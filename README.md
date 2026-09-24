@@ -4,14 +4,17 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 ## 管理対象
 
-- 楽曲作品（work）と、オリジナル／新録／カバーなどの具体的な歌唱版（song）
+- 楽曲作品（work）、具体的な音源・歌唱版（song）、シングル／アルバム／配信等の商品（release）
 - 作詞・作曲・編曲などの作家とクレジット
 - 通常グループ、限定・シャッフル・企画ユニット
 - メンバー、その所属履歴、各 song の実際の歌唱メンバー
 - Hello! Project 公式系 YouTube 動画と、動画内の楽曲・開始位置・公演情報
+- release ごとの収録 song とトラック表記
 - 各情報を確認した公式一次情報の URL
 
-卒業後に発表された OG のソロ作品、非公式動画、同一音源の再収録、Instrumental や映像違いだけの MV は、現時点の収集対象外です。
+卒業後に発表された OG のソロ作品、非公式動画、Instrumental や映像違いだけの MV は、現時点の収集対象外です。同一音源の再収録では song を増やさず、`releases.csv` と `release_tracks.csv` で複数の商品への収録を表します。同一音源か確証がない場合は、推測で統合・新規採番せずユーザー確認事項として保留します。
+
+データ収集の一次情報は原則として Hello! Project 公式サイトの、対象楽曲・release を直接説明する情報です。公式情報で確認できない内容を第三者サイトから推測補完しません。
 
 ## ディレクトリ構成
 
@@ -30,13 +33,18 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
     ├── member_affiliations.csv
     ├── song_artists.csv
     ├── song_performers.csv
+    ├── releases.csv
+    ├── release_tracks.csv
     ├── videos.csv
-    └── video_songs.csv
+    ├── video_songs.csv
+    └── video_song_performers.csv
 ```
 
 ## 現在の段階
 
-現在は**データ設計段階**です。`data/` 以下の CSV を唯一の正本（Single Source of Truth）とし、実データはまだ投入していません。入力・変更時は [データ仕様](docs/data-spec.md) に従います。生成物を将来追加する場合も、CSV を手作業で逆更新せず、CSV から一方向に生成します。
+現在は**データ設計段階**です。`data/` 以下の CSV を唯一の正本（Single Source of Truth）とし、実データはまだ投入していません。入力・変更時は [データ仕様 v0.2](docs/data-spec.md) に従います。生成物を将来追加する場合も、CSV を手作業で逆更新せず、CSV から一方向に生成します。
+
+`created_at` / `updated_at` はデータとして登録・更新時期を簡単に参照するために使い、Git 履歴は誰がどのコミットで何を変更したかを追跡する完全な履歴として使います。
 
 ## 将来構想
 

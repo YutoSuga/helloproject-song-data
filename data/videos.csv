@@ -1,1 +1,1 @@
-video_id,youtube_video_id,title,channel_name,channel_id,published_date,url,notes,source_url
+video_id,youtube_video_id,title,channel_name,channel_id,published_date,url,notes,source_url,created_at,updated_at
