@@ -1,257 +1,305 @@
-# データ仕様
+# データ仕様 v0.2
 
 ## 1. 基本方針
 
 `data/` 以下の UTF-8 CSV（RFC 4180 準拠、ヘッダーあり）を正本とする。1 レコードを物理的な 1 行とし、カンマ・改行・ダブルクォートを含む値はダブルクォートで囲み、内部のダブルクォートは二重化する。列順は本書および各 CSV のヘッダー順に固定する。
 
-### work と song
+### work、song、release
 
 - **work** は「楽曲という作品」そのもの。同一の詞・曲を基礎とする関連版を束ねる。
-- **song** は、その作品の具体的な音源・歌唱版。オリジナル、新録、New Vocal、別歌唱者によるカバーなどをそれぞれ別 `song_id` とし、同じ作品なら同一 `work_id` に紐付ける。
-- Instrumental、MV／Dance Shot など映像だけの違い、同一音源のアルバム再収録は新しい song にしない。
-- 新録か同一音源か判断できない場合は推測で追加せず、一次情報を確認する。
+- **song** は、その作品の具体的な音源・歌唱 Version。登録基準はシングル曲かアルバム曲かではなく、その具体的な音源が既に `songs.csv` に存在するかである。
+- **release** は、シングル、アルバム、公式配信等のリリース商品・作品。song の収録先は `release_tracks.csv` で表す。
+- 同一音源のアルバム等への再収録では新しい `song_id` を作らず、同じ song を複数の release に紐付ける。New Vocal Ver.、新録・再録、別歌唱者によるカバー、公式に別 Version とされた音源は別 song とし、同じ作品なら `work_id` を共有する。
+- Instrumental、MV、Dance Shot 等は song として登録しない。ライブの短縮版、メドレー、ライブ固有アレンジ、一時的な歌唱者変更も、公式に別音源・別 Version としてリリースされない限り新しい song にしない。映像ごとの歌唱者は `video_song_performers.csv` で表す。
 
-### 共通表記と NULL
+### 同一音源の判定と収集順序
+
+収集は発売順でなくてよい。例えばアルバム `terzo` を先に調査し、収録されたシングル既出曲がまだ `songs.csv` にない場合は、その song を登録してよい。後からシングルを調査して同一音源と確認できた場合、新しい song は作らず、既存 song にその release を追加する。登録時に見るのは「過去にシングル発売されたか」ではなく「現在の `songs.csv` に同一音源が登録済みか」である。
+
+同一性に確証がないときは、既存 song への統合も新規 `song_id` の採番も推測で行わず、**要確認として保留しユーザー判断を求める**。特に次は自動判断しない。
+
+- 同名だが歌唱メンバーが異なる
+- アルバム収録時に新録された可能性がある
+- Version 表記が曖昧
+- クレジットは同じだが音源が同一か分からない
+- 表記違いだが同一 Version の可能性がある
+
+今後のデータ収集でも、Codex は一次情報から確証を持てない同一性判定を勝手に行わない。
+
+### 一次情報
+
+楽曲データの一次情報は原則として Hello! Project 公式サイトとし、主に公式リリース情報から曲名、発売日、作詞、作曲、編曲、歌唱者、Version 表記、収録商品を取得する。公式情報が複数ある場合は、楽曲・release を直接説明する情報を優先する。第三者サイトを一次情報として扱わず、公式サイトだけで確認できない値は推測で補完せず要確認とする。
+
+### 共通表記、NULL、日時
 
 - ID、列挙値、URL、日付、時刻秒は半角 ASCII、名称・注記は公式表記を原則とする。
-- 必須列は空欄不可。任意列の不明・該当なしは空欄とし、`NULL`、`N/A`、`-` などの代替文字列を入れない。空文字と未確認を区別する必要が生じた場合は将来ステータス列を追加する。
-- 日付は完全な日付が確認できる場合のみ `YYYY-MM-DD`（ISO 8601）で記録する。年月・年しか分からない値を補完せず空欄にし、必要なら `notes` に記す。
+- 必須列は空欄不可。任意列の不明・該当なしは空欄とし、`NULL`、`N/A`、`-` 等を入れない。
+- 日付は完全に確認できる場合のみ `YYYY-MM-DD` で記録し、年月・年しか分からない値を補完しない。
+- 日時はタイムゾーンを含む ISO 8601（例 `2026-09-24T22:15:00+09:00`）とする。
 - 真偽値は `true` / `false` とする。
-- `source_url` は当該行を裏付ける Hello! Project 公式サイト等の一次情報 URL。複数ある場合は最も直接的なものを記録し、追加出典が必要になれば将来、出典テーブルへの分離を検討する。
+- `source_url` は当該行を裏付ける一次情報の絶対 HTTPS URL。現時点で `source_checked_at` は追加しない。複数出典や確認日を厳密に管理する必要が生じた場合は `sources.csv`、`record_sources.csv` 等を検討する。
+
+マスタ系 CSV（works、songs、creators、artists、members、videos、releases）の `created_at` は正本データへ最初に登録した日時、`updated_at` はそのレコード自体を最後に更新した日時であり、発売日や公式情報公開日ではない。新規作成時は原則同値とし、更新時は `created_at` を変えず `updated_at` のみ更新する。関連テーブル（song_creators、member_affiliations、song_artists、song_performers、release_tracks、video_songs、video_song_performers）には現時点で両列を設けず、詳細な変更履歴は Git で追跡する。
+
+`created_at` / `updated_at` は登録・更新時期を簡単に参照するための情報である。Git は誰が、どのコミットで、何をどのように変更したかを追跡する完全な変更履歴であり、CSV 内に更新履歴自体を複数行・複数列で蓄積しない。
 
 ### ID 採番
 
 | 対象 | 形式 | 例 | 方針 |
 |---|---|---|---|
-| work | `W` + 5 桁連番 | `W00001` | 作品単位でリポジトリ全体一意 |
-| creator | `C` + 5 桁連番 | `C00001` | 名義を識別する固定 ID |
-| member | `P` + 5 桁連番 | `P00001` | 人物を識別する固定 ID |
-| artist | `G` + 5 桁連番 | `G00001` | グループ／ユニット／ソロ名義を横断して一意 |
+| work | `W` + 5 桁連番 | `W00001` | 作品単位で全体一意 |
+| creator | `C` + 5 桁連番 | `C00001` | 同一人物・同一制作主体を識別 |
+| member | `P` + 5 桁連番 | `P00001` | 人物を識別 |
+| artist | `G` + 5 桁連番 | `G00001` | 活動主体を識別 |
+| release | `L` + 5 桁連番 | `L00001` | リリース商品・作品単位で一意 |
 | video | `V` + 5 桁連番 | `V00001` | YouTube 動画単位で一意 |
 | song | 接頭辞 + 5 桁連番 | `J00001` | 主な歌唱側の系列内で一意 |
 
-song の接頭辞は `M`（モーニング娘。）、`A`（アンジュルム）、`J`（Juice=Juice）、`T`（つばきファクトリー）、`B`（BEYOOOOONDS）、`O`（OCHA NORMA）、`R`（ロージークロニクル）、`H`（Hello! Project 全体、企画曲、通常グループに属さないケース等）。カバーは原曲側でなく、カバーした側の接頭辞を使う。採番済み ID は名称変更・統合・削除後も再利用せず、番号の欠番を許容する。新たな通常グループが生じた場合は、既存値と衝突しない接頭辞を仕様改定で追加してから採番する。
+song 接頭辞は `M`（モーニング娘。）、`A`（アンジュルム）、`J`（Juice=Juice）、`T`（つばきファクトリー）、`B`（BEYOOOOONDS）、`O`（OCHA NORMA）、`R`（ロージークロニクル）、`H`（Hello! Project 全体、企画曲、通常グループに属さないケース）とする。カバーはカバー側を使う。GOODM!X 等の特殊／シャッフルユニット、在籍中メンバーのソロ名義等で通常グループに該当しないものは原則 `H` とし、実際の名義・人物は artists、song_artists、song_performers で表す。採番済み ID は再利用せず欠番を許容する。
 
 ### 参照整合性、変更、削除
 
-- 主キー（PK）は一意かつ空欄不可。外部キー（FK）は参照先に存在しなければならない。
-- 複合 PK の全列の組み合わせを一意とする。表示順を持つ関連表では、同じ親における `position` も一意とする。
-- 表記訂正は ID を保ったまま更新する。作品・人物等の同一性が変わる場合のみ新 ID を採番する。
-- 参照されている行は物理削除しない。誤登録は同じ変更で関連行を修正・削除し、履歴は Git で追跡する。公式な解散・卒業は削除ではなく終了日で表す。
-- FK の連鎖削除は行わない。ID の変更は原則禁止し、やむを得ない場合は全参照を同一コミットで更新する。
-- CSV 追加・更新時は、重複 PK、FK、列挙値、ID 形式、日付形式を機械検証することを将来想定する。
+- PK は一意かつ空欄不可、FK は参照先に存在すること。複合 PK の全列の組み合わせを一意とする。
+- 表示順を持つ関連表では、同じ親・文脈における順序値も一意とする。
+- 表記訂正は ID を保って更新する。同一性が変わる場合のみ新 ID を採番する。
+- 参照中の行を物理削除しない。誤登録は同じ変更で関連行を修正・削除し、履歴は Git で追跡する。FK の連鎖削除は行わない。
+- CSV 更新時は重複 PK、FK、列挙値、ID・日付・日時形式を機械検証することを将来想定する。
 
 ## 2. CSV 定義
 
-以下で「文字列」は UTF-8 テキスト、「日付」は `YYYY-MM-DD`、「URL」は絶対 `https` URL、「非負整数」は 0 以上の 10 進整数を表す。
+以下で「日付」は `YYYY-MM-DD`、「日時」はタイムゾーン付き ISO 8601、「URL」は絶対 HTTPS URL、「正整数」は 1 以上、「非負整数」は 0 以上を表す。
 
 ### `data/works.csv`
 
-作品としての楽曲を管理する。
-
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `work_id` | ID | 必須 | 作品 ID | `W00123` | PK、`^W[0-9]{5}$` |
-| `title` | 文字列 | 必須 | 作品の代表タイトル | `ある楽曲` | 空文字不可 |
-| `title_kana` | 文字列 | 任意 | 検索・並び替え用の読み | `アルガッキョク` | 公式表記または確認できる読み |
-| `notes` | 文字列 | 任意 | 同一作品判定等の注記 | `原曲は企画ユニット版` | 自由記述 |
-| `source_url` | URL | 必須 | 作品名を確認した一次情報 | `https://www.helloproject.com/...` | 絶対 HTTPS URL |
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `work_id` | ID | 必須 | PK、`^W[0-9]{5}$` |
+| `title` | 文字列 | 必須 | 作品の代表タイトル |
+| `title_kana` | 文字列 | 任意 | 検索用の読み |
+| `notes` | 文字列 | 任意 | 同一作品判定等 |
+| `source_url` | URL | 必須 | 作品名の一次情報 |
+| `created_at` | 日時 | 必須 | 正本への初回登録日時 |
+| `updated_at` | 日時 | 必須 | レコードの最終更新日時 |
 
 ### `data/songs.csv`
 
-作品の具体的な歌唱版を管理する。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `song_id` | ID | 必須 | PK、`^[MAJTBORH][0-9]{5}$` |
+| `work_id` | ID | 必須 | FK → `works.work_id` |
+| `title` | 文字列 | 必須 | この版の公式曲名 |
+| `version_name` | 文字列 | 任意 | Version 名。なければ空欄 |
+| `version_type` | 列挙 | 必須 | `original`, `new_vocal`, `re_recording`, `cover`, `other` |
+| `release_date` | 日付 | 任意 | この具体的音源が公式商品または公式配信で最初にリリースされた日 |
+| `notes` | 文字列 | 任意 | 版の判定等 |
+| `source_url` | URL | 必須 | 曲名・版の一次情報 |
+| `created_at` | 日時 | 必須 | 正本への初回登録日時 |
+| `updated_at` | 日時 | 必須 | レコードの最終更新日時 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `song_id` | ID | 必須 | 歌唱版 ID | `J00123` | PK、`^[MAJTBORH][0-9]{5}$`、主歌唱側の接頭辞 |
-| `work_id` | ID | 必須 | 元となる作品 | `W00123` | FK → `works.work_id` |
-| `title` | 文字列 | 必須 | この版での公式曲名 | `ある楽曲 (New Vocal Ver.)` | 空文字不可 |
-| `version_name` | 文字列 | 任意 | 版名のみ | `New Vocal Ver.` | オリジナルで版名がなければ空欄 |
-| `version_type` | 列挙 | 必須 | 版の分類 | `new_vocal` | `original`, `new_vocal`, `re_recording`, `cover`, `other` |
-| `release_date` | 日付 | 任意 | この版の初出日 | `2025-01-01` | `YYYY-MM-DD`、推測禁止 |
-| `notes` | 文字列 | 任意 | 版の判定・収録等の注記 | `メンバー変更後の新録` | 自由記述 |
-| `source_url` | URL | 必須 | 曲名・版を確認した一次情報 | `https://www.helloproject.com/...` | 絶対 HTTPS URL |
-
-`version_type=original` は原則として 1 work に 1 件とする。ただし同時に異なる歌唱者で成立した作品など例外は `notes` に根拠を記す。カバー／New Vocal／新録は別 song とし、同じ作品に基づく限り `work_id` を共有する。
+`release_date` は CD と公式配信で異なる場合、原則として早い方とし、ライブ初披露日は含めない。個別の CD 発売日、配信日、アルバム再収録日、その他の商品収録は releases / release_tracks で管理する。`version_type=original` は原則 1 work に 1 件だが、同時に異なる歌唱者で成立した例外は根拠を `notes` に記す。
 
 ### `data/creators.csv`
 
-クレジットに現れる作家名義を管理する。人物名を ID として使わない。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `creator_id` | ID | 必須 | PK、`^C[0-9]{5}$` |
+| `name` | 文字列 | 必須 | 人物・制作主体を識別する代表名 |
+| `name_kana` | 文字列 | 任意 | 代表名の読み |
+| `notes` | 文字列 | 任意 | 別名義等 |
+| `source_url` | URL | 任意 | 同一性・名称の一次情報 |
+| `created_at` | 日時 | 必須 | 正本への初回登録日時 |
+| `updated_at` | 日時 | 必須 | レコードの最終更新日時 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `creator_id` | ID | 必須 | 作家 ID | `C00001` | PK、`^C[0-9]{5}$` |
-| `name` | 文字列 | 必須 | 公式クレジット名義 | `山田花子` | 空文字不可 |
-| `name_kana` | 文字列 | 任意 | 名義の読み | `ヤマダハナコ` | 確認できる場合のみ |
-| `notes` | 文字列 | 任意 | 別名義等の注記 | `別名義あり` | 自由記述 |
-| `source_url` | URL | 任意 | 名義を確認した一次情報 | `https://www.helloproject.com/...` | 設定時は絶対 HTTPS URL |
-
-同一人物の別名義を統合するかは個別判断とし、初期運用では公式クレジット名義単位を原則とする。`name` は同姓同名や表記差があるため一意制約を設けない。
+`creator_id` はクレジット名義でなく、原則として同一人物・同一制作主体を識別する。同一人物による複数名義と確認できれば同じ ID を用い、曲ごとの実際の名義は `song_creators.credit_name` に残す。確証がない名義は推測で統合せず、別 ID とするか要確認として保留する。集計は `creator_id` を用いる。より厳密な名義履歴が必要なら `creator_aliases` 等を追加できる。
 
 ### `data/song_creators.csv`
 
-song ごとの作家クレジットを管理する。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `song_id` | ID | 必須 | 複合 PK、FK → `songs.song_id` |
+| `creator_id` | ID | 必須 | 複合 PK、FK → `creators.creator_id` |
+| `role` | 列挙 | 必須 | 複合 PK、`lyrics`, `composition`, `arrangement` |
+| `credit_name` | 文字列 | 必須 | その song で実際に表示されたクレジット名義 |
+| `credit_order` | 正整数 | 任意 | 同一 song・role 内の公式掲載順 |
+| `source_url` | URL | 必須 | クレジットの一次情報 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `song_id` | ID | 必須 | 対象の歌唱版 | `J00001` | PK（複合）、FK → `songs.song_id` |
-| `creator_id` | ID | 必須 | クレジットされた作家 | `C00001` | PK（複合）、FK → `creators.creator_id` |
-| `role` | 列挙 | 必須 | 担当 | `lyrics` | PK（複合）、`lyrics`, `composition`, `arrangement` |
-| `credit_order` | 正整数 | 任意 | 同一 role 内の公式掲載順 | `1` | 1 以上、同一 `song_id`・`role` 内で一意 |
-| `source_url` | URL | 必須 | クレジットの一次情報 | `https://www.helloproject.com/...` | 絶対 HTTPS URL |
-
-共同作詞・共同作曲は作家ごとに 1 行を登録する。集計では持分で按分せず、各作家を各 role で 1 曲と数える。同一 `song_id`・`creator_id` に `lyrics` と `composition` の両行があれば「作詞・作曲を両方担当した楽曲」1 曲と集計する。版ごとにクレジットが異なり得るため work ではなく song に関連付ける。
+共同担当は作家ごとに 1 行とする。集計では持分按分せず、各 `creator_id` を role ごとに 1 曲と数える。Web 等で当時の正式名義を表示するときは `credit_name` を用いる。
 
 ### `data/artists.csv`
 
-通常グループから限定ユニット、ソロ名義まで、楽曲の発表・歌唱主体を管理する。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `artist_id` | ID | 必須 | PK、`^G[0-9]{5}$` |
+| `name` | 文字列 | 必須 | 現在または代表となる公式名称 |
+| `type` | 列挙 | 必須 | `group`, `solo`, `temporary_unit`, `shuffle_unit`, `special_unit`, `project`, `other` |
+| `start_date` | 日付 | 任意 | 結成・活動開始日 |
+| `end_date` | 日付 | 任意 | 活動終了日。開始日以後 |
+| `notes` | 文字列 | 任意 | 旧名称・性質等 |
+| `source_url` | URL | 任意 | 名称等の一次情報 |
+| `created_at` | 日時 | 必須 | 正本への初回登録日時 |
+| `updated_at` | 日時 | 必須 | レコードの最終更新日時 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `artist_id` | ID | 必須 | アーティスト ID | `G00001` | PK、`^G[0-9]{5}$` |
-| `name` | 文字列 | 必須 | 公式名称 | `GOODM!X` | 空文字不可 |
-| `type` | 列挙 | 必須 | 主体の分類 | `special_unit` | `group`, `solo`, `temporary_unit`, `shuffle_unit`, `special_unit`, `project`, `other` |
-| `start_date` | 日付 | 任意 | 結成・活動開始日 | `2024-01-01` | `YYYY-MM-DD` |
-| `end_date` | 日付 | 任意 | 解散・活動終了日 | `2024-12-31` | `YYYY-MM-DD`、開始日以後、活動中は空欄 |
-| `notes` | 文字列 | 任意 | 性質・改名等の注記 | `期間限定ユニット` | 自由記述 |
-| `source_url` | URL | 任意 | 名称等の一次情報 | `https://www.helloproject.com/...` | 設定時は絶対 HTTPS URL |
-
-`name` は改名や同名再結成に備えて一意制約を設けない。名称変更を同一主体として扱う場合は ID を維持し、現状は最新名を `name`、旧名を `notes` に記録する。
+名称変更後も活動主体の継続が明確なら同じ `artist_id` を維持し、単純な改名だけで別 ID を採番しない。旧名称は当面 `notes` に記す。主体の同一性が不明なら統合せずユーザー確認事項とする。厳密な履歴が必要になれば `artist_names`、`artist_name_history` 等を追加できる。
 
 ### `data/members.csv`
 
-人物の基本情報を管理する。`current` / `graduated` のような現在状態は保持せず、所属期間から導出する。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `member_id` | ID | 必須 | PK、`^P[0-9]{5}$` |
+| `name` | 文字列 | 必須 | 公式表記の氏名・芸名 |
+| `name_kana` | 文字列 | 任意 | 読み |
+| `birth_date` | 日付 | 任意 | 生年月日 |
+| `notes` | 文字列 | 任意 | 改名等 |
+| `source_url` | URL | 任意 | プロフィール等の一次情報 |
+| `created_at` | 日時 | 必須 | 正本への初回登録日時 |
+| `updated_at` | 日時 | 必須 | レコードの最終更新日時 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `member_id` | ID | 必須 | 人物 ID | `P00001` | PK、`^P[0-9]{5}$` |
-| `name` | 文字列 | 必須 | 公式表記の氏名・芸名 | `山田花子` | 空文字不可 |
-| `name_kana` | 文字列 | 任意 | 読み | `ヤマダハナコ` | 確認できる場合のみ |
-| `birth_date` | 日付 | 任意 | 生年月日 | `2000-01-01` | `YYYY-MM-DD` |
-| `notes` | 文字列 | 任意 | 改名等の注記 | `旧芸名あり` | 自由記述 |
-| `source_url` | URL | 任意 | プロフィール等の一次情報 | `https://www.helloproject.com/...` | 設定時は絶対 HTTPS URL |
+現在状態は持たず所属期間から導出する。
 
 ### `data/member_affiliations.csv`
 
-人物がアーティストに所属した期間を管理する。同じ人物の再加入も別行で表現できる。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `member_id` | ID | 必須 | 複合 PK、FK → `members.member_id` |
+| `artist_id` | ID | 必須 | 複合 PK、FK → `artists.artist_id` |
+| `start_date` | 日付 | 必須 | 複合 PK、所属開始日 |
+| `end_date` | 日付 | 任意 | 所属終了日。開始日以後 |
+| `notes` | 文字列 | 任意 | 兼任等 |
+| `source_url` | URL | 必須 | 期間の一次情報 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `member_id` | ID | 必須 | 人物 | `P00001` | PK（複合）、FK → `members.member_id` |
-| `artist_id` | ID | 必須 | 所属先 | `G00001` | PK（複合）、FK → `artists.artist_id` |
-| `start_date` | 日付 | 必須 | 所属開始日 | `2020-01-01` | PK（複合）、`YYYY-MM-DD` |
-| `end_date` | 日付 | 任意 | 所属終了日 | `2025-03-31` | `YYYY-MM-DD`、開始日以後、空欄は現在所属中 |
-| `notes` | 文字列 | 任意 | 兼任・期間の注記 | `サブリーダー兼任` | 自由記述 |
-| `source_url` | URL | 必須 | 期間を確認した一次情報 | `https://www.helloproject.com/news/...` | 絶対 HTTPS URL |
-
-同じ `member_id`・`artist_id` の期間は原則重複不可。ただし公式上の兼任は異なる artist 間で期間が重複してよい。
+同じ member・artist の期間は原則重複不可。公式上の異なる artist 間の兼任は重複してよい。
 
 ### `data/song_artists.csv`
 
-song と公式なアーティスト名義の多対多関係を管理する。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `song_id` | ID | 必須 | 複合 PK、FK → `songs.song_id` |
+| `artist_id` | ID | 必須 | 複合 PK、FK → `artists.artist_id` |
+| `role` | 列挙 | 必須 | 複合 PK、`primary`, `featured` |
+| `credit_order` | 正整数 | 任意 | 同一 song 内の公式掲載順 |
+| `source_url` | URL | 必須 | 名義の一次情報 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `song_id` | ID | 必須 | 歌唱版 | `J00001` | PK（複合）、FK → `songs.song_id` |
-| `artist_id` | ID | 必須 | 発表・歌唱アーティスト | `G00001` | PK（複合）、FK → `artists.artist_id` |
-| `role` | 列挙 | 必須 | song に対する関係 | `primary` | PK（複合）、`primary`, `featured` |
-| `credit_order` | 正整数 | 任意 | 連名時の公式掲載順 | `1` | 1 以上、同一 song 内で一意 |
-| `source_url` | URL | 必須 | 名義を確認した一次情報 | `https://www.helloproject.com/...` | 絶対 HTTPS URL |
-
-各 song に `primary` を 1 件以上必須とする。複数名義の共同曲は複数行で表現する。
+各 song に `primary` を 1 件以上必須とする。
 
 ### `data/song_performers.csv`
 
-所属履歴から推定せず、各歌唱版で実際に歌唱した人物を明示する。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `song_id` | ID | 必須 | 複合 PK、FK → `songs.song_id` |
+| `member_id` | ID | 必須 | 複合 PK、FK → `members.member_id` |
+| `performer_order` | 正整数 | 任意 | 同一 song 内の公式掲載順 |
+| `notes` | 文字列 | 任意 | 参加形態等 |
+| `source_url` | URL | 必須 | 歌唱者の一次情報 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `song_id` | ID | 必須 | 歌唱版 | `J00001` | PK（複合）、FK → `songs.song_id` |
-| `member_id` | ID | 必須 | 実際の歌唱者 | `P00001` | PK（複合）、FK → `members.member_id` |
-| `performer_order` | 正整数 | 任意 | 公式掲載順 | `1` | 1 以上、同一 song 内で一意 |
-| `notes` | 文字列 | 任意 | 参加形態等 | `コーラス参加` | 自由記述 |
-| `source_url` | URL | 必須 | 歌唱者を確認した一次情報 | `https://www.helloproject.com/...` | 絶対 HTTPS URL |
+所属履歴から推定せず、その音源で実際に歌唱した確認可能な member を登録する。
 
-これによりソロ（1 人）、グループ内ユニット、シャッフル、限定ユニットを同じ構造で検索できる。全員歌唱であっても確認できる各 member を明示的に登録する。
+### `data/releases.csv`
+
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `release_id` | ID | 必須 | PK、`^L[0-9]{5}$` |
+| `title` | 文字列 | 必須 | 商品・配信作品の公式タイトル |
+| `release_type` | 列挙 | 必須 | `single`, `album`, `digital`, `other` |
+| `release_date` | 日付 | 任意 | 当該 release の公式発売・配信日。未確認時は空欄 |
+| `catalog_number` | 文字列 | 任意 | 公式規格品番。ない場合は空欄 |
+| `notes` | 文字列 | 任意 | 盤種等 |
+| `source_url` | URL | 必須 | release の一次情報 |
+| `created_at` | 日時 | 必須 | 正本への初回登録日時 |
+| `updated_at` | 日時 | 必須 | レコードの最終更新日時 |
+
+分類は当初この 4 値に留め、mini album / best album は `album` として必要なら `notes` に記す。検索上の必要性が確認できた場合に限り `mini_album`、`best_album` 等を追加する。初回盤・通常盤等は、規格品番または song 対象の収録内容が異なる場合は原則別 release とする。パッケージのみの差などをどこまで分けるか、公式情報から盤の差を確定できない場合は要確認とし、勝手に複雑化しない。
+
+### `data/release_tracks.csv`
+
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `release_id` | ID | 必須 | 複合 PK、FK → `releases.release_id` |
+| `disc_number` | 正整数 | 必須 | 複合 PK、Disc 番号 |
+| `track_number` | 正整数 | 必須 | 複合 PK、Disc 内トラック番号 |
+| `song_id` | ID | 必須 | FK → `songs.song_id` |
+| `track_title` | 文字列 | 必須 | 商品上の曲名表記。一致時も保持 |
+| `notes` | 文字列 | 任意 | 収録上の注記 |
+| `source_url` | URL | 必須 | 収録情報の一次情報 |
+
+同じ音源がシングルとアルバムに収録された場合、両行の `song_id` は同じにする。原則として song 管理対象だけを紐付け、Instrumental、MV、Dance Shot 等は登録しない。そのためトラック番号の欠番を許容する。将来、商品の完全なトラックリストが必要になれば、非 song トラックを nullable な `song_id` や種別で扱う等の拡張を仕様改定で検討する。
 
 ### `data/videos.csv`
 
-対象は原則として Hello! Project 公式系 YouTube チャンネルの動画のみとする。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `video_id` | ID | 必須 | PK、`^V[0-9]{5}$` |
+| `youtube_video_id` | 文字列 | 必須 | 一意、YouTube 動画 ID |
+| `title` | 文字列 | 必須 | 動画タイトル |
+| `channel_name` | 文字列 | 必須 | 公式系チャンネル名 |
+| `channel_id` | 文字列 | 任意 | YouTube channel ID |
+| `published_date` | 日付 | 必須 | YouTube 公開日 |
+| `url` | URL | 必須 | 一意、動画 URL |
+| `notes` | 文字列 | 任意 | 公開状態等 |
+| `source_url` | URL | 必須 | 動画情報の出典 |
+| `created_at` | 日時 | 必須 | 正本への初回登録日時 |
+| `updated_at` | 日時 | 必須 | レコードの最終更新日時 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `video_id` | ID | 必須 | 内部動画 ID | `V00001` | PK、`^V[0-9]{5}$` |
-| `youtube_video_id` | 文字列 | 必須 | YouTube の動画 ID | `dQw4w9WgXcQ` | 一意、`^[A-Za-z0-9_-]{11}$` |
-| `title` | 文字列 | 必須 | 動画タイトル | `ハロ！ステ #XXX` | 空文字不可 |
-| `channel_name` | 文字列 | 必須 | 公開チャンネル名 | `ハロ！ステ` | 公式系チャンネルのみ |
-| `channel_id` | 文字列 | 任意 | YouTube チャンネル ID | `UCxxxxxxxxxxxxxxxxxxxxxx` | 設定時は YouTube channel ID |
-| `published_date` | 日付 | 必須 | YouTube 公開日 | `2025-01-01` | `YYYY-MM-DD` |
-| `url` | URL | 必須 | 動画 URL | `https://www.youtube.com/watch?v=dQw4w9WgXcQ` | 一意、絶対 HTTPS URL、ID と一致 |
-| `notes` | 文字列 | 任意 | 公開状態等の注記 | `期間限定公開` | 自由記述 |
-| `source_url` | URL | 必須 | 動画情報の出典 | `https://www.youtube.com/watch?v=dQw4w9WgXcQ` | 絶対 HTTPS URL（通常は `url` と同値） |
-
-第三者の非公式・違法アップロードは登録しない。削除・非公開になっても参照保全のため行は残し、判明した状態を `notes` に記す。
+対象は原則 Hello! Project 公式系 YouTube のみ。非公式・違法アップロードは登録しない。削除・非公開後も行を残し状態を `notes` に記す。
 
 ### `data/video_songs.csv`
 
-1 本の動画に含まれる各楽曲区間を管理する。同じ song が同一動画に複数回現れる場合も開始秒で区別する。
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `video_id` | ID | 必須 | 複合 PK、FK → `videos.video_id` |
+| `song_id` | ID | 必須 | 複合 PK、FK → `songs.song_id` |
+| `start_seconds` | 非負整数 | 必須 | 複合 PK、動画先頭からの開始秒 |
+| `performer_artist_id` | ID | 任意 | FK → `artists.artist_id` |
+| `performer_credit` | 文字列 | 必須 | 公式表示・自由記述の歌唱名義 |
+| `event_name` | 文字列 | 任意 | 公演・イベント名 |
+| `event_date` | 日付 | 任意 | 収録公演日 |
+| `notes` | 文字列 | 任意 | メドレー等 |
+| `source_url` | URL | 必須 | 区間・クレジットの一次情報 |
 
-| 列名 | 型 | 必須 | 意味 | 値の例 | 制約 |
-|---|---|---:|---|---|---|
-| `video_id` | ID | 必須 | 動画 | `V00001` | PK（複合）、FK → `videos.video_id` |
-| `song_id` | ID | 必須 | 歌唱された版 | `J00001` | PK（複合）、FK → `songs.song_id` |
-| `start_seconds` | 非負整数 | 必須 | 動画先頭からの開始秒 | `332` | PK（複合）、0 以上 |
-| `performer_artist_id` | ID | 任意 | この映像での歌唱アーティスト | `G00001` | FK → `artists.artist_id` |
-| `performer_credit` | 文字列 | 必須 | 映像上の実際の歌唱者・歌唱名義 | `Juice=Juice（○○・△△）` | 公式表記を優先、空文字不可 |
-| `event_name` | 文字列 | 任意 | 公演・イベント名 | `Hello! Project 2025 Winter` | 不明なら空欄 |
-| `event_date` | 日付 | 任意 | 収録公演日 | `2025-01-02` | `YYYY-MM-DD`、公開日とは区別 |
-| `notes` | 文字列 | 任意 | メドレー等の注記 | `メドレー内` | 自由記述 |
-| `source_url` | URL | 必須 | 区間・クレジットの出典 | `https://www.youtube.com/watch?v=...&t=332s` | 絶対 HTTPS URL |
+開始リンクは動画 URL と開始秒から生成する。個人単位の検索は `video_song_performers` を使用し、`performer_credit` は原文の歌唱名義を保持する。
 
-開始リンクは `videos.url` と `start_seconds` から生成する。`performer_artist_id` は登録済み名義がある場合に用い、個人列挙・当日だけの編成などは `performer_credit` に原文で残す。これは特定 song の標準的歌唱者を表す `song_performers` と区別する。映像単位で個々の member を厳密検索する要件が生じた場合は、区切り文字入り ID を格納せず `video_song_performers` 関連表を追加する。
+### `data/video_song_performers.csv`
+
+| 列名 | 型 | 必須 | 意味・制約 |
+|---|---|---:|---|
+| `video_id` | ID | 必須 | 複合 PK の区間部分 |
+| `song_id` | ID | 必須 | 複合 PK の区間部分 |
+| `start_seconds` | 非負整数 | 必須 | 複合 PK の区間部分 |
+| `member_id` | ID | 必須 | 複合 PK、FK → `members.member_id` |
+| `performer_order` | 正整数 | 任意 | 同一区間内の表示順 |
+| `notes` | 文字列 | 任意 | 歌唱形態等 |
+| `source_url` | URL | 必須 | 歌唱者の一次情報 |
+
+`(video_id, song_id, start_seconds)` は `video_songs` の対象区間への複合 FK であり、行の PK はこれに `member_id` を加えた 4 列とする。特定メンバーの公式映像、特定曲の歌唱、卒業前や限定編成の映像を人物単位で検索するための構造化データである。
 
 ## 3. 列挙値一覧
 
-| 列 | 値 | 意味 |
-|---|---|---|
-| `songs.version_type` | `original` | 最初の歌唱版 |
-|  | `new_vocal` | New Vocal と明記された版 |
-|  | `re_recording` | 新録・再録版 |
-|  | `cover` | 別歌唱側によるカバー |
-|  | `other` | 上記以外の別歌唱版（理由を notes に記載） |
-| `artists.type` | `group` | 通常グループ |
-|  | `solo` | H!P 在籍中のソロ名義 |
-|  | `temporary_unit` | 期間限定ユニット |
-|  | `shuffle_unit` | シャッフルユニット |
-|  | `special_unit` | GOODM!X 等の特殊ユニット |
-|  | `project` | H!P 全体・企画名義 |
-|  | `other` | 上記に分類できない名義 |
-| `song_creators.role` | `lyrics` | 作詞 |
-|  | `composition` | 作曲 |
-|  | `arrangement` | 編曲 |
-| `song_artists.role` | `primary` | 主名義 |
-|  | `featured` | 客演・併記名義 |
+| 列 | 値 |
+|---|---|
+| `songs.version_type` | `original`, `new_vocal`, `re_recording`, `cover`, `other` |
+| `artists.type` | `group`, `solo`, `temporary_unit`, `shuffle_unit`, `special_unit`, `project`, `other` |
+| `releases.release_type` | `single`, `album`, `digital`, `other` |
+| `song_creators.role` | `lyrics`, `composition`, `arrangement` |
+| `song_artists.role` | `primary`, `featured` |
 
-列挙値の追加は既存値を読み替えず、本書と検証処理を先に更新する。作家 role（訳詞、補作詞等）が必要になった場合も、既存 3 値へ無理に寄せず仕様改定で追加する。
+列挙値は既存値を読み替えず、仕様を先に改定して追加する。訳詞・補作詞等も既存 role へ無理に寄せない。
 
 ## 4. 収集範囲と集計規則
 
-- 現役・過去グループ曲、在籍中メンバーのソロ曲、限定／シャッフル／企画ユニット曲、過去の限定ユニット曲、カバー、New Vocal 等を対象とする。
-- Hello! Project 卒業後に発表されたソロ作品は現時点では対象外。在籍中に歌唱した song は、現在の所属状態にかかわらず保持する。将来対象を広げても、既存 ID・関係表はそのまま利用できる。
-- グループ別の作家集計は `song_artists` から song を選び、`song_creators` を role ごとに数える。同じ作家・song・role は複合 PK により 1 回だけ数える。
-- 「作詞・作曲両方」は同じ `song_id` で同じ `creator_id` に両 role が存在するかで判定する。共同担当も単独担当と同じ 1 曲で、0.5 曲にはしない。
-- work 単位の関連 Version／カバー検索は、同一 `work_id` の songs を列挙し `version_type` で分類する。
-- メンバーの歌唱曲は `song_performers`、所属履歴は `member_affiliations` を参照し、両者を推測で代用しない。
+- 現役・過去グループ曲、在籍中メンバーのソロ曲、限定／シャッフル／企画ユニット曲、カバー、New Vocal 等を対象とする。卒業後に発表された OG のソロ作品は現時点では対象外。
+- グループ別作家集計は song_artists から song を選び、song_creators を `creator_id`・role ごとに数える。同じ作家・song・role は複合 PK により 1 回だけ数え、共同担当を按分しない。
+- work の関連 Version／カバーは同じ `work_id` の songs を列挙する。
+- 標準音源の歌唱者は song_performers、映像区間の歌唱者は video_song_performers、所属履歴は member_affiliations を参照し、相互に推測で代用しない。
 
-## 5. 初期運用で判断が必要な事項
+## 5. 今後判断が必要な事項
 
-実データ投入前に、次を少量のサンプルで確認し、必要なら後方互換性を保って仕様を更新する。
+実データ投入前後に少量のサンプルで確認し、確証のないものはユーザーへ確認する。
 
-1. 作家の別名義・表記揺れを同一 `creator_id` に統合する範囲。
-2. グループ改名を同一 artist とするか、新 artist とするか、および名称履歴テーブルの要否。
-3. 発表日を配信日・CD 発売日・初披露日のどれに統一するか。
-4. メドレー、短縮版、ライブ固有アレンジを新 song とする境界（現仕様では新録音源として独立して公式化された場合を基本とする）。
-5. 動画内の個人歌唱者を構造化検索するための `video_song_performers` 追加要否。
-6. 複数の一次情報や確認日を正規化する `sources` 関連表の追加要否。
+1. 同一人物・制作主体と確認できない creator 名義を別 ID にするか、登録を保留するか。
+2. 活動主体の継続が不明な改名・再結成と、名称履歴テーブル導入時期。
+3. 初回盤・通常盤等について、規格品番・収録曲差以外の違いまで別 release とする境界。
+4. 公式表記だけでは判別できない同一音源、新録、歌唱者違いの扱い。
+5. mini album / best album を独立した `release_type` にする必要性。
+6. 完全な商品トラックリストを保持する場合の Instrumental・映像トラックの表現。
+7. 複数出典と確認日を管理する sources / record_sources の導入時期。
 
-将来的には、公式ページの消失・URL 変更、YouTube 動画の非公開、改名、日付不明、公式クレジットの粒度差、同一音源判定、表記揺れが主な課題になる。出典 URL と Git 履歴を維持し、推測による補完や既存 ID の再利用を避ける。
+公式ページの消失・URL 変更、クレジットの粒度差、同一性判定、表記揺れも継続課題とする。出典 URL と Git 履歴を維持し、推測による補完・統合・新規採番を避ける。
