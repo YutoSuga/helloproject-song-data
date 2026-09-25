@@ -1,1 +1,92 @@
 song_id,creator_id,role,credit_name,credit_order,source_url
+J00001,C00001,lyrics,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00001,C00002,composition,KOUGA,1,https://helloproject.com/juicejuice/release/6692/
+J00001,C00002,arrangement,KOUGA,1,https://helloproject.com/juicejuice/release/6692/
+J00002,C00003,lyrics,中島卓偉,1,https://helloproject.com/juicejuice/release/6692/
+J00002,C00003,composition,中島卓偉,1,https://helloproject.com/juicejuice/release/6692/
+J00002,C00003,arrangement,中島卓偉,1,https://helloproject.com/juicejuice/release/6692/
+J00003,C00004,lyrics,三浦徳子,1,https://helloproject.com/juicejuice/release/6692/
+J00003,C00002,composition,KOUGA,1,https://helloproject.com/juicejuice/release/6692/
+J00003,C00005,arrangement,炭竃智弘,1,https://helloproject.com/juicejuice/release/6692/
+J00004,C00001,lyrics,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00004,C00001,composition,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00004,C00001,arrangement,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00005,C00006,lyrics,児玉雨子,1,https://helloproject.com/juicejuice/release/6692/
+J00005,C00002,composition,KOUGA,1,https://helloproject.com/juicejuice/release/6692/
+J00005,C00002,arrangement,KOUGA,1,https://helloproject.com/juicejuice/release/6692/
+J00006,C00001,lyrics,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00006,C00001,composition,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00006,C00001,arrangement,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00007,C00007,lyrics,KAN,1,https://helloproject.com/juicejuice/release/6692/
+J00007,C00007,composition,KAN,1,https://helloproject.com/juicejuice/release/6692/
+J00007,C00005,arrangement,炭竃智弘,1,https://helloproject.com/juicejuice/release/6692/
+J00008,C00001,lyrics,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00008,C00001,composition,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00008,C00001,arrangement,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00009,C00008,lyrics,星部ショウ,1,https://helloproject.com/juicejuice/release/6692/
+J00009,C00008,composition,星部ショウ,1,https://helloproject.com/juicejuice/release/6692/
+J00009,C00009,arrangement,平田祥一郎,1,https://helloproject.com/juicejuice/release/6692/
+J00010,C00006,lyrics,児玉雨子,1,https://helloproject.com/juicejuice/release/6692/
+J00010,C00010,composition,Shusui,1,https://helloproject.com/juicejuice/release/6692/
+J00010,C00011,composition,Josef Melin,2,https://helloproject.com/juicejuice/release/6692/
+J00010,C00011,arrangement,Josef Melin,1,https://helloproject.com/juicejuice/release/6692/
+J00011,C00012,lyrics,近藤薫,1,https://helloproject.com/juicejuice/release/6692/
+J00011,C00012,composition,近藤薫,1,https://helloproject.com/juicejuice/release/6692/
+J00011,C00013,arrangement,上杉洋史,1,https://helloproject.com/juicejuice/release/6692/
+J00012,C00014,lyrics,伊藤銀次,1,https://helloproject.com/juicejuice/release/6692/
+J00012,C00015,composition,山下達郎,1,https://helloproject.com/juicejuice/release/6692/
+J00012,C00016,arrangement,Anders Dannvik,1,https://helloproject.com/juicejuice/release/6692/
+J00013,C00006,lyrics,児玉雨子,1,https://helloproject.com/juicejuice/release/6692/
+J00013,C00002,composition,KOUGA,1,https://helloproject.com/juicejuice/release/6692/
+J00013,C00005,arrangement,炭竃智弘,1,https://helloproject.com/juicejuice/release/6692/
+J00014,C00017,lyrics,竹内まりや,1,https://helloproject.com/juicejuice/release/6692/
+J00014,C00017,composition,竹内まりや,1,https://helloproject.com/juicejuice/release/6692/
+J00014,C00016,arrangement,Anders Dannvik,1,https://helloproject.com/juicejuice/release/6692/
+J00015,C00031,lyrics,イイジマケン,1,https://helloproject.com/juicejuice/release/6692/
+J00015,C00010,composition,Shusui,1,https://helloproject.com/juicejuice/release/6692/
+J00015,C00018,composition,Stefan Ekstedt,2,https://helloproject.com/juicejuice/release/6692/
+J00015,C00018,arrangement,Stefan Ekstedt,1,https://helloproject.com/juicejuice/release/6692/
+J00016,C00019,lyrics,大森祥子,1,https://helloproject.com/juicejuice/release/6692/
+J00016,C00010,composition,Shusui,1,https://helloproject.com/juicejuice/release/6692/
+J00016,C00011,composition,Josef Melin,2,https://helloproject.com/juicejuice/release/6692/
+J00016,C00011,arrangement,Josef Melin,1,https://helloproject.com/juicejuice/release/6692/
+J00017,C00020,lyrics,NOBE,1,https://helloproject.com/juicejuice/release/6692/
+J00017,C00003,composition,中島卓偉,1,https://helloproject.com/juicejuice/release/6692/
+J00017,C00003,arrangement,中島卓偉,1,https://helloproject.com/juicejuice/release/6692/
+J00018,C00001,lyrics,山崎あおい,1,https://helloproject.com/juicejuice/release/6692/
+J00018,C00021,composition,Andreas Öhrn,1,https://helloproject.com/juicejuice/release/6692/
+J00018,C00022,composition,Henrik Smith,2,https://helloproject.com/juicejuice/release/6692/
+J00018,C00023,composition,Olof Lindskog,3,https://helloproject.com/juicejuice/release/6692/
+J00018,C00023,arrangement,Olof Lindskog,1,https://helloproject.com/juicejuice/release/6692/
+J00019,C00006,lyrics,児玉雨子,1,https://helloproject.com/juicejuice/release/6692/
+J00019,C00002,composition,KOUGA,1,https://helloproject.com/juicejuice/release/6692/
+J00019,C00002,arrangement,KOUGA,1,https://helloproject.com/juicejuice/release/6692/
+J00020,C00024,lyrics,オオヤギヒロオ,1,https://helloproject.com/juicejuice/release/6692/
+J00020,C00011,composition,Josef Melin,1,https://helloproject.com/juicejuice/release/6692/
+J00020,C00011,arrangement,Josef Melin,1,https://helloproject.com/juicejuice/release/6692/
+J00021,C00026,lyrics,唐沢美帆,1,https://helloproject.com/juicejuice/release/6692/
+J00021,C00025,composition,松井寛,1,https://helloproject.com/juicejuice/release/6692/
+J00021,C00025,arrangement,松井寛,1,https://helloproject.com/juicejuice/release/6692/
+J00022,C00027,lyrics,井筒日美,1,https://helloproject.com/juicejuice/release/6692/
+J00022,C00010,composition,Shusui,1,https://helloproject.com/juicejuice/release/6692/
+J00022,C00011,composition,Josef Melin,2,https://helloproject.com/juicejuice/release/6692/
+J00022,C00011,arrangement,Josef Melin,1,https://helloproject.com/juicejuice/release/6692/
+J00023,C00010,lyrics,Shusui,1,https://helloproject.com/juicejuice/release/6692/
+J00023,C00010,composition,Shusui,1,https://helloproject.com/juicejuice/release/6692/
+J00023,C00011,composition,Josef Melin,2,https://helloproject.com/juicejuice/release/6692/
+J00023,C00011,arrangement,Josef Melin,1,https://helloproject.com/juicejuice/release/6692/
+J00024,C00006,lyrics,児玉雨子,1,https://helloproject.com/juicejuice/release/6692/
+J00024,C00005,composition,炭竃智弘,1,https://helloproject.com/juicejuice/release/6692/
+J00024,C00005,arrangement,炭竃智弘,1,https://helloproject.com/juicejuice/release/6692/
+J00025,C00004,lyrics,三浦徳子,1,https://helloproject.com/juicejuice/release/6692/
+J00025,C00028,composition,つんく,1,https://helloproject.com/juicejuice/release/6692/
+J00025,C00029,arrangement,高橋諭一,1,https://helloproject.com/juicejuice/release/6692/
+J00026,C00008,lyrics,星部ショウ,1,https://helloproject.com/juicejuice/release/6692/
+J00026,C00008,composition,星部ショウ,1,https://helloproject.com/juicejuice/release/6692/
+J00026,C00009,arrangement,平田祥一郎,1,https://helloproject.com/juicejuice/release/6692/
+J00027,C00006,lyrics,児玉雨子,1,https://helloproject.com/juicejuice/release/6692/
+J00027,C00008,composition,星部ショウ,1,https://helloproject.com/juicejuice/release/6692/
+J00027,C00030,arrangement,大久保薫,1,https://helloproject.com/juicejuice/release/6692/
+J00028,C00012,lyrics,近藤薫,1,https://helloproject.com/juicejuice/release/6692/
+J00028,C00012,composition,近藤薫,1,https://helloproject.com/juicejuice/release/6692/
+J00028,C00012,arrangement,近藤薫,1,https://helloproject.com/juicejuice/release/6692/

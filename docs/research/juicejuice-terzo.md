@@ -81,11 +81,11 @@ CD は全盤同一の Disc 1（16曲）＋ Disc 2（12曲）で、CD には Inst
 
 上表の表記を `song_creators.credit_name` にそのまま保存し、role は `lyrics` / `composition` / `arrangement` とする。「、」区切りの共同作曲はそれぞれ1行に分割し、公式掲載順を `credit_order` にする。
 
-重複を表記どおりまとめた creator 候補は次の **30主体**である（ID未採番）：
+重複を表記どおりまとめた creator 候補は次の **31主体**である（ID未採番）：
 
 > 山崎あおい、KOUGA、中島卓偉、三浦徳子、炭竃智弘、児玉雨子、KAN、星部ショウ、平田祥一郎、Shusui、Josef Melin、近藤薫、上杉洋史、伊藤銀次、山下達郎、Anders Dannvik、竹内まりや、Stefan Ekstedt、大森祥子、NOBE、Andreas Öhrn、Henrik Smith、Olof Lindskog、オオヤギヒロオ、松井寛、唐沢美帆、井筒日美、つんく、高橋諭一、大久保薫
 
-上記列挙は **30表記（30主体候補）**であり、別名義同一人物の推測統合はしていない。入力時も公式の別根拠なしに統合しない。欧文のダイアクリティカルマーク（`Öhrn`）、`Shusui`、`KOUGA` などの大文字小文字を `credit_name` で保持する。
+上記列挙は **31表記（31主体候補）**であり、別名義同一人物の推測統合はしていない。入力時も公式の別根拠なしに統合しない。欧文のダイアクリティカルマーク（`Öhrn`）、`Shusui`、`KOUGA` などの大文字小文字を `credit_name` で保持する。
 
 ### 特殊クレジット
 
@@ -163,7 +163,7 @@ S11について公式曲名中の `feat. Karin` から「Karin」という参加
 4. 公式releaseページだけでは個人performerや同一マスターを証明できず、`song_performers`と既発song reuseを完結できない。これは仕様の欠陥というより、推測禁止ルールが正しく停止させた箇所である。
 5. カバー元を同じworkへ束ねるには、カバー関係を裏付ける公式資料が別途必要である。
 
-## 9. CSV投入前のユーザー確認事項（停止点）
+## 9. 事前調査時のCSV投入前ユーザー確認事項（解決済み）
 
 ### Q1. 三盤のrelease粒度
 
@@ -213,4 +213,22 @@ S11について公式曲名中の `feat. Karin` から「Karin」という参加
 - **選択肢**：(A) 曲別歌唱者を明示する別のHello! Project公式資料を追加調査、(B) `song_performers`を空のまま先に他テーブルを投入。
 - **停止点**：members、affiliations、song_performersを未確定。
 
-上記が解決するまで、正本CSVへのID採番・日時設定・行追加は行わない。
+上記は事前調査時の停止条件であり、次節のユーザー判断により初回投入に必要な事項は解決した。
+
+## 10. ユーザー判断の反映と初回投入（2026-09-25）
+
+以下は事前調査後に**ユーザー確認により確定**した運用判断であり、公式ページから直接確認した事実とは区別する。公式ページは曲名、Version 表記、作家クレジット、発売日、盤種、規格品番および曲順の出典として用い、ユーザー判断自体を `source_url` として表現しない。
+
+- 初回生産限定盤A、初回生産限定盤B、通常盤を、規格品番ごとの **3 releases** として登録する。CD内容が同じため、3盤の `release_tracks` は同じ28 `song_id` を用いる（計84行）。
+- Version表記なしの既発候補も、現在の `songs.csv` に同一songがないためterzoから先行登録する。後日、過去releaseと同一音源だと公式情報で確認できた場合は、新規songを作らず今回のsongを再利用する。
+- `GIRLS BE AMBITIOUS! 2022`、`生まれたてのBaby Love(2022 ver.)`、`CHOICE & CHANCE(2022 ver.)`、`Never Never Surrender(2022 ver.)`、`Goal～明日はあっちだよ～(Album Version)` は、具体的な変更種別を公式情報から断定できないため `version_type=other` とする。`プラトニック・プラネット(Ultimate Juice Ver.)` および `続いていくSTORY (Symphonic Version feat. Karin)` も同じ理由で `other` とする。
+- `「ひとりで生きられそう」って それってねえ、褒めているの？(New Vocal Ver.)` は公式表記に従い `new_vocal` とし、通常版と同じworkの別songとする。
+- `Karin = 宮本佳林` は**ユーザー確認により確定**した人物同定である。曲名の `feat. Karin` から確認できる参加だけを `song_performers` に登録し、歌唱範囲、他の歌唱メンバー、featured artist名義は推測しない。
+- `プラスティック・ラブ` と `DOWN TOWN` は、いずれも**ユーザー確認によりカバーと確定**した。作品workを作り、Juice=Juice版songを `version_type=cover` で紐付ける。原曲songは今回登録しない。
+- 個人歌唱者が未確認でも、works、songs、creators、song_creators、artists、song_artists、releases、release_tracksの確定情報は先行登録する。発売日時点の所属から歌唱者を生成しない。
+
+以上により、旧「CSV投入前のユーザー確認事項」Q1～Q6のうち、Q1～Q5およびQ6の先行投入方針は解決済みとする。曲別の全歌唱者、既発音源の初出日・同一性、および `feat. Karin` の正式なfeatured artist扱いは、追加の公式根拠が得られるまで未確認のまま残す。
+
+### 今回使用した一次情報
+
+- Hello! Project公式「Juice=Juice 3rdアルバム『terzo』」：https://helloproject.com/juicejuice/release/6692/
