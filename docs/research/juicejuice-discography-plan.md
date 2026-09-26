@@ -1,6 +1,6 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-09-26
+調査日: 2026-09-26（配信・特殊音源の専門調査を同日追記）
 状態: **CSV 投入前の release 単位のロードマップ**（`data/*.csv` は未変更）
 
 ## 1. 調査目的
@@ -94,7 +94,7 @@ Hello! Project 公式ディスコグラフィーに掲載された Juice=Juice �
 | terzo以前 | プラトニック・プラネット(Ultimate Juice Ver.) | J00024 | [terzo詳細](https://helloproject.com/juicejuice/release/6692/) | 通常版/配信版とUltimate版を分離。 |
 | 2022以後 | 各シングルのSpecial Edition、THE FIRST TAKE版、BAND Live Ver.、ライブ音源配信 | 原則なし | [公式一覧](https://helloproject.com/juicejuice/release/) | 独立した公式音源releaseのみ対象。映像だけなら除外。 |
 
-したがって、**優先度Dの確定release件数は0、未確定候補群は5行**である。これは「配信releaseが存在しない」という結論ではなく、URL・日付を推測して確定表へ入れないための保留である。
+したがって、専門調査後も **優先度Dの確定release件数は0** である。上表の5行は分類上のキューであり、release件数ではない。release単位で数えられる名前付き未確定候補は、後述のとおり **13件**（2017年前後5、Special Edition 6、J00011初出候補1、プラトニック・プラネット通常版候補1）である。これは「配信releaseが存在しない」という結論ではなく、公式個別情報に到達できない状態でURL・日付・trackを推測して確定表へ入れないための保留である。
 
 ## 8. 登録済みrelease
 
@@ -169,19 +169,117 @@ Hello! Project 公式ディスコグラフィーに掲載された Juice=Juice �
 - 明示的な発売日・タイトルの不一致は今回確定できなかった。ただし「不一致なし」と結論したのではなく、個別ページ照合未完了である。
 - したがって次回は、まず旧一覧3作と現行一覧の全ページについて、個別URL・公式種別・盤種・日付を保存する。差が見つかった場合は両URLを併記してユーザー判断へ回す。
 
-## 13. 集計サマリー
+## 13. 配信・Special Edition・特殊音源release専門調査（2026-09-26）
+
+### 13.1 調査方法と到達状況
+
+通常CD投入前に、現行release一覧、旧ディスコグラフィー、公式newsを入口として、結成以降から調査日時点までの配信限定release、Special Edition、先行配信およびVersion付き音源を調べた。第三者まとめサイト、Wikipedia、ファンサイトは根拠に使用していない。また、YouTube上のMV、Promotion Edit、Dance Shot、THE FIRST TAKE映像、ライブ映像は、独立した公式音源releaseを示すHello! Project公式情報が得られない限り候補へ加えていない。
+
+しかし、この実行環境では次の2つの公式入口はいずれもHTTPS接続トンネルの段階で **HTTP 403 Forbidden** となった。レスポンス本文を取得できなかったため、一覧のページング、個別詳細へのリンク、news検索結果、2025年末以降の先頭項目を閲覧できていない。検索用Webツールも **HTTP 401 Unauthorized** となり、公式ページの検索結果を代替経路として確認できなかった。アクセス失敗は不存在の証拠として扱わない。
+
+- https://helloproject.com/juicejuice/release/ — `curl` のCONNECT tunnelがHTTP 403。
+- https://www.helloproject.com/discography/juicejuice/ — `curl` のCONNECT tunnelがHTTP 403。
+- https://helloproject.com/juicejuice/release/6692/ — repository内で保存済みの公式URLと、既調査のterzo track情報は参照できるが、今回のネットワークからの再取得は同じホスト制限のため実施不能。
+
+このため、今回新たに公式個別ページまで照合して確定できた配信release、Special Edition、特殊Version音源releaseはいずれも **0件** である。一方、既存候補を「どの事実が不足しているか」までrelease単位に分解し、次回アクセス可能時の収集順と停止条件を確定した。CSVは変更していない。
+
+### 13.2 release単位の未確定候補（13件）
+
+下表の「候補」は曲名や既存計画に基づく照合キーであって、同名の独立releaseが存在するとの認定ではない。日付とtrackを公式ページで確認できなかったため、すべて未確定である。
+
+| No. | release日 | releaseタイトル候補 | 種別候補 | 名義 | track候補 | CD/アルバムとの関係 | terzo既存songとの関係 | 公式URL | 状態・notes |
+|---:|---|---|---|---|---|---|---|---|---|
+| D01 | 未確認 | Goal～明日はあっちだよ～ | 先行配信候補 | Juice=Juice候補 | 同名曲（構成未確認） | 後の`Juice=Juice#2 -¡Una más!-`収録候補 | J00028は`Album Version`のため、通常版が確認できれば別song候補 | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。独立release、日付、音源同一性を確認できず。 |
+| D02 | 未確認 | 如雨露 | 先行配信候補 | Juice=Juice候補 | 同名曲（構成未確認） | 後の`#2`収録候補 | terzo直接対応なし | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。 |
+| D03 | 未確認 | Fiesta! Fiesta! | 先行配信候補 | Juice=Juice候補 | 同名曲（構成未確認） | 後の`#2`収録候補 | terzo直接対応なし | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。 |
+| D04 | 未確認 | Never Never Surrender | 先行配信候補 | Juice=Juice候補 | 同名曲（構成未確認） | 後の`#2`収録候補 | J00027は`2022 ver.`のため、通常版が確認できれば別song候補 | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。 |
+| D05 | 未確認 | TOKYOグライダー | 先行配信候補 | Juice=Juice候補 | 同名曲（構成未確認） | 後の`#2`収録候補 | terzo直接対応なし | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。 |
+| D06 | 未確認 | SEXY SEXY／泣いていいよ／Vivid Midnight (Special Edition) | Special Edition候補 | Juice=Juice候補 | 全track未確認 | 2018-04-18 CDとの別releaseか未確認 | terzo直接対応なし | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。括弧を含む正式タイトルも未確認。 |
+| D07 | 未確認 | 微炭酸／ポツリと／Good bye & Good luck！ (Special Edition) | Special Edition候補 | Juice=Juice候補 | J00001–J00003候補、追加track未確認 | 2019-02-13 CDとの別releaseか未確認 | 同一音源候補に留める | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。CD前の先行配信も確認できず。 |
+| D08 | 未確認 | 「ひとりで生きられそう」って それってねえ、褒めているの？／25歳永遠説 (Special Edition) | Special Edition候補 | Juice=Juice候補 | J00004–J00006を含む可能性、全track未確認 | 2019-06-05 CDとの別releaseか未確認 | J00006の初出候補だが日付・収録を確認できず | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。New Vocal Ver.を通常2曲のCDへ自動統合しない。 |
+| D09 | 未確認 | ポップミュージック／好きって言ってよ (Special Edition) | Special Edition候補 | Juice=Juice候補 | J00007–J00011を含む可能性、全track未確認 | 2020-04-01 CDとの別releaseか未確認 | J00009/J00010/J00011の初出候補だが未確認 | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。盤別CD曲と配信追加曲を区別できず。 |
+| D10 | 未確認 | DOWN TOWN／がんばれないよ (Special Edition) | Special Edition候補 | Juice=Juice候補 | J00012–J00013候補、追加track未確認 | 2021-04-28 CDとの別releaseか未確認 | 同一音源候補に留める | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。 |
+| D11 | 未確認 | プラスティック・ラブ／Familia／Future Smile (Special Edition) | Special Edition候補 | Juice=Juice候補 | J00014–J00016候補、追加track未確認 | 2021-12-22 CDとの別releaseか未確認 | 同一音源候補に留める | [公式一覧](https://helloproject.com/juicejuice/release/) | 未確定。 |
+| D12 | 未確認 | 続いていくSTORY (Symphonic Version feat. Karin)を収録するterzo以前のrelease | 特殊Version配信候補 | Juice=Juice候補（featured名義未確認） | J00011候補 | terzoでの収録は確定、以前のreleaseは未確認 | terzoタイトルから別Versionであることのみ確定 | [terzo詳細](https://helloproject.com/juicejuice/release/6692/) | 未確定。初出日・releaseタイトル・track構成を確認できず。 |
+| D13 | 未確認 | プラトニック・プラネット（通常版）を収録するrelease | 配信候補 | Juice=Juice候補 | 通常版候補 | Ultimate Juice Ver.より前のreleaseか未確認 | J00024とは公式タイトル上別Version。通常版の存在・初出は未確定 | [terzo詳細](https://helloproject.com/juicejuice/release/6692/) | 未確定。通常版を採番・登録しない。 |
+
+### 13.3 terzo既存songと`release_date`への影響
+
+- **J00006**: `New Vocal Ver.`であることはterzo詳細で確定しているが、terzo以前の収録releaseと日付は未確認。D08を第一照合先とし、現時点の初出候補は「D08またはterzo（2022-04-20）」までで、日付更新は保留する。
+- **J00009 / J00010**: D09および2020-04-01 CDの盤別trackを照合する。どちらがCD収録、配信追加、または両方か確認できていないため、現時点の確実な初出日はterzo（2022-04-20）のみであり、それ以前への更新候補日は確定しない。
+- **J00011**: terzo以前の特殊配信D12を確認できていない。公式terzo詳細によりVersion名と2022-04-20収録は確定するが、それ以前の初出日は確定しない。
+- **J00024**: `Ultimate Juice Ver.`はterzo詳細で独立したVersion表記として確認済みで、確実な初出候補は2022-04-20。通常版D13のrelease・初出・音源は未確認であり、通常版とJ00024を統合しない。
+- **優先度Aの5 CDより前の配信**: 今回公式日付まで確認できたsong候補は **0件**。これは先行配信がなかったという意味ではない。D07～D11について配信日がCD日より前なら、該当する具体的音源の`release_date更新候補`とする。
+
+### 13.4 2022年以降、THE FIRST TAKE、BAND Live Ver.、最新状況
+
+2022年以降のSpecial Edition、THE FIRST TAKE音源、BAND Live Ver.、ライブ音源配信、その他Version付き配信は、独立した音源releaseであることを示すHello! Project公式個別情報を今回取得できなかったため **確定0件** とした。映像の存在だけを理由に候補化していない。
+
+2025-10-08より後の通常release、配信シングル、EP、アルバムおよび発売予定も、現行一覧の先頭を取得できなかったため **0件確認／有無は未確認** である。したがって「2026年作品なし」とは結論しない。アクセス可能になった時点で、最初に現行一覧とartist newsの日付降順先頭を確認し、通常シングル・EP・アルバムならDではなくCへ追加する。
+
+### 13.5 次回の公式情報収集順と確定条件
+
+1. 現行release一覧の全ページから、配信カテゴリおよび各個別URLをリンクのまま保存する（URLを推測しない）。
+2. 公式artist newsで候補曲名、`配信`、`Special Edition`、`THE FIRST TAKE`、`BAND Live Ver.`を検索し、告知日ではなく明記された配信日を採る。
+3. D01～D05は日付、正式releaseタイトル、名義、全track、`#2`でのVersion表記を照合する。
+4. D06～D11はCD詳細と配信詳細を並べ、別releaseか、配信限定trackがあるか、CDより早い配信かを記録する。releaseが別でも、同一音源と公式情報だけで確認できない曲は同一songへ統合しない。
+5. D12/D13はVersion名のある音源と基礎版を分けて確認する。公式に別Versionと明記されるJ00011/J00024は別songのまま維持し、通常版の存在をタイトルから逆算しない。
+6. 2022年以降および2025-10-08以後を再検索し、映像だけの結果は除外する。通常releaseを発見した場合は優先度Cと通常一覧へ追加する。
+
+### 13.6 CSV投入前にユーザー判断が必要な事項
+
+#### U1. Special Editionのrelease粒度
+
+- **対象**: D06～D11。
+- **公式情報から確認できた事実**: 今回新たに確認できた事実はない。
+- **参考にした公式URL**: https://helloproject.com/juicejuice/release/
+- **判断できない理由**: 公式一覧・個別情報へHTTP 403で到達できず、CDの単なる配信形態か独立タイトルか、全track、日付を確認できない。
+- **選択肢**: (A) 公式に独立タイトル・配信日・trackが示された単位を別releaseにする、(B) 商品形態だけならCD releaseのnotesに留める。
+- **releaseへの影響**: AならDのrelease数と将来の`releases`行が増える。
+- **songへの影響**: 別releaseでも同一音源なら既存songを参照する。追加Versionが公式明記された場合だけ別song候補になる。
+- **停止点**: 個別公式ページ取得前。release採番・song採番とも未実施。
+
+#### U2. 先行配信とアルバム版の音源同一性
+
+- **対象**: D01～D05、特にJ00027/J00028。
+- **公式情報から確認できた事実**: terzoでは`Never Never Surrender(2022 ver.)`、`Goal～明日はあっちだよ～(Album Version)`と表記される。
+- **参考にした公式URL**: https://helloproject.com/juicejuice/release/6692/ 、https://helloproject.com/juicejuice/release/
+- **判断できない理由**: 先行配信release自体と`#2` track詳細を今回取得できず、通常版、Album Version、2022 ver.の境界を確定できない。
+- **選択肢**: (A) 明示Versionだけ別songとし無表記版の同一性は保留、(B) 追加の公式告知・商品詳細が揃うまで関連release全体を保留。
+- **releaseへの影響**: 存在が公式確認できた配信単位のみ登録する。
+- **songへの影響**: 通常版が確認されればJ00027/J00028とは別song候補。`#2`との同一性は別途判定する。
+- **停止点**: release存在確認前。CSVは未変更。
+
+#### U3. J00011・J00024より前の基礎版
+
+- **対象**: D12、D13。
+- **公式情報から確認できた事実**: terzoのVersion付きtrack表記と2022-04-20収録のみ。
+- **参考にした公式URL**: https://helloproject.com/juicejuice/release/6692/
+- **判断できない理由**: terzo以前の公式音源release、日付、名義、trackを確認できない。
+- **選択肢**: (A) 公式release確認後に基礎版を別songとして追加、(B) 確認できるまでterzo版だけを維持。
+- **releaseへの影響**: Aは確認できた過去releaseを追加する。
+- **songへの影響**: Versionなし通常版が確認されてもJ00011/J00024へ統合せず、同一workの別song候補とする。
+- **停止点**: 過去releaseの公式根拠取得前。
+
+ユーザー判断以前に、まず公式個別情報の取得が必要である。現時点では上記のどの選択肢にも進まず、すべてのCSV更新を停止している。
+
+## 14. 集計サマリー
 
 - 確定表: **27タイトル候補**（インディーズシングル3、CDシングル20、アルバム4）。
-- 優先度: **A 5、B 15、C 6、D 0確定（5候補群を保留）**。登録済みterzo 1タイトルは優先度外。
+- 優先度: **A 5、B 15、C 6、D 0確定（13の名前付きrelease候補を保留）**。登録済みterzo 1タイトルは優先度外。
 - DB登録済み: **3 releases**（同一タイトルterzoの3盤）。
 - 最古: 2013-03-31「私が言う前に抱きしめなきゃね」。
 - 最新: 2025-10-08「四の五の言わず颯と別れてあげた／盛れ！ミ・アモーレ」。
-- 2026-09-26時点の発売予定: **確定できず、未確認**。
+- 2026-09-26時点の発売予定: **公式入口へのHTTP 403により確定できず、未確認**。
+- 新規確認件数: **配信release 0、Special Edition 0、特殊Version音源release 0**。
+- release候補総数: **通常27 + D確定0 = 確定候補27**。未確定D 13を探索母数まで含める場合は最大40候補だが、13件は存在未確定のため確定総数へ加えない。
 
 数値は「公式個別ページまで確認済みの完全な全件数」を装うものではない。配信・Special Editionの確定件数は次回調査で増える前提であり、根拠URLを確保できない候補を無理に総数へ足さない方針を優先した。
 
-## 14. 使用したHello! Project公式URL一覧
+## 15. 使用したHello! Project公式URL一覧
 
 1. https://helloproject.com/juicejuice/release/
 2. https://www.helloproject.com/discography/juicejuice/
 3. https://helloproject.com/juicejuice/release/6692/
+
+今回アクセス不能だったURLは1と2（いずれもCONNECT tunnelのHTTP 403）。3は既調査資料に保存されたURLとtrack情報を参照したが、同一ホストへのネットワーク再取得はできなかった。アクセス不能を不存在判定には用いていない。
