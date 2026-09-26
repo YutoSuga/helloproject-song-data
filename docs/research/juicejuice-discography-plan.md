@@ -79,6 +79,29 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 4. **A-4 DOWN TOWN／がんばれないよ**（2021-04-28）: J00012/J00013候補。CDだけで完了とせず、同日の公式配信`DOWN TOWN/がんばれないよ(Special Edition)`（D10）をセットで確認する。ソロ7 Versionは別song候補として保留する。
 5. **A-5 プラスティック・ラブ／Familia／Future Smile**（2021-12-22）: J00014～J00016候補。D11も確認する。
 
+### 4.1 A-1投入作業の停止記録（2026-09-26）
+
+- `songs.csv`、`works.csv`、`release_tracks.csv`を照合し、J00001＝「微炭酸」
+  （W00001）、J00002＝「ポツリと」（W00002）、J00003＝「Good bye & Good
+  luck！」（W00003）であること、および3曲がterzo 3盤（L00001～L00003）の
+  Disc 1、track 1～3にそれぞれ接続済みであることを確認した。3 songはいずれも
+  `version_type=original`、`release_date`空欄であり、notesには初出日および過去
+  releaseとの音源同一性が未確認と記録されている。
+- A-1の公式詳細、2019-02-13以前の先行配信、D07 Special Editionをオンラインで
+  再確認しようとしたが、調査環境からHello! Project公式サイトへの接続がHTTP 403、
+  Web検索機能がHTTP 401となり、公式ページ本文を取得できなかった。取得不能を
+  「先行配信なし」「Special Editionなし」の根拠にはしていない。
+- このため、盤種・規格品番・盤別track list、先行配信、D07の存在、および2019年盤と
+  terzoの音源同一性は今回確定していない。D07は未確認状態を維持する。
+- 未検証の規格品番やURLを推測で登録せず、J00001～J00003の`release_date`、notes、
+  source URLも変更していない。新規release、release_tracks、song、work、creator、
+  song_creators、song_artists、song_performersは追加していない。
+- **停止点**: Hello! Project公式の個別releaseページ本文へアクセスできる環境、または
+  その保存内容が提供された時点で、CD各盤、先行配信、D07を再調査する。その上で、
+  terzoとの音源同一性を公式情報から確定できた場合に限り既存J00001～J00003へ
+  `release_tracks`を接続し、具体的音源の最初の公式release日に`songs.release_date`を
+  更新する。同一性を確定できない場合は、ユーザー判断を求めるまで当該接続を保留する。
+
 ## 5. 優先度B・C
 
 - **B（15件）**: インディーズ3作、2013-09-11から2018-04-18までの主要CD、`First Squeeze！`、`Juice=Juice#2 -¡Una más!-`。明示Version、MEMORIAL EDIT、Album Version、2022 ver.の境界を確認する。
