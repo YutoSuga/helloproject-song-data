@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-09-27（A-2追加公式情報による訂正を反映）
-状態: **A-2投入・訂正完了、A-3再開中（商品形態・規格品番の一次情報待ち、D08/D09未確認継続）**
+調査日: 2026-09-27（A-3通常CD投入と追加公式情報を反映）
+状態: **A-1～A-3投入完了、D08/D09未確認継続、次の投入対象はA-4**
 
 ## 1. 目的・判定原則
 
@@ -34,7 +34,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 
 その後、ChatGPT側でHello! Project公式サイトを確認した。以下では、依頼文で提供された確認結果を入力データとして**公式確認済み**へ更新した。今回Codex側ではWeb再調査をしていない。個別URLが依頼文にないものは推測せず、その旨を明記する。
 
-2026-09-27のA-3再開時にも公式URLへの接続はHTTP 403、Web検索はHTTP 401となった。音源同一性とカバー区分はその後のユーザー確定判断を採用したが、保存済み情報にない商品形態・規格品番は推測していない。
+2026-09-27のA-3再開時にも公式URLへの接続はHTTP 403、Web検索はHTTP 401となった。音源同一性とカバー区分はその後のユーザー確定判断を採用した。当時取得できなかった商品形態・規格品番・盤別track構成、および追加公式ニュースの確認結果は、その後ユーザーから提供された確定情報として4.7節へ反映した。
 
 ## 3. 通常release一覧（優先度A～Cと登録済みterzo）
 
@@ -59,7 +59,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 | 2018-08-01 | アルバム | Juice=Juice#2 -¡Una más!- | J00027/J00028の基礎版候補 | B | [公式一覧](https://helloproject.com/juicejuice/release/) | Album Version等との同一性を要検証。 |
 | 2019-02-13 | CDシングル | 微炭酸／ポツリと／Good bye & Good luck！ | J00001–J00003 | A | [公式一覧](https://helloproject.com/juicejuice/release/) | 初出・同一音源確認に直結。 |
 | 2019-06-05／2019-10-23 | CDシングル | 「ひとりで生きられそう」って それってねえ、褒めているの？／25歳永遠説 | J00004–J00006 | A | [2019-06-05公式詳細](https://helloproject.com/release/detail/HKCN-50610/?pc=1)／[通常盤C公式詳細](https://helloproject.com/juicejuice/release/detail/HKCN-50629/) | 2019-06-05の5形態と、後発の2019-10-23通常盤Cを同一タイトル候補内で区別。 |
-| 2020-04-01 | CDシングル | ポップミュージック／好きって言ってよ | J00007–J00011候補 | A | [公式詳細](https://helloproject.com/juicejuice/release/6261/) | Borderline、Va-Va-Voom、続いていくSTORY (Symphonic Version feat. Karin)の正式収録を公式確認済み。terzoとの音源同一性は未確定。 |
+| 2020-04-01 | CDシングル | ポップミュージック／好きって言ってよ | J00007–J00011 | A | [公式詳細](https://helloproject.com/juicejuice/release/6261/) | **A-3完了**。5形態をL00017～L00021へ登録済み。J00009/J00010はterzoと同一音源、J00011は再録と確定。 |
 | 2021-04-28 | CDシングル | DOWN TOWN／がんばれないよ | J00012–J00013 | A | [公式一覧](https://helloproject.com/juicejuice/release/) | 同日のSpecial Edition（D10）とセットで確認。 |
 | 2021-12-22 | CDシングル | プラスティック・ラブ／Familia／Future Smile | J00014–J00016 | A | [公式一覧](https://helloproject.com/juicejuice/release/) | 盤別track差と配信版を分離確認。 |
 | 2022-04-20 | アルバム | 3rdアルバム「terzo」 | J00001–J00028 | — | [公式詳細](https://helloproject.com/juicejuice/release/6692/) | CSV登録済み。規格品番別L00001–L00003。 |
@@ -77,7 +77,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 
 1. **A-1 完了 — 微炭酸／ポツリと／Good bye & Good luck！**（2019-02-13）: 公式情報確認およびユーザーの音源同一性判断に基づき、7形態をCSV投入済み。J00001～J00003を接続し、初出日を2019-02-13へ更新した。
 2. **A-2 完了（D08独立Special Edition確認は継続） — 「ひとりで生きられそう」って…／25歳永遠説**: 2019-06-05の5形態を訂正しJ00004/J00005へ接続。2019-10-23通常盤CをJ00004/J00005/J00006へ接続し、J00006の2019-10-10先行配信を初出日に反映した。
-3. **A-3再開中 ポップミュージック／好きって言ってよ**（2020-04-01）: 対象5曲のsong整理は完了。通常商品の形態・規格品番・盤別track構成を一次情報から確定できず、release投入のみ停止している。D09も未確認を継続する。
+3. **A-3 完了（D09独立Special Edition確認は継続）— ポップミュージック／好きって言ってよ**（2020-04-01）: 通常CD 5形態と17 trackをCSV投入し、対象5曲のsong整理、J00011の再録判定、同日公式配信の存在確認まで完了した。
 4. **A-4 DOWN TOWN／がんばれないよ**（2021-04-28）: J00012/J00013候補。CDだけで完了とせず、同日の公式配信`DOWN TOWN/がんばれないよ(Special Edition)`（D10）をセットで確認する。ソロ7 Versionは別song候補として保留する。
 5. **A-5 プラスティック・ラブ／Familia／Future Smile**（2021-12-22）: J00014～J00016候補。D11も確認する。
 
@@ -229,10 +229,21 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
   投入はこの項目で停止した。最大release IDは引き続き`L00016`である。
 - D09 Special Editionも公式根拠を取得できず、存在・不存在のいずれとも断定せず
   **未確認を継続**する。D09未確認とは別に、通常盤の商品情報が未確定なので、現時点の
-  最終状態は**A-3 song整理完了／通常release投入未完了（A-3本体は未完了）**である。
+  **4.6節時点の状態**はA-3 song整理完了／通常release投入未完了（A-3本体は未完了）であった。
 - 一次情報で通常商品の形態・規格品番・盤別track構成を確認できた時点で、`L00017`以降を
   採番して既存`J00007`～`J00011`へ接続する。次の投入対象A-4へ進む前にこのrelease投入を
-  完了する。ロードマップ候補件数（確定41、未確定8、最大探索母数49）への変更はない。
+  完了する方針としていた。4.6節時点ではロードマップ候補件数（確定41、未確定8、最大探索母数49）への変更はなかった。
+
+### 4.7 A-3通常CD投入・完了（2026-09-27）
+
+- [公式release](https://helloproject.com/juicejuice/release/6261/)に基づき、2020-04-01発売の5形態を登録した。`L00017`＝初回生産限定盤A（HKCN-50630）、`L00018`＝初回生産限定盤B（HKCN-50632）、`L00019`＝初回生産限定盤SP（HKCN-50634）、`L00020`＝通常盤A（HKCN-50636）、`L00021`＝通常盤B（HKCN-50637）である。
+- 初回生産限定盤A/B/SPはtrack 1～3を`J00007`、`J00008`、`J00011`へ接続した。通常盤Aは同3曲にtrack 4の`J00009`、通常盤Bは同3曲にtrack 4の`J00010`を接続し、計17行を追加した。InstrumentalおよびDVD等の映像trackは仕様どおり登録していない。
+- [公式ニュース11719](https://helloproject.com/news/11719/)により、「ポップミュージック」がKAN楽曲のカバーであること、「Borderline」と「Va-Va-Voom」が本シングルで初音源化されたこと、「続いていくSTORY (Symphonic Version feat. Karin)」が宮本佳林をフィーチャーしてすべて新たに録り直されたVersionであることを確認した。
+- `J00007`は`W00006`、`version_type=cover`、`release_date=2020-04-01`を維持し、公式根拠確認済みとした。`J00008`は`W00007`、`original`、同日を維持する。`J00009` / `W00008`と`J00010` / `W00009`はユーザー判断どおり2020年版とterzo版を同一音源として扱い、既存ID、`original`、同日、およびterzo 3盤への接続を維持する。
+- `J00011` / `W00010`は、公式に新たな録音と確認できたため、データ仕様の「同じworkを改めて録音した音源」に従い`version_type`を`other`から`re_recording`へ変更した。元音源の別releaseへの再収録は同じsong ID、明確な再録は同じworkの別song ID、New Vocal Ver.は`new_vocal`、別歌唱者によるカバーは`cover`という既存ルールを適用した代表例である。`release_date=2020-04-01`および宮本佳林（`P00001`）との既存performer関係は維持し、他のperformerを推測追加していない。
+- [公式配信ニュース11918](https://helloproject.com/news/11918/)により、2020-04-01からアルバム配信、ハイレゾ配信、ビデオ配信等が開始され、音源として`J00007`～`J00011`の5曲が配信されたことを確認した。現在は確認済み配信releaseもまとめて後の配信release投入フェーズでCSV化する方針のため、今回だけ特殊なreleaseレコードを作らず保留した。
+- 上記の公式配信は確認済みだが、独立releaseの正式名称が「Special Edition」である根拠は確認できない。したがってD09は存在・不存在のいずれとも断定せず未確認を継続する。通常CDと配信確認の完了からD09を切り離し、**A-3本体は完了**、次の投入対象は**A-4**とする。
+- 新規song/work/creator/artist/memberはなく、作家クレジット、`G00001`とのartist関係、Juicetoryを含むA-4以降のCSVは変更していない。
 
 ## 5. 優先度B・C
 
@@ -255,13 +266,13 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 | D06 | 未確認 | SEXY SEXY／泣いていいよ／Vivid Midnight (Special Edition) | Special Edition候補 | 未確認 | [公式一覧](https://helloproject.com/juicejuice/release/) | 独立release、正式タイトル、全track未確認。 |
 | D07 | 未確認 | 微炭酸／ポツリと／Good bye & Good luck！ (Special Edition) | Special Edition候補 | 未確認 | [A-1公式詳細](https://helloproject.com/release/detail/HKCN-50580/?pc=1) | 初回生産限定盤SP（HKCN-50586）との混同の可能性があるが、独立した音源Special Edition releaseは現時点で公式確認できていない。不存在とは断定せず未確認を維持し、release IDは採番しない。後日のイベントV（TGBS-10960）は映像商品のため音源release CSVの対象外。 |
 | D08 | 未確認 | 「ひとりで生きられそう」って それってねえ、褒めているの？／25歳永遠説 (Special Edition) | Special Edition候補 | 未確認 | [公式一覧](https://helloproject.com/juicejuice/release/) | 2019-10-10先行配信および2019-10-23通常盤Cとは別候補。独立Special Editionと呼べる公式根拠は未確認で、不存在とは断定せずrelease IDを採番しない。 |
-| D09 | 未確認 | ポップミュージック／好きって言ってよ (Special Edition) | Special Edition候補 | 未確認 | [公式一覧](https://helloproject.com/juicejuice/release/) | Special Edition自体は未確認。ただしJ00009～J00011候補の2020-04-01 **CD収録は公式確認済み**。 |
+| D09 | 未確認 | ポップミュージック／好きって言ってよ (Special Edition) | Special Edition候補 | 未確認 | [公式一覧](https://helloproject.com/juicejuice/release/) | 「Special Edition」という独立releaseは未確認。2020-04-01公式配信の存在確認済み（D23）とは分離し、不存在とも断定しない。 |
 | D10 | 2021-04-28 | DOWN TOWN/がんばれないよ(Special Edition) | 配信 | UFDL-1473 | [公式詳細](https://helloproject.com/juicejuice/release/detail/UFDL-1473/) | **独立した公式配信releaseとして確認済み**。通常2曲と「がんばれないよ」メンバー別ソロVersion 7曲を収録。 |
 | D11 | 未確認 | プラスティック・ラブ／Familia／Future Smile (Special Edition) | Special Edition候補 | 未確認 | [公式一覧](https://helloproject.com/juicejuice/release/) | 独立release・追加track未確認。 |
-| D12 | 2020-04-01 | ポップミュージック／好きって言ってよ | CD（通常一覧の既存release） | 未提示 | [公式詳細](https://helloproject.com/juicejuice/release/6261/) | J00011候補の収録を**公式確認済み**。独立したD releaseを追加せず、通常27件に既に含まれるCDへ解決。J00011はterzo初出ではなく、初出候補を2020-04-01まで遡れる。Karin＝宮本佳林はユーザー判断済み。 |
+| D12 | 2020-04-01 | ポップミュージック／好きって言ってよ | CD（通常一覧の既存release） | 未提示 | [公式詳細](https://helloproject.com/juicejuice/release/6261/) | 通常28候補に含まれるCDとして解決し、5形態をCSV登録済み。J00011は2020-04-01初出の`re_recording`、Karin＝宮本佳林（P00001）として確定済み。 |
 | D13 | 未確認 | プラトニック・プラネット（通常スタジオ版）を収録するrelease | 配信等候補 | 未確認 | [terzo詳細](https://helloproject.com/juicejuice/release/6692/) | **通常版スタジオ音源の公式音源releaseは未確認**。通常版が存在しないとは断定しない。J00024 Ultimate Juice Ver.とは区別。 |
 
-### 6.2 Dリスト外から追加した確定release（D14～D22）
+### 6.2 Dリスト外から追加した確定release（D14～D23）
 
 便宜上、既存番号に続けて管理番号を付す。すべて独立した公式音源releaseとして確認済みであり、CSVのrelease/song IDではない。
 
@@ -276,6 +287,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 | D20 | 2026-04-06 | Juice=Juice Concert 2025 Queen of Hearts Special Flush | ライブ音源配信 | UFDL-1586 | [公式詳細](https://helloproject.com/release/7662/?pc=1) | 各trackのsong化は今回行わない。 |
 | D21 | 2026-04-06 | Juice=Juiceスペシャルライブ2025 ～10月10日はJuice=Juiceの日～ | ライブ音源配信 | UFDL-1587 | [公式詳細](https://helloproject.com/release/7663/) | 各trackのsong化は今回行わない。 |
 | D22 | 2019-10-10 | 「ひとりで生きられそう」って それってねえ、褒めているの？(New Vocal Ver.) | iTunes先行配信 | 未提示 | [公式ニュース](https://helloproject.com/news/11099/) | **公式配信確認済み**。J00006の初出日へ反映済み。配信releaseのCSV投入フェーズでレコード化する。2019-10-23通常盤CおよびD08候補とは区別する。 |
+| D23 | 2020-04-01 | ポップミュージック／好きって言ってよ | 公式配信 | 未提示 | [公式ニュース](https://helloproject.com/news/11918/) | **公式配信確認済み**。J00007～J00011の5音源を確認済み。配信release投入フェーズまでCSV化を保留し、名称未確認のD09 Special Edition候補とは区別する。 |
 
 ### 6.3 Special Editionの設計メモ
 
@@ -294,9 +306,9 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 ## 7. terzo既存songへの影響
 
 - **J00006**: 2019-10-10 iTunes先行配信を初出として`release_date`へ反映し、2019-10-23通常盤C（L00016）のtrack 3へ接続済み。J00004とW00004を共有する別songである。先行配信release自体のCSV化は配信release投入フェーズまで保留し、D08独立Special Edition候補とは区別する。
-- **J00009 Borderline**: 2020-04-01 CDへの収録を公式確認済み。terzo収録音源との完全な同一性は未確定のため同一音源候補に留め、A-3投入時に判定する。
-- **J00010 Va-Va-Voom**: 2020-04-01 CDへの収録を公式確認済み。J00009と同様、同一音源候補に留める。
-- **J00011 続いていくSTORY (Symphonic Version feat. Karin)**: 2020-04-01 CDへの収録を公式確認済みで、terzoが初出ではない。初出候補を少なくとも2020-04-01まで遡れ、`songs.release_date`更新候補とする。CSV更新はA-3投入時に音源同一性を確認して行う。Karin＝宮本佳林は確定済み。
+- **J00009 Borderline**: 2020-04-01シングルでの初音源化を公式確認済み。ユーザー判断によりterzo収録版と同一音源として確定し、`release_date=2020-04-01`、`version_type=original`および両releaseへの接続を維持する。
+- **J00010 Va-Va-Voom**: 2020-04-01シングルでの初音源化を公式確認済み。ユーザー判断によりterzo収録版と同一音源として確定し、`release_date=2020-04-01`、`version_type=original`および両releaseへの接続を維持する。
+- **J00011 続いていくSTORY (Symphonic Version feat. Karin)**: 2020-04-01初出、`version_type=re_recording`として確定。公式の「すべて新たに録り直したVersion」を根拠とし、Karin＝宮本佳林（P00001）の既存関係を維持する。
 - **J00024 プラトニック・プラネット(Ultimate Juice Ver.)**: terzoのVersion表記を維持。通常スタジオ版の公式音源releaseは未確認であり統合しない。D16のライブ音源とも区別し、いずれも今回はsong化しない。
 - **J00027/J00028**: D04の独立配信は未確認だが、D01は公式配信release確認済み。2022 ver./Album Versionと無表記版の音源同一性は未確定。
 
@@ -315,14 +327,14 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 
 ## 9. 推奨投入順
 
-1. **優先度A**は完了済みA-1/A-2に続き、A-3～A-5の順に投入する。各CDだけで完了とせず、関係する先行配信・Special Editionを同時確認する。特にA-3はJ00009～J00011、A-4はD10をセットで扱う。
+1. **優先度A**はA-1～A-3が完了済みであり、次はA-4、続いてA-5を投入する。各CDだけで完了とせず、関係する先行配信・Special Editionを同時確認する。A-4はD10をセットで扱う。
 2. **優先度B**を、インディーズ3作、メジャーシングル、`First Squeeze！`、`Juice=Juice#2 -¡Una más!-`の順で扱う。
 3. **優先度C**を発売順に扱い、2026-06-24 `MORE! MORE! EP`まで進める。
 4. **優先度D**を扱う。DのうちA/Cに直接関連する先行配信・Special Editionは当該通常releaseと同時確認するが、2025/2026年ライブ音源をAより先に投入する必要はない。
 
 ## 10. CSV投入前の要確認事項
 
-1. **音源同一性**: J00009～J00011と2020年CD、J00027/J00028と2017年配信・#2、通常CDと各Special Edition。公式情報だけで決められなければ統合も新規採番もしない。
+1. **音源同一性**: J00009～J00011と2020年CDは解決済み。残るJ00027/J00028と2017年配信・#2、通常CDと各Special Editionは、公式情報だけで決められなければ統合も新規採番もしない。
 2. **未確認の独立release**: D04～D09、D11、D13。D08は2019-10-10先行配信や2019-10-23通常盤Cではなく独立Special Edition候補を指す。未確認は不存在を意味しない。
 3. **Special Editionのsong粒度**: D10のソロ7 Versionのsong分割、`version_type`、performer。D15の`Brilliance of memories`のsong/artist/member構造。
 4. **特殊音源のsong粒度**: D16～D21のライブ、BAND Live、THE FIRST TAKE各音源を別songとするか、workを共有するか、`version_type`を何にするか。
@@ -333,8 +345,8 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 ## 11. 登録済みreleaseとCSV投入状況
 
 `data/releases.csv`にはterzo 3盤（L00001～L00003）、A-1の7形態（L00004～L00010）、
-A-2の2019-06-05 CD 5形態（L00011～L00015）、後発通常盤C（L00016）の**計16 releaseレコード**がある。`release_tracks.csv`はterzo 84行、A-1 21行、A-2 13行の計118行、`songs.csv`は28行である。
-A-2訂正では新規song/work/creatorを採番せず、既存J00004～J00006を再利用した。2019-10-10先行配信releaseのCSV化、J00009～J00011、J00024等の後続保留事項、member、ハロ！ステDB・Web・集計処理には着手していない。
+A-2の2019-06-05 CD 5形態（L00011～L00015）と後発通常盤C（L00016）、A-3の5形態（L00017～L00021）の**計21 releaseレコード**がある。`release_tracks.csv`はterzo 84行、A-1 21行、A-2 13行、A-3 17行の計135行、`songs.csv`は28行である。
+A-3では新規song/work/creatorを採番せず、既存J00007～J00011を再利用した。確認済み配信releaseのCSV化、J00024等の後続保留事項、member、ハロ！ステDB・Web・集計処理には着手していない。
 
 ## 12. 件数集計
 
@@ -342,11 +354,11 @@ A-2訂正では新規song/work/creatorを採番せず、既存J00004～J00006を
 
 - 更新前: 通常release候補27、D確定0、**確定release候補総数27**、未確定D 13、最大探索母数40。
 - 更新後の通常release: 既存27 + `MORE! MORE! EP` 1 = **28**（A 5、B 15、C 7、登録済みterzo 1。各区分はタイトル単位で重複なし）。
-- 更新後のD確定: 既存DからD01/D02/D03/D10の4 + Dリスト外D14～D22の9 = **13**。D12は既存通常releaseである2020-04-01 CDへ解決したためD確定件数に重複加算しない。D22は2019-10-10先行配信で、後発通常盤CやD08候補とは別releaseとして数える。
-- 更新後の確定release候補総数: 通常28 + D確定13 = **41**。2019-10-23通常盤Cは既存のA-2タイトル候補に含まれる盤違いのため通常候補へ単純加算しない。
+- 更新後のD確定: 既存DからD01/D02/D03/D10の4 + Dリスト外D14～D23の10 = **14**。D12は既存通常releaseである2020-04-01 CDへ解決したためD確定件数に重複加算しない。D22は2019-10-10先行配信で、後発通常盤CやD08候補とは別releaseとして数える。
+- 更新後の確定release候補総数: 通常28 + D確定14 = **42**。2019-10-23通常盤Cは既存のA-2タイトル候補に含まれる盤違いのため通常候補へ単純加算しない。
 - 更新後の未確定候補: D04～D09、D11、D13の**8**。D12は未確定から除外した。
-- 更新後の最大探索母数: 確定41 + 未確定8 = **49**。
-- DB登録済み: **16 releaseレコード**（terzo 3盤 + A-1 7形態 + A-2の2019-06-05 CD 5形態 + 後発通常盤C 1形態）。確定release候補総数41はタイトル／release単位のロードマップ件数であり、CSVの盤単位レコード数とは一致しない。
+- 更新後の最大探索母数: 確定42 + 未確定8 = **50**。
+- DB登録済み: **21 releaseレコード**（terzo 3盤 + A-1 7形態 + A-2の2019-06-05 CD 5形態 + 後発通常盤C 1形態 + A-3 5形態）。確定release候補総数42はタイトル／release単位のロードマップ件数であり、CSVの盤単位レコード数とは一致しない。
 - 最古の通常候補: 2013-03-31「私が言う前に抱きしめなきゃね」。最新の確認済みrelease: 2026-06-24 `MORE! MORE! EP`。したがって旧記述「最新は2025-10-08」「2026年作品未確認」は更新済み。
 
 ## 13. 公式URL一覧（今回追加分）
@@ -357,7 +369,9 @@ A-2訂正では新規song/work/creatorを採番せず、既存J00004～J00006を
 - https://helloproject.com/juicejuice/release/detail/HKCN-50629/ — 2019-10-23通常盤C、収録trackおよびNew Vocal Ver.
 - https://helloproject.com/news/11099/ — 2019-10-10 New Vocal Ver. iTunes先行配信
 - https://helloproject.com/release/5363/ — `Goal〜明日はあっちだよ〜`
-- https://helloproject.com/juicejuice/release/6261/ — `ポップミュージック／好きって言ってよ`
+- https://helloproject.com/juicejuice/release/6261/ — `ポップミュージック／好きって言ってよ`の5形態、規格品番、track
+- https://helloproject.com/news/11719/ — カバー、初音源化、再録の根拠
+- https://helloproject.com/news/11918/ — 2020-04-01公式配信開始と対象音源
 - https://helloproject.com/juicejuice/release/detail/UFDL-1473/ — `DOWN TOWN/がんばれないよ(Special Edition)`
 - https://helloproject.com/release/7256/?pc=1 — `トウキョウ・ブラー/ナイモノラブ/おあいこ(Special Edition)`
 - https://helloproject.com/release/7273/?pc=1 — `Juice=Juice 10th Anniversary Concert Tour 2023 Final ～Juicetory～`
