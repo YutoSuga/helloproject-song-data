@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
 調査日: 2026-09-27（A-2追加公式情報による訂正を反映）
-状態: **A-2投入・訂正完了、D08独立Special Editionは未確認継続**
+状態: **A-2投入・訂正完了、A-3は音源同一性のユーザー判断待ち（D08/D09未確認継続）**
 
 ## 1. 目的・判定原則
 
@@ -130,6 +130,74 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 - 現在のCSVは配信releaseを独立レコードとして管理可能な設計だが、確認済みの配信releaseもまだCSV投入しておらず、配信release投入フェーズ自体が未実施である。このため今回だけ特殊扱いせず、2019-10-10 iTunes先行配信は`J00006.release_date`へ反映する一方、releaseレコード化と`release_tracks`接続は配信release投入フェーズまで保留する。
 - `songs.source_url`は曲名・Versionを直接示す通常盤C公式詳細を採用し、初出日の根拠となる公式ニュースとの複数出典は本節で管理する。複数URLを1セルへ格納していない。新規song/work/creatorはなく、A-1およびA-3以降は変更していない。
 - **最終状態**: 通常release、後発通常盤C、New Vocal Ver.初出の必要情報が確定したため、**A-2本体は完了**。独立したSpecial Editionの存在は今回も根拠を確認できず、D08として不存在と断定せず未確認を継続する。次の通常CD投入対象はA-3「ポップミュージック／好きって言ってよ」。
+
+### 4.5 A-3公式情報再調査・停止記録（2026-09-27）
+
+- CSV投入前に全表を照合し、対象5曲はすべてterzoから登録済みであることを確認した。
+  `J00007`＝ポップミュージック（`W00006`）、`J00008`＝好きって言ってよ（`W00007`）、
+  `J00009`＝Borderline（`W00008`）、`J00010`＝Va-Va-Voom（`W00009`）、
+  `J00011`＝続いていくSTORY (Symphonic Version feat. Karin)（`W00010`）である。
+  いずれもterzo 3盤へ接続済みで、`release_date`は空欄である。作詞・作曲・編曲、
+  Juice=Juice（`G00001`）との関係も既存CSVに登録済みで、新規song/work/creatorは不要な候補である。
+- リポジトリ保存済みの[公式詳細URL](https://helloproject.com/juicejuice/release/6261/)と既調査結果から、
+  正式タイトル、2020-04-01発売、およびCDに上記5曲が収録されたことまでは再確認した。
+  一方、今回の実行環境では同URLへの直接接続がHTTP 403、Web検索がHTTP 401となり、
+  商品形態、規格品番、盤別track list、先行配信、D09 Special Editionを再検証できなかった。
+  取得不能を「先行配信なし」「Special Editionなし」とは扱わない。
+- 2020年CDとterzoはいずれもBorderlineおよびVa-Va-VoomをVersion表記なしで掲載し、
+  既存の作家クレジットはそれぞれ星部ショウ／平田祥一郎、児玉雨子／Shusui／Josef Melinである。
+  しかし、保存済み公式情報とresearch文書には、同一マスター、再録なし、New Vocalなし等を
+  明示する説明も、ユーザーによる同一音源の確定判断もない。同名・Version表記なし・作家一致
+  だけでは`docs/data-spec.md`の同一音源基準を満たさないため、既存songへの接続も別song採番も行わない。
+- 同じ理由でJ00007/J00008/J00011についても2020年CDとterzoの同一音源を確定せず、
+  `release_date`、notes、source URLを変更しない。仮IDを用いた`release_tracks`も作成しない。
+  新規release、release_tracks、song、work、creator、song_creators、song_artists、
+  song_performersはいずれも追加していない。配信release投入フェーズも開始していない。
+
+#### ユーザー確認事項: Borderline
+
+- **対象**: 2020-04-01 CD収録版とterzo収録版の音源同一性。
+- **既存song_id / work_id**: `J00009` / `W00008`。
+- **既存CSVの状態**: `version_type=original`、`release_date`空欄、初出日と過去releaseとの同一性は未確認。
+- **公式に確認できた事実**: 両releaseのtrack表記は「Borderline」でVersion注記がなく、
+  2020年CDへの正式収録と既存クレジット（作詞・作曲 星部ショウ、編曲 平田祥一郎）を確認済み。
+- **参考にした公式URL**: 2020年CDは https://helloproject.com/juicejuice/release/6261/ 、
+  terzoは https://helloproject.com/juicejuice/release/6692/ 。
+- **判断できない理由**: 公式ページに同一マスターまたは再録の有無を明示する説明がなく、
+  Version表記なしと作家一致だけでは具体的音源の同一性を証明できない。
+- **選択肢**: (A) ユーザー確認により同一音源として既存J00009を再利用する、
+  (B) 別音源と確認できる公式根拠を提示して同じW00008の新songを採番する、
+  (C) 根拠取得まで当該track接続を保留する。
+- **各選択肢のCSVへの影響**: AはJ00009を各該当盤の`release_tracks`へ接続し、初出日を
+  先行配信調査後の確定日へ更新する。Bは新songとcreator/artist関係を追加してCDへ接続し、
+  J00009はterzo版として維持する。Cはreleaseを確定できてもBorderlineのtrackだけ接続しない。
+- **推奨**: 音源を聴取済みなどの根拠を持つユーザーが同一性を確認できるならA。確認できなければC。
+
+#### ユーザー確認事項: Va-Va-Voom
+
+- **対象**: 2020-04-01 CD収録版とterzo収録版の音源同一性。
+- **既存song_id / work_id**: `J00010` / `W00009`。
+- **既存CSVの状態**: `version_type=original`、`release_date`空欄、初出日と過去releaseとの同一性は未確認。
+- **公式に確認できた事実**: 両releaseのtrack表記は「Va-Va-Voom」でVersion注記がなく、
+  2020年CDへの正式収録と既存クレジット（作詞 児玉雨子、作曲 Shusui・Josef Melin、
+  編曲 Josef Melin）を確認済み。
+- **参考にした公式URL**: 2020年CDは https://helloproject.com/juicejuice/release/6261/ 、
+  terzoは https://helloproject.com/juicejuice/release/6692/ 。
+- **判断できない理由**: Borderlineと同様、公式情報に同一マスターや再録の有無の明示がない。
+- **選択肢**: (A) ユーザー確認により同一音源として既存J00010を再利用する、
+  (B) 別音源と確認できる公式根拠を提示して同じW00009の新songを採番する、
+  (C) 根拠取得まで当該track接続を保留する。
+- **各選択肢のCSVへの影響**: AはJ00010を各該当盤の`release_tracks`へ接続し、初出日を
+  先行配信調査後の確定日へ更新する。Bは新songとcreator/artist関係を追加してCDへ接続し、
+  J00010はterzo版として維持する。Cはreleaseを確定できてもVa-Va-Voomのtrackだけ接続しない。
+- **推奨**: 音源を聴取済みなどの根拠を持つユーザーが同一性を確認できるならA。確認できなければC。
+
+- **停止点**: BorderlineとVa-Va-Voomの上記判断、ならびに公式ページ本文または同等の保存済み
+  公式情報による全商品形態・規格品番・盤別track・先行配信・Special Editionの確認後から再開する。
+  その時点でポップミュージック、好きって言ってよ、続いていくSTORYについても同一性を確定し、
+  release採番、確定songへのtrack接続、初出日・notes・source URL更新、validationを一括して行う。
+- **A-3の最終状態**: **未完了（ユーザー判断および公式商品詳細の再取得待ち）**。次の投入対象は
+  A-3の再開であり、A-4以降には着手しない。通常release候補・D候補の件数に変更はない。
 
 ## 5. 優先度B・C
 
