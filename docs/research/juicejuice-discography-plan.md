@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-09-29（A-4通常CD・Special Edition投入を反映）
-状態: **A-1～A-4投入完了、D08/D09未確認継続、次の投入対象はA-5**
+調査日: 2026-09-29（A-5 CD 9形態投入を反映）
+状態: **優先度A 5件すべて完了、D08/D09未確認継続、次の投入対象は優先度B**
 
 ## 1. 目的・判定原則
 
@@ -61,7 +61,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 | 2019-06-05／2019-10-23 | CDシングル | 「ひとりで生きられそう」って それってねえ、褒めているの？／25歳永遠説 | J00004–J00006 | A | [2019-06-05公式詳細](https://helloproject.com/release/detail/HKCN-50610/?pc=1)／[通常盤C公式詳細](https://helloproject.com/juicejuice/release/detail/HKCN-50629/) | 2019-06-05の5形態と、後発の2019-10-23通常盤Cを同一タイトル候補内で区別。 |
 | 2020-04-01 | CDシングル | ポップミュージック／好きって言ってよ | J00007–J00011 | A | [公式詳細](https://helloproject.com/juicejuice/release/6261/) | **A-3完了**。5形態をL00017～L00021へ登録済み。J00009/J00010はterzoと同一音源、J00011は再録と確定。 |
 | 2021-04-28 | CDシングル | DOWN TOWN／がんばれないよ | J00012–J00013 | A | [公式詳細](https://helloproject.com/juicejuice/release/detail/HKCN-50646/) | **A-4完了**。通常CD 6形態と同日のSpecial Edition（D10）をCSV登録済み。 |
-| 2021-12-22 | CDシングル | プラスティック・ラブ／Familia／Future Smile | J00014–J00016 | A | [公式一覧](https://helloproject.com/juicejuice/release/) | 盤別track差と配信版を分離確認。 |
+| 2021-12-22 | CDシングル | プラスティック・ラブ／Familia／Future Smile | J00014–J00016 | A | [公式詳細](https://helloproject.com/juicejuice/release/6613/) | **A-5完了**。CD 9形態をL00029～L00037へ登録し、一般デジタル配信は存在確認のみ。 |
 | 2022-04-20 | アルバム | 3rdアルバム「terzo」 | J00001–J00028 | — | [公式詳細](https://helloproject.com/juicejuice/release/6692/) | CSV登録済み。規格品番別L00001–L00003。 |
 | 2022-11-23 | CDシングル | 全部賭けてGO！！／イニミニマニモ～恋のライバル宣言～ | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | Special Edition有無を確認。 |
 | 2023-07-12 | CDシングル | プライド・ブライト／FUNKY FLUSHIN' | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | 「プライド・ブライト」は2023-06-29先行配信あり（D14）。 |
@@ -79,7 +79,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 2. **A-2 完了（D08独立Special Edition確認は継続） — 「ひとりで生きられそう」って…／25歳永遠説**: 2019-06-05の5形態を訂正しJ00004/J00005へ接続。2019-10-23通常盤CをJ00004/J00005/J00006へ接続し、J00006の2019-10-10先行配信を初出日に反映した。
 3. **A-3 完了（D09独立Special Edition確認は継続）— ポップミュージック／好きって言ってよ**（2020-04-01）: 通常CD 5形態と17 trackをCSV投入し、対象5曲のsong整理、J00011の再録判定、同日公式配信の存在確認まで完了した。
 4. **A-4 完了 — DOWN TOWN／がんばれないよ**（2021-04-28）: 通常CD 6形態をJ00012/J00013へ接続し、同日の公式配信`DOWN TOWN／がんばれないよ(Special Edition)`（D10）とソロ7 VersionもCSV投入した。
-5. **A-5 プラスティック・ラブ／Familia／Future Smile**（2021-12-22）: J00014～J00016候補。D11も確認する。
+5. **A-5 完了 — プラスティック・ラブ／Familia／Future Smile**（2021-12-22）: CD 9形態をL00029～L00037へ登録し、既存J00014～J00016を接続した。一般デジタル配信は存在確認のみとし、CSV化していない。
 
 ### 4.1 A-1投入作業の停止記録（2026-09-26）
 
@@ -255,6 +255,18 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 - 各曲名に明記された歌唱者を構造化するため、金澤朋子（P00002）、植村あかり（P00003）、稲場愛香（P00004）、井上玲音（P00005）、段原瑠々（P00006）、工藤由愛（P00007）、松永里愛（P00008）を最小情報で新規member登録し、それぞれ1名を対応songのperformerとした。所属開始日等は今回の一次情報から確認できないため`member_affiliations.csv`へ推測登録していない。ソロsongを作成した根拠はSP盤の映像ではなく、Special Editionで正式な音源trackとして配信されたことである。
 - 新規work、creator、artistはなく、通常版2曲の新規songもない。通常CD 6形態、Special Edition、ソロ7 song、performer、作家クレジットまで投入できたため、**A-4は完了**。通常release候補総数28件は変わらず、優先度A 5件中4件が完了し、残る次の投入対象は**A-5「プラスティック・ラブ／Familia／Future Smile」**である。A-5以降のCSVには着手していない。A-4に残る未確認事項およびユーザー判断事項はない。
 
+### 4.9 A-5 CD 9形態投入／優先度A完了（2026-09-29）
+
+- [公式release](https://helloproject.com/juicejuice/release/6613/)に基づき、2021-12-22発売「プラスティック・ラブ／Familia／Future Smile」のCD 9形態を登録した。`L00029`＝初回生産限定盤A（HKCN-50677）、`L00030`＝初回生産限定盤B（HKCN-50679）、`L00031`＝初回生産限定盤C（HKCN-50681）、`L00032`＝初回生産限定盤SP1（HKCN-50683）、`L00033`＝初回生産限定盤SP2（HKCN-50685）、`L00034`＝通常盤A（HKCN-50686）、`L00035`＝通常盤B（HKCN-50687）、`L00036`＝通常盤C（HKCN-50688）、`L00037`＝金澤朋子卒業記念盤（HKCP-50001）である。卒業記念盤は限定販売商品だが、公式ページの独立形態かつ独自規格品番を持つため別releaseとした。
+- 9形態すべてのCD音源trackはtrack 1＝`J00014`「プラスティック・ラブ」、track 2＝`J00015`「Familia」、track 3＝`J00016`「Future Smile」であり、合計27 `release_tracks`を追加した。Instrumental、DVD、Blu-ray等の映像trackは登録していない。
+- 3曲はいずれも2021年シングル版とterzo収録版が同一音源であるとのユーザー確定判断に基づき、既存song/work IDとterzo 3盤への接続を維持した。既存調査・CSVに2021-12-22より前の公式音源releaseはないため、3曲の`release_date`を`2021-12-22`、初出releaseを示す`source_url`をA-5公式releaseへ更新した。
+- `J00014` / `W00013`「プラスティック・ラブ」は`version_type=cover`を維持し、作詞・作曲＝竹内まりや（C00017）、編曲＝Anders Dannvik（C00016）を確認した。`J00016` / `W00015`「Future Smile」は作詞＝大森祥子（C00019）、作曲＝Shusui（C00010）／Josef Melin（C00011）、編曲＝Josef Melin（C00011）を確認した。
+- terzo初期投入時の`J00015` / `W00014`「Familia」は、作曲＝Shusui／Stefan Ekstedt、編曲＝Stefan Ekstedtと誤登録されていた。A-5公式releaseと[terzo公式release](https://helloproject.com/juicejuice/release/6692/)の双方で、作詞＝イイジマケン、作曲＝Shusui／Shim Zeyun／tsubomi、編曲＝鈴木俊介と一致することをユーザーが再確認したため、誤ったC00018との2関係を削除し、C00033＝Shim Zeyun、C00034＝tsubomi、C00035＝鈴木俊介を追加して訂正した。共同作曲は公式順1～3で独立creditとし、旧誤データはCSVに残さず本節とGitで履歴を管理する。C00018 creator masterおよび他songは変更していない。
+- 金澤朋子卒業記念盤BDの「プラスティック・ラブ(feat. 金澤朋子 Ver.)」「Familia(feat. 金澤朋子 Ver.)」「Future Smile(feat. 金澤朋子 Ver.)」は映像収録のみ確認でき、独立した公式音源releaseではないため、song/work、song_performers、release_tracksを追加していない。SP1等の有澤一華「赤い日記帳」、入江里咲「恋ならとっくに始まってる」、江端妃咲「My Days for You」等のBDソロ映像も同様にsong化していない。これらは将来`videos.csv`、`video_songs.csv`、`video_song_performers.csv`を本格整備する際の候補とする。
+- 映像に独自Version名があっても、それだけでは別songを作らず、独立した公式音源releaseを確認できる場合にsong化する方針を維持した。これは独自release名・規格品番・独自音源trackを持つA-4 Special Editionのソロ7音源とは異なる。
+- 2021-12-22から同内容の一般デジタル配信が開始されたことは確認済みだが、一般配信releaseは今回CSV化しない。A-4 Special Edition相当の独自release名、独自規格品番、独自音源trackを推測作成していない。
+- 新規song/work/artist/memberはなく、既存song_artists、song_performers、member_affiliationsも変更していない。新規creatorは上記3名のみである。以上により**A-5は完了**し、**優先度A 5件すべて完了**となった。通常release候補総数28件は変わらず、次の調査・投入対象はロードマップどおり**優先度Bのインディーズ3作から**とする。今回は優先度BのCSV投入およびJuicetoryには着手していない。
+
 ## 5. 優先度B・C
 
 - **B（15件）**: インディーズ3作、2013-09-11から2018-04-18までの主要CD、`First Squeeze！`、`Juice=Juice#2 -¡Una más!-`。明示Version、MEMORIAL EDIT、Album Version、2022 ver.の境界を確認する。
@@ -278,7 +290,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 | D08 | 未確認 | 「ひとりで生きられそう」って それってねえ、褒めているの？／25歳永遠説 (Special Edition) | Special Edition候補 | 未確認 | [公式一覧](https://helloproject.com/juicejuice/release/) | 2019-10-10先行配信および2019-10-23通常盤Cとは別候補。独立Special Editionと呼べる公式根拠は未確認で、不存在とは断定せずrelease IDを採番しない。 |
 | D09 | 未確認 | ポップミュージック／好きって言ってよ (Special Edition) | Special Edition候補 | 未確認 | [公式一覧](https://helloproject.com/juicejuice/release/) | 「Special Edition」という独立releaseは未確認。2020-04-01公式配信の存在確認済み（D23）とは分離し、不存在とも断定しない。 |
 | D10 | 2021-04-28 | DOWN TOWN／がんばれないよ(Special Edition) | 配信 | UFDL-1473 | [公式詳細](https://helloproject.com/juicejuice/release/detail/UFDL-1473/) | **公式確認・CSV投入済み（L00028）**。通常2曲と、別songとして登録したメンバー別ソロVersion 7曲を収録。 |
-| D11 | 未確認 | プラスティック・ラブ／Familia／Future Smile (Special Edition) | Special Edition候補 | 未確認 | [公式一覧](https://helloproject.com/juicejuice/release/) | 独立release・追加track未確認。 |
+| D11 | 2021-12-22 | プラスティック・ラブ／Familia／Future Smile | 一般デジタル配信 | 未提示 | [公式詳細](https://helloproject.com/juicejuice/release/6613/) | **公式配信の存在確認済み**。CDと同内容の一般配信としてCSV化を保留し、独自音源を持つSpecial Edition相当のreleaseは推測作成しない。 |
 | D12 | 2020-04-01 | ポップミュージック／好きって言ってよ | CD（通常一覧の既存release） | 未提示 | [公式詳細](https://helloproject.com/juicejuice/release/6261/) | 通常28候補に含まれるCDとして解決し、5形態をCSV登録済み。J00011は2020-04-01初出の`re_recording`、Karin＝宮本佳林（P00001）として確定済み。 |
 | D13 | 未確認 | プラトニック・プラネット（通常スタジオ版）を収録するrelease | 配信等候補 | 未確認 | [terzo詳細](https://helloproject.com/juicejuice/release/6692/) | **通常版スタジオ音源の公式音源releaseは未確認**。通常版が存在しないとは断定しない。J00024 Ultimate Juice Ver.とは区別。 |
 
@@ -337,7 +349,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 
 ## 9. 推奨投入順
 
-1. **優先度A**はA-1～A-4が完了済みであり、次はA-5を投入する。各CDだけで完了とせず、関係する先行配信・Special Editionを同時確認する。
+1. **優先度A**はA-1～A-5の5件すべて完了済みである。
 2. **優先度B**を、インディーズ3作、メジャーシングル、`First Squeeze！`、`Juice=Juice#2 -¡Una más!-`の順で扱う。
 3. **優先度C**を発売順に扱い、2026-06-24 `MORE! MORE! EP`まで進める。
 4. **優先度D**を扱う。DのうちA/Cに直接関連する先行配信・Special Editionは当該通常releaseと同時確認するが、2025/2026年ライブ音源をAより先に投入する必要はない。
@@ -345,7 +357,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 ## 10. CSV投入前の要確認事項
 
 1. **音源同一性**: J00009～J00011と2020年CDは解決済み。残るJ00027/J00028と2017年配信・#2、通常CDと各Special Editionは、公式情報だけで決められなければ統合も新規採番もしない。
-2. **未確認の独立release**: D04～D09、D11、D13。D08は2019-10-10先行配信や2019-10-23通常盤Cではなく独立Special Edition候補を指す。未確認は不存在を意味しない。
+2. **未確認の独立release**: D04～D09、D13。D08は2019-10-10先行配信や2019-10-23通常盤Cではなく独立Special Edition候補を指す。D11は同内容の一般デジタル配信として確認済みであり、独立Special Editionを推測しない。未確認は不存在を意味しない。
 3. **Special Editionのsong粒度**: D10は解決済み。D15の`Brilliance of memories`のsong/artist/member構造。
 4. **特殊音源のsong粒度**: D16～D21のライブ、BAND Live、THE FIRST TAKE各音源を別songとするか、workを共有するか、`version_type`を何にするか。
 5. **通常版プラトニック・プラネット**: 公式動画内で識別可能な歌唱Versionにまでsongの境界を拡張するか。`video_songs`実装時まで保留。
@@ -355,8 +367,8 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 ## 11. 登録済みreleaseとCSV投入状況
 
 `data/releases.csv`にはterzo 3盤（L00001～L00003）、A-1の7形態（L00004～L00010）、
-A-2の2019-06-05 CD 5形態（L00011～L00015）と後発通常盤C（L00016）、A-3の5形態（L00017～L00021）、A-4通常CD 6形態（L00022～L00027）とSpecial Edition（L00028）の**計28 releaseレコード**がある。`release_tracks.csv`はterzo 84行、A-1 21行、A-2 13行、A-3 17行、A-4 21行の計156行、`songs.csv`は35行である。
-A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035を追加した。新規work/creator/artistはなく、A-5以降、Juicetory、ハロ！ステDB・Web・集計処理には着手していない。
+A-2の2019-06-05 CD 5形態（L00011～L00015）と後発通常盤C（L00016）、A-3の5形態（L00017～L00021）、A-4通常CD 6形態（L00022～L00027）とSpecial Edition（L00028）、A-5 CD 9形態（L00029～L00037）の**計37 releaseレコード**がある。`release_tracks.csv`はterzo 84行、A-1 21行、A-2 13行、A-3 17行、A-4 21行、A-5 27行の計183行、`songs.csv`は35行である。
+A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035を追加した。A-5ではJ00014～J00016を再利用し、Familiaの作家誤登録訂正に伴うcreator 3件だけを追加した。優先度B以降、Juicetory、ハロ！ステDB・Web・集計処理には着手していない。
 
 ## 12. 件数集計
 
@@ -364,11 +376,11 @@ A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035�
 
 - 更新前: 通常release候補27、D確定0、**確定release候補総数27**、未確定D 13、最大探索母数40。
 - 更新後の通常release: 既存27 + `MORE! MORE! EP` 1 = **28**（A 5、B 15、C 7、登録済みterzo 1。各区分はタイトル単位で重複なし）。
-- 更新後のD確定: 既存DからD01/D02/D03/D10の4 + Dリスト外D14～D23の10 = **14**。D12は既存通常releaseである2020-04-01 CDへ解決したためD確定件数に重複加算しない。D22は2019-10-10先行配信で、後発通常盤CやD08候補とは別releaseとして数える。
-- 更新後の確定release候補総数: 通常28 + D確定14 = **42**。2019-10-23通常盤Cは既存のA-2タイトル候補に含まれる盤違いのため通常候補へ単純加算しない。
-- 更新後の未確定候補: D04～D09、D11、D13の**8**。D12は未確定から除外した。
-- 更新後の最大探索母数: 確定42 + 未確定8 = **50**。
-- DB登録済み: **21 releaseレコード**（terzo 3盤 + A-1 7形態 + A-2の2019-06-05 CD 5形態 + 後発通常盤C 1形態 + A-3 5形態）。確定release候補総数42はタイトル／release単位のロードマップ件数であり、CSVの盤単位レコード数とは一致しない。
+- 更新後のD確定: 既存DからD01/D02/D03/D10/D11の5 + Dリスト外D14～D23の10 = **15**。D11は一般デジタル配信として確認済みだがCSV化を保留する。D12は既存通常releaseである2020-04-01 CDへ解決したためD確定件数に重複加算しない。D22は2019-10-10先行配信で、後発通常盤CやD08候補とは別releaseとして数える。
+- 更新後の確定release候補総数: 通常28 + D確定15 = **43**。2019-10-23通常盤Cは既存のA-2タイトル候補に含まれる盤違いのため通常候補へ単純加算しない。
+- 更新後の未確定候補: D04～D09、D13の**7**。D11は一般デジタル配信の確認により未確定から除外した。
+- 更新後の最大探索母数: 確定43 + 未確定7 = **50**。
+- DB登録済み: **37 releaseレコード**（terzo 3盤 + A-1 7形態 + A-2の2019-06-05 CD 5形態 + 後発通常盤C 1形態 + A-3 5形態 + A-4通常CD 6形態・Special Edition 1件 + A-5 CD 9形態）。確定release候補総数43はタイトル／release単位のロードマップ件数であり、CSVの盤単位レコード数とは一致しない。
 - 最古の通常候補: 2013-03-31「私が言う前に抱きしめなきゃね」。最新の確認済みrelease: 2026-06-24 `MORE! MORE! EP`。したがって旧記述「最新は2025-10-08」「2026年作品未確認」は更新済み。
 
 ## 13. 公式URL一覧（今回追加分）
@@ -383,6 +395,7 @@ A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035�
 - https://helloproject.com/news/11719/ — カバー、初音源化、再録の根拠
 - https://helloproject.com/news/11918/ — 2020-04-01公式配信開始と対象音源
 - https://helloproject.com/juicejuice/release/detail/UFDL-1473/ — `DOWN TOWN/がんばれないよ(Special Edition)`
+- https://helloproject.com/juicejuice/release/6613/ — `プラスティック・ラブ／Familia／Future Smile`の9形態、track、クレジットおよび一般配信
 - https://helloproject.com/release/7256/?pc=1 — `トウキョウ・ブラー/ナイモノラブ/おあいこ(Special Edition)`
 - https://helloproject.com/release/7273/?pc=1 — `Juice=Juice 10th Anniversary Concert Tour 2023 Final ～Juicetory～`
 - https://helloproject.com/release/7625/ — `盛れ！ミ・アモーレ(BAND Live Ver.)`
