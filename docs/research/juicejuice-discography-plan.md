@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-09-29（A-5 CD 9形態投入、B-1事前確認を反映）
-状態: **優先度A 5件すべて完了、B-1は既存MEMORIAL EDIT不在のため投入停止中**
+調査日: 2026-10-02（B-1インディーズ通常版投入を反映）
+状態: **優先度A 5件およびB-1完了、次の対象はB-2**
 
 ## 1. 目的・判定原則
 
@@ -42,7 +42,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 
 | 発売日 | 種別 | タイトル | terzo補完 | 優先度 | 公式URL・状態 | notes |
 |---|---|---|---|---|---|---|
-| 2013-04-03 | インディーズシングル | 私が言う前に抱きしめなきゃね | — | B | [公式詳細](https://helloproject.com/release/2210/) | B-1事前確認で発売日・規格品番UFCW-1057・通常版と後発MEMORIAL EDITが同一work／別songとのユーザー確定方針を確認。既存MEMORIAL EDITがCSVに存在せず投入停止中。 |
+| 2013-04-03 | インディーズシングル | 私が言う前に抱きしめなきゃね | — | B | [公式詳細](https://helloproject.com/release/2210/) | **B-1投入完了。** `L00038` / `W00028` / `J00036`。通常版と後発MEMORIAL EDITは同一work／別songとする。 |
 | 2013-05-05 | インディーズシングル | 五月雨美女がさ乱れる | — | B | [旧公式一覧](https://www.helloproject.com/discography/juicejuice/) | 後発MEMORIAL EDITとは別Version候補。 |
 | 2013-06-12 | インディーズシングル | 天まで登れ！ | — | B | [旧公式一覧](https://www.helloproject.com/discography/juicejuice/) | 正式名義を投入時確認。 |
 | 2013-09-11 | CDシングル | ロマンスの途中／私が言う前に抱きしめなきゃね(MEMORIAL EDIT)／五月雨美女がさ乱れる(MEMORIAL EDIT) | — | B | [公式一覧](https://helloproject.com/juicejuice/release/) | Version検証が必要。 |
@@ -269,14 +269,14 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 
 ## 5. 優先度B・C
 
-### 5.1 B-1 事前確認と停止状態（2026-09-29）
+### 5.1 B-1「私が言う前に抱きしめなきゃね」投入完了（2026-10-02）
 
-- 対象は **2013-04-03** 発売の「私が言う前に抱きしめなきゃね」、規格品番 `UFCW-1057`。[公式release](https://helloproject.com/release/2210/)のCD構成はtrack 1「私が言う前に抱きしめなきゃね」、track 2「私が言う前に抱きしめなきゃね (Instrumental)」であり、投入時は現行方針に従ってInstrumentalを除外する。
-- 通常版は `version_type=original` とし、後発「私が言う前に抱きしめなきゃね(MEMORIAL EDIT)」とは別song、同一workとする方針がユーザー判断で確定した。作家クレジットは作詞・作曲＝つんく（`C00028`）、編曲＝平田祥一郎（`C00009`）。artistはJuice=Juice（`G00001`）を `primary` とし、個々のperformerは所属から推測しない。
-- しかし事前確認時点の `songs.csv`、`works.csv`、`release_tracks.csv` のいずれにも、MEMORIAL EDITまたは「私が言う前に抱きしめなきゃね」に対応する既存song/workが存在しない。そのため、共有すべきwork IDと既存MEMORIAL EDIT song IDを安全に特定できず、指定された停止条件に従ってCSV投入前に停止した。`UFCW-1057`のrelease、新規通常版song、release track、creator relation、artist relationは未追加である。
-- 解決には、(A) MEMORIAL EDITを先に公式releaseとともに登録してworkを作成してからB-1通常版を同じworkへ接続する、または (B) B-1でworkを新設し、後続のMEMORIAL EDIT投入時にそのworkを共有する、のいずれかについてユーザー判断が必要である。確定後のB-1想定IDは現行最大値の次となる `L00038` / `J00036` だが、停止中のため予約・登録はしていない。
+- 対象は **2013-04-03** 発売の「私が言う前に抱きしめなきゃね」、規格品番 `UFCW-1057`。[公式release](https://helloproject.com/release/2210/)のCD構成はtrack 1「私が言う前に抱きしめなきゃね」、track 2「私が言う前に抱きしめなきゃね (Instrumental)」である。`L00038`にtrack 1の `J00036` のみを登録し、Instrumentalは収集対象外として除外した。
+- 事前確認時点の正本CSVにはMEMORIAL EDITと対応workが存在せず一度投入を停止した。その後、ユーザー判断で選択肢B（B-1でworkを新設）を採用し、`W00028`「私が言う前に抱きしめなきゃね」と `J00036` を新設して投入を再開した。`J00036` は `version_type=original`、`release_date=2013-04-03` である。
+- 作家クレジットは作詞・作曲＝つんく（`C00028`）、編曲＝平田祥一郎（`C00009`）。artistはJuice=Juice（`G00001`）を `primary` とした。個々のperformerは当時の所属から推測せず、`song_performers.csv` には追加していない。
+- 後発「私が言う前に抱きしめなきゃね(MEMORIAL EDIT)」と2013-09-11メジャーデビューreleaseは今回未投入。将来MEMORIAL EDITを登録する際は、`W00028` を必ず再利用し、originalの `J00036` は再利用せず新規song IDを作成する。`version_type` はその時点のdata-specと2013-09-11公式release情報に従って確定し、通常版とMEMORIAL EDITを同一workの別songとして維持する。
 - artist共通設計は `docs/data-spec.md` で確定済みである。「天まで登れ！」の将来投入時は、ハロプロ研修生 feat. Juice=Juice版をハロプロ研修生=`primary`、Juice=Juice=`featured`、Juice=Juice単独版をJuice=Juice=`primary` とする。B-3のrelease/song/artistデータはまだ投入していない。
-- **B-1は未完了**。停止解除後も次のCSV投入対象はB-1であり、B-1完了後の次対象をB-2「五月雨美女がさ乱れる」とする。B-2以降には着手していない。
+- **B-1は完了**。次のCSV投入対象はB-2「五月雨美女がさ乱れる」とする。B-2以降には着手していない。
 
 - **B（15件）**: インディーズ3作、2013-09-11から2018-04-18までの主要CD、`First Squeeze！`、`Juice=Juice#2 -¡Una más!-`。明示Version、MEMORIAL EDIT、Album Version、2022 ver.の境界を確認する。
 - **C（7件）**: (1) 全部賭けてGO！！…、(2) プライド・ブライト…、(3) Juicetory、(4) トウキョウ・ブラー…、(5) 初恋の亡霊…、(6) 四の五の言わず颯と別れてあげた…、(7) **MORE! MORE! EP**。2026年の通常releaseが未確認という旧状態は解消した。
@@ -375,9 +375,8 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 
 ## 11. 登録済みreleaseとCSV投入状況
 
-`data/releases.csv`にはterzo 3盤（L00001～L00003）、A-1の7形態（L00004～L00010）、
-A-2の2019-06-05 CD 5形態（L00011～L00015）と後発通常盤C（L00016）、A-3の5形態（L00017～L00021）、A-4通常CD 6形態（L00022～L00027）とSpecial Edition（L00028）、A-5 CD 9形態（L00029～L00037）の**計37 releaseレコード**がある。`release_tracks.csv`はterzo 84行、A-1 21行、A-2 13行、A-3 17行、A-4 21行、A-5 27行の計183行、`songs.csv`は35行である。
-A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035を追加した。A-5ではJ00014～J00016を再利用し、Familiaの作家誤登録訂正に伴うcreator 3件だけを追加した。優先度B以降、Juicetory、ハロ！ステDB・Web・集計処理には着手していない。
+`data/releases.csv`にはterzo 3盤（L00001～L00003）、A-1～A-5の34盤（L00004～L00037）、B-1のインディーズシングル（L00038）の**計38 releaseレコード**がある。`release_tracks.csv`は184行、`songs.csv`は36行、`works.csv`は28行である。
+A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035を追加した。A-5ではJ00014～J00016を再利用し、Familiaの作家誤登録訂正に伴うcreator 3件だけを追加した。B-1ではL00038/W00028/J00036を追加した。B-2以降、Juicetory、ハロ！ステDB・Web・集計処理には着手していない。
 
 ## 12. 件数集計
 
