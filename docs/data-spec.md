@@ -201,6 +201,47 @@ ID は永続的な識別子であり、発売順・時系列を表さない。�
 
 各 song に `primary` を 1 件以上必須とする。
 
+#### 複数 artist のクレジットと検索関係
+
+`artists.csv` には、検索・集計可能な artist 実体を登録する。1 song には
+`song_artists.csv` の複数行を介して複数 artist を紐付けられる。公式クレジットが
+複数の既存 artist の参加を表す場合、その文字列全体を検索目的だけで機械的に
+複合 artist entity として登録せず、参加する実体 artist を個別に登録・参照する。
+この原則は feat.、collaboration、複数 artist 参加、限定ユニット、特別名義、および
+今後の類似ケースに共通して適用する。
+
+現時点の `song_artists.role` は次の 2 種類とする。
+
+- `primary`: 主名義の artist
+- `featured`: featured 参加の artist
+
+例えば「天まで登れ！」の「ハロプロ研修生 feat. Juice=Juice」版を将来登録する
+場合は、ハロプロ研修生を `primary`、Juice=Juice を `featured` とする 2 関係を
+同じ song に登録する。「ハロプロ研修生 feat. Juice=Juice」という複合 artist は
+検索目的だけでは新設しない。Juice=Juice 単独版は Juice=Juice を `primary` とする。
+必要性が確認されていない role は先回りして追加せず、新たな参加形態を構造化する
+必要が生じた時点で仕様を拡張する。
+
+公開サイトで artist の参加曲を検索する際は、公式表記の文字列検索ではなく
+`song_artists` の relation を使用する。例えば Juice=Juice（`G00001`）の検索では、
+role が `primary` と `featured` のどちらであっても `G00001` との relation がある
+song を「Juice=Juice が参加した song」として取得できるようにする。一方、作家
+ランキング等で `primary` のみを対象とするか、`primary` と `featured` の双方を
+対象とするかは検索要件とは別の集計方針である。現時点のランキング集計規則は
+変更せず、将来この範囲を切り替えられる余地を残す。
+
+公式に掲載された artist credit と検索・集計用 relation は別概念として扱う。
+「ハロプロ研修生 feat. Juice=Juice」のような公式表記は、そのまま保持する必要が
+あるため、将来 `artist_credit` 等の専用フィールドを設ける候補とする。ただし検索・
+集計にはその文字列ではなく `song_artists` を用いる。現行 `songs.csv` には同等列が
+ないため、本方針の記録時点では schema を変更せず、実データで必要になる前に
+フィールドの所属先、必須性および制約を別途判断する。
+
+この原則は、公式に独立したユニット名を持つ正式な artist まで構成 artist に分解
+するものではない。GOODM!X 等、公式に独立したユニットとして扱うべき主体は従来
+どおり artist entity として登録できる。禁止するのは、複数の既存 artist の参加を
+表す公式クレジットを、検索目的だけで複合 artist entity 化することである。
+
 ### `data/song_performers.csv`
 
 | 列名 | 型 | 必須 | 意味・制約 |
