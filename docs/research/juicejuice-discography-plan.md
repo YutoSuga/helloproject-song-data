@@ -431,3 +431,126 @@ A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035�
 - https://helloproject.com/release/7663/ — `Juice=Juiceスペシャルライブ2025 ～10月10日はJuice=Juiceの日～`
 
 `如雨露`、`Fiesta! Fiesta!`、`プライド・ブライト`先行配信、UFDL-1572、UFDL-1573、`MORE! MORE! EP`はChatGPT側でHello! Project公式掲載を確認済みだが、依頼文に個別URLが提示されていないためURLを生成していない。
+
+## 14. B-4 2013-09-11メジャーデビューシングル調査・投入計画（未投入）
+
+調査日: 2026-10-03。本節は次回投入のための調査記録であり、CSVへ投入済みであることを意味しない。公式一次情報、現行CSVとの突合、未確定事項、投入案を分けて記す。
+
+### 14.1 公式release情報
+
+1. **公式release情報**: Hello! Project公式詳細は本作をJuice=JuiceのCDシングルとして掲載している。公式artist creditは3曲とも「歌：Juice=Juice」である。
+2. **release title**: `ロマンスの途中/私が言う前に抱きしめなきゃね(MEMORIAL EDIT)/五月雨美女がさ乱れる(MEMORIAL EDIT)`。
+3. **release date**: 2013-09-11。
+4. **label**: hachama。
+5. **edition一覧**: 初回生産限定盤A、B、C、D、E、通常盤の6形態。
+6. **各catalog number**:
+
+   | edition | catalog number | 付属物 |
+   |---|---|---|
+   | 初回生産限定盤A | HKCN-50310 | DVD付 |
+   | 初回生産限定盤B | HKCN-50312 | DVD付 |
+   | 初回生産限定盤C | HKCN-50314 | DVD付 |
+   | 初回生産限定盤D | HKCN-50316 | DVD付 |
+   | 初回生産限定盤E | HKCN-50318 | DVD付 |
+   | 通常盤 | HKCN-50320 | CD |
+
+7. **各editionのCD track構成**: 6形態すべて同一で、1 `ロマンスの途中`（04:58）、2 `私が言う前に抱きしめなきゃね(MEMORIAL EDIT)`（04:13）、3 `五月雨美女がさ乱れる(MEMORIAL EDIT)`（04:10）、4 `ロマンスの途中(Instrumental)`（04:58）、5 `私が言う前に抱きしめなきゃね(MEMORIAL EDIT)(Instrumental)`（04:13）、6 `五月雨美女がさ乱れる(MEMORIAL EDIT)(Instrumental)`（04:11）。
+8. **Instrumental構成**: 各盤track 4～6。現行仕様ではInstrumentalはsongにもrelease_tracksにも登録しないため、計画対象は各盤track 1～3のみとする。
+9. **DVD/映像構成の概要**: Aは`ロマンスの途中` Music Video／Dance Shot Ver.、Bは`私が言う前に抱きしめなきゃね(MEMORIAL EDIT)` Music Video／Dance Shot Ver.、Cは`五月雨美女がさ乱れる(MEMORIAL EDIT)` Music Video／Dance Shot Ver.、Dは`私が言う前に抱きしめなきゃね(MEMORIAL EDIT)` Close-up Ver／Dance Shot Ver.Ⅱ、Eは`五月雨美女がさ乱れる(MEMORIAL EDIT)` Close-up Ver／Dance Shot Ver.Ⅱ。音源song/release_tracksには登録せず、将来のvideos/video_songs候補とする。
+10. **公式NEWS等の追加一次情報**: 2013-06-13公式NEWSは新曲`ロマンスの途中`で今夏メジャーデビュー決定と告知し、2013-07-27公式NEWSは本作を9月11日発売のデビューシングルと告知した。2013-08-19公式NEWSも6形態と各品番を列挙する。2013-09-11公式NEWSは3曲の着うた・着うたフルおよびビデオクリップの同日配信開始を明記する。一方、確認できた公式情報には`MEMORIAL EDIT`の録音・ボーカル・アレンジ・編集上の差分説明はなかった。
+
+公式一次情報:
+
+- https://helloproject.com/release/1656/
+- https://helloproject.com/news/346/
+- https://helloproject.com/news/300/
+- https://helloproject.com/news/265/?pc=1
+- https://helloproject.com/news/232/
+
+### 14.2 現在CSVとの突合結果
+
+11. **現在CSVとの突合結果**: 現在の正本はreleases 40行、release_tracks 187行、songs 39行、works 30行、creators 36行、artists 2行、members 8行。対象タイトル、6品番、および`ロマンスの途中`に一致するwork/song/release_trackは未登録。最大IDはrelease `L00040`、Juice=Juice song `J00038`、work `W00030`。
+12. **ロマンスの途中の既存work有無**: なし。works.csv全体およびterzo関連行を突合した。
+13. **ロマンスの途中の既存song有無**: なし。songs.csv、release_tracks.csv、terzo 3盤を含む既存Juice=Juiceデータに該当なし。
+14. **私が言う前に抱きしめなきゃねの既存work/song**: `W00028`と、2013-04-03インディーズ通常版`J00036`（`original`）が存在する。
+15. **五月雨美女がさ乱れるの既存work/song**: `W00029`と、2013-05-05インディーズ通常版`J00037`（`original`）が存在する。
+16. **MEMORIAL EDITと既存originalの関係**: ユーザー確定方針どおり、それぞれW00028／W00029を共有する別songとする。新規workは作らない。公式releaseページはMEMORIAL EDITを明示した別表記で掲載するが、元音源との技術的差分までは説明しない。
+17. **MEMORIAL EDITの公式説明有無**: 今回確認した公式releaseおよびNEWSに、新録、vocal再録、arrangement変更、単なるeditのいずれかを特定できる説明はない。曲名、尺、同一の作家クレジットだけから差分を推測しない。
+
+### 14.3 MEMORIAL EDITのversion_type検討
+
+18. **候補**: 現行enumのうち`re_recording`または`other`。`original`は同workの先行通常版J00036/J00037が既に存在し、`new_vocal`は公式にNew Vocalまたはボーカル差し替えと説明されず、`cover`は同一artistの後発Versionなので適合しない。
+19. **各候補の理由**: `re_recording`は新録・再録が公式根拠で確認できる場合に検索・集計上明瞭だが、本件ではその根拠が不足する。`other`は公式に別Versionとされたものの再録と確定できない場合というdata-specの定義に合い、推測を避けられる一方、将来の再録集計には含まれず、根拠判明時に更新が必要となる。
+20. **推奨version_type**: 既存仕様をそのまま適用するなら2曲とも`other`を推奨する。これは`MEMORIAL EDIT`という名称だけで分類する結論ではなく、公式な別Version表記がある一方で、変更内容を特定する公式説明がないためである。
+21. **ユーザー判断の要否**: 必要。別song化は確定済みだが、`other`で投入するか、追加一次情報を待って保留するか、別途再録根拠をユーザーが提示・確定して`re_recording`とするかは実投入前に確定する。
+
+### 14.4 creditおよびrelation計画
+
+22. **creator credit**:
+
+   | song | lyrics | composition | arrangement | brass_arrangement |
+   |---|---|---|---|---|
+   | ロマンスの途中 | つんく | つんく | 鈴木俊介 | — |
+   | 私が言う前に抱きしめなきゃね(MEMORIAL EDIT) | つんく | つんく | 平田祥一郎 | — |
+   | 五月雨美女がさ乱れる(MEMORIAL EDIT) | つんく | つんく | 板垣祐介 | 鈴木俊介 |
+
+23. **creator ID突合**: つんく=`C00028`、平田祥一郎=`C00009`、鈴木俊介=`C00035`、板垣祐介=`C00036`を再利用する。`五月雨美女がさ乱れる(MEMORIAL EDIT)`では板垣を`arrangement`、鈴木を`brass_arrangement`として分離する。
+24. **新規creator必要有無**: なし。
+25. **song_artists計画**: 新規3 songすべて`G00001` Juice=Juice、`role=primary`、`credit_order=1`。featured artistは追加しない。
+26. **song_performers計画**: 公式情報に個別歌唱者の明示がないため追加なし。当時の所属から推測しない。
+
+### 14.5 release、song、work、track投入計画
+
+27. **release登録計画**: 品番が異なる6 physical editionを各1 release（`release_type=single`、日付2013-09-11、labelは現行releases列にないため構造化しない）として登録する。notesに盤名とDVD有無を記録する。映像trackは音源release_tracksへ入れない。
+28. **想定release ID**: 現在の状態なら`L00041`～`L00046`。今回は確定・採番しない。
+29. **song登録計画**: `ロマンスの途中`を新規song（`original`、2013-09-11）、両MEMORIAL EDITをW00028／W00029配下の新規別song（version_type要判断、2013-09-11）として計3件登録する。公式NEWS上、3曲はCDと同日配信であり、これより前の公式音源releaseは今回確認できなかった。ライブ披露日は初出日に用いない。
+30. **想定song ID**: 現在の状態なら`J00039`～`J00041`。想定対応はJ00039=`ロマンスの途中`、J00040=`私が言う前に抱きしめなきゃね(MEMORIAL EDIT)`、J00041=`五月雨美女がさ乱れる(MEMORIAL EDIT)`だが、今回は確定・採番しない。
+31. **work登録計画**: `ロマンスの途中`だけ新規workを1件作成し、両MEMORIAL EDITは既存W00028／W00029を再利用する。
+32. **想定work ID**: 現在の状態なら`W00031`。今回は確定・採番しない。
+33. **release_tracks登録計画**: 6 releaseそれぞれdisc 1のtrack 1～3を同じ3 songへ接続し、商品上のMEMORIAL EDIT表記をtrack_titleに保持する。track 4～6のInstrumentalとDVD映像は除外する。
+34. **想定追加release_tracks件数**: 6形態×3曲=18行。
+35. **同日デジタル配信の扱い**: 2013-09-11公式NEWSで同日配信を確認した。ただしNEWSは着うた・着うたフル・ビデオクリップを複数サイトで開始したことを示す一方、現行仕様・既存運用から、CDと同内容の一般配信を独立した`digital` releaseとして必ず登録するか、サービス別に分けるかは一意に決まらない。今回の6 physical releaseとは別の要判断事項として保留し、勝手にreleaseを増やさない。
+36. **後続releaseとの関係**: 2015-07-15 `First Squeeze！`公式ページは通常盤Disc 1に同じ3表記・尺・作家クレジット（04:58／04:13／04:10）を掲載する。ただし現在CSVに同アルバムは未登録で、公式ページは「同一audio」と明言しないため、今回のsongとの統合は後続release投入時に確認する。尺一致だけでは断定しない。terzoには3曲のsong登録・release_tracks登録がない。
+37. **既存データへの影響候補**: W00028/J00036およびW00029/J00037の既存original判定は維持でき、B-3とterzo/A-1～A-5に今回修正すべき箇所は見つからなかった。First Squeeze！は将来の追加対象だが既存データの誤りではない。
+38. **未確認事項**: MEMORIAL EDITの具体的変更内容、First Squeeze！収録音源との厳密な同一性、2013-09-11より前の配信音源の有無（今回確認した公式情報では見つからないが不存在の断定はしない）、デジタルreleaseの粒度。
+
+### 14.6 ユーザー判断事項
+
+39. **MEMORIAL EDITのversion_type**
+
+対象：`私が言う前に抱きしめなきゃね(MEMORIAL EDIT)`、`五月雨美女がさ乱れる(MEMORIAL EDIT)`。
+
+公式事実：2013-09-11 releaseで公式にMEMORIAL EDITと表記され、Juice=Juice歌唱として収録・同日配信された。確認できた公式情報は変更内容を説明していない。
+
+公式URL：https://helloproject.com/release/1656/ 、https://helloproject.com/news/232/
+
+現在の既存データ：W00028/J00036（2013-04-03、original）およびW00029/J00037（2013-05-05、original）。MEMORIAL EDITは各workを共有する別songとすることが確定済み。
+
+現在のdata-spec：enumは`original`, `new_vocal`, `re_recording`, `cover`, `other`。公式表記だけで再録と確定できない公式別Versionは`other`とし、根拠確認後に`re_recording`への更新を検討する。
+
+判断できない理由：名称、尺、作家クレジットは判明するが、新録、ボーカル再録、アレンジ変更、編集のどれかを特定する公式説明がない。
+
+選択肢A：2曲とも`other`。
+
+影響：現行仕様に最も直接整合し、根拠のない再録分類を避ける。再録検索・集計には含まれず、公式根拠が後日判明した場合は更新する。
+
+選択肢B：2曲とも保留し、追加一次情報が得られるまでsong/release一式の実投入を待つ。
+
+影響：分類誤りを最大限避けるが、確認済みphysical release 6形態の投入も進められない。
+
+選択肢C：ユーザーが別途公式の再録根拠を提示・確定できる場合に限り`re_recording`。
+
+影響：再録検索・集計に含められるが、現時点の確認済み一次情報だけで選ぶと仕様の根拠要件を満たさない。
+
+推奨案：選択肢A（2曲とも`other`）。
+
+推奨理由：別song化は確定済みであり、現行data-specが「公式表記だけでは再録と確定できない別Version」に明示的な受け皿を設けているため。
+
+**同日デジタル配信のrelease登録**も次回投入前に判断が必要である。推奨は、まず確実な6 physical editionのみを投入し、一般配信を独立release化する全体方針と粒度が決まるまでデジタルreleaseを保留すること。音源3件の`release_date=2013-09-11`は同日なので、この保留によって初出日は変わらない。
+
+### 14.7 推奨投入手順と変更範囲
+
+40. **推奨投入手順**: (1) ユーザーがMEMORIAL EDITのversion_typeとデジタルrelease方針を確定、(2) W00031候補を作成、(3) J00039～J00041候補を作成、(4) 既存creatorでsong_creatorsを作成、(5) G00001のsong_artistsを作成しsong_performersは追加しない、(6) L00041～L00046候補を6形態分作成、(7) release_tracks 18行を作成、(8) schema・参照整合性・件数・CSV差分を検証、(9) 後続First Squeeze！および映像は別タスクで扱う。
+41. **今回変更したファイル**: `docs/research/juicejuice-discography-plan.md`のみ。
+42. **CSV未変更確認**: `data/*.csv`は変更しない。
+43. **data-spec未変更確認**: `docs/data-spec.md`は変更しない。新enumも追加しない。
