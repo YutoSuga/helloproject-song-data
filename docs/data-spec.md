@@ -155,7 +155,7 @@ ID は永続的な識別子であり、発売順・時系列を表さない。�
 |---|---|---:|---|
 | `artist_id` | ID | 必須 | PK、`^G[0-9]{5}$` |
 | `name` | 文字列 | 必須 | 現在または代表となる公式名称 |
-| `type` | 列挙 | 必須 | `group`, `solo`, `temporary_unit`, `shuffle_unit`, `special_unit`, `project`, `other` |
+| `type` | 列挙 | 必須 | `group`, `solo`, `temporary_unit`, `shuffle_unit`, `special_unit`, `project`, `trainee`, `other` |
 | `start_date` | 日付 | 任意 | 結成・活動開始日 |
 | `end_date` | 日付 | 任意 | 活動終了日。開始日以後 |
 | `notes` | 文字列 | 任意 | 旧名称・性質等 |
@@ -164,6 +164,30 @@ ID は永続的な識別子であり、発売順・時系列を表さない。�
 | `updated_at` | 日時 | 必須 | レコードの最終更新日時 |
 
 名称変更後も活動主体の継続が明確なら同じ `artist_id` を維持し、単純な改名だけで別 ID を採番しない。旧名称は当面 `notes` に記す。主体の同一性が不明なら統合せずユーザー確認事項とする。厳密な履歴が必要になれば `artist_names`、`artist_name_history` 等を追加できる。
+
+`artist.type` は公式artist名義そのものを置き換えたり、異なる名義を一つの
+`artist_id` に統合したりするためのものではなく、独立したartist entityを意味的に
+分類・検索するための属性である。特に次の境界を適用する。
+
+- `group`: Hello! Projectで正式にデビューし、継続的に活動するグループを基本対象とする。
+  モーニング娘。、アンジュルム、Juice=Juice、つばきファクトリー、BEYOOOOONDS、
+  OCHA NORMA、ロージークロニクル等が該当する。
+- `trainee`: Hello! Projectにおいて、研修生・候補生・育成対象などとして活動する
+  メンバーをまとめた公式artist entityを分類する。ハロプロ研修生、ハロプロエッグ、
+  ハロー！プロジェクト・キッズ、および今後公式情報から確認される研修生・育成組織が
+  対象になり得る。時代ごとの公式名称や制度名称が異なる場合も、それぞれを別の
+  `artist_id` で保持し、`type=trainee` によって横断分類する。同じtypeであることは
+  entity同士を統合する根拠にならない。
+- `project`: Hello! Project全体、またはその時代の複数のデビューグループ等を横断して
+  構成される公式artist名義を分類する。ハロプロ・オールスターズ、モベキマス等が
+  将来登録される場合は、公式名義ごとに別artist entityとして保持する。単に複数artistが
+  1曲へ参加したことだけを理由にprojectを作成せず、既存artistの参加は
+  `song_artists` のrelationで表す。
+
+`trainee` は名称の印象、デビュー前のメンバーの在籍、または「デビューしていない」
+という事実だけから推測して付与しない。公式上の活動主体・制度・名義を確認して使用し、
+`temporary_unit`、`shuffle_unit`、`special_unit` 等に該当するartistにはそれぞれのtypeを
+使用する。
 
 ### `data/members.csv`
 
@@ -341,7 +365,7 @@ song を「Juice=Juice が参加した song」として取得できるように�
 | 列 | 値 |
 |---|---|
 | `songs.version_type` | `original`, `new_vocal`, `re_recording`, `cover`, `other` |
-| `artists.type` | `group`, `solo`, `temporary_unit`, `shuffle_unit`, `special_unit`, `project`, `other` |
+| `artists.type` | `group`, `solo`, `temporary_unit`, `shuffle_unit`, `special_unit`, `project`, `trainee`, `other` |
 | `releases.release_type` | `single`, `album`, `digital`, `other` |
 | `song_creators.role` | `lyrics`, `composition`, `arrangement`, `brass_arrangement` |
 | `song_artists.role` | `primary`, `featured` |
