@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-10-03（B-3インディーズ通常版投入を反映）
-状態: **優先度A 5件およびB-1～B-3完了、次の対象は2013-09-11メジャーデビュー作**
+調査日: 2026-10-03（B-4投入およびB-5～B-9調査を反映）
+状態: **優先度A 5件およびB-1～B-4投入完了、B-5～B-9は調査・投入計画まで完了（CSV未投入）**
 
 ## 1. 目的・判定原則
 
@@ -575,3 +575,125 @@ A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035�
 49. **release_tracks**: L00041～L00046の各releaseにdisc 1、track 1=J00039、track 2=J00040、track 3=J00041を登録し、合計18行を追加した。商品上のtrack番号を維持した。
 50. **対象外・後続**: Instrumental（各盤track 4～6）は本DBのsong／release_tracks管理対象外として登録していない。DVD映像は音源データへ追加せず、将来のvideos／video_songs系タスク候補とする。2013-09-11のデジタル配信はrelease粒度確定後の後続タスク、`First Squeeze！`は収録音源の同一性を同アルバム調査時に確認する後続タスクとして、いずれも今回登録していない。
 51. **投入後件数**: releases 46、release_tracks 205、songs 42、works 31、creators 36、artists 2、members 8。data-spec変更なし。
+
+## 15. B-5～B-9 1stアルバム前5シングル調査・投入計画（未投入）
+
+調査日: 2026-10-03。対象は2013-12-04から2015-04-08までの5シングルだけとし、`First Squeeze！`は関係確認に限った。Hello! Project公式release本文と公式NEWSを一次情報に用い、正本CSV 14表、README、data-specを再照合した。**この節は調査・計画のみで、`data/*.csv`および`docs/data-spec.md`は変更していない。**
+
+### 15.1 結論と停止点
+
+- **そのまま投入可能（分類A）**: physical 29形態、各盤の通常曲2 track（計58 relation）、10 work、10 song（いずれも`original`候補）、公式作家relation、各songの`G00001` / `primary`。InstrumentalとDVD映像は現仕様どおり投入しない。
+- **DB方針判断が必要（分類B）**: 2013-11-27先行「着うたフル」とCD収録音源の同一性を一次情報が明言していないため、最初の2 songの`release_date`を11月27日にするか12月4日にするか。さらに、シングルでは正式track titleが`Ça va ? Ça va ?`、アルバムでは`Ça va ? Ça va ?(サヴァサヴァ)`となる表記差を、同一songの`track_title`差として将来扱うか、音源同一性確認まで別song候補として保留するか。
+- **一次情報不足（分類C）**: 残る4作の発売日前full-audio配信の不存在、全10曲と`First Squeeze！`収録音源の同一audio、個人歌唱者。見つからないことを不存在とはしていない。
+- **停止点**: 上記Bの判断が必要になるまでCSVは一切変更していない。推奨投入単位は **C（判断のある第2シングルを分離し、残る4作をまとめる）**。ただし4作もalbum音源再利用はせず、まずsingle songを作り、`First Squeeze！`投入時に同一audioを再確認する。
+
+### 15.2 公式release・physical edition一覧
+
+全作のartistはJuice=Juice、種別はCDシングル、labelはhachama。sourceは各行の公式詳細。planned IDは現在最大`L00046`からの便宜的な候補であり、予約・確定ではない。
+
+| single（official title） | edition | catalog | date | CD track差 | DVD | source | planned ID |
+|---|---|---|---|---|---|---|---|
+| イジワルしないで 抱きしめてよ/初めてを経験中 | 初回A | HKCN-50324 | 2013-12-04 | 順序A | MV: イジワル | [公式](https://helloproject.com/release/1667/) | L00047 |
+| 同上 | 初回B | HKCN-50326 | 同日 | 順序A | MV: 初めて | 同上 | L00048 |
+| 同上 | 初回C | HKCN-50328 | 同日 | 順序A | 両曲Close-up、making/off shot | 同上 | L00049 |
+| 同上 | 初回D | HKCN-50330 | 同日 | 順序A | なし | 同上 | L00050 |
+| 同上 | 通常A | HKCN-50331 | 同日 | 順序A | なし | 同上 | L00051 |
+| 同上 | 通常B | HKCN-50332 | 同日 | 順序A | なし | 同上 | L00052 |
+| 裸の裸の裸のKISS/アレコレしたい！ | 初回A | HKCN-50343 | 2014-03-19 | 順序A | 裸… MV/Dance Shot | [公式](https://helloproject.com/release/8/) | L00053 |
+| 同上 | 初回B | HKCN-50345 | 同日 | 順序B | アレコレ… MV/Dance Shot | 同上 | L00054 |
+| 同上 | 初回C | HKCN-50347 | 同日 | 順序A | 両曲Close-up、making/off shot | 同上 | L00055 |
+| 同上 | 通常A | HKCN-50349 | 同日 | 順序A | なし | 同上 | L00056 |
+| 同上 | 通常B | HKCN-50350 | 同日 | 順序B | なし | 同上 | L00057 |
+| ブラックバタフライ/風に吹かれて | 初回A | HKCN-50367 | 2014-07-30 | 順序A | ブラック… MV | [公式](https://helloproject.com/release/2277/) | L00058 |
+| 同上 | 初回B | HKCN-50369 | 同日 | 順序B | 風… MV | 同上 | L00059 |
+| 同上 | 初回C | HKCN-50371 | 同日 | 順序A | ブラック… Dance Shot、making/off shot | 同上 | L00060 |
+| 同上 | 初回D | HKCN-50373 | 同日 | 順序B | 風… Dance Shot、making/off shot | 同上 | L00061 |
+| 同上 | 通常A | HKCN-50375 | 同日 | 順序A | なし | 同上 | L00062 |
+| 同上 | 通常B | HKCN-50376 | 同日 | 順序B | なし | 同上 | L00063 |
+| 背伸び/伊達じゃないよ うちの人生は | 初回A | HKCN-50387 | 2014-10-01 | 順序A | 背伸び MV | [公式](https://helloproject.com/release/2371/) | L00064 |
+| 同上 | 初回B | HKCN-50389 | 同日 | 順序B | 伊達… MV | 同上 | L00065 |
+| 同上 | 初回C | HKCN-50391 | 同日 | 順序A | 背伸び Dance Shot、making/off shot | 同上 | L00066 |
+| 同上 | 初回D | HKCN-50393 | 同日 | 順序B | 伊達… Dance Shot、making/off shot | 同上 | L00067 |
+| 同上 | 通常A | HKCN-50395 | 同日 | 順序A | なし | 同上 | L00068 |
+| 同上 | 通常B | HKCN-50396 | 同日 | 順序B | なし | 同上 | L00069 |
+| Wonderful World/Ça va ? Ça va ? | 初回A | HKCN-50407 | 2015-04-08 | 順序A | Wonderful… MV | [公式](https://helloproject.com/release/4094/) | L00070 |
+| 同上 | 初回B | HKCN-50409 | 同日 | 順序B | Ça va… MV | 同上 | L00071 |
+| 同上 | 初回C | HKCN-50411 | 同日 | 順序A | Wonderful… Dance Shot、making/off shot | 同上 | L00072 |
+| 同上 | 初回D | HKCN-50413 | 同日 | 順序B | Ça va… Dance Shot、making/off shot | 同上 | L00073 |
+| 同上 | 通常A | HKCN-50415 | 同日 | 順序A | なし | 同上 | L00074 |
+| 同上 | 通常B | HKCN-50416 | 同日 | 順序B | なし | 同上 | L00075 |
+
+**CD構成凡例:** 順序Aは「表題1、表題2、表題1(Instrumental)、表題2(Instrumental)」、順序Bは両曲を逆順にした全4 track。第1作だけ全6形態が順序A。その他は上表どおりA/Bがある。通常曲の盤間差はなく、track順だけが異なる。Instrumentalは実CDに全盤2曲あるが、work/song/creator/artist/release_tracksを作らない。映像も今回video系CSVへ入れず、別song作成理由にしない。
+
+### 15.3 対象10曲・既存CSV突合・投入候補
+
+現在CSVを完全一致・部分一致・`version_name`・later releaseまで検索した結果、対象10 titleはworks/songs/release_tracksのいずれにも存在しない。したがって全曲を **C（新規work + 新規song候補）** と分類する。後年の`(2023)`は現CSV未登録で、同一work候補ではあるが今回投入しない。
+
+| title（single公式track表記） | single日 | earliest confirmed full audio / `release_date`候補 | existing work/song | 判定・planned IDs | version | lyrics / composition / arrangement / specialized | artist / performer | First Squeeze！ |
+|---|---:|---|---|---|---|---|---|---|
+| イジワルしないで 抱きしめてよ | 2013-12-04 | 2013-11-27 着うたフル確認。ただしCD同一audio明記なし（B） | — / — | C / W00032・J00042 | original候補 | つんく(C00028) / つんく / 大久保薫(C00030) / — | G00001 primary / 追加なし | Disc1-5、表記差なし。audio同一性未確定 |
+| 初めてを経験中 | 同上 | 同上 | — / — | C / W00033・J00043 | original候補 | つんく / つんく / AKIRA(新規候補) / 鈴木俊介(C00035), brass_arrangement | 同上 | Disc1-6、表記差なし。audio同一性未確定 |
+| 裸の裸の裸のKISS | 2014-03-19 | 2014-03-19（同日full配信確認、先行未確認） | — / — | C / W00034・J00044 | original候補 | つんく / つんく / 平田祥一郎(C00009) / — | 同上 | Disc1-7、表記差なし。audio同一性未確定 |
+| アレコレしたい！ | 同上 | 同上 | — / — | C / W00035・J00045 | original候補 | つんく / つんく / 近藤圭一(新規候補) / — | 同上 | Disc1-8、表記差なし。audio同一性未確定 |
+| ブラックバタフライ | 2014-07-30 | 2014-07-30（同日full配信確認、先行未確認） | — / — | C / W00036・J00046 | original候補 | つんく / つんく / 平田祥一郎 / — | 同上 | Disc1-9、表記差なし。audio同一性未確定 |
+| 風に吹かれて | 同上 | 同上 | — / — | C / W00037・J00047 | original候補 | つんく / つんく / 平田祥一郎 / — | 同上 | Disc1-10、表記差なし。audio同一性未確定 |
+| 背伸び | 2014-10-01 | 2014-10-01（physical。発売日前full配信未確認） | — / — | C / W00038・J00048 | original候補 | つんく / つんく / 平田祥一郎 / — | 同上 | Disc1-11、表記差なし。audio同一性未確定 |
+| 伊達じゃないよ うちの人生は | 同上 | 同上 | — / — | C / W00039・J00049 | original候補 | つんく / つんく / 平田祥一郎 / — | 同上 | Disc1-12、表記差なし。audio同一性未確定 |
+| Wonderful World | 2015-04-08 | 2015-04-08（physical。発売日前full配信未確認） | — / — | C / W00040・J00050 | original候補 | イイジマケン(C00031) / 同 / gaokalab(新規候補) / — | 同上 | Disc2-1、表記差なし。audio同一性未確定 |
+| Ça va ? Ça va ? | 同上 | 同上 | — / — | C / W00041・J00051 | original候補 | 三浦徳子(C00004) / 川辺ヒロシ・上田禎(各新規候補) / CMJK(新規候補) / — | 同上 | Disc2-6は`Ça va ? Ça va ?(サヴァサヴァ)`。audio同一性・表記方針未確定 |
+
+sourceは各曲のsingle公式詳細（15.2）および[First Squeeze！公式詳細](https://helloproject.com/release/4204/)。`credit_name`は上表の公式表記をそのまま使う。共同作曲は川辺ヒロシと上田禎を別relationにする。新規creator候補は6名（AKIRA、近藤圭一、gaokalab、川辺ヒロシ、上田禎、CMJK）で、実投入時に最大IDを再確認して採番する。今回のspecialized roleは既存仕様で扱える`brass_arrangement` 1件だけで、新roleは不要。
+
+公式の「歌」は全曲Juice=Juiceで、featured/別artist/特殊名義なし。従って`G00001` / `primary`候補。公式releaseは個人歌唱者を明示しないため、在籍から推測せず`song_performers`追加なしとする。
+
+### 15.4 デジタル配信調査
+
+| 対象 | 公式NEWSで確認した事実 | 発売前か | full-audio判断 | source |
+|---|---|---:|---|---|
+| イジワル… / 初めて… | 2013-11-27、両曲の「着うたフル」をDAM★うたフルで独占先行、同日「着うた」を各サイトで開始 | はい（7日前） | 着うたフルはfull、着うたは部分音源として区別 | [先行NEWS](https://helloproject.com/news/153/)、[12/4各社開始](https://helloproject.com/juicejuice/news/142/) |
+| 裸… / アレコレ… | 2014-03-19から着うた、着うたフル、PC・スマホシングル、ビデオ配信 | 同日 | 着うたフルおよびPC・スマホシングルはfull候補 | [公式NEWS](https://helloproject.com/news/5/) |
+| ブラック… / 風… | 2014-07-30から着うた、着うたフル、PC・スマホシングル、ビデオ配信 | 同日 | 同上 | [公式NEWS](https://helloproject.com/news/1886/) |
+| 背伸び / 伊達… | 今回の公式NEWS検索では発売日前後の音源配信告知を取得できず | 未確認 | 未確認。不存在とはしない | [公式release](https://helloproject.com/release/2371/)の現行「音楽配信一覧」導線のみ |
+| Wonderful… / Ça va… | 今回の公式NEWS検索では購入特典告知は確認したが、日付入り音源配信告知を取得できず | 未確認 | 未確認。不存在とはしない | [購入特典NEWS](https://helloproject.com/juicejuice/news/2687/)、[公式release](https://helloproject.com/release/4094/) |
+
+配信サービス単位のdigital release entityは今回作らない。先行NEWSは両曲をsingle名で特定するが、「CD収録と同一マスター/audio」とまでは明記しないため、2013-11-27を`songs.release_date`へ確定適用するには次節の判断が必要。その他8曲は、確認できた最早full audioが同日またはphysicalであるため、現時点の候補日は各physical日とする。
+
+### 15.5 First Squeeze！との関係（参考のみ）
+
+公式albumページでは今回の10曲すべてを収録し、明示的なNew Vocal等のversion表記はない。最初の8曲はDisc 1 track 5～12、`Wonderful World`はDisc 2 track 1、`Ça va ? Ça va ?(サヴァサヴァ)`はDisc 2 track 6。creator creditはsingleと一致する。durationはsingle→albumで、イジワル04:02→04:01、初めて04:14→04:14、裸03:58→03:58、アレコレ03:48→03:47、ブラック03:52→03:52、風03:42→03:41、背伸び04:28→04:28、伊達04:07→04:07、Wonderful04:14→04:14、Ça va03:46→03:46。
+
+一致するtitle/credit/durationだけでは同一audioを証明しない。差があることも別audioの証明とはしない。したがってalbum側は**全10曲とも「First Squeeze！投入時に再確認」**であり、今回release/release_tracks/song/workを追加しない。特に`Ça va ? Ça va ?`はsingle公式trackに読み仮名がなく、album trackだけに`(サヴァサヴァ)`があるため、single DB title候補は公式どおり`Ça va ? Ça va ?`（アクセント付き、半角空白を挟む疑問符）とし、括弧をversion_nameへ推測移送しない。
+
+### 15.6 ユーザー判断事項
+
+**対象:** 「イジワルしないで 抱きしめてよ」「初めてを経験中」の`songs.release_date`
+
+- **公式に確認できた事実:** 2013-11-27に両曲の着うたフル先行配信、2013-12-04にphysical発売および各社着うたフル配信。
+- **現在CSV:** work/songとも未登録。
+- **参考URL:** [先行NEWS](https://helloproject.com/news/153/)、[公式release](https://helloproject.com/release/1667/)。
+- **判断できない理由:** NEWSはsingleと両曲を特定するが、先行ファイルとCD収録audioが同一であることを明記しない。
+- **選択肢:** A. 同一audioとして2013-11-27（2 songを先行日にする） / B. 厳格に2013-12-04（physical日） / C. song作成自体を保留。
+- **各選択肢のCSV影響:** A/BはJ00042・J00043の`release_date`だけが異なる。Cは第2シングルのwork/song/release投入を全保留。
+- **推奨:** A。公式が当該single両曲の「着うたフル」と明示するため。ただし厳格なaudio identity基準を優先するならB。
+- **停止点:** この判断が必要になるまでCSVは変更していない。
+
+**対象:** `Ça va ? Ça va ?`と`First Squeeze！`の`Ça va ? Ça va ?(サヴァサヴァ)`
+
+- **公式に確認できた事実:** single CD trackは読み仮名なし、album trackは括弧付き。creditと03:46は一致し、別version表記はない。
+- **現在CSV:** どちらも未登録。
+- **参考URL:** [single](https://helloproject.com/release/4094/)、[album](https://helloproject.com/release/4204/)。
+- **判断できない理由:** 公式は同一audioを明言せず、同名・同尺・同creditだけでは統合禁止。
+- **選択肢:** A. 今回single songだけ作りalbum投入時に再確認 / B. 今回から同一song再利用を予定 / C. single songも保留。
+- **各選択肢のCSV影響:** AはW00041/J00051を作るがalbum relationなし。Bは将来同じJ00051へalbumを接続。Cは当該work/songと関連trackを保留。
+- **推奨:** A。今回のsingle投入を妨げず、未証明のalbum同一性を断定しない。
+- **停止点:** この判断が必要になるまでCSVは変更していない。
+
+### 15.7 件数、後続タスク、仕様検討
+
+- physical release追加予定: **29**（候補L00047～L00075）。通常曲のrelease_tracks追加予定: **58**。Instrumental 58 trackは商品上の存在だけ記録し、relation追加なし。
+- work追加予定: **10**（候補W00032～W00041）。song追加予定: **10**（候補J00042～J00051）。全曲`original`候補。IDは投入直前に再計算する。
+- creator: 既存4名（C00028/C00030/C00009/C00035）に加え、C00031/C00004も利用し、新規6名候補。artist追加なし、song_artists 10、song_performers 0。
+- 後続1: ユーザー判断後、推奨どおり第2シングルを単独投入し、残る4作を一括投入する。各単位でvalidationと件数を確認する。
+- 後続2: digital release entityの粒度を別設計し、今回確認した着うた/着うたフル/PC・スマホ配信はそのフェーズまでrelease化しない。
+- 後続3: `First Squeeze！`調査時にmaster/audio identityを公式資料で再確認し、証明できた曲だけsingle song IDを再利用する。
+- **仕様検討事項（data-specは未変更）:** 同じrelease告知に紐づく着うたフルを、明示的な「CDと同一audio」という記述なしでspecific song初出とみなす証拠基準。括弧付き読み仮名の`track_title`差をwork/song identityから独立して扱う運用。
