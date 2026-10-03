@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-10-02（B-1インディーズ通常版投入を反映）
-状態: **優先度A 5件およびB-1完了、次の対象はB-2**
+調査日: 2026-10-03（B-2インディーズ通常版投入を反映）
+状態: **優先度A 5件およびB-1～B-2完了、次の対象はB-3**
 
 ## 1. 目的・判定原則
 
@@ -32,7 +32,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 - https://www.helloproject.com/discography/juicejuice/ — HTTP 403
 - https://helloproject.com/juicejuice/release/6692/ — repositoryに保存済みのURLと既調査track情報のみ参照し、再取得不能
 
-その後、ChatGPT側でHello! Project公式サイトを確認した。以下では、依頼文で提供された確認結果を入力データとして**公式確認済み**へ更新した。今回Codex側ではWeb再調査をしていない。個別URLが依頼文にないものは推測せず、その旨を明記する。
+その後、ChatGPT側でHello! Project公式サイトを確認した。以下では、依頼文で提供された確認結果を入力データとして**公式確認済み**へ更新した。個別URLが依頼文にないものは推測せず、その旨を明記する。2026-10-03のB-2投入時には[公式release](https://helloproject.com/release/2211/)を再取得し、発売日、規格品番、収録曲、作家クレジットおよびJuice=Juice名義を確認した。
 
 2026-09-27のA-3再開時にも公式URLへの接続はHTTP 403、Web検索はHTTP 401となった。音源同一性とカバー区分はその後のユーザー確定判断を採用した。当時取得できなかった商品形態・規格品番・盤別track構成、および追加公式ニュースの確認結果は、その後ユーザーから提供された確定情報として4.7節へ反映した。
 
@@ -43,7 +43,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 | 発売日 | 種別 | タイトル | terzo補完 | 優先度 | 公式URL・状態 | notes |
 |---|---|---|---|---|---|---|
 | 2013-04-03 | インディーズシングル | 私が言う前に抱きしめなきゃね | — | B | [公式詳細](https://helloproject.com/release/2210/) | **B-1投入完了。** `L00038` / `W00028` / `J00036`。通常版と後発MEMORIAL EDITは同一work／別songとする。 |
-| 2013-05-05 | インディーズシングル | 五月雨美女がさ乱れる | — | B | [旧公式一覧](https://www.helloproject.com/discography/juicejuice/) | 後発MEMORIAL EDITとは別Version候補。 |
+| 2013-05-05 | インディーズシングル | 五月雨美女がさ乱れる | — | B | [公式詳細](https://helloproject.com/release/2211/) | **B-2投入完了。** `L00039` / `W00029` / `J00037`。通常版と後発MEMORIAL EDITは同一work／別songとする。 |
 | 2013-06-12 | インディーズシングル | 天まで登れ！ | — | B | [旧公式一覧](https://www.helloproject.com/discography/juicejuice/) | 正式名義を投入時確認。 |
 | 2013-09-11 | CDシングル | ロマンスの途中／私が言う前に抱きしめなきゃね(MEMORIAL EDIT)／五月雨美女がさ乱れる(MEMORIAL EDIT) | — | B | [公式一覧](https://helloproject.com/juicejuice/release/) | Version検証が必要。 |
 | 2013-12-04 | CDシングル | イジワルしないで 抱きしめてよ／初めてを経験中 | — | B | [公式一覧](https://helloproject.com/juicejuice/release/) | 盤別track差を確認。 |
@@ -276,7 +276,15 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 - 作家クレジットは作詞・作曲＝つんく（`C00028`）、編曲＝平田祥一郎（`C00009`）。artistはJuice=Juice（`G00001`）を `primary` とした。個々のperformerは当時の所属から推測せず、`song_performers.csv` には追加していない。
 - 後発「私が言う前に抱きしめなきゃね(MEMORIAL EDIT)」と2013-09-11メジャーデビューreleaseは今回未投入。将来MEMORIAL EDITを登録する際は、`W00028` を必ず再利用し、originalの `J00036` は再利用せず新規song IDを作成する。`version_type` はその時点のdata-specと2013-09-11公式release情報に従って確定し、通常版とMEMORIAL EDITを同一workの別songとして維持する。
 - artist共通設計は `docs/data-spec.md` で確定済みである。「天まで登れ！」の将来投入時は、ハロプロ研修生 feat. Juice=Juice版をハロプロ研修生=`primary`、Juice=Juice=`featured`、Juice=Juice単独版をJuice=Juice=`primary` とする。B-3のrelease/song/artistデータはまだ投入していない。
-- **B-1は完了**。次のCSV投入対象はB-2「五月雨美女がさ乱れる」とする。B-2以降には着手していない。
+- **B-1は完了**。B-1完了時点では次のCSV投入対象をB-2「五月雨美女がさ乱れる」とし、B-2以降には着手していなかった。
+
+### 5.2 B-2「五月雨美女がさ乱れる」投入完了（2026-10-03）
+
+- 対象は **2013-05-05** 発売の「五月雨美女がさ乱れる」、規格品番 `UFCW-1065`。[公式release](https://helloproject.com/release/2211/)のCD構成はtrack 1「五月雨美女がさ乱れる」、track 2「五月雨美女がさ乱れる(Instrumental)」である。`L00039`にはdisc 1・track 1の `J00037` のみを登録し、Instrumentalは収集対象外として除外した。
+- 事前確認時点の正本CSVには通常版、MEMORIAL EDITおよび対応workが存在しなかったため、ユーザー確定方針に従い `W00029` と通常版 `J00037` を新設した。`J00037` は `version_type=original`、`release_date=2013-05-05` である。後発「五月雨美女がさ乱れる(MEMORIAL EDIT)」とそれを収録するreleaseは今回未投入であり、将来は `W00029` を共有する別song IDを作成する。通常版の `J00037` は再利用せず、version_typeは将来の登録時点の仕様と公式情報から確定する。
+- 作家クレジットは作詞・作曲＝つんく（`C00028`）、編曲＝板垣祐介（新規 `C00036`）、ブラスアレンジ＝鈴木俊介（既存 `C00035`）。`song_creators.role` に `brass_arrangement` を正式追加し、通常の `arrangement` と分離する共通仕様を `docs/data-spec.md` に定めた。鈴木俊介を通常編曲へ統合していない。
+- artistはJuice=Juice（`G00001`）を `primary`、`credit_order=1` とした。featured artistはない。個々のperformerは当時の所属から推測せず、`song_performers.csv` には追加していない。
+- **B-2は完了**。次のCSV投入対象はB-3「天まで登れ！」とする。B-3のwork、song、release、track、artistおよびcreator relationには着手していない。B-3の公式creditでブラスアレンジが明示された場合は、今回追加した `brass_arrangement` roleを再利用する。
 
 - **B（15件）**: インディーズ3作、2013-09-11から2018-04-18までの主要CD、`First Squeeze！`、`Juice=Juice#2 -¡Una más!-`。明示Version、MEMORIAL EDIT、Album Version、2022 ver.の境界を確認する。
 - **C（7件）**: (1) 全部賭けてGO！！…、(2) プライド・ブライト…、(3) Juicetory、(4) トウキョウ・ブラー…、(5) 初恋の亡霊…、(6) 四の五の言わず颯と別れてあげた…、(7) **MORE! MORE! EP**。2026年の通常releaseが未確認という旧状態は解消した。
@@ -375,8 +383,8 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 
 ## 11. 登録済みreleaseとCSV投入状況
 
-`data/releases.csv`にはterzo 3盤（L00001～L00003）、A-1～A-5の34盤（L00004～L00037）、B-1のインディーズシングル（L00038）の**計38 releaseレコード**がある。`release_tracks.csv`は184行、`songs.csv`は36行、`works.csv`は28行である。
-A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035を追加した。A-5ではJ00014～J00016を再利用し、Familiaの作家誤登録訂正に伴うcreator 3件だけを追加した。B-1ではL00038/W00028/J00036を追加した。B-2以降、Juicetory、ハロ！ステDB・Web・集計処理には着手していない。
+`data/releases.csv`にはterzo 3盤（L00001～L00003）、A-1～A-5の34盤（L00004～L00037）、B-1～B-2のインディーズシングル（L00038～L00039）の**計39 releaseレコード**がある。`release_tracks.csv`は185行、`songs.csv`は37行、`works.csv`は29行である。
+A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035を追加した。A-5ではJ00014～J00016を再利用し、Familiaの作家誤登録訂正に伴うcreator 3件だけを追加した。B-1ではL00038/W00028/J00036、B-2ではL00039/W00029/J00037およびC00036を追加した。B-3以降、Juicetory、ハロ！ステDB・Web・集計処理には着手していない。
 
 ## 12. 件数集計
 
@@ -388,7 +396,7 @@ A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035�
 - 更新後の確定release候補総数: 通常28 + D確定15 = **43**。2019-10-23通常盤Cは既存のA-2タイトル候補に含まれる盤違いのため通常候補へ単純加算しない。
 - 更新後の未確定候補: D04～D09、D13の**7**。D11は一般デジタル配信の確認により未確定から除外した。
 - 更新後の最大探索母数: 確定43 + 未確定7 = **50**。
-- DB登録済み: **37 releaseレコード**（terzo 3盤 + A-1 7形態 + A-2の2019-06-05 CD 5形態 + 後発通常盤C 1形態 + A-3 5形態 + A-4通常CD 6形態・Special Edition 1件 + A-5 CD 9形態）。確定release候補総数43はタイトル／release単位のロードマップ件数であり、CSVの盤単位レコード数とは一致しない。
+- DB登録済み: **39 releaseレコード**（terzo 3盤 + A-1 7形態 + A-2の2019-06-05 CD 5形態 + 後発通常盤C 1形態 + A-3 5形態 + A-4通常CD 6形態・Special Edition 1件 + A-5 CD 9形態 + B-1～B-2各1件）。確定release候補総数43はタイトル／release単位のロードマップ件数であり、CSVの盤単位レコード数とは一致しない。
 - 最古の通常候補: 2013-04-03「私が言う前に抱きしめなきゃね」。最新の確認済みrelease: 2026-06-24 `MORE! MORE! EP`。したがって旧記述「最新は2025-10-08」「2026年作品未確認」は更新済み。
 
 ## 13. 公式URL一覧（今回追加分）

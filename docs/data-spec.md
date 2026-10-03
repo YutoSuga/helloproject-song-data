@@ -138,12 +138,16 @@ ID は永続的な識別子であり、発売順・時系列を表さない。�
 |---|---|---:|---|
 | `song_id` | ID | 必須 | 複合 PK、FK → `songs.song_id` |
 | `creator_id` | ID | 必須 | 複合 PK、FK → `creators.creator_id` |
-| `role` | 列挙 | 必須 | 複合 PK、`lyrics`, `composition`, `arrangement` |
+| `role` | 列挙 | 必須 | 複合 PK、`lyrics`, `composition`, `arrangement`, `brass_arrangement` |
 | `credit_name` | 文字列 | 必須 | その song で実際に表示されたクレジット名義 |
 | `credit_order` | 正整数 | 任意 | 同一 song・role 内の公式掲載順 |
 | `source_url` | URL | 必須 | クレジットの一次情報 |
 
 共同担当は作家ごとに 1 行とする。集計では持分按分せず、各 `creator_id` を role ごとに 1 曲と数える。Web 等で当時の正式名義を表示するときは `credit_name` を用いる。
+
+`brass_arrangement` は、公式クレジットで「ブラスアレンジ」「Brass Arrangement」等と明示された作家に使用し、通常の「編曲」を表す `arrangement` とは別の relation として保持する。例えば公式表記が「編曲：A、ブラスアレンジ：B」であれば、A を `arrangement`、B を `brass_arrangement` として登録し、B を `arrangement` に統合しない。反対に、公式クレジットが単に「編曲」とだけ記載されている場合は、推測で `brass_arrangement` へ分解しない。この規則は特定の楽曲に限らず今後登録する全データへ適用する。
+
+`credit_name` には従来どおり実際の作家クレジット名義を記録し、role の意味を示す「ブラスアレンジ」等の文言を押し込まない。現時点で正式な特殊 arrangement role は `brass_arrangement` のみとし、その他の特殊 role は公式データで必要になった時点で個別に仕様追加を判断する。編曲ランキングは従来どおり `role=arrangement` を基本対象とし、`brass_arrangement` を自動合算しない。検索 relation とランキングの集計範囲は分離し、将来必要なら通常編曲、ブラスアレンジ、arrangement 系参加全体を別々に集計できる構造を維持する。
 
 ### `data/artists.csv`
 
@@ -339,7 +343,7 @@ song を「Juice=Juice が参加した song」として取得できるように�
 | `songs.version_type` | `original`, `new_vocal`, `re_recording`, `cover`, `other` |
 | `artists.type` | `group`, `solo`, `temporary_unit`, `shuffle_unit`, `special_unit`, `project`, `other` |
 | `releases.release_type` | `single`, `album`, `digital`, `other` |
-| `song_creators.role` | `lyrics`, `composition`, `arrangement` |
+| `song_creators.role` | `lyrics`, `composition`, `arrangement`, `brass_arrangement` |
 | `song_artists.role` | `primary`, `featured` |
 
 列挙値は既存値を読み替えず、仕様を先に改定して追加する。訳詞・補作詞等も既存 role へ無理に寄せない。
