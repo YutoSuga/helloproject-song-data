@@ -432,9 +432,9 @@ A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035�
 
 `如雨露`、`Fiesta! Fiesta!`、`プライド・ブライト`先行配信、UFDL-1572、UFDL-1573、`MORE! MORE! EP`はChatGPT側でHello! Project公式掲載を確認済みだが、依頼文に個別URLが提示されていないためURLを生成していない。
 
-## 14. B-4 2013-09-11メジャーデビューシングル調査・投入計画（未投入）
+## 14. B-4 2013-09-11メジャーデビューシングル調査・投入（完了）
 
-調査日: 2026-10-03。本節は次回投入のための調査記録であり、CSVへ投入済みであることを意味しない。公式一次情報、現行CSVとの突合、未確定事項、投入案を分けて記す。
+調査日・投入日: 2026-10-03。前回の調査記録と投入計画を保持し、確定方針に基づく実投入結果を14.8へ追記する。
 
 ### 14.1 公式release情報
 
@@ -551,6 +551,27 @@ A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035�
 ### 14.7 推奨投入手順と変更範囲
 
 40. **推奨投入手順**: (1) ユーザーがMEMORIAL EDITのversion_typeとデジタルrelease方針を確定、(2) W00031候補を作成、(3) J00039～J00041候補を作成、(4) 既存creatorでsong_creatorsを作成、(5) G00001のsong_artistsを作成しsong_performersは追加しない、(6) L00041～L00046候補を6形態分作成、(7) release_tracks 18行を作成、(8) schema・参照整合性・件数・CSV差分を検証、(9) 後続First Squeeze！および映像は別タスクで扱う。
-41. **今回変更したファイル**: `docs/research/juicejuice-discography-plan.md`のみ。
-42. **CSV未変更確認**: `data/*.csv`は変更しない。
+41. **前回調査フェーズで変更したファイル**: `docs/research/juicejuice-discography-plan.md`のみ。
+42. **前回調査フェーズのCSV未変更確認**: `data/*.csv`は変更しなかった。
 43. **data-spec未変更確認**: `docs/data-spec.md`は変更しない。新enumも追加しない。
+
+### 14.8 実投入結果
+
+44. **完了状態**: 2013-09-11メジャーデビューシングルのphysical 6形態を正本CSVへ投入完了。labelは`hachama`だが現行release schemaにlabel列がないため構造化していない。
+45. **release ID・盤種・品番**:
+
+   | release ID | edition | catalog number |
+   |---|---|---|
+   | L00041 | 初回生産限定盤A（DVD付） | HKCN-50310 |
+   | L00042 | 初回生産限定盤B（DVD付） | HKCN-50312 |
+   | L00043 | 初回生産限定盤C（DVD付） | HKCN-50314 |
+   | L00044 | 初回生産限定盤D（DVD付） | HKCN-50316 |
+   | L00045 | 初回生産限定盤E（DVD付） | HKCN-50318 |
+   | L00046 | 通常盤（CD） | HKCN-50320 |
+
+46. **work・song**: 新規workはW00031=`ロマンスの途中`のみ。J00039（W00031、version_nameなし、`original`）、J00040（W00028、`MEMORIAL EDIT`、`other`）、J00041（W00029、`MEMORIAL EDIT`、`other`）を追加し、release_dateはいずれも2013-09-11とした。MEMORIAL EDIT用のworkは作らず既存W00028／W00029を共有し、既存J00036／J00037の`original`は維持した。
+47. **creator credit**: J00039はつんく（C00028）がlyrics／composition、鈴木俊介（C00035）がarrangement。J00040はつんく（C00028）がlyrics／composition、平田祥一郎（C00009）がarrangement。J00041はつんく（C00028）がlyrics／composition、板垣祐介（C00036）がarrangement、鈴木俊介（C00035）が`brass_arrangement`。鈴木俊介をJ00041の通常arrangementには重複登録していない。新規creatorは追加していない。
+48. **artist・performer**: 3 songともJuice=Juice（G00001）を`primary`、credit_order 1で登録した。featured artistおよびsong_performersは追加していない。
+49. **release_tracks**: L00041～L00046の各releaseにdisc 1、track 1=J00039、track 2=J00040、track 3=J00041を登録し、合計18行を追加した。商品上のtrack番号を維持した。
+50. **対象外・後続**: Instrumental（各盤track 4～6）は本DBのsong／release_tracks管理対象外として登録していない。DVD映像は音源データへ追加せず、将来のvideos／video_songs系タスク候補とする。2013-09-11のデジタル配信はrelease粒度確定後の後続タスク、`First Squeeze！`は収録音源の同一性を同アルバム調査時に確認する後続タスクとして、いずれも今回登録していない。
+51. **投入後件数**: releases 46、release_tracks 205、songs 42、works 31、creators 36、artists 2、members 8。data-spec変更なし。
