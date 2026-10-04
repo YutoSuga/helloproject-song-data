@@ -1442,7 +1442,8 @@ Instrumental、BD/DVD映像、通常曲の推測performer、member affiliation�
 | S4 | SEXY SEXY/泣いていいよ/Vivid Midnight | Juice=Juice | 2018-04-18 | 7 | 3 | https://helloproject.com/release/5586/ |
 | **total** | 4作品 |  |  | **24** | **10** |  |
 
-結論は **READY AFTER USER DECISION**。10曲はいずれもFirst Squeeze！までのCSVに同一workがなく、
+調査時点の結論は **READY AFTER USER DECISION** だったが、17.13記載のユーザー判断が確定したため、
+現在の結論は **READY**。10曲はいずれもFirst Squeeze！までのCSVに同一workがなく、
 今回のシングルが公式に確認できる最初の通常releaseなので **C（new work + new song）10 / A 0 / B 0 /
 D 0** とする。audio identityの重大な保留はない。一方、S1の`Next is you!`は公式artistが`NEXT YOU`で、
 既存artist masterにないため新規artist候補が必要である。またS3は同じ公式releaseページ内で
@@ -1521,7 +1522,7 @@ ID順でなく公式chronologyを基準にした。
 | 2016-10-26 | S2 | 2 | KEEP ON 上昇志向！！ | 04:24 | C | planned W00056 | planned J00070 | 空欄 | original | 2016-10-26 | 前山田健一 / 前山田健一 / ダンス☆マン / brass: 川松久芳 | 個人表記なし | 同上 | specialized roleは既存brass_arrangementで表現可能 |
 | 2016-10-26 | S2 | 3 | 明日やろうはバカやろう | 03:34 | C | planned W00057 | planned J00071 | 空欄 | original | 2016-10-26 | 福田花音 / 板垣祐介 / 板垣祐介 | 個人表記なし | 同上 |  |
 | 2017-04-26 | S3 | 1 | 地団駄ダンス | 03:48 | C | planned W00058 | planned J00072 | 空欄 | original | 2017-04-26 | 児玉雨子 / BLACC HOLE・NOBB-D / BLACC HOLE・NOBB-D・T | 個人表記なし | https://helloproject.com/release/5152/ | `with T`を共同arrangement creditとして保持 |
-| 2017-04-26 | S3 | 2 | Feel！感じるよ（候補） | 03:58 | C | planned W00059 | planned J00073 | 空欄 | original | 2017-04-26 | 三浦徳子 / 中村瑛彦 / 中村瑛彦 | 個人表記なし | 同上 | page内で`Feel!感じるよ`も表示。表記のみ要確認 |
+| 2017-04-26 | S3 | 2 | Feel！感じるよ | 03:58 | C | planned W00059 | planned J00073 | 空欄 | original | 2017-04-26 | 三浦徳子 / 中村瑛彦 / 中村瑛彦 | 個人表記なし | 同上 | page内の`Feel!感じるよ`は表記揺れ。同一work/songとして全角`！`をcanonicalに採用 |
 | 2018-04-18 | S4 | 1 | SEXY SEXY | 04:45 | C | planned W00060 | planned J00074 | 空欄 | original | 2018-04-18 | つんく / つんく / 平田祥一郎 | 個人表記なし | https://helloproject.com/release/5586/ | 2nd albumは04:21表示のためidentity再確認必須 |
 | 2018-04-18 | S4 | 2 | 泣いていいよ | 04:55 | C | planned W00061 | planned J00075 | 空欄 | original | 2018-04-18 | 大森祥子 / 中村瑛彦 / 中村瑛彦 | 個人表記なし | 同上 | albumは04:56（小差だけで別audioにしない） |
 | 2018-04-18 | S4 | 3 | Vivid Midnight | 04:05 | C | planned W00062 | planned J00076 | 空欄 | original | 2018-04-18 | 児玉雨子 / SEION・Tasco・Tenzo / Tasco・Tenzo | 個人表記なし | 同上 | albumも04:05 |
@@ -1557,7 +1558,7 @@ ID順でなく公式chronologyを基準にした。
 
 - 5形態すべてCD track 1～2が同順、track 3～4はInstrumental。planned audio relationは各2件。
 - official product headingは`Feel！感じるよ`、track欄は`Feel!感じるよ`で感嘆符が不一致。albumページは
-  `Feel！感じるよ`。canonical候補はproduct titleに合わせた全角`！`だが、投入前にユーザー判断を求める。
+  `Feel！感じるよ`。ユーザー判断によりproduct titleに合わせた全角`！`をcanonicalとして確定した。
 - releaseページの配信リンクは確認したが、発売前または当日のfull-audio開始日を明記した公式newsは今回
   見つけられなかった。確認できた最初のfull-audio release 2017-04-26を候補とする。
 - event Vは2017-06-30に公式Web Store販売開始が確認できるが映像商品のため対象外。
@@ -1614,11 +1615,14 @@ KEEP ONの1 relationだけ既存`brass_arrangement`を使う。`with T`はrole�
 
 | song | official artist / 歌 | planned relation | individual performer |
 |---|---|---|---|
-| Next is you! | NEXT YOU | planned G00003 / primary（ユーザー確認後） | singleページには個人名なし |
+| Next is you! | NEXT YOU | G00003 / primary + G00001 / primary | singleページには個人名なし |
 | カラダだけが大人になったんじゃない | Juice=Juice | G00001 / primary | singleページには個人名なし |
 | S2・S3・S4の8曲 | Juice=Juice | 各G00001 / primary | singleページには個人名なし |
 
-planned `song_artists`は10 relation。`NEXT YOU`は公式に独立した歌唱名義なのでartist master候補とする。
+planned `song_artists`は11 relation。`NEXT YOU`はG00003、`type=temporary_unit`のartist masterとし、
+`Next is you!`にはNEXT YOUとJuice=Juiceの双方を主体としてprimaryで紐付ける。Juice=Juiceは客演では
+ないためfeaturedにしない。この判断は検索目的だけのprimary追加ではなく、複数のartist identityが当該songの
+主体として実質的に成立する場合に限る複数primaryルールの適用である。公式歌唱名義はNEXT YOUである。
 既存在籍memberから個人performerを推測しない。4 singleの公式audio欄に個人名はなく、planned
 `song_performers=0`、new member candidate=0、planned member IDなし。event VのSolo Ver.は映像出演であり
 song performerの根拠にしない。2nd albumは旧5人を曲ごとに明記するが、album audio identityを次回確定して
@@ -1640,7 +1644,7 @@ relation追加を検討する。member affiliationは今回対象外で追加計
 | L00085–L00090 | 1 | 2 | KEEP ON 上昇志向！！ | C | planned J00070 | 6形態共通 | 同上 |
 | L00085–L00090 | 1 | 3 | 明日やろうはバカやろう | C | planned J00071 | 6形態共通 | 同上 |
 | L00091–L00095 | 1 | 1 | 地団駄ダンス | C | planned J00072 | 5形態共通 | https://helloproject.com/release/5152/ |
-| L00091–L00095 | 1 | 2 | Feel！感じるよ（候補） | C | planned J00073 | punctuation確認後確定 | 同上 |
+| L00091–L00095 | 1 | 2 | Feel！感じるよ | C | planned J00073 | 全角`！`をcanonicalとして確定 | 同上 |
 | L00096–L00102 | 1 | 1 | SEXY SEXY | C | planned J00074 | 7形態共通 | https://helloproject.com/release/5586/ |
 | L00096–L00102 | 1 | 2 | 泣いていいよ | C | planned J00075 | 7形態共通 | 同上 |
 | L00096–L00102 | 1 | 3 | Vivid Midnight | C | planned J00076 | 7形態共通 | 同上 |
@@ -1704,7 +1708,7 @@ Digital releaseは今回のplanned release IDに含めない。videoは将来の
 | members | なし | 0 |
 | release_tracks | 17.8展開結果 | 61 |
 | song_creators | 37 relations | 37 |
-| song_artists | 10 relations | 10 |
+| song_artists | 11 relations | 11 |
 | song_performers | なし | 0 |
 
 | table | current | planned additions | expected after import |
@@ -1717,12 +1721,17 @@ Digital releaseは今回のplanned release IDに含めない。videoは将来の
 | members | 10 | 0 | 10 |
 | artists | 2 | 1 | 3 |
 | song_creators | 217 | 37 | 254 |
-| song_artists | 68 | 10 | 78 |
+| song_artists | 68 | 11 | 79 |
 | song_performers | 13 | 0 | 13 |
 
-この件数は`NEXT YOU`を新規artistにし、S3 titleを`Feel！感じるよ`に確定する推奨案の暫定値である。
+この件数は確定したユーザー判断（`NEXT YOU`を新規artistにし、S3 titleを`Feel！感じるよ`に確定し、
+`Next is you!`をNEXT YOU + Juice=Juiceのdual primaryとする）を反映した確定値である。
 
 ### 17.13 User confirmation items
+
+以下は調査時点の判断待ち記録である。2026-10-04にユーザー判断が完了し、UC-1は
+`G00003 NEXT YOU / temporary_unit`、`Next is you!`はG00003とG00001のdual primary、UC-2は
+全角`！`の`Feel！感じるよ`をcanonical titleとすることで確定した。
 
 #### UC-1 NEXT YOU artist master
 
@@ -1775,6 +1784,23 @@ Digital releaseは今回のplanned release IDに含めない。videoは将来の
 - [x] Markdown tableの各行の列数を機械検証対象とした。
 - [x] `data/*.csv`未変更、`docs/data-spec.md`未変更。
 
-**Final readiness: READY AFTER USER DECISION.** UC-1のartist typeとUC-2のpunctuationを推奨どおり確定すれば、
-planned IDを変えず、次回1回のCodexタスクで4 singleを一括投入できる。次にユーザーが判断すべきことは
-(1) NEXT YOUをG00003 `temporary_unit`とするか、(2) canonical titleを`Feel！感じるよ`とするか、の2点だけである。
+**Final readiness: READY.** UC-1とUC-2は上記のとおり解決済みであり、planned IDを変更せず投入できる。
+
+### 17.16 CSV実投入・validation（2026-10-04）
+
+確定計画どおり、`L00079`～`L00102`、`W00053`～`W00062`、`J00067`～`J00076`、
+`C00053`～`C00064`、`G00003`を正本CSVへ投入した。追加はphysical release 24、release_tracks 61、
+work 10、song 10、creator 12、artist 1、song_creators 37、song_artists 11である。members、
+song_performers、member_affiliationsおよびvideo系CSVは変更していない。Instrumental 61 appearancesと
+DVD / BD / MV / event V等の映像は登録していない。
+
+投入後件数はreleases 102、release_tracks 399、songs 77、works 62、creators 64、members 10、
+artists 3、song_creators 254、song_artists 79、song_performers 13となった。全CSVについてparse、header、
+列数、required fields、enum、ID・日付・timestamp形式、PK、FK、relation完全重複、creator / artist / work
+identity重複、release/disc/track位置重複を検証した。S1/S2/S3/S4のrelease_tracksは12/18/10/21、
+分類はA/B/C/D = 0/0/10/0、unresolved=0である。`Next is you!`のdual primary、他9曲のG00001 primary、
+既存featured relation不変、および`Feel！感じるよ`のwork/song/release_track canonical表記一致も確認した。
+
+次回の2nd album調査では9曲を既存song再利用候補として現行audio identityルールで確認する。特に
+`SEXY SEXY`はsingle公式04:45に対してalbum公式04:21と24秒差があるため、version notation、creator、
+performer、official metadata、audio comparison、intro/outro、edit、recording identityを最優先で確認する。

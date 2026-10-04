@@ -1,3 +1,4 @@
 artist_id,name,type,start_date,end_date,notes,source_url,created_at,updated_at
 G00001,Juice=Juice,group,,,,https://helloproject.com/juicejuice/release/6692/,2026-09-25T07:31:25+00:00,2026-09-25T07:31:25+00:00
 G00002,ハロプロ研修生,trainee,,,厳密な活動開始日は未確認。,https://helloproject.com/release/2212/,2026-10-03T05:42:10+00:00,2026-10-03T05:42:10+00:00
+G00003,NEXT YOU,temporary_unit,,,「Next is you!」の公式歌唱名義。,https://helloproject.com/release/4548/,2026-10-04T12:17:17+00:00,2026-10-04T12:17:17+00:00

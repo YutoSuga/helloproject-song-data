@@ -269,6 +269,12 @@ ID は永続的な識別子であり、発売順・時系列を表さない。�
 - `primary`: 主名義の artist
 - `featured`: featured 参加の artist
 
+1 song に複数の `primary` relationを登録してよい。ただし、これは複数の artist
+identityが当該songの主体として実質的に成立する場合に限る。単なる参加・客演は
+`featured` とし、検索結果へ含めることだけを目的に `primary` を機械的に追加しない。
+また複数primaryを使う場合も、その組み合わせを表すcomposite artistを無条件に新設
+するものではなく、公式に独立したartist entityとして扱う根拠の有無を別途判断する。
+
 例えば「天まで登れ！」の「ハロプロ研修生 feat. Juice=Juice」版を将来登録する
 場合は、ハロプロ研修生を `primary`、Juice=Juice を `featured` とする 2 関係を
 同じ song に登録する。「ハロプロ研修生 feat. Juice=Juice」という複合 artist は
