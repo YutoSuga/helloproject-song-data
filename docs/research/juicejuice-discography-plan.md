@@ -1425,3 +1425,356 @@ release_tracks 75、unresolved audio identity 0。今回の変更は仕様とres
 投入実績はphysical release 3件、release_tracks 75件（L00076=23、L00077=23、L00078=29）、song 15件、work 11件、creator 10件、member 2件、song_creators 47件、song_artists 15件、song_performers 5件である。A/B/C/Dは14/4/11/0、unique audio trackは29、unresolved audio identityは0であり、計画との差異はない。投入後件数はreleases 78、release_tracks 338、songs 67、works 52、creators 52、members 10、artists 2、song_performers 13となった。
 
 Instrumental、BD/DVD映像、通常曲の推測performer、member affiliationは追加していない。artists、member_affiliations、videos、video_songs、video_song_performersおよびdata-specは変更していない。全CSVのparse・header/列数・required field・enum・ID/date/timestamp形式、PK/FK、relation完全重複、release/disc/track位置重複、planned mapping、B 4曲のchronology、source URL、追加件数を機械検証し、すべて正常であることを確認した。
+
+## 17. 2016–2018 pre-2nd-album singles research（2026-10-04、research-only）
+
+### 17.1 Summary
+
+対象は次の4作品である。本節は **canonical CSV投入前の調査だけ**を行い、`data/*.csv`と
+`docs/data-spec.md`は変更しない。一次情報はHello! Project公式releaseページを中心に、公式release一覧、
+配信告知、商品告知を補助に用いた。4作品はすべて`release_type=single`、labelは`hachama`である。
+
+| key | official release | artist表記 | official release date | physical editions | unique audio songs | source |
+|---|---|---|---|---:|---:|---|
+| S1 | Next is you!/カラダだけが大人になったんじゃない | NEXT YOU/Juice=Juice | 2016-02-03 | 6 | 2 | https://helloproject.com/release/4548/ |
+| S2 | Dream Road〜心が躍り出してる〜/KEEP ON 上昇志向！！/明日やろうはバカやろう | Juice=Juice | 2016-10-26 | 6 | 3 | https://helloproject.com/release/4921/ |
+| S3 | 地団駄ダンス/Feel！感じるよ | Juice=Juice | 2017-04-26 | 5 | 2 | https://helloproject.com/release/5152/ |
+| S4 | SEXY SEXY/泣いていいよ/Vivid Midnight | Juice=Juice | 2018-04-18 | 7 | 3 | https://helloproject.com/release/5586/ |
+| **total** | 4作品 |  |  | **24** | **10** |  |
+
+結論は **READY AFTER USER DECISION**。10曲はいずれもFirst Squeeze！までのCSVに同一workがなく、
+今回のシングルが公式に確認できる最初の通常releaseなので **C（new work + new song）10 / A 0 / B 0 /
+D 0** とする。audio identityの重大な保留はない。一方、S1の`Next is you!`は公式artistが`NEXT YOU`で、
+既存artist masterにないため新規artist候補が必要である。またS3は同じ公式releaseページ内で
+`Feel！感じるよ`（商品見出し・edition説明）と`Feel!感じるよ`（CD track表示）が混在する。
+この2点だけを投入前のユーザー確認事項とし、他の確定行のresearchは止めない。
+
+### 17.2 Current CSV baseline
+
+2026-10-04作業開始時のCSVを正として、First Squeeze！投入済みを確認した。`wc -l`からheaderを除いた
+件数と最大IDは次のとおりであり、依頼文の参考完了状態と一致する。
+
+| table | current rows | current max / note |
+|---|---:|---|
+| releases | 78 | L00078 |
+| release_tracks | 338 | L00078を含む |
+| songs | 67 | Juice=Juice系列最大 J00066 |
+| works | 52 | W00052 |
+| creators | 52 | C00052 |
+| members | 10 | P00010 |
+| artists | 2 | G00002（Juice=JuiceはG00001） |
+| song_creators | 217 |  |
+| song_artists | 68 |  |
+| song_performers | 13 |  |
+
+`L00076`～`L00078`はFirst Squeeze！3形態、`J00052`～`J00066`と`W00042`～`W00052`は同albumで
+追加済みである。今回10曲のtitleを`works.csv` / `songs.csv`へ完全一致・正規化比較し、該当なしを確認した。
+ID順でなく公式chronologyを基準にした。
+
+### 17.3 Physical release summary / planned release IDs
+
+発売日→作品→公式edition掲載順で`L00079`以降を割り当てる。CD収録は各editionで同一（S1のB/D/通常B
+だけ曲順が逆）で、初回盤はDVD付き、通常盤はCDのみである。DVDは存在だけを記録し、planned
+`release_tracks`には含めない。
+
+| release date | title | edition | planned release_id | catalog | media | audio track count | source | note |
+|---|---|---|---|---|---|---:|---|---|
+| 2016-02-03 | Next is you!/カラダだけが大人になったんじゃない | 初回生産限定盤A | L00079 | HKCN-50471 | CD+DVD | 2 | https://helloproject.com/release/4548/ | DVD: Next is you! MV |
+| 2016-02-03 | 同上 | 初回生産限定盤B | L00080 | HKCN-50473 | CD+DVD | 2 | 同上 | DVD: カラダだけが大人になったんじゃない MV。CD曲順逆 |
+| 2016-02-03 | 同上 | 初回生産限定盤C | L00081 | HKCN-50475 | CD+DVD | 2 | 同上 | DVD: Next is you! Dance Shot |
+| 2016-02-03 | 同上 | 初回生産限定盤D | L00082 | HKCN-50477 | CD+DVD | 2 | 同上 | DVD: カラダだけが大人になったんじゃない Dance Shot。CD曲順逆 |
+| 2016-02-03 | 同上 | 通常盤A | L00083 | HKCN-50479 | CD | 2 | 同上 |  |
+| 2016-02-03 | 同上 | 通常盤B | L00084 | HKCN-50480 | CD | 2 | 同上 | CD曲順逆 |
+| 2016-10-26 | Dream Road〜心が躍り出してる〜/KEEP ON 上昇志向！！/明日やろうはバカやろう | 初回生産限定盤A | L00085 | HKCN-50492 | CD+DVD | 3 | https://helloproject.com/release/4921/ | DVD: Dream Road MV |
+| 2016-10-26 | 同上 | 初回生産限定盤B | L00086 | HKCN-50494 | CD+DVD | 3 | 同上 | DVD: KEEP ON MV |
+| 2016-10-26 | 同上 | 初回生産限定盤C | L00087 | HKCN-50496 | CD+DVD | 3 | 同上 | DVD: 明日やろうはバカやろう MV |
+| 2016-10-26 | 同上 | 通常盤A | L00088 | HKCN-50498 | CD | 3 | 同上 |  |
+| 2016-10-26 | 同上 | 通常盤B | L00089 | HKCN-50499 | CD | 3 | 同上 |  |
+| 2016-10-26 | 同上 | 通常盤C | L00090 | HKCN-50500 | CD | 3 | 同上 |  |
+| 2017-04-26 | 地団駄ダンス/Feel！感じるよ | 初回生産限定盤A | L00091 | HKCN-50510 | CD+DVD | 2 | https://helloproject.com/release/5152/ | DVD: 地団駄ダンス MV |
+| 2017-04-26 | 同上 | 初回生産限定盤B | L00092 | HKCN-50512 | CD+DVD | 2 | 同上 | DVD: Feel!感じるよ MV |
+| 2017-04-26 | 同上 | 初回生産限定盤SP | L00093 | HKCN-50514 | CD+DVD | 2 | 同上 | DVD: 2曲のDance Shot |
+| 2017-04-26 | 同上 | 通常盤A | L00094 | HKCN-50516 | CD | 2 | 同上 |  |
+| 2017-04-26 | 同上 | 通常盤B | L00095 | HKCN-50517 | CD | 2 | 同上 |  |
+| 2018-04-18 | SEXY SEXY/泣いていいよ/Vivid Midnight | 初回生産限定盤A | L00096 | HKCN-50542 | CD+DVD | 3 | https://helloproject.com/release/5586/ | DVD: SEXY SEXY MV |
+| 2018-04-18 | 同上 | 初回生産限定盤B | L00097 | HKCN-50544 | CD+DVD | 3 | 同上 | DVD: 泣いていいよ MV |
+| 2018-04-18 | 同上 | 初回生産限定盤C | L00098 | HKCN-50546 | CD+DVD | 3 | 同上 | DVD: Vivid Midnight MV |
+| 2018-04-18 | 同上 | 初回生産限定盤SP | L00099 | HKCN-50548 | CD+DVD | 3 | 同上 | DVD: 3曲のDance Shot |
+| 2018-04-18 | 同上 | 通常盤A | L00100 | HKCN-50550 | CD | 3 | 同上 |  |
+| 2018-04-18 | 同上 | 通常盤B | L00101 | HKCN-50551 | CD | 3 | 同上 |  |
+| 2018-04-18 | 同上 | 通常盤C | L00102 | HKCN-50552 | CD | 3 | 同上 |  |
+
+公式releaseページとrelease一覧で、上記以外の同日physical Special Editionは確認できなかった。
+これは「存在しない」の断定ではなく、確認できたphysical editionが24件という意味である。S2にSP盤はなく、
+初回A/B/Cと通常A/B/Cの6形態である。
+
+### 17.4 Integrated unique-song / work classification
+
+`version_name`は全曲空欄、`version_type=original`候補。durationはofficial physical CD表示で、identityの
+補助情報に限る。S1のartist relationだけ`NEXT YOU`と`Juice=Juice`に分かれ、他8曲はG00001 primary。
+
+| release date | release | track | title | duration | classification | work_id | song_id | version_name | version_type | songs.release_date | creators | performer | source | note |
+|---|---|---:|---|---:|---|---|---|---|---|---|---|---|---|---|
+| 2016-02-03 | S1 | 1 | Next is you! | 04:30 | C | planned W00053 | planned J00067 | 空欄 | original | 2016-02-03 | つんく / つんく / 大久保薫 | 個人表記なし | https://helloproject.com/release/4548/ | primary artistはNEXT YOU（planned G00003候補） |
+| 2016-02-03 | S1 | 2 | カラダだけが大人になったんじゃない | 04:17 | C | planned W00054 | planned J00068 | 空欄 | original | 2016-02-03 | つんく / つんく / 平田祥一郎 | 個人表記なし | 同上 | G00001 primary |
+| 2016-10-26 | S2 | 1 | Dream Road〜心が躍り出してる〜 | 04:59 | C | planned W00055 | planned J00069 | 空欄 | original | 2016-10-26 | つんく / つんく / 江上浩太郎 | 個人表記なし | https://helloproject.com/release/4921/ | G00001 primary |
+| 2016-10-26 | S2 | 2 | KEEP ON 上昇志向！！ | 04:24 | C | planned W00056 | planned J00070 | 空欄 | original | 2016-10-26 | 前山田健一 / 前山田健一 / ダンス☆マン / brass: 川松久芳 | 個人表記なし | 同上 | specialized roleは既存brass_arrangementで表現可能 |
+| 2016-10-26 | S2 | 3 | 明日やろうはバカやろう | 03:34 | C | planned W00057 | planned J00071 | 空欄 | original | 2016-10-26 | 福田花音 / 板垣祐介 / 板垣祐介 | 個人表記なし | 同上 |  |
+| 2017-04-26 | S3 | 1 | 地団駄ダンス | 03:48 | C | planned W00058 | planned J00072 | 空欄 | original | 2017-04-26 | 児玉雨子 / BLACC HOLE・NOBB-D / BLACC HOLE・NOBB-D・T | 個人表記なし | https://helloproject.com/release/5152/ | `with T`を共同arrangement creditとして保持 |
+| 2017-04-26 | S3 | 2 | Feel！感じるよ（候補） | 03:58 | C | planned W00059 | planned J00073 | 空欄 | original | 2017-04-26 | 三浦徳子 / 中村瑛彦 / 中村瑛彦 | 個人表記なし | 同上 | page内で`Feel!感じるよ`も表示。表記のみ要確認 |
+| 2018-04-18 | S4 | 1 | SEXY SEXY | 04:45 | C | planned W00060 | planned J00074 | 空欄 | original | 2018-04-18 | つんく / つんく / 平田祥一郎 | 個人表記なし | https://helloproject.com/release/5586/ | 2nd albumは04:21表示のためidentity再確認必須 |
+| 2018-04-18 | S4 | 2 | 泣いていいよ | 04:55 | C | planned W00061 | planned J00075 | 空欄 | original | 2018-04-18 | 大森祥子 / 中村瑛彦 / 中村瑛彦 | 個人表記なし | 同上 | albumは04:56（小差だけで別audioにしない） |
+| 2018-04-18 | S4 | 3 | Vivid Midnight | 04:05 | C | planned W00062 | planned J00076 | 空欄 | original | 2018-04-18 | 児玉雨子 / SEION・Tasco・Tenzo / Tasco・Tenzo | 個人表記なし | 同上 | albumも04:05 |
+
+分類検証は **A 0 + B 0 + C 10 + D 0 = unique audio song 10**。4シングル内で同名曲・再収録・別Versionは
+なく、edition間は同じplanned songを再利用する。Instrumentalは各CDにあるがwork/song候補にしない。
+
+### 17.5 Release-by-release notes
+
+#### S1 Next is you!/カラダだけが大人になったんじゃない
+
+- 公式product identityは`NEXT YOU/Juice=Juice`。`Next is you!`は歌`NEXT YOU`、もう1曲は歌
+  `Juice=Juice`であり、両方をJuice=Juice単独へ単純化しない。
+- A/C/通常Aはtrack 1=`Next is you!`、2=`カラダだけが大人になったんじゃない`。B/D/通常Bは逆順。
+- 全形態のaudio songは2曲、続く2trackはInstrumentalで除外。限定4形態のDVDも除外。
+- 公式配信告知は発売日当日の着うた、**着うたフル**、PC・スマホシングル、video配信開始を明記するため、
+  full-audio初出候補は確実に2016-02-03。発売日前full-audioは確認できなかった（不存在とは断定しない）。
+  Source: https://helloproject.com/news/4300/
+- 2016-02-24のevent V告知は各MVの5人Solo Ver.を列挙するが、audio song/releaseではなく将来video候補。
+  Source: https://helloproject.com/news/4524/
+
+#### S2 Dream Road〜心が躍り出してる〜/KEEP ON 上昇志向！！/明日やろうはバカやろう
+
+- 6形態すべてCD track 1～3が同順、track 4～6は対応Instrumental。planned audio relationは各3件。
+- 公式ページの`ブラスアレンジ:川松久芳`は現行schemaの`brass_arrangement`へそのまま登録可能。
+- official release pageと購入者特典告知で2016-10-26、6 catalogを確認。releaseページの配信リンクは確認したが、
+  今回検索できた公式告知には配信開始日の明記を見つけられなかった。したがって確認できた最初のfull-audio
+  releaseであるCD日を候補とし、先行配信不存在とは断定しない。
+- 2016-11-30 event V告知の3曲×メンバー5人Solo Ver.は映像候補だけでaudio DB対象外。
+  Source: https://helloproject.com/news/6129/
+
+#### S3 地団駄ダンス/Feel！感じるよ
+
+- 5形態すべてCD track 1～2が同順、track 3～4はInstrumental。planned audio relationは各2件。
+- official product headingは`Feel！感じるよ`、track欄は`Feel!感じるよ`で感嘆符が不一致。albumページは
+  `Feel！感じるよ`。canonical候補はproduct titleに合わせた全角`！`だが、投入前にユーザー判断を求める。
+- releaseページの配信リンクは確認したが、発売前または当日のfull-audio開始日を明記した公式newsは今回
+  見つけられなかった。確認できた最初のfull-audio release 2017-04-26を候補とする。
+- event Vは2017-06-30に公式Web Store販売開始が確認できるが映像商品のため対象外。
+  Source: https://helloproject.com/news/7285/
+
+#### S4 SEXY SEXY/泣いていいよ/Vivid Midnight
+
+- 7形態すべてCD track 1～3が同順、track 4～6はInstrumental。planned audio relationは各3件。
+- 公式配信告知は2018-04-18に着うた、PC・スマホシングル、ハイレゾ、MV配信中と明記する。
+  confirmed full-audio初出候補はCDと同日の2018-04-18。発売日前full-audioは確認できなかった。
+  Source: https://helloproject.com/news/8444/
+- 限定盤DVDのMV/Dance Shot、およびevent VのClose-up Ver.はvideo候補だけでaudio DB対象外。
+  Source: https://helloproject.com/news/8551/
+
+### 17.6 Creator summary
+
+#### Existing creators
+
+| creator_id | name | 今回のcredit |
+|---|---|---|
+| C00004 | 三浦徳子 | Feel！感じるよ lyrics |
+| C00006 | 児玉雨子 | 地団駄ダンス、Vivid Midnight lyrics |
+| C00009 | 平田祥一郎 | カラダだけが大人になったんじゃない、SEXY SEXY arrangement |
+| C00019 | 大森祥子 | 泣いていいよ lyrics |
+| C00028 | つんく | Next is you!、カラダだけが大人になったんじゃない、Dream Road、SEXY SEXY lyrics/composition |
+| C00030 | 大久保薫 | Next is you! arrangement |
+| C00036 | 板垣祐介 | 明日やろうはバカやろう composition/arrangement |
+
+#### New creator candidates
+
+発売日→track順→credit出現順で採番する。同名は現行52 creatorに存在しない。名義を公式根拠なく既存人物へ
+統合せず、`credit_name`は下表の表示を保持する。
+
+| planned creator_id | name | credit | source | identity uncertainty |
+|---|---|---|---|---|
+| C00053 | 江上浩太郎 | Dream Road arrangement | https://helloproject.com/release/4921/ | なし |
+| C00054 | 前山田健一 | KEEP ON lyrics/composition | 同上 | なし |
+| C00055 | ダンス☆マン | KEEP ON arrangement | 同上 | なし |
+| C00056 | 川松久芳 | KEEP ON brass_arrangement | 同上 | なし |
+| C00057 | 福田花音 | 明日やろうはバカやろう lyrics | 同上 | なし（credit名を保持） |
+| C00058 | BLACC HOLE | 地団駄ダンス composition/arrangement | https://helloproject.com/release/5152/ | 制作主体として独立候補 |
+| C00059 | NOBB-D | 地団駄ダンス composition/arrangement | 同上 | 独立名義候補 |
+| C00060 | T | 地団駄ダンス arrangement (`with T`) | 同上 | 一文字名義だが公式creditどおり。別名義との統合はしない |
+| C00061 | 中村瑛彦 | Feel！感じるよ、泣いていいよ composition/arrangement | S3/S4公式release | なし |
+| C00062 | SEION | Vivid Midnight composition | https://helloproject.com/release/5586/ | 独立名義候補 |
+| C00063 | Tasco | Vivid Midnight composition/arrangement | 同上 | 独立名義候補 |
+| C00064 | Tenzo | Vivid Midnight composition/arrangement | 同上 | 独立名義候補 |
+
+planned `song_creators`は37 relation（S1 6、S2 10、S3 9、S4 12）。新しいspecialized roleはなく、
+KEEP ONの1 relationだけ既存`brass_arrangement`を使う。`with T`はrole名ではなく公式編曲creditの一部と
+解し、BLACC HOLE、NOBB-D、Tの3 creatorを`arrangement`に置く計画である。
+
+### 17.7 Artist / performer / member summary
+
+| song | official artist / 歌 | planned relation | individual performer |
+|---|---|---|---|
+| Next is you! | NEXT YOU | planned G00003 / primary（ユーザー確認後） | singleページには個人名なし |
+| カラダだけが大人になったんじゃない | Juice=Juice | G00001 / primary | singleページには個人名なし |
+| S2・S3・S4の8曲 | Juice=Juice | 各G00001 / primary | singleページには個人名なし |
+
+planned `song_artists`は10 relation。`NEXT YOU`は公式に独立した歌唱名義なのでartist master候補とする。
+既存在籍memberから個人performerを推測しない。4 singleの公式audio欄に個人名はなく、planned
+`song_performers=0`、new member candidate=0、planned member IDなし。event VのSolo Ver.は映像出演であり
+song performerの根拠にしない。2nd albumは旧5人を曲ごとに明記するが、album audio identityを次回確定して
+同じsongを再利用すると判断した時点で、その一次情報を根拠に既存P00009/P00002/P00010/P00001/P00003との
+relation追加を検討する。member affiliationは今回対象外で追加計画なし。
+
+### 17.8 Planned release_tracks
+
+表を圧縮するため同一track構成のeditionはrelease IDを併記する。各IDごとに示した行を1 relationずつ作る。
+`source_url`は全行それぞれのofficial release pageとする。
+
+| planned release_id(s) | disc | track | track_title | class | song_id | notes | source_url |
+|---|---:|---:|---|---|---|---|---|
+| L00079,L00081,L00083 | 1 | 1 | Next is you! | C | planned J00067 | 同一song再利用 | https://helloproject.com/release/4548/ |
+| L00079,L00081,L00083 | 1 | 2 | カラダだけが大人になったんじゃない | C | planned J00068 | 同一song再利用 | 同上 |
+| L00080,L00082,L00084 | 1 | 1 | カラダだけが大人になったんじゃない | C | planned J00068 | 逆順edition | 同上 |
+| L00080,L00082,L00084 | 1 | 2 | Next is you! | C | planned J00067 | 逆順edition | 同上 |
+| L00085–L00090 | 1 | 1 | Dream Road〜心が躍り出してる〜 | C | planned J00069 | 6形態共通 | https://helloproject.com/release/4921/ |
+| L00085–L00090 | 1 | 2 | KEEP ON 上昇志向！！ | C | planned J00070 | 6形態共通 | 同上 |
+| L00085–L00090 | 1 | 3 | 明日やろうはバカやろう | C | planned J00071 | 6形態共通 | 同上 |
+| L00091–L00095 | 1 | 1 | 地団駄ダンス | C | planned J00072 | 5形態共通 | https://helloproject.com/release/5152/ |
+| L00091–L00095 | 1 | 2 | Feel！感じるよ（候補） | C | planned J00073 | punctuation確認後確定 | 同上 |
+| L00096–L00102 | 1 | 1 | SEXY SEXY | C | planned J00074 | 7形態共通 | https://helloproject.com/release/5586/ |
+| L00096–L00102 | 1 | 2 | 泣いていいよ | C | planned J00075 | 7形態共通 | 同上 |
+| L00096–L00102 | 1 | 3 | Vivid Midnight | C | planned J00076 | 7形態共通 | 同上 |
+
+展開後はS1 12、S2 18、S3 10、S4 21、計 **61 release_tracks**。physical CD上のInstrumental
+（S1 12、S2 18、S3 10、S4 21、同じく計61 physical track appearances）は全件除外し、DVD映像も全件除外する。
+
+### 17.9 Cross-release / existing DB / chronology comparison
+
+- 今回4作相互に同一title、明示Version、再収録はない。10曲をeditionごとに複製せず10 songへ集約する。
+- First Squeeze！以前を含む現行`W00001`～`W00052` / `J00001`～`J00066`に同一title/workはない。
+  coverを示す公式情報もなく、10曲とも今回がchronological original候補である。
+- 現行CSVに今回10曲の後年version先行登録もない。したがって既存work/song再利用は0件。
+- titleだけで判断せず、artist、credit、version、公式chronology、duration、release情報を突合した。
+- S1公式titleの`Next is you!`とユーザー記載の`Next is you！`、S2ページに見られる波ダッシュ字体は、
+  canonicalではofficial release track表示を採用する。S3だけは同一一次情報内で半角/全角が混在するため保留する。
+
+### 17.10 2nd album follow-up（次回確認事項）
+
+公式album page https://helloproject.com/release/5684/ で、今回10曲すべてが2018-08-01
+`Juice=Juice#2 -¡Una más!-` Disc 1 track 2～11に無印収録されることを確認した。album側IDは今回採番しない。
+
+| single song | album track | single duration → album duration | version/credit/performer observation | next action |
+|---|---:|---:|---|---|
+| SEXY SEXY | 1-2 | 04:45 → 04:21 | 無印、creator同一、7人明記 | **24秒差が大きいため最優先でaudio/track boundary確認。推測でAにしない** |
+| 泣いていいよ | 1-3 | 04:55 → 04:56 | 無印、creator同一、7人明記 | 小差だけで別songにせず一般ルールでA候補 |
+| Vivid Midnight | 1-4 | 04:05 → 04:05 | 無印、creator同一、7人明記 | A候補 |
+| 地団駄ダンス | 1-5 | 03:48 → 03:49 | 無印、creator同一、旧5人明記 | 小差だけで別songにせずA候補 |
+| Feel！感じるよ | 1-6 | 03:58 → 03:58 | 無印、creator同一、旧5人明記 | A候補。表記も再確認 |
+| Dream Road〜心が躍り出してる〜 | 1-7 | 04:59 → 04:59 | 無印、creator同一、旧5人明記 | A候補 |
+| KEEP ON 上昇志向！！ | 1-8 | 04:24 → 04:24 | 無印、creator/brass同一、旧5人明記 | A候補 |
+| 明日やろうはバカやろう | 1-9 | 03:34 → 03:34 | 無印、creator同一、旧5人明記 | A候補 |
+| Next is you! | 1-10 | 04:30 → 04:30 | 無印、creator同一、NEXT YOU（旧5人を括弧明記） | A候補。artist/member relationを確認 |
+| カラダだけが大人になったんじゃない | 1-11 | 04:17 → 04:16 | 無印、creator同一、旧5人明記 | 小差だけで別songにせずA候補 |
+
+次回はdata-specのalbum無印再収録一般ルールを適用できる9曲と、積極的差異（24秒）がある`SEXY SEXY`を
+分ける。duration一致だけでA、小差だけでBとはしない。album公式には全曲で個人歌唱者が明示されるため、
+audio identity確定後にsong_performersを既存memberへ付けられる。
+
+### 17.11 Digital release / Special Edition / video notes
+
+| release | official digital evidence | pre-release full audio | physical Special Edition | video-only candidates |
+|---|---|---|---|---|
+| S1 | 2016-02-03公式newsで着うたフル等の配信開始 | 確認できず（不存在とは断定しない） | 追加physicalは確認できず | 限定DVD MV/Dance Shot、event V各5 Solo Ver. |
+| S2 | release pageに音楽配信導線あり。開始日明記newsは未確認 | 確認できず | SPは確認できず | 限定DVD各MV、event V 3曲×5 Solo Ver. |
+| S3 | release pageに音楽配信導線あり。開始日明記newsは未確認 | 確認できず | 初回SP=HKCN-50514をphysical計画済み。それ以外未確認 | MV、Dance Shot、event V |
+| S4 | 2018-04-18公式newsでsingle/high-res等の配信中 | 確認できず | 初回SP=HKCN-50548をphysical計画済み。それ以外未確認 | MV、Dance Shot、event V Close-up |
+
+Digital releaseは今回のplanned release IDに含めない。videoは将来の`videos` / `video_songs` /
+`video_song_performers`候補に留める。
+
+### 17.12 Planned IDs and import summary
+
+| entity | planned range / relation | additions |
+|---|---|---:|
+| releases | L00079–L00102 | 24 |
+| works | W00053–W00062 | 10 |
+| songs | J00067–J00076 | 10 |
+| creators | C00053–C00064 | 12 |
+| artists | G00003 NEXT YOU（user decision後） | 1 |
+| members | なし | 0 |
+| release_tracks | 17.8展開結果 | 61 |
+| song_creators | 37 relations | 37 |
+| song_artists | 10 relations | 10 |
+| song_performers | なし | 0 |
+
+| table | current | planned additions | expected after import |
+|---|---:|---:|---:|
+| releases | 78 | 24 | 102 |
+| release_tracks | 338 | 61 | 399 |
+| songs | 67 | 10 | 77 |
+| works | 52 | 10 | 62 |
+| creators | 52 | 12 | 64 |
+| members | 10 | 0 | 10 |
+| artists | 2 | 1 | 3 |
+| song_creators | 217 | 37 | 254 |
+| song_artists | 68 | 10 | 78 |
+| song_performers | 13 | 0 | 13 |
+
+この件数は`NEXT YOU`を新規artistにし、S3 titleを`Feel！感じるよ`に確定する推奨案の暫定値である。
+
+### 17.13 User confirmation items
+
+#### UC-1 NEXT YOU artist master
+
+- **対象：** `Next is you!`。
+- **公式に確認できた事実：** S1 product artistは`NEXT YOU/Juice=Juice`、当該trackの歌は`NEXT YOU`。
+  albumでも`NEXT YOU(宮崎由加・金澤朋子・高木紗友希・宮本佳林・植村あかり)`と明記。
+- **現在CSV：** artistはG00001 Juice=JuiceとG00002 ハロプロ研修生だけ。
+- **判断できない理由：** NEXT YOUは劇中unit名義で、G00001への単純化は公式creditを失う一方、artist.typeの
+  `temporary_unit` / `special_unit`のどちらが適切かはspecから一意でない。
+- **選択肢：** (A) G00003 NEXT YOU / `temporary_unit`、(B) G00003 / `special_unit`、
+  (C) G00001へ単純化（非推奨）。
+- **CSVへの影響：** artists +1とJ00067→G00003 primary。performerはalbum identity確定後に別途5件候補。
+- **参考URL：** https://helloproject.com/release/4548/ 、https://helloproject.com/release/5684/
+- **推奨：** A。ドラマ内で期間限定に設定された公式unit名義を独立検索可能にする。
+- **停止点：** G00003のtypeとJ00067 song_artists投入。
+
+#### UC-2 Feel punctuation
+
+- **対象：** S3 track 2。
+- **公式に確認できた事実：** 同一公式ページの商品title/edition説明は`Feel！感じるよ`、CD track欄は
+  `Feel!感じるよ`。2nd album trackは`Feel！感じるよ`。
+- **現在CSV：** 同一work/songなし。
+- **判断できない理由：** 一次情報内部の全角/半角感嘆符の不一致。
+- **選択肢：** (A) product titleとalbumに合わせ`Feel！感じるよ`、(B) single CD track欄どおり
+  `Feel!感じるよ`。
+- **CSVへの影響：** W00059/J00073 titleと5形態のtrack_title。ID・relation件数は不変。
+- **参考URL：** https://helloproject.com/release/5152/ 、https://helloproject.com/release/5684/
+- **推奨：** A（複数の公式product-level表記に一致）。
+- **停止点：** W00059/J00073および該当release_tracksのtitle文字列だけ。
+
+### 17.14 Spec considerations
+
+- `NEXT YOU`のような劇中・期間限定公式名義を`temporary_unit`と`special_unit`のどちらに分類するかの
+  境界を将来明文化できる。今回はdata-specを変更しない。
+- singleページではgroup名義、後発albumページでは個人歌唱を明記する場合、同一audio確定後に後発一次情報を
+  song_performer根拠として使う運用を明文化する余地がある。
+- `SEXY SEXY`の24秒差は固定秒数ルールを作る理由にはせず、外部録音ID/波形比較を次回researchで扱う。
+
+### 17.15 Validation
+
+- [x] A/B/C/D = 0/0/10/0、合計10 = unique audio song 10。
+- [x] planned release IDs L00079–L00102、work IDs W00053–W00062、song IDs J00067–J00076、
+  creator IDs C00053–C00064に内部重複なし、現行最大IDとの衝突なし。
+- [x] planned artist G00003は現行G00001–G00002と衝突なし。member ID追加なし。
+- [x] edition数6+6+5+7=24、audio relation数12+18+10+21=61。
+- [x] S1の逆順3形態を含めofficial tracklistとplanned release_tracksが一致。
+- [x] Instrumental 61 appearancesと全DVD/event Vを除外。
+- [x] existing work/song再利用0、chronological original候補10の関係が整合。
+- [x] すべてのrelease/song/credit/relation計画にofficial source URLを記録。
+- [x] Markdown tableの各行の列数を機械検証対象とした。
+- [x] `data/*.csv`未変更、`docs/data-spec.md`未変更。
+
+**Final readiness: READY AFTER USER DECISION.** UC-1のartist typeとUC-2のpunctuationを推奨どおり確定すれば、
+planned IDを変えず、次回1回のCodexタスクで4 singleを一括投入できる。次にユーザーが判断すべきことは
+(1) NEXT YOUをG00003 `temporary_unit`とするか、(2) canonical titleを`Feel！感じるよ`とするか、の2点だけである。
