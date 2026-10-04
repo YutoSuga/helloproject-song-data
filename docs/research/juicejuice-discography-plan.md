@@ -1041,3 +1041,259 @@ edition別やdisc別にwork/songを分断すると同じsongを重複採番し�
 D判断、ID最大値再計算、creator同一性の最終照合、2 memberの公式profileとaffiliation期間資料確認、
 発売前full audio配信の追加検索、そして通常のCSV validationである。本節作成時点ではCSV未変更、
 ID未予約、First Squeeze！投入未実施である。
+
+### 16.11 B 4曲・D 13曲のaudio identity比較資料（2026-10-04、判断材料のみ）
+
+本節は16.4のB 4曲とD 13曲、計17曲を、ユーザーとChatGPTが次段で最終判断するための比較資料である。
+**CSV投入・分類確定は行わない。** D 13曲はすべてcurrent classificationをDのまま維持し、下記の
+`research tendency`は結論ではない。既定のA「Ça va ? Ça va ?(サヴァサヴァ)」も再検討しない。
+
+#### 16.11.1 調査方法、sourceの区分、判定上の注意
+
+- **公式一次情報:** [First Squeeze！公式release](https://helloproject.com/release/4204/)、
+  [terzo公式release](https://helloproject.com/juicejuice/release/6692/)、
+  [ポップミュージック／好きって言ってよ公式release](https://helloproject.com/juicejuice/release/6261/)、
+  [天まで登れ！](https://helloproject.com/release/2212/)、
+  [メジャーデビューsingle](https://helloproject.com/release/1656/)、および15.2記載の各single公式release。
+  albumページから正式track表記、disc/track、duration、作家、歌唱名義を、既発ページから対応する
+  商品情報を比較した。公式ページ本文は今回web取得できた（16.1の過去のshell 403記録も保持する）。
+- **repository正本:** `songs.csv`、`release_tracks.csv`、`song_creators.csv`、`song_artists.csv`、
+  `song_performers.csv`を照合した。後年版しかDBにないB 4曲では、その既存songを2015年版として
+  再利用できるかを検討した。planned `J00052/J00054/J00056/J00060`は未採番の候補にすぎない。
+- **補助情報:** Spotify、Apple Music、Wikipedia、Discogsは今回使用しておらず、repositoryにも対象の
+  Spotify URL / Track IDはない。必要箇所は「Chat側確認候補」とした。配信情報だけで確定しない。
+- duration一致・1秒差はいずれも単独ではaudio identityを証明しない。title、作家、artistの一致も同様。
+  performerは公式明記または既存relationだけを記し、発売時在籍者から補わない。「追加なし」は
+  個人performerがいないとの意味ではなく、公式個人creditを確認できずrelationを作らないとの意味である。
+
+#### 16.11.2 17曲比較表
+
+`creator difference`は既存song→album。`—`は差なし、`未確認`は公式値を今回確定できないもの。
+
+| track | current classification | existing work_id | existing song_id | existing version | First Squeeze！version | original release | original duration | album duration | creator difference | performer difference | official version evidence | research tendency | Chat側確認必要 | source |
+|---|---|---|---|---|---|---|---:|---:|---|---|---|---|---|---|
+| CHOICE & CHANCE | B | W00025 | J00026 | 2022 ver. / other | 表記なし / original候補 | terzo (2022-04-20) | 未確認 | 04:22 | — | 両方個人明記なし | 既存は公式titleが2022 ver.、albumは2015年・無印 | **B-confirmed** | 2022版とのvocal・全体比較 | [album](https://helloproject.com/release/4204/) / [terzo](https://helloproject.com/juicejuice/release/6692/) |
+| 生まれたてのBaby Love | B | W00024 | J00025 | 2022 ver. / other | 表記なし / original候補 | terzo (2022-04-20) | 未確認 | 04:36 | 作曲 つんく→masaaki asada、編曲 高橋諭一→松井寛（DB既存2022 creditとの比較） | 両方個人明記なし | 既存は公式2022 ver.、albumは2015年・無印。作家差も明確 | **B-confirmed** | 全編、特にmelody/arrangement | 同上 |
+| GIRLS BE AMBITIOUS | B | W00016 | J00017 | 2022 / other | 表記なし / original候補 | terzo (2022-04-20) | 03:59 | 04:00 | 作詞 NOBE→中島卓偉、編曲 中島卓偉→中島卓偉・宮永治郎（DB既存2022 creditとの比較） | 両方個人明記なし | 既存は公式titleが`GIRLS BE AMBITIOUS! 2022`、albumは無印 | **B-confirmed** | lyrics、vocal、arrangement | 同上 |
+| 続いていくSTORY | B | W00010 | J00011 | Symphonic Version feat. Karin / re_recording | 表記なし / original候補 | ポップミュージック／好きって言ってよ (2020-04-01) | 05:17 | 05:20 | 編曲 上杉洋史→近藤薫・HASSE | 既存のみ宮本佳林（feat. Karin）を公式titleで明記 | 既存は公式別Versionかつ全録り直し、albumは2015年・無印 | **B-confirmed** | strings/交響的編曲、vocal、intro/outro | [album](https://helloproject.com/release/4204/) / [2020 single](https://helloproject.com/juicejuice/release/6261/) / [terzo](https://helloproject.com/juicejuice/release/6692/) |
+| 天まで登れ！ | D | W00030 | J00038 | 表記なし / original | 表記なし | 天まで登れ！ (2013-06-12) | 04:53 | 04:53 | —（ブラス含む） | 両方Juice=Juice、個人明記なし | New Vocal / re-recording明記なし | A寄り | 実audioまたは録音識別情報 | [original](https://helloproject.com/release/2212/) / [album](https://helloproject.com/release/4204/) |
+| ロマンスの途中 | D | W00031 | J00039 | 表記なし / original | 表記なし | メジャーデビューsingle (2013-09-11) | 04:58 | 04:58 | — | 両方個人明記なし | New Vocal / re-recording明記なし | A寄り | 同上 | [original](https://helloproject.com/release/1656/) / [album](https://helloproject.com/release/4204/) |
+| 私が言う前に抱きしめなきゃね(MEMORIAL EDIT) | D | W00028 | J00040 | MEMORIAL EDIT / other | MEMORIAL EDIT | 同上 | 04:13 | 04:13 | — | 両方個人明記なし | 同じ公式Version表記。ただし同一master明記なし | A寄り | 同じMEMORIAL EDIT同士のaudio比較 | 同上 |
+| 五月雨美女がさ乱れる(MEMORIAL EDIT) | D | W00029 | J00041 | MEMORIAL EDIT / other | MEMORIAL EDIT | 同上 | 04:10 | 04:10 | —（ブラス含む） | 両方個人明記なし | 同じ公式Version表記。ただし同一master明記なし | A寄り | 同上、brassも確認 | 同上 |
+| イジワルしないで 抱きしめてよ | D | W00032 | J00042 | 表記なし / original | 表記なし | イジワルしないで 抱きしめてよ／初めてを経験中 (2013-12-04; full配信2013-11-27) | 04:02 | 04:01 | — | 両方個人明記なし | New Vocal / re-recording明記なし | A寄り | 1秒差の境界・実audio | [original](https://helloproject.com/release/1667/) / [album](https://helloproject.com/release/4204/) |
+| 初めてを経験中 | D | W00033 | J00043 | 表記なし / original | 表記なし | 同上 | 04:14 | 04:14 | —（ブラス含む） | 両方個人明記なし | 同上 | A寄り | 実audio、brass | 同上 |
+| 裸の裸の裸のKISS | D | W00034 | J00044 | 表記なし / original | 表記なし | 裸の裸の裸のKISS／アレコレしたい！ (2014-03-19) | 03:58 | 03:58 | — | 両方個人明記なし | 同上 | A寄り | 実audio | [original](https://helloproject.com/release/8/) / [album](https://helloproject.com/release/4204/) |
+| アレコレしたい！ | D | W00035 | J00045 | 表記なし / original | 表記なし | 同上 | 03:48 | 03:47 | — | 両方個人明記なし | 同上 | A寄り | 1秒差の境界・実audio | 同上 |
+| ブラックバタフライ | D | W00036 | J00046 | 表記なし / original | 表記なし | ブラックバタフライ／風に吹かれて (2014-07-30) | 03:52 | 03:52 | — | 両方個人明記なし | 同上 | A寄り | 実audio | [original](https://helloproject.com/release/2277/) / [album](https://helloproject.com/release/4204/) |
+| 風に吹かれて | D | W00037 | J00047 | 表記なし / original | 表記なし | 同上 | 03:42 | 03:41 | — | 両方個人明記なし | 同上 | A寄り | 1秒差の境界・実audio | 同上 |
+| 背伸び | D | W00038 | J00048 | 表記なし / original | 表記なし | 背伸び／伊達じゃないよ うちの人生は (2014-10-01) | 04:28 | 04:28 | — | 両方個人明記なし | 同上 | A寄り | 実audio | [original](https://helloproject.com/release/2371/) / [album](https://helloproject.com/release/4204/) |
+| 伊達じゃないよ うちの人生は | D | W00039 | J00049 | 表記なし / original | 表記なし | 同上 | 04:07 | 04:07 | — | 両方個人明記なし | 同上 | A寄り | 実audio | 同上 |
+| Wonderful World | D | W00040 | J00050 | 表記なし / original | 表記なし | Wonderful World／Ça va ? Ça va ? (2015-04-08) | 04:14 | 04:14 | — | 両方個人明記なし | 同上 | A寄り | 実audio | [original](https://helloproject.com/release/4094/) / [album](https://helloproject.com/release/4204/) |
+
+#### 16.11.3 B分類4曲の再評価（詳細）
+
+| album track / Disc-Track | existing work / song | existing song title / version / type / date | album version / duration | existing duration | album creator | existing creator | artist / performer | なぜ既存songを再利用しないか | 再評価 |
+|---|---|---|---|---:|---|---|---|---|---|
+| CHOICE & CHANCE / 2-2 | W00025 / J00026 | CHOICE & CHANCE(2022 ver.) / 2022 ver. / other / release date未登録（terzoは2022-04-20） | 表記なし / 04:22 | 未確認 | 星部ショウ / 星部ショウ / 平田祥一郎 / specializedなし | 同一 | Juice=Juice / 個人なし | 2015無印trackを、公式に2022 ver.と名付けた後年songへ接続すると具体的Version境界を失う。変更内容の説明はないが、同じaudioとの扱いはできない | **B-confirmed** |
+| 生まれたてのBaby Love / 2-4 | W00024 / J00025 | 生まれたてのBaby Love(2022 ver.) / 2022 ver. / other / 未登録（terzoは2022-04-20） | 表記なし / 04:36 | 未確認 | 星部ショウ / masaaki asada / 松井寛 / specializedなし | 三浦徳子 / つんく / 高橋諭一 / specializedなし | Juice=Juice / 個人なし | 公式Version名に加え作詞・作曲・編曲が既存songと全面的に異なるため、同一audioではあり得ない。workは同じ楽曲系譜として維持する | **B-confirmed** |
+| GIRLS BE AMBITIOUS / 2-7 | W00016 / J00017 | GIRLS BE AMBITIOUS! 2022 / 2022 / other / 未登録（terzoは2022-04-20） | 表記なし / 04:00 | 03:59 | 中島卓偉 / 中島卓偉 / 中島卓偉・宮永治郎 / specializedなし | NOBE / 中島卓偉 / 中島卓偉 / specializedなし | Juice=Juice / 個人なし | 公式titleの2022区別に加え作詞creditと編曲creditが異なる。1秒差は補助材料に留める | **B-confirmed** |
+| 続いていくSTORY / 2-11 | W00010 / J00011 | 続いていくSTORY (Symphonic Version feat. Karin) / Symphonic Version feat. Karin / re_recording / 2020-04-01 | 表記なし / 05:20 | 05:17 | 近藤薫 / 近藤薫 / 近藤薫・HASSE / specializedなし | 近藤薫 / 近藤薫 / 上杉洋史 / specializedなし | 両方Juice=Juice。既存のみ宮本佳林（P00001、feat. Karin） | 既存は公式に別Versionかつ「すべて新たに録り直した」後年音源。編曲・feat. performer・尺も異なるため2015無印とは別song | **B-confirmed** |
+
+**B集計:** B-confirmed **4**、B-supported **0**、Dへ戻すべき **0**。ここでのconfirmedは
+「2015版がDB既存の具体的な後年Versionと同一ではない」ことの確認であり、Spotifyの推測ではない。
+CHOICE & CHANCEだけは後年版の変更内容自体は未説明だが、公式が年号付き別Versionとして区別している。
+
+**「続いていくSTORY」の全既存version確認:** 現在このworkでCSVに存在するsongは
+`W00010 / J00011`「続いていくSTORY (Symphonic Version feat. Karin)」だけで、2020-04-01、
+`re_recording`、編曲 上杉洋史、05:17、公式titleにfeat. Karinを明記し、`P00001 宮本佳林` relationを持つ。
+First Squeeze！版はDisc 2 Track 11「続いていくSTORY」、version表記なし、編曲 近藤薫・HASSE、05:20、
+歌 Juice=Juice、個人performer明記なしである。したがってSymphonic版との混同余地はなく、同じ
+`W00010`を共有する2015通常版song候補として扱う根拠がある。一方、予定ID `J00060`は未投入である。
+
+#### 16.11.4 D分類13曲の1対1比較カード
+
+以下の全カードで、artistはoriginal / albumとも公式`Juice=Juice`、個人performerは双方未確認、
+audio identityの公式明記は**なし**である。title、version、作家、specialized creditが一致しても、
+同一audioの確定とはしない。
+
+##### 天まで登れ！
+
+- **existing work_id / song_id:** W00030 / J00038（title同一、version空欄、original、2013-06-12）。
+- **original release / First Squeeze！:** 「天まで登れ！」 / Disc 1 Track 1。
+- **共通点 / 差異:** title、version表記なし、04:53、作詞 つんく、作曲 つんく、編曲 平田祥一郎、
+  brass_arrangement 鈴木俊介、artistが一致。公式release情報上の差異・New Vocal・再録表記なし。
+- **research tendency:** A寄り。ただしcurrent classificationはD。
+- **Chat側確認:** single track 2とalbum trackの配信録音識別子または実audioを確認。
+  聴取時はintro/outro、vocal、brass、instrumental breakを比較。
+- **source:** [original](https://helloproject.com/release/2212/)、[album](https://helloproject.com/release/4204/)。
+
+##### ロマンスの途中
+
+- **existing work_id / song_id:** W00031 / J00039（同名、version空欄、original、2013-09-11）。
+- **original release / First Squeeze！:** メジャーデビューsingle / Disc 1 Track 2。
+- **共通点 / 差異:** 04:58、つんく / つんく / 鈴木俊介、specializedなしまで一致。公式差異、
+  New Vocal、再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** singleとalbumの実audio・録音識別子。intro/outro、vocal、instrumental break。
+- **source:** [original](https://helloproject.com/release/1656/)、[album](https://helloproject.com/release/4204/)。
+
+##### 私が言う前に抱きしめなきゃね(MEMORIAL EDIT)
+
+- **existing work_id / song_id:** W00028 / J00040（title「私が言う前に抱きしめなきゃね」、version
+  `MEMORIAL EDIT`、other、2013-09-11）。同workのJ00036 originalは比較対象外ではなく別Versionとして存在するが、
+  album正式表記がMEMORIAL EDITなので直接比較対象はJ00040である。
+- **original release / First Squeeze！:** メジャーデビューsingle / Disc 1 Track 3。
+- **共通点 / 差異:** 正式Version、04:13、つんく / つんく / 平田祥一郎、specializedなしが一致。
+  公式差異、New Vocal、再録表記なし。ただしMEMORIAL EDITの具体的変更内容自体も公式未説明。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** J00040相当とalbumが同じMEMORIAL masterか。intro/outro、vocal、edit位置。
+- **source:** [original](https://helloproject.com/release/1656/)、[album](https://helloproject.com/release/4204/)。
+
+##### 五月雨美女がさ乱れる(MEMORIAL EDIT)
+
+- **existing work_id / song_id:** W00029 / J00041（title「五月雨美女がさ乱れる」、version
+  `MEMORIAL EDIT`、other、2013-09-11）。同workには別VersionのJ00037 originalも存在する。
+- **original release / First Squeeze！:** メジャーデビューsingle / Disc 1 Track 4。
+- **共通点 / 差異:** 正式Version、04:10、つんく / つんく / 板垣祐介、brass_arrangement 鈴木俊介が一致。
+  公式差異、New Vocal、再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** J00041相当とalbumの同一master性。intro/outro、vocal、brass、edit位置。
+- **source:** [original](https://helloproject.com/release/1656/)、[album](https://helloproject.com/release/4204/)。
+
+##### イジワルしないで 抱きしめてよ
+
+- **existing work_id / song_id:** W00032 / J00042（version空欄、original、2013-11-27）。
+- **original release / First Squeeze！:** 同名double-A single（CD 2013-12-04）/ Disc 1 Track 5。
+- **共通点 / 差異:** title、version、つんく / つんく / 大久保薫、specializedなしが一致。
+  durationは04:02→04:01（-1秒）。New Vocal・再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** 1秒差が無音・丸め・masteringか音源差か。intro/outro、vocal、instrumental break。
+- **source:** [original](https://helloproject.com/release/1667/)、[album](https://helloproject.com/release/4204/)。
+
+##### 初めてを経験中
+
+- **existing work_id / song_id:** W00033 / J00043（version空欄、original、2013-11-27）。
+- **original release / First Squeeze！:** 同double-A single（CD 2013-12-04）/ Disc 1 Track 6。
+- **共通点 / 差異:** 04:14、つんく / つんく / AKIRA、brass_arrangement 鈴木俊介まで一致。
+  公式差異、New Vocal、再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** 実audio。intro/outro、vocal、brass。
+- **source:** [original](https://helloproject.com/release/1667/)、[album](https://helloproject.com/release/4204/)。
+
+##### 裸の裸の裸のKISS
+
+- **existing work_id / song_id:** W00034 / J00044（version空欄、original、2014-03-19）。
+- **original release / First Squeeze！:** 「裸の裸の裸のKISS／アレコレしたい！」/ Disc 1 Track 7。
+- **共通点 / 差異:** 03:58、つんく / つんく / 平田祥一郎、specializedなしまで一致。
+  公式差異、New Vocal、再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** 実audio。intro/outro、vocal、instrumental break。
+- **source:** [original](https://helloproject.com/release/8/)、[album](https://helloproject.com/release/4204/)。
+
+##### アレコレしたい！
+
+- **existing work_id / song_id:** W00035 / J00045（version空欄、original、2014-03-19）。
+- **original release / First Squeeze！:** 同double-A single / Disc 1 Track 8。
+- **共通点 / 差異:** title、version、つんく / つんく / 近藤圭一、specializedなしが一致。
+  duration 03:48→03:47（-1秒）。New Vocal・再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** 1秒差の由来。intro/outro、vocal、instrumental break。
+- **source:** [original](https://helloproject.com/release/8/)、[album](https://helloproject.com/release/4204/)。
+
+##### ブラックバタフライ
+
+- **existing work_id / song_id:** W00036 / J00046（version空欄、original、2014-07-30）。
+- **original release / First Squeeze！:** 「ブラックバタフライ／風に吹かれて」/ Disc 1 Track 9。
+- **共通点 / 差異:** 03:52、つんく / つんく / 平田祥一郎、specializedなしまで一致。
+  公式差異、New Vocal、再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** 実audio。intro/outro、vocal、instrumental break。
+- **source:** [original](https://helloproject.com/release/2277/)、[album](https://helloproject.com/release/4204/)。
+
+##### 風に吹かれて
+
+- **existing work_id / song_id:** W00037 / J00047（version空欄、original、2014-07-30）。
+- **original release / First Squeeze！:** 同double-A single / Disc 1 Track 10。
+- **共通点 / 差異:** title、version、つんく / つんく / 平田祥一郎、specializedなしが一致。
+  duration 03:42→03:41（-1秒）。New Vocal・再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** 1秒差の由来。intro/outro、vocal、instrumental break。
+- **source:** [original](https://helloproject.com/release/2277/)、[album](https://helloproject.com/release/4204/)。
+
+##### 背伸び
+
+- **existing work_id / song_id:** W00038 / J00048（version空欄、original、2014-10-01）。
+- **original release / First Squeeze！:** 「背伸び／伊達じゃないよ うちの人生は」/ Disc 1 Track 11。
+- **共通点 / 差異:** 04:28、つんく / つんく / 平田祥一郎、specializedなしまで一致。
+  公式差異、New Vocal、再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** 実audio。intro/outro、vocal、instrumental break。
+- **source:** [original](https://helloproject.com/release/2371/)、[album](https://helloproject.com/release/4204/)。
+
+##### 伊達じゃないよ うちの人生は
+
+- **existing work_id / song_id:** W00039 / J00049（version空欄、original、2014-10-01）。
+- **original release / First Squeeze！:** 同double-A single / Disc 1 Track 12。
+- **共通点 / 差異:** 04:07、つんく / つんく / 平田祥一郎、specializedなしまで一致。
+  公式差異、New Vocal、再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** 実audio。intro/outro、vocal、instrumental break。
+- **source:** [original](https://helloproject.com/release/2371/)、[album](https://helloproject.com/release/4204/)。
+
+##### Wonderful World
+
+- **existing work_id / song_id:** W00040 / J00050（version空欄、original、2015-04-08）。
+- **original release / First Squeeze！:** 「Wonderful World／Ça va ? Ça va ?」/ Disc 2 Track 1。
+- **共通点 / 差異:** 04:14、イイジマケン / イイジマケン / gaokalab、specializedなしまで一致。
+  公式差異、New Vocal、再録表記なし。
+- **research tendency:** A寄り（classification D）。
+- **Chat側確認:** 実audio。intro/outro、vocal、instrumental break。
+- **source:** [original](https://helloproject.com/release/4094/)、[album](https://helloproject.com/release/4204/)。
+
+**D傾向集計（classificationは全曲Dのまま）:** A寄り **13**、B寄り **0**、判断材料不足 **0**。
+「A寄り」は、公式の商品metadataがすべて一致または説明可能な1秒差で、別Version表示もないという
+比較上の傾向だけをいう。公式は同一audioを明記していないため、13曲とも確定Aではない。
+
+#### 16.11.5 Chat側確認優先順位と仕様検討
+
+- **Priority 1（4曲）:** CHOICE & CHANCE、生まれたてのBaby Love、GIRLS BE AMBITIOUS、
+  続いていくSTORY。既存DB songが明示的な後年Versionであることは公式情報から区別可能。
+- **Priority 2（13曲）:** 天まで登れ！、ロマンスの途中、私が言う前に抱きしめなきゃね
+  (MEMORIAL EDIT)、五月雨美女がさ乱れる(MEMORIAL EDIT)、イジワルしないで 抱きしめてよ、
+  初めてを経験中、裸の裸の裸のKISS、アレコレしたい！、ブラックバタフライ、風に吹かれて、背伸び、
+  伊達じゃないよ うちの人生は、Wonderful World。Spotify等でoriginalとalbumの波形上の区切り、
+  vocal、編曲、intro/outroを実際に比較する。ただし第三者metadataだけでA/B確定しない。
+- **Priority 3（0曲）:** 現時点なし。ただしPriority 2で差異が出ても原因を特定できない曲は、権利者の
+  master台帳・ISRC相当の録音識別情報・公式スタッフ回答が必要となりPriority 3へ移す。
+- **仕様検討事項:** 16.9の既存4項目を維持する。今回新規には、録音master/ISRC等の外部識別子を
+  song単位で保持する列がない点を将来検討候補とする。data-specは変更しない。
+
+#### 16.11.6 Chat側確認用サマリー
+
+この表はそのままChatGPTへ渡すための要約である。`差`はoriginal→album、performer差の「なし」は
+公式に確認できた個人creditの範囲であり、在籍者推測ではない。
+
+| Priority | 曲名 | current class | existing song_id | original release | First Squeeze！ | duration差 | version表記差 | creator差 | performer差 | tendency | A/B決定に必要な確認 |
+|---:|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | CHOICE & CHANCE | B | J00026 | terzo (2022-04-20) | 2-2 | existing未確認 / album 04:22 | 2022 ver.→無印 | なし | なし | B-confirmed | 公式年号Version境界を確認。必要ならvocal/全体を補助比較 |
+| 1 | 生まれたてのBaby Love | B | J00025 | terzo (2022-04-20) | 2-4 | existing未確認 / album 04:36 | 2022 ver.→無印 | 作詞・作曲・編曲差 | なし | B-confirmed | creator差により別audio。melody/arrangementを補助確認 |
+| 1 | GIRLS BE AMBITIOUS | B | J00017 | terzo (2022-04-20) | 2-7 | +1秒 | 2022→無印 | 作詞・編曲差 | なし | B-confirmed | lyrics/vocal/arrangementを補助確認 |
+| 1 | 続いていくSTORY | B | J00011 | 2020 single | 2-11 | +3秒 | Symphonic feat. Karin→無印 | 編曲差 | 既存のみ宮本佳林 | B-confirmed | 公式全録り直し・編曲・feat.差を確認 |
+| 2 | 天まで登れ！ | D | J00038 | 2013-06-12 single | 1-1 | 0秒 | なし | なし | なし | A寄り | audio/録音ID、vocal・brass・intro/outro |
+| 2 | ロマンスの途中 | D | J00039 | 2013-09-11 single | 1-2 | 0秒 | なし | なし | なし | A寄り | audio/録音ID、vocal・intro/outro |
+| 2 | 私が言う前に抱きしめなきゃね(MEMORIAL EDIT) | D | J00040 | 2013-09-11 single | 1-3 | 0秒 | なし（同じMEMORIAL EDIT） | なし | なし | A寄り | 同じMEMORIAL masterか、edit位置 |
+| 2 | 五月雨美女がさ乱れる(MEMORIAL EDIT) | D | J00041 | 2013-09-11 single | 1-4 | 0秒 | なし（同じMEMORIAL EDIT） | なし | なし | A寄り | 同じmasterか、brass・edit位置 |
+| 2 | イジワルしないで 抱きしめてよ | D | J00042 | 2013-12-04 single | 1-5 | -1秒 | なし | なし | なし | A寄り | 末尾無音/丸め/masteringか、vocal差か |
+| 2 | 初めてを経験中 | D | J00043 | 2013-12-04 single | 1-6 | 0秒 | なし | なし | なし | A寄り | audio/録音ID、vocal・brass |
+| 2 | 裸の裸の裸のKISS | D | J00044 | 2014-03-19 single | 1-7 | 0秒 | なし | なし | なし | A寄り | audio/録音ID、vocal・intro/outro |
+| 2 | アレコレしたい！ | D | J00045 | 2014-03-19 single | 1-8 | -1秒 | なし | なし | なし | A寄り | 末尾無音/丸め/masteringか、vocal差か |
+| 2 | ブラックバタフライ | D | J00046 | 2014-07-30 single | 1-9 | 0秒 | なし | なし | なし | A寄り | audio/録音ID、vocal・intro/outro |
+| 2 | 風に吹かれて | D | J00047 | 2014-07-30 single | 1-10 | -1秒 | なし | なし | なし | A寄り | 末尾無音/丸め/masteringか、vocal差か |
+| 2 | 背伸び | D | J00048 | 2014-10-01 single | 1-11 | 0秒 | なし | なし | なし | A寄り | audio/録音ID、vocal・intro/outro |
+| 2 | 伊達じゃないよ うちの人生は | D | J00049 | 2014-10-01 single | 1-12 | 0秒 | なし | なし | なし | A寄り | audio/録音ID、vocal・intro/outro |
+| 2 | Wonderful World | D | J00050 | 2015-04-08 single | 2-1 | 0秒 | なし | なし | なし | A寄り | audio/録音ID、vocal・intro/outro |
+
+**次段への明示事項:** 公式audio identity明記は、Bでは続いていくSTORYの後年版「全録り直し」と
+各2022 Version名・credit差、Dでは13曲すべてなし。Spotify URLは未収集で全DがChat側確認候補。
+source間のduration・creator・version矛盾は今回発見しなかった。確認不能なexisting duration 2件は
+推測で埋めず未確認とした。CSV、data-spec、既存researchの結論はいずれも変更していない。
