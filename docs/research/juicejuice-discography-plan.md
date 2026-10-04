@@ -576,16 +576,16 @@ A-4では通常版J00012/J00013を再利用し、ソロVersion J00029～J00035�
 50. **対象外・後続**: Instrumental（各盤track 4～6）は本DBのsong／release_tracks管理対象外として登録していない。DVD映像は音源データへ追加せず、将来のvideos／video_songs系タスク候補とする。2013-09-11のデジタル配信はrelease粒度確定後の後続タスク、`First Squeeze！`は収録音源の同一性を同アルバム調査時に確認する後続タスクとして、いずれも今回登録していない。
 51. **投入後件数**: releases 46、release_tracks 205、songs 42、works 31、creators 36、artists 2、members 8。data-spec変更なし。
 
-## 15. B-5～B-9 1stアルバム前5シングル調査・投入計画（未投入）
+## 15. B-5～B-9 1stアルバム前5シングル調査・投入結果
 
-調査日: 2026-10-03。対象は2013-12-04から2015-04-08までの5シングルだけとし、`First Squeeze！`は関係確認に限った。Hello! Project公式release本文と公式NEWSを一次情報に用い、正本CSV 14表、README、data-specを再照合した。**この節は調査・計画のみで、`data/*.csv`および`docs/data-spec.md`は変更していない。**
+調査日: 2026-10-03。対象は2013-12-04から2015-04-08までの5シングルだけとし、`First Squeeze！`は関係確認に限った。Hello! Project公式release本文と公式NEWSを一次情報に用い、正本CSV 14表、README、data-specを再照合した。調査結果に対するユーザー確定判断を反映し、2026-10-04に正本CSVへ投入した。実績は15.8に記録する。
 
-### 15.1 結論と停止点
+### 15.1 調査時点の結論と解決済み停止点
 
 - **そのまま投入可能（分類A）**: physical 29形態、各盤の通常曲2 track（計58 relation）、10 work、10 song（いずれも`original`候補）、公式作家relation、各songの`G00001` / `primary`。InstrumentalとDVD映像は現仕様どおり投入しない。
 - **DB方針判断が必要（分類B）**: 2013-11-27先行「着うたフル」とCD収録音源の同一性を一次情報が明言していないため、最初の2 songの`release_date`を11月27日にするか12月4日にするか。さらに、シングルでは正式track titleが`Ça va ? Ça va ?`、アルバムでは`Ça va ? Ça va ?(サヴァサヴァ)`となる表記差を、同一songの`track_title`差として将来扱うか、音源同一性確認まで別song候補として保留するか。
 - **一次情報不足（分類C）**: 残る4作の発売日前full-audio配信の不存在、全10曲と`First Squeeze！`収録音源の同一audio、個人歌唱者。見つからないことを不存在とはしていない。
-- **停止点**: 上記Bの判断が必要になるまでCSVは一切変更していない。推奨投入単位は **C（判断のある第2シングルを分離し、残る4作をまとめる）**。ただし4作もalbum音源再利用はせず、まずsingle songを作り、`First Squeeze！`投入時に同一audioを再確認する。
+- **停止点（解決済み）**: 調査時は上記Bの判断までCSVを変更しなかった。2026-10-04のユーザー確定方針により、最初の2曲は2013-11-27、`Ça va ? Ça va ?(サヴァサヴァ)`はsingle／album同一audioとして解決し、5作を一括投入した。他9曲のalbum audio identityだけを後続確認に残す。
 
 ### 15.2 公式release・physical edition一覧
 
@@ -662,9 +662,9 @@ sourceは各曲のsingle公式詳細（15.2）および[First Squeeze！公式�
 
 公式albumページでは今回の10曲すべてを収録し、明示的なNew Vocal等のversion表記はない。最初の8曲はDisc 1 track 5～12、`Wonderful World`はDisc 2 track 1、`Ça va ? Ça va ?(サヴァサヴァ)`はDisc 2 track 6。creator creditはsingleと一致する。durationはsingle→albumで、イジワル04:02→04:01、初めて04:14→04:14、裸03:58→03:58、アレコレ03:48→03:47、ブラック03:52→03:52、風03:42→03:41、背伸び04:28→04:28、伊達04:07→04:07、Wonderful04:14→04:14、Ça va03:46→03:46。
 
-一致するtitle/credit/durationだけでは同一audioを証明しない。差があることも別audioの証明とはしない。したがってalbum側は**全10曲とも「First Squeeze！投入時に再確認」**であり、今回release/release_tracks/song/workを追加しない。特に`Ça va ? Ça va ?`はsingle公式trackに読み仮名がなく、album trackだけに`(サヴァサヴァ)`があるため、single DB title候補は公式どおり`Ça va ? Ça va ?`（アクセント付き、半角空白を挟む疑問符）とし、括弧をversion_nameへ推測移送しない。
+一致するtitle/credit/durationだけでは同一audioを証明しない。差があることも別audioの証明とはしない。ユーザー確定方針により`Ça va ? Ça va ?(サヴァサヴァ)`だけはsingle版とalbum版を同一曲・同一audioとして扱い、First Squeeze！投入時にJ00051を再利用する。括弧を含む表記全体が正規titleであり、`サヴァサヴァ`はversion_nameではない。singleのrelease_tracksには商品上の表記`Ça va ? Ça va ?`を保持する。他9曲は引き続き**「First Squeeze！投入時に再確認」**とし、title・credit・durationだけで同一audioと断定しない。今回First Squeeze！のrelease/release_tracksは追加しない。
 
-### 15.6 ユーザー判断事項
+### 15.6 調査時のユーザー判断事項（解決済み）
 
 **対象:** 「イジワルしないで 抱きしめてよ」「初めてを経験中」の`songs.release_date`
 
@@ -693,7 +693,44 @@ sourceは各曲のsingle公式詳細（15.2）および[First Squeeze！公式�
 - physical release追加予定: **29**（候補L00047～L00075）。通常曲のrelease_tracks追加予定: **58**。Instrumental 58 trackは商品上の存在だけ記録し、relation追加なし。
 - work追加予定: **10**（候補W00032～W00041）。song追加予定: **10**（候補J00042～J00051）。全曲`original`候補。IDは投入直前に再計算する。
 - creator: 既存4名（C00028/C00030/C00009/C00035）に加え、C00031/C00004も利用し、新規6名候補。artist追加なし、song_artists 10、song_performers 0。
-- 後続1: ユーザー判断後、推奨どおり第2シングルを単独投入し、残る4作を一括投入する。各単位でvalidationと件数を確認する。
+- 完了: ユーザー確定判断を反映し、B-5～B-9の5シングルを一括投入した。
 - 後続2: digital release entityの粒度を別設計し、今回確認した着うた/着うたフル/PC・スマホ配信はそのフェーズまでrelease化しない。
-- 後続3: `First Squeeze！`調査時にmaster/audio identityを公式資料で再確認し、証明できた曲だけsingle song IDを再利用する。
-- **仕様検討事項（data-specは未変更）:** 同じrelease告知に紐づく着うたフルを、明示的な「CDと同一audio」という記述なしでspecific song初出とみなす証拠基準。括弧付き読み仮名の`track_title`差をwork/song identityから独立して扱う運用。
+- 後続3: `First Squeeze！`調査時に、`Ça va ? Ça va ?(サヴァサヴァ)`はJ00051を再利用し、その他9曲のmaster/audio identityを再確認する。
+- **仕様反映済み:** CD発売前の公式full audio配信を`songs.release_date`へ採用し、partial audioだけの先行日は採用しない一般ルールをdata-specへ追記した。release上の`track_title`とDB上の正規song titleは独立して保持する。
+
+### 15.8 実投入結果（2026-10-04）
+
+ユーザー確定方針と投入直前の正本CSVを照合し、対象10曲が未登録、新規creator 6名が未登録、全29品番が未登録であることを再確認した。計画どおりB-5～B-9を一括投入し、停止条件に該当する新しい矛盾・曖昧さはなかった。
+
+#### single・physical release
+
+| single | physical date | release ID / edition / catalog | release_tracks |
+|---|---|---|---:|
+| イジワルしないで 抱きしめてよ/初めてを経験中 | 2013-12-04 | L00047 初回生産限定盤A HKCN-50324; L00048 初回生産限定盤B HKCN-50326; L00049 初回生産限定盤C HKCN-50328; L00050 初回生産限定盤D HKCN-50330; L00051 通常盤A HKCN-50331; L00052 通常盤B HKCN-50332 | 12 |
+| 裸の裸の裸のKISS/アレコレしたい！ | 2014-03-19 | L00053 初回生産限定盤A HKCN-50343; L00054 初回生産限定盤B HKCN-50345; L00055 初回生産限定盤C HKCN-50347; L00056 通常盤A HKCN-50349; L00057 通常盤B HKCN-50350 | 10 |
+| ブラックバタフライ/風に吹かれて | 2014-07-30 | L00058 初回生産限定盤A HKCN-50367; L00059 初回生産限定盤B HKCN-50369; L00060 初回生産限定盤C HKCN-50371; L00061 初回生産限定盤D HKCN-50373; L00062 通常盤A HKCN-50375; L00063 通常盤B HKCN-50376 | 12 |
+| 背伸び/伊達じゃないよ うちの人生は | 2014-10-01 | L00064 初回生産限定盤A HKCN-50387; L00065 初回生産限定盤B HKCN-50389; L00066 初回生産限定盤C HKCN-50391; L00067 初回生産限定盤D HKCN-50393; L00068 通常盤A HKCN-50395; L00069 通常盤B HKCN-50396 | 12 |
+| Wonderful World/Ça va ? Ça va ? | 2015-04-08 | L00070 初回生産限定盤A HKCN-50407; L00071 初回生産限定盤B HKCN-50409; L00072 初回生産限定盤C HKCN-50411; L00073 初回生産限定盤D HKCN-50413; L00074 通常盤A HKCN-50415; L00075 通常盤B HKCN-50416 | 12 |
+
+全29 releaseは`release_type=single`。各盤の順序A/Bに従い通常曲2曲だけを紐付け、release_tracksは合計58件。Instrumental 58 trackは現行方針どおり除外した。DVDのMV、Dance Shot、Close-up、making/off shot等はvideo系CSVへ追加せず保留した。着うた・着うたフル・PC／スマートフォン配信は日付判断にだけ使用し、digital release entityは追加していない。
+
+#### work・song・credit
+
+| work ID | song ID | 正規song title | version | songs.release_date | lyrics / composition / arrangement / specialized |
+|---|---|---|---|---|---|
+| W00032 | J00042 | イジワルしないで 抱きしめてよ | original（version_name空欄） | 2013-11-27 | つんく(C00028) / つんく(C00028) / 大久保薫(C00030) / — |
+| W00033 | J00043 | 初めてを経験中 | original（version_name空欄） | 2013-11-27 | つんく(C00028) / つんく(C00028) / AKIRA(C00037) / 鈴木俊介(C00035), brass_arrangement |
+| W00034 | J00044 | 裸の裸の裸のKISS | original（version_name空欄） | 2014-03-19 | つんく(C00028) / つんく(C00028) / 平田祥一郎(C00009) / — |
+| W00035 | J00045 | アレコレしたい！ | original（version_name空欄） | 2014-03-19 | つんく(C00028) / つんく(C00028) / 近藤圭一(C00038) / — |
+| W00036 | J00046 | ブラックバタフライ | original（version_name空欄） | 2014-07-30 | つんく(C00028) / つんく(C00028) / 平田祥一郎(C00009) / — |
+| W00037 | J00047 | 風に吹かれて | original（version_name空欄） | 2014-07-30 | つんく(C00028) / つんく(C00028) / 平田祥一郎(C00009) / — |
+| W00038 | J00048 | 背伸び | original（version_name空欄） | 2014-10-01 | つんく(C00028) / つんく(C00028) / 平田祥一郎(C00009) / — |
+| W00039 | J00049 | 伊達じゃないよ うちの人生は | original（version_name空欄） | 2014-10-01 | つんく(C00028) / つんく(C00028) / 平田祥一郎(C00009) / — |
+| W00040 | J00050 | Wonderful World | original（version_name空欄） | 2015-04-08 | イイジマケン(C00031) / イイジマケン(C00031) / gaokalab(C00039) / — |
+| W00041 | J00051 | Ça va ? Ça va ?(サヴァサヴァ) | original（version_name空欄） | 2015-04-08 | 三浦徳子(C00004) / 川辺ヒロシ(C00040)、上田禎(C00041) / CMJK(C00042) / — |
+
+新規creatorはAKIRA(C00037)、近藤圭一(C00038)、gaokalab(C00039)、川辺ヒロシ(C00040)、上田禎(C00041)、CMJK(C00042)。全10 songに`G00001`（Juice=Juice）/ `primary` / `credit_order=1`を登録し、個人歌唱者を推測せずsong_performersは追加していない。最初の2曲は2013-11-27の公式「着うたフル」をfull audio先行配信として`songs.release_date`に採用した。partial audioである「着うた」だけの日は採用しない一般ルールをdata-specへ明記した。
+
+`Ça va ? Ça va ?(サヴァサヴァ)`は括弧を含む表記全体をW00041/J00051の正規titleとし、「サヴァサヴァ」をversion_nameにしていない。singleの全release_tracksは商品上の表記`Ça va ? Ça va ?`を保持する。ユーザー確定方針によりsingle版と`First Squeeze！`収録版は同一曲・同一audioとして扱い、同album投入時はJ00051を再利用する。表記差だけを理由とするwork/song追加はしない。他9曲のalbum版とのaudio identityは未確定のまま、`First Squeeze！`投入時の確認事項として残す。
+
+投入後はreleases 75、release_tracks 263、songs 52、works 41、creators 42、artists 2、members 8。`First Squeeze！`自体、そのrelease_tracks、album新曲は今回未投入である。
