@@ -2621,3 +2621,48 @@ song_creators +15、song_artists +4。member/artist/song_performersは不変。D
 
 D=0、release構成、audio identity、planned IDs、creator/artist/performer計画、planned release_tracksが確定し、
 次回physical 10形態を一括投入可能。次にユーザーが判断すべき事項はない。digital release master、後発7-inch、映像は別phase。
+
+### 19.17 Canonical import actual result（2026-10-04）
+
+**Import completed.** 19.1～19.16の確定済みresearchを変更せず正として、2作品10 physical releaseをcanonical
+CSVへ投入した。unique audioは4、A/B/C/D=`0/0/4/0`、`A+B+C+D=4`。READYを維持し、unresolvedは**0件**。
+
+| entity | actual IDs / mapping | actual additions |
+|---|---|---:|
+| releases | L00105～L00109 = 全部賭けてGO!!/イニミニマニモ～恋のライバル宣言～、L00110～L00114 = プライド・ブライト/FUNKY FLUSHIN' | 10 |
+| works | W00073 全部賭けてGO!!、W00074 イニミニマニモ～恋のライバル宣言～、W00075 プライド・ブライト、W00076 FUNKY FLUSHIN' | 4 |
+| songs | J00089→W00073、J00090→W00074、J00091→W00075、J00092→W00076 | 4 |
+| creators | C00070 徳田光希、C00071 Johan Alkenas、C00072 Joacim Persson、C00073 Lisa Desmond、C00074 吉田美奈子、C00075 Aksel Odenbalk | 6 |
+| song_creators | 19.10の確定mapping（existing C00001/C00015/C00019/C00035を再利用） | 15 |
+| song_artists | J00089～J00092にG00001 / primary / credit_order 1 | 4 |
+| release_tracks | L00105～L00114に各Disc 1 Track 1～2 | 20 |
+| artists / members / song_performers | 新規なし | 0 / 0 / 0 |
+
+J00089～J00092の`version_name`はすべて空欄、`version_type`は順に
+`original / original / original / cover`。`release_date`は順に`2022-11-23 / 2022-11-23 / 2023-06-29 /
+2023-07-12`であり、`プライド・ブライト`はCD日でなく先行full-audio配信日を保持した。`FUNKY FLUSHIN'`は
+new work W00076に対するcover song J00092として登録した。
+
+| table | baseline | actual additions | actual total |
+|---|---:|---:|---:|
+| releases | 104 | 10 | 114 |
+| release_tracks | 445 | 20 | 465 |
+| songs | 89 | 4 | 93 |
+| works | 72 | 4 | 76 |
+| creators | 69 | 6 | 75 |
+| members | 11 | 0 | 11 |
+| artists | 3 | 0 | 3 |
+| song_creators | 292 | 15 | 307 |
+| song_artists | 92 | 4 | 96 |
+| song_performers | 161 | 0 | 161 |
+
+全10 releaseは各2 canonical relation、合計20。Instrumentalは2曲×10盤の**20 positionsを除外**し、work/song/
+creator relationも作成していない。2022 BD 10 entriesと2023 BD 17 entriesの**video計27 entriesを除外**し、video系
+3 CSVは変更していない。individual performer evidenceは0のためperformer additionsは**0**。UFDL-1520、発売日digital
+products、その他digital distributionのrelease master、および後発7-inch HR7S300も未投入のままfuture candidateを維持する。
+
+Validationでは全14 CSVをparseし、header・列数・required fields・enum・role enum・ID/date/timestamp形式、全master
+PK、指定FK、relation完全重複、全releaseの`release_id/disc_number/track_number`位置重複を検証した。planned ID衝突なし、
+catalog number 10件とedition mapping、work/song/creator mapping、15 creator relationsのrole・credit_name・credit_order・
+source_url、4 artist relations、multiple primary 0、対象release各2 positions、chronology、canonical scope、expected totalsは
+すべて一致した。変更禁止対象のhash一致、Markdown table列数、`git diff --check`も通過し、想定外diffなし、unresolved = **0**。
