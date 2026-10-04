@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-10-04（B-5～B-9投入およびFirst Squeeze！最終投入計画を反映）
-状態: **優先度A 5件およびB-1～B-9、Juice=Juice#2 -¡Una más!-投入完了、First Squeeze！はaudio identityと投入仕様を確定（CSV未投入）**
+調査日: 2026-10-04（Juice=Juice#2 -¡Una más!-投入および2022～2023年シングル調査を反映）
+状態: **First Squeeze！、2016～2018年シングル4作、Juice=Juice#2 -¡Una más!-までcanonical CSV投入完了。2022～2023年シングル2作はresearch完了・CSV未投入**
 
 ## 1. 目的・判定原則
 
@@ -2333,3 +2333,291 @@ physical release=2、release_tracks=46で計画と一致した。
 指定FK、relation重複、全releaseのdisc/track位置重複を検証した。L00103/L00104は各23（11+12）、新規work/song/
 creator/member ID、chronology、Version、artist、creator、performer内訳、expected totalsも一致した。Markdown tableの
 列数と`git diff --check`も通過し、想定外diffはない。classification再判断は行わず、unresolved = **0**。
+
+## 19. Juice=Juice 2022-2023 singles research（2026-10-04、research-only）
+
+### 19.1 Summary / Scope
+
+対象は2022-11-23 `全部賭けてGO!!/イニミニマニモ～恋のライバル宣言～`と、2023-07-12
+`プライド・ブライト/FUNKY FLUSHIN'`。公式表記は前者の感嘆符が半角`!!`（依頼文の全角`！！`ではない）、
+区切りが半角`/`、後者のapostropheがASCII `'`である。両作ともphysicalは5形態、合計10 release。
+各CDは共通して表題2曲＋各Instrumentalの4 trackで、canonical対象は表題4 unique audio、各盤2 relation、計20 relation。
+初回生産限定盤SPは存在するが、商品名に`(Special Edition)`を持つ別配信版やadditional audioは公式release一覧・
+商品ページ・公式配信告知からは確認できなかった（不存在を公式に宣言した資料を確認した、という意味ではない）。
+
+4曲を現行`works.csv` / `songs.csv`全体とtitle、version、credit、chronologyで照合した結果、既存work/songは0。
+`FUNKY FLUSHIN'`だけは公式が「シティ・ポップの名曲をカバー」と明記するため、new work + new cover song。
+残る3曲はnew work + new original songで、分類はA/B/C/D=`0/0/4/0`。`プライド・ブライト`は公式配信release
+UFDL-1520と公式NEWSにより2023-06-29 0時からの先行full-audio配信を確認し、CDと同一title、03:46、同一artist/
+creator、Version注記なしのため同じspecific audioと判断する。結論は **READY**。今回は`data/*.csv`、
+`docs/data-spec.md`、video系CSVを変更しない。
+
+主な一次情報： [2022公式release](https://helloproject.com/juicejuice/release/6853/)、
+[2022発売決定NEWS](https://helloproject.com/news/15109/)、
+[2022配信NEWS](https://helloproject.com/news/15357/?pc=1)、
+[2023公式release](https://helloproject.com/release/6991/)、
+[プライド・ブライト配信release](https://helloproject.com/release/7019/)、
+[先行配信NEWS](https://helloproject.com/news/16124/)、
+[2023配信NEWS](https://helloproject.com/news/16184/)、
+[FUNKY FLUSHIN' cover根拠](https://helloproject.com/juicejuice/news/16504/?pc=1)。
+
+### 19.2 Current CSV baseline / current max IDs
+
+作業開始時にREADME、data-spec、既存researchと指定14 CSVを再確認した。`Juice=Juice#2 -¡Una más!-`は
+`L00103`/`L00104`および46 release_tracksまで投入済み。現在CSVを正とするbaselineは依頼記載値と一致した。
+冒頭に残っていた「First Squeeze！はCSV未投入」という古い状態表示だけを最小修正し、過去の調査履歴は維持した。
+
+| table | current rows | current max relevant ID |
+|---|---:|---|
+| releases | 104 | L00104 |
+| release_tracks | 445 | — |
+| songs | 89 | Juice=Juice J00088 |
+| works | 72 | W00072 |
+| creators | 69 | C00069 |
+| members | 11 | P00011 |
+| artists | 3 | G00003 |
+| song_creators | 292 | — |
+| song_artists | 92 | — |
+| song_performers | 161 | — |
+
+### 19.3 2022-11-23 official release / physical editions
+
+正式titleは`全部賭けてGO!!/イニミニマニモ～恋のライバル宣言～`、artist `Juice=Juice`、label
+`hachama`、CDシングル、発売日2022-11-23。physical 5形態を公式商品ページと発売決定NEWSの双方で確認した。
+
+| release date | title | edition | planned release_id | catalog number | media | official CD tracks | canonical audio tracks | source |
+|---|---|---|---|---|---|---:|---:|---|
+| 2022-11-23 | 全部賭けてGO!!/イニミニマニモ～恋のライバル宣言～ | 初回生産限定盤A | L00105 | HKCN-50742 | CD+BD | 4 | 2 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| 2022-11-23 | 同上 | 初回生産限定盤B | L00106 | HKCN-50744 | CD+BD | 4 | 2 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| 2022-11-23 | 同上 | 初回生産限定盤SP | L00107 | HKCN-50746 | CD+BD | 4 | 2 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| 2022-11-23 | 同上 | 通常盤A | L00108 | HKCN-50748 | CD | 4 | 2 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| 2022-11-23 | 同上 | 通常盤B | L00109 | HKCN-50749 | CD | 4 | 2 | [official](https://helloproject.com/juicejuice/release/6853/) |
+
+### 19.4 2022 tracklists / Special Edition investigation
+
+全5形態のCD tracklistは同一。Instrumental 2曲/盤（計10 physical positions）はresearch上把握するがcanonical除外。
+
+| disc | track | official title | duration | kind | editions | canonical scope | source |
+|---:|---:|---|---|---|---|---|---|
+| 1 | 1 | 全部賭けてGO!! | 03:32 | audio | 全5形態 | 対象 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| 1 | 2 | イニミニマニモ～恋のライバル宣言～ | 03:22 | audio | 全5形態 | 対象 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| 1 | 3 | 全部賭けてGO!!(Instrumental) | 03:28 | Instrumental | 全5形態 | 除外 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| 1 | 4 | イニミニマニモ～恋のライバル宣言～(Instrumental) | 03:22 | Instrumental | 全5形態 | 除外 | [official](https://helloproject.com/juicejuice/release/6853/) |
+
+- **physical SP:** 初回生産限定盤SP（HKCN-50746）は存在。ただしCD additional audio/alternate audioはなく、通常CDと同じ4曲。
+  BDだけが新メンバーfeature映像2本とmaking 2本を持つ。映像上の`feat. 石山咲良、遠藤彩加里Ver.`をaudio songにしない。
+- **digital / later Special Edition:** 公式配信告知は発売日から通常2曲のシングル・ハイレゾ・video配信開始を示す。
+  商品名`Special Edition`、ソロVersion、additional audio、後発Special Editionは公式release一覧・検索結果で確認できなかった。
+  「存在しないとの公式宣言」は確認していないため、結論は**確認できなかった**に留める。
+- **future video candidates:** 限定盤Aは`全部賭けてGO!!` MV/Dance Shot/making各1、限定盤Bは
+  `イニミニマニモ～恋のライバル宣言～` MV/Dance Shot/making各1、SPはfeature Ver. 2＋making 2、計10映像。
+
+### 19.5 2023-07-12 official release / physical editions
+
+正式titleは`プライド・ブライト/FUNKY FLUSHIN'`、artist `Juice=Juice`、label `hachama`、CDシングル、
+発売日2023-07-12。physical 5形態。`FUNKY FLUSHIN'`のcapitalization、space、ASCII apostropheを保持する。
+
+| release date | title | edition | planned release_id | catalog number | media | official CD tracks | canonical audio tracks | source |
+|---|---|---|---|---|---|---:|---:|---|
+| 2023-07-12 | プライド・ブライト/FUNKY FLUSHIN' | 初回生産限定盤A | L00110 | HKCN-50766 | CD+BD | 4 | 2 | [official](https://helloproject.com/release/6991/) |
+| 2023-07-12 | 同上 | 初回生産限定盤B | L00111 | HKCN-50768 | CD+BD | 4 | 2 | [official](https://helloproject.com/release/6991/) |
+| 2023-07-12 | 同上 | 初回生産限定盤SP | L00112 | HKCN-50770 | CD+BD | 4 | 2 | [official](https://helloproject.com/release/6991/) |
+| 2023-07-12 | 同上 | 通常盤A | L00113 | HKCN-50772 | CD | 4 | 2 | [official](https://helloproject.com/release/6991/) |
+| 2023-07-12 | 同上 | 通常盤B | L00114 | HKCN-50773 | CD | 4 | 2 | [official](https://helloproject.com/release/6991/) |
+
+### 19.6 2023 tracklists / Special Edition investigation
+
+全5形態のCD tracklistは同一。Instrumental 2曲/盤（計10 positions）はcanonical除外。
+
+| disc | track | official title | duration | kind | editions | canonical scope | source |
+|---:|---:|---|---|---|---|---|---|
+| 1 | 1 | プライド・ブライト | 03:46 | audio | 全5形態 | 対象 | [official](https://helloproject.com/release/6991/) |
+| 1 | 2 | FUNKY FLUSHIN' | 03:56 | audio | 全5形態 | 対象 | [official](https://helloproject.com/release/6991/) |
+| 1 | 3 | プライド・ブライト(Instrumental) | 03:46 | Instrumental | 全5形態 | 除外 | [official](https://helloproject.com/release/6991/) |
+| 1 | 4 | FUNKY FLUSHIN'(Instrumental) | 04:01 | Instrumental | 全5形態 | 除外 | [official](https://helloproject.com/release/6991/) |
+
+- **physical SP:** 初回生産限定盤SP（HKCN-50770）は存在。CD追加音源なし。BDはCOUNTDOWN JAPAN 22/23の
+  OPENING、8曲、MC、backstage（公式11 entries）で、短縮live audioをcanonical audioへ含めない。
+- **digital / later Special Edition:** 6/29配信は`プライド・ブライト`単曲（UFDL-1520）。7/12告知は通常シングル・
+  ハイレゾ・video配信。商品名`Special Edition`、digital-only追加曲、alternate version、後発Special Editionは
+  公式情報から確認できなかったが、不存在を公式に確認したとはしない。
+- **future video candidates:** 限定盤AはPride MV/Dance Shot/making 3、BはFUNKY MV/Dance Shot/making 3、
+  SPは上記11、計17 entries。videos系は今回非投入。
+
+### 19.7 Unique audio / Current DB comparison
+
+unique audioは4。全`W00001`～`W00072` / 全89 songと機械的title照合し、creator、version、chronologyも確認した。
+同名work/songはなく、後年release経由の既登録もない。durationは補助情報にのみ使用した。
+
+| release | track | title | duration | classification | existing work | existing song | existing version | version notation | creator diff | artist diff | performer diff | release date candidate | planned work | planned song | note |
+|---|---:|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2022 single | 1 | 全部賭けてGO!! | 03:32 | C | なし | なし | なし | なし | 新規徳田光希を含む | なし | 個人証拠なし | 2022-11-23 | W00073 | J00089 | new original |
+| 2022 single | 2 | イニミニマニモ～恋のライバル宣言～ | 03:22 | C | なし | なし | なし | なし | 新規海外作家3名 | なし | 個人証拠なし | 2022-11-23 | W00074 | J00090 | new original |
+| 2023 single | 1 | プライド・ブライト | 03:46 | C | なし | なし | なし | なし | 既存作家のみ | なし | 個人証拠なし | 2023-06-29 | W00075 | J00091 | same audio先行配信 |
+| 2023 single | 2 | FUNKY FLUSHIN' | 03:56 | C | なし | なし | なし | なし | 新規2名を含む | なし | 個人証拠なし | 2023-07-12 | W00076 | J00092 | 山下達郎原曲のcover |
+
+#### A classification
+
+0件。existing work + existing song reuseはない。
+
+#### B classification
+
+0件。cover元`FUNKY FLUSHIN'` workはcurrent DBに存在しないためBではない。
+
+#### C classification
+
+| title | work / song | reasoning | source |
+|---|---|---|---|
+| 全部賭けてGO!! | W00073 / J00089 | current DBにwork/songなし、無印の最初の通常release | [official](https://helloproject.com/juicejuice/release/6853/) |
+| イニミニマニモ～恋のライバル宣言～ | W00074 / J00090 | current DBにwork/songなし、無印の最初の通常release | [official](https://helloproject.com/juicejuice/release/6853/) |
+| プライド・ブライト | W00075 / J00091 | current DBにwork/songなし、6/29先行単曲とCDは同一specific audio | [digital](https://helloproject.com/release/7019/) |
+| FUNKY FLUSHIN' | W00076 / J00092 | current DBに原曲workなし、公式が名曲coverと明記 | [official cover note](https://helloproject.com/juicejuice/news/16504/?pc=1) |
+
+#### D classification
+
+0件。`A+B+C+D = 0+0+4+0 = 4`でunique audio数と一致。
+
+### 19.8 New song table / audio identity
+
+下記IDはすべてplanned。無印3曲はそのworkのchronological original、FUNKYはリポジトリ外の山下達郎原曲が先行するcover。
+
+| release | title | class | work_id | song_id | version_name | version_type | release_date | source |
+|---|---|---|---|---|---|---|---|---|
+| 2022-11-23 | 全部賭けてGO!! | C | W00073 | J00089 | 空欄 | original | 2022-11-23 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| 2022-11-23 | イニミニマニモ～恋のライバル宣言～ | C | W00074 | J00090 | 空欄 | original | 2022-11-23 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| 2023-06-29 | プライド・ブライト | C | W00075 | J00091 | 空欄 | original | 2023-06-29 | [digital](https://helloproject.com/release/7019/) |
+| 2023-07-12 | FUNKY FLUSHIN' | C | W00076 | J00092 | 空欄 | cover | 2023-07-12 | [cover evidence](https://helloproject.com/juicejuice/news/16504/?pc=1) |
+
+### 19.9 Pre-release full-audio distribution / Pride Bright investigation
+
+| title | CD release date | earlier full-audio date | source | same specific audio | songs.release_date candidate |
+|---|---|---|---|---|---|
+| 全部賭けてGO!! | 2022-11-23 | 確認できず | [release-day distribution](https://helloproject.com/news/15357/?pc=1) | — | 2022-11-23 |
+| イニミニマニモ～恋のライバル宣言～ | 2022-11-23 | 確認できず | [release-day distribution](https://helloproject.com/news/15357/?pc=1) | — | 2022-11-23 |
+| プライド・ブライト | 2023-07-12 | **2023-06-29** | [NEWS](https://helloproject.com/news/16124/) / [UFDL-1520](https://helloproject.com/release/7019/) | yes | **2023-06-29** |
+| FUNKY FLUSHIN' | 2023-07-12 | 確認できず | [release-day distribution](https://helloproject.com/news/16184/) | — | 2023-07-12 |
+
+`プライド・ブライト`はNEWSが6/29 0時からiTunes Store、レコチョク、moraで「先行配信」と明記し、公式配信releaseは
+1 track全尺03:46、同じJuice=Juice名義、作詞・作曲山崎あおい、編曲鈴木俊介を掲載する。CDも同一表記・尺・creditで
+Version注記やperformer差がなく、official download/streaming full audioと判断できる。MV、teaser、radio OAを根拠にしていない。
+他3曲は検索した公式release/newsで発売日配信は確認したが、それ以前のfull audioは確認できず、不存在とは断定しない。
+
+### 19.10 Creator credits
+
+共同creditは`/`区切りの公式順を独立relationにし、`credit_name`はofficial spellingを保持する。specialized roleや
+brass/english lyricsはなく、現行roleだけで表現可能。planned song_creatorsは15 relations。
+
+| song | lyrics | composition | arrangement | relation count | source |
+|---|---|---|---|---:|---|
+| J00089 全部賭けてGO!! | C00019 大森祥子 | C00070 徳田光希 | C00070 徳田光希 | 3 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| J00090 イニミニマニモ～恋のライバル宣言～ | C00001 山崎あおい | C00071 Johan Alkenas / C00072 Joacim Persson / C00073 Lisa Desmond | C00072 Joacim Persson / C00071 Johan Alkenas | 6 | [official](https://helloproject.com/juicejuice/release/6853/) |
+| J00091 プライド・ブライト | C00001 山崎あおい | C00001 山崎あおい | C00035 鈴木俊介 | 3 | [official](https://helloproject.com/release/6991/) |
+| J00092 FUNKY FLUSHIN' | C00074 吉田美奈子 | C00015 山下達郎 | C00075 Aksel Odenbalk | 3 | [official](https://helloproject.com/release/6991/) |
+
+**Existing creators**
+
+| creator_id | name | role / credit | songs |
+|---|---|---|---|
+| C00001 | 山崎あおい | lyrics; lyrics/composition | J00090; J00091 |
+| C00015 | 山下達郎 | composition | J00092 |
+| C00019 | 大森祥子 | lyrics | J00089 |
+| C00035 | 鈴木俊介 | arrangement | J00091 |
+
+**New creator candidates**
+
+| planned creator_id | name | role / credit | songs | source | uncertainty |
+|---|---|---|---|---|---|
+| C00070 | 徳田光希 | composition, arrangement | J00089 | [official](https://helloproject.com/juicejuice/release/6853/) | なし |
+| C00071 | Johan Alkenas | composition, arrangement | J00090 | [official](https://helloproject.com/juicejuice/release/6853/) | official ASCII spellingを保持 |
+| C00072 | Joacim Persson | composition, arrangement | J00090 | [official](https://helloproject.com/juicejuice/release/6853/) | なし |
+| C00073 | Lisa Desmond | composition | J00090 | [official](https://helloproject.com/juicejuice/release/6853/) | なし |
+| C00074 | 吉田美奈子 | lyrics | J00092 | [official](https://helloproject.com/release/6991/) | なし |
+| C00075 | Aksel Odenbalk | arrangement | J00092 | [official](https://helloproject.com/release/6991/) | なし |
+
+### 19.11 Artist relations / performer evidence / members
+
+全4 songの公式`歌：Juice=Juice`に基づき、existing `G00001 / Juice=Juice / primary / credit_order=1`を各1件、
+planned song_artists計4。別artist、featured、multiple primary、新artist候補は0。
+
+公式ページの`歌：Juice=Juice`はgroup-level artist wordingであり、個人member列挙ではない。SP映像の`feat.`は映像の出演/
+featureで、CD specific audioの個人performer evidenceではない。在籍から推測しないためplanned song_performersは**0件**、
+performer summary該当行0件、新member候補0、planned member IDなし。後発`Juicetory`等のrelease pageにも今回4 specific audioへ
+適用できる個人列挙は確認できなかった。
+
+### 19.12 Planned IDs
+
+| entity | planned IDs | count | rule |
+|---|---|---:|---|
+| physical releases | L00105～L00109（2022 official edition順）、L00110～L00114（2023 official edition順） | 10 | chronological + official listing order |
+| works | W00073 全部、W00074 イニミニ、W00075 Pride、W00076 FUNKY | 4 | chronological + track order |
+| songs | J00089 全部、J00090 イニミニ、J00091 Pride、J00092 FUNKY | 4 | chronological + track order |
+| creators | C00070～C00075（19.10順） | 6 | first credit appearance stable order |
+| members | なし | 0 | individual evidenceなし |
+| artists | なし | 0 | G00001再利用 |
+
+Digital UFDL-1520および発売日digital productsには今回physical planned release IDを割り当てない。future digital release master候補として保留。
+
+### 19.13 Planned release_tracks
+
+source_urlはL00105～L00109が2022公式release、L00110～L00114が2023公式release。各行の複数IDをそれぞれ
+1 relationへ展開し、同じspecific audioを全editionで同じsong IDから参照する。
+
+| planned release_id(s) | disc | track | track_title | class | work_id | song_id | version_name | version_type | source_url | note |
+|---|---:|---:|---|---|---|---|---|---|---|---|
+| L00105,L00106,L00107,L00108,L00109 | 1 | 1 | 全部賭けてGO!! | C | W00073 | J00089 | 空欄 | original | https://helloproject.com/juicejuice/release/6853/ | same audio reuse |
+| L00105,L00106,L00107,L00108,L00109 | 1 | 2 | イニミニマニモ～恋のライバル宣言～ | C | W00074 | J00090 | 空欄 | original | https://helloproject.com/juicejuice/release/6853/ | same audio reuse |
+| L00110,L00111,L00112,L00113,L00114 | 1 | 1 | プライド・ブライト | C | W00075 | J00091 | 空欄 | original | https://helloproject.com/release/6991/ | 6/29 same audio reuse |
+| L00110,L00111,L00112,L00113,L00114 | 1 | 2 | FUNKY FLUSHIN' | C | W00076 | J00092 | 空欄 | cover | https://helloproject.com/release/6991/ | 山下達郎work cover |
+
+| edition group | editions | official CD positions | planned relations / edition | planned relations total | Instrumental excluded |
+|---|---:|---:|---:|---:|---:|
+| 2022 single | 5 | 4 each | 2 | 10 | 10 |
+| 2023 single | 5 | 4 each | 2 | 10 | 10 |
+| **total** | **10** | **40** | **2** | **20** | **20** |
+
+### 19.14 Digital notes / User confirmation / Spec considerations
+
+- 2022は11/23からシングル、ハイレゾ、video配信。2023はPride単曲を6/29先行配信、両曲を7/12からシングル、
+  ハイレゾ、video配信。digital release masterは今回planned physical releasesに含めない。
+- 2023-12-06の7-inch `FUNKY FLUSHIN'`（HR7S300）は後発physical future release candidateだが、今回対象releaseではない。
+  公式NEWSは17th singleのoriginal releaseを2023-07-12と明記し、cover identityの根拠にもなる。
+- **User confirmation items: 0件。** D=0で現行specと一次情報から決定でき、ユーザー判断が必要な停止点はない。
+- **Spec considerations: 0件。** 新role、新version種別、multiple primary等は発生しない。
+
+### 19.15 Expected counts after import
+
+確定計画（physicalのみ）ではrelease +10、release_tracks +20、songs +4、works +4、creators +6、
+song_creators +15、song_artists +4。member/artist/song_performersは不変。D=0のためrangeなし。
+
+| table | current | planned additions | expected after import |
+|---|---:|---:|---:|
+| releases | 104 | 10 | 114 |
+| release_tracks | 445 | 20 | 465 |
+| songs | 89 | 4 | 93 |
+| works | 72 | 4 | 76 |
+| creators | 69 | 6 | 75 |
+| members | 11 | 0 | 11 |
+| artists | 3 | 0 | 3 |
+| song_creators | 292 | 15 | 307 |
+| song_artists | 92 | 4 | 96 |
+| song_performers | 161 | 0 | 161 |
+
+### 19.16 Validation / Import readiness
+
+- [x] baseline 10表、max IDs、Juice=Juice#2投入をCSVから再計数。説明不能な差分なし。
+- [x] physical editions 5+5=10、catalog numbers 10件、media、発売日、正式titleを公式一次情報で確認。
+- [x] 各盤CD 4 positions / canonical 2、Instrumental 2ずつ除外。映像27 entriesもaudio scopeから除外。
+- [x] unique audio 4、A/B/C/D=`0/0/4/0`、合計4。全existing work/songと照合しreuse 0。
+- [x] chronologyとfull-audio確認。Pride 2023-06-29を公式single-track配信から採用、他3曲は確認できた最初の日を採用。
+- [x] FUNKY coverを公式後発NEWSで確認。version_name空欄、version_type original/original/original/cover。
+- [x] creator既存4名/new 6名、relation 15。official credit順・spellingを保持しID重複/衝突なし。
+- [x] artistはG00001 primary 4、multiple primary 0。個人performer証拠なしのためperformer/member追加0。
+- [x] L00105～L00114、W00073～W00076、J00089～J00092、C00070～C00075に内部重複・existing衝突なし。
+- [x] release/disc/track位置は各planned releaseのDisc 1 Track 1～2で一意。planned relations 20。
+- [x] official source URLをrelease、track、credit、配信、cover判断へ記録。digital masterはphysical計画から分離。
+- [x] Markdown table列数を機械検証し、`git diff --check`対象とする。CSV/data-spec変更なし。
+
+**Import readiness: READY**
+
+D=0、release構成、audio identity、planned IDs、creator/artist/performer計画、planned release_tracksが確定し、
+次回physical 10形態を一括投入可能。次にユーザーが判断すべき事項はない。digital release master、後発7-inch、映像は別phase。
