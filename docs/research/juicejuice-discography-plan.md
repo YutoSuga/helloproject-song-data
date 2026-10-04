@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
 調査日: 2026-10-04（2023-07-12シングルまでの投入およびJuicetory調査を反映）
-状態: **2023-07-12「プライド・ブライト/FUNKY FLUSHIN'」までcanonical CSV投入完了。次対象「Juicetory」はresearch完了・CSV未投入**
+状態: **2023-10-11「Juicetory」までcanonical CSV投入完了**
 
 ## 1. 目的・判定原則
 
@@ -65,7 +65,7 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 | 2022-04-20 | アルバム | 3rdアルバム「terzo」 | J00001–J00028 | — | [公式詳細](https://helloproject.com/juicejuice/release/6692/) | CSV登録済み。規格品番別L00001–L00003。 |
 | 2022-11-23 | CDシングル | 全部賭けてGO!!/イニミニマニモ～恋のライバル宣言～ | — | C | [公式詳細](https://helloproject.com/juicejuice/release/6853/) | **投入完了。** L00105～L00109 / W00073～W00074 / J00089～J00090。 |
 | 2023-07-12 | CDシングル | プライド・ブライト/FUNKY FLUSHIN' | — | C | [公式詳細](https://helloproject.com/release/6991/) | **投入完了。** L00110～L00114 / W00075～W00076 / J00091～J00092。「プライド・ブライト」は2023-06-29先行配信。 |
-| 2023-10-11 | アルバム | Juicetory | — | C | [公式詳細](https://helloproject.com/juicejuice/release/7056/?pc=1) | **research完了・CSV未投入。** 20節参照。 |
+| 2023-10-11 | アルバム | Juicetory | — | C | [公式詳細](https://helloproject.com/juicejuice/release/7056/?pc=1) | **canonical CSV投入完了。** 20節参照。 |
 | 2024-05-15 | CDシングル | トウキョウ・ブラー／ナイモノラブ／おあいこ | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | 同日のSpecial Edition（D15）をセットで確認。 |
 | 2025-02-26 | CDシングル | 初恋の亡霊／今夜はHearty Party | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | 個別ページ未確認。 |
 | 2025-10-08 | CDシングル | 四の五の言わず颯と別れてあげた／盛れ！ミ・アモーレ | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | 後発の特殊Version（D17～D19）とは分離。 |
@@ -3038,3 +3038,47 @@ D=0、edition構成、A/B/C、audio/version/cover identity、planned IDs、creat
 release_dateが確定し、次回physical 2形態を一括投入できる。unresolvedは**0件**、user decisionも0件。
 `Juicetory`後の次の未投入Juice=Juice通常作品は、roadmap上2024-05-15
 `トウキョウ・ブラー/ナイモノラブ/おあいこ`（同日Special Editionも併せて調査）である。
+
+### 20.24 Canonical import actual result（2026-10-04）
+
+**Import completed. READYを維持する。** 20.1～20.23の確定計画を変更せずcanonical CSVへ投入した。指定された
+research commit `6cd51d0d84f385d63d09636db6fe3e1e7192cf30`はlocal Git objectに存在しなかったが、同等のresearch commit
+`5b7e559d17dfcf4c4174eda324323564b4da5c4a`（`docs: research Juice=Juice Juicetory`）、current research MD、
+current CSV baselineを確認した。投入前baselineは20.2記載どおりで、planned ID collisionは0だった。
+
+| entity | actual IDs / result |
+|---|---|
+| releases | L00115 初回生産限定盤（HKCN-50774、CD+BD）、L00116 通常盤（HKCN-50776、CD） |
+| work | W00077 ボン・ヴォヤージュ～想いの軌跡～ |
+| songs | J00093～J00106（official CD track 1～14順、20.7・20.9・20.10のwork mappingどおり） |
+| members | P00012 有澤一華、P00013 入江里咲、P00014 江端妃咲、P00015 石山咲良、P00016 遠藤彩加里、P00017 川嶋美楓 |
+| creators / artists | creator additions 0、artist additions 0。existing creator 16名とG00001を再利用 |
+
+| table | before | actual additions | actual total |
+|---|---:|---:|---:|
+| releases | 114 | 2 | 116 |
+| release_tracks | 465 | 28 | 493 |
+| songs | 93 | 14 | 107 |
+| works | 76 | 1 | 77 |
+| creators | 75 | 0 | 75 |
+| members | 11 | 6 | 17 |
+| artists | 3 | 0 | 3 |
+| song_creators | 307 | 44 | 351 |
+| song_artists | 96 | 14 | 110 |
+| song_performers | 161 | 11 | 172 |
+
+- unique audio 14、A/B/C/D=`0/13/1/0`（合計14）。existing song reuse 0、Bはexisting work+new song 13、CはW00077/J00106の1。
+- version typeは`re_recording` 11、`cover` 2（Magic of Love、ポップミュージック）、`original` 1
+  （ボン・ヴォヤージュ～想いの軌跡～）。version_name、song→work、全14曲の`release_date=2023-10-11`は計画どおり。
+- creator additions 0、song_creators 44、artist additions 0、G00001 primaryのsong_artists 14、multiple primary 0。
+- member additions 6、member_affiliations変更なし。公式個人歌唱者列挙があるJ00096/J00097の2曲だけへ、existing member 5名と
+  new member 6名のsong_performers 11を追加した。その他12曲への推測追加とexisting songへの遡及補完はいずれも0。
+- release_tracksはL00115=14、L00116=14、合計28。各disc 1、track 1～14で、対応trackはedition間で同じJ00093～J00106を再利用。
+- Instrumental unique/positionsは0/0。初回盤BD 31 entries、digital album master、後発live音源は除外し、video系3 CSVは変更していない。
+- CSV validatorで全`data/*.csv`のparse、header、column count、required fields、enum/role、ID/date/timestamp format、master PK、
+  指定FK、relation完全重複、release position、primary artist、expected totalsを検証し全件PASS。new songのchronology、work mapping、
+  creator 44、artist 14、member/performer 11、edition reuseも計画と一致した。
+- Markdown tableは全行の列数整合を機械検証しPASS。`git diff --check`もPASS。`docs/data-spec.md`、`creators.csv`、
+  `artists.csv`、`member_affiliations.csv`、video系3 CSVは未変更で、想定外diffは0。
+- unresolved 0、user confirmation 0、spec considerations 0。次の未投入Juice=Juice通常作品は2024-05-15
+  `トウキョウ・ブラー/ナイモノラブ/おあいこ`（同日Special Editionも併せて調査）。
