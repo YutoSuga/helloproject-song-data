@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
 調査日: 2026-10-04（B-5～B-9投入およびFirst Squeeze！最終投入計画を反映）
-状態: **優先度A 5件およびB-1～B-9投入完了、First Squeeze！はaudio identityと投入仕様を確定（CSV未投入）**
+状態: **優先度A 5件およびB-1～B-9、Juice=Juice#2 -¡Una más!-投入完了、First Squeeze！はaudio identityと投入仕様を確定（CSV未投入）**
 
 ## 1. 目的・判定原則
 
@@ -1805,7 +1805,7 @@ identity重複、release/disc/track位置重複を検証した。S1/S2/S3/S4のr
 `SEXY SEXY`はsingle公式04:45に対してalbum公式04:21と24秒差があるため、version notation、creator、
 performer、official metadata、audio comparison、intro/outro、edit、recording identityを最優先で確認する。
 
-## 18. Juice=Juice#2 -¡Una más!- research（2026-10-04、research-only）
+## 18. Juice=Juice#2 -¡Una más!- research・投入記録（2026-10-04）
 
 ### 18.1 Summary
 
@@ -1828,9 +1828,10 @@ https://helloproject.com/news/8594/ 、全曲配信告知 https://helloproject.c
   album配信の同曲はsingle初出日の同一配信trackとして扱われ、補助配信metadataも04:45である。無印、creator、
   artist、7名のperformerも一致し、別Versionの積極的根拠がないため **A / J00074再利用**とする。04:21は
   直前track`Fiesta! Fiesta!`と同値であり、product-page duration転記誤りの可能性が高い、という推定までに留める。
-- `Wonderful World(2018 English Ver.)`の公式`英語詞:鈴木桃子`は現行creator roleにない。relationを失わず
-  canonical化するにはspec判断が必要なため、全audio identityは解決済みだが最終判定は
-  **READY AFTER USER DECISION**。CSVとdata-specは今回変更しない。
+- `Wonderful World(2018 English Ver.)`の公式`英語詞:鈴木桃子`は調査時点のcreator roleになく、
+  relationを失わずcanonical化するためユーザー判断を求めた。その後、`english_lyrics`を一般化した独立roleとして
+  仕様追加し、鈴木桃子を同roleで登録する判断が確定した。通常の`lyrics`へ統合せず、元の作詞者creditも保持する。
+- 上記ユーザー判断により唯一の停止点が解消したため状態は **READY**。18.20に実投入結果を記録する。
 
 ### 18.2 Current CSV baseline
 
@@ -2215,7 +2216,7 @@ https://helloproject.com/release/5684/ 。D=0なのでsong_idは全て確定候�
 
 ### 18.15 User confirmation items
 
-#### UC-18-1 Wonderful World英語詞role
+#### UC-18-1 Wonderful World英語詞role（ユーザー判断確定）
 
 - **対象：** `Wonderful World(2018 English Ver.)`の`英語詞:鈴木桃子`。
 - **公式に確認できた事実：** official album pageは`作詞：イイジマケン/英語詞:鈴木桃子`と役割を明確に分離。
@@ -2232,10 +2233,13 @@ https://helloproject.com/release/5684/ 。D=0なのでsong_idは全て確定候�
 - **参考URL：** https://helloproject.com/release/5684/
 - **推奨：** A、`english_lyrics`を独立roleとして仕様化してから一括投入。
 - **停止点：** J00088の鈴木桃子creator relationと最終song_creators countのみ。他の計画は確定済み。
+- **ユーザー判断（2026-10-04）：** 推奨Aを採用し、一般role `english_lyrics`をdata-specへ追加する。
+  `J00088 / C00069 / english_lyrics / 鈴木桃子`を登録し、`C00031 / lyrics / イイジマケン`は保持する。
+  通常の作詞ランキングには`english_lyrics`を自動包含せず、必要時に独立集計する。これにより停止点は解消した。
 
 ### 18.16 Spec considerations
 
-- **英語詞role（要判断）：** 現行4 roleでは公式`英語詞`を損失なく表せない。既存lyricsへ勝手に統合しない。
+- **英語詞role（確定）：** `english_lyrics`を公式「英語詞」等の一般roleとして追加し、通常の`lyrics`と独立保持する。元の作詞者creditを置換せず、通常作詞ランキングへ自動包含しない。
 - **大きなduration差：** 同一product pageの隣接track duration誤転記と配信metadata矛盾をどう記録するか。
   固定秒数閾値は作らず、source単位のduration provenanceが必要なら将来duration/source tableを検討する。
 - **後発album performer evidence：** 同一audio A確定後、後発一次情報の個人歌唱creditをsong_performers根拠に
@@ -2246,7 +2250,7 @@ https://helloproject.com/release/5684/ 。D=0なのでsong_idは全て確定候�
 
 ### 18.17 Expected counts after import
 
-UC-18-1の推奨A（new role追加）を採用した場合。song_creatorsはnew song 37 + J00028補完1 = 38。
+UC-18-1の推奨A（new role追加）をユーザー判断により採用。song_creatorsはnew song 37 + J00028補完1 = 38。
 performerは全23曲の公式個人credit 148。song_artistsはnew song 12曲に13（大人の事情のみdual primary）。
 
 | table | current | planned additions | expected after import |
@@ -2262,8 +2266,7 @@ performerは全23曲の公式個人credit 148。song_artistsはnew song 12曲に
 | song_artists | 79 | 13 | 92 |
 | song_performers | 13 | 148 | 161 |
 
-UCで英語詞relationを保留する場合、song_creatorsだけ追加37 / expected291（ただしcredit欠落のためNOT READY
-相当）。B案lyricsへ統合なら件数は292だがrole精度が落ちる。member_affiliationsとvideo系は不変。
+過去に検討した保留案ではsong_creators追加37 / expected291、lyrics統合案では292だがrole精度が落ちるため、いずれも不採用。確定した`english_lyrics`案で292となった。member_affiliationsとvideo系は不変。
 
 ### 18.18 Validation
 
@@ -2277,15 +2280,56 @@ UCで英語詞relationを保留する場合、song_creatorsだけ追加37 / expe
 - [x] SEXY SEXYの24秒差を公式配信導線と補助metadataまで追跡し、単独閾値で判断していない。
 - [x] existing work/song mapping：A 11、B 2、C 10。Goal J00028、Never W00026、Wonderful W00040整合。
 - [x] chronology：Fiesta 2017-08-23、大人の事情2016-03-02、Never 2018版がoriginal、J00027は後年版。
-- [x] creator identityを全C00001～C00064と突合、新規5名のみ採番。英語詞roleは未決として停止。
+- [x] creator identityを全C00001～C00064と突合、新規5名のみ採番。英語詞roleはユーザー判断で`english_lyrics`に確定。
 - [x] performerは公式`歌：`のみ使用し、在籍推測なし。梁川奈々美だけnew member候補。
 - [x] 全release/song/relation計画にofficial source URLを記録。
 - [x] Markdown table列数を機械検証対象とし、CSVは変更しない。
 
 ### 18.19 Import readiness
 
-**READY AFTER USER DECISION**
+**READY**
 
-D=0でaudio identity、release構成、planned IDs、release_tracks、artist、performerは確定している。唯一の停止点は
-`Wonderful World(2018 English Ver.)`の公式`英語詞`を表すcreator role。UC-18-1で推奨Aを確定し、次回
-`docs/data-spec.md`を先に更新すれば一括投入可能。今回は`data/*.csv`と`docs/data-spec.md`を変更しない。
+D=0でaudio identity、release構成、planned IDs、release_tracks、artist、performerは確定済み。調査時点では
+`Wonderful World(2018 English Ver.)`の公式`英語詞`を表すcreator roleだけが停止点であり、状態は
+**READY AFTER USER DECISION**だった。この履歴は維持する。その後UC-18-1の推奨A（`english_lyrics`）が
+ユーザー判断で確定し、停止点が解消したため **READY**へ更新した。実投入結果は18.20のとおり。
+
+
+### 18.20 Canonical CSV import result（2026-10-04）
+
+ユーザー判断を反映して`docs/data-spec.md`へ一般role `english_lyrics`を追加した。通常`lyrics`と区別し、元の
+作詞者creditを置換せず、通常作詞ランキングへ自動包含しない。performerについても、同一specific audioとして
+同じ`song_id`を参照すると確定した場合に、後発公式sourceの歌唱者情報をmetadata補完へ使用できる一般規則を
+最小限追記した。別Version・再録・New Vocal・同一audio未確定・対象recordingが曖昧な場合は遡及しない。
+
+確定計画どおりcanonical CSVへ投入した。actual IDと追加数は次のとおり。
+
+| entity | actual IDs / result | actual additions |
+|---|---|---:|
+| releases | L00103 初回生産限定盤 HKCN-50564、L00104 通常盤 HKCN-50567 | 2 |
+| release_tracks | 両releaseともDisc 1=11、Disc 2=12、各23 | 46 |
+| works | W00063～W00072（18.13 mappingどおり） | 10 |
+| songs | J00077～J00088（18.13 mappingどおり） | 12 |
+| creators | C00065～C00069（18.9 mappingどおり） | 5 |
+| members | P00011 梁川奈々美 | 1 |
+| artists | G00001 / G00003を再利用 | 0 |
+| song_creators | new song 37 + J00028/C00067 arrangement補完1 | 38 |
+| song_artists | new song 12曲へ13（J00087のみG00003/G00001 dual primary） | 13 |
+| song_performers | 5名曲8=40、7名曲12=84、8名曲3=24 | 148 |
+
+`J00088`には`C00069 / english_lyrics / 鈴木桃子`を登録し、`C00031 / lyrics / イイジマケン`を保持した。
+`J00028`には公式album creditに基づき`C00067 / arrangement / 沢頭たかし / credit_order=2`を補完した。
+A分類11曲は全てexisting songを再利用し、`SEXY SEXY`は`W00060 / J00074`のまま両releaseから参照した。
+A曲のperformerは、album公式`歌：`が同一song_id＝同一specific audioに対して示すmetadataとして補完し、sourceは
+album公式pageを保持した。既存13 relationとの重複は0だった。`Next is you!`のexisting dual primaryへ重複追加せず、
+`大人の事情`だけnew songにG00003/G00001のdual primaryを登録した。member affiliations、digital release、BD 45件、
+video系CSVは非投入、Instrumental対象は0である。
+
+投入後totalはreleases 104、release_tracks 445、songs 89、works 72、creators 69、members 11、artists 3、
+song_creators 292、song_artists 92、song_performers 161。unique audio=23、A/B/C/D=`11/2/10/0`、
+physical release=2、release_tracks=46で計画と一致した。
+
+全CSVをparseし、header/列数、required fields、enum（`english_lyrics`を含む）、ID/date/timestamp形式、master PK、
+指定FK、relation重複、全releaseのdisc/track位置重複を検証した。L00103/L00104は各23（11+12）、新規work/song/
+creator/member ID、chronology、Version、artist、creator、performer内訳、expected totalsも一致した。Markdown tableの
+列数と`git diff --check`も通過し、想定外diffはない。classification再判断は行わず、unresolved = **0**。

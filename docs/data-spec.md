@@ -164,12 +164,14 @@ ID は永続的な識別子であり、発売順・時系列を表さない。�
 |---|---|---:|---|
 | `song_id` | ID | 必須 | 複合 PK、FK → `songs.song_id` |
 | `creator_id` | ID | 必須 | 複合 PK、FK → `creators.creator_id` |
-| `role` | 列挙 | 必須 | 複合 PK、`lyrics`, `composition`, `arrangement`, `brass_arrangement` |
+| `role` | 列挙 | 必須 | 複合 PK、`lyrics`, `english_lyrics`, `composition`, `arrangement`, `brass_arrangement` |
 | `credit_name` | 文字列 | 必須 | その song で実際に表示されたクレジット名義 |
 | `credit_order` | 正整数 | 任意 | 同一 song・role 内の公式掲載順 |
 | `source_url` | URL | 必須 | クレジットの一次情報 |
 
 共同担当は作家ごとに 1 行とする。集計では持分按分せず、各 `creator_id` を role ごとに 1 曲と数える。Web 等で当時の正式名義を表示するときは `credit_name` を用いる。
+
+`english_lyrics` は、公式クレジットで「英語詞」等と明示された担当者に使用し、通常の`lyrics`とは別のrelationとして保持する。元の作詞者の`lyrics`を置換せず、英語詞担当者を通常の作詞者として扱わない。通常の作詞ランキングは`role=lyrics`のみを対象とし、`english_lyrics`を自動的に含めない。将来必要になった場合は、英語詞担当検索や英語詞ランキングとして独立集計できる。
 
 `brass_arrangement` は、公式クレジットで「ブラスアレンジ」「Brass Arrangement」等と明示された作家に使用し、通常の「編曲」を表す `arrangement` とは別の relation として保持する。例えば公式表記が「編曲：A、ブラスアレンジ：B」であれば、A を `arrangement`、B を `brass_arrangement` として登録し、B を `arrangement` に統合しない。反対に、公式クレジットが単に「編曲」とだけ記載されている場合は、推測で `brass_arrangement` へ分解しない。この規則は特定の楽曲に限らず今後登録する全データへ適用する。
 
@@ -314,6 +316,8 @@ song を「Juice=Juice が参加した song」として取得できるように�
 
 所属履歴から推定せず、その音源で実際に歌唱した確認可能な member を登録する。
 
+`song_performers`はreleaseではなくspecific audioである`song_id`に紐づく。同一audioとして同じ`song_id`を参照することが確定している場合、そのaudioについて後発の公式sourceが示した歌唱者情報を当該songのmetadata補完に使用できる。この場合も根拠にした後発sourceを`source_url`へ記録する。別Version、再録、New Vocal、同一audio未確定、または公式記載の対象recordingが曖昧な場合は既存songへ遡及しない。
+
 ### `data/releases.csv`
 
 | 列名 | 型 | 必須 | 意味・制約 |
@@ -399,7 +403,7 @@ song を「Juice=Juice が参加した song」として取得できるように�
 | `songs.version_type` | `original`, `new_vocal`, `re_recording`, `cover`, `other` |
 | `artists.type` | `group`, `solo`, `temporary_unit`, `shuffle_unit`, `special_unit`, `project`, `trainee`, `other` |
 | `releases.release_type` | `single`, `album`, `digital`, `other` |
-| `song_creators.role` | `lyrics`, `composition`, `arrangement`, `brass_arrangement` |
+| `song_creators.role` | `lyrics`, `english_lyrics`, `composition`, `arrangement`, `brass_arrangement` |
 | `song_artists.role` | `primary`, `featured` |
 
 列挙値は既存値を読み替えず、仕様を先に改定して追加する。訳詞・補作詞等も既存 role へ無理に寄せない。
