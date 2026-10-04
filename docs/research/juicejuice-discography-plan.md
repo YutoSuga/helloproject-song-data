@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-10-03（B-4投入およびB-5～B-9調査を反映）
-状態: **優先度A 5件およびB-1～B-4投入完了、B-5～B-9は調査・投入計画まで完了（CSV未投入）**
+調査日: 2026-10-04（B-5～B-9投入およびFirst Squeeze！詳細調査を反映）
+状態: **優先度A 5件およびB-1～B-9投入完了、First Squeeze！は調査・投入計画まで完了（CSV未投入）**
 
 ## 1. 目的・判定原則
 
@@ -734,3 +734,310 @@ sourceは各曲のsingle公式詳細（15.2）および[First Squeeze！公式�
 `Ça va ? Ça va ?(サヴァサヴァ)`は括弧を含む表記全体をW00041/J00051の正規titleとし、「サヴァサヴァ」をversion_nameにしていない。singleの全release_tracksは商品上の表記`Ça va ? Ça va ?`を保持する。ユーザー確定方針によりsingle版と`First Squeeze！`収録版は同一曲・同一audioとして扱い、同album投入時はJ00051を再利用する。表記差だけを理由とするwork/song追加はしない。他9曲のalbum版とのaudio identityは未確定のまま、`First Squeeze！`投入時の確認事項として残す。
 
 投入後はreleases 75、release_tracks 263、songs 52、works 41、creators 42、artists 2、members 8。`First Squeeze！`自体、そのrelease_tracks、album新曲は今回未投入である。
+
+## 16. 1stアルバム「First Squeeze！」詳細調査・投入計画（2026-10-04、research-only）
+
+### 16.1 調査範囲、一次情報、停止点
+
+本節は2015-07-15発売の1stアルバムを、正本CSVへ入れる前に調べた結果である。変更前に
+README、data-spec、本書、および全14 CSVを確認した。正本の現況は`releases=75`、
+`release_tracks=263`、`songs=52`、`works=41`、`creators=42`、`artists=2`、
+`members=8`、最大IDは`L00075` / `J00051` / `W00041` / `C00042`である。
+
+一次情報は[Hello! Project公式release詳細](https://helloproject.com/release/4204/)を中心に、
+[公式release一覧](https://helloproject.com/juicejuice/release/?g=album&qs=%E6%A4%9C%E7%B4%A2&s=1)、
+[発売・配信告知](https://helloproject.com/juicejuice/news/3161/?pc=1)、
+[購入者特典告知](https://helloproject.com/news/3088/)を用いた。公式詳細は発売日、レーベル、
+3形態、品番、媒体、全track、作家、歌唱名義および映像内容を掲載している。配信告知は
+「7/15発売」の同作について着うた、着うたフル、PC・スマホシングルの配信開始を告知するが、
+NEWS掲載日は2015-07-16であり、発売日前のfull audio配信は今回確認できなかった。
+
+Hello! Project公式ページはshellの直接取得では403になったが、検索インデックス経由で公式本文を
+確認できた。「取得できない」ことを「公式情報がない」とは扱っていない。第三者情報は分類根拠に
+用いていない。とりわけ同名・同credit・ほぼ同じ尺だけではaudio同一性を確定しない。
+
+**停止点:** 本節はresearch-onlyである。`data/*.csv`、`docs/data-spec.md`、video系CSVを含む
+正本には一切投入せず、D分類のaudio identityについてユーザー判断が得られるまで停止する。
+
+### 16.2 release / edition構成
+
+公式titleは`First Squeeze！`、artistは`Juice=Juice`、release type候補は`album`、発売日は
+`2015-07-15`、labelは`hachama`である。商品・catalog numberが異なる次の3件を別release候補とする。
+IDは現在最大値からの便宜的候補で、予約・確定ではない。
+
+| planned release ID | edition | catalog number | media / disc構成 | official source |
+|---|---|---|---|---|
+| L00076 | 初回生産限定盤A | HKCN-50417 | 2CD＋BD。CD Disc 1「The Best Juice」12曲、CD Disc 2「The Brand-New Juice」11曲、BD「Music Videoクリップス集」本編13＋特典17 | [公式release](https://helloproject.com/release/4204/) |
+| L00077 | 初回生産限定盤B | HKCN-50420 | 2CD＋DVD。CDはAと同じ23曲、DVDは2015-04-25札幌公演の会場入り等を含む全32 chapter | [公式release](https://helloproject.com/release/4204/) |
+| L00078 | 通常盤 | HKCN-50423 | 3CD。Disc 1・2は初回盤と同じ23曲、Disc 3「The Cover Juice」6曲 | [公式release](https://helloproject.com/release/4204/) |
+
+Instrumental trackは**全形態ともなし**。初回盤の映像discは将来のvideo DB候補としてのみ扱い、
+今回`videos.csv` / `video_songs.csv` / `video_song_performers.csv`の投入計画に含めない。
+
+### 16.3 全audio track identity一覧（unique 29曲）
+
+Disc 1・2は3形態共通、Disc 3は通常盤だけである。`—`は現時点で該当IDなし、`保留`はD分類のため
+採番しないことを表す。日付は、その具体的audioについて確認できた最早full-audio release日または
+後続投入時の候補日である。sourceは特記しない限り[公式album詳細](https://helloproject.com/release/4204/)。
+
+| disc-track | official track title / canonical title候補 | class | existing work / song | planned work / song | version_name / type候補 | earliest full audio | lyrics / composition / arrangement / specialized | artist / performer | unresolved |
+|---|---|---|---|---|---|---|---|---|---|
+| 1-1 | 天まで登れ！ | D | W00030 / J00038 | 保留 / 保留 | 空欄 / original候補 | 2013-06-12 | つんく(C00028) / つんく / 平田祥一郎(C00009) / 鈴木俊介(C00035), brass_arrangement | G00001 primary / 追加なし | album版と既存Juice=Juice版が同一audioか公式に明記なし |
+| 1-2 | ロマンスの途中 | D | W00031 / J00039 | 保留 / 保留 | 空欄 / original候補 | 2013-09-11 | つんく / つんく / 鈴木俊介 / — | 同上 | single版とのaudio identity未確定 |
+| 1-3 | 私が言う前に抱きしめなきゃね(MEMORIAL EDIT) / canonical song title候補は既存J00040のtitle＋version_name | D | W00028 / J00040 | 保留 / 保留 | MEMORIAL EDIT / other候補 | 2013-09-11 | つんく / つんく / 平田祥一郎 / — | 同上 | 同じVersion表記だけでは既存MEMORIAL EDIT音源との同一性を確定しない |
+| 1-4 | 五月雨美女がさ乱れる(MEMORIAL EDIT) / canonical song title候補は既存J00041のtitle＋version_name | D | W00029 / J00041 | 保留 / 保留 | MEMORIAL EDIT / other候補 | 2013-09-11 | つんく / つんく / 板垣祐介(C00036) / 鈴木俊介, brass_arrangement | 同上 | 同上 |
+| 1-5 | イジワルしないで 抱きしめてよ | D | W00032 / J00042 | 保留 / 保留 | 空欄 / original候補 | 2013-11-27 | つんく / つんく / 大久保薫(C00030) / — | 同上 | single版とのaudio identity未確定 |
+| 1-6 | 初めてを経験中 | D | W00033 / J00043 | 保留 / 保留 | 空欄 / original候補 | 2013-11-27 | つんく / つんく / AKIRA(C00037) / 鈴木俊介, brass_arrangement | 同上 | single版とのaudio identity未確定 |
+| 1-7 | 裸の裸の裸のKISS | D | W00034 / J00044 | 保留 / 保留 | 空欄 / original候補 | 2014-03-19 | つんく / つんく / 平田祥一郎 / — | 同上 | single版とのaudio identity未確定 |
+| 1-8 | アレコレしたい！ | D | W00035 / J00045 | 保留 / 保留 | 空欄 / original候補 | 2014-03-19 | つんく / つんく / 近藤圭一(C00038) / — | 同上 | single版とのaudio identity未確定 |
+| 1-9 | ブラックバタフライ | D | W00036 / J00046 | 保留 / 保留 | 空欄 / original候補 | 2014-07-30 | つんく / つんく / 平田祥一郎 / — | 同上 | single版とのaudio identity未確定 |
+| 1-10 | 風に吹かれて | D | W00037 / J00047 | 保留 / 保留 | 空欄 / original候補 | 2014-07-30 | つんく / つんく / 平田祥一郎 / — | 同上 | single版とのaudio identity未確定 |
+| 1-11 | 背伸び | D | W00038 / J00048 | 保留 / 保留 | 空欄 / original候補 | 2014-10-01 | つんく / つんく / 平田祥一郎 / — | 同上 | single版とのaudio identity未確定 |
+| 1-12 | 伊達じゃないよ うちの人生は | D | W00039 / J00049 | 保留 / 保留 | 空欄 / original候補 | 2014-10-01 | つんく / つんく / 平田祥一郎 / — | 同上 | single版とのaudio identity未確定 |
+| 2-1 | Wonderful World | D | W00040 / J00050 | 保留 / 保留 | 空欄 / original候補 | 2015-04-08 | イイジマケン(C00031) / 同 / gaokalab(C00039) / — | 同上 | single版とのaudio identity未確定 |
+| 2-2 | CHOICE & CHANCE | B | W00025 / J00026は2022 ver. | W00025 / J00052 | 空欄 / original候補 | 2015-07-15候補 | 星部ショウ(C00008) / 同 / 平田祥一郎 / — | G00001 primary / 追加なし | 既存songは明示的な2022 ver.。2015通常版が必要 |
+| 2-3 | 愛・愛・傘 | C | — / — | W00042 / J00053 | 空欄 / original候補 | 2015-07-15候補 | 中島卓偉(C00003) / 同 / 大久保薫 / — | 同上 | 発売前full audioは未確認 |
+| 2-4 | 生まれたてのBaby Love | B | W00024 / J00025は2022 ver. | W00024 / J00054 | 空欄 / original候補 | 2015-07-15候補 | 星部ショウ / masaaki asada(C00043候補) / 松井寛(C00025) / — | 同上 | 既存songは明示的な2022 ver. |
+| 2-5 | 選ばれし私達 | C | — / — | W00043 / J00055 | 空欄 / original候補 | 2015-07-15候補 | つんく / つんく / 山崎淳(C00044候補) / — | 同上 | 発売前full audioは未確認 |
+| 2-6 | Ça va ? Ça va ?(サヴァサヴァ) | **A** | W00041 / J00051 | W00041 / J00051再利用 | 空欄 / original | 2015-04-08 | 三浦徳子(C00004) / 川辺ヒロシ(C00040)・上田禎(C00041) / CMJK(C00042) / — | G00001 primary / 追加なし | **ユーザー確定済み。同一audio。表記全体がcanonical title** |
+| 2-7 | GIRLS BE AMBITIOUS | B | W00016 / J00017は2022 | W00016 / J00056 | 空欄 / original候補 | 2015-07-15候補 | 中島卓偉 / 同 / 中島卓偉・宮永治郎(C00045候補) / — | G00001 primary / 追加なし | 既存songは明示的な2022版 |
+| 2-8 | 愛のダイビング | C | — / — | W00044 / J00057 | 空欄 / original候補 | 2015-07-15候補 | 星部ショウ / 同 / 土肥真生(C00046候補) / — | 同上 | 発売前full audioは未確認 |
+| 2-9 | チクタク 私の旬 | C | — / — | W00045 / J00058 | 空欄 / original候補 | 2015-07-15候補 | 児玉雨子(C00006) / 星部ショウ / CMJK / — | 同上 | 発売前full audioは未確認 |
+| 2-10 | 未来へ、さあ走り出せ！ | C | — / — | W00046 / J00059 | 空欄 / original候補 | 2015-07-15候補 | 角田崇徳(C00047候補) / KOJI oba(C00048候補) / KOJI oba / — | 同上 | 発売前full audioは未確認 |
+| 2-11 | 続いていくSTORY | B | W00010 / J00011はSymphonic Version feat. Karin | W00010 / J00060 | 空欄 / original候補 | 2015-07-15候補 | 近藤薫(C00012) / 同 / 近藤薫・HASSE(C00049候補) / — | G00001 primary / 追加なし | 既存songは2020年の明示別Version |
+| 3-1 | Magic of Love(J=J 2015Ver.) | C | — / — | W00047 / J00061 | J=J 2015Ver. / cover | 2015-07-15候補 | つんく / つんく / 村山晋一郎(C00050候補) / — | G00001 primary / 追加なし | 公式Disc名「The Cover Juice」によりcover。元workはCSV未登録 |
+| 3-2 | 香水(J=J 2015Ver.) | C | — / — | W00048 / J00062 | J=J 2015Ver. / cover | 2015-07-15候補 | つんく / つんく / 平田祥一郎 / — | G00001 primary / 追加なし | 同上 |
+| 3-3 | 鳴り始めた恋のBELL | C | — / — | W00049 / J00063 | 空欄 / cover | 2015-07-15候補 | つんく / つんく / 松井寛 / — | G00001 primary / 追加なし | 同上 |
+| 3-4 | スクランブル | C | — / — | W00050 / J00064 | 空欄 / cover | 2015-07-15候補 | つんく / つんく / 鈴木Daichi秀行(C00051候補) / — | G00001 primary / 追加なし | 同上 |
+| 3-5 | BABY! 恋に KNOCK OUT! | C | — / — | W00051 / J00065 | 空欄 / cover | 2015-07-15候補 | つんく / つんく / 小西貴雄(C00052候補) / — | G00001 primary / 宮崎由加(P00009候補)・金澤朋子(P00002)・植村あかり(P00003) | 公式が個人歌唱を明記。元workはCSV未登録 |
+| 3-6 | ラストキッス | C | — / — | W00052 / J00066 | 空欄 / cover | 2015-07-15候補 | つんく / つんく / 小西貴雄 / — | G00001 primary / 高木紗友希(P00010候補)・宮本佳林(P00001) | 同上 |
+
+`version_type`は、明示された後年版より前の通常版を`original`、公式に「The Cover Juice」とされた
+Disc 3を`cover`とする候補である。D分類ではaudio identity確定前なので既存songを上書きせず、
+新規songも採番しない。公式album creditはすべて`歌：Juice=Juice`であり、Disc 3の2 unit曲も
+song artistは`G00001 / primary`、個人名はsong_performers relationとして扱う候補である。
+
+### 16.4 A / B / C / D分類一覧
+
+#### A: existing work + existing song再利用（1 unique track）
+
+| album track | work / song | original release | audio identity根拠 | source |
+|---|---|---|---|---|
+| Ça va ? Ça va ?(サヴァサヴァ) | W00041 / J00051 | 2015-04-08 single | ユーザー確定判断によりsingle版とalbum版は同一audio。括弧付き正規title、version_name空欄を維持 | [single公式](https://helloproject.com/release/4094/)、[album公式](https://helloproject.com/release/4204/) |
+
+#### B: existing work + new song（4 unique tracks）
+
+| album track | existing work / related song | new song候補 | version | 別songが必要な根拠 |
+|---|---|---|---|---|
+| CHOICE & CHANCE | W00025 / J00026「(2022 ver.)」 | J00052 | version_name空欄 / original候補 | 既存songは公式に2022 ver.と明示された後年版 |
+| 生まれたてのBaby Love | W00024 / J00025「(2022 ver.)」 | J00054 | 同上 | 同上 |
+| GIRLS BE AMBITIOUS | W00016 / J00017「2022」 | J00056 | 同上 | 同上 |
+| 続いていくSTORY | W00010 / J00011「Symphonic Version feat. Karin」 | J00060 | 同上 | 既存songは2020年の公式別Version・再録 |
+
+全行の一次情報は[First Squeeze！](https://helloproject.com/release/4204/)と
+[terzo](https://helloproject.com/juicejuice/release/6692/)。
+
+#### C: new work + new song（11 unique tracks）
+
+| title | planned work / song | version type / date | creator | artist / performer |
+|---|---|---|---|---|
+| 愛・愛・傘 | W00042 / J00053 | original候補 / 2015-07-15候補 | 中島卓偉 / 中島卓偉 / 大久保薫 | G00001 / 追加なし |
+| 選ばれし私達 | W00043 / J00055 | original候補 / 同上 | つんく / つんく / 山崎淳 | 同上 |
+| 愛のダイビング | W00044 / J00057 | original候補 / 同上 | 星部ショウ / 星部ショウ / 土肥真生 | 同上 |
+| チクタク 私の旬 | W00045 / J00058 | original候補 / 同上 | 児玉雨子 / 星部ショウ / CMJK | 同上 |
+| 未来へ、さあ走り出せ！ | W00046 / J00059 | original候補 / 同上 | 角田崇徳 / KOJI oba / KOJI oba | 同上 |
+| Magic of Love(J=J 2015Ver.) | W00047 / J00061 | cover / 同上 | つんく / つんく / 村山晋一郎 | 同上 |
+| 香水(J=J 2015Ver.) | W00048 / J00062 | cover / 同上 | つんく / つんく / 平田祥一郎 | 同上 |
+| 鳴り始めた恋のBELL | W00049 / J00063 | cover / 同上 | つんく / つんく / 松井寛 | 同上 |
+| スクランブル | W00050 / J00064 | cover / 同上 | つんく / つんく / 鈴木Daichi秀行 | 同上 |
+| BABY! 恋に KNOCK OUT! | W00051 / J00065 | cover / 同上 | つんく / つんく / 小西貴雄 | G00001 / P00009候補・P00002・P00003 |
+| ラストキッス | W00052 / J00066 | cover / 同上 | つんく / つんく / 小西貴雄 | G00001 / P00010候補・P00001 |
+
+全行の一次情報は[公式album詳細](https://helloproject.com/release/4204/)。coverの元作品をDB対象外の
+原曲songとは別workにしないため、Juice=Juice版と元曲を束ねるworkを新設する計画である。
+
+#### D: 一次情報だけではaudio identityを確定できない（13 unique tracks）
+
+| track | related existing song | 公式に確認できた事実 | 不足情報・A/Bを確定できない理由 | 推奨確認方法 |
+|---|---|---|---|---|
+| 天まで登れ！ | J00038 | Juice=Juice歌唱、title/creditは既存版と一致 | albumが既存masterの再収録か新録かを明記しない | labelの商品台帳・master情報、公式スタッフ回答 |
+| ロマンスの途中 | J00039 | title/credit一致、version表記なし | 同上 | 同上 |
+| 私が言う前に抱きしめなきゃね(MEMORIAL EDIT) | J00040 | 同じ公式Version名・credit | Version名だけでは同一masterを証明しない | 同上 |
+| 五月雨美女がさ乱れる(MEMORIAL EDIT) | J00041 | 同上 | 同上 | 同上 |
+| イジワルしないで 抱きしめてよ | J00042 | title/credit一致。04:02→04:01 | 尺差は同一／別audioどちらの証明にもならない | 同上、または権利者提供の録音識別情報 |
+| 初めてを経験中 | J00043 | title/credit一致。04:14→04:14 | 一致だけでは不十分 | 同上 |
+| 裸の裸の裸のKISS | J00044 | title/credit一致。03:58→03:58 | 同上 | 同上 |
+| アレコレしたい！ | J00045 | title/credit一致。03:48→03:47 | 同上 | 同上 |
+| ブラックバタフライ | J00046 | title/credit一致。03:52→03:52 | 同上 | 同上 |
+| 風に吹かれて | J00047 | title/credit一致。03:42→03:41 | 同上 | 同上 |
+| 背伸び | J00048 | title/credit一致。04:28→04:28 | 同上 | 同上 |
+| 伊達じゃないよ うちの人生は | J00049 | title/credit一致。04:07→04:07 | 同上 | 同上 |
+| Wonderful World | J00050 | title/credit一致。04:14→04:14 | 同上 | 同上 |
+
+全行のsourceは[album公式](https://helloproject.com/release/4204/)および各既発release公式（本書15.2）。
+このうち依頼で特に指定された`J00042`～`J00050`の9曲はすべて**D**であり、一次情報から
+同一audioまたは別audioを示す明示を発見できなかった。`J00051`だけは既定方針どおり**A**である。
+
+### 16.5 ユーザー判断事項（D分類13曲を一括して同じ基準で判断）
+
+**対象:** 天まで登れ！、ロマンスの途中、MEMORIAL EDIT 2曲、J00042～J00050の9曲。
+
+**公式に確認できた事実:** album公式は各trackのtitle、尺、作詞・作曲・編曲、歌唱名義を掲載する。
+既発公式releaseとtitle・creditが一致し、album側に新録等のVersion表記はない。MEMORIAL EDITは
+同じVersion名を明記する。
+
+**現在CSV:** 関係するworkはW00028～W00040、songはJ00038～J00050として登録済み。
+
+**参考URL:** [First Squeeze！](https://helloproject.com/release/4204/)、
+[2013-06-12](https://helloproject.com/release/2212/)、
+[2013-09-11](https://helloproject.com/release/1656/)および本書15.2の各single公式URL。
+
+**第三者情報で確認できる補助情報:** 今回は第三者情報をidentity確定に用いていない。
+
+**判断できない理由:** album収録、title/credit/尺の一致、Version表記なしだけでaudioを統合することを
+data-specおよび本依頼が禁止しており、公式本文には「singleと同一音源」または「新録」の明記がない。
+
+**選択肢:** A. 13曲とも既存songを再利用 / B. 別audioと確認できた曲だけ既存work＋新規songにする /
+C. 公式master情報が得られるまで13曲のrelease_tracksを保留。
+
+**各選択肢のCSVへの影響:** Aは3 releaseそれぞれの該当位置へ既存IDを39行接続する。Bは確認できた
+曲ごとに新規song・credits・artist relationを作り、3盤に接続する。Cは3 releaseを作成しても当該
+39 relationを入れず、確定済み16曲分36 relationだけを先行可能とする。
+
+**推奨:** C。推測統合も根拠のない別song作成もしない。商品全体の投入を止めたくない場合は、
+16.10の分割単位で確定trackだけ先行する。
+
+**停止点:** この判断が必要になるまでCSVは変更していない。
+
+### 16.6 creator、artist、performer、member突合
+
+既存creatorは`C00003 中島卓偉`、`C00004 三浦徳子`、`C00006 児玉雨子`、`C00008 星部ショウ`、
+`C00009 平田祥一郎`、`C00012 近藤薫`、`C00025 松井寛`、`C00028 つんく`、
+`C00030 大久保薫`、`C00031 イイジマケン`、`C00035 鈴木俊介`、`C00036 板垣祐介`、
+`C00037 AKIRA`、`C00038 近藤圭一`、`C00039 gaokalab`、`C00040 川辺ヒロシ`、
+`C00041 上田禎`、`C00042 CMJK`を安全に再利用できる。
+
+| new creator candidate | ID候補 | official credit / 対象 |
+|---|---|---|
+| masaaki asada | C00043 | 作曲 / 生まれたてのBaby Love |
+| 山崎淳 | C00044 | 編曲 / 選ばれし私達 |
+| 宮永治郎 | C00045 | 編曲（中島卓偉との共同、order 2）/ GIRLS BE AMBITIOUS |
+| 土肥真生 | C00046 | 編曲 / 愛のダイビング |
+| 角田崇徳 | C00047 | 作詞 / 未来へ、さあ走り出せ！ |
+| KOJI oba | C00048 | 作曲・編曲 / 未来へ、さあ走り出せ！ |
+| HASSE | C00049 | 編曲（近藤薫との共同、order 2）/ 続いていくSTORY |
+| 村山晋一郎 | C00050 | 編曲 / Magic of Love(J=J 2015Ver.) |
+| 鈴木Daichi秀行 | C00051 | 編曲 / スクランブル |
+| 小西貴雄 | C00052 | 編曲 / BABY! 恋に KNOCK OUT!、ラストキッス |
+
+表記を既存creatorへ推測統合せず、全10名を新規候補とする。IDは未予約。全creditのsourceは
+[公式album詳細](https://helloproject.com/release/4204/)。specialized arrangementはDisc 1の
+2曲に公式の「ブラスアレンジ」があり、既存`brass_arrangement`で表現できる。strings / chorus /
+horn / vocal arrangement等の新roleは登場せず、仕様追加は不要である。
+
+全29曲のartist候補は`G00001 / Juice=Juice / primary / credit_order=1`。通常曲の個人歌唱者は
+在籍から推測せず追加なし。Disc 3 track 5・6のみ公式が歌唱者を明記するため、計5 relationを計画する。
+`P00001 宮本佳林`、`P00002 金澤朋子`、`P00003 植村あかり`を再利用し、`P00009 宮崎由加`と
+`P00010 高木紗友希`を新規member候補とする。`member_affiliations.csv`はヘッダーのみで、公式albumの
+歌唱creditは所属開始・終了日を証明しないため、affiliationは自動生成しない。期間を直接示す公式資料を
+別途確認する後続事項とする。
+
+### 16.7 release_tracks投入計画（全edition / disc / track）
+
+次表の`release`欄が3 IDの行は、同じ位置・track_titleを各releaseへ1行ずつ作る計画である。
+これにより盤ごとの配置を省略せず示す。Dはsong ID確定までrelationを保留する。
+
+| release | disc-track | track_title | song candidate | class | source |
+|---|---|---|---|---|---|
+| L00076 / L00077 / L00078 | 1-1 | 天まで登れ！ | 保留（関連J00038） | D | [公式](https://helloproject.com/release/4204/) |
+| 同上 | 1-2 | ロマンスの途中 | 保留（J00039） | D | 同上 |
+| 同上 | 1-3 | 私が言う前に抱きしめなきゃね(MEMORIAL EDIT) | 保留（J00040） | D | 同上 |
+| 同上 | 1-4 | 五月雨美女がさ乱れる(MEMORIAL EDIT) | 保留（J00041） | D | 同上 |
+| 同上 | 1-5 | イジワルしないで 抱きしめてよ | 保留（J00042） | D | 同上 |
+| 同上 | 1-6 | 初めてを経験中 | 保留（J00043） | D | 同上 |
+| 同上 | 1-7 | 裸の裸の裸のKISS | 保留（J00044） | D | 同上 |
+| 同上 | 1-8 | アレコレしたい！ | 保留（J00045） | D | 同上 |
+| 同上 | 1-9 | ブラックバタフライ | 保留（J00046） | D | 同上 |
+| 同上 | 1-10 | 風に吹かれて | 保留（J00047） | D | 同上 |
+| 同上 | 1-11 | 背伸び | 保留（J00048） | D | 同上 |
+| 同上 | 1-12 | 伊達じゃないよ うちの人生は | 保留（J00049） | D | 同上 |
+| L00076 / L00077 / L00078 | 2-1 | Wonderful World | 保留（J00050） | D | 同上 |
+| 同上 | 2-2 | CHOICE & CHANCE | J00052 | B | 同上 |
+| 同上 | 2-3 | 愛・愛・傘 | J00053 | C | 同上 |
+| 同上 | 2-4 | 生まれたてのBaby Love | J00054 | B | 同上 |
+| 同上 | 2-5 | 選ばれし私達 | J00055 | C | 同上 |
+| 同上 | 2-6 | Ça va ? Ça va ?(サヴァサヴァ) | J00051 | A | 同上 |
+| 同上 | 2-7 | GIRLS BE AMBITIOUS | J00056 | B | 同上 |
+| 同上 | 2-8 | 愛のダイビング | J00057 | C | 同上 |
+| 同上 | 2-9 | チクタク 私の旬 | J00058 | C | 同上 |
+| 同上 | 2-10 | 未来へ、さあ走り出せ！ | J00059 | C | 同上 |
+| 同上 | 2-11 | 続いていくSTORY | J00060 | B | 同上 |
+| L00078 | 3-1 | Magic of Love(J=J 2015Ver.) | J00061 | C | 同上 |
+| L00078 | 3-2 | 香水(J=J 2015Ver.) | J00062 | C | 同上 |
+| L00078 | 3-3 | 鳴り始めた恋のBELL | J00063 | C | 同上 |
+| L00078 | 3-4 | スクランブル | J00064 | C | 同上 |
+| L00078 | 3-5 | BABY! 恋に KNOCK OUT! | J00065 | C | 同上 |
+| L00078 | 3-6 | ラストキッス | J00066 | C | 同上 |
+
+実商品のaudioは初回A 23、初回B 23、通常29、延べ75 trackで、Instrumental除外は0件。
+Dを含む全identity確定後の`release_tracks`追加予定は**75**。現時点で確定しているA/B/Cだけなら、
+Disc 2の10曲×3盤＋Disc 3の6曲＝**36**を投入でき、D 13曲×3盤＝**39**は保留となる。
+
+### 16.8 映像disc（将来のvideo DB候補、今回は非投入）
+
+**初回生産限定盤A BD:** Music Video本編13本（ロマンスの途中、私が言う前に抱きしめなきゃね
+(MEMORIAL EDIT)、五月雨美女がさ乱れる(MEMORIAL EDIT)、イジワルしないで 抱きしめてよ、
+初めてを経験中、裸の裸の裸のKISS、アレコレしたい！、ブラックバタフライ、風に吹かれて、背伸び、
+伊達じゃないよ うちの人生は、Wonderful World、Ça va ? Ça va ?(サヴァサヴァ)）。特典17本は、
+ロマンスの途中 Dance Shot Ver.Ⅱ / Close-up Ver.、MEMORIAL EDIT 2曲のDance Shot等4本、
+イジワル… KYAST Dance Shot Ver. / Ⅱ、初めて… Dance Shot Ver.Ⅱ、裸… Dance Shot Ver.Ⅱ、
+アレコレ… Dance Shot Ver.Ⅱ、ブラック… Close-up Ver.、風… Close-up Ver.、背伸び Dance Shot
+Ver.Ⅱ、伊達… Close-up Ver.、Wonderful World Close-up Ver.、Ça va… Close-up Ver.である。
+
+**初回生産限定盤B DVD:** 「Juice=Juice ファーストライブツアー2015 News=News
+〜各地よりお届けします！〜」2015-04-25札幌最終日の全32 chapter。会場入り、本番直前コメント、
+ナレーション、伊達じゃないよ うちの人生は、MC、背伸び、イジワルしないで 抱きしめてよ、
+裸の裸の裸のKISS、MC、Wonderful World、ブラックバタフライ、初めてを経験中、MC、
+SHALL WE LOVE?（高木紗友希・宮本佳林）、香水（宮崎由加・金澤朋子・植村あかり）、
+風に吹かれて、MC、Ça va ? Ça va ?(サヴァサヴァ)、黄色いお空で BOOM BOOM BOOM、
+天まで登れ！、Magic of Love、MC、アレコレしたい！、五月雨美女がさ乱れる、MC、
+ロマンスの途中、選ばれし私達［ENCORE］、インスピレーション！［ENCORE］、
+鳴り始めた恋のBELL［ENCORE］、MC［ENCORE］、私が言う前に抱きしめなきゃね［ENCORE］、
+コメント［ENCORE］。映像出演者をstudio audioのsong_performersへ転用しない。
+
+### 16.9 想定投入件数と仕様検討
+
+| item | planned count | note |
+|---|---:|---|
+| physical releases | 3 | L00076～L00078候補 |
+| physical audio tracks / release_tracks（全確定後） | 75 / 75 | Instrumentalなし。A/B/C確定分36、D保留39 |
+| existing song再利用 | 1 unique / 3 relations | J00051 |
+| existing work + new song | 4 unique / 12 relations | J00052, J00054, J00056, J00060候補 |
+| new work + new song | 11 unique / 21 relations | W00042～W00052、J00053等 |
+| unresolved | 13 unique / 39 relations | 新規IDを割り当てない |
+| new songs（確定候補） | 15 | B 4 + C 11、J00052～J00066候補 |
+| new works | 11 | W00042～W00052候補 |
+| new creators | 10 | C00043～C00052候補 |
+| new members | 2 | P00009～P00010候補 |
+| song_performers | 5 relations | unit cover 2曲のみ |
+
+**仕様検討事項:** (1) 現行`releases.csv`にlabel列がないため`hachama`を構造化できない。
+(2) media構成・disc title・映像chapterをreleaseに完全保持する列／表がない。
+(3) source URLを複数保持できない。(4) D trackを含む商品の完全tracklistを、nullable songなしで
+先に保持できない。今回はdata-specを変更せず、release notesとresearch記録で補う候補とする。
+Instrumental表現やspecialized roleの新規不足は今回発生しない。
+
+### 16.10 推奨投入単位、後続タスク
+
+最も安全なのは**C: 判断不能trackだけ保留し、確定trackをまとめて投入**である。ただしFKと連番を
+管理しやすくするため、実作業は次の2 commitに分けることを推奨する。
+
+1. 3 release、B/Cの15 song、Cの11 work、10 creator、2 member、artist/creator/performer relation、
+   およびA/B/Cのrelease_tracks 36行を一括投入する。Disc 3を含む通常盤も同じcommitで扱う。
+2. D 13 trackのaudio identityを公式master情報またはユーザー判断で確定後、3盤分39 relationを追加する。
+   Aなら既存J00038～J00050を再利用し、Bなら各既存workに新規songを作る。
+
+edition別やdisc別にwork/songを分断すると同じsongを重複採番しやすいため推奨しない。後続タスクは、
+D判断、ID最大値再計算、creator同一性の最終照合、2 memberの公式profileとaffiliation期間資料確認、
+発売前full audio配信の追加検索、そして通常のCSV validationである。本節作成時点ではCSV未変更、
+ID未予約、First Squeeze！投入未実施である。
