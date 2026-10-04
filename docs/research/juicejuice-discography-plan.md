@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-10-04（Juice=Juice#2 -¡Una más!-投入および2022～2023年シングル調査を反映）
-状態: **First Squeeze！、2016～2018年シングル4作、Juice=Juice#2 -¡Una más!-までcanonical CSV投入完了。2022～2023年シングル2作はresearch完了・CSV未投入**
+調査日: 2026-10-04（2023-07-12シングルまでの投入およびJuicetory調査を反映）
+状態: **2023-07-12「プライド・ブライト/FUNKY FLUSHIN'」までcanonical CSV投入完了。次対象「Juicetory」はresearch完了・CSV未投入**
 
 ## 1. 目的・判定原則
 
@@ -63,9 +63,9 @@ DVD/Blu-ray、ライブ映像、MV集、写真集、書籍、Instrumentalだけ�
 | 2021-04-28 | CDシングル | DOWN TOWN／がんばれないよ | J00012–J00013 | A | [公式詳細](https://helloproject.com/juicejuice/release/detail/HKCN-50646/) | **A-4完了**。通常CD 6形態と同日のSpecial Edition（D10）をCSV登録済み。 |
 | 2021-12-22 | CDシングル | プラスティック・ラブ／Familia／Future Smile | J00014–J00016 | A | [公式詳細](https://helloproject.com/juicejuice/release/6613/) | **A-5完了**。CD 9形態をL00029～L00037へ登録し、一般デジタル配信は存在確認のみ。 |
 | 2022-04-20 | アルバム | 3rdアルバム「terzo」 | J00001–J00028 | — | [公式詳細](https://helloproject.com/juicejuice/release/6692/) | CSV登録済み。規格品番別L00001–L00003。 |
-| 2022-11-23 | CDシングル | 全部賭けてGO！！／イニミニマニモ～恋のライバル宣言～ | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | Special Edition有無を確認。 |
-| 2023-07-12 | CDシングル | プライド・ブライト／FUNKY FLUSHIN' | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | 「プライド・ブライト」は2023-06-29先行配信あり（D14）。 |
-| 2023-10-11 | アルバム | Juicetory | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | 再収録・別Versionを検証。 |
+| 2022-11-23 | CDシングル | 全部賭けてGO!!/イニミニマニモ～恋のライバル宣言～ | — | C | [公式詳細](https://helloproject.com/juicejuice/release/6853/) | **投入完了。** L00105～L00109 / W00073～W00074 / J00089～J00090。 |
+| 2023-07-12 | CDシングル | プライド・ブライト/FUNKY FLUSHIN' | — | C | [公式詳細](https://helloproject.com/release/6991/) | **投入完了。** L00110～L00114 / W00075～W00076 / J00091～J00092。「プライド・ブライト」は2023-06-29先行配信。 |
+| 2023-10-11 | アルバム | Juicetory | — | C | [公式詳細](https://helloproject.com/juicejuice/release/7056/?pc=1) | **research完了・CSV未投入。** 20節参照。 |
 | 2024-05-15 | CDシングル | トウキョウ・ブラー／ナイモノラブ／おあいこ | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | 同日のSpecial Edition（D15）をセットで確認。 |
 | 2025-02-26 | CDシングル | 初恋の亡霊／今夜はHearty Party | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | 個別ページ未確認。 |
 | 2025-10-08 | CDシングル | 四の五の言わず颯と別れてあげた／盛れ！ミ・アモーレ | — | C | [公式一覧](https://helloproject.com/juicejuice/release/) | 後発の特殊Version（D17～D19）とは分離。 |
@@ -2666,3 +2666,375 @@ PK、指定FK、relation完全重複、全releaseの`release_id/disc_number/trac
 catalog number 10件とedition mapping、work/song/creator mapping、15 creator relationsのrole・credit_name・credit_order・
 source_url、4 artist relations、multiple primary 0、対象release各2 positions、chronology、canonical scope、expected totalsは
 すべて一致した。変更禁止対象のhash一致、Markdown table列数、`git diff --check`も通過し、想定外diffなし、unresolved = **0**。
+
+## 20. Juice=Juice「Juicetory」research
+
+調査日: 2026-10-04。対象は2023-10-11発売のベストセレクションアルバム`Juicetory`。本節は次回の
+canonical import用計画であり、**data CSVおよびdata-specへの投入・変更は行わない**。
+
+### 20.1 Summary
+
+- 公式表記はJuice=Juice `Juicetory`、2023-10-11発売、CDアルバム（公式ニュースでは「ベストセレクションアルバム」）。
+- physicalは初回生産限定盤（CD+BD、HKCN-50774）と通常盤（CD、HKCN-50776）の**2形態**。両盤のCDは同一14曲、1 discで、Instrumentalはない。
+- unique audioは14。公式発売決定ニュースが既存曲13曲を「セルフリメイク」と明記し、14曲目は新曲であるため、A/B/C/D=`0/13/1/0`。
+- Bの13曲は既存workを再利用してnew song、C「ボン・ヴォヤージュ～想いの軌跡～」だけnew work/new song。planned songはJ00093～J00106、new workはW00077。
+- 13曲のうち既存Juice=Juiceオリジナル曲11曲は`re_recording`、既存work自体が他歌手原曲の「Magic of Love」「ポップミュージック」は、再録後もJuice=Juiceによるcoverという作品関係を失わないため`cover`とする。全曲の公式Version表記を`version_name`へ保持する。
+- 全14 specific audioについて、発売日前のofficial full-audio配信は確認できなかった。公式配信開始告知は発売日当日の2023-10-11で、release date候補は全曲同日。
+- creatorは全16名がexisting C IDに一致し、新規0。planned song_creatorsは44、song_artistsはG00001 primaryを14。
+- 個人歌唱の公式明記はtrack 4の6名とtrack 5の5名。前者6名をP00012～P00017として新規member候補、後者5名はexisting memberを再利用し、planned song_performersは計11。グループ名義だけの曲は在籍から推測しない。
+- planned releasesはL00115～L00116、planned release_tracksは14×2=`28`。初回盤BDの31 video entriesはaudio import対象外。
+- unresolved 0、user confirmation 0、spec considerations 0。**Import readiness: READY**。
+
+### 20.2 Current CSV baseline
+
+CSVをparseしてヘッダーを除く行数と全IDを再計数した。依頼の参考baselineと一致する。指定commit
+`68e74a9883a8e0aada3257196795524ffbab1592`はlocal objectに存在しないが、同等内容のcommit
+`ea9c62e data: add Juice=Juice 2022-2023 singles`とcurrent CSVのL00105～L00114、W00073～W00076、
+J00089～J00092、C00070～C00075、および19.17のactual resultを確認したため停止条件には該当しない。
+
+| table | current rows | current max ID |
+|---|---:|---|
+| releases | 114 | L00114 |
+| release_tracks | 465 | — |
+| songs | 93 | J00092（Juice=Juice系列） |
+| works | 76 | W00076 |
+| creators | 75 | C00075 |
+| members | 11 | P00011 |
+| artists | 3 | G00003 |
+| song_creators | 307 | — |
+| song_artists | 96 | — |
+| song_performers | 161 | — |
+
+video系3 CSVはヘッダーのみ。`member_affiliations.csv`もヘッダーのみであり、今回の計画対象外とする。
+
+### 20.3 Scope and official sources
+
+canonical計画はphysical CDのaudioだけを対象とする。Instrumental、BD映像、digital release master、後発live音源は
+含めない。一次情報は[Hello! Project公式release](https://helloproject.com/juicejuice/release/7056/?pc=1)、
+[UP-FRONT WORKS発売決定ニュース](https://up-front-works.jp/news/16380/)、
+[Hello! Project公式配信開始告知](https://helloproject.com/news/16564/)、
+[公式購入特典告知](https://helloproject.com/news/16532/)を使用した。release pageとUP-FRONT WORKSの
+[公式release](https://up-front-works.jp/release/7056/?pc=pc)は内容が一致する。
+
+### 20.4 Official release information / physical editions
+
+| release date | official title | artist | release type | edition | planned release_id | catalog number | media / discs | official audio tracks | canonical release_tracks | source |
+|---|---|---|---|---|---|---|---|---:|---:|---|
+| 2023-10-11 | Juicetory | Juice=Juice | CDアルバム／ベストセレクションアルバム | 初回生産限定盤 | L00115 | HKCN-50774 | CD 1枚+BD 1枚、7インチサイズジャケット仕様 | 14 | 14 | [公式release](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| 2023-10-11 | Juicetory | Juice=Juice | CDアルバム／ベストセレクションアルバム | 通常盤 | L00116 | HKCN-50776 | CD 1枚、紙ジャケ仕様 | 14 | 14 | [公式release](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+
+公式release pageが列挙するphysical editionはこの2形態だけで、購入特典告知も同じ2品番を対象商品としている。
+初回盤の表示品番はCD `HKCN-50774`（BD同梱商品）、通常盤は`HKCN-50776`。A/B/SPその他physical editionは確認できない。
+「確認できない」を公式による不存在証明とはしないが、複数の公式商品案内が2形態だけを完全列挙しており、投入計画上は2形態で確定する。
+
+### 20.5 Special / digital / later edition investigation
+
+- `Juicetory (Special Edition)`、digital-only bonus、additional-track edition、alternate-version edition、later physical editionは、
+  Hello! Project公式release一覧・対象release page・公式news検索から**確認できなかった**。公式に「存在しない」と宣言した資料は未確認。
+- 公式は2023-10-11にiTunes Store（album ID `1708874309`）、レコチョク（`A1029698710`）、mora high-resolution
+  （`HKCN-50776-HR`）で「Juicetory」の配信開始を告知した。これは同日digital albumであり、今回はrelease masterを作らないfuture candidate。
+- 2024-05-29のlive音源配信`Juice=Juice 10th Anniversary Concert Tour 2023 Final ～Juicetory～`
+  （UFDL-1536）は別の後発live recordingで、今回のalbum audioとは統合せずscopeを広げない。
+
+### 20.6 Full tracklists
+
+両physical editionのCD Disc 1は下表と同一。`kind`は全てaudio、Instrumentalは0。duration、Version表記、credits、歌唱は
+[公式release](https://helloproject.com/juicejuice/release/7056/?pc=1)による。
+
+| disc | track | official track title | duration | version notation | kind | Instrumental | official creator credit | official singer wording |
+|---:|---:|---|---|---|---|---|---|---|
+| 1 | 1 | ロマンスの途中(2023 10th Juice Ver.) | 05:08 | 2023 10th Juice Ver. | audio | no | 作詞・作曲：つんく／編曲：鈴木俊介 | Juice=Juice |
+| 1 | 2 | 私が言う前に抱きしめなきゃね(2023) | 03:55 | 2023 | audio | no | 作詞・作曲：つんく／編曲：平田祥一郎 | Juice=Juice |
+| 1 | 3 | イジワルしないで 抱きしめてよ(2023) | 04:01 | 2023 | audio | no | 作詞・作曲：つんく／編曲：大久保薫 | Juice=Juice |
+| 1 | 4 | 初めてを経験中(2023) | 04:14 | 2023 | audio | no | 作詞・作曲：つんく／編曲：AKIRA／ブラスアレンジ：鈴木俊介 | 有澤一華・入江里咲・江端妃咲・石山咲良・遠藤彩加里・川嶋美楓 |
+| 1 | 5 | ブラックバタフライ(2023) | 03:52 | 2023 | audio | no | 作詞・作曲：つんく／編曲：平田祥一郎 | 植村あかり・段原瑠々・井上玲音・工藤由愛・松永里愛 |
+| 1 | 6 | Wonderful World(2023 10th Juice Ver.) | 04:21 | 2023 10th Juice Ver. | audio | no | 作詞・作曲：イイジマケン／編曲：炭竃智弘 | Juice=Juice |
+| 1 | 7 | CHOICE & CHANCE(2023) | 04:29 | 2023 | audio | no | 作詞・作曲：星部ショウ／編曲：平田祥一郎 | Juice=Juice |
+| 1 | 8 | Magic of Love(2023) | 05:02 | 2023 | audio | no | 作詞・作曲：つんく／編曲：村山晋一郎 | Juice=Juice |
+| 1 | 9 | カラダだけが大人になったんじゃない(2023) | 04:16 | 2023 | audio | no | 作詞・作曲：つんく／編曲：平田祥一郎 | Juice=Juice |
+| 1 | 10 | Never Never Surrender(2023) | 03:54 | 2023 | audio | no | 作詞：児玉雨子／作曲：星部ショウ／編曲：大久保薫 | Juice=Juice |
+| 1 | 11 | 微炭酸(2023) | 04:35 | 2023 | audio | no | 作詞：山崎あおい／作曲・編曲：KOUGA | Juice=Juice |
+| 1 | 12 | 「ひとりで生きられそう」って それってねえ、褒めているの？(2023) | 03:32 | 2023 | audio | no | 作詞・作曲：山崎あおい／編曲：鈴木俊介 | Juice=Juice |
+| 1 | 13 | ポップミュージック(2023) | 05:18 | 2023 | audio | no | 作詞・作曲：KAN／編曲：炭竃智弘 | Juice=Juice |
+| 1 | 14 | ボン・ヴォヤージュ～想いの軌跡～ | 04:04 | なし | audio | no | 作詞：井筒日美／作曲：Shusui・Josef Melin／編曲：Josef Melin | Juice=Juice |
+
+Physical positionsは14×2=`28`。同じ14 specific audioを両editionで共有するためunique audioは**14**。Instrumentalは
+unique 0／physical positions 0で、canonical除外も0。
+
+### 20.7 Unique audio tracks / Current DB comparison
+
+creator diffは既存基礎版との公式作家欄の比較であり、`same`は作詞・作曲・編曲が同じ、`n/a`はnew work。
+performer diffは全員名を列挙しないgroup creditでは断定せず、明示されたtracksだけ記す。公式の「セルフリメイク」は
+13既存曲を別specific audioとする積極的根拠であり、duration単独では判定していない。
+
+| disc | track | title | duration | classification | existing work | existing song | version notation | creator diff | artist diff | performer diff | release date candidate | planned work | planned song | note |
+|---:|---:|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 1 | ロマンスの途中(2023 10th Juice Ver.) | 05:08 | B | W00031 | J00041 | 2023 10th Juice Ver. | arrangement changed | none | group credit; not inferred | 2023-10-11 | — | J00093 | self-remake/re_recording |
+| 1 | 2 | 私が言う前に抱きしめなきゃね(2023) | 03:55 | B | W00028 | J00036 | 2023 | same | none | group credit; not inferred | 2023-10-11 | — | J00094 | self-remake/re_recording |
+| 1 | 3 | イジワルしないで 抱きしめてよ(2023) | 04:01 | B | W00032 | J00042 | 2023 | same | none | group credit; not inferred | 2023-10-11 | — | J00095 | self-remake/re_recording |
+| 1 | 4 | 初めてを経験中(2023) | 04:14 | B | W00033 | J00043 | 2023 | same | none | 6名を明記 | 2023-10-11 | — | J00096 | self-remake/re_recording |
+| 1 | 5 | ブラックバタフライ(2023) | 03:52 | B | W00036 | J00046 | 2023 | same | none | 5名を明記 | 2023-10-11 | — | J00097 | self-remake/re_recording |
+| 1 | 6 | Wonderful World(2023 10th Juice Ver.) | 04:21 | B | W00040 | J00050 | 2023 10th Juice Ver. | arrangement changed | none | group credit; not inferred | 2023-10-11 | — | J00098 | self-remake/re_recording |
+| 1 | 7 | CHOICE & CHANCE(2023) | 04:29 | B | W00025 | J00052 | 2023 | same | none | group credit; not inferred | 2023-10-11 | — | J00099 | self-remake/re_recording |
+| 1 | 8 | Magic of Love(2023) | 05:02 | B | W00047 | J00061 | 2023 | same | none | group credit; not inferred | 2023-10-11 | — | J00100 | self-remade cover; cover retained |
+| 1 | 9 | カラダだけが大人になったんじゃない(2023) | 04:16 | B | W00054 | J00068 | 2023 | same | none | group credit; not inferred | 2023-10-11 | — | J00101 | self-remake/re_recording |
+| 1 | 10 | Never Never Surrender(2023) | 03:54 | B | W00026 | J00078 | 2023 | same | none | group credit; not inferred | 2023-10-11 | — | J00102 | self-remake/re_recording |
+| 1 | 11 | 微炭酸(2023) | 04:35 | B | W00001 | J00001 | 2023 | same | none | group credit; not inferred | 2023-10-11 | — | J00103 | self-remake/re_recording |
+| 1 | 12 | 「ひとりで生きられそう」って それってねえ、褒めているの？(2023) | 03:32 | B | W00004 | J00004/J00006 | 2023 | same | none | group credit; not inferred | 2023-10-11 | — | J00104 | work reuse; neither existing audio reused |
+| 1 | 13 | ポップミュージック(2023) | 05:18 | B | W00006 | J00007 | 2023 | same | none | group credit; not inferred | 2023-10-11 | — | J00105 | self-remade cover; cover retained |
+| 1 | 14 | ボン・ヴォヤージュ～想いの軌跡～ | 04:04 | C | none | none | none | n/a | none | group credit; not inferred | 2023-10-11 | W00077 | J00106 | new original work/song |
+
+重点対象J00089～J00092（全部賭けてGO!!、イニミニマニモ～恋のライバル宣言～、プライド・ブライト、
+FUNKY FLUSHIN'）はofficial CD tracklistに含まれずreuse 0。それ以前を含む全93 songs／76 worksとtitle/workを照合した。
+
+### 20.8 A classification
+
+**A=0件。** Version notationなしの既存specific audio再収録はなく、13既存workは公式にself-remakeされた別audioである。
+
+| title | existing work_id | existing song_id | same-audio evidence | release_tracks reuse | source |
+|---|---|---|---|---|---|
+| 0件 | — | — | — | — | [発売決定ニュース](https://up-front-works.jp/news/16380/) |
+
+### 20.9 B classification
+
+| title | existing work_id | planned song_id | version_name | version_type | release_date | reason | source |
+|---|---|---|---|---|---|---|---|
+| ロマンスの途中(2023 10th Juice Ver.) | W00031 | J00093 | 2023 10th Juice Ver. | re_recording | 2023-10-11 | official self-remake | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| 私が言う前に抱きしめなきゃね(2023) | W00028 | J00094 | 2023 | re_recording | 2023-10-11 | official self-remake | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| イジワルしないで 抱きしめてよ(2023) | W00032 | J00095 | 2023 | re_recording | 2023-10-11 | official self-remake | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| 初めてを経験中(2023) | W00033 | J00096 | 2023 | re_recording | 2023-10-11 | self-remake and new named cohort | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| ブラックバタフライ(2023) | W00036 | J00097 | 2023 | re_recording | 2023-10-11 | self-remake and named cohort | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| Wonderful World(2023 10th Juice Ver.) | W00040 | J00098 | 2023 10th Juice Ver. | re_recording | 2023-10-11 | official self-remake | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| CHOICE & CHANCE(2023) | W00025 | J00099 | 2023 | re_recording | 2023-10-11 | official self-remake | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| Magic of Love(2023) | W00047 | J00100 | 2023 | cover | 2023-10-11 | self-remade Juice cover; original work is not Juice=Juice | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| カラダだけが大人になったんじゃない(2023) | W00054 | J00101 | 2023 | re_recording | 2023-10-11 | official self-remake | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| Never Never Surrender(2023) | W00026 | J00102 | 2023 | re_recording | 2023-10-11 | official self-remake | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| 微炭酸(2023) | W00001 | J00103 | 2023 | re_recording | 2023-10-11 | official self-remake | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| 「ひとりで生きられそう」って それってねえ、褒めているの？(2023) | W00004 | J00104 | 2023 | re_recording | 2023-10-11 | official self-remake | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| ポップミュージック(2023) | W00006 | J00105 | 2023 | cover | 2023-10-11 | self-remade KAN cover; cover relation retained | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+
+### 20.10 C classification
+
+| title | planned work_id | planned song_id | version_name | version_type | release_date | reason | source |
+|---|---|---|---|---|---|---|---|
+| ボン・ヴォヤージュ～想いの軌跡～ | W00077 | J00106 | （空欄） | original | 2023-10-11 | current DBにwork/songなし、Version表記なしのalbum新曲 | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+
+### 20.11 D classification
+
+**D=0件。** `A+B+C+D = 0+13+1+0 = 14`でunique audio 14件と一致する。
+
+| title | issue | confirmed facts | missing evidence | options | CSV impact | recommended next check | source |
+|---|---|---|---|---|---|---|---|
+| 0件 | — | — | — | — | — | — | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+
+### 20.12 Audio identity / version identity / cover notes
+
+- 公式ニュースは「代表曲からセレクトした楽曲を、セルフリメイク」と明記し、track 1～13には`(2023)`または
+  `(2023 10th Juice Ver.)`を付す。したがって既存audioのA再利用ではなく、既存workに属する別recording（B）である。
+- arrangementが過去版と同じ曲も別recordingであり、durationの一致・差は根拠の中心にしていない。逆にtrack 1/6は
+  arrangementも過去版から変わり、track 4/5は個人歌唱者も明示され、別identityを補強する。
+- `version_name`は公式括弧内を正確に保持する。`2023`だけでも公式self-remake告知と組み合わせて`re_recording`を採用する。
+- `Magic of Love`はW00047にJ00061 `Magic of Love(J=J 2015Ver.)`（cover）が存在し、2023版も同じ他歌手原曲の
+  Juice=Juice coverである。`ポップミュージック`もW00006/J00007（KAN cover）と同じ関係。この2曲はnew specific audioでも
+  coverというwork由来を優先して`version_type=cover`、notesに2023 self-remakeを保持する。
+- ボン・ヴォヤージュは新規W00077/J00106のoriginal。公式credits、artist、titleにcoverを示す情報はなく、current DBにもworkなし。
+- existing song chronology correction候補は0。Juicetory調査で、current `songs.release_date`より早いfull-audioは発見していない。
+
+### 20.13 Pre-release full-audio distribution
+
+発売決定ニュース、公式release一覧、Juice=Juice公式news、公式配信開始告知を検索した。2023-10-11より前のofficial digital
+single、advance distribution、download/streaming startは14 specific audioのいずれにも確認できない。これは不存在の断定ではなく、
+**確認できた最初のfull audioが2023-10-11のCD/digital album**という記録である。teaser、preview、MV、live、radio OAは日付根拠にしない。
+
+| title(s) | album release date | earlier full-audio date | release/product ID | same specific audio | songs.release_date candidate | source |
+|---|---|---|---|---|---|---|
+| tracks 1～14（全B/C候補） | 2023-10-11 | 確認できず | iTunes 1708874309 / レコチョク A1029698710 / mora HKCN-50776-HR（いずれも同日） | official album配信として同一track set | 2023-10-11 | [公式配信告知](https://helloproject.com/news/16564/) |
+
+### 20.14 Creator credits
+
+全creditは既存creator masterにexact matchする。新creator候補・planned creator IDは0。`credit_name`は下表の公式表記を保持し、
+各song内・role内の公式記載順を`credit_order`にする（track 14 compositionはShusui=1、Josef Melin=2）。
+
+| creator_id | name | role/credit | songs |
+|---|---|---|---|
+| C00028 | つんく | lyrics, composition | J00093～J00097, J00100～J00101 |
+| C00035 | 鈴木俊介 | arrangement, brass_arrangement | J00093, J00096, J00104 |
+| C00009 | 平田祥一郎 | arrangement | J00094, J00097, J00099, J00101 |
+| C00030 | 大久保薫 | arrangement | J00095, J00102 |
+| C00037 | AKIRA | arrangement | J00096 |
+| C00031 | イイジマケン | lyrics, composition | J00098 |
+| C00005 | 炭竃智弘 | arrangement | J00098, J00105 |
+| C00008 | 星部ショウ | lyrics, composition | J00099, J00102 |
+| C00050 | 村山晋一郎 | arrangement | J00100 |
+| C00006 | 児玉雨子 | lyrics | J00102 |
+| C00001 | 山崎あおい | lyrics, composition | J00103, J00104 |
+| C00002 | KOUGA | composition, arrangement | J00103 |
+| C00007 | KAN | lyrics, composition | J00105 |
+| C00027 | 井筒日美 | lyrics | J00106 |
+| C00010 | Shusui | composition | J00106 |
+| C00011 | Josef Melin | composition, arrangement | J00106 |
+
+| planned creator_id | name | role/credit | songs | source | uncertainty |
+|---|---|---|---|---|---|
+| 0件 | — | — | — | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | — |
+
+planned song_creatorsは曲別`3,3,3,4,3,3,3,3,3,3,3,3,3,4`、合計**44 relations**。lyrics 14、composition 16、
+arrangement 13、brass_arrangement 1。現行roleで全て表現でき、english_lyricsその他new roleはない。
+
+### 20.15 Artist relations
+
+全14曲のofficial artist/singer wordingはJuice=Juice（個人名列挙曲もalbum artistはJuice=Juice）。各new songへ
+`G00001 / Juice=Juice / primary / credit_order=1`を1件ずつ、合計14 relations追加する。new artist候補0、featured 0、
+multiple primary 0。個人歌唱者はartist化せずsong_performersで表す。A=0なのでexisting song relationの重複追加もない。
+
+| planned songs | artist_id | artist name | role | credit_order | official artist wording | multiple primary |
+|---|---|---|---|---:|---|---|
+| J00093～J00106 | G00001 | Juice=Juice | primary | 1 | Juice=Juice | no |
+
+### 20.16 Performer evidence / new members
+
+release pageが個人名を「歌：」として列挙するtracks 4/5だけを構造化する。その他12曲は`歌：Juice=Juice`であり、在籍情報から
+個人を推測しない。これはalbum specific audioに適用する証拠で、過去songへ遡及しない。A=0のためexisting song performer metadata
+completionは**0 relations**、new songsへのplanned relationだけが**11**。
+
+| song | member | existing/planned member_id | official wording | source | applies to which recording |
+|---|---|---|---|---|---|
+| J00096 初めてを経験中(2023) | 有澤一華 | P00012 | 歌：有澤一華・… | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00096 初めてを経験中(2023) | 入江里咲 | P00013 | 歌：…入江里咲・… | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00096 初めてを経験中(2023) | 江端妃咲 | P00014 | 歌：…江端妃咲・… | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00096 初めてを経験中(2023) | 石山咲良 | P00015 | 歌：…石山咲良・… | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00096 初めてを経験中(2023) | 遠藤彩加里 | P00016 | 歌：…遠藤彩加里・… | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00096 初めてを経験中(2023) | 川嶋美楓 | P00017 | 歌：…川嶋美楓 | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00097 ブラックバタフライ(2023) | 植村あかり | P00003 | 歌：植村あかり・… | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00097 ブラックバタフライ(2023) | 段原瑠々 | P00006 | 歌：…段原瑠々・… | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00097 ブラックバタフライ(2023) | 井上玲音 | P00005 | 歌：…井上玲音・… | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00097 ブラックバタフライ(2023) | 工藤由愛 | P00007 | 歌：…工藤由愛・… | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+| J00097 ブラックバタフライ(2023) | 松永里愛 | P00008 | 歌：…松永里愛 | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) | 2023 self-remake |
+
+performer_orderは公式列挙順でJ00096に1～6、J00097に1～5を予定する。
+
+| planned member_id | name | evidence | required for songs | source |
+|---|---|---|---|---|
+| P00012 | 有澤一華 | official individual singer list | J00096 | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| P00013 | 入江里咲 | official individual singer list | J00096 | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| P00014 | 江端妃咲 | official individual singer list | J00096 | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| P00015 | 石山咲良 | official individual singer list | J00096 | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| P00016 | 遠藤彩加里 | official individual singer list | J00096 | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+| P00017 | 川嶋美楓 | official individual singer list | J00096 | [公式](https://helloproject.com/juicejuice/release/7056/?pc=1) |
+
+member_affiliationsの投入計画は作らない。
+
+### 20.17 Planned IDs
+
+| entity | planned IDs | allocation |
+|---|---|---|
+| release | L00115～L00116 | 初回生産限定盤、通常盤の公式表示順 |
+| work | W00077 | track 14 new workだけ |
+| song | J00093～J00106 | official CD track 1～14順（B/Cだけ） |
+| creator | なし | 全員existing C00001～C00050内 |
+| member | P00012～P00017 | track 4 official singer列挙順 |
+| artist | なし | G00001を再利用 |
+
+current maxとの衝突、planned内重複、A/B/C割当矛盾はいずれもない。
+
+### 20.18 Planned release_tracks
+
+両editionに同じsong IDをreuseする。sourceは全行
+[公式release](https://helloproject.com/juicejuice/release/7056/?pc=1)。`version_name/type`はsong計画の監査用で、
+release_tracks CSV自体にはtrack titleとnotesを保持する。
+
+| planned release_id | disc | track | track_title | class | work_id | song_id | version_name | version_type | note |
+|---|---:|---:|---|---|---|---|---|---|---|
+| L00115 | 1 | 1 | ロマンスの途中(2023 10th Juice Ver.) | B | W00031 | J00093 | 2023 10th Juice Ver. | re_recording | self-remake |
+| L00115 | 1 | 2 | 私が言う前に抱きしめなきゃね(2023) | B | W00028 | J00094 | 2023 | re_recording | self-remake |
+| L00115 | 1 | 3 | イジワルしないで 抱きしめてよ(2023) | B | W00032 | J00095 | 2023 | re_recording | self-remake |
+| L00115 | 1 | 4 | 初めてを経験中(2023) | B | W00033 | J00096 | 2023 | re_recording | 6 named performers |
+| L00115 | 1 | 5 | ブラックバタフライ(2023) | B | W00036 | J00097 | 2023 | re_recording | 5 named performers |
+| L00115 | 1 | 6 | Wonderful World(2023 10th Juice Ver.) | B | W00040 | J00098 | 2023 10th Juice Ver. | re_recording | self-remake |
+| L00115 | 1 | 7 | CHOICE & CHANCE(2023) | B | W00025 | J00099 | 2023 | re_recording | self-remake |
+| L00115 | 1 | 8 | Magic of Love(2023) | B | W00047 | J00100 | 2023 | cover | self-remade cover |
+| L00115 | 1 | 9 | カラダだけが大人になったんじゃない(2023) | B | W00054 | J00101 | 2023 | re_recording | self-remake |
+| L00115 | 1 | 10 | Never Never Surrender(2023) | B | W00026 | J00102 | 2023 | re_recording | self-remake |
+| L00115 | 1 | 11 | 微炭酸(2023) | B | W00001 | J00103 | 2023 | re_recording | self-remake |
+| L00115 | 1 | 12 | 「ひとりで生きられそう」って それってねえ、褒めているの？(2023) | B | W00004 | J00104 | 2023 | re_recording | self-remake |
+| L00115 | 1 | 13 | ポップミュージック(2023) | B | W00006 | J00105 | 2023 | cover | self-remade cover |
+| L00115 | 1 | 14 | ボン・ヴォヤージュ～想いの軌跡～ | C | W00077 | J00106 | （空欄） | original | new work/song |
+| L00116 | 1 | 1 | ロマンスの途中(2023 10th Juice Ver.) | B | W00031 | J00093 | 2023 10th Juice Ver. | re_recording | same audio as L00115 |
+| L00116 | 1 | 2 | 私が言う前に抱きしめなきゃね(2023) | B | W00028 | J00094 | 2023 | re_recording | same audio as L00115 |
+| L00116 | 1 | 3 | イジワルしないで 抱きしめてよ(2023) | B | W00032 | J00095 | 2023 | re_recording | same audio as L00115 |
+| L00116 | 1 | 4 | 初めてを経験中(2023) | B | W00033 | J00096 | 2023 | re_recording | same audio as L00115 |
+| L00116 | 1 | 5 | ブラックバタフライ(2023) | B | W00036 | J00097 | 2023 | re_recording | same audio as L00115 |
+| L00116 | 1 | 6 | Wonderful World(2023 10th Juice Ver.) | B | W00040 | J00098 | 2023 10th Juice Ver. | re_recording | same audio as L00115 |
+| L00116 | 1 | 7 | CHOICE & CHANCE(2023) | B | W00025 | J00099 | 2023 | re_recording | same audio as L00115 |
+| L00116 | 1 | 8 | Magic of Love(2023) | B | W00047 | J00100 | 2023 | cover | same audio as L00115 |
+| L00116 | 1 | 9 | カラダだけが大人になったんじゃない(2023) | B | W00054 | J00101 | 2023 | re_recording | same audio as L00115 |
+| L00116 | 1 | 10 | Never Never Surrender(2023) | B | W00026 | J00102 | 2023 | re_recording | same audio as L00115 |
+| L00116 | 1 | 11 | 微炭酸(2023) | B | W00001 | J00103 | 2023 | re_recording | same audio as L00115 |
+| L00116 | 1 | 12 | 「ひとりで生きられそう」って それってねえ、褒めているの？(2023) | B | W00004 | J00104 | 2023 | re_recording | same audio as L00115 |
+| L00116 | 1 | 13 | ポップミュージック(2023) | B | W00006 | J00105 | 2023 | cover | same audio as L00115 |
+| L00116 | 1 | 14 | ボン・ヴォヤージュ～想いの軌跡～ | C | W00077 | J00106 | （空欄） | original | same audio as L00115 |
+
+Planned release_tracks summary: `L00115 = 14`、`L00116 = 14`、**total = 28**。official CD positionsも各14で一致する。
+Instrumental除外による差はない。
+
+### 20.19 Digital release notes / video candidates
+
+- Digital albumは2023-10-11配信開始。release-date evidenceには使うが、digital release masterは今回のphysical import計画へ含めない。
+- 初回盤BDは`Juice=Juice CONCERT TOUR ～final: nouvelle vague～（2023-02-28 日本武道館）`。
+  公式番号1～31の**31 video entries**（楽曲performance 24、OPENING 1、MC 5、backstage 1）を収録する。
+- 31 entriesすべてaudio canonical importから除外するfuture video candidates。今回`videos.csv`、`video_songs.csv`、
+  `video_song_performers.csv`は変更しない。映像上の個人出演表記をalbum audio performerへ流用しない。
+
+### 20.20 User confirmation items / Spec considerations
+
+**User confirmation items: 0件。** official self-remake明記、Version表記、work照合、coverの既存canonical関係、credits、歌唱者、
+同日配信により現行specだけで確定できる。次にユーザーが判断すべき事項はない。
+
+**Spec considerations: 0件。** brass_arrangementを含め全creditは現行roleで表現できる。self-remade coverは既存の`cover`とnotesで
+表現でき、新version enumやmultiple primaryは不要。
+
+### 20.21 Expected additions / expected counts after import
+
+| table | current | planned additions | expected after import |
+|---|---:|---:|---:|
+| releases | 114 | 2 | 116 |
+| release_tracks | 465 | 28 | 493 |
+| songs | 93 | 14 | 107 |
+| works | 76 | 1 | 77 |
+| creators | 75 | 0 | 75 |
+| members | 11 | 6 | 17 |
+| artists | 3 | 0 | 3 |
+| song_creators | 307 | 44 | 351 |
+| song_artists | 96 | 14 | 110 |
+| song_performers | 161 | 11 | 172 |
+
+D=0のためconditional/rangeなし。member additionsはperformer evidenceの構造化に必要な6名だけで、member_affiliationsは増やさない。
+
+### 20.22 Validation
+
+- [x] current 10-table baselineとmax IDsをCSVから確認。参考値と一致。
+- [x] 指定SHAはlocal objectなしだが、同等commit、current CSV、19.17 actual resultから直前投入を確認。
+- [x] official title/date/type/artist、physical 2形態、catalog 2件、media/discs、各CD 14 tracksを複数公式sourceで確認。
+- [x] full tracklist、duration、Version notation、credits、singer wordingをofficial releaseから転記。
+- [x] unique audio 14、physical positions 28、Instrumental unique/positions 0/0。
+- [x] 全current works/songsと照合。A/B/C/D=`0/13/1/0`、合計14。
+- [x] self-remakeを別audio根拠に使用。duration単独判定なし。cover 2、re_recording 11、new original 1。
+- [x] B/C 14件のfull-audio chronologyを調査し、確認できた初出2023-10-11を採用。partial audioは不採用。
+- [x] creator 16名をexisting masterへ照合。new 0、44 relations、role/credit_name/order/sourceを確認。
+- [x] G00001 primary 14、new artist/featured/multiple primary 0、duplicate relation予定なし。
+- [x] performerは公式個人列挙2曲だけ。existing member 5/new member 6、11 relations、推測0、既存song補完0。
+- [x] L00115～L00116、W00077、J00093～J00106、P00012～P00017にcollision/duplicateなし。
+- [x] release_tracks 28のrelease/disc/track/song mapping一意、edition間same song reuse、Instrumental/video除外。
+- [x] 初回盤BD 31 entriesをfuture video candidateとして分離。digital masterと後発live音源も分離。
+- [x] canonical候補のofficial source URLを各表または節に保持。
+- [x] Markdown table列数を機械検証し、`git diff --check`対象とする。
+- [x] `data/*.csv`および`docs/data-spec.md`は変更しない。
+
+### 20.23 Import readiness
+
+**READY**
+
+D=0、edition構成、A/B/C、audio/version/cover identity、planned IDs、creator/artist/performer relations、release_tracks、
+release_dateが確定し、次回physical 2形態を一括投入できる。unresolvedは**0件**、user decisionも0件。
+`Juicetory`後の次の未投入Juice=Juice通常作品は、roadmap上2024-05-15
+`トウキョウ・ブラー/ナイモノラブ/おあいこ`（同日Special Editionも併せて調査）である。
