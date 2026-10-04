@@ -1804,3 +1804,488 @@ identity重複、release/disc/track位置重複を検証した。S1/S2/S3/S4のr
 次回の2nd album調査では9曲を既存song再利用候補として現行audio identityルールで確認する。特に
 `SEXY SEXY`はsingle公式04:45に対してalbum公式04:21と24秒差があるため、version notation、creator、
 performer、official metadata、audio comparison、intro/outro、edit、recording identityを最優先で確認する。
+
+## 18. Juice=Juice#2 -¡Una más!- research（2026-10-04、research-only）
+
+### 18.1 Summary
+
+対象は2018-08-01発売の2nd album **`Juice=Juice#2 -¡Una más!-`**。公式releaseページの表記を
+そのままcanonical release title候補とする（`#2`の前後に空白なし、半角hyphen、hyphen直後に反転感嘆符
+`¡`、`más!`末尾は半角`!`、閉じhyphen）。公式release一覧、発売告知、当日配信告知も同じ表記である。
+購入特典newsの見出しには全角`＃` / `！`もあるが、本文とproduct pageを優先し推測正規化しない。
+
+公式一次情報はproduct page https://helloproject.com/release/5684/ 、発売告知
+https://helloproject.com/news/8594/ 、全曲配信告知 https://helloproject.com/juicejuice/news/8940/ を中心にした。
+直接閲覧でき、title、日付、label、edition、catalog、全audio track、duration、creator、個人歌唱者、BD内容を確認した。
+
+- physicalは2形態：初回生産限定盤（2CD+BD、HKCN-50564）と通常盤（2CD、HKCN-50567）。
+- 両形態のaudioは同一23曲（Disc 1=11、Disc 2=12）。限定盤Disc 3のBDおよび特典映像はaudio scope外。
+- unique audio trackは23。分類は **A 11 / B 2 / C 10 / D 0**。
+- physical planned releaseは`L00103`～`L00104`、planned release_tracksは各23、合計46。
+- planned new workは10（`W00063`～`W00072`）、planned new songは12（`J00077`～`J00088`）。
+- new creatorは5（`C00065`～`C00069`）、new memberは梁川奈々美1名（`P00011`）。new artistは0。
+- `SEXY SEXY`はproduct pageの04:21表示とsingleの04:45表示が矛盾するが、公式配信告知からリンクされた
+  album配信の同曲はsingle初出日の同一配信trackとして扱われ、補助配信metadataも04:45である。無印、creator、
+  artist、7名のperformerも一致し、別Versionの積極的根拠がないため **A / J00074再利用**とする。04:21は
+  直前track`Fiesta! Fiesta!`と同値であり、product-page duration転記誤りの可能性が高い、という推定までに留める。
+- `Wonderful World(2018 English Ver.)`の公式`英語詞:鈴木桃子`は現行creator roleにない。relationを失わず
+  canonical化するにはspec判断が必要なため、全audio identityは解決済みだが最終判定は
+  **READY AFTER USER DECISION**。CSVとdata-specは今回変更しない。
+
+### 18.2 Current CSV baseline
+
+作業開始時に全指定CSVをparseし、直前4 singleの実投入済みを確認した。現在CSVを正とする。
+
+| table | current rows | maximum / confirmation |
+|---|---:|---|
+| releases | 102 | L00102 |
+| release_tracks | 399 | 直前4 singleの61 relationを含む |
+| songs | 77 | Juice=Juice最大J00076 |
+| works | 62 | W00062 |
+| creators | 64 | C00064 |
+| members | 10 | P00010 |
+| artists | 3 | G00003 |
+| song_creators | 254 | J00067～J00076の37 relationを含む |
+| song_artists | 79 | J00067 dual primaryを含む |
+| song_performers | 13 | J00067～J00076は未登録 |
+| member_affiliations | 0 | 今回も非投入phase |
+| videos / video_songs / video_song_performers | 0 / 0 / 0 | 今回は候補記録のみ |
+
+`W00053`～`W00062` / `J00067`～`J00076` / `L00079`～`L00102`の存在、title、credit、artist、
+release_tracksを確認した。さらに`J00001`～`J00076` / `W00001`～`W00062`全体をtitle、work、Version、
+chronologyで突合した。
+
+### 18.3 Official release information / physical editions
+
+| release date | official title | edition | planned release_id | catalog number | type / label | media | audio tracks | source |
+|---|---|---|---|---|---|---|---:|---|
+| 2018-08-01 | Juice=Juice#2 -¡Una más!- | 初回生産限定盤 | L00103 | HKCN-50564 | album / hachama | CD Disc 1 + CD Disc 2 + BD Disc 3 | 23 | https://helloproject.com/release/5684/ |
+| 2018-08-01 | Juice=Juice#2 -¡Una más!- | 通常盤 | L00104 | HKCN-50567 | album / hachama | CD Disc 1 + CD Disc 2 | 23 | https://helloproject.com/release/5684/ |
+
+発売告知も2形態と両catalogを列挙する：https://helloproject.com/news/8594/ 。catalog末尾の連番から未掲載の
+`HKCN-50565`～`50566`が限定盤の構成部材である可能性はあるが、release masterは商品catalog
+`HKCN-50564`を保持し、推測で別releaseを作らない。確認できたphysical editionは2件である。
+
+### 18.4 Tracklists
+
+両physical editionのCD tracklistは同一。`track title`、記号、durationは公式表示を保持する。
+
+| disc | track | official track title | duration | notation | audio scope | official source |
+|---:|---:|---|---:|---|---|---|
+| 1 | 1 | Fiesta! Fiesta! | 04:21 | 無印 | 対象 | https://helloproject.com/release/5684/ |
+| 1 | 2 | SEXY SEXY | 04:21（page表示。配信は04:45） | 無印 | 対象 | 同上 |
+| 1 | 3 | 泣いていいよ | 04:56 | 無印 | 対象 | 同上 |
+| 1 | 4 | Vivid Midnight | 04:05 | 無印 | 対象 | 同上 |
+| 1 | 5 | 地団駄ダンス | 03:49 | 無印 | 対象 | 同上 |
+| 1 | 6 | Feel！感じるよ | 03:58 | 無印 | 対象 | 同上 |
+| 1 | 7 | Dream Road～心が躍り出してる～ | 04:59 | 無印 | 対象 | 同上 |
+| 1 | 8 | KEEP ON 上昇志向！！ | 04:24 | 無印 | 対象 | 同上 |
+| 1 | 9 | 明日やろうはバカやろう | 03:34 | 無印 | 対象 | 同上 |
+| 1 | 10 | Next is you! | 04:30 | 無印 | 対象 | 同上 |
+| 1 | 11 | カラダだけが大人になったんじゃない | 04:16 | 無印 | 対象 | 同上 |
+| 2 | 1 | Never Never Surrender | 03:54 | 無印 | 対象 | 同上 |
+| 2 | 2 | 如雨露(Album Version) | 04:11 | Album Version | 対象 | 同上 |
+| 2 | 3 | TOKYOグライダー | 04:14 | 無印 | 対象 | 同上 |
+| 2 | 4 | シンクロ。 | 04:18 | 無印 | 対象 | 同上 |
+| 2 | 5 | あばれてっか?! ハヴアグッタイ | 04:29 | 無印 | 対象 | 同上 |
+| 2 | 6 | 素直に甘えて | 03:46 | 無印 | 対象 | 同上 |
+| 2 | 7 | Goal～明日はあっちだよ～(Album Version) | 04:59 | Album Version | 対象 | 同上 |
+| 2 | 8 | 銀色のテレパシー | 04:19 | 無印 | 対象 | 同上 |
+| 2 | 9 | この世界は捨てたもんじゃない | 04:20 | 無印 | 対象 | 同上 |
+| 2 | 10 | 禁断少女 | 04:54 | 無印 | 対象 | 同上 |
+| 2 | 11 | 大人の事情 | 04:01 | 無印 | 対象 | 同上 |
+| 2 | 12 | Wonderful World(2018 English Ver.) | 04:14 | 2018 English Ver. | 対象 | 同上 |
+
+限定盤BDはMV 29本（Music Video / Dance Shot / Close-up）とTV-SPOT 15本、ジャケット撮影メイキング1本。
+いずれもaudio `song` / `release_tracks`対象外で、将来video候補とする。CDにInstrumentalはなく、
+Instrumental除外件数は0。
+
+### 18.5 Unique audio tracks / Current DB comparison
+
+両editionで同じ23 audioを再利用するためuniqueは23。`Dream Road`はalbum pageが`～`、既存canonicalが`〜`
+だが、creator・duration・chronology・無印収録が一致する単なるglyph差であり別work/songを作らない。
+
+| disc | track | album title | duration | class | existing work | existing song | existing title/version | existing duration | creator diff | artist diff | performer diff | version notation | planned work | planned song | note |
+|---:|---:|---|---:|---|---|---|---|---:|---|---|---|---|---|---|---|
+| 1 | 1 | Fiesta! Fiesta! | 04:21 | C | なし | なし | なし | — | — | — | — | 無印 | W00063 | J00077 | 2017-08-23公式配信が初出 |
+| 1 | 2 | SEXY SEXY | page 04:21 / 配信04:45 | A | W00060 | J00074 | SEXY SEXY / original | 04:45 | なし | なし | albumで7名明記 | 無印 | — | J00074 | duration詳細は18.7 |
+| 1 | 3 | 泣いていいよ | 04:56 | A | W00061 | J00075 | 同名 / original | 04:55 | なし | なし | albumで7名明記 | 無印 | — | J00075 | 1秒差のみ |
+| 1 | 4 | Vivid Midnight | 04:05 | A | W00062 | J00076 | 同名 / original | 04:05 | なし | なし | albumで7名明記 | 無印 | — | J00076 |  |
+| 1 | 5 | 地団駄ダンス | 03:49 | A | W00058 | J00072 | 同名 / original | 03:48 | なし | なし | albumで旧5名明記 | 無印 | — | J00072 | 1秒差のみ |
+| 1 | 6 | Feel！感じるよ | 03:58 | A | W00059 | J00073 | 同名 / original | 03:58 | なし | なし | albumで旧5名明記 | 無印 | — | J00073 | canonical punctuation一致 |
+| 1 | 7 | Dream Road～心が躍り出してる～ | 04:59 | A | W00055 | J00069 | Dream Road〜心が躍り出してる〜 / original | 04:59 | なし | なし | albumで旧5名明記 | 無印 | — | J00069 | 波ダッシュglyph差のみ |
+| 1 | 8 | KEEP ON 上昇志向！！ | 04:24 | A | W00056 | J00070 | 同名 / original | 04:24 | なし | なし | albumで旧5名明記 | 無印 | — | J00070 | brass creditも一致 |
+| 1 | 9 | 明日やろうはバカやろう | 03:34 | A | W00057 | J00071 | 同名 / original | 03:34 | なし | なし | albumで旧5名明記 | 無印 | — | J00071 |  |
+| 1 | 10 | Next is you! | 04:30 | A | W00053 | J00067 | 同名 / original | 04:30 | なし | なし | NEXT YOU旧5名明記 | 無印 | — | J00067 | dual primaryは既存relation再利用 |
+| 1 | 11 | カラダだけが大人になったんじゃない | 04:16 | A | W00054 | J00068 | 同名 / original | 04:17 | なし | なし | albumで旧5名明記 | 無印 | — | J00068 | 1秒差のみ |
+| 2 | 1 | Never Never Surrender | 03:54 | B | W00026 | J00027は2022 ver. | Never Never Surrender(2022 ver.) | 03:53 | album版が先 | なし | 2018版7名 | 無印 | — | J00078 | chronological originalを新規作成 |
+| 2 | 2 | 如雨露(Album Version) | 04:11 | C | なし | なし | なし | — | — | — | — | Album Version | W00064 | J00079 | 2017-06-16無印配信に対する明示版 |
+| 2 | 3 | TOKYOグライダー | 04:14 | C | なし | なし | なし | — | — | — | — | 無印 | W00065 | J00080 | album新曲 |
+| 2 | 4 | シンクロ。 | 04:18 | C | なし | なし | なし | — | — | — | — | 無印 | W00066 | J00081 | album新曲、8名歌唱 |
+| 2 | 5 | あばれてっか?! ハヴアグッタイ | 04:29 | C | なし | なし | なし | — | — | — | — | 無印 | W00067 | J00082 | album新曲 |
+| 2 | 6 | 素直に甘えて | 03:46 | C | なし | なし | なし | — | — | — | — | 無印 | W00068 | J00083 | album新曲、8名歌唱 |
+| 2 | 7 | Goal～明日はあっちだよ～(Album Version) | 04:59 | A | W00027 | J00028 | 同title / Album Version | 未記録 | なし | なし | albumで7名明記 | Album Version | — | J00028 | 後年terzo調査で先行登録済み |
+| 2 | 8 | 銀色のテレパシー | 04:19 | C | なし | なし | なし | — | — | — | — | 無印 | W00069 | J00084 | album新曲 |
+| 2 | 9 | この世界は捨てたもんじゃない | 04:20 | C | なし | なし | なし | — | — | — | — | 無印 | W00070 | J00085 | album新曲 |
+| 2 | 10 | 禁断少女 | 04:54 | C | なし | なし | なし | — | — | — | — | 無印 | W00071 | J00086 | album新曲、8名歌唱 |
+| 2 | 11 | 大人の事情 | 04:01 | C | なし | なし | なし | — | — | NEXT YOU | 旧5名 | 無印 | W00072 | J00087 | 既存DBにworkなし、dual primary候補 |
+| 2 | 12 | Wonderful World(2018 English Ver.) | 04:14 | B | W00040 | J00050 | Wonderful World / original | 04:17 | 英語詞追加 | なし | 2018版7名 | 2018 English Ver. | — | J00088 | existing work + explicit version |
+
+### 18.6 Audio identity comparison / A classification
+
+| title | existing song | existing release | existing duration | album duration | version notation | creator | artist | performer | positive evidence of different audio | result |
+|---|---|---|---:|---:|---|---|---|---|---|---|
+| SEXY SEXY | J00074 | 2018-04-18 single | 04:45 | page 04:21 / album配信04:45 | 両方無印 | 一致 | G00001一致 | albumは同じ7名を明記 | なし。page durationだけ矛盾 | A |
+| 泣いていいよ | J00075 | 同single | 04:55 | 04:56 | 両方無印 | 一致 | 一致 | albumは同じ7名 | なし | A |
+| Vivid Midnight | J00076 | 同single | 04:05 | 04:05 | 両方無印 | 一致 | 一致 | albumは同じ7名 | なし | A |
+| 地団駄ダンス | J00072 | 2017-04-26 single | 03:48 | 03:49 | 両方無印 | 一致 | 一致 | albumは旧5名 | なし | A |
+| Feel！感じるよ | J00073 | 同single | 03:58 | 03:58 | 両方無印 | 一致 | 一致 | albumは旧5名 | なし | A |
+| Dream Road〜心が躍り出してる〜 | J00069 | 2016-10-26 single | 04:59 | 04:59 | 両方無印 | 一致 | 一致 | albumは旧5名 | なし（title glyph差のみ） | A |
+| KEEP ON 上昇志向！！ | J00070 | 同single | 04:24 | 04:24 | 両方無印 | 通常/ブラスとも一致 | 一致 | albumは旧5名 | なし | A |
+| 明日やろうはバカやろう | J00071 | 同single | 03:34 | 03:34 | 両方無印 | 一致 | 一致 | albumは旧5名 | なし | A |
+| Next is you! | J00067 | 2016-02-03 single | 04:30 | 04:30 | 両方無印 | 一致 | NEXT YOU主体一致 | albumは旧5名 | なし | A |
+| カラダだけが大人になったんじゃない | J00068 | 同single | 04:17 | 04:16 | 両方無印 | 一致 | 一致 | albumは旧5名 | なし | A |
+| Goal～明日はあっちだよ～(Album Version) | J00028 | terzoにも収録 | 未記録 | 04:59 | 完全一致 | 一致 | G00001 | albumは7名 | なし | A |
+
+`J00067`～`J00076`はすべてA。duration一致だけで確定したのではなく、無印、同一work/title、creator、
+artist、performer、chronology、別Version情報の不存在を総合した。1秒差は丸め/境界差の範囲として単独でBに
+しない。A 11曲にはnew work/song/artist relationを作らず、release_tracksから既存songを参照する。
+
+### 18.7 SEXY SEXY audio identity
+
+#### Existing single
+
+- Existing: `W00060 / J00074`、2018-04-18、title `SEXY SEXY`、無印、04:45。
+- 公式single page：https://helloproject.com/release/5586/ 。lyrics/composition=つんく、
+  arrangement=平田祥一郎、artist=Juice=Juice。公式配信告知：https://helloproject.com/news/8444/ 。
+- Spotify補助：https://open.spotify.com/intl-fr/album/4qzlMI5lakVZPshEi8FfZT （04:45）。
+
+#### Album
+
+- physical page track 1-2は無印`SEXY SEXY`、表示04:21、同じ3 creator、歌は宮崎由加・金澤朋子・
+  高木紗友希・宮本佳林・植村あかり・梁川奈々美・段原瑠々。
+- 公式album page：https://helloproject.com/release/5684/ 。
+- 公式全曲配信告知：https://helloproject.com/juicejuice/news/8940/ は2018-08-01から全23曲配信と、albumの
+  iTunes / レコチョク / mora商品を直接リンクする。
+
+#### Official metadata comparison
+
+| field | single | album | assessment |
+|---|---|---|---|
+| title | SEXY SEXY | SEXY SEXY | 完全一致 |
+| formal version | なし | なし | edit / Album Version等なし |
+| lyrics / composition | つんく / つんく | つんく / つんく | 一致 |
+| arrangement | 平田祥一郎 | 平田祥一郎 | 一致 |
+| artist | Juice=Juice | Juice=Juice | 一致 |
+| performer | single pageはgroup表記 | albumは当該single期と同じ7名 | 矛盾なし |
+| distribution identity | 2018-04-18初出 | Apple album掲載trackは2018-04-18表示 | 既発track再利用を支持 |
+| formal note | 別版注記なし | 別版注記なし | different audioを支持しない |
+
+#### Duration
+
+physical product page同士では **04:45 → 04:21（24秒差）**。ただし公式配信告知がリンクするalbum配信を
+補助確認すると04:45で、Appleのalbum track URL https://music.apple.com/us/song/1416410882 はalbum名と
+2018-04-18を表示する。配信metadata補助 https://music.orimyu.com/php/cd/CdTop.php?cd=SPB00208057 も
+album track 2を04:45とする。album pageの04:21は直前のFiesta! Fiesta!と完全に同値であり、duration欄の
+転記誤りが最も整合的という**推定**である。公式訂正文や「同一master」という明記は見つからなかった。
+
+#### Creator comparison
+
+lyrics / composition / arrangementは全て一致。specialized arrangement、remix、edit creditはない。
+
+#### Artist comparison
+
+両方G00001 Juice=Juice。別artist、featured、名義変更はない。
+
+#### Performer comparison
+
+albumは7名を公式明記し、single発売時の同曲に別歌唱者を示す情報はない。albumの個人表記を根拠なく別audio
+とは扱わず、A確定後はJ00074のperformer根拠として使用する。single pageへの遡及ではなく、同一songを説明する
+後発一次情報としてrelation sourceをalbum pageにする。
+
+#### Version notation
+
+両releaseとも無印。`edit`、`shortened`、`Album Version`、`New Vocal`、`re-recording`等は一切表示されない。
+同じalbum内では別版を`如雨露(Album Version)`等と明示しており、SEXY SEXYにはその記載がない。
+
+#### Supplemental evidence
+
+Apple / Spotify / 音楽配信metadataは第三者補助であり単独確定根拠にはしない。ただし公式配信告知がalbum
+商品へ直接誘導し、そのalbum上でsingle初出日を持つ既存trackとして提示されることは、公式無印・credit一致と
+組み合わせると同一audio判断を強く支持する。実音源の波形比較は実施していない。
+
+#### Possible explanations
+
+1. 最有力：album product pageで直前track 04:21を誤って重複転記。
+2. metadata boundary差：24秒には大きすぎ、配信04:45と整合しないため低い。
+3. 未表記short edit：formal notation、配信duration、creditのいずれも支持せず低い。
+4. 別録音：performer/creator差や公式再録注記がなく支持されない。
+
+#### Listening points
+
+追加確認するならsingle / album CDの (1)冒頭無音とintro、(2)first vocal開始、(3)各chorus、
+(4)instrumental break、(5)last chorus、(6)outro/fade、(7)総構成を同期比較する。実聴していないため
+「どこが違う」とは記載しない。Spotify等でalbumとsingleのtrack IDが同一かも確認候補。
+
+#### A/B/D impact
+
+- A（採用）：J00074を2 release_tracksで再利用。new song/credit/artistは0、performer 7 relationを追加候補。
+- B：W00060 + 別new songが必要で、planned `J00078`以降が1つずつ繰り下がり、credits/artistsも追加。
+- D：両album release_tracksのsong_idを未確定にし、album全体はREADYにならない。
+
+#### Recommendation
+
+**A**。24秒差を無視せず配信側を優先確認した結果、04:45を支持するmetadataと同一track identityがあり、
+別Versionの積極的根拠はない。data-specの無印再収録ルールに従いJ00074を再利用する。
+
+#### Stop point
+
+SEXY SEXYについて停止点なし。もしユーザーがphysical CD実聴で構造差を確認した場合だけB/Dへ再度開く。
+
+### 18.8 B / C / D classification and new-song plan
+
+#### B classification（existing work + new song、2曲）
+
+- `Never Never Surrender`：W00026再利用。2018無印版は後年`J00027 2022 ver.`よりchronologically先で、
+  planned J00078を`original`とする。J00027の`version_type=other`は変更不要。
+- `Wonderful World(2018 English Ver.)`：W00040再利用、明示Versionと英語詞creditがあるためplanned J00088。
+
+#### C classification（new work + new song、10曲）
+
+`Fiesta! Fiesta!`、`如雨露(Album Version)`、`TOKYOグライダー`、`シンクロ。`、
+`あばれてっか?! ハヴアグッタイ`、`素直に甘えて`、`銀色のテレパシー`、
+`この世界は捨てたもんじゃない`、`禁断少女`、`大人の事情`。
+
+如雨露と大人の事情はalbum以前の公式full-audioがあるが、現行DBにwork自体がないため分類はC。
+`如雨露(Album Version)`は`version_type=other`、他9曲はchronologyに応じ`original`候補。
+
+#### D classification
+
+**0曲**。SEXY SEXYのduration原因は上記のとおりmetadata誤記と合理的に判断可能でaudio identityを解決した。
+未解決なのはaudio identityではなく英語詞roleのschema判断である。
+
+| title | class | work_id | song_id | version_name | version_type | release_date | source |
+|---|---|---|---|---|---|---|---|
+| Fiesta! Fiesta! | C | planned W00063 | planned J00077 | 空欄 | original | 2017-08-23 | https://helloproject.com/juicejuice/release/detail/UFDL-1353/ |
+| Never Never Surrender | B | W00026 | planned J00078 | 空欄 | original | 2018-08-01 | https://helloproject.com/release/5684/ |
+| 如雨露(Album Version) | C | planned W00064 | planned J00079 | Album Version | other | 2018-08-01 | https://helloproject.com/release/5684/ |
+| TOKYOグライダー | C | planned W00065 | planned J00080 | 空欄 | original | 2018-08-01 | 同上 |
+| シンクロ。 | C | planned W00066 | planned J00081 | 空欄 | original | 2018-08-01 | 同上 |
+| あばれてっか?! ハヴアグッタイ | C | planned W00067 | planned J00082 | 空欄 | original | 2018-08-01 | 同上 |
+| 素直に甘えて | C | planned W00068 | planned J00083 | 空欄 | original | 2018-08-01 | 同上 |
+| 銀色のテレパシー | C | planned W00069 | planned J00084 | 空欄 | original | 2018-08-01 | 同上 |
+| この世界は捨てたもんじゃない | C | planned W00070 | planned J00085 | 空欄 | original | 2018-08-01 | 同上 |
+| 禁断少女 | C | planned W00071 | planned J00086 | 空欄 | original | 2018-08-01 | 同上 |
+| 大人の事情 | C | planned W00072 | planned J00087 | 空欄 | original | 2016-03-02 | https://helloproject.com/juicejuice/news/4567/?pc=1 |
+| Wonderful World(2018 English Ver.) | B | W00040 | planned J00088 | 2018 English Ver. | other | 2018-08-01 | https://helloproject.com/release/5684/ |
+
+発売日前full-audio：`Fiesta! Fiesta!`は公式配信release 2017-08-23、`大人の事情`はNEXT YOUの公式
+single 2016-03-02が確認できるため、その音源がalbumと同一であることを無印・同一creator/performerから確認し
+上記日を採用候補とする。`如雨露`の無印は2017-06-16配信だがalbumは明示`Album Version`なのでspecific audioの
+初出は2018-08-01。その他album新音源について発売日前の公式full-audio配信は確認できなかった（不存在とは
+断定しない）。ラジオ初OA（シンクロ。2018-07-09）は商用full-audio releaseではない。
+
+### 18.9 Creator credits
+
+#### Existing creators
+
+| creator_id | name | role / credit | songs |
+|---|---|---|---|
+| C00006 | 児玉雨子 | lyrics | Never Never Surrender、如雨露、あばれてっか?!、銀色のテレパシー |
+| C00008 | 星部ショウ | composition | Never Never Surrender、TOKYOグライダー、シンクロ。、素直に甘えて、銀色のテレパシー |
+| C00009 | 平田祥一郎 | arrangement | 禁断少女、既存SEXY SEXY等 |
+| C00012 | 近藤薫 | lyrics/composition/arrangement | 既存J00028 Goal Album Version |
+| C00020 | NOBE | lyrics | 素直に甘えて |
+| C00025 | 松井寛 | arrangement | TOKYOグライダー |
+| C00026 | 唐沢美帆 | lyrics | TOKYOグライダー |
+| C00027 | 井筒日美 | lyrics | Fiesta! Fiesta!、シンクロ。、この世界は捨てたもんじゃない |
+| C00028 | つんく | lyrics/composition | 既存A曲、大人の事情 |
+| C00029 | 高橋諭一 | arrangement | 銀色のテレパシー |
+| C00030 | 大久保薫 | arrangement | Fiesta! Fiesta!、Never Never Surrender、如雨露 |
+| C00031 | イイジマケン | lyrics/composition | Wonderful World(2018 English Ver.) |
+| C00032 | 浜田ピエール裕介 | arrangement | シンクロ。 |
+| C00035 | 鈴木俊介 | arrangement | 素直に甘えて |
+| C00039 | gaokalab | arrangement | Wonderful World(2018 English Ver.) |
+| C00055 | ダンス☆マン | composition/arrangement | あばれてっか?! ハヴアグッタイ |
+| C00061 | 中村瑛彦 | composition/arrangement | この世界は捨てたもんじゃない、既存A曲 |
+
+`沢頭たかし`はJ00028で既存relationが既にあるかを確認した結果creator master未登録であり、今回J00028の
+既存creditを完全化するplanned correctionも含める。新song 12曲のplanned creator relationは、英語詞を独立
+roleにする場合37（現行roleだけなら36で、英語詞relationを欠落させるため非推奨）。J00028への沢頭たかし
+arrangement補完1件を別途加えるとalbum import全体の`song_creators`追加は **38**（spec決定時）となる。
+
+#### New creator candidates
+
+| planned creator_id | name | role / credit | songs | source | uncertainty |
+|---|---|---|---|---|---|
+| C00065 | エリック・フクサキ | composition | Fiesta! Fiesta! | https://helloproject.com/release/5684/ | なし |
+| C00066 | YUKO | composition | 如雨露(Album Version) | 同上 | official credit名義を保持、他名義と統合しない |
+| C00067 | 沢頭たかし | arrangement（近藤薫との共同） | Goal Album Version | 同上 | なし |
+| C00068 | 大橋莉子 | lyrics/composition | 禁断少女 | 同上 | なし |
+| C00069 | 鈴木桃子 | **英語詞**（new role要検討） | Wonderful World(2018 English Ver.) | 同上 | 人物identityではなくrole schemaが未決 |
+
+### 18.10 Artist relations
+
+| song scope | official artist wording | planned relation | multiple primary |
+|---|---|---|---|
+| Fiesta、Never、如雨露、TOKYO、シンクロ。、あばれて、素直、銀色、この世界、禁断、Wonderful英語版 | Juice=Juice / 個人名列挙 | G00001 primary（各new song） | なし |
+| 大人の事情 | NEXT YOU（旧5名） | G00003 primary + G00001 primary | あり。J00067と同じ公式unit identity |
+| J00067 Next is you! | NEXT YOU（旧5名） | 既存G00003 + G00001 primaryを再利用、追加0 | 既存 |
+| その他A 10曲 | Juice=Juiceまたは既存NEXT YOU relation | existing song_artists再利用、追加0 | なし（J00067除く） |
+
+new artist candidate=0、planned artist IDなし。new song 12曲へのplanned `song_artists`は13 relation。
+検索目的だけでprimaryを増やさない。
+
+### 18.11 Performer evidence
+
+公式album pageは全23 trackの`歌：`に個人名を列挙する。推測ではなく明示creditなのでsong_performers候補とする。
+梁川奈々美のみ現行membersにないためplanned `P00011`。他はP00001～P00004、P00006、P00009～P00010を再利用。
+
+| song set | members / member IDs | official wording | source | applies to which recording |
+|---|---|---|---|---|
+| 地団駄、Feel、Dream Road、KEEP ON、明日やろう、Next is you!、カラダ、大人の事情 | 宮崎P00009・金澤P00002・高木P00010・宮本P00001・植村P00003 | `歌：`5名（NEXT YOU曲は括弧内） | https://helloproject.com/release/5684/ | album収録audio。A確定曲は同一existing song |
+| Fiesta、SEXY、泣いて、Vivid、Never、如雨露、TOKYO、あばれて、Goal、銀色、この世界、Wonderful英語版 | 上記5名 + 梁川planned P00011 + 段原P00006 | `歌：`7名 | 同上 | album収録audio |
+| シンクロ。、素直に甘えて、禁断少女 | 上記7名 + 稲場P00004 | `歌：`8名 | 同上 | album収録audio |
+
+23 songへのplanned performer relationは **148**（5名曲8曲=40、7名曲12曲=84、8名曲3曲=24）。
+うち既存song Aへの追加63、新songへの追加85。現在13からexpected 161。album版だけを指す別audioの場合に
+singleへ遡及しない原則を守り、A判定した同一songにのみ付与する。member_affiliationsは計画しない。
+
+### 18.12 Digital release / video candidates
+
+- 公式告知は2018-08-01にalbum全23曲のiTunes（Mastered for iTunes）、レコチョク、mora high-resolution
+  配信開始を明記：https://helloproject.com/juicejuice/news/8940/ 。physical release IDsとは分離し、digital
+  release masterは今回採番しない。
+- album全体の発売日前full-audio配信は確認できなかった。既発Fiesta、大人の事情、single 10曲、Goal等は
+  各初出releaseをsongs.release_dateに用いる。ラジオOAや試聴はfull-audio商用releaseに数えない。
+- 限定BD video候補：Next is you!、カラダだけが大人になったんじゃない、Dream Road、KEEP ON、
+  明日やろう、地団駄、Feel！、SEXY SEXY、泣いていいよ、Vivid MidnightのMusic Video / Dance Shot /
+  Close-up（公式収録29本）、各TV-SPOT、ジャケット撮影メイキング。video CSVには今回投入しない。
+
+### 18.13 Planned IDs
+
+| entity | planned IDs | count | allocation rule |
+|---|---|---:|---|
+| releases | L00103 初回生産限定盤、L00104 通常盤 | 2 | official edition掲載順 |
+| works | W00063 Fiesta! Fiesta!、W00064 如雨露、W00065 TOKYOグライダー、W00066 シンクロ。、W00067 あばれてっか?! ハヴアグッタイ、W00068 素直に甘えて、W00069 銀色のテレパシー、W00070 この世界は捨てたもんじゃない、W00071 禁断少女、W00072 大人の事情 | 10 | first album track appearance順、A/Bは採番なし |
+| songs | J00077 Fiesta、J00078 Never、J00079 如雨露 Album Version、J00080 TOKYO、J00081 シンクロ。、J00082 あばれて、J00083 素直、J00084 銀色、J00085 この世界、J00086 禁断、J00087 大人の事情、J00088 Wonderful English | 12 | B/C first appearance順 |
+| creators | C00065～C00069（18.9参照） | 5 | first credit appearance順（既存J00028補完を含む） |
+| artists | なし | 0 | G00001/G00003再利用 |
+| members | P00011 梁川奈々美 | 1 | official performer evidenceに必要 |
+
+Work titleは代表作として`如雨露`を候補とし、song titleだけ`如雨露(Album Version)`を保持する。
+`Goal`は既存J00028のrelease_dateを2018-08-01へ、sourceを今回一次情報へ更新するplanned correction。
+
+### 18.14 Planned release_tracks
+
+下表の各行を`L00103`と`L00104`の双方に1 relationずつ展開する。source_urlは全て
+https://helloproject.com/release/5684/ 。D=0なのでsong_idは全て確定候補。
+
+| planned release_id(s) | disc | track | track_title | class | work_id | song_id | version_name | version_type | note |
+|---|---:|---:|---|---|---|---|---|---|---|
+| L00103,L00104 | 1 | 1 | Fiesta! Fiesta! | C | W00063 | J00077 | 空欄 | original | 2017配信audio再収録 |
+| L00103,L00104 | 1 | 2 | SEXY SEXY | A | W00060 | J00074 | 空欄 | original | 配信04:45、page duration誤記推定 |
+| L00103,L00104 | 1 | 3 | 泣いていいよ | A | W00061 | J00075 | 空欄 | original | existing reuse |
+| L00103,L00104 | 1 | 4 | Vivid Midnight | A | W00062 | J00076 | 空欄 | original | existing reuse |
+| L00103,L00104 | 1 | 5 | 地団駄ダンス | A | W00058 | J00072 | 空欄 | original | existing reuse |
+| L00103,L00104 | 1 | 6 | Feel！感じるよ | A | W00059 | J00073 | 空欄 | original | existing reuse |
+| L00103,L00104 | 1 | 7 | Dream Road～心が躍り出してる～ | A | W00055 | J00069 | 空欄 | original | track_titleはalbum公式glyph保持 |
+| L00103,L00104 | 1 | 8 | KEEP ON 上昇志向！！ | A | W00056 | J00070 | 空欄 | original | existing reuse |
+| L00103,L00104 | 1 | 9 | 明日やろうはバカやろう | A | W00057 | J00071 | 空欄 | original | existing reuse |
+| L00103,L00104 | 1 | 10 | Next is you! | A | W00053 | J00067 | 空欄 | original | existing dual primary重複追加なし |
+| L00103,L00104 | 1 | 11 | カラダだけが大人になったんじゃない | A | W00054 | J00068 | 空欄 | original | existing reuse |
+| L00103,L00104 | 2 | 1 | Never Never Surrender | B | W00026 | J00078 | 空欄 | original | J00027 2022 ver.より先 |
+| L00103,L00104 | 2 | 2 | 如雨露(Album Version) | C | W00064 | J00079 | Album Version | other | explicit version |
+| L00103,L00104 | 2 | 3 | TOKYOグライダー | C | W00065 | J00080 | 空欄 | original | new album song |
+| L00103,L00104 | 2 | 4 | シンクロ。 | C | W00066 | J00081 | 空欄 | original | new album song |
+| L00103,L00104 | 2 | 5 | あばれてっか?! ハヴアグッタイ | C | W00067 | J00082 | 空欄 | original | new album song |
+| L00103,L00104 | 2 | 6 | 素直に甘えて | C | W00068 | J00083 | 空欄 | original | new album song |
+| L00103,L00104 | 2 | 7 | Goal～明日はあっちだよ～(Album Version) | A | W00027 | J00028 | Album Version | other | existing same explicit version |
+| L00103,L00104 | 2 | 8 | 銀色のテレパシー | C | W00069 | J00084 | 空欄 | original | new album song |
+| L00103,L00104 | 2 | 9 | この世界は捨てたもんじゃない | C | W00070 | J00085 | 空欄 | original | new album song |
+| L00103,L00104 | 2 | 10 | 禁断少女 | C | W00071 | J00086 | 空欄 | original | new album song |
+| L00103,L00104 | 2 | 11 | 大人の事情 | C | W00072 | J00087 | 空欄 | original | 2016 NEXT YOU audio |
+| L00103,L00104 | 2 | 12 | Wonderful World(2018 English Ver.) | B | W00040 | J00088 | 2018 English Ver. | other | explicit version、英語詞role保留 |
+
+| edition | total audio tracks | project scope | instrumental excluded | video excluded | A | B | C | D |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| L00103 初回生産限定盤 | 23 | 23 | 0 | BD 45 entries | 11 | 2 | 10 | 0 |
+| L00104 通常盤 | 23 | 23 | 0 | 0 | 11 | 2 | 10 | 0 |
+| **planned relations** | **46** | **46** | **0** | **45** | **22** | **4** | **20** | **0** |
+
+### 18.15 User confirmation items
+
+#### UC-18-1 Wonderful World英語詞role
+
+- **対象：** `Wonderful World(2018 English Ver.)`の`英語詞:鈴木桃子`。
+- **公式に確認できた事実：** official album pageは`作詞：イイジマケン/英語詞:鈴木桃子`と役割を明確に分離。
+- **現在CSV：** `song_creators.role`はlyrics / composition / arrangement / brass_arrangementのみ。
+- **比較結果：** 鈴木桃子はcreator master未登録。通常lyricsへ押し込むと公式の役割差を失う。
+- **判断できない理由：** 現行data-specではtranslation / English lyricsを表現できず、今回はspec変更禁止。
+- **選択肢：** (A) 次回specへ`english_lyrics`（または汎用translation相当）を追加してC00069 relationを登録、
+  (B) `lyrics`として登録し`credit_name=鈴木桃子`にする、(C) relationを保留してnoteだけ残す。
+- **Aの場合：** song_creators +1（推奨）。公式roleを検索・集計可能。
+- **Bの場合：** 件数は同じだが通常作詞ランキングへ混入するため非推奨。
+- **その他の場合：** Cはcreator credit欠落となり非推奨。
+- **CSVへの影響：** data-spec role enum、C00069、J00088 relation。release/work/song IDsは不変。
+- **追加確認方法：** repository全体で将来の訳詞/英語詞需要を確認しrole名を決める。
+- **参考URL：** https://helloproject.com/release/5684/
+- **推奨：** A、`english_lyrics`を独立roleとして仕様化してから一括投入。
+- **停止点：** J00088の鈴木桃子creator relationと最終song_creators countのみ。他の計画は確定済み。
+
+### 18.16 Spec considerations
+
+- **英語詞role（要判断）：** 現行4 roleでは公式`英語詞`を損失なく表せない。既存lyricsへ勝手に統合しない。
+- **大きなduration差：** 同一product pageの隣接track duration誤転記と配信metadata矛盾をどう記録するか。
+  固定秒数閾値は作らず、source単位のduration provenanceが必要なら将来duration/source tableを検討する。
+- **後発album performer evidence：** 同一audio A確定後、後発一次情報の個人歌唱creditをsong_performers根拠に
+  できる。本計画ではrelation sourceをalbum pageとし「single pageに書かれていた」とは扱わない。
+- **既存song metadata補完：** 後年album調査で先行登録したJ00028に初出release_dateと共同arrangerを補う
+  workflowを明文化する余地がある。
+- **title glyph：** release_track titleはalbum公式`～`、work/songは既存canonical`〜`を保持し、同一性を分けない。
+
+### 18.17 Expected counts after import
+
+UC-18-1の推奨A（new role追加）を採用した場合。song_creatorsはnew song 37 + J00028補完1 = 38。
+performerは全23曲の公式個人credit 148。song_artistsはnew song 12曲に13（大人の事情のみdual primary）。
+
+| table | current | planned additions | expected after import |
+|---|---:|---:|---:|
+| releases | 102 | 2 | 104 |
+| release_tracks | 399 | 46 | 445 |
+| songs | 77 | 12 | 89 |
+| works | 62 | 10 | 72 |
+| creators | 64 | 5 | 69 |
+| members | 10 | 1 | 11 |
+| artists | 3 | 0 | 3 |
+| song_creators | 254 | 38 | 292 |
+| song_artists | 79 | 13 | 92 |
+| song_performers | 13 | 148 | 161 |
+
+UCで英語詞relationを保留する場合、song_creatorsだけ追加37 / expected291（ただしcredit欠落のためNOT READY
+相当）。B案lyricsへ統合なら件数は292だがrole精度が落ちる。member_affiliationsとvideo系は不変。
+
+### 18.18 Validation
+
+- [x] unique audio track=23、A+B+C+D=`11+2+10+0=23`。
+- [x] planned release IDs L00103–L00104、work W00063–W00072、song J00077–J00088、creator
+  C00065–C00069、member P00011に内部重複なし、現行最大IDとの衝突なし。
+- [x] planned artist IDなし。existing G00001/G00003 mapping整合。
+- [x] physical edition 2、各Disc 1=11 + Disc 2=12 =23、release_tracks各23 / 計46。
+- [x] Instrumental 0、BD/video 45 entriesをaudio scopeから除外。
+- [x] J00067～J00076全10曲をcreator、artist、performer、version、duration、chronologyで比較。
+- [x] SEXY SEXYの24秒差を公式配信導線と補助metadataまで追跡し、単独閾値で判断していない。
+- [x] existing work/song mapping：A 11、B 2、C 10。Goal J00028、Never W00026、Wonderful W00040整合。
+- [x] chronology：Fiesta 2017-08-23、大人の事情2016-03-02、Never 2018版がoriginal、J00027は後年版。
+- [x] creator identityを全C00001～C00064と突合、新規5名のみ採番。英語詞roleは未決として停止。
+- [x] performerは公式`歌：`のみ使用し、在籍推測なし。梁川奈々美だけnew member候補。
+- [x] 全release/song/relation計画にofficial source URLを記録。
+- [x] Markdown table列数を機械検証対象とし、CSVは変更しない。
+
+### 18.19 Import readiness
+
+**READY AFTER USER DECISION**
+
+D=0でaudio identity、release構成、planned IDs、release_tracks、artist、performerは確定している。唯一の停止点は
+`Wonderful World(2018 English Ver.)`の公式`英語詞`を表すcreator role。UC-18-1で推奨Aを確定し、次回
+`docs/data-spec.md`を先に更新すれば一括投入可能。今回は`data/*.csv`と`docs/data-spec.md`を変更しない。
