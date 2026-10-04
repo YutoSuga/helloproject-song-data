@@ -1417,3 +1417,11 @@ Cのcover 6曲の6 relationで、42 + 12 + 15 + 6 = 75。未解決classification
 
 現時点の最終状態は **A/B/C/D = 14/4/11/0**、新規song 15、新規work 11、physical release 3、
 release_tracks 75、unresolved audio identity 0。今回の変更は仕様とresearchだけで、`data/*.csv`は未変更である。
+
+### 16.13 実投入結果（2026-10-04）
+
+16.12の最終確定仕様を投入直前の正本CSVと再突合し、planned IDの未使用、A分類14曲とB分類4曲の既存work/song、既存creator/member ID、およびC分類11 workの未登録を確認した。計画どおり`W00042`～`W00052`、`J00052`～`J00066`、`C00043`～`C00052`、`P00009`～`P00010`、`L00076`～`L00078`を使用して正本CSVへ投入した。
+
+投入実績はphysical release 3件、release_tracks 75件（L00076=23、L00077=23、L00078=29）、song 15件、work 11件、creator 10件、member 2件、song_creators 47件、song_artists 15件、song_performers 5件である。A/B/C/Dは14/4/11/0、unique audio trackは29、unresolved audio identityは0であり、計画との差異はない。投入後件数はreleases 78、release_tracks 338、songs 67、works 52、creators 52、members 10、artists 2、song_performers 13となった。
+
+Instrumental、BD/DVD映像、通常曲の推測performer、member affiliationは追加していない。artists、member_affiliations、videos、video_songs、video_song_performersおよびdata-specは変更していない。全CSVのparse・header/列数・required field・enum・ID/date/timestamp形式、PK/FK、relation完全重複、release/disc/track位置重複、planned mapping、B 4曲のchronology、source URL、追加件数を機械検証し、すべて正常であることを確認した。
