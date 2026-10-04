@@ -3068,6 +3068,7 @@ current CSV baselineを確認した。投入前baselineは20.2記載どおりで
 | song_performers | 161 | 11 | 172 |
 
 - unique audio 14、A/B/C/D=`0/13/1/0`（合計14）。existing song reuse 0、Bはexisting work+new song 13、CはW00077/J00106の1。
+
 - version typeは`re_recording` 11、`cover` 2（Magic of Love、ポップミュージック）、`original` 1
   （ボン・ヴォヤージュ～想いの軌跡～）。version_name、song→work、全14曲の`release_date=2023-10-11`は計画どおり。
 - creator additions 0、song_creators 44、artist additions 0、G00001 primaryのsong_artists 14、multiple primary 0。
@@ -3082,3 +3083,439 @@ current CSV baselineを確認した。投入前baselineは20.2記載どおりで
   `artists.csv`、`member_affiliations.csv`、video系3 CSVは未変更で、想定外diffは0。
 - unresolved 0、user confirmation 0、spec considerations 0。次の未投入Juice=Juice通常作品は2024-05-15
   `トウキョウ・ブラー/ナイモノラブ/おあいこ`（同日Special Editionも併せて調査）。
+
+
+## 21. Juice=Juice 2024-2025 singles research（2026-10-04、research-only）
+
+### 21.1 Summary / Scope
+
+次の未投入通常作品3作を、current canonical CSV、data spec、Hello! Project公式release/news、権利者公式discographyと照合した。
+この節は**調査専用**であり、`data/*.csv`、`docs/data-spec.md`、digital release master、video tablesは変更しない。
+
+| release date | official release title | physical editions | unique canonical audio | A/B/C/D | readiness |
+|---|---|---:|---:|---|---|
+| 2024-05-15 | トウキョウ・ブラー/ナイモノラブ/おあいこ | 7 | 4 | 0/0/4/0 | **READY** |
+| 2025-02-26 | 初恋の亡霊/今夜はHearty Party | 5 | 2 | 0/0/2/0 | **READY** |
+| 2025-10-08 | 四の五の言わず颯と別れてあげた/盛れ！ミ・アモーレ | 5 | 2 | 0/0/2/0 | **READY** |
+| total | 3 works / 17 physical editions | 17 | 8 | **0/0/8/0** | **OVERALL READY** |
+
+Official release pageの連結表記（slash前後spaceなし）をcanonical title候補とする。2025-10 newsの読み補足
+`颯(さっ)と`はtitleへ加えず、release pageどおり`颯と`を保持する。
+
+### 21.2 Current CSV baseline / Juicetory confirmation
+
+| table | current rows | reference | result |
+|---|---:|---:|---|
+| releases | 116 | 116 | match |
+| release_tracks | 493 | 493 | match |
+| songs | 107 | 107 | match |
+| works | 77 | 77 | match |
+| creators | 75 | 75 | match |
+| members | 17 | 17 | match |
+| artists | 3 | 3 | match |
+| song_creators | 351 | 351 | match |
+| song_artists | 110 | 110 | match |
+| song_performers | 172 | 172 | match |
+
+Current maximaは`L00116`、Juice=Juice `J00106`、`W00077`、`C00075`、`P00017`、`G00003`。
+依頼記載SHA `8f241c4e3b12f9fe45afa226edd2f6c4501c1e09`はlocal objectにないが、同等のcurrent commit
+`d7af4f4`（`data: add Juice=Juice Juicetory`）、21節直前の20.24 actual result、current CSVの
+L00115～L00116/J00093～J00106/W00077等と上記件数が一致するため、Juicetory import反映済みと確認した。
+
+---
+
+## 21A. 2024-05-15 トウキョウ・ブラー/ナイモノラブ/おあいこ
+
+### 21A.1 Official release information / physical editions
+
+Primary source: [official physical release](https://helloproject.com/juicejuice/release/7195/)。発売日2024-05-15、artist
+Juice=Juice、label hachama、全7形態。全形態のCDは同一8 positions（通常音源4＋Instrumental 4）。
+
+| edition | planned release_id | catalog number | media | CD content | BD content | source |
+|---|---|---|---|---|---|---|
+| 初回生産限定盤A | L00117 | HKCN-50793 | CD+BD | 8 tracks | トウキョウ・ブラー MV / Dance Shot / making | [official](https://helloproject.com/juicejuice/release/7195/) |
+| 初回生産限定盤B | L00118 | HKCN-50795 | CD+BD | 8 tracks | ナイモノラブ MV / Group Lip / making | [official](https://helloproject.com/juicejuice/release/7195/) |
+| 初回生産限定盤C | L00119 | HKCN-50797 | CD+BD | 8 tracks | おあいこ MV / Dance Shot / making | [official](https://helloproject.com/juicejuice/release/7195/) |
+| 初回生産限定盤SP | L00120 | HKCN-50799 | CD+BD | 8 tracks | ROCK IN JAPAN FESTIVAL 2023 live 9 entries | [official](https://helloproject.com/juicejuice/release/7195/) |
+| 通常盤A | L00121 | HKCN-50801 | CD | 8 tracks | none | [official](https://helloproject.com/juicejuice/release/7195/) |
+| 通常盤B | L00122 | HKCN-50802 | CD | 8 tracks | none | [official](https://helloproject.com/juicejuice/release/7195/) |
+| 通常盤C | L00123 | HKCN-50803 | CD | 8 tracks | none | [official](https://helloproject.com/juicejuice/release/7195/) |
+
+### 21A.2 Special Edition / digital chronology
+
+[Official digital release](https://helloproject.com/release/7256/)は同日2024-05-15、title
+`トウキョウ・ブラー/ナイモノラブ/おあいこ(Special Edition)`、label UP-FRONT WORKS、STREAMING、
+product ID `UFDL-1534`、4 tracks。[Official distribution news](https://helloproject.com/news/17413/)も同日開始を明記し、
+iTunes album `1743153821`、レコチョク`A2004444500`、mora `UFDL-1534-HR`を案内する。physicalより先行ではなく同日で、
+4音源すべての`songs.release_date`候補は2024-05-15。digital masterは既存のphysical-only投入運用に従い、次回L IDや
+release_tracksへ混ぜないfuture candidateとする。exclusive trackはなく、physicalにも4曲すべて収録される。
+
+### 21A.3 Full tracklist / comparison
+
+次表は**全7形態共通**（disc 1）。source editionはall physical + Special Edition（通常音源のみ）。
+
+| track | title | duration | source edition | classification | existing work | existing song | version notation | artist | performer | release date candidate | planned work | planned song | note |
+|---:|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | トウキョウ・ブラー | 04:04 | all 7 / digital | C | none | none | none | G00001 Juice=Juice primary | individual evidenceなし | 2024-05-15 | W00078 | J00107 | original |
+| 2 | ナイモノラブ | 04:10 | all 7 / digital | C | none | none | none | G00001 Juice=Juice primary | individual evidenceなし | 2024-05-15 | W00079 | J00108 | original |
+| 3 | おあいこ | 03:56 | all 7 / digital | C | none | none | none | G00001 Juice=Juice primary | individual evidenceなし | 2024-05-15 | W00080 | J00109 | original |
+| 4 | Brilliance of memories | 04:24 | all 7 / digital | C | none | none | none | G00001 Juice=Juice primary | P00003 植村あかり | 2024-05-15 | W00081 | J00110 | original; 歌：植村あかり |
+| 5 | トウキョウ・ブラー(Instrumental) | 04:04 | all 7 | excluded | — | — | Instrumental | — | — | — | — | — | canonical scope外 |
+| 6 | ナイモノラブ(Instrumental) | 04:10 | all 7 | excluded | — | — | Instrumental | — | — | — | — | — | canonical scope外 |
+| 7 | おあいこ(Instrumental) | 03:56 | all 7 | excluded | — | — | Instrumental | — | — | — | — | — | canonical scope外 |
+| 8 | Brilliance of memories(Instrumental) | 04:24 | all 7 | excluded | — | — | Instrumental | — | — | — | — | — | canonical scope外 |
+
+Credits/source: [official physical](https://helloproject.com/juicejuice/release/7195/) and
+[official Special Edition](https://helloproject.com/release/7256/)。Instrumental unique 4、physical positions 28。
+
+### 21A.4 Brilliance of memories identity
+
+- physical全7形態CD track 4、digital Special Edition track 4に同じ無印・同duration・同creditsで収録。別Version根拠なし。
+- physicalは`歌：植村あかり`、digitalはより明確に`歌：植村あかり(Juice=Juice)`。P00003をperformer order 1で登録予定。
+- release masterのartistはJuice=Juiceで、現行DBもmember solo VersionをG00001 primaryで表す。したがってG00001 primary、
+  新solo artist entityなし、multiple primaryなし。検索目的だけの追加artist relationは作らない。
+- current works/songs全体に同名work/songなし。W00081/J00110、`version_name`空、`version_type=original`。
+- 作詞・作曲：山崎あおい（C00001）、編曲：浜田ピエール裕介（C00032）。初full audioは同日physical/digitalの2024-05-15。
+
+### 21A.5 A/B/C/D and cover/version investigation
+
+**A=0件、B=0件、D=0件。**
+
+| title | planned work_id | planned song_id | version_name | version_type | release_date | reason | source |
+|---|---|---|---|---|---|---|---|
+| トウキョウ・ブラー | W00078 | J00107 | empty | original | 2024-05-15 | current DBにwork/songなし、cover/version表記なし | [official](https://helloproject.com/juicejuice/release/7195/) |
+| ナイモノラブ | W00079 | J00108 | empty | original | 2024-05-15 | same | [official](https://helloproject.com/juicejuice/release/7195/) |
+| おあいこ | W00080 | J00109 | empty | original | 2024-05-15 | same | [official](https://helloproject.com/juicejuice/release/7195/) |
+| Brilliance of memories | W00081 | J00110 | empty | original | 2024-05-15 | current DBにwork/songなし、植村soloの初通常音源 | [official digital](https://helloproject.com/release/7256/) |
+
+Cover candidatesは4曲とも0。A table（existing work+existing song reuse）0件、B table（existing work+new song）0件、
+D table（重大な不確実性）0件。`A+B+C+D=0+0+4+0=4`。
+
+### 21A.6 Pre-release full-audio / creators / relations
+
+| title | physical release date | earlier full-audio date | product/release ID | same specific audio | songs.release_date candidate | source |
+|---|---|---|---|---|---|---|
+| トウキョウ・ブラー | 2024-05-15 | none confirmed | UFDL-1534 (same-day) | yes | 2024-05-15 | [distribution news](https://helloproject.com/news/17413/) |
+| ナイモノラブ | 2024-05-15 | none confirmed | UFDL-1534 (same-day) | yes | 2024-05-15 | [distribution news](https://helloproject.com/news/17413/) |
+| おあいこ | 2024-05-15 | none confirmed | UFDL-1534 (same-day) | yes | 2024-05-15 | [distribution news](https://helloproject.com/news/17413/) |
+| Brilliance of memories | 2024-05-15 | none confirmed | UFDL-1534 (same-day) | yes | 2024-05-15 | [official digital](https://helloproject.com/release/7256/) |
+
+Radio power play/MV/live/previewはfull-audio commercial distributionに数えない。
+
+| song | lyrics | composition | arrangement | planned creator relations |
+|---|---|---|---|---:|
+| J00107 | C00001 山崎あおい | C00076 Erik Lidbom | C00076 Erik Lidbom | 3 |
+| J00108 | C00077 SUIMI | C00078 渡辺泰司 | C00078 渡辺泰司 | 3 |
+| J00109 | C00028 つんく | C00028 つんく | C00009 平田祥一郎 | 3 |
+| J00110 | C00001 山崎あおい | C00001 山崎あおい | C00032 浜田ピエール裕介 | 3 |
+
+Planned `song_creators` 12、`song_artists` 4（全曲G00001 primary/order 1）、`song_performers` 1
+（J00110/P00003/order 1、official wording `歌：植村あかり(Juice=Juice)`）。existing song metadata completion 0。
+
+### 21A.7 Planned release_tracks / exclusions
+
+全L00117～L00123について次の4行を反復する（disc 1）：track 1 J00107、track 2 J00108、track 3 J00109、track 4 J00110。
+official track_titleは上記無印title、classificationはいずれもC、work/song/version/sourceは21A.3～21A.5のとおり。
+
+| planned release_id | edition | canonical tracks | omitted Instrumental positions | mapping |
+|---|---|---:|---:|---|
+| L00117 | 初回生産限定盤A | 4 | 4 (5-8) | 1:J00107, 2:J00108, 3:J00109, 4:J00110 |
+| L00118 | 初回生産限定盤B | 4 | 4 (5-8) | same |
+| L00119 | 初回生産限定盤C | 4 | 4 (5-8) | same |
+| L00120 | 初回生産限定盤SP | 4 | 4 (5-8) | same |
+| L00121 | 通常盤A | 4 | 4 (5-8) | same |
+| L00122 | 通常盤B | 4 | 4 (5-8) | same |
+| L00123 | 通常盤C | 4 | 4 (5-8) | same |
+
+Subtotal 28 canonical release_tracks。BD future video candidatesは18 entries：MV 3、Dance Shot 2、Group Lip 1、making 3、
+SP live/program entries 9（OPENING、MCを含む）。audio import/video CSVから全18を除外。
+
+---
+
+## 21B. 2025-02-26 初恋の亡霊/今夜はHearty Party
+
+### 21B.1 Official release information / physical editions / full tracklist
+
+Primary source: [official release](https://helloproject.com/juicejuice/release/7376/)。全5形態、全CD共通4 positions。
+
+| edition | planned release_id | catalog number | media | CD tracks | BD content | source |
+|---|---|---|---|---:|---|---|
+| 初回生産限定盤A | L00124 | HKCN-50826 | CD+BD | 4 | 初恋の亡霊 MV / Dance Shot / making | [official](https://helloproject.com/juicejuice/release/7376/) |
+| 初回生産限定盤B | L00125 | HKCN-50828 | CD+BD | 4 | 今夜はHearty Party MV / Dance Shot / making | [official](https://helloproject.com/juicejuice/release/7376/) |
+| 初回生産限定盤SP | L00126 | HKCN-50830 | CD+BD | 4 | ROCK IN JAPAN FESTIVAL 2024 live 9 entries | [official](https://helloproject.com/juicejuice/release/7376/) |
+| 通常盤A | L00127 | HKCN-50832 | CD | 4 | none | [official](https://helloproject.com/juicejuice/release/7376/) |
+| 通常盤B | L00128 | HKCN-50833 | CD | 4 | none | [official](https://helloproject.com/juicejuice/release/7376/) |
+
+| track | title | duration | source edition | classification | existing work | existing song | version notation | artist | performer | release date candidate | planned work | planned song | note |
+|---:|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 初恋の亡霊 | 03:45 | all 5 | C | none | none | none | G00001 primary | individual evidenceなし | 2025-02-26 | W00082 | J00111 | original |
+| 2 | 今夜はHearty Party | 04:52 | all 5 | C | none in current DB | none | none | G00001 primary | individual evidenceなし | 2025-02-26 | W00083 | J00112 | cover of 竹内まりや work |
+| 3 | 初恋の亡霊(Instrumental) | 03:45 | all 5 | excluded | — | — | Instrumental | — | — | — | — | — | scope外 |
+| 4 | 今夜はHearty Party(Instrumental) | 04:52 | all 5 | excluded | — | — | Instrumental | — | — | — | — | — | scope外 |
+
+Instrumental unique 2、physical positions 10。
+
+### 21B.2 A/B/C/D / cover identity
+
+**A=0件、B=0件、D=0件。** Current canonical全workに`今夜はHearty Party`はないため、既存世間workのcoverでも
+canonical classificationはC（new canonical work + new song）。
+
+| title | planned work_id | planned song_id | version_name | version_type | release_date | reason | source |
+|---|---|---|---|---|---|---|---|
+| 初恋の亡霊 | W00082 | J00111 | empty | original | 2025-02-26 | current DBにwork/songなし、cover/version表記なし | [official](https://helloproject.com/juicejuice/release/7376/) |
+| 今夜はHearty Party | W00083 | J00112 | empty | cover | 2025-02-26 | 竹内まりや既発workのJuice=Juice新録、arrangerも異なる | [Juice=Juice official](https://helloproject.com/juicejuice/release/7376/) |
+
+| title | cover evidence | original work | current work_id | planned work_id | version_type | source |
+|---|---|---|---|---|---|---|
+| 今夜はHearty Party | 竹内まりや公式discographyが1995 singleを掲載し、Juice版は歌Juice=Juice・新arrangement | 今夜はHEARTY PARTY（竹内まりや、1995-11-20） | none | W00083 | cover | [竹内まりや official](https://www.mariyat.co.jp/discography/single/single2.html), [Juice official](https://helloproject.com/juicejuice/release/7376/) |
+
+大文字小文字差は同一work titleの表記差と判断し、canonical work titleは今回のofficial track表記`今夜はHearty Party`。
+A table 0、B table 0、D table 0。`A+B+C+D=0+0+2+0=2`。
+
+### 21B.3 Distribution / creators / relations / release_tracks
+
+[Official distribution news](https://helloproject.com/juicejuice/news/18542/)は発売日2025-02-26にsingle/high-resolution/video配信開始、
+iTunes `1797286102`、レコチョク`A2005179902`、mora `HKCN-50832-HR`を明記。Special Edition/配信限定曲なし、
+先行full-audioなし。digital masterはfuture candidate。
+
+| title | physical release date | earlier full-audio date | product/release ID | same specific audio | songs.release_date candidate | source |
+|---|---|---|---|---|---|---|
+| 初恋の亡霊 | 2025-02-26 | none confirmed | 1797286102 / A2005179902 / HKCN-50832-HR (same-day) | yes | 2025-02-26 | [official news](https://helloproject.com/juicejuice/news/18542/) |
+| 今夜はHearty Party | 2025-02-26 | none confirmed | same | yes | 2025-02-26 | [official news](https://helloproject.com/juicejuice/news/18542/) |
+
+| song | lyrics | composition | arrangement | relations |
+|---|---|---|---|---:|
+| J00111 | C00079 西野蒟蒻 | C00002 KOUGA | C00009 平田祥一郎 | 3 |
+| J00112 | C00017 竹内まりや | C00017 竹内まりや | C00075 Aksel Odenbalk / C00080 Albin Hillborg | 4 |
+
+`Aksel Odenbalk/Albin Hillborg`はofficial slash-separated joint arrangementなので2 creator rows、各credit_nameを個別名義のまま保持。
+Planned song_creators 7、song_artists 2（G00001 primary）、song_performers 0。全L00124～L00128でdisc 1 track 1=J00111、
+track 2=J00112を再利用し、tracks 3-4 Instrumentalを省く。各release 2 canonical tracks、subtotal 10。
+
+BD future video candidates 15 entries：MV 2、Dance Shot 2、making 2、SP live/program 9（OPENING/MC含む）。全15除外。
+
+---
+
+## 21C. 2025-10-08 四の五の言わず颯と別れてあげた/盛れ！ミ・アモーレ
+
+### 21C.1 Official release information / physical editions / full tracklist
+
+Primary source: [official release](https://helloproject.com/juicejuice/release/7506/)。release page titleを正とし、newsの読み補足は不採用。
+
+| edition | planned release_id | catalog number | media | CD tracks | BD content | source |
+|---|---|---|---|---:|---|---|
+| 初回生産限定盤A | L00129 | HKCN-50852 | CD+BD | 4 | 四の五の言わず颯と別れてあげた MV / Dance Shot / making | [official](https://helloproject.com/juicejuice/release/7506/) |
+| 初回生産限定盤B | L00130 | HKCN-50854 | CD+BD | 4 | 盛れ！ミ・アモーレ MV / Dance Shot / making | [official](https://helloproject.com/juicejuice/release/7506/) |
+| 初回生産限定盤SP | L00131 | HKCN-50856 | CD+BD | 4 | Concert Tour 2025 Crimson≠Azure 19 entries | [official](https://helloproject.com/juicejuice/release/7506/) |
+| 通常盤A | L00132 | HKCN-50858 | CD | 4 | none | [official](https://helloproject.com/juicejuice/release/7506/) |
+| 通常盤B | L00133 | HKCN-50859 | CD | 4 | none | [official](https://helloproject.com/juicejuice/release/7506/) |
+
+| track | title | duration | source edition | classification | existing work | existing song | version notation | artist | performer | release date candidate | planned work | planned song | note |
+|---:|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 四の五の言わず颯と別れてあげた | 03:35 | all 5 | C | none | none | none | G00001 primary | individual evidenceなし | 2025-10-08 | W00084 | J00113 | original |
+| 2 | 盛れ！ミ・アモーレ | 03:50 | all 5 | C | none | none | none | G00001 primary | individual evidenceなし | 2025-10-08 | W00085 | J00114 | original |
+| 3 | 四の五の言わず颯と別れてあげた(Instrumental) | 03:35 | all 5 | excluded | — | — | Instrumental | — | — | — | — | — | scope外 |
+| 4 | 盛れ！ミ・アモーレ(Instrumental) | 03:50 | all 5 | excluded | — | — | Instrumental | — | — | — | — | — | scope外 |
+
+Instrumental unique 2、physical positions 10。
+
+### 21C.2 A/B/C/D / distribution / credits
+
+**A=0、B=0、D=0。** Current canonical全work/songに一致なし、公式cover/alternate notationなし。
+
+| title | planned work_id | planned song_id | version_name | version_type | release_date | reason | source |
+|---|---|---|---|---|---|---|---|
+| 四の五の言わず颯と別れてあげた | W00084 | J00113 | empty | original | 2025-10-08 | new work/new song | [official](https://helloproject.com/juicejuice/release/7506/) |
+| 盛れ！ミ・アモーレ | W00085 | J00114 | empty | original | 2025-10-08 | new work/new song | [official](https://helloproject.com/juicejuice/release/7506/) |
+
+A/B/D tables 0件、cover candidate 0件。`A+B+C+D=0+0+2+0=2`。
+[Official distribution news](https://helloproject.com/juicejuice/news/19552/)は同日配信を明記し、iTunes `1841823358`、
+レコチョク`A1043877647`、mora `HKCN-50858-HR`。先行full-audio/Special Edition/配信限定曲なし、digital master future candidate。
+
+| title | physical release date | earlier full-audio date | product/release ID | same specific audio | songs.release_date candidate | source |
+|---|---|---|---|---|---|---|
+| 四の五の言わず颯と別れてあげた | 2025-10-08 | none confirmed | 1841823358 / A1043877647 / HKCN-50858-HR | yes | 2025-10-08 | [official](https://helloproject.com/juicejuice/news/19552/) |
+| 盛れ！ミ・アモーレ | 2025-10-08 | none confirmed | same | yes | 2025-10-08 | [official](https://helloproject.com/juicejuice/news/19552/) |
+
+| song | lyrics | composition | arrangement | relations |
+|---|---|---|---|---:|
+| J00113 | C00019 大森祥子 | C00002 KOUGA | C00081 荒幡亮平 | 3 |
+| J00114 | C00001 山崎あおい | C00001 山崎あおい | C00005 炭竃智弘 | 3 |
+
+Planned song_creators 6、song_artists 2（G00001 primary）、song_performers 0。全L00129～L00133でdisc 1 track 1=J00113、
+track 2=J00114、Instrumental 3-4除外。各release 2、subtotal 10 release_tracks。
+
+### 21C.3 New member / video evidence
+
+[Official release announcement](https://helloproject.com/juicejuice/news/19261/)は林仁愛加入後の「新体制によるNEWシングル」と明記し、
+[official joining news](https://helloproject.com/news/19076/)は2025-06-23加入・9月本格始動を示す。しかしCD creditは`歌：Juice=Juice`
+だけでindividual listingではない。在籍・新体制だけからspecific audio performerを推測しないため、P00018やsong_performersを計画しない。
+林仁愛は将来official individual performer evidenceが出た場合のmember candidateだが、今回canonical relationには不要。
+
+BD future video candidates 25 entries：MV 2、Dance Shot 2、making 2、SP live/program 19（Crimson/Azure OPENINGを含む）。全25除外。
+
+---
+
+## 21D. Cross-release summary
+
+### 21D.1 Combined classifications / planned IDs
+
+| release | unique | A | B | C | D | planned works | planned songs |
+|---|---:|---:|---:|---:|---:|---|---|
+| 2024-05 | 4 | 0 | 0 | 4 | 0 | W00078-W00081 | J00107-J00110 |
+| 2025-02 | 2 | 0 | 0 | 2 | 0 | W00082-W00083 | J00111-J00112 |
+| 2025-10 | 2 | 0 | 0 | 2 | 0 | W00084-W00085 | J00113-J00114 |
+| total | **8** | **0** | **0** | **8** | **0** | 8 | 8 |
+
+Release IDsはL00117～L00133（作品日付順、公式edition order）。Digital releasesは採番外。ID collision、planned内重複、
+classification不整合はいずれも0。
+
+### 21D.2 Creator summary
+
+| creator_id | name | roles | songs |
+|---|---|---|---|
+| C00001 | 山崎あおい | lyrics, composition | J00107, J00110, J00114 |
+| C00002 | KOUGA | composition | J00111, J00113 |
+| C00005 | 炭竃智弘 | arrangement | J00114 |
+| C00009 | 平田祥一郎 | arrangement | J00109, J00111 |
+| C00017 | 竹内まりや | lyrics, composition | J00112 |
+| C00019 | 大森祥子 | lyrics | J00113 |
+| C00028 | つんく | lyrics, composition | J00109 |
+| C00032 | 浜田ピエール裕介 | arrangement | J00110 |
+| C00075 | Aksel Odenbalk | arrangement | J00112 |
+
+| planned creator_id | name | role | songs | source | uncertainty |
+|---|---|---|---|---|---|
+| C00076 | Erik Lidbom | composition, arrangement | J00107 | [official](https://helloproject.com/juicejuice/release/7195/) | none |
+| C00077 | SUIMI | lyrics | J00108 | [official](https://helloproject.com/juicejuice/release/7195/) | none |
+| C00078 | 渡辺泰司 | composition, arrangement | J00108 | [official](https://helloproject.com/juicejuice/release/7195/) | none |
+| C00079 | 西野蒟蒻 | lyrics | J00111 | [official](https://helloproject.com/juicejuice/release/7376/) | none |
+| C00080 | Albin Hillborg | arrangement | J00112 | [official](https://helloproject.com/juicejuice/release/7376/) | none |
+| C00081 | 荒幡亮平 | arrangement | J00113 | [official](https://helloproject.com/juicejuice/release/7506/) | none |
+
+Planned song_creators：2024-05 +12、2025-02 +7、2025-10 +6、合計**+25**。
+
+### 21D.3 Artist / performer / member summary
+
+| songs | artist | role | credit_order | official wording | multiple primary | reason |
+|---|---|---|---:|---|---|---|
+| J00107-J00114 | G00001 Juice=Juice | primary | 1 | release artist / 通常曲は歌：Juice=Juice | no | release主体。J00110もSpecial Edition artistはJuice=Juice |
+
+Planned song_artists：2024-05 +4、2025-02 +2、2025-10 +2、合計**+8**。New artist 0、planned artist IDなし。
+Brilliance of memories用solo artist entityは不要。
+
+| song | member | ID | official wording | source | applies to recording |
+|---|---|---|---|---|---|
+| J00110 Brilliance of memories | 植村あかり | P00003 | 歌：植村あかり(Juice=Juice) | [official digital](https://helloproject.com/release/7256/) | 2024-05-15無印specific audio |
+
+Planned song_performers：2024-05 +1、他0、合計**+1**。Existing song metadata completion 0。New member 0、planned member IDなし。
+林仁愛はofficial新体制の事実のみでrelationを作らないためcandidate採番なし。member_affiliations additions 0。
+
+### 21D.4 Physical / release_tracks / exclusion summary
+
+| release date | title | editions | planned release IDs | official audio positions | canonical release_tracks | Instrumental excluded | video excluded |
+|---|---|---:|---|---:|---:|---:|---:|
+| 2024-05-15 | トウキョウ・ブラー/ナイモノラブ/おあいこ | 7 | L00117-L00123 | 56 | 28 | 28 | 18 |
+| 2025-02-26 | 初恋の亡霊/今夜はHearty Party | 5 | L00124-L00128 | 20 | 10 | 10 | 15 |
+| 2025-10-08 | 四の五の言わず颯と別れてあげた/盛れ！ミ・アモーレ | 5 | L00129-L00133 | 20 | 10 | 10 | 25 |
+| total | — | **17** | L00117-L00133 | **96** | **48** | **48** | **58** |
+
+Per release：L00117-L00123 =各4、L00124-L00128 =各2、L00129-L00133 =各2 canonical tracks。
+
+### 21D.5 Exhaustive planned release_tracks
+
+| release_id | disc | track | official track_title | class | work_id | song_id | version_name | version_type | source_url | note |
+|---|---:|---:|---|---|---|---|---|---|---|---|
+| L00117 | 1 | 1 | トウキョウ・ブラー | C | W00078 | J00107 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00117 | 1 | 2 | ナイモノラブ | C | W00079 | J00108 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00117 | 1 | 3 | おあいこ | C | W00080 | J00109 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00117 | 1 | 4 | Brilliance of memories | C | W00081 | J00110 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00118 | 1 | 1 | トウキョウ・ブラー | C | W00078 | J00107 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00118 | 1 | 2 | ナイモノラブ | C | W00079 | J00108 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00118 | 1 | 3 | おあいこ | C | W00080 | J00109 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00118 | 1 | 4 | Brilliance of memories | C | W00081 | J00110 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00119 | 1 | 1 | トウキョウ・ブラー | C | W00078 | J00107 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00119 | 1 | 2 | ナイモノラブ | C | W00079 | J00108 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00119 | 1 | 3 | おあいこ | C | W00080 | J00109 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00119 | 1 | 4 | Brilliance of memories | C | W00081 | J00110 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00120 | 1 | 1 | トウキョウ・ブラー | C | W00078 | J00107 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00120 | 1 | 2 | ナイモノラブ | C | W00079 | J00108 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00120 | 1 | 3 | おあいこ | C | W00080 | J00109 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00120 | 1 | 4 | Brilliance of memories | C | W00081 | J00110 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00121 | 1 | 1 | トウキョウ・ブラー | C | W00078 | J00107 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00121 | 1 | 2 | ナイモノラブ | C | W00079 | J00108 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00121 | 1 | 3 | おあいこ | C | W00080 | J00109 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00121 | 1 | 4 | Brilliance of memories | C | W00081 | J00110 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00122 | 1 | 1 | トウキョウ・ブラー | C | W00078 | J00107 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00122 | 1 | 2 | ナイモノラブ | C | W00079 | J00108 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00122 | 1 | 3 | おあいこ | C | W00080 | J00109 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00122 | 1 | 4 | Brilliance of memories | C | W00081 | J00110 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00123 | 1 | 1 | トウキョウ・ブラー | C | W00078 | J00107 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00123 | 1 | 2 | ナイモノラブ | C | W00079 | J00108 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00123 | 1 | 3 | おあいこ | C | W00080 | J00109 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00123 | 1 | 4 | Brilliance of memories | C | W00081 | J00110 | empty | original | https://helloproject.com/juicejuice/release/7195/ | same specific audio reused across editions; Instrumental excluded |
+| L00124 | 1 | 1 | 初恋の亡霊 | C | W00082 | J00111 | empty | original | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00124 | 1 | 2 | 今夜はHearty Party | C | W00083 | J00112 | empty | cover | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00125 | 1 | 1 | 初恋の亡霊 | C | W00082 | J00111 | empty | original | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00125 | 1 | 2 | 今夜はHearty Party | C | W00083 | J00112 | empty | cover | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00126 | 1 | 1 | 初恋の亡霊 | C | W00082 | J00111 | empty | original | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00126 | 1 | 2 | 今夜はHearty Party | C | W00083 | J00112 | empty | cover | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00127 | 1 | 1 | 初恋の亡霊 | C | W00082 | J00111 | empty | original | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00127 | 1 | 2 | 今夜はHearty Party | C | W00083 | J00112 | empty | cover | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00128 | 1 | 1 | 初恋の亡霊 | C | W00082 | J00111 | empty | original | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00128 | 1 | 2 | 今夜はHearty Party | C | W00083 | J00112 | empty | cover | https://helloproject.com/juicejuice/release/7376/ | same specific audio reused across editions; Instrumental excluded |
+| L00129 | 1 | 1 | 四の五の言わず颯と別れてあげた | C | W00084 | J00113 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+| L00129 | 1 | 2 | 盛れ！ミ・アモーレ | C | W00085 | J00114 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+| L00130 | 1 | 1 | 四の五の言わず颯と別れてあげた | C | W00084 | J00113 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+| L00130 | 1 | 2 | 盛れ！ミ・アモーレ | C | W00085 | J00114 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+| L00131 | 1 | 1 | 四の五の言わず颯と別れてあげた | C | W00084 | J00113 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+| L00131 | 1 | 2 | 盛れ！ミ・アモーレ | C | W00085 | J00114 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+| L00132 | 1 | 1 | 四の五の言わず颯と別れてあげた | C | W00084 | J00113 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+| L00132 | 1 | 2 | 盛れ！ミ・アモーレ | C | W00085 | J00114 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+| L00133 | 1 | 1 | 四の五の言わず颯と別れてあげた | C | W00084 | J00113 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+| L00133 | 1 | 2 | 盛れ！ミ・アモーレ | C | W00085 | J00114 | empty | original | https://helloproject.com/juicejuice/release/7506/ | same specific audio reused across editions; Instrumental excluded |
+
+Total **48** rows。各 `(release_id, disc, track)` は一意で、official CD上のInstrumental positionは意図的に存在しない。
+
+### 21D.6 Digital notes / user confirmation / spec considerations
+
+- 2024 Special Edition UFDL-1534は同日4曲、exclusive 0。2025-02/10もofficial同日配信、exclusive/Special Editionなし。
+- Digitalはchronology evidenceとして使うが、physical-only次回importではrelease master/release_tracksに含めないfuture candidate。
+- **User confirmation items: 0件。** official evidenceとcurrent specで全判定可能。
+- **Spec considerations: 0件。** cover、solo performer、joint arrangement、新体制はいずれも現行schema/rulesで表現可能。
+
+### 21D.7 Expected additions / expected totals
+
+| table | 2024-05 | 2025-02 | 2025-10 | total additions | current | expected |
+|---|---:|---:|---:|---:|---:|---:|
+| releases | +7 | +5 | +5 | **+17** | 116 | **133** |
+| release_tracks | +28 | +10 | +10 | **+48** | 493 | **541** |
+| works | +4 | +2 | +2 | **+8** | 77 | **85** |
+| songs | +4 | +2 | +2 | **+8** | 107 | **115** |
+| creators | +3 | +2 | +1 | **+6** | 75 | **81** |
+| members | +0 | +0 | +0 | **+0** | 17 | **17** |
+| artists | +0 | +0 | +0 | **+0** | 3 | **3** |
+| song_creators | +12 | +7 | +6 | **+25** | 351 | **376** |
+| song_artists | +4 | +2 | +2 | **+8** | 110 | **118** |
+| song_performers | +1 | +0 | +0 | **+1** | 172 | **173** |
+
+D=0/user decision=0なのでconditional rangeなし。
+
+### 21D.8 Validation / import readiness
+
+- [x] Baseline/max IDs/current Juicetory importをcurrent CSV/history/research actual resultで確認。
+- [x] 17 physical editions、catalog/media、96 CD positions、全duration/credits/singer wordingをofficial releaseで確認。
+- [x] Unique canonical audio 8、A/B/C/D=`0/0/8/0`。作品別等式と合算等式が成立。
+- [x] Current works/songs全体と照合。今夜はHearty Partyの1995 original workを権利者公式sourceで確認し`cover`確定。
+- [x] 全B/C（今回はC 8）のfirst official full-audio chronologyを調査。同日official digitalを確認、先行full-audioなし。
+- [x] Existing/new creators、roles、credit_name/order、joint arrangementを確認。new creator重複なし。
+- [x] G00001 primary 8、multiple primary/new artist 0。solo singerとartist identityを分離。
+- [x] Individual performer evidenceはJ00110/P00003だけ。在籍からの推測0、新member/master/affiliation additions 0。
+- [x] Planned IDsはcurrentと衝突なし、横断重複なし。48 release_tracksはedition間で同じsongを再利用。
+- [x] Instrumental 48 positions、video 58 entries、digital mastersをcanonical physical audio planから除外。
+- [x] Markdown table column countsを機械検証対象とし、`data/*.csv`と`docs/data-spec.md`は変更しない。
+
+**2024-05: READY** / **2025-02: READY** / **2025-10: READY**。
+
+**OVERALL READY**。Unresolved/D/user confirmationは**0件**。次の未調査通常作品は、current official release一覧上、
+2026-06-24 `MORE! MORE! EP`（本調査時点ではfuture roadmap candidate）。
