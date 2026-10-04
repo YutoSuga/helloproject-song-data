@@ -30,6 +30,32 @@
 
 今後のデータ収集でも、Codex は一次情報から確証を持てない同一性判定を勝手に行わない。
 
+#### アルバム等への無印再収録の audio identity 判定
+
+同一 work の既発 song が後発のアルバム、ベスト盤その他の release に無印で再収録され、(1) 別 Version
+表記がない、(2) artist credit に別録音を示す差がない、(3) creator credit に別 Version を示す差がない、
+(4) New Vocal、re-recording、Album Ver. 等の別録音を示す公式情報がない、かつ (5) その他に別 audio と
+判断すべき積極的な根拠がない場合は、**原則として既存 song の再収録**として扱う。新しい `song_id` は
+作成せず、`release_tracks.csv` から既存 `song_id` を再利用する。
+
+これは「Version 表記がなければ必ず同一 audio」という絶対ルールではない。無印であることは判断材料の
+一つにすぎない。New Vocal、re-recording、Album Ver.、Memorial Edit、Remixその他の明示された別
+Version、creator／arrangement の変更、別録音を示す performer の変更、公式な再録明記、その他の
+一次情報など、別 audio を示す積極的根拠がある場合は既存 song を自動再利用しない。同一作品の別音源なら
+既存 work + 新規 song、作品自体も異なる場合は必要に応じて別 work + song として判断する。
+
+公式一次情報を最優先し、title、Version 表記、artist、creator、performer、公式リリース時系列、duration、
+公式 release 情報を総合して合理的に判定する。公式に「同一 master」と明記されていないことだけを理由に
+永久に判断不能とはしない。一方、Spotify 等の第三者 metadata だけで同一／別 audio を確定しない。
+ユーザー自身が音源比較等を行い明示的に判断した場合は、根拠とともに user-confirmed decision として
+research に記録できる。この一般ルールを適用しても重大な不確実性が残る場合は、推測で統合せず従来どおり
+ユーザー確認で停止する。
+
+duration は audio identity の**補助情報**であり、単独の決定条件ではない。duration の一致だけで同一
+audio を確定せず、差だけで別 audio を確定しない。数秒程度の差は metadata の丸め、track boundary、
+先頭・末尾の無音、mastering、source ごとの計測方法でも生じ得るため、特に小さな差だけを理由に新規 song
+を作成しない。ただし「1秒以内なら必ず同一 audio」などの固定閾値も設けず、他の根拠と合わせて判断する。
+
 ユーザー判断が必要な事項を提示するときは、対象、一次情報から確認できた事実、判断できない理由、選択肢、登録の停止点に加え、判断に用いた一次情報 URL を必ず併記する。複数の一次情報を用いた場合は、関連する URL をすべて提示する。
 
 ### 一次情報
