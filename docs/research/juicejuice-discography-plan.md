@@ -1,7 +1,7 @@
 # Juice=Juice 公式ディスコグラフィー収集計画
 
-調査日: 2026-10-04（B-5～B-9投入およびFirst Squeeze！詳細調査を反映）
-状態: **優先度A 5件およびB-1～B-9投入完了、First Squeeze！は調査・投入計画まで完了（CSV未投入）**
+調査日: 2026-10-04（B-5～B-9投入およびFirst Squeeze！最終投入計画を反映）
+状態: **優先度A 5件およびB-1～B-9投入完了、First Squeeze！はaudio identityと投入仕様を確定（CSV未投入）**
 
 ## 1. 目的・判定原則
 
@@ -737,6 +737,9 @@ sourceは各曲のsingle公式詳細（15.2）および[First Squeeze！公式�
 
 ## 16. 1stアルバム「First Squeeze！」詳細調査・投入計画（2026-10-04、research-only）
 
+> **節内の状態について:** 16.1～16.11はユーザー判断前の調査履歴（当時D 13曲）を意図的に保持する。
+> 2026-10-04のユーザー確定判断後の正本計画は16.12であり、分類・ID・件数・投入手順は16.12を優先する。
+
 ### 16.1 調査範囲、一次情報、停止点
 
 本節は2015-07-15発売の1stアルバムを、正本CSVへ入れる前に調べた結果である。変更前に
@@ -1297,3 +1300,120 @@ audio identityの公式明記は**なし**である。title、version、作家�
 各2022 Version名・credit差、Dでは13曲すべてなし。Spotify URLは未収集で全DがChat側確認候補。
 source間のduration・creator・version矛盾は今回発見しなかった。確認不能なexisting duration 2件は
 推測で埋めず未確認とした。CSV、data-spec、既存researchの結論はいずれも変更していない。
+
+### 16.12 最終確定仕様（2026-10-04、次回投入用）
+
+#### 16.12.1 D 13曲のユーザー確定判断と最終分類
+
+16.11でDだった13曲は、今回すべて **A（existing work + existing song再利用）** に確定した。
+previous classificationはD、final classificationはA、decisionは **user-confirmed based on official metadata
+comparison and project audio-identity rule** である。公式が同一audioと明記した、という判断ではない。
+
+背景は、全13曲でFirst Squeeze！側に別Version表記、creator差、performer差、New Vocal／再録等の
+公式明示がなく、durationも一致または最大1秒差で、16.11のresearch tendencyが全曲A寄りだったことである。
+1秒差はmetadataの丸め、track boundary、末尾無音、mastering、sourceの計測差でも起こり得るため、
+今回それだけを別songの根拠にしない。ただし「1秒以内なら常に同一」という一般化はしない。
+
+| title | previous | final | reused work / song | album duration difference | decision |
+|---|---|---|---|---:|---|
+| 天まで登れ！ | D | A | W00030 / J00038 | 0秒 | user-confirmed、既存song再収録 |
+| ロマンスの途中 | D | A | W00031 / J00039 | 0秒 | 同上 |
+| 私が言う前に抱きしめなきゃね(MEMORIAL EDIT) | D | A | W00028 / J00040 | 0秒 | 同上（同じMEMORIAL EDIT） |
+| 五月雨美女がさ乱れる(MEMORIAL EDIT) | D | A | W00029 / J00041 | 0秒 | 同上（同じMEMORIAL EDIT） |
+| イジワルしないで 抱きしめてよ | D | A | W00032 / J00042 | -1秒 | 同上。小差だけで新規songにしない |
+| 初めてを経験中 | D | A | W00033 / J00043 | 0秒 | 同上 |
+| 裸の裸の裸のKISS | D | A | W00034 / J00044 | 0秒 | 同上 |
+| アレコレしたい！ | D | A | W00035 / J00045 | -1秒 | 同上。小差だけで新規songにしない |
+| ブラックバタフライ | D | A | W00036 / J00046 | 0秒 | 同上 |
+| 風に吹かれて | D | A | W00037 / J00047 | -1秒 | 同上。小差だけで新規songにしない |
+| 背伸び | D | A | W00038 / J00048 | 0秒 | 同上 |
+| 伊達じゃないよ うちの人生は | D | A | W00039 / J00049 | 0秒 | 同上 |
+| Wonderful World | D | A | W00040 / J00050 | 0秒 | 同上 |
+
+確定済みの`Ça va ? Ça va ?(サヴァサヴァ)`（W00041 / J00051）もsingle／album同一audioとして
+再利用する。したがってA 14曲は上表13曲とJ00051であり、いずれも新規songを作らず、3形態の該当
+`release_tracks`から同じ既存IDを参照する。
+
+| class | unique tracks | 方針 |
+|---|---:|---|
+| A | 14 | W00028～W00041の該当work、J00038～J00051を再利用 |
+| B | 4 | 既存workを再利用しFirst Squeeze！版songを新設 |
+| C | 11 | workとsongを新設（album新曲5、cover 6） |
+| D | 0 | unresolved audio identityなし |
+| **total** | **29** | **14 + 4 + 11 + 0 = 29** |
+
+#### 16.12.2 B/C planned ID、Version、release date
+
+最新CSVの最大値`W00041` / `J00051`を基準に、albumの曲順で新規songを安定採番する。
+First Squeeze！の2015年無印版はB 4 workにおける最初の通常公式releaseであり、後年の2020／2022
+明示Versionより時系列上先に存在するため、4曲とも`version_type=original`、`version_name`空欄とする。
+既存J00026／J00025／J00017の`other`とJ00011の`re_recording`は妥当であり修正不要である。
+
+| class | disc-track | title | planned work | planned song | version_name | version_type | chronological original | songs.release_date |
+|---|---|---|---|---|---|---|---|---|
+| B | 2-2 | CHOICE & CHANCE | W00025（再利用） | J00052 | 空欄 | original | yes（2022 ver.より先） | 2015-07-15 |
+| C | 2-3 | 愛・愛・傘 | W00042 | J00053 | 空欄 | original | yes | 2015-07-15 |
+| B | 2-4 | 生まれたてのBaby Love | W00024（再利用） | J00054 | 空欄 | original | yes（2022 ver.より先） | 2015-07-15 |
+| C | 2-5 | 選ばれし私達 | W00043 | J00055 | 空欄 | original | yes | 2015-07-15 |
+| B | 2-7 | GIRLS BE AMBITIOUS | W00016（再利用） | J00056 | 空欄 | original | yes（2022より先） | 2015-07-15 |
+| C | 2-8 | 愛のダイビング | W00044 | J00057 | 空欄 | original | yes | 2015-07-15 |
+| C | 2-9 | チクタク 私の旬 | W00045 | J00058 | 空欄 | original | yes | 2015-07-15 |
+| C | 2-10 | 未来へ、さあ走り出せ！ | W00046 | J00059 | 空欄 | original | yes | 2015-07-15 |
+| B | 2-11 | 続いていくSTORY | W00010（再利用） | J00060 | 空欄 | original | yes（2020 Symphonic版より先） | 2015-07-15 |
+| C | 3-1 | Magic of Love(J=J 2015Ver.) | W00047 | J00061 | J=J 2015Ver. | cover | no（cover） | 2015-07-15 |
+| C | 3-2 | 香水(J=J 2015Ver.) | W00048 | J00062 | J=J 2015Ver. | cover | no（cover） | 2015-07-15 |
+| C | 3-3 | 鳴り始めた恋のBELL | W00049 | J00063 | 空欄 | cover | no（cover） | 2015-07-15 |
+| C | 3-4 | スクランブル | W00050 | J00064 | 空欄 | cover | no（cover） | 2015-07-15 |
+| C | 3-5 | BABY! 恋に KNOCK OUT! | W00051 | J00065 | 空欄 | cover | no（cover） | 2015-07-15 |
+| C | 3-6 | ラストキッス | W00052 | J00066 | 空欄 | cover | no（cover） | 2015-07-15 |
+
+発売前の公式full audioは既存researchで確認されず、partial audioだけの日も採用しないため、新規15曲の
+`songs.release_date`は全件`2015-07-15`予定とする。今後、発売前full audioの一次情報が見つかった場合は
+投入前に更新する。Cの内訳はalbum新曲5曲（愛・愛・傘、選ばれし私達、愛のダイビング、チクタク 私の旬、
+未来へ、さあ走り出せ！）と、Disc 3 cover 6曲（上表J00061～J00066）である。
+
+#### 16.12.3 release、creator、member、performer計画
+
+- releaseは`L00076` 初回生産限定盤A（HKCN-50417、2CD+BD）、`L00077` 初回生産限定盤B
+  （HKCN-50420、2CD+DVD）、`L00078` 通常盤（HKCN-50423、3CD）の3件。
+- creators.csvを再突合し、既存最大はC00042で、16.6の新規10名との同一名・identity衝突はない。
+  planned IDsは`C00043 masaaki asada`、`C00044 山崎淳`、`C00045 宮永治郎`、`C00046 土肥真生`、
+  `C00047 角田崇徳`、`C00048 KOJI oba`、`C00049 HASSE`、`C00050 村山晋一郎`、
+  `C00051 鈴木Daichi秀行`、`C00052 小西貴雄`。
+- members.csvを再突合し、既存最大はP00008で、`P00009 宮崎由加`、`P00010 高木紗友希`を新規候補とする。
+  `member_affiliations`は歌唱creditから推測登録しない。
+- song_performersは公式個人歌唱がある2曲だけ計5件：J00065にP00009（宮崎由加）、P00002（金澤朋子）、
+  P00003（植村あかり）、J00066にP00010（高木紗友希）、P00001（宮本佳林）。通常曲は在籍者から推測しない。
+
+#### 16.12.4 release_tracks全75 relationと件数
+
+16.7の表の「保留（J00038～J00050）」は最終的にすべて当該既存IDを使用し、classをAと読み替える。
+Disc 1の12曲とDisc 2の11曲を各3形態へ、Disc 3の6曲を通常盤だけへ接続するため、23 + 23 + 29 =
+**75 relation**である。内訳はA 14曲の42 relation、B 4曲の12 relation、Cのalbum新曲5曲の15 relation、
+Cのcover 6曲の6 relationで、42 + 12 + 15 + 6 = 75。未解決classification／relationは0件である。
+
+| item | current CSV | addition | expected after next import |
+|---|---:|---:|---:|
+| releases | 75 | 3 | 78 |
+| release_tracks | 263 | 75 | 338 |
+| songs | 52 | 15 | 67 |
+| works | 41 | 11 | 52 |
+| creators | 42 | 10 | 52 |
+| members | 8 | 2 | 10 |
+| artists | 2 | 0 | 2 |
+| song_performers | 8 | 5 | 13 |
+
+#### 16.12.5 次回実投入手順と注意事項
+
+1. 作業開始時に全CSVの最大IDと件数を再確認し、今回のplanned IDが他変更と衝突していないことを確認する。
+2. C 11 work、creator 10名、member 2名、B/C 15 songを上表のID・Version・日付で作成する。
+3. 15 songのcreator relationと`G00001 / primary`を作成し、公式明記の5 performer relationだけを作成する。
+4. 3 physical releaseを作成し、Aは既存J00038～J00051、B/CはJ00052～J00066を参照して75
+   `release_tracks`を一括作成する。同一曲をeditionごとに別songへ複製しない。
+5. 既存後年songのIDを再採番せず、J00026／J00025／J00017の`other`とJ00011の`re_recording`を維持する。
+6. affiliation、通常曲の個人performer、映像disc、発売前full audioを推測で補完しない。公式一次情報を優先し、
+   planned creator/member identityやtracklistに新しい衝突が出た場合は投入を停止する。
+7. schema、PK/FK、複合キー、disc/track順、件数、Markdown記録との一致を検証する。
+
+現時点の最終状態は **A/B/C/D = 14/4/11/0**、新規song 15、新規work 11、physical release 3、
+release_tracks 75、unresolved audio identity 0。今回の変更は仕様とresearchだけで、`data/*.csv`は未変更である。
