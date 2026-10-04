@@ -3848,3 +3848,45 @@ D=0 and user decision=0, so there are no conditional totals.
 research, no later unresearched Juice=Juice normal audio release is confirmed; the normal-release roadmap is current through
 `MORE! MORE! EP` (the later `8月の空` is displayed as a distribution release and is not silently treated as the next normal
 physical work).
+
+### 22.13 Canonical import actual result（2026-10-04）
+
+Canonical importを完了した。依頼記載のresearch commit
+`dd8cd6e7d0f110a2cd35049927437eba696589a4`はlocal objectに存在しなかったが、current historyの
+`fa054d6b53dacf25d8ac5afbe4a96306a6991b11 docs: research Juice=Juice MORE! MORE! EP`、本sectionの確定plan、
+および投入前canonical baselineが同等内容の反映を示したため、指定どおり継続した。planned ID衝突は0件だった。
+
+- Official title/date/typeは`MORE! MORE! EP` / 2026-06-24 / EP。canonical `release_type=album`とし、公式EP区分を
+  notesに保持した。L00134=初回生産限定盤A（HKCN-50868、CD+BD）、L00135=初回生産限定盤B
+  （HKCN-50870、CD+BD）、L00136=通常盤（HKCN-50872、CD）を実登録した。
+- Unique physical/canonical audioは7/7、A/B/C/Dは**1/1/5/0**。Aは`盛れ！ミ・アモーレ`の
+  W00085/J00114を3盤で再利用し、J00114の`release_date=2025-10-08`と既存master/relationを変更していない。
+  BはW00016を再利用し、J00120 `GIRLS BE AMBITIOUS! 2026(Live at Zepp
+  DiverCity(TOKYO)2026.05.06)`（`version_name=2026(Live at Zepp DiverCity(TOKYO)2026.05.06)`、
+  `version_type=other`、2026-06-24）を追加した。
+- CはW00086/J00115 `クラクラ☆クライマックス`、W00087/J00116 `結論から言ってちょうだい`、
+  W00088/J00117 `甘えんな`、W00089/J00118 `BLOODY BULLET`、W00090/J00119 `ギラめきな！`を1:1で登録した。
+  5件ともversion_nameは空、`version_type=original`。cover追加は0件。
+- First-full-audio dateはJ00115/J00117が先行配信日の2026-05-28、J00116/J00118/J00119/J00120が
+  2026-06-24。先行配信ID A00218878をchronology evidenceとして維持した。2026-06-24のdigital EP
+  （product ID 6771731206、6 tracks、physical bonus live trackなし、digital-only audio 0）と先行配信の
+  digital release masterは登録していない。J00120はphysical-only canonical audioである。
+- Actual creator IDsはC00082 広瀬香美、C00083 Maria Okada、C00084 h-wonder、C00085 Simon Janlov、
+  C00086 miwaflower。既存9 creatorを再利用し、J00115-J00120へplannedどおりsong_creators 21件を追加した。
+  J00114の既存3件は重複追加していない。
+- J00115-J00120へG00001 Juice=Juice / primary / order 1のsong_artists 6件を追加した。multiple primary 0、
+  artist追加0、member追加0、member_affiliations変更0、song_performers追加0、existing performer completion 0。
+- release_tracksはL00134/L00135/L00136へ各7件、計21件を公式positionのまま追加し、3 editionsで同じ7
+  song IDsを再利用した。Instrumental exclusionsはunique/positionとも0。BDの42 entries（MV 12、Close-up 9、
+  live/performance 17、OPENING/MC 4）はvideo系CSVへ追加せず、canonical audio importから除外した。
+- Actual additionsはreleases +3、release_tracks +21、works +5、songs +6、creators +5、members +0、artists +0、
+  song_creators +21、song_artists +6、song_performers +0。Actual totalsは順に136、562、90、121、86、17、3、
+  397、124、173。Max IDsはL00136 / W00090 / J00120 / C00086 / P00017 / G00003。
+- 全data CSVのparse/header/column count/required fields/enum/role enum/ID/date/timestamp/PK/FK、relation完全重複、
+  `(release_id, disc_number, track_number)`一意性、expected additions/totals、全Markdown table column count、
+  forbidden-file diff、`git diff --check`を検証済み。PK/FK failure 0、relation duplicate 0、release position conflict 0。
+- `docs/data-spec.md`、artists/members/member_affiliations/song_performers、videos/video_songs/
+  video_song_performersは変更していない。Unresolved 0、D 0、user confirmation 0。**Import readiness: READY**。
+
+Roadmapは確定researchから変更せず、official一覧上で次の未調査通常physical/audio releaseは未確認のままとする。
+`8月の空`を次の通常physical workとは推測しない。
