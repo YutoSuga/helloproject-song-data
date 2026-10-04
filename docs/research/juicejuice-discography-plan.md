@@ -3519,3 +3519,52 @@ D=0/user decision=0なのでconditional rangeなし。
 
 **OVERALL READY**。Unresolved/D/user confirmationは**0件**。次の未調査通常作品は、current official release一覧上、
 2026-06-24 `MORE! MORE! EP`（本調査時点ではfuture roadmap candidate）。
+
+### 21D.9 Canonical import actual result（2026-10-04）
+
+**Import completed.** 依頼記載research SHA `05595ee3480370bc7160895880edb6e750cf904f`はlocal objectに存在しなかったが、
+同等内容はcurrent historyの`8efc76c`（`docs: research Juice=Juice 2024-2025 singles`）、本21節、current canonical baselineの
+三者で確認した。投入前baseline/maximaは21.2どおり、planned ID collisionは0。3作品の**READY**および全体の
+**OVERALL READY**を維持し、unresolved/user confirmation/spec considerationは各0件で完了した。
+
+| release date | official title | actual releases | actual works | actual songs | unique | A/B/C/D | release_tracks | Instrumental excluded | video excluded |
+|---|---|---|---|---|---:|---|---:|---:|---:|
+| 2024-05-15 | トウキョウ・ブラー/ナイモノラブ/おあいこ | L00117-L00123 (7) | W00078-W00081 (4) | J00107-J00110 (4) | 4 | 0/0/4/0 | 28 | 28 | 18 |
+| 2025-02-26 | 初恋の亡霊/今夜はHearty Party | L00124-L00128 (5) | W00082-W00083 (2) | J00111-J00112 (2) | 2 | 0/0/2/0 | 10 | 10 | 15 |
+| 2025-10-08 | 四の五の言わず颯と別れてあげた/盛れ！ミ・アモーレ | L00129-L00133 (5) | W00084-W00085 (2) | J00113-J00114 (2) | 2 | 0/0/2/0 | 10 | 10 | 25 |
+| **total** | 3 works / 17 physical editions | **L00117-L00133 (17)** | **W00078-W00085 (8)** | **J00107-J00114 (8)** | **8** | **0/0/8/0** | **48** | **48** | **58** |
+
+Song mapping/version/chronologyはplanned tableどおり実投入した。`version_name`は全8曲空欄、`version_type`はJ00112
+`今夜はHearty Party`だけ`cover`、他7曲は`original`。`release_date`はJ00107-J00110が2024-05-15、J00111-J00112が
+2025-02-26、J00113-J00114が2025-10-08。W00083/J00112はnew work/new songのC分類で、repo scope外の竹内まりやoriginal
+recordingはsongとして追加していない。全editionで同じspecific audioのJ IDを再利用し、official CD track positionを保持した。
+
+Actual creator IDsはC00076 Erik Lidbom、C00077 SUIMI、C00078 渡辺泰司、C00079 西野蒟蒻、C00080 Albin Hillborg、
+C00081 荒幡亮平。既存C00001/C00002/C00005/C00009/C00017/C00019/C00028/C00032/C00075もplannedどおり再利用し、
+`creators +6`、`song_creators +25`。New artist 0、new member 0、member_affiliations 0、`song_artists +8`は全曲
+G00001 primary/order 1、multiple primary 0。`song_performers +1`はJ00110 Brilliance of memories / P00003 植村あかり /
+order 1だけで、existing song performer completionは0、他7曲への個人performer推測は0。
+
+| table | baseline | actual additions | actual total |
+|---|---:|---:|---:|
+| releases | 116 | +17 | **133** |
+| release_tracks | 493 | +48 | **541** |
+| works | 77 | +8 | **85** |
+| songs | 107 | +8 | **115** |
+| creators | 75 | +6 | **81** |
+| members | 17 | +0 | **17** |
+| artists | 3 | +0 | **3** |
+| song_creators | 351 | +25 | **376** |
+| song_artists | 110 | +8 | **118** |
+| song_performers | 172 | +1 | **173** |
+
+Digital release mastersは0 additions（UFDL-1534および2025年2作の同日配信はchronology evidenceとして維持）。Instrumental
+48 physical positionsとvideo 58 entriesはplannedどおりcanonical importから除外し、video系3 CSVは変更していない。
+
+Validationは全`data/*.csv`のparse/header/column count/required fields、URL・ID・date・timestamp formats、enum/creator role、
+master PK、指定FK、relation完全重複、creator/order、全releaseの`release_id/disc_number/track_number`位置一意性を機械確認した。
+Expected additions/totals、work/song 1:1、cover、edition song reuse、G00001 primary、P00003 performer、maxima
+`L00133/J00114/W00085/C00081/P00017/G00003`はいずれも一致。Markdown全tableのcolumn count、`git diff --check`もpass。
+`docs/data-spec.md`、artists/members/member_affiliations、video系CSVは変更なし。Unresolvedは**0件**。
+
+Roadmapは変更なく、次の未調査通常作品は2026-06-24 `MORE! MORE! EP`。今回research/import対象には含めていない。
