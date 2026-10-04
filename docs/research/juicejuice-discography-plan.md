@@ -3568,3 +3568,283 @@ Expected additions/totals、work/song 1:1、cover、edition song reuse、G00001 
 `docs/data-spec.md`、artists/members/member_affiliations、video系CSVは変更なし。Unresolvedは**0件**。
 
 Roadmapは変更なく、次の未調査通常作品は2026-06-24 `MORE! MORE! EP`。今回research/import対象には含めていない。
+
+## 22. 2026-06-24 MORE! MORE! EP research
+
+### 22.1 Summary / current CSV baseline / previous import verification
+
+Hello! Project公式は作品名を **`MORE! MORE! EP`**、artistをJuice=Juice、区分を**EP**、発売日を
+**2026-06-24**、レーベルをhachamaと明記する。公式release pageは3 physical editionsと、全盤共通のCD
+7 tracks（本編6曲＋live bonus 1曲）を掲載している。Instrumentalはない。
+
+調査開始時に全canonical CSVを再読込した。依頼記載SHA
+`ec70f59b81de6f3080e3e229f789e44a4a62cb48`はlocal objectに存在しないが、current historyの
+`d9f04e9 data: add Juice=Juice 2024-2025 singles`、21D.9のactual-result記録、下表のcurrent CSVが一致するため、
+同等importは反映済みと確認して継続した。説明不能なbaseline差分・planned ID衝突はない。
+
+| table | current rows | current max |
+|---|---:|---|
+| releases | 133 | L00133 |
+| release_tracks | 541 | — |
+| works | 85 | W00085 |
+| songs | 115 | Juice=Juice max J00114 |
+| creators | 81 | C00081 |
+| members | 17 | P00017 |
+| artists | 3 | G00003 |
+| song_creators | 376 | — |
+| song_artists | 118 | — |
+| song_performers | 173 | — |
+
+Primary sources: [official release](https://helloproject.com/release/7674/),
+[release announcement](https://helloproject.com/news/20390/),
+[advance distribution announcement](https://helloproject.com/juicejuice/news/20499/),
+[edition/catalog confirmation](https://helloproject.com/news/20545/)。
+
+### 22.2 Official release information / release type / physical editions
+
+Official classification is **EP**, not single or mini album. Current `releases.release_type` has only
+`single/album/digital/other`; its guidance maps mini/best albums to `album`. An EP is likewise an album-family release,
+so the import candidate is `release_type=album` with `notes` retaining official `EP`. Adding a dedicated enum is a future
+spec consideration, not a blocker and not a reason to use `other`.
+
+| release date | release title | edition | planned release_id | catalog number | media | official audio positions | canonical release_tracks | source |
+|---|---|---|---|---|---|---:|---:|---|
+| 2026-06-24 | MORE! MORE! EP | 初回生産限定盤A | L00134 | HKCN-50868 | CD+BD、photobook、三方背BOX、トールケースsize digipak | 7 | 7 | https://helloproject.com/release/7674/ |
+| 2026-06-24 | MORE! MORE! EP | 初回生産限定盤B | L00135 | HKCN-50870 | CD+BD、三方背BOX、jewel-case size | 7 | 7 | https://helloproject.com/release/7674/ |
+| 2026-06-24 | MORE! MORE! EP | 通常盤 | L00136 | HKCN-50872 | CD | 7 | 7 | https://helloproject.com/release/7674/ |
+
+The announcement explicitly says all three CDs are identical. Catalog numbers are independently repeated by the official
+purchase-benefit notice. Thus physical edition count is **3**, CD discs are one each, and A/B alone have one BD each.
+
+### 22.3 Full CD tracklists
+
+The following applies identically to L00134-L00136; official durations, wording and credits are preserved.
+
+| disc | track | official track title | duration | version / artist wording | credits | Instrumental | source |
+|---:|---:|---|---|---|---|---|---|
+| 1 | 1 | クラクラ☆クライマックス | 04:47 | no version; 歌：Juice=Juice | lyrics 広瀬香美 / Maria Okada; composition 広瀬香美; arrangement h-wonder | no | https://helloproject.com/release/7674/ |
+| 1 | 2 | 盛れ！ミ・アモーレ | 03:53 | no version; 歌：Juice=Juice | lyrics/composition 山崎あおい; arrangement 炭竃智弘 | no | https://helloproject.com/release/7674/ |
+| 1 | 3 | 結論から言ってちょうだい | 04:14 | no version; 歌：Juice=Juice | lyrics/composition 中島卓偉; arrangement 鈴木俊介 | no | https://helloproject.com/release/7674/ |
+| 1 | 4 | 甘えんな | 04:02 | no version; 歌：Juice=Juice | lyrics 大森祥子; composition/arrangement 炭竃智弘 | no | https://helloproject.com/release/7674/ |
+| 1 | 5 | BLOODY BULLET | 04:33 | no version; 歌：Juice=Juice | lyrics 西野蒟蒻; composition 星部ショウ; arrangement 平田祥一郎 | no | https://helloproject.com/release/7674/ |
+| 1 | 6 | ギラめきな！ | 04:18 | no version; 歌：Juice=Juice | lyrics 西野蒟蒻; composition Simon Janlov / miwaflower; arrangement Simon Janlov | no | https://helloproject.com/release/7674/ |
+| 1 | 7 | GIRLS BE AMBITIOUS! 2026(Live at Zepp DiverCity(TOKYO)2026.05.06)〖Bonus Track〗 | 04:10 | explicit 2026 live take; 歌：Juice=Juice | lyrics/composition 中島卓偉; arrangement 中島卓偉 / 宮永治郎 | no | https://helloproject.com/release/7674/ |
+
+Unique physical audio is **7** and unique canonical audio is **7**. Instrumental unique count/physical positions are
+**0/0**; all 21 physical positions remain canonical rather than being renumbered.
+
+### 22.4 Digital releases / first-full-audio chronology
+
+Official news released `クラクラ☆クライマックス`, `甘えんな`, and existing `盛れ！ミ・アモーレ` for download and
+streaming on **2026-05-28**, under official distribution link ID **A00218878**. The complete digital EP appeared
+2026-06-24 with **6 tracks** (the physical live bonus is absent); Apple Music product ID is **6771731206**. This storefront
+metadata is supplemental evidence only. There is no digital-only canonical audio. Consistent with current physical-master
+practice, no planned L ID is assigned to either digital object; they remain future digital-release candidates.
+
+| title | physical release date | earlier full-audio date | product/release ID | same specific audio | songs.release_date candidate | source |
+|---|---|---|---|---|---|---|
+| クラクラ☆クライマックス | 2026-06-24 | 2026-05-28 | A00218878 | yes; official EP収録曲として先行配信 | 2026-05-28 | https://helloproject.com/juicejuice/news/20499/ |
+| 結論から言ってちょうだい | 2026-06-24 | none confirmed | digital EP 6771731206 | yes | 2026-06-24 | https://helloproject.com/release/7674/ |
+| 甘えんな | 2026-06-24 | 2026-05-28 | A00218878 | yes; official EP収録曲として先行配信 | 2026-05-28 | https://helloproject.com/juicejuice/news/20499/ |
+| BLOODY BULLET | 2026-06-24 | none confirmed | digital EP 6771731206 | yes | 2026-06-24 | https://helloproject.com/release/7674/ |
+| ギラめきな！ | 2026-06-24 | none confirmed | digital EP 6771731206 | yes | 2026-06-24 | https://helloproject.com/release/7674/ |
+| GIRLS BE AMBITIOUS! 2026 (live) | 2026-06-24 | none; 2026-05-06 performance is not a release | physical catalog numbers only | not in 6-track digital EP | 2026-06-24 | https://helloproject.com/release/7674/ |
+
+MV, YouTube concert audio, radio, previews and the 2026-05-06 concert date do not move `songs.release_date`.
+
+### 22.5 Current DB comparison / unique canonical audio / A/B/C/D
+
+All 115 songs and 85 works were title-compared. `盛れ！ミ・アモーレ` is the unmarked reuse of W00085/J00114 with
+identical artist and credits and no new-version evidence: A. `GIRLS BE AMBITIOUS! 2026` is W00016 but an explicitly dated,
+named 2026 live recording, distinct from J00056 original and J00017 `2022`: B. The other five titles do not exist in either
+master: C. The announcement additionally calls tracks 1,3,6 new recordings and tracks 4,5 first audio releases. No cover
+evidence exists for any of the five new works.
+
+| track | title | duration | source edition | classification | existing work | existing song | version notation | artist | performer | release date candidate | planned work | planned song | note |
+|---:|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | クラクラ☆クライマックス | 04:47 | all | C | none | none | none | G00001 Juice=Juice primary | individual unknown | 2026-05-28 | W00086 | J00115 | new recording; advance full audio |
+| 2 | 盛れ！ミ・アモーレ | 03:53 | all | A | W00085 | J00114 | none | existing G00001 primary | individual unknown | existing 2025-10-08 | — | reuse J00114 | unmarked same-audio reuse |
+| 3 | 結論から言ってちょうだい | 04:14 | all | C | none | none | none | G00001 Juice=Juice primary | individual unknown | 2026-06-24 | W00087 | J00116 | official new recording |
+| 4 | 甘えんな | 04:02 | all | C | none | none | none | G00001 Juice=Juice primary | individual unknown | 2026-05-28 | W00088 | J00117 | first audio release; advance full audio |
+| 5 | BLOODY BULLET | 04:33 | all | C | none | none | none | G00001 Juice=Juice primary | individual unknown | 2026-06-24 | W00089 | J00118 | first audio release |
+| 6 | ギラめきな！ | 04:18 | all | C | none | none | none | G00001 Juice=Juice primary | individual unknown | 2026-06-24 | W00090 | J00119 | official new recording |
+| 7 | GIRLS BE AMBITIOUS! 2026(Live at Zepp DiverCity(TOKYO)2026.05.06) | 04:10 | all | B | W00016 | J00056/J00017 are other recordings | explicit 2026 live take | G00001 Juice=Juice primary | no individual official list | 2026-06-24 | — | J00120 | version_name full live notation; other |
+
+#### A: Existing song reuse
+
+| title | existing work_id | existing song_id | same-audio evidence | release_tracks reuse | source |
+|---|---|---|---|---|---|
+| 盛れ！ミ・アモーレ | W00085 | J00114 | unmarked; artist and all three credits match; no positive distinct-version evidence | J00114 in all three releases | https://helloproject.com/release/7674/ |
+
+#### B: Existing work / new song
+
+| title | existing work_id | planned song_id | version_name | version_type | release_date | distinct-audio evidence | source |
+|---|---|---|---|---|---|---|---|
+| GIRLS BE AMBITIOUS! 2026(Live at Zepp DiverCity(TOKYO)2026.05.06) | W00016 | J00120 | 2026(Live at Zepp DiverCity(TOKYO)2026.05.06) | other | 2026-06-24 | explicit 2026 title, live date/take and Bonus Track; distinct from original/J00017 | https://helloproject.com/release/7674/ |
+
+#### C: New work / new song
+
+| title | planned work_id | planned song_id | version_name | version_type | release_date | reason | source |
+|---|---|---|---|---|---|---|---|
+| クラクラ☆クライマックス | W00086 | J00115 | empty | original | 2026-05-28 | absent from current DB; official new recording | https://helloproject.com/news/20390/ |
+| 結論から言ってちょうだい | W00087 | J00116 | empty | original | 2026-06-24 | absent from current DB; official new recording | https://helloproject.com/news/20390/ |
+| 甘えんな | W00088 | J00117 | empty | original | 2026-05-28 | absent from current DB; official first audio release | https://helloproject.com/news/20390/ |
+| BLOODY BULLET | W00089 | J00118 | empty | original | 2026-06-24 | absent from current DB; official first audio release | https://helloproject.com/news/20390/ |
+| ギラめきな！ | W00090 | J00119 | empty | original | 2026-06-24 | absent from current DB; official new recording | https://helloproject.com/news/20390/ |
+
+#### D: Unresolved / cover investigation
+
+**D=0.** Classification validation: **A 1 + B 1 + C 5 + D 0 = 7 unique canonical audio**.
+
+Cover candidates are **0件**. Neither official title/announcement nor credits identify a cover; W00016 is a new version of
+Juice=Juice's existing work rather than a cover. `version_type`: five C songs `original`, B live take `other`, A retains
+J00114 `original`.
+
+### 22.6 Creator credits
+
+All official credit strings can use existing roles `lyrics`, `composition`, `arrangement`; slash-separated joint credits
+become ordered relations while `credit_name` preserves the displayed name.
+
+**Existing creators**
+
+| creator_id | name | roles | songs |
+|---|---|---|---|
+| C00001 | 山崎あおい | lyrics, composition | 盛れ！ミ・アモーレ (A; no new relations) |
+| C00003 | 中島卓偉 | lyrics, composition, arrangement | 結論から言ってちょうだい; GIRLS BE AMBITIOUS! 2026 |
+| C00005 | 炭竃智弘 | composition, arrangement | 甘えんな; 盛れ！ミ・アモーレ (A) |
+| C00008 | 星部ショウ | composition | BLOODY BULLET |
+| C00009 | 平田祥一郎 | arrangement | BLOODY BULLET |
+| C00019 | 大森祥子 | lyrics | 甘えんな |
+| C00035 | 鈴木俊介 | arrangement | 結論から言ってちょうだい |
+| C00045 | 宮永治郎 | arrangement | GIRLS BE AMBITIOUS! 2026 |
+| C00079 | 西野蒟蒻 | lyrics | BLOODY BULLET; ギラめきな！ |
+
+**New creator candidates**
+
+| planned creator_id | name | role | songs | source | uncertainty |
+|---|---|---|---|---|---|
+| C00082 | 広瀬香美 | lyrics, composition | クラクラ☆クライマックス | https://helloproject.com/release/7674/ | none |
+| C00083 | Maria Okada | lyrics | クラクラ☆クライマックス | https://helloproject.com/release/7674/ | none |
+| C00084 | h-wonder | arrangement | クラクラ☆クライマックス | https://helloproject.com/release/7674/ | none |
+| C00085 | Simon Janlov | composition, arrangement | ギラめきな！ | https://helloproject.com/release/7674/ | none |
+| C00086 | miwaflower | composition | ギラめきな！ | https://helloproject.com/release/7674/ | none |
+
+Planned `song_creators` additions are **21**: J00115 4, J00116 3, J00117 3, J00118 3, J00119 4,
+J00120 4. J00114's existing three relations are reused, not duplicated.
+
+### 22.7 Artist relations / performer evidence / new members / new artists
+
+| song_id | artist_id | artist | role | credit_order | official wording | multiple primary | reason |
+|---|---|---|---|---:|---|---|---|
+| J00115 | G00001 | Juice=Juice | primary | 1 | 歌：Juice=Juice | no | group recording |
+| J00114 | G00001 | Juice=Juice | existing primary | 1 | 歌：Juice=Juice | no | A relation reused |
+| J00116 | G00001 | Juice=Juice | primary | 1 | 歌：Juice=Juice | no | group recording |
+| J00117 | G00001 | Juice=Juice | primary | 1 | 歌：Juice=Juice | no | group recording |
+| J00118 | G00001 | Juice=Juice | primary | 1 | 歌：Juice=Juice | no | group recording |
+| J00119 | G00001 | Juice=Juice | primary | 1 | 歌：Juice=Juice | no | group recording |
+| J00120 | G00001 | Juice=Juice | primary | 1 | 歌：Juice=Juice | no | group live recording |
+
+Planned `song_artists` additions: **6** (all new songs); J00114 is not duplicated. New artists: **0件**; planned artist IDs:
+none; multiple primary: **0件**.
+
+Official audio wording never lists individual singers. The announcement says the bonus track introduces the current 11
+members, but it does not enumerate individual performers for this specific recording. Roster membership, lyrics and video
+appearances are not substituted for `歌：` evidence. Therefore planned `song_performers`: new-song relations **0**;
+existing-song metadata completion **0**. New members: **0件**, planned member IDs none. In particular 林仁愛 receives no
+P00018 solely from membership or the phrase “current 11”; `member_affiliations` also receives no planned addition.
+
+### 22.8 Planned IDs / planned release_tracks
+
+- Releases: L00134 初回A, L00135 初回B, L00136 通常盤 (`release_type=album`, notes=official EP).
+- Works: W00086-W00090 in CD order, excluding A and B.
+- Songs: J00115-J00119 in CD order for C; J00120 for B live take.
+- Creators: C00082-C00086 in first-credit appearance order.
+- Members/artists: none. All ranges are collision-free and contain no duplicate.
+
+| planned release_id | disc_number | track_number | track_title | classification | work_id | song_id | version_name | version_type | source_url | note |
+|---|---:|---:|---|---|---|---|---|---|---|---|
+| L00134 | 1 | 1 | クラクラ☆クライマックス | C | W00086 | J00115 | empty | original | https://helloproject.com/release/7674/ | advance date 2026-05-28 |
+| L00134 | 1 | 2 | 盛れ！ミ・アモーレ | A | W00085 | J00114 | empty | original | https://helloproject.com/release/7674/ | existing specific audio |
+| L00134 | 1 | 3 | 結論から言ってちょうだい | C | W00087 | J00116 | empty | original | https://helloproject.com/release/7674/ | new work/song |
+| L00134 | 1 | 4 | 甘えんな | C | W00088 | J00117 | empty | original | https://helloproject.com/release/7674/ | advance date 2026-05-28 |
+| L00134 | 1 | 5 | BLOODY BULLET | C | W00089 | J00118 | empty | original | https://helloproject.com/release/7674/ | new work/song |
+| L00134 | 1 | 6 | ギラめきな！ | C | W00090 | J00119 | empty | original | https://helloproject.com/release/7674/ | new work/song |
+| L00134 | 1 | 7 | GIRLS BE AMBITIOUS! 2026(Live at Zepp DiverCity(TOKYO)2026.05.06)〖Bonus Track〗 | B | W00016 | J00120 | 2026(Live at Zepp DiverCity(TOKYO)2026.05.06) | other | https://helloproject.com/release/7674/ | explicit live recording |
+| L00135 | 1 | 1 | クラクラ☆クライマックス | C | W00086 | J00115 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00135 | 1 | 2 | 盛れ！ミ・アモーレ | A | W00085 | J00114 | empty | original | https://helloproject.com/release/7674/ | existing specific audio |
+| L00135 | 1 | 3 | 結論から言ってちょうだい | C | W00087 | J00116 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00135 | 1 | 4 | 甘えんな | C | W00088 | J00117 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00135 | 1 | 5 | BLOODY BULLET | C | W00089 | J00118 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00135 | 1 | 6 | ギラめきな！ | C | W00090 | J00119 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00135 | 1 | 7 | GIRLS BE AMBITIOUS! 2026(Live at Zepp DiverCity(TOKYO)2026.05.06)〖Bonus Track〗 | B | W00016 | J00120 | 2026(Live at Zepp DiverCity(TOKYO)2026.05.06) | other | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00136 | 1 | 1 | クラクラ☆クライマックス | C | W00086 | J00115 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00136 | 1 | 2 | 盛れ！ミ・アモーレ | A | W00085 | J00114 | empty | original | https://helloproject.com/release/7674/ | existing specific audio |
+| L00136 | 1 | 3 | 結論から言ってちょうだい | C | W00087 | J00116 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00136 | 1 | 4 | 甘えんな | C | W00088 | J00117 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00136 | 1 | 5 | BLOODY BULLET | C | W00089 | J00118 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00136 | 1 | 6 | ギラめきな！ | C | W00090 | J00119 | empty | original | https://helloproject.com/release/7674/ | same audio as L00134 |
+| L00136 | 1 | 7 | GIRLS BE AMBITIOUS! 2026(Live at Zepp DiverCity(TOKYO)2026.05.06)〖Bonus Track〗 | B | W00016 | J00120 | 2026(Live at Zepp DiverCity(TOKYO)2026.05.06) | other | https://helloproject.com/release/7674/ | same audio as L00134 |
+
+Planned release_tracks are **21** (7 per release). Every edition references the same song IDs; no edition-level song
+duplication and no position compaction occurs.
+
+### 22.9 Instrumental exclusions / video exclusions
+
+Instrumental exclusions are **0**. BD entries are future video candidates only and cause no works/songs/release_tracks.
+
+| edition | total entries | MV | Dance Shot | Group Lip | Close-up | making/documentary | live/performance | other |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 初回生産限定盤A | 30 | 12 | 0 | 0 | 9 | 0 | 7 | 2 (OPENING, MC) |
+| 初回生産限定盤B | 12 | 0 | 0 | 0 | 0 | 0 | 10 (festival 8 + THE FIRST TAKE 2) | 2 (OPENING, MC) |
+| total | 42 | 12 | 0 | 0 | 9 | 0 | 17 | 4 |
+
+Thus **42 video entries** are excluded from the canonical audio import; `videos.csv`, `video_songs.csv`, and
+`video_song_performers.csv` remain unchanged. Existing-song footage and live performances do not establish new audio.
+
+### 22.10 Digital notes / user confirmation / spec considerations
+
+- Digital title: `MORE! MORE! - EP` on the supplemental Apple storefront; release date 2026-06-24, product ID
+  `6771731206`, 6 tracks, digital-only audio 0. Official advance bundle/link A00218878 has 3 tracks on 2026-05-28,
+  of which two new audios change chronology and one is existing J00114.
+- Next canonical import remains three physical masters only. Digital masters receive no L IDs under established practice.
+- **User confirmation items: 0件.** Official evidence plus current rules determine every identity and mapping.
+- **Spec considerations: 1件.** Official `EP` lacks a dedicated `release_type`; use current album-family value `album` and
+  preserve EP in notes now. Consider an `ep` enum only in a future general schema discussion; do not change data-spec here.
+
+### 22.11 Expected additions / expected totals
+
+| table | current | planned additions | expected after import |
+|---|---:|---:|---:|
+| releases | 133 | +3 | 136 |
+| release_tracks | 541 | +21 | 562 |
+| works | 85 | +5 | 90 |
+| songs | 115 | +6 | 121 |
+| creators | 81 | +5 | 86 |
+| members | 17 | +0 | 17 |
+| artists | 3 | +0 | 3 |
+| song_creators | 376 | +21 | 397 |
+| song_artists | 118 | +6 | 124 |
+| song_performers | 173 | +0 | 173 |
+
+D=0 and user decision=0, so there are no conditional totals.
+
+### 22.12 Validation / import readiness
+
+- [x] Three physical editions, catalogs/media and identical 7-position CD tracklists confirmed by official sources.
+- [x] Official type EP mapped to current `album` with notes; schema limitation documented without changing data-spec.
+- [x] Unique physical/canonical audio 7; **1+1+5+0=7**; A creates no duplicate song or relations.
+- [x] W00085/J00114 reuse follows the unmarked album/EP rule; explicit 2026 live take creates B on W00016.
+- [x] Version/cover identities and all six new-song release dates established; official advance distribution applied only
+  to J00115/J00117, not MV/live dates.
+- [x] Existing/new creator identity, ordered roles, exact credit names and 21 planned relations checked.
+- [x] Six new songs use G00001 primary/order 1; no multiple primary/new artist.
+- [x] No individual performer inference, new member, affiliation, or retrospective completion. 林仁愛 remains unplanned.
+- [x] L00134-L00136, W00086-W00090, J00115-J00120 and C00082-C00086 are collision-free and classification-consistent.
+- [x] Twenty-one physical release_tracks preserve official positions and reuse one song per specific audio across editions.
+- [x] Instrumental 0; 42 BD entries and digital masters excluded; all `data/*.csv` and `docs/data-spec.md` unchanged.
+- [x] Markdown table column counts and diff hygiene are subject to the final machine checks below.
+
+**Import readiness: READY.** Unresolved/D/user-confirmation count is **0**. As of the official release list checked for this
+research, no later unresearched Juice=Juice normal audio release is confirmed; the normal-release roadmap is current through
+`MORE! MORE! EP` (the later `8月の空` is displayed as a distribution release and is not silently treated as the next normal
+physical work).
