@@ -42,10 +42,24 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 ## 現在の段階
 
-現在は**データ設計・収集段階**です。`data/` 以下の CSV を唯一の正本（Single Source of Truth）とし、入力・変更時は [データ仕様 v0.3](docs/data-spec.md) に従います。生成物を将来追加する場合も、CSV を手作業で逆更新せず、CSV から一方向に生成します。
+`data/` 以下の CSV を唯一の正本（Single Source of Truth）とし、入力・変更時は [データ仕様 v0.3](docs/data-spec.md) に従います。Juice=Juiceの作家ランキングを検証できる最小静的サイトと、CSVからその派生データを生成する処理も収録しています。ランキングのapplication-level規則は[作家ランキング集計仕様](docs/ranking-spec.md)を参照してください。生成物からCSVを逆更新しません。
 
 `created_at` / `updated_at` はデータとして登録・更新時期を簡単に参照するために使い、Git 履歴は誰がどのコミットで何を変更したかを追跡する完全な履歴として使います。
 
 ## 将来構想
 
-CSV から静的 Web サイトを生成し、GitHub Pages などで公開することを想定しています。グループ別の作家ランキング、作家・メンバー別の楽曲一覧、関連 Version／カバー、所属履歴、限定ユニット、公式ライブ映像、および開始時刻付き YouTube リンクなどを検索・表示できる構成を目指します。Web サイト、DB、API、スクレイピング処理は今回の範囲には含みません。
+静的 Web サイトをGitHub Pagesなどで公開し、作家・メンバー別の楽曲一覧、関連Version／カバー、所属履歴、限定ユニット、公式ライブ映像、および開始時刻付きYouTubeリンクなどへ広げる構成を目指します。DB、API、認証、外部backendは使用しません。
+
+## 作家ランキングの実行
+
+Node.js 20以降だけを使用し、外部dependencyはありません。
+
+```bash
+npm test                    # unit test
+npm run rankings:validate   # canonical Juice=Juice integration validation
+npm run rankings:generate   # site/data/rankings/G00001.json を再生成
+npm run site:build          # 現在はranking生成と同じ静的site build
+npm run site:preview        # http://localhost:4173 でsite/をpreview
+```
+
+Webページは`/`（リポジトリ内では`site/index.html`）で、4カテゴリ、全順位、rank 3以内の強調、作家ごとの根拠workを確認できます。別artistを生成するときは`node scripts/generate-rankings.js Gxxxxx`を実行し、ページ側のartist設定を追加します。
