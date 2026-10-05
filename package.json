@@ -1,0 +1,12 @@
+{
+  "name": "helloproject-song-data",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "rankings:generate": "node scripts/generate-rankings.js",
+    "rankings:validate": "node scripts/validate-rankings.js",
+    "site:build": "npm run rankings:generate",
+    "site:preview": "node scripts/preview-site.js",
+    "test": "node --test"
+  }
+}
