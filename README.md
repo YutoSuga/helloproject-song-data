@@ -63,3 +63,11 @@ npm run site:preview        # http://localhost:4173 でsite/をpreview
 ```
 
 Webページは`/`（リポジトリ内では`site/index.html`）で、4カテゴリ、全順位、rank 3以内の強調、作家ごとの根拠workを確認できます。別artistを生成するときは`node scripts/generate-rankings.js Gxxxxx`を実行し、ページ側のartist設定を追加します。
+
+## 静的サイトのbuildと公開
+
+`npm run site:build`は、正本である`data/*.csv`からランキングJSONを`site/data/rankings/`へ再生成します。生成後は`npm run site:preview`を実行し、`http://localhost:4173/`で確認できます。HTML、CSS、JavaScript、ランキングJSONの参照にはrelative pathを使用しているため、localhost直下とGitHub Pagesのproject site subpathの両方で動作します。
+
+GitHub Actionsの「Deploy ranking site to GitHub Pages」workflowは、`main`へのpushでtest、ランキング検証、site build、生成物の差分検査を順に実行し、成功した`site/`だけをGitHub Pagesへdeployします。Actions画面の「Run workflow」から手動実行も可能です。Pull Requestでも同じbuild前検証を行いますが、artifact uploadと本番deployは行いません。workflowがrepositoryへ生成物をcommitまたはpushすることはありません。
+
+初回公開時はrepositoryの **Settings → Pages → Build and deployment → Source** で **GitHub Actions** を選択してください。公開URLはhardcodeせず、SettingsのPages画面、またはworkflowのdeploy jobに表示されるenvironment URLから確認します。独自PATやrepository secretは不要です。
