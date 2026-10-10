@@ -20,6 +20,7 @@ export function aggregateCreatorRankings(data, artistId) {
     .map((relation) => relation.song_id));
 
   const evidence = new Map();
+  const pairEvidence = new Map();
   const addEvidence = (category, credit, song) => {
     const key = `${category}\0${credit.creator_id}\0${song.work_id}`;
     const current = evidence.get(key) ?? {
@@ -35,6 +36,7 @@ export function aggregateCreatorRankings(data, artistId) {
   };
 
   const creditsBySong = new Map();
+  const pairCreditsBySong = new Map();
   for (const credit of data.songCreators) {
     if (!targetSongIds.has(credit.song_id)) continue;
     const song = songsById.get(credit.song_id);
@@ -44,11 +46,32 @@ export function aggregateCreatorRankings(data, artistId) {
     }
     if (["lyrics", "composition"].includes(credit.role)) {
       addEvidence("lyrics_or_composition", credit, song);
+      const roles = pairCreditsBySong.get(credit.song_id) ?? { lyrics: new Set(), composition: new Set() };
+      roles[credit.role].add(credit.creator_id);
+      pairCreditsBySong.set(credit.song_id, roles);
     }
     const key = `${credit.song_id}\0${credit.creator_id}`;
     const roles = creditsBySong.get(key) ?? new Set();
     roles.add(credit.role);
     creditsBySong.set(key, roles);
+  }
+
+  // Form pairs within one concrete song, then deduplicate at work + pair level.
+  for (const [songId, roles] of pairCreditsBySong) {
+    const song = songsById.get(songId);
+    for (const lyricistId of roles.lyrics) {
+      for (const composerId of roles.composition) {
+        const key = `${song.work_id}\0${lyricistId}\0${composerId}`;
+        const item = pairEvidence.get(key) ?? {
+          work_id: song.work_id,
+          lyricist_creator_id: lyricistId,
+          composer_creator_id: composerId,
+          song_ids: new Set()
+        };
+        item.song_ids.add(songId);
+        pairEvidence.set(key, item);
+      }
+    }
   }
 
   // Both roles must occur on the same concrete recording. Evidence is still
@@ -96,12 +119,41 @@ export function aggregateCreatorRankings(data, artistId) {
   }
 
   const targetSongs = [...targetSongIds].map((id) => songsById.get(id));
+  const pairsByCreators = new Map();
+  for (const item of pairEvidence.values()) {
+    const key = `${item.lyricist_creator_id}\0${item.composer_creator_id}`;
+    const works = pairsByCreators.get(key) ?? [];
+    const work = worksById.get(item.work_id);
+    if (!work) throw new Error(`Song references missing work: ${item.work_id}`);
+    works.push({ work_id: item.work_id, title: work.title, song_ids: [...item.song_ids].sort(byId) });
+    pairsByCreators.set(key, works);
+  }
+  const pairEntries = [...pairsByCreators].map(([key, works]) => {
+    const [lyricistId, composerId] = key.split("\0");
+    return {
+      rank: 0,
+      lyricist_creator_id: lyricistId,
+      lyricist_name: creatorsById.get(lyricistId)?.name ?? "",
+      composer_creator_id: composerId,
+      composer_name: creatorsById.get(composerId)?.name ?? "",
+      work_count: works.length,
+      works: works.sort((left, right) => byId(left.work_id, right.work_id))
+    };
+  }).sort((left, right) => right.work_count - left.work_count
+    || byId(left.lyricist_creator_id, right.lyricist_creator_id)
+    || byId(left.composer_creator_id, right.composer_creator_id));
+  pairEntries.forEach((entry, index) => {
+    entry.rank = index === 0 || entry.work_count !== pairEntries[index - 1].work_count
+      ? index + 1
+      : pairEntries[index - 1].rank;
+  });
   return {
     artist: { artist_id: artist.artist_id, name: artist.name },
     summary: {
       primary_song_count: targetSongIds.size,
       target_work_count: new Set(targetSongs.map((song) => song.work_id)).size
     },
-    categories
+    categories,
+    lyrics_composition_pairs: { label: "作詞者 × 作曲者", entries: pairEntries }
   };
 }
