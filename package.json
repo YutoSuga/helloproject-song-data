@@ -7,6 +7,7 @@
     "rankings:validate": "node scripts/validate-rankings.js",
     "site:build": "npm run rankings:generate",
     "site:preview": "node scripts/preview-site.js",
-    "test": "node --test"
+    "test": "node --test",
+    "collect:candidates": "node scripts/collect-candidates.js"
   }
 }
