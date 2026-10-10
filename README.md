@@ -108,7 +108,7 @@ npm run site:build          # 現在はranking生成と同じ静的site build
 npm run site:preview        # http://localhost:4173 でsite/をpreview
 ```
 
-Webページは`/`（リポジトリ内では`site/index.html`）で、4カテゴリ、全順位、rank 3以内の強調、作家ごとの根拠workを確認できます。別artistを生成するときは`node scripts/generate-rankings.js Gxxxxx`を実行し、ページ側のartist設定を追加します。
+Webページは`/`（リポジトリ内では`site/index.html`）で、5カテゴリ、全順位、rank 3以内の強調、作家ごとの根拠work、作詞 × 作曲の組み合わせ分析を確認できます。組み合わせ分析では全pairとCreator起点の両方向、自己pair作品数を表示します。別artistを生成するときは`node scripts/generate-rankings.js Gxxxxx`を実行し、ページ側のartist設定を追加します。
 
 ## ランキングデータ生成と公開の仕組み
 
