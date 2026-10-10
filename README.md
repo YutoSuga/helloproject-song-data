@@ -64,6 +64,43 @@ npm run site:preview        # http://localhost:4173 でsite/をpreview
 
 Webページは`/`（リポジトリ内では`site/index.html`）で、4カテゴリ、全順位、rank 3以内の強調、作家ごとの根拠workを確認できます。別artistを生成するときは`node scripts/generate-rankings.js Gxxxxx`を実行し、ページ側のartist設定を追加します。
 
+## ランキングデータ生成と公開の仕組み
+
+`data/` 配下のCSVが正本データです。`site/data/rankings/G00001.json` は正本ではなく、CSVから生成されるWeb表示用の成果物です。`G00001` は Juice=Juice の `artist_id` です。
+
+```text
+data/*.csv
+  ↓
+src/rankings.js などの集計ロジック
+  ↓
+site/data/rankings/G00001.json
+  ↓
+site/app.js が読み込み
+  ↓
+GitHub Pagesで表示
+```
+
+ランキングは事前にJSONへ生成し、静的ファイルとして配信します。ブラウザでページを開くたびにランキングを計算するわけではありません。
+
+- `npm run rankings:generate`: ランキングJSONを生成します。
+- `npm run site:build`: サイト公開用データを生成します。現状はランキングJSON生成を含み、`rankings:generate` を実行します。
+
+CSV更新時は、基本的にローカルで次の手順を行い、CSVと生成済みJSONを一緒にcommitする運用です。
+
+```text
+CSV更新
+  ↓
+npm run site:build
+  ↓
+生成された site/data/rankings/*.json を確認
+  ↓
+CSVと生成済みJSONを一緒にcommit
+  ↓
+PR作成
+```
+
+GitHub Actionsでもtest / validate / site buildを実行し、再生成したJSONがリポジトリにcommit済みの生成物と一致するかを差分（drift）検査で確認します。JSONの再生成やcommitを忘れ、差分が生じた場合は検査が失敗します。Actionsが生成したJSONを自動commit/pushする仕組みではないため、ローカルで再生成してcommitする必要があります。
+
 ## 静的サイトのbuildと公開
 
 `npm run site:build`は、正本である`data/*.csv`からランキングJSONを`site/data/rankings/`へ再生成します。生成後は`npm run site:preview`を実行し、`http://localhost:4173/`で確認できます。HTML、CSS、JavaScript、ランキングJSONの参照にはrelative pathを使用しているため、localhost直下とGitHub Pagesのproject site subpathの両方で動作します。
