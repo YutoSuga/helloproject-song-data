@@ -22,7 +22,8 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 .
 ├── README.md
 ├── docs/
-│   └── data-spec.md       # CSV の列、制約、運用ルール
+│   ├── data-spec.md       # CSV の列、制約、運用ルール
+│   └── roadmap.md         # 今後の実装マイルストーン
 └── data/                  # 正本となる CSV
     ├── works.csv
     ├── songs.csv
@@ -48,7 +49,51 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 ## 将来構想
 
+現在の実装状況と機能単位の実装予定は [Roadmap](docs/roadmap.md) を参照してください。
+
 静的 Web サイトをGitHub Pagesなどで公開し、作家・メンバー別の楽曲一覧、関連Version／カバー、所属履歴、限定ユニット、公式ライブ映像、および開始時刻付きYouTubeリンクなどへ広げる構成を目指します。DB、API、認証、外部backendは使用しません。
+
+## 開発フロー
+
+基本方針は **1作業 = 1ブランチ → PR → merge → 作業ブランチ削除** です。
+
+### 作業開始
+
+`main` を最新化し、作業用ブランチを作成します。
+
+```bash
+git switch main
+git pull
+git switch -c feature/xxx
+```
+
+### 実装
+
+作業用ブランチ上で Codex 等を利用してソースやドキュメントを修正し、必要に応じてテスト・build・生成物確認を行います。
+
+### commit / push
+
+```bash
+git add .
+git commit -m "変更内容を表すメッセージ"
+git push -u origin feature/xxx
+```
+
+初回に upstream を設定した後、2回目以降の push は通常 `git push` で行えます。
+
+### PR / merge
+
+GitHub 上で作業ブランチから `main` への Pull Request を作成します。GitHub Actions 等の確認後、`main` へ merge し、GitHub 上の作業ブランチを削除します。
+
+### ローカルブランチ整理
+
+merge 後はローカルの `main` を最新化し、作業ブランチを削除します。
+
+```bash
+git switch main
+git pull
+git branch -d feature/xxx
+```
 
 ## 作家ランキングの実行
 
