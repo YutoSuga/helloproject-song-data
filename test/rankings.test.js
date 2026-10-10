@@ -4,7 +4,7 @@ import { parseCsv } from "../src/csv.js";
 import { aggregateCreatorRankings } from "../src/rankings.js";
 
 function fixture() {
-  const creators = ["A", "B", "C", "D", "E"].map((id) => ({ creator_id: id, name: `Creator ${id}` }));
+  const creators = ["A", "B", "C", "D", "E", "F", "G"].map((id) => ({ creator_id: id, name: `Creator ${id}` }));
   const works = [1, 2, 3, 4, 5].map((id) => ({ work_id: `W${id}`, title: `Work ${id}` }));
   const songs = [
     { song_id: "S1", work_id: "W1" }, { song_id: "S2", work_id: "W1" },
@@ -32,8 +32,10 @@ function fixture() {
     { song_id: "S2", creator_id: "D", role: "arrangement" },
     { song_id: "S3", creator_id: "A", role: "lyrics" },
     { song_id: "S3", creator_id: "B", role: "composition" },
+    { song_id: "S3", creator_id: "F", role: "composition" },
     { song_id: "S4", creator_id: "B", role: "lyrics" },
     { song_id: "S4", creator_id: "B", role: "composition" },
+    { song_id: "S4", creator_id: "G", role: "lyrics" },
     { song_id: "S5", creator_id: "E", role: "lyrics" },
     { song_id: "S6", creator_id: "E", role: "lyrics" }
   ];
@@ -49,20 +51,28 @@ test("work aggregation covers primary filters, joint credits, roles, and version
   assert.equal(result.summary.primary_song_count, 4, "multiple-primary is included");
   assert.equal(result.summary.target_work_count, 3);
   const lyrics = result.categories.lyrics.entries;
-  assert.deepEqual(lyrics.map(({ creator_id, work_count }) => [creator_id, work_count]), [["A", 2], ["B", 2]]);
-  assert.deepEqual(lyrics.map(({ creator_id, rank }) => [creator_id, rank]), [["A", 1], ["B", 1]], "ties share a competition rank and use creator_id ordering");
+  assert.deepEqual(lyrics.map(({ creator_id, work_count }) => [creator_id, work_count]), [["A", 2], ["B", 2], ["G", 1]]);
+  assert.deepEqual(lyrics.map(({ creator_id, rank }) => [creator_id, rank]), [["A", 1], ["B", 1], ["G", 3]], "ties share a competition rank and use creator_id ordering");
   assert.equal(lyrics.find((item) => item.creator_id === "A").works[0].song_ids.length, 2, "same creator/work across two songs counts once");
   assert.ok(!lyrics.some((item) => item.creator_id === "E"), "featured-only and another artist's song are excluded");
-  assert.deepEqual(result.categories.composition.entries.map((item) => item.creator_id), ["B", "A"]);
+  assert.deepEqual(result.categories.composition.entries.map((item) => item.creator_id), ["B", "A", "F"]);
+  assert.ok(result.categories.lyrics.entries.some((item) => item.creator_id === "G"), "lyrics-only creator is included");
+  assert.ok(result.categories.composition.entries.some((item) => item.creator_id === "F"), "composition-only creator is included");
   assert.deepEqual(result.categories.arrangement.entries.map((item) => item.creator_id), ["C", "D"], "different version arrangers each count once; brass role is excluded");
   assert.deepEqual(result.categories.lyrics_composition.entries.map(({ creator_id, work_count }) => [creator_id, work_count]), [["A", 1], ["B", 1]]);
+  assert.equal(result.categories.lyrics_composition.label, "作詞 & 作曲");
+  assert.equal(result.categories.lyrics_or_composition.label, "作詞 or 作曲");
+  assert.deepEqual(result.categories.lyrics_or_composition.entries.map(({ creator_id, work_count }) => [creator_id, work_count]), [["B", 3], ["A", 2], ["F", 1], ["G", 1]]);
+  assert.ok(!result.categories.lyrics_or_composition.entries.some((item) => ["C", "D", "E"].includes(item.creator_id)), "arrangement-only, specialized-role-only, and featured-only creators are excluded");
 });
 
 test("lyrics+composition never combines roles found only on different songs", () => {
   const data = fixture();
   data.songCreators.push({ song_id: "S1", creator_id: "C", role: "lyrics" });
   data.songCreators.push({ song_id: "S2", creator_id: "C", role: "composition" });
-  assert.ok(!aggregateCreatorRankings(data, "G1").categories.lyrics_composition.entries.some((item) => item.creator_id === "C"));
+  const result = aggregateCreatorRankings(data, "G1");
+  assert.ok(!result.categories.lyrics_composition.entries.some((item) => item.creator_id === "C"));
+  assert.deepEqual(result.categories.lyrics_or_composition.entries.find((item) => item.creator_id === "C").work_count, 1, "or category combines roles at work level");
 });
 
 test("competition ranking and creator-id tie order are stable", () => {
@@ -72,7 +82,7 @@ test("competition ranking and creator-id tie order are stable", () => {
   data.songArtists.push({ song_id: "S7", artist_id: "G1", role: "primary" }, { song_id: "S8", artist_id: "G1", role: "primary" });
   data.songCreators.push({ song_id: "S7", creator_id: "A", role: "lyrics" }, { song_id: "S8", creator_id: "D", role: "lyrics" });
   const entries = aggregateCreatorRankings(data, "G1").categories.lyrics.entries;
-  assert.deepEqual(entries.map(({ creator_id, rank }) => [creator_id, rank]), [["A", 1], ["B", 2], ["D", 3]]);
+  assert.deepEqual(entries.map(({ creator_id, rank }) => [creator_id, rank]), [["A", 1], ["B", 2], ["D", 3], ["G", 3]]);
 
   // Explicit 5/3/3/2 shape specified by the ranking contract.
   const counts = [5, 3, 3, 2];
