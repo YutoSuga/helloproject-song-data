@@ -16,7 +16,8 @@ canonical CSVから、artist別の主要作家と集計根拠を再現可能に�
 - **作詞**: `role=lyrics`のみ。`english_lyrics`は含めない。
 - **作曲**: `role=composition`のみ。
 - **編曲**: `role=arrangement`のみ。`brass_arrangement`その他のspecialized roleは含めない。
-- **作詞・作曲**: 同じcreatorが**同じ`song_id`**で`lyrics`と`composition`の両方を担当した場合だけ成立し、その後`creator_id + work_id`で重複排除する。別Versionをまたいだroleの合成はしない。
+- **作詞 & 作曲**: 同じcreatorが**同じ`song_id`**で`lyrics`と`composition`の両方を担当した場合だけ成立し、その後`creator_id + work_id`で重複排除する。別Versionをまたいだroleの合成はしない。
+- **作詞 or 作曲**: `lyrics`または`composition`を担当したcreatorに、`creator_id + work_id`単位で1 workを付与する。両方を担当していても2件にはしない。`arrangement`、`brass_arrangement`、`english_lyrics`は含めない。
 
 共同creditは各creatorに1 workを付与し、按分しない。全creator、全順位、work数、根拠work（`work_id`、title、該当`song_id`、role）を派生データへ保持する。
 

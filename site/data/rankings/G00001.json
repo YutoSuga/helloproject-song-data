@@ -2776,7 +2776,7 @@
       ]
     },
     "lyrics_composition": {
-      "label": "作詞・作曲",
+      "label": "作詞 & 作曲",
       "entries": [
         {
           "artist_id": "G00001",
@@ -3429,6 +3429,2207 @@
               "roles": [
                 "composition",
                 "lyrics"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "lyrics_or_composition": {
+      "label": "作詞 or 作曲",
+      "entries": [
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 1,
+          "creator_id": "C00028",
+          "creator_name": "つんく",
+          "work_count": 26,
+          "works": [
+            {
+              "work_id": "W00024",
+              "title": "生まれたてのBaby Love",
+              "song_ids": [
+                "J00025"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00028",
+              "title": "私が言う前に抱きしめなきゃね",
+              "song_ids": [
+                "J00036",
+                "J00040",
+                "J00094"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00029",
+              "title": "五月雨美女がさ乱れる",
+              "song_ids": [
+                "J00037",
+                "J00041"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00030",
+              "title": "天まで登れ！",
+              "song_ids": [
+                "J00038"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00031",
+              "title": "ロマンスの途中",
+              "song_ids": [
+                "J00039",
+                "J00093"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00032",
+              "title": "イジワルしないで 抱きしめてよ",
+              "song_ids": [
+                "J00042",
+                "J00095"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00033",
+              "title": "初めてを経験中",
+              "song_ids": [
+                "J00043",
+                "J00096"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00034",
+              "title": "裸の裸の裸のKISS",
+              "song_ids": [
+                "J00044"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00035",
+              "title": "アレコレしたい！",
+              "song_ids": [
+                "J00045"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00036",
+              "title": "ブラックバタフライ",
+              "song_ids": [
+                "J00046",
+                "J00097"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00037",
+              "title": "風に吹かれて",
+              "song_ids": [
+                "J00047"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00038",
+              "title": "背伸び",
+              "song_ids": [
+                "J00048"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00039",
+              "title": "伊達じゃないよ うちの人生は",
+              "song_ids": [
+                "J00049"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00043",
+              "title": "選ばれし私達",
+              "song_ids": [
+                "J00055"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00047",
+              "title": "Magic of Love",
+              "song_ids": [
+                "J00061",
+                "J00100"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00048",
+              "title": "香水",
+              "song_ids": [
+                "J00062"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00049",
+              "title": "鳴り始めた恋のBELL",
+              "song_ids": [
+                "J00063"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00050",
+              "title": "スクランブル",
+              "song_ids": [
+                "J00064"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00051",
+              "title": "BABY! 恋に KNOCK OUT!",
+              "song_ids": [
+                "J00065"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00052",
+              "title": "ラストキッス",
+              "song_ids": [
+                "J00066"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00053",
+              "title": "Next is you!",
+              "song_ids": [
+                "J00067"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00054",
+              "title": "カラダだけが大人になったんじゃない",
+              "song_ids": [
+                "J00068",
+                "J00101"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00055",
+              "title": "Dream Road〜心が躍り出してる〜",
+              "song_ids": [
+                "J00069"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00060",
+              "title": "SEXY SEXY",
+              "song_ids": [
+                "J00074"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00072",
+              "title": "大人の事情",
+              "song_ids": [
+                "J00087"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00080",
+              "title": "おあいこ",
+              "song_ids": [
+                "J00109"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 2,
+          "creator_id": "C00006",
+          "creator_name": "児玉雨子",
+          "work_count": 11,
+          "works": [
+            {
+              "work_id": "W00005",
+              "title": "25歳永遠説",
+              "song_ids": [
+                "J00005"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00009",
+              "title": "Va-Va-Voom",
+              "song_ids": [
+                "J00010"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00018",
+              "title": "STAGE～アガッてみな～",
+              "song_ids": [
+                "J00019"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00023",
+              "title": "プラトニック・プラネット",
+              "song_ids": [
+                "J00024"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00026",
+              "title": "Never Never Surrender",
+              "song_ids": [
+                "J00027",
+                "J00078",
+                "J00102"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00045",
+              "title": "チクタク 私の旬",
+              "song_ids": [
+                "J00058"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00058",
+              "title": "地団駄ダンス",
+              "song_ids": [
+                "J00072"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00062",
+              "title": "Vivid Midnight",
+              "song_ids": [
+                "J00076"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00064",
+              "title": "如雨露",
+              "song_ids": [
+                "J00079"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00067",
+              "title": "あばれてっか?! ハヴアグッタイ",
+              "song_ids": [
+                "J00082"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00069",
+              "title": "銀色のテレパシー",
+              "song_ids": [
+                "J00084"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 2,
+          "creator_id": "C00008",
+          "creator_name": "星部ショウ",
+          "work_count": 11,
+          "works": [
+            {
+              "work_id": "W00008",
+              "title": "Borderline",
+              "song_ids": [
+                "J00009"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00024",
+              "title": "生まれたてのBaby Love",
+              "song_ids": [
+                "J00054"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00025",
+              "title": "CHOICE & CHANCE",
+              "song_ids": [
+                "J00026",
+                "J00052",
+                "J00099"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00026",
+              "title": "Never Never Surrender",
+              "song_ids": [
+                "J00027",
+                "J00078",
+                "J00102"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00044",
+              "title": "愛のダイビング",
+              "song_ids": [
+                "J00057"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00045",
+              "title": "チクタク 私の旬",
+              "song_ids": [
+                "J00058"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00065",
+              "title": "TOKYOグライダー",
+              "song_ids": [
+                "J00080"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00066",
+              "title": "シンクロ。",
+              "song_ids": [
+                "J00081"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00068",
+              "title": "素直に甘えて",
+              "song_ids": [
+                "J00083"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00069",
+              "title": "銀色のテレパシー",
+              "song_ids": [
+                "J00084"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00089",
+              "title": "BLOODY BULLET",
+              "song_ids": [
+                "J00118"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 4,
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_count": 10,
+          "works": [
+            {
+              "work_id": "W00001",
+              "title": "微炭酸",
+              "song_ids": [
+                "J00001",
+                "J00103"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00004",
+              "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+              "song_ids": [
+                "J00004",
+                "J00006",
+                "J00104"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00007",
+              "title": "好きって言ってよ",
+              "song_ids": [
+                "J00008"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00012",
+              "title": "がんばれないよ",
+              "song_ids": [
+                "J00013",
+                "J00029",
+                "J00030",
+                "J00031",
+                "J00032",
+                "J00033",
+                "J00034",
+                "J00035"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00017",
+              "title": "POPPIN' LOVE",
+              "song_ids": [
+                "J00018"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00074",
+              "title": "イニミニマニモ～恋のライバル宣言～",
+              "song_ids": [
+                "J00090"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00075",
+              "title": "プライド・ブライト",
+              "song_ids": [
+                "J00091"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00078",
+              "title": "トウキョウ・ブラー",
+              "song_ids": [
+                "J00107"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00081",
+              "title": "Brilliance of memories",
+              "song_ids": [
+                "J00110"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00085",
+              "title": "盛れ！ミ・アモーレ",
+              "song_ids": [
+                "J00114"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 5,
+          "creator_id": "C00002",
+          "creator_name": "KOUGA",
+          "work_count": 7,
+          "works": [
+            {
+              "work_id": "W00001",
+              "title": "微炭酸",
+              "song_ids": [
+                "J00001",
+                "J00103"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00003",
+              "title": "Good bye & Good luck！",
+              "song_ids": [
+                "J00003"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00005",
+              "title": "25歳永遠説",
+              "song_ids": [
+                "J00005"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00012",
+              "title": "がんばれないよ",
+              "song_ids": [
+                "J00013",
+                "J00029",
+                "J00030",
+                "J00031",
+                "J00032",
+                "J00033",
+                "J00034",
+                "J00035"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00018",
+              "title": "STAGE～アガッてみな～",
+              "song_ids": [
+                "J00019"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00082",
+              "title": "初恋の亡霊",
+              "song_ids": [
+                "J00111"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00084",
+              "title": "四の五の言わず颯と別れてあげた",
+              "song_ids": [
+                "J00113"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 6,
+          "creator_id": "C00010",
+          "creator_name": "Shusui",
+          "work_count": 6,
+          "works": [
+            {
+              "work_id": "W00009",
+              "title": "Va-Va-Voom",
+              "song_ids": [
+                "J00010"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00014",
+              "title": "Familia",
+              "song_ids": [
+                "J00015"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00015",
+              "title": "Future Smile",
+              "song_ids": [
+                "J00016"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00021",
+              "title": "G.O.A.T.",
+              "song_ids": [
+                "J00022"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00022",
+              "title": "雨の中の口笛",
+              "song_ids": [
+                "J00023"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00077",
+              "title": "ボン・ヴォヤージュ～想いの軌跡～",
+              "song_ids": [
+                "J00106"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 6,
+          "creator_id": "C00011",
+          "creator_name": "Josef Melin",
+          "work_count": 6,
+          "works": [
+            {
+              "work_id": "W00009",
+              "title": "Va-Va-Voom",
+              "song_ids": [
+                "J00010"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00015",
+              "title": "Future Smile",
+              "song_ids": [
+                "J00016"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00019",
+              "title": "Mon Amour",
+              "song_ids": [
+                "J00020"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00021",
+              "title": "G.O.A.T.",
+              "song_ids": [
+                "J00022"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00022",
+              "title": "雨の中の口笛",
+              "song_ids": [
+                "J00023"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00077",
+              "title": "ボン・ヴォヤージュ～想いの軌跡～",
+              "song_ids": [
+                "J00106"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 8,
+          "creator_id": "C00019",
+          "creator_name": "大森祥子",
+          "work_count": 5,
+          "works": [
+            {
+              "work_id": "W00015",
+              "title": "Future Smile",
+              "song_ids": [
+                "J00016"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00061",
+              "title": "泣いていいよ",
+              "song_ids": [
+                "J00075"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00073",
+              "title": "全部賭けてGO!!",
+              "song_ids": [
+                "J00089"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00084",
+              "title": "四の五の言わず颯と別れてあげた",
+              "song_ids": [
+                "J00113"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00088",
+              "title": "甘えんな",
+              "song_ids": [
+                "J00117"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 8,
+          "creator_id": "C00027",
+          "creator_name": "井筒日美",
+          "work_count": 5,
+          "works": [
+            {
+              "work_id": "W00021",
+              "title": "G.O.A.T.",
+              "song_ids": [
+                "J00022"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00063",
+              "title": "Fiesta! Fiesta!",
+              "song_ids": [
+                "J00077"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00066",
+              "title": "シンクロ。",
+              "song_ids": [
+                "J00081"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00070",
+              "title": "この世界は捨てたもんじゃない",
+              "song_ids": [
+                "J00085"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00077",
+              "title": "ボン・ヴォヤージュ～想いの軌跡～",
+              "song_ids": [
+                "J00106"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 10,
+          "creator_id": "C00003",
+          "creator_name": "中島卓偉",
+          "work_count": 4,
+          "works": [
+            {
+              "work_id": "W00002",
+              "title": "ポツリと",
+              "song_ids": [
+                "J00002"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00016",
+              "title": "GIRLS BE AMBITIOUS!",
+              "song_ids": [
+                "J00017",
+                "J00056",
+                "J00120"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00042",
+              "title": "愛・愛・傘",
+              "song_ids": [
+                "J00053"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00087",
+              "title": "結論から言ってちょうだい",
+              "song_ids": [
+                "J00116"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 10,
+          "creator_id": "C00004",
+          "creator_name": "三浦徳子",
+          "work_count": 4,
+          "works": [
+            {
+              "work_id": "W00003",
+              "title": "Good bye & Good luck！",
+              "song_ids": [
+                "J00003"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00024",
+              "title": "生まれたてのBaby Love",
+              "song_ids": [
+                "J00025"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00041",
+              "title": "Ça va ? Ça va ?(サヴァサヴァ)",
+              "song_ids": [
+                "J00051"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00059",
+              "title": "Feel！感じるよ",
+              "song_ids": [
+                "J00073"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 12,
+          "creator_id": "C00061",
+          "creator_name": "中村瑛彦",
+          "work_count": 3,
+          "works": [
+            {
+              "work_id": "W00059",
+              "title": "Feel！感じるよ",
+              "song_ids": [
+                "J00073"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00061",
+              "title": "泣いていいよ",
+              "song_ids": [
+                "J00075"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00070",
+              "title": "この世界は捨てたもんじゃない",
+              "song_ids": [
+                "J00085"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 12,
+          "creator_id": "C00079",
+          "creator_name": "西野蒟蒻",
+          "work_count": 3,
+          "works": [
+            {
+              "work_id": "W00082",
+              "title": "初恋の亡霊",
+              "song_ids": [
+                "J00111"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00089",
+              "title": "BLOODY BULLET",
+              "song_ids": [
+                "J00118"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00090",
+              "title": "ギラめきな！",
+              "song_ids": [
+                "J00119"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 14,
+          "creator_id": "C00005",
+          "creator_name": "炭竃智弘",
+          "work_count": 2,
+          "works": [
+            {
+              "work_id": "W00023",
+              "title": "プラトニック・プラネット",
+              "song_ids": [
+                "J00024"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00088",
+              "title": "甘えんな",
+              "song_ids": [
+                "J00117"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 14,
+          "creator_id": "C00012",
+          "creator_name": "近藤薫",
+          "work_count": 2,
+          "works": [
+            {
+              "work_id": "W00010",
+              "title": "続いていくSTORY",
+              "song_ids": [
+                "J00011",
+                "J00060"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00027",
+              "title": "Goal～明日はあっちだよ～",
+              "song_ids": [
+                "J00028"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 14,
+          "creator_id": "C00015",
+          "creator_name": "山下達郎",
+          "work_count": 2,
+          "works": [
+            {
+              "work_id": "W00011",
+              "title": "DOWN TOWN",
+              "song_ids": [
+                "J00012"
+              ],
+              "roles": [
+                "composition"
+              ]
+            },
+            {
+              "work_id": "W00076",
+              "title": "FUNKY FLUSHIN'",
+              "song_ids": [
+                "J00092"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 14,
+          "creator_id": "C00017",
+          "creator_name": "竹内まりや",
+          "work_count": 2,
+          "works": [
+            {
+              "work_id": "W00013",
+              "title": "プラスティック・ラブ",
+              "song_ids": [
+                "J00014"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00083",
+              "title": "今夜はHearty Party",
+              "song_ids": [
+                "J00112"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 14,
+          "creator_id": "C00020",
+          "creator_name": "NOBE",
+          "work_count": 2,
+          "works": [
+            {
+              "work_id": "W00016",
+              "title": "GIRLS BE AMBITIOUS!",
+              "song_ids": [
+                "J00017"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00068",
+              "title": "素直に甘えて",
+              "song_ids": [
+                "J00083"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 14,
+          "creator_id": "C00026",
+          "creator_name": "唐沢美帆",
+          "work_count": 2,
+          "works": [
+            {
+              "work_id": "W00020",
+              "title": "ノクチルカ",
+              "song_ids": [
+                "J00021"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00065",
+              "title": "TOKYOグライダー",
+              "song_ids": [
+                "J00080"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 14,
+          "creator_id": "C00031",
+          "creator_name": "イイジマケン",
+          "work_count": 2,
+          "works": [
+            {
+              "work_id": "W00014",
+              "title": "Familia",
+              "song_ids": [
+                "J00015"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00040",
+              "title": "Wonderful World",
+              "song_ids": [
+                "J00050",
+                "J00088",
+                "J00098"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00007",
+          "creator_name": "KAN",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00006",
+              "title": "ポップミュージック",
+              "song_ids": [
+                "J00007",
+                "J00105"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00014",
+          "creator_name": "伊藤銀次",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00011",
+              "title": "DOWN TOWN",
+              "song_ids": [
+                "J00012"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00021",
+          "creator_name": "Andreas Öhrn",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00017",
+              "title": "POPPIN' LOVE",
+              "song_ids": [
+                "J00018"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00022",
+          "creator_name": "Henrik Smith",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00017",
+              "title": "POPPIN' LOVE",
+              "song_ids": [
+                "J00018"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00023",
+          "creator_name": "Olof Lindskog",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00017",
+              "title": "POPPIN' LOVE",
+              "song_ids": [
+                "J00018"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00024",
+          "creator_name": "オオヤギヒロオ",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00019",
+              "title": "Mon Amour",
+              "song_ids": [
+                "J00020"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00025",
+          "creator_name": "松井寛",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00020",
+              "title": "ノクチルカ",
+              "song_ids": [
+                "J00021"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00033",
+          "creator_name": "Shim Zeyun",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00014",
+              "title": "Familia",
+              "song_ids": [
+                "J00015"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00034",
+          "creator_name": "tsubomi",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00014",
+              "title": "Familia",
+              "song_ids": [
+                "J00015"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00036",
+          "creator_name": "板垣祐介",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00057",
+              "title": "明日やろうはバカやろう",
+              "song_ids": [
+                "J00071"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00040",
+          "creator_name": "川辺ヒロシ",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00041",
+              "title": "Ça va ? Ça va ?(サヴァサヴァ)",
+              "song_ids": [
+                "J00051"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00041",
+          "creator_name": "上田禎",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00041",
+              "title": "Ça va ? Ça va ?(サヴァサヴァ)",
+              "song_ids": [
+                "J00051"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00043",
+          "creator_name": "masaaki asada",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00024",
+              "title": "生まれたてのBaby Love",
+              "song_ids": [
+                "J00054"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00047",
+          "creator_name": "角田崇徳",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00046",
+              "title": "未来へ、さあ走り出せ！",
+              "song_ids": [
+                "J00059"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00048",
+          "creator_name": "KOJI oba",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00046",
+              "title": "未来へ、さあ走り出せ！",
+              "song_ids": [
+                "J00059"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00054",
+          "creator_name": "前山田健一",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00056",
+              "title": "KEEP ON 上昇志向！！",
+              "song_ids": [
+                "J00070"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00055",
+          "creator_name": "ダンス☆マン",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00067",
+              "title": "あばれてっか?! ハヴアグッタイ",
+              "song_ids": [
+                "J00082"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00057",
+          "creator_name": "福田花音",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00057",
+              "title": "明日やろうはバカやろう",
+              "song_ids": [
+                "J00071"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00058",
+          "creator_name": "BLACC HOLE",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00058",
+              "title": "地団駄ダンス",
+              "song_ids": [
+                "J00072"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00059",
+          "creator_name": "NOBB-D",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00058",
+              "title": "地団駄ダンス",
+              "song_ids": [
+                "J00072"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00062",
+          "creator_name": "SEION",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00062",
+              "title": "Vivid Midnight",
+              "song_ids": [
+                "J00076"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00063",
+          "creator_name": "Tasco",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00062",
+              "title": "Vivid Midnight",
+              "song_ids": [
+                "J00076"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00064",
+          "creator_name": "Tenzo",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00062",
+              "title": "Vivid Midnight",
+              "song_ids": [
+                "J00076"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00065",
+          "creator_name": "エリック・フクサキ",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00063",
+              "title": "Fiesta! Fiesta!",
+              "song_ids": [
+                "J00077"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00066",
+          "creator_name": "YUKO",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00064",
+              "title": "如雨露",
+              "song_ids": [
+                "J00079"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00068",
+          "creator_name": "大橋莉子",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00071",
+              "title": "禁断少女",
+              "song_ids": [
+                "J00086"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00070",
+          "creator_name": "徳田光希",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00073",
+              "title": "全部賭けてGO!!",
+              "song_ids": [
+                "J00089"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00071",
+          "creator_name": "Johan Alkenas",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00074",
+              "title": "イニミニマニモ～恋のライバル宣言～",
+              "song_ids": [
+                "J00090"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00072",
+          "creator_name": "Joacim Persson",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00074",
+              "title": "イニミニマニモ～恋のライバル宣言～",
+              "song_ids": [
+                "J00090"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00073",
+          "creator_name": "Lisa Desmond",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00074",
+              "title": "イニミニマニモ～恋のライバル宣言～",
+              "song_ids": [
+                "J00090"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00074",
+          "creator_name": "吉田美奈子",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00076",
+              "title": "FUNKY FLUSHIN'",
+              "song_ids": [
+                "J00092"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00076",
+          "creator_name": "Erik Lidbom",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00078",
+              "title": "トウキョウ・ブラー",
+              "song_ids": [
+                "J00107"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00077",
+          "creator_name": "SUIMI",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00079",
+              "title": "ナイモノラブ",
+              "song_ids": [
+                "J00108"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00078",
+          "creator_name": "渡辺泰司",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00079",
+              "title": "ナイモノラブ",
+              "song_ids": [
+                "J00108"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00082",
+          "creator_name": "広瀬香美",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00086",
+              "title": "クラクラ☆クライマックス",
+              "song_ids": [
+                "J00115"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00083",
+          "creator_name": "Maria Okada",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00086",
+              "title": "クラクラ☆クライマックス",
+              "song_ids": [
+                "J00115"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00085",
+          "creator_name": "Simon Janlov",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00090",
+              "title": "ギラめきな！",
+              "song_ids": [
+                "J00119"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 21,
+          "creator_id": "C00086",
+          "creator_name": "miwaflower",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00090",
+              "title": "ギラめきな！",
+              "song_ids": [
+                "J00119"
+              ],
+              "roles": [
+                "composition"
               ]
             }
           ]

@@ -74,6 +74,7 @@ git switch -c feature/xxx
 ### commit / push
 
 ```bash
+git status
 git add .
 git commit -m "変更内容を表すメッセージ"
 git push -u origin feature/xxx
