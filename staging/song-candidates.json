@@ -1,0 +1,4435 @@
+{
+  "schema_version": 1,
+  "candidates": [
+    {
+      "candidate_id": "sc_f0dd53c4da6838a7cb7aeed3",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "だって大凶じゃん☆",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-8117",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_13698f24682b6d326726f0a5",
+        "sc_4714b50eb356d872c8eab2c9",
+        "sc_a45808e18ccd21fb31b529a7",
+        "sc_d19b62b774529d01e3c3dd04"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_2188eeda363baf863ed40b30",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なじられたって泣けない 愛されたって泣けない",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-8117",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_29bd0019c545e3b84e1e93c4",
+        "sc_94e9edcd6d0c743c231397d6",
+        "sc_a1ca3c23a4f7faef9fbb39d6",
+        "sc_fa0ac624a0abc745187252a4"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_d19b62b774529d01e3c3dd04",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "だって大凶じゃん☆",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-8119",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_13698f24682b6d326726f0a5",
+        "sc_4714b50eb356d872c8eab2c9",
+        "sc_a45808e18ccd21fb31b529a7",
+        "sc_f0dd53c4da6838a7cb7aeed3"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_a1ca3c23a4f7faef9fbb39d6",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なじられたって泣けない 愛されたって泣けない",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-8119",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_2188eeda363baf863ed40b30",
+        "sc_29bd0019c545e3b84e1e93c4",
+        "sc_94e9edcd6d0c743c231397d6",
+        "sc_fa0ac624a0abc745187252a4"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_a45808e18ccd21fb31b529a7",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "だって大凶じゃん☆",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤SP】",
+      "disc_index": 0,
+      "product_number": "EPCE-8121",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_13698f24682b6d326726f0a5",
+        "sc_4714b50eb356d872c8eab2c9",
+        "sc_d19b62b774529d01e3c3dd04",
+        "sc_f0dd53c4da6838a7cb7aeed3"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_29bd0019c545e3b84e1e93c4",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なじられたって泣けない 愛されたって泣けない",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤SP】",
+      "disc_index": 0,
+      "product_number": "EPCE-8121",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_2188eeda363baf863ed40b30",
+        "sc_94e9edcd6d0c743c231397d6",
+        "sc_a1ca3c23a4f7faef9fbb39d6",
+        "sc_fa0ac624a0abc745187252a4"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_4714b50eb356d872c8eab2c9",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "だって大凶じゃん☆",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-8123",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_13698f24682b6d326726f0a5",
+        "sc_a45808e18ccd21fb31b529a7",
+        "sc_d19b62b774529d01e3c3dd04",
+        "sc_f0dd53c4da6838a7cb7aeed3"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_fa0ac624a0abc745187252a4",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なじられたって泣けない 愛されたって泣けない",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-8123",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_2188eeda363baf863ed40b30",
+        "sc_29bd0019c545e3b84e1e93c4",
+        "sc_94e9edcd6d0c743c231397d6",
+        "sc_a1ca3c23a4f7faef9fbb39d6"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_a9cb8630fb580b84c3e407fa",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "Pi-Pi-Pit-a-pat！",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-8123",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：中村瑛彦",
+          "names": [
+            "中村瑛彦"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：中村瑛彦",
+          "names": [
+            "中村瑛彦"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：中村瑛彦",
+          "names": [
+            "中村瑛彦"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_13698f24682b6d326726f0a5",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "だって大凶じゃん☆",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-8124",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：早川響介",
+          "names": [
+            "早川響介"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_4714b50eb356d872c8eab2c9",
+        "sc_a45808e18ccd21fb31b529a7",
+        "sc_d19b62b774529d01e3c3dd04",
+        "sc_f0dd53c4da6838a7cb7aeed3"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_94e9edcd6d0c743c231397d6",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なじられたって泣けない 愛されたって泣けない",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-8124",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_2188eeda363baf863ed40b30",
+        "sc_29bd0019c545e3b84e1e93c4",
+        "sc_a1ca3c23a4f7faef9fbb39d6",
+        "sc_fa0ac624a0abc745187252a4"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_498c83dbf06805e0c4810199",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "バッターズボックスはどこ？",
+      "release_title": "だって大凶じゃん☆/なじられたって泣けない 愛されたって泣けない",
+      "release_date": "2026-11-04",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7703/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-8124",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_78b956ca567dc26d8f54b2f2",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "夏のイナズマ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7942",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_6b6d58feeeb76732207fe2b3",
+        "sc_884f272d2cfe3ccdcdf9f79b",
+        "sc_8e97026b7a2451e1a78e28de",
+        "sc_906eb5d4242b7ae7720210d8",
+        "sc_da086492d2b2eb5cb3ffdfb5"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_5deacbf1f619254dab91d642",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ガオガオガオ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7942",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大沢圭一",
+          "names": [
+            "大沢圭一"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_48fc179b481299a6dc9cdbda",
+        "sc_5a26038fc41671229fb60229",
+        "sc_68bb164e475d5485d4b422e1",
+        "sc_795ad87abf6b74a2f84adc62",
+        "sc_d1357d5776ca73ee3177d919",
+        "sc_e9bd629a34c11542b497bd30"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_c8d0a6470fc181b7732d888c",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "薔薇より美しい人生",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7942",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：ありぼぼ",
+          "names": [
+            "ありぼぼ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_0f76b04e6cd02a3a972e4f5f",
+        "sc_8d9cd8d3f2621c9964c85540",
+        "sc_8e5630f83804811e9c3432e7",
+        "sc_9ea3d87f32bab619173601f5",
+        "sc_e28288705de8521c099cb00c"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_da086492d2b2eb5cb3ffdfb5",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "夏のイナズマ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7944",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_6b6d58feeeb76732207fe2b3",
+        "sc_78b956ca567dc26d8f54b2f2",
+        "sc_884f272d2cfe3ccdcdf9f79b",
+        "sc_8e97026b7a2451e1a78e28de",
+        "sc_906eb5d4242b7ae7720210d8"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_48fc179b481299a6dc9cdbda",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ガオガオガオ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7944",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大沢圭一",
+          "names": [
+            "大沢圭一"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_5a26038fc41671229fb60229",
+        "sc_5deacbf1f619254dab91d642",
+        "sc_68bb164e475d5485d4b422e1",
+        "sc_795ad87abf6b74a2f84adc62",
+        "sc_d1357d5776ca73ee3177d919",
+        "sc_e9bd629a34c11542b497bd30"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_0f76b04e6cd02a3a972e4f5f",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "薔薇より美しい人生",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7944",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：ありぼぼ",
+          "names": [
+            "ありぼぼ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_8d9cd8d3f2621c9964c85540",
+        "sc_8e5630f83804811e9c3432e7",
+        "sc_9ea3d87f32bab619173601f5",
+        "sc_c8d0a6470fc181b7732d888c",
+        "sc_e28288705de8521c099cb00c"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_8e97026b7a2451e1a78e28de",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "夏のイナズマ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤SP】",
+      "disc_index": 0,
+      "product_number": "EPCE-7946",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_6b6d58feeeb76732207fe2b3",
+        "sc_78b956ca567dc26d8f54b2f2",
+        "sc_884f272d2cfe3ccdcdf9f79b",
+        "sc_906eb5d4242b7ae7720210d8",
+        "sc_da086492d2b2eb5cb3ffdfb5"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_68bb164e475d5485d4b422e1",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ガオガオガオ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤SP】",
+      "disc_index": 0,
+      "product_number": "EPCE-7946",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大沢圭一",
+          "names": [
+            "大沢圭一"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_48fc179b481299a6dc9cdbda",
+        "sc_5a26038fc41671229fb60229",
+        "sc_5deacbf1f619254dab91d642",
+        "sc_795ad87abf6b74a2f84adc62",
+        "sc_d1357d5776ca73ee3177d919",
+        "sc_e9bd629a34c11542b497bd30"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_9ea3d87f32bab619173601f5",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "薔薇より美しい人生",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤SP】",
+      "disc_index": 0,
+      "product_number": "EPCE-7946",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：ありぼぼ",
+          "names": [
+            "ありぼぼ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_0f76b04e6cd02a3a972e4f5f",
+        "sc_8d9cd8d3f2621c9964c85540",
+        "sc_8e5630f83804811e9c3432e7",
+        "sc_c8d0a6470fc181b7732d888c",
+        "sc_e28288705de8521c099cb00c"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_6b6d58feeeb76732207fe2b3",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "夏のイナズマ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7948",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_78b956ca567dc26d8f54b2f2",
+        "sc_884f272d2cfe3ccdcdf9f79b",
+        "sc_8e97026b7a2451e1a78e28de",
+        "sc_906eb5d4242b7ae7720210d8",
+        "sc_da086492d2b2eb5cb3ffdfb5"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_e9bd629a34c11542b497bd30",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ガオガオガオ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7948",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大沢圭一",
+          "names": [
+            "大沢圭一"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_48fc179b481299a6dc9cdbda",
+        "sc_5a26038fc41671229fb60229",
+        "sc_5deacbf1f619254dab91d642",
+        "sc_68bb164e475d5485d4b422e1",
+        "sc_795ad87abf6b74a2f84adc62",
+        "sc_d1357d5776ca73ee3177d919"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_e28288705de8521c099cb00c",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "薔薇より美しい人生",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7948",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：ありぼぼ",
+          "names": [
+            "ありぼぼ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_0f76b04e6cd02a3a972e4f5f",
+        "sc_8d9cd8d3f2621c9964c85540",
+        "sc_8e5630f83804811e9c3432e7",
+        "sc_9ea3d87f32bab619173601f5",
+        "sc_c8d0a6470fc181b7732d888c"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_f5f80c2dbf7f64d60ad8077e",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ダイスキだけど付き合えない【Additional Track】",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 4,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7948",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：児玉雨子",
+          "names": [
+            "児玉雨子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：渡部チェル",
+          "names": [
+            "渡部チェル"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_906eb5d4242b7ae7720210d8",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "夏のイナズマ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7949",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_6b6d58feeeb76732207fe2b3",
+        "sc_78b956ca567dc26d8f54b2f2",
+        "sc_884f272d2cfe3ccdcdf9f79b",
+        "sc_8e97026b7a2451e1a78e28de",
+        "sc_da086492d2b2eb5cb3ffdfb5"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_d1357d5776ca73ee3177d919",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ガオガオガオ",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7949",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大沢圭一",
+          "names": [
+            "大沢圭一"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_48fc179b481299a6dc9cdbda",
+        "sc_5a26038fc41671229fb60229",
+        "sc_5deacbf1f619254dab91d642",
+        "sc_68bb164e475d5485d4b422e1",
+        "sc_795ad87abf6b74a2f84adc62",
+        "sc_e9bd629a34c11542b497bd30"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_8e5630f83804811e9c3432e7",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "薔薇より美しい人生",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7949",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：ありぼぼ",
+          "names": [
+            "ありぼぼ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_0f76b04e6cd02a3a972e4f5f",
+        "sc_8d9cd8d3f2621c9964c85540",
+        "sc_9ea3d87f32bab619173601f5",
+        "sc_c8d0a6470fc181b7732d888c",
+        "sc_e28288705de8521c099cb00c"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_d50c20aeae7ed0ce298bafa9",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "女で地球は回ってる【Additional Track】",
+      "release_title": "夏のイナズマ/ガオガオガオ",
+      "release_date": "2025-07-23",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7459/",
+      "track_number": 4,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7949",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：井筒日美",
+          "names": [
+            "井筒日美"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_884f272d2cfe3ccdcdf9f79b",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "夏のイナズマ",
+      "release_title": "夏のイナズマ/ガオガオガオ(Special Edition)",
+      "release_date": "2025-07-23",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "track_number": 1,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1559",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_6b6d58feeeb76732207fe2b3",
+        "sc_78b956ca567dc26d8f54b2f2",
+        "sc_8e97026b7a2451e1a78e28de",
+        "sc_906eb5d4242b7ae7720210d8",
+        "sc_da086492d2b2eb5cb3ffdfb5"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_5a26038fc41671229fb60229",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ガオガオガオ",
+      "release_title": "夏のイナズマ/ガオガオガオ(Special Edition)",
+      "release_date": "2025-07-23",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "track_number": 2,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1559",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大沢圭一",
+          "names": [
+            "大沢圭一"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_48fc179b481299a6dc9cdbda",
+        "sc_5deacbf1f619254dab91d642",
+        "sc_68bb164e475d5485d4b422e1",
+        "sc_795ad87abf6b74a2f84adc62",
+        "sc_d1357d5776ca73ee3177d919",
+        "sc_e9bd629a34c11542b497bd30"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_8d9cd8d3f2621c9964c85540",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "薔薇より美しい人生",
+      "release_title": "夏のイナズマ/ガオガオガオ(Special Edition)",
+      "release_date": "2025-07-23",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "track_number": 3,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1559",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：ありぼぼ",
+          "names": [
+            "ありぼぼ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_0f76b04e6cd02a3a972e4f5f",
+        "sc_8e5630f83804811e9c3432e7",
+        "sc_9ea3d87f32bab619173601f5",
+        "sc_c8d0a6470fc181b7732d888c",
+        "sc_e28288705de8521c099cb00c"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_68c711215a8ada27fb1ed439",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ダイスキだけど付き合えない",
+      "release_title": "夏のイナズマ/ガオガオガオ(Special Edition)",
+      "release_date": "2025-07-23",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "track_number": 4,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1559",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：児玉雨子",
+          "names": [
+            "児玉雨子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：渡部チェル",
+          "names": [
+            "渡部チェル"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_51ce933698c41dba686867f4",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "女で地球は回ってる",
+      "release_title": "夏のイナズマ/ガオガオガオ(Special Edition)",
+      "release_date": "2025-07-23",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7502/",
+      "track_number": 5,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1559",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：井筒日美",
+          "names": [
+            "井筒日美"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_795ad87abf6b74a2f84adc62",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ガオガオガオ",
+      "release_title": "ガオガオガオ",
+      "release_date": "2025-04-05",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7447/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7447/",
+      "track_number": 1,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1553",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大沢圭一",
+          "names": [
+            "大沢圭一"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_48fc179b481299a6dc9cdbda",
+        "sc_5a26038fc41671229fb60229",
+        "sc_5deacbf1f619254dab91d642",
+        "sc_68bb164e475d5485d4b422e1",
+        "sc_d1357d5776ca73ee3177d919",
+        "sc_e9bd629a34c11542b497bd30"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_55245030871b80de01efbf50",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ガオガオガオ(アニメサイズ)",
+      "release_title": "ガオガオガオ",
+      "release_date": "2025-04-05",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7447/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7447/",
+      "track_number": 2,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1553",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：MIKOTO",
+          "names": [
+            "MIKOTO"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大沢圭一",
+          "names": [
+            "大沢圭一"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_b831e749693c0f0ad5135f86",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "へいらっしゃい！～ニッポンで会いましょう～",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7909",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_4dcabae605dfafca18ca9316",
+        "sc_528c1e1967b5adf05e104fab",
+        "sc_6f1be9d2c26fddabc61ca4f6",
+        "sc_7d765c92653db80cc7d39549",
+        "sc_db748dc683738b3722f23381",
+        "sc_ef7536004f0474a23aa1ddd7"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_43afe9559e5ec559a5ad05db",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ウブとズル",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7909",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_23fc56352bbb7f81d2709e51",
+        "sc_3f7861ccd8350bd77926bbff",
+        "sc_5e1ee1f9532855a6bd7af744",
+        "sc_7c5eb53df2b93943529878a7",
+        "sc_965c71b59713a4ef0b8a9c63",
+        "sc_ea48fad72460b29bd3fbfcc2"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_7d765c92653db80cc7d39549",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "へいらっしゃい！～ニッポンで会いましょう～",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7911",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_4dcabae605dfafca18ca9316",
+        "sc_528c1e1967b5adf05e104fab",
+        "sc_6f1be9d2c26fddabc61ca4f6",
+        "sc_b831e749693c0f0ad5135f86",
+        "sc_db748dc683738b3722f23381",
+        "sc_ef7536004f0474a23aa1ddd7"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_3f7861ccd8350bd77926bbff",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ウブとズル",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7911",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_23fc56352bbb7f81d2709e51",
+        "sc_43afe9559e5ec559a5ad05db",
+        "sc_5e1ee1f9532855a6bd7af744",
+        "sc_7c5eb53df2b93943529878a7",
+        "sc_965c71b59713a4ef0b8a9c63",
+        "sc_ea48fad72460b29bd3fbfcc2"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_4dcabae605dfafca18ca9316",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "へいらっしゃい！～ニッポンで会いましょう～",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤SP】",
+      "disc_index": 0,
+      "product_number": "EPCE-7913",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_528c1e1967b5adf05e104fab",
+        "sc_6f1be9d2c26fddabc61ca4f6",
+        "sc_7d765c92653db80cc7d39549",
+        "sc_b831e749693c0f0ad5135f86",
+        "sc_db748dc683738b3722f23381",
+        "sc_ef7536004f0474a23aa1ddd7"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_965c71b59713a4ef0b8a9c63",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ウブとズル",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤SP】",
+      "disc_index": 0,
+      "product_number": "EPCE-7913",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_23fc56352bbb7f81d2709e51",
+        "sc_3f7861ccd8350bd77926bbff",
+        "sc_43afe9559e5ec559a5ad05db",
+        "sc_5e1ee1f9532855a6bd7af744",
+        "sc_7c5eb53df2b93943529878a7",
+        "sc_ea48fad72460b29bd3fbfcc2"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_528c1e1967b5adf05e104fab",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "へいらっしゃい！～ニッポンで会いましょう～",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7915",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_4dcabae605dfafca18ca9316",
+        "sc_6f1be9d2c26fddabc61ca4f6",
+        "sc_7d765c92653db80cc7d39549",
+        "sc_b831e749693c0f0ad5135f86",
+        "sc_db748dc683738b3722f23381",
+        "sc_ef7536004f0474a23aa1ddd7"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_ea48fad72460b29bd3fbfcc2",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ウブとズル",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7915",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_23fc56352bbb7f81d2709e51",
+        "sc_3f7861ccd8350bd77926bbff",
+        "sc_43afe9559e5ec559a5ad05db",
+        "sc_5e1ee1f9532855a6bd7af744",
+        "sc_7c5eb53df2b93943529878a7",
+        "sc_965c71b59713a4ef0b8a9c63"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_8c09644743d3d67d429c346c",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "CHOちょこっとロッケンロール【Additional Track】",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7915",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：児玉雨子",
+          "names": [
+            "児玉雨子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_6f1be9d2c26fddabc61ca4f6",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "へいらっしゃい！～ニッポンで会いましょう～",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7916",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_4dcabae605dfafca18ca9316",
+        "sc_528c1e1967b5adf05e104fab",
+        "sc_7d765c92653db80cc7d39549",
+        "sc_b831e749693c0f0ad5135f86",
+        "sc_db748dc683738b3722f23381",
+        "sc_ef7536004f0474a23aa1ddd7"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_7c5eb53df2b93943529878a7",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ウブとズル",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7916",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_23fc56352bbb7f81d2709e51",
+        "sc_3f7861ccd8350bd77926bbff",
+        "sc_43afe9559e5ec559a5ad05db",
+        "sc_5e1ee1f9532855a6bd7af744",
+        "sc_965c71b59713a4ef0b8a9c63",
+        "sc_ea48fad72460b29bd3fbfcc2"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_e7dcd44c569b8540628ee430",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "未来ハジマリ【Additional Track】",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7916",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_db748dc683738b3722f23381",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "へいらっしゃい！～ニッポンで会いましょう～",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【通常盤C】",
+      "disc_index": 0,
+      "product_number": "EPCE-7917",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_4dcabae605dfafca18ca9316",
+        "sc_528c1e1967b5adf05e104fab",
+        "sc_6f1be9d2c26fddabc61ca4f6",
+        "sc_7d765c92653db80cc7d39549",
+        "sc_b831e749693c0f0ad5135f86",
+        "sc_ef7536004f0474a23aa1ddd7"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_5e1ee1f9532855a6bd7af744",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ウブとズル",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【通常盤C】",
+      "disc_index": 0,
+      "product_number": "EPCE-7917",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_23fc56352bbb7f81d2709e51",
+        "sc_3f7861ccd8350bd77926bbff",
+        "sc_43afe9559e5ec559a5ad05db",
+        "sc_7c5eb53df2b93943529878a7",
+        "sc_965c71b59713a4ef0b8a9c63",
+        "sc_ea48fad72460b29bd3fbfcc2"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_8541fcd96c47ef83c3c2a633",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "8bit片想い【Additional Track】",
+      "release_title": "へいらっしゃい！〜ニッポンで会いましょう〜/ウブとズル",
+      "release_date": "2025-03-19",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7384/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【通常盤C】",
+      "disc_index": 0,
+      "product_number": "EPCE-7917",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：児玉雨子",
+          "names": [
+            "児玉雨子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_ef7536004f0474a23aa1ddd7",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "へいらっしゃい！～ニッポンで会いましょう～",
+      "release_title": "へいらっしゃい！～ニッポンで会いましょう～/ウブとズル(Special Edition)",
+      "release_date": "2025-03-19",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "track_number": 1,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1552",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：平田祥一郎",
+          "names": [
+            "平田祥一郎"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_4dcabae605dfafca18ca9316",
+        "sc_528c1e1967b5adf05e104fab",
+        "sc_6f1be9d2c26fddabc61ca4f6",
+        "sc_7d765c92653db80cc7d39549",
+        "sc_b831e749693c0f0ad5135f86",
+        "sc_db748dc683738b3722f23381"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_23fc56352bbb7f81d2709e51",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "ウブとズル",
+      "release_title": "へいらっしゃい！～ニッポンで会いましょう～/ウブとズル(Special Edition)",
+      "release_date": "2025-03-19",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "track_number": 2,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1552",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：大森祥子",
+          "names": [
+            "大森祥子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_3f7861ccd8350bd77926bbff",
+        "sc_43afe9559e5ec559a5ad05db",
+        "sc_5e1ee1f9532855a6bd7af744",
+        "sc_7c5eb53df2b93943529878a7",
+        "sc_965c71b59713a4ef0b8a9c63",
+        "sc_ea48fad72460b29bd3fbfcc2"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_6f1a1a10d37bdb2fb8175327",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "CHOちょこっとロッケンロール",
+      "release_title": "へいらっしゃい！～ニッポンで会いましょう～/ウブとズル(Special Edition)",
+      "release_date": "2025-03-19",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "track_number": 3,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1552",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：児玉雨子",
+          "names": [
+            "児玉雨子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_b956a55347f30ba6f72002a6",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "未来ハジマリ",
+      "release_title": "へいらっしゃい！～ニッポンで会いましょう～/ウブとズル(Special Edition)",
+      "release_date": "2025-03-19",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "track_number": 4,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1552",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：鈴木俊介",
+          "names": [
+            "鈴木俊介"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_9cb49e584eced16bcd8d38b4",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "8bit片想い",
+      "release_title": "へいらっしゃい！～ニッポンで会いましょう～/ウブとズル(Special Edition)",
+      "release_date": "2025-03-19",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7418/",
+      "track_number": 5,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1552",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：児玉雨子",
+          "names": [
+            "児玉雨子"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_82dfe8d0cefb52c6040666fe",
+      "artist_id": null,
+      "artist_slug": null,
+      "artist_name": "ConChu!",
+      "title": "ニンミンフレンズ",
+      "release_title": "ニンミンフレンズ",
+      "release_date": "2026-07-18",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7690/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7690/",
+      "track_number": 1,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1599",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：原田 茂幸",
+          "names": [
+            "原田 茂幸"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：原田 茂幸",
+          "names": [
+            "原田 茂幸"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：原田 茂幸",
+          "names": [
+            "原田 茂幸"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ConChu！",
+          "names": [
+            "ConChu！"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_b4a90b7f104ae3904256cd98",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "Misery～愛の天秤～",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7981",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_7eab23790c0d029443514612",
+        "sc_878b6b21438d847cc2a42e76",
+        "sc_a4adbabf229b197487d52d0f",
+        "sc_bdc9cd58a610e1b179f74e92",
+        "sc_c4c1935ab3afec028f951daf"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_ccf87e799c870ebbb4a8f3fc",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なんとかなるでしょ",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7981",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：炭竃智弘",
+          "names": [
+            "炭竃智弘"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_335ce9e5da63efdfe2d41b39",
+        "sc_5d9f4495c2da4f419115ee95",
+        "sc_a4b7fc1110ec0c4733897f45",
+        "sc_b8143ae29a791e545ca3b412",
+        "sc_c0a2d72a62d79f835c2fe098"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_bdc9cd58a610e1b179f74e92",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "Misery～愛の天秤～",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7983",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_7eab23790c0d029443514612",
+        "sc_878b6b21438d847cc2a42e76",
+        "sc_a4adbabf229b197487d52d0f",
+        "sc_b4a90b7f104ae3904256cd98",
+        "sc_c4c1935ab3afec028f951daf"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_c0a2d72a62d79f835c2fe098",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なんとかなるでしょ",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7983",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：炭竃智弘",
+          "names": [
+            "炭竃智弘"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_335ce9e5da63efdfe2d41b39",
+        "sc_5d9f4495c2da4f419115ee95",
+        "sc_a4b7fc1110ec0c4733897f45",
+        "sc_b8143ae29a791e545ca3b412",
+        "sc_ccf87e799c870ebbb4a8f3fc"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_a4adbabf229b197487d52d0f",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "Misery～愛の天秤～",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤SP】",
+      "disc_index": 0,
+      "product_number": "EPCE-7985",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_7eab23790c0d029443514612",
+        "sc_878b6b21438d847cc2a42e76",
+        "sc_b4a90b7f104ae3904256cd98",
+        "sc_bdc9cd58a610e1b179f74e92",
+        "sc_c4c1935ab3afec028f951daf"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_a4b7fc1110ec0c4733897f45",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なんとかなるでしょ",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【初回生産限定盤SP】",
+      "disc_index": 0,
+      "product_number": "EPCE-7985",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：炭竃智弘",
+          "names": [
+            "炭竃智弘"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_335ce9e5da63efdfe2d41b39",
+        "sc_5d9f4495c2da4f419115ee95",
+        "sc_b8143ae29a791e545ca3b412",
+        "sc_c0a2d72a62d79f835c2fe098",
+        "sc_ccf87e799c870ebbb4a8f3fc"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_c4c1935ab3afec028f951daf",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "Misery～愛の天秤～",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7987",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_7eab23790c0d029443514612",
+        "sc_878b6b21438d847cc2a42e76",
+        "sc_a4adbabf229b197487d52d0f",
+        "sc_b4a90b7f104ae3904256cd98",
+        "sc_bdc9cd58a610e1b179f74e92"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_335ce9e5da63efdfe2d41b39",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なんとかなるでしょ",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7987",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：炭竃智弘",
+          "names": [
+            "炭竃智弘"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_5d9f4495c2da4f419115ee95",
+        "sc_a4b7fc1110ec0c4733897f45",
+        "sc_b8143ae29a791e545ca3b412",
+        "sc_c0a2d72a62d79f835c2fe098",
+        "sc_ccf87e799c870ebbb4a8f3fc"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_83499114124ac29f7702aec6",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "記念日未満【Additional Track】",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【通常盤A】",
+      "disc_index": 0,
+      "product_number": "EPCE-7987",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：馬瀬みさき",
+          "names": [
+            "馬瀬みさき"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_7eab23790c0d029443514612",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "Misery～愛の天秤～",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 1,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7988",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_878b6b21438d847cc2a42e76",
+        "sc_a4adbabf229b197487d52d0f",
+        "sc_b4a90b7f104ae3904256cd98",
+        "sc_bdc9cd58a610e1b179f74e92",
+        "sc_c4c1935ab3afec028f951daf"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_b8143ae29a791e545ca3b412",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なんとかなるでしょ",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 2,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7988",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：炭竃智弘",
+          "names": [
+            "炭竃智弘"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_335ce9e5da63efdfe2d41b39",
+        "sc_5d9f4495c2da4f419115ee95",
+        "sc_a4b7fc1110ec0c4733897f45",
+        "sc_c0a2d72a62d79f835c2fe098",
+        "sc_ccf87e799c870ebbb4a8f3fc"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_637edaf74ce2c426e1624b62",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "バラ色アンソロージー【Additional Track】",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ",
+      "release_date": "2026-03-18",
+      "release_type": "CDシングル",
+      "source_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7611/",
+      "track_number": 3,
+      "media_type": "CD",
+      "edition": "【通常盤B】",
+      "disc_index": 0,
+      "product_number": "EPCE-7988",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：西野蒟蒻",
+          "names": [
+            "西野蒟蒻"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：馬瀬みさき",
+          "names": [
+            "馬瀬みさき"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：馬瀬みさき",
+          "names": [
+            "馬瀬みさき"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_878b6b21438d847cc2a42e76",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "Misery ～愛の天秤～",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ(Special Edition)",
+      "release_date": "2026-03-18",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7645/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7645/",
+      "track_number": 1,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1583",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：星部ショウ",
+          "names": [
+            "星部ショウ"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：大久保薫",
+          "names": [
+            "大久保薫"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_7eab23790c0d029443514612",
+        "sc_a4adbabf229b197487d52d0f",
+        "sc_b4a90b7f104ae3904256cd98",
+        "sc_bdc9cd58a610e1b179f74e92",
+        "sc_c4c1935ab3afec028f951daf"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_5d9f4495c2da4f419115ee95",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "なんとかなるでしょ",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ(Special Edition)",
+      "release_date": "2026-03-18",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7645/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7645/",
+      "track_number": 2,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1583",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：中島卓偉",
+          "names": [
+            "中島卓偉"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：炭竃智弘",
+          "names": [
+            "炭竃智弘"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [
+        "sc_335ce9e5da63efdfe2d41b39",
+        "sc_a4b7fc1110ec0c4733897f45",
+        "sc_b8143ae29a791e545ca3b412",
+        "sc_c0a2d72a62d79f835c2fe098",
+        "sc_ccf87e799c870ebbb4a8f3fc"
+      ],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_06c7c2ce317e4b04fc1a106e",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "記念日未満",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ(Special Edition)",
+      "release_date": "2026-03-18",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7645/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7645/",
+      "track_number": 3,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1583",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：山崎あおい",
+          "names": [
+            "山崎あおい"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：KOUGA",
+          "names": [
+            "KOUGA"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：馬瀬みさき",
+          "names": [
+            "馬瀬みさき"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    },
+    {
+      "candidate_id": "sc_7a1f0347c0c356d11e4aab4a",
+      "artist_id": null,
+      "artist_slug": "rosychronicle",
+      "artist_name": "ロージークロニクル",
+      "title": "バラ色アンソロージー",
+      "release_title": "Misery ～愛の天秤～/なんとかなるでしょ(Special Edition)",
+      "release_date": "2026-03-18",
+      "release_type": "配信",
+      "source_url": "https://helloproject.com/rosychronicle/release/7645/",
+      "source_release_url": "https://helloproject.com/rosychronicle/release/7645/",
+      "track_number": 4,
+      "media_type": "STREAMING",
+      "edition": "edition-0",
+      "disc_index": 0,
+      "product_number": "UFDL-1583",
+      "status": "pending",
+      "detected_at": "2026-10-10T15:43:07.520Z",
+      "last_seen_at": "2026-10-10T16:35:22.447Z",
+      "credits": {
+        "lyrics": {
+          "raw": "作詞：西野蒟蒻",
+          "names": [
+            "西野蒟蒻"
+          ]
+        },
+        "composition": {
+          "raw": "作曲：馬瀬みさき",
+          "names": [
+            "馬瀬みさき"
+          ]
+        },
+        "arrangement": {
+          "raw": "編曲：馬瀬みさき",
+          "names": [
+            "馬瀬みさき"
+          ]
+        },
+        "performer": {
+          "raw": "歌：ロージークロニクル",
+          "names": [
+            "ロージークロニクル"
+          ]
+        }
+      },
+      "match": {
+        "state": "no_match",
+        "song_ids": [],
+        "work_ids": [],
+        "confirmed_song_id": null,
+        "confirmed_work_id": null
+      },
+      "notes": "",
+      "related_candidates": [],
+      "source_artist_slug": "rosychronicle"
+    }
+  ],
+  "updated_at": "2026-10-10T16:35:22.447Z"
+}

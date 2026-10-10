@@ -1,0 +1,9 @@
+{
+  "type": "release",
+  "year": 2025,
+  "items": [
+    {"id": 7459, "artistsSearch": [676], "categoryLabel": "CDシングル", "title": "夏のイナズマ/ガオガオガオ", "link": "/release/7459/"},
+    {"id": 7553, "artistsSearch": [676], "categoryLabel": "写真集", "title": "ほのほの", "link": "/release/7553/"},
+    {"id": 9999, "artistsSearch": [3], "categoryLabel": "配信", "title": "別artist", "link": "/release/9999/"}
+  ]
+}
