@@ -51,13 +51,17 @@ Juice=Juice（`G00001`）を対象に、以下を実装済みです。
 
 ## Milestone 3：他Hello! Projectグループへの展開
 
-3-A Follow-upで候補collectorをモーニング娘。、アンジュルム、Juice=Juice、つばきファクトリー、BEYOOOOONDS、OCHA NORMA、ロージークロニクルの7グループに展開済み。ランキング処理は特定の`artist_id`をハードコードせず、指定して集計できる構成を維持する。
+3-A と 3-A Follow-up は完了。候補 collector はモーニング娘。、アンジュルム、Juice=Juice、つばきファクトリー、BEYOOOOONDS、OCHA NORMA、ロージークロニクルの主要7グループに対応し、実サイトで全対象 artist の収集に成功した。ランキング処理は特定の `artist_id` をハードコードせず、指定して集計できる構成を維持する。次フェーズは 3-B canonical registration とする。
 
-- **3-A 候補収集バッチ + 中間JSON**：公式release一覧・詳細から音声トラックを収集し、正本CSVと参考照合して `staging/song-candidates.json` に保存する。人間のstatusとnotesを再実行時も保持する。詳細は[収集仕様](collection-spec.md)。
-- **3-A Follow-up 複数artist収集**：通常運用は `npm run collect:candidates` で全対象、個別確認は `npm run collect:candidates -- --artist rosychronicle`。全選択artistの成功後だけ共通stagingを一度保存し、途中失敗時は全体を更新しない。期間指定は実装しない。旧名義・関連ユニットはsourceと実名義を区別して保持し、artist identityを自動統合しない。これは3-Bではなく、正本反映・ID採番・管理画面・認証・週次実行・通知は追加しない。
-- **3-B 候補から正本への反映**：人間が確定した候補だけを正本CSVに反映する。song/work/creatorのID採番やversion判定はここで扱う。
-- **3-C 認証付き管理画面**：候補を確認・修正し、確定・保留・除外を選べる画面を作る。
-- **3-D 週次自動実行・通知**：収集と差分確認を定期化し、必要な通知を整える。
+- **3-A 候補収集バッチ + 中間JSON（完了）**：公式 release 一覧・詳細から音声トラックを収集し、正本 CSV と参考照合して `staging/song-candidates.json` に保存する。人間の status と notes を再実行時も保持する。詳細は[収集仕様](collection-spec.md)。
+- **3-A Follow-up 複数artist収集（完了）**：通常運用は設定済み7グループ全体、個別確認は `--artist <slug>` を使用する。全選択 artist の成功後だけ共通 staging を一度保存し、途中失敗時は更新しない。旧名義・関連ユニットは source と実名義を区別して保持し、artist identity を自動統合しない。
+- **3-B0 structure / docs refresh（今回）**：現行構造、実装機能、データフローを README と基本設計に反映し、3-B1 / 3-B2 の入口を整理する。既存機能・データ形式は変更しない。
+- **3-B1 review preparation（次）**：候補と正本 CSV を照合し、自動で分かる情報と人間判断が必要な項目をレビュー可能に整理する。正本 CSV は書き換えない。
+- **3-B2 canonical apply（予定）**：人間が確定した decision を検証し、ID 採番と正本 CSV 反映を行う。途中失敗時に部分更新を残さない。
+- **3-C 認証付き管理画面（予定）**：3-B1 の結果を表示し、人間の判断を 3-B2 へ渡す。実現方式は着手時に検討する。
+- **3-D 定期収集・通知（予定）**：収集と差分確認を定期化し、必要な通知を整える。
+
+3-B の基本設計は[canonical registration 基本設計](design/canonical-registration.md)を参照。review JSON と decision JSON の詳細 schema は 3-B1 / 3-B2 の着手時に決める。
 
 公開サイトはGitHub Pagesを継続する。独自ドメインは将来の公開設定として検討する。
 

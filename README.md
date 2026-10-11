@@ -2,6 +2,12 @@
 
 Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を、検索・集計しやすい形で管理するためのデータリポジトリです。
 
+## プロジェクト概要
+
+このリポジトリは、`data/*.csv` を唯一の正本（canonical CSV）として管理します。Hello! Project 公式サイトから楽曲候補を収集する candidate collector、確認待ちの候補と収集履歴を置く `staging/song-candidates.json`、正本から集計・生成する作家ランキングと公開静的サイトを含みます。人間の判断を経て候補を正本へ登録する canonical registration は Milestone 3-B の予定です。
+
+現在の公開サイトは Juice=Juice のランキングを表示します。collector は設定済みの主要7グループに対応していますが、収集した候補がそのまま公開サイトや正本 CSV に反映されるわけではありません。
+
 ## 管理対象
 
 - 楽曲作品（work）、具体的な音源・歌唱版（song）、シングル／アルバム／配信等の商品（release）
@@ -20,26 +26,51 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 ```text
 .
-├── README.md
-├── docs/
-│   ├── data-spec.md       # CSV の列、制約、運用ルール
-│   └── roadmap.md         # 今後の実装マイルストーン
-└── data/                  # 正本となる CSV
-    ├── works.csv
-    ├── songs.csv
-    ├── creators.csv
-    ├── song_creators.csv
-    ├── artists.csv
-    ├── members.csv
-    ├── member_affiliations.csv
-    ├── song_artists.csv
-    ├── song_performers.csv
-    ├── releases.csv
-    ├── release_tracks.csv
-    ├── videos.csv
-    ├── video_songs.csv
-    └── video_song_performers.csv
+├── .github/               # GitHub Actions / Pages
+├── .vscode/               # 開発用タスク設定
+├── data/                  # canonical CSV（唯一の正本）
+├── docs/                  # 基本設計、詳細仕様、roadmap、調査記録
+│   ├── design/            # 機能ごとの基本設計
+│   └── research/          # 調査記録
+├── scripts/               # 収集・集計・検証・preview の CLI entrypoint
+├── site/                  # 公開静的サイトと生成済み ranking JSON
+├── src/                   # application logic
+│   ├── collector/         # 公式 release 取得・解析・候補統合
+│   ├── canonical.js       # ranking 用の canonical CSV 読み込み
+│   ├── csv.js             # CSV 読み込み
+│   └── rankings.js        # 作家ランキング集計
+├── staging/               # 確認待ち候補と収集履歴
+├── test/                  # tests / fixtures
+├── .gitignore             # 管理対象外ファイルの指定
+├── package.json           # CLI と test の実行定義
+└── README.md
 ```
+
+## データフロー
+
+```text
+Hello! Project 公式 release 一覧・詳細
+  ↓ candidate collector（実装済み）
+staging/song-candidates.json（確認待ち・収集履歴）
+  ↓ review / canonical registration（Milestone 3-B、planned）
+data/*.csv（唯一の正本）
+  ↓ ranking / site build（実装済み）
+site/data/rankings/*.json（生成物）
+  ↓ GitHub Pages（実装済み）
+公開サイト
+```
+
+collector は正本 CSV を参考照合のために読みますが、直接更新しません。`staging/` は確認待ち候補と収集履歴の保存先であり、正本ではありません。`site/data/` などの生成物は正本 CSV から再生成する表示用データです。3-B では人間が確認した判断だけを正本へ反映する経路を設計・実装します。
+
+## 設計書・仕様書
+
+- [公開サイト基本設計](docs/design/public-site.md)：正本からランキングを生成し公開する流れ
+- [候補収集基本設計](docs/design/candidate-collector.md)：公式 release から staging までの流れ
+- [canonical registration 基本設計](docs/design/canonical-registration.md)：Milestone 3-B の責務と段階
+- [データ仕様](docs/data-spec.md)：canonical CSV の列・制約・運用ルール
+- [収集仕様](docs/collection-spec.md)：collector の詳細仕様
+- [ランキング集計仕様](docs/ranking-spec.md)：集計・生成物の詳細仕様
+- [Roadmap](docs/roadmap.md)：milestone と実装計画
 
 ## 現在の段階
 
@@ -51,7 +82,7 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 現在の実装状況と機能単位の実装予定は [Roadmap](docs/roadmap.md) を参照してください。
 
-静的 Web サイトをGitHub Pagesなどで公開し、作家・メンバー別の楽曲一覧、関連Version／カバー、所属履歴、限定ユニット、公式ライブ映像、および開始時刻付きYouTubeリンクなどへ広げる構成を目指します。DB、API、認証、外部backendは使用しません。
+現在の公開サイトは GitHub Pages 上の静的サイトです。作家・メンバー別の楽曲一覧、関連Version／カバー、所属履歴、限定ユニット、公式ライブ映像、および開始時刻付きYouTubeリンクなどは将来の拡張候補です。Milestone 3-C では認証付き管理画面を予定していますが、その実現方式や server-side 処理、DB、API、外部 backend の採否は未決定です。
 
 ## 開発フロー
 
