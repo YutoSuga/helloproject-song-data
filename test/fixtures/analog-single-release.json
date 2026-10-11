@@ -1,0 +1,199 @@
+{
+  "captured_at": "2026-10-11",
+  "description": "Official Hello! Project feed items for the morningmusume group and detail HTML excerpts. The detail excerpts retain each media section and its first track; trackCount records the original full-page count.",
+  "feed": [
+    {
+      "year": 1999,
+      "url": "https://helloproject.com/json/2610110200-WJMkPRZyIVpLBI63/1999_releases.json",
+      "items": [
+        {
+          "id": 1052,
+          "artistsSearch": [
+            3
+          ],
+          "releaseNamesSearch": [
+            2
+          ],
+          "releaseName": "モーニング娘。",
+          "date": "1999-10-06",
+          "category": [
+            "single"
+          ],
+          "categoryLabel": "アナログシングル",
+          "title": "LOVEマシーン",
+          "image": {
+            "alt": "LOVEマシーン",
+            "url": "/upload/images/e1b2ae04a9cecfec7cb88055732f4b33e2bcb963.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "EPJE-5035",
+          "link": "/release/1052/"
+        }
+      ]
+    },
+    {
+      "year": 2000,
+      "url": "https://helloproject.com/json/2610110200-WJMkPRZyIVpLBI63/2000_releases.json",
+      "items": [
+        {
+          "id": 1053,
+          "artistsSearch": [
+            3
+          ],
+          "releaseNamesSearch": [
+            2
+          ],
+          "releaseName": "モーニング娘。",
+          "date": "2000-02-09",
+          "category": [
+            "single"
+          ],
+          "categoryLabel": "アナログシングル",
+          "title": "恋のダンスサイト",
+          "image": {
+            "alt": "恋のダンスサイト",
+            "url": "/upload/images/d40d9c1af3be29f1c8a175778ada7aa722c67374.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "EPJE-5050",
+          "link": "/release/1053/"
+        }
+      ]
+    },
+    {
+      "year": 2001,
+      "url": "https://helloproject.com/json/2610110200-WJMkPRZyIVpLBI63/2001_releases.json",
+      "items": [
+        {
+          "id": 1054,
+          "artistsSearch": [
+            3
+          ],
+          "releaseNamesSearch": [
+            2
+          ],
+          "releaseName": "モーニング娘。",
+          "date": "2001-01-24",
+          "category": [
+            "single"
+          ],
+          "categoryLabel": "アナログシングル",
+          "title": "恋愛レボリューション21",
+          "image": {
+            "alt": "恋愛レボリューション21",
+            "url": "/resources/images/foundation/release-placeholder.jpg",
+            "hasBorder": false
+          },
+          "catalogNo": "EPJE-5084",
+          "link": "/release/1054/"
+        }
+      ]
+    },
+    {
+      "year": 2016,
+      "url": "https://helloproject.com/json/2610110200-WJMkPRZyIVpLBI63/2016_releases.json",
+      "items": [
+        {
+          "id": 4908,
+          "artistsSearch": [
+            3
+          ],
+          "releaseNamesSearch": [
+            526
+          ],
+          "releaseName": "モーニング娘。'16",
+          "date": "2016-08-10",
+          "category": [
+            "single"
+          ],
+          "categoryLabel": "アナログシングル",
+          "title": "泡沫サタデーナイト！/The Vision/Tokyoという片隅",
+          "image": {
+            "alt": "泡沫サタデーナイト！/The Vision/Tokyoという片隅",
+            "url": "/upload/images/039f2b2584addd2b7602f6c4ad52503f5503fb45.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "UFWT-9006_A,UFWT-9006_B",
+          "link": "/release/4908/"
+        },
+        {
+          "id": 4792,
+          "artistsSearch": [
+            3
+          ],
+          "releaseNamesSearch": [
+            488
+          ],
+          "releaseName": "モーニング娘。'15",
+          "date": "2016-05-11",
+          "category": [
+            "single"
+          ],
+          "categoryLabel": "アナログシングル",
+          "title": "冷たい風と片思い/ENDLESS SKY/One and Only",
+          "image": {
+            "alt": "冷たい風と片思い/ENDLESS SKY/One and Only",
+            "url": "/upload/images/c0d3126f58d97cfaab5e5df1aa286d7dfbc74865.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "UFWT-9003_A,UFWT-9003_B",
+          "link": "/release/4792/"
+        }
+      ]
+    }
+  ],
+  "details": [
+    {
+      "id": 1052,
+      "url": "https://helloproject.com/morningmusume/release/1052/",
+      "type": "アナログシングル",
+      "media": [
+        "ANALOG"
+      ],
+      "trackCount": 5,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/upload/images/e1b2ae04a9cecfec7cb88055732f4b33e2bcb963.webp\" alt=\"LOVEマシーン\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">アナログシングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        LOVEマシーン\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            1999.10.6\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>zetima</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            EPJE-5035\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        定価 \n                                                        ￥1,388\n                                                        （税抜価格 ￥1,262\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        \n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">ANALOG</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">EPJE-5035</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">LOVEマシーン</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">05:00</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->ダンス☆マン</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "id": 1053,
+      "url": "https://helloproject.com/morningmusume/release/1053/",
+      "type": "アナログシングル",
+      "media": [
+        "ANALOG"
+      ],
+      "trackCount": 4,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/upload/images/d40d9c1af3be29f1c8a175778ada7aa722c67374.webp\" alt=\"恋のダンスサイト\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">アナログシングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        恋のダンスサイト\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2000.2.9\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>zetima</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            EPJE-5050\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        定価 \n                                                        ￥1,495\n                                                        （税抜価格 ￥1,359\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        \n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">ANALOG</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">EPJE-5050</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"mr-[0.5em]\">恋のダンスサイト</span><span>(Original)</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:26</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->ダンス☆マン</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "id": 1054,
+      "url": "https://helloproject.com/morningmusume/release/1054/",
+      "type": "アナログシングル",
+      "media": [
+        "ANALOG"
+      ],
+      "trackCount": 4,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/resources/images/foundation/release-placeholder.jpg\" alt=\"恋愛レボリューション21\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">アナログシングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        恋愛レボリューション21\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2001.1.24\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>zetima</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            EPJE-5084\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        定価 \n                                                        ￥1,540\n                                                        （税抜価格 ￥1,400\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        \n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">ANALOG</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">EPJE-5084</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">恋愛レボリューション21</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:52</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->ダンス☆マン</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "id": 4908,
+      "url": "https://helloproject.com/morningmusume/release/4908/",
+      "type": "アナログシングル",
+      "media": [
+        "ANALOG",
+        "ANALOG"
+      ],
+      "trackCount": 4,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/upload/images/039f2b2584addd2b7602f6c4ad52503f5503fb45.webp\" alt=\"泡沫サタデーナイト！/The Vision/Tokyoという片隅\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">アナログシングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        泡沫サタデーナイト！/The Vision/Tokyoという片隅\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。'16\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2016.8.10\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>UP-FRONT WORKS</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            UFWT-9006_A\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        \n                                                        ￥2,750\n                                                        （税抜価格 ￥2,500\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        <div class=\"ReleaseHead__description paragraph-sm\">\n                                    <div class=\"paragraph-sm plain-text-flow\">HMVrecord shop渋谷にて8/3〜1週間先行販売。</div>\n                                </div>\n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">ANALOG</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">UFWT-9006_A</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">泡沫サタデーナイト！</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">03:48</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->津野米咲</span><span class=\"pr-[1em]\">作曲：<!-- -->津野米咲</span><span class=\"pr-[1em]\">編曲：<!-- -->鈴木俊介/ストリングスアレンジ:クラッシャー木村</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。'16</span></div></div></div></div></div></div></div></div></div><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-1\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">ANALOG</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-1\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-1-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">Tokyoという片隅</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:33</div><div data-toggle-target=\"edition-0-disc-1-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->大久保薫</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。'16</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "id": 4792,
+      "url": "https://helloproject.com/morningmusume/release/4792/",
+      "type": "アナログシングル",
+      "media": [
+        "ANALOG",
+        "ANALOG"
+      ],
+      "trackCount": 4,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/upload/images/c0d3126f58d97cfaab5e5df1aa286d7dfbc74865.webp\" alt=\"冷たい風と片思い/ENDLESS SKY/One and Only\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">アナログシングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        冷たい風と片思い/ENDLESS SKY/One and Only\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。'15\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2016.5.11\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>UP-FRONT WORKS</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            UFWT-9003_A\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        \n                                                        ￥2,750\n                                                        （税抜価格 ￥2,500\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        <div class=\"ReleaseHead__description paragraph-sm\">\n                                    <div class=\"paragraph-sm plain-text-flow\">e-LineUP!通販先行販売</div>\n                                </div>\n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">ANALOG</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">UFWT-9003_A</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">冷たい風と片思い</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:17</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->大久保薫</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。'15</span></div></div></div></div></div></div></div></div></div><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-1\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">ANALOG</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-1\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-1-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">冷たい風と片思い(TYPE B) </span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:13</div><div data-toggle-target=\"edition-0-disc-1-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->前嶋康明</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。'15</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    }
+  ]
+}

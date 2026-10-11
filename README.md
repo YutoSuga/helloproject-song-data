@@ -96,6 +96,20 @@ git pull
 git branch -d feature/xxx
 ```
 
+## 楽曲候補collector（Milestone 3-A Follow-up）
+
+Node.js 20以降。通常運用は設定済み7グループ全体、個別確認は `--artist <slug>` で指定する。
+
+```bash
+npm run collect:candidates
+npm run collect:candidates -- --artist rosychronicle
+node --test
+```
+
+対象はモーニング娘。、アンジュルム、Juice=Juice、つばきファクトリー、BEYOOOOONDS、OCHA NORMA、ロージークロニクル。全選択artistの収集・解析が成功した場合だけ、共通の `staging/song-candidates.json` を一度更新する。1件でも失敗すればstagingは変更しない。既存candidate ID、status、notes、detected_at、管理者追加フィールドは維持する。
+
+位置引数、未知オプション、未知slug、値なしは非0終了する。期間指定は実装しない。旧名義・関連ユニットを現在のartist IDへ自動統合せず、正本CSVへの反映やwork/songの採番も行わない。設定根拠・公式feedの範囲・summary仕様は[収集仕様](docs/collection-spec.md)を参照。
+
 ## 作家ランキングの実行
 
 Node.js 20以降だけを使用し、外部dependencyはありません。

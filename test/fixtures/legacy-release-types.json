@@ -1,0 +1,188 @@
+{
+  "captured_at": "2026-10-11",
+  "description": "Official feed excerpts for five releases; detail HTML excerpts retain the release header and only the first track in each media section. Original track counts are recorded separately. CDMD is retained verbatim; no expansion or correction of the official label or CD media heading is inferred.",
+  "feed": {
+    "type": "release",
+    "sources": [
+      "https://helloproject.com/json/2610110150-QRlZaRG7YmXQEWBO/1998_releases.json",
+      "https://helloproject.com/json/2610110150-QRlZaRG7YmXQEWBO/1999_releases.json",
+      "https://helloproject.com/json/2610110150-QRlZaRG7YmXQEWBO/2000_releases.json"
+    ],
+    "items": [
+      {
+        "id": 1134,
+        "artistsSearch": [
+          3
+        ],
+        "releaseNamesSearch": [
+          2
+        ],
+        "releaseName": "モーニング娘。",
+        "date": "1998-12-23",
+        "category": [
+          "single"
+        ],
+        "categoryLabel": "CDMD",
+        "title": "ファーストタイム",
+        "image": {
+          "alt": "ファーストタイム",
+          "url": "/resources/images/foundation/release-placeholder.jpg",
+          "hasBorder": false
+        },
+        "catalogNo": "EPYE-5002",
+        "link": "/release/1134/"
+      },
+      {
+        "id": 1057,
+        "artistsSearch": [
+          3
+        ],
+        "releaseNamesSearch": [
+          226,
+          378,
+          2
+        ],
+        "releaseName": "モーニング娘。&平家みちよ",
+        "date": "1998-12-12",
+        "category": [
+          "video"
+        ],
+        "categoryLabel": "VHS",
+        "title": "Hello! FIRST LIVE AT SHIBUYA KOHKAIDO",
+        "image": {
+          "alt": "Hello! FIRST LIVE AT SHIBUYA KOHKAIDO",
+          "url": "/upload/images/9020fa61685d9f160e5adeb9eac3222da0560a91.webp",
+          "hasBorder": false
+        },
+        "catalogNo": "EPVE-5002",
+        "link": "/release/1057/"
+      },
+      {
+        "id": 1059,
+        "artistsSearch": [
+          3
+        ],
+        "releaseNamesSearch": [
+          2
+        ],
+        "releaseName": "モーニング娘。",
+        "date": "1999-10-14",
+        "category": [
+          "video"
+        ],
+        "categoryLabel": "VHS",
+        "title": "ザ・ビデオLOVEマシーン",
+        "image": {
+          "alt": "ザ・ビデオLOVEマシーン",
+          "url": "/upload/images/eeef654b0c4de25a316bb8ab34829f19920c5ac2.webp",
+          "hasBorder": false
+        },
+        "catalogNo": "EPVE-5005",
+        "link": "/release/1059/"
+      },
+      {
+        "id": 1135,
+        "artistsSearch": [
+          3
+        ],
+        "releaseNamesSearch": [
+          2
+        ],
+        "releaseName": "モーニング娘。",
+        "date": "1999-07-28",
+        "category": [
+          "single"
+        ],
+        "categoryLabel": "CDMD",
+        "title": "セカンド モ-ニング",
+        "image": {
+          "alt": "セカンド モ-ニング",
+          "url": "/resources/images/foundation/release-placeholder.jpg",
+          "hasBorder": false
+        },
+        "catalogNo": "EPYE-5025",
+        "link": "/release/1135/"
+      },
+      {
+        "id": 1136,
+        "artistsSearch": [
+          3
+        ],
+        "releaseNamesSearch": [
+          2
+        ],
+        "releaseName": "モーニング娘。",
+        "date": "2000-03-29",
+        "category": [
+          "single"
+        ],
+        "categoryLabel": "CDMD",
+        "title": "3rd-LOVEパラダイス-",
+        "image": {
+          "alt": "3rd-LOVEパラダイス-",
+          "url": "/resources/images/foundation/release-placeholder.jpg",
+          "hasBorder": false
+        },
+        "catalogNo": "EPYE-5051",
+        "link": "/release/1136/"
+      }
+    ]
+  },
+  "details": [
+    {
+      "url": "https://helloproject.com/morningmusume/release/1134/",
+      "id": 1134,
+      "type": "CDMD",
+      "title": "ファーストタイム",
+      "media": [
+        "CD"
+      ],
+      "trackCount": 10,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/resources/images/foundation/release-placeholder.jpg\" alt=\"ファーストタイム\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">CDMD</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        ファーストタイム\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            1998.12.23\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>zetima</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            EPYE-5002\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        定価 \n                                                        ￥3,204\n                                                        （税抜価格 ￥2,913\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        \n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">CD</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">EPYE-5002</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">GoodMorning</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:07</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->前嶋康明</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "url": "https://helloproject.com/morningmusume/release/1135/",
+      "id": 1135,
+      "type": "CDMD",
+      "title": "セカンド モ-ニング",
+      "media": [
+        "CD"
+      ],
+      "trackCount": 12,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/resources/images/foundation/release-placeholder.jpg\" alt=\"セカンド モ-ニング\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">CDMD</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        セカンド モ-ニング\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            1999.7.28\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>zetima</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            EPYE-5025\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        定価 \n                                                        ￥3,204\n                                                        （税抜価格 ￥2,913\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        \n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">CD</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">EPYE-5025</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">NIGHT OF TOKYO CITY</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:12</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->前嶋康明</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "url": "https://helloproject.com/morningmusume/release/1136/",
+      "id": 1136,
+      "type": "CDMD",
+      "title": "3rd-LOVEパラダイス-",
+      "media": [
+        "CD"
+      ],
+      "trackCount": 12,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/resources/images/foundation/release-placeholder.jpg\" alt=\"3rd-LOVEパラダイス-\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">CDMD</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        3rd-LOVEパラダイス-\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2000.3.29\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>zetima</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            EPYE-5051\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        定価 \n                                                        ￥3,204\n                                                        （税抜価格 ￥2,913\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        \n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">CD</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">EPYE-5051</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">〜おはよう〜</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">02:00</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->前嶋康明</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "url": "https://helloproject.com/morningmusume/release/1057/",
+      "id": 1057,
+      "type": "VHS",
+      "title": "Hello! FIRST LIVE AT SHIBUYA KOHKAIDO",
+      "media": [
+        "VHS"
+      ],
+      "trackCount": 11,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/upload/images/9020fa61685d9f160e5adeb9eac3222da0560a91.webp\" alt=\"Hello! FIRST LIVE AT SHIBUYA KOHKAIDO\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">VHS</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        Hello! FIRST LIVE AT SHIBUYA KOHKAIDO\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。&amp;平家みちよ\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            1998.12.12\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>zetima</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            EPVE-5002\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        \n                                                        ￥4,379\n                                                        （税抜価格 ￥3,981\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        \n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">VHS</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">EPVE-5002</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">Good Morning </span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:22</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->前嶋康明</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "url": "https://helloproject.com/morningmusume/release/1059/",
+      "id": 1059,
+      "type": "VHS",
+      "title": "ザ・ビデオLOVEマシーン",
+      "media": [
+        "VHS"
+      ],
+      "trackCount": 1,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\">\n                    <div class=\"ReleaseHead__images\">\n                        <link rel=\"preload\" as=\"image\" href=\"/resources/images/foundation/arrow-default.svg\"><div class=\"Carousel Carousel--releaseGallery ReleaseItemGallery\"><div class=\"swiper js-swiper\" data-id=\"gallery\" data-responsive=\"\" data-options=\"{&quot;slidesPerView&quot;:1,&quot;spaceBetween&quot;:0,&quot;navigation&quot;:{&quot;nextEl&quot;:&quot;[data-swiper-next=\\&quot;gallery\\&quot;]&quot;,&quot;prevEl&quot;:&quot;[data-swiper-prev=\\&quot;gallery\\&quot;]&quot;}}\"><div class=\"swiper-wrapper\"><div class=\"swiper-slide ReleaseItemGallery__slide\"><div class=\"ReleaseItemGallery__image\"><img src=\"/upload/images/eeef654b0c4de25a316bb8ab34829f19920c5ac2.webp\" alt=\"ザ・ビデオLOVEマシーン\" width=\"\" height=\"\" loading=\"lazy\"></div></div></div></div><button data-swiper-prev=\"gallery\" class=\"Carousel__button Carousel__button--prev\"><img class=\"rotate-180\" src=\"/resources/images/foundation/arrow-default.svg\" alt=\"prev\" width=\"20\" height=\"20\"></button><button data-swiper-next=\"gallery\" class=\"Carousel__button Carousel__button--next\"><img src=\"/resources/images/foundation/arrow-default.svg\" alt=\"next\" width=\"20\" height=\"20\"></button></div>\n                    </div>\n                    <div class=\"ReleaseHead__content paragraph-sm\">\n                        <div class=\"ReleaseHead__main\">\n                            <div class=\"ReleaseHead__mainInner\">\n                                <div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">VHS</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        ザ・ビデオLOVEマシーン\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。\n                                    </div>\n                                </div>\n                                <div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            1999.10.14\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>zetima</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            EPVE-5005\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        \n                                                        ￥1,068\n                                                        （税抜価格 ￥971\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div>\n                                \n                            </div>\n                        </div>\n                        \n                    </div>\n                </div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">VHS</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">EPVE-5005</div><div class=\"ml-auto\"></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">LOVEマシーン</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">05:00</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->ダンス☆マン</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    }
+  ]
+}

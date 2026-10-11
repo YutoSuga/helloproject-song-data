@@ -1,0 +1,135 @@
+{
+  "captured_at": "2026-10-11",
+  "description": "Official Hello! Project detail HTML excerpts for three audio releases whose TrackList sections explicitly show 収録内容未定.",
+  "details": [
+    {
+      "id": 5448,
+      "url": "https://helloproject.com/morningmusume/release/5448/",
+      "type": "配信シングル",
+      "media": [
+        "STREAMING"
+      ],
+      "trackCount": 0,
+      "emptyLabel": "収録内容未定",
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\"><div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">配信シングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        愛の種(20th Anniversary Ver.)\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。20th\n                                    </div>\n                                </div><div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2017.11.3\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>UP-FRONT WORKS</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    \n                                </div></div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">STREAMING</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">UFDL-1366</div><div class=\"ml-auto\"><button class=\"DisclosureControl group\" data-toggle-button=\"edition-0-disc-0\" aria-expanded=\"true\"><div class=\"Disclosure undefined\"><div class=\"Chevron\"><img src=\"/resources/images/foundation/chevron_gr.svg\" loading=\"lazy\" alt=\"chevron\" width=\"16\" height=\"16\"></div></div></button></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__content--empty TrackList__content--empty--singleDisc\"><div class=\"type-base-medium py-8.5 text-center\">収録内容未定</div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "id": 5369,
+      "url": "https://helloproject.com/morningmusume/release/5369/",
+      "type": "配信",
+      "media": [
+        "STREAMING"
+      ],
+      "trackCount": 0,
+      "emptyLabel": "収録内容未定",
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\"><div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">配信</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        ミンミンロケンロー！\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        船木結(アンジュルム/カントリー・ガールズ）、横山玲奈(モーニング娘。'17)\n                                    </div>\n                                </div><div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2017.7.28\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>UP-FRONT WORKS</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    \n                                </div></div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">STREAMING</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">UFDL-1356</div><div class=\"ml-auto\"><button class=\"DisclosureControl group\" data-toggle-button=\"edition-0-disc-0\" aria-expanded=\"true\"><div class=\"Disclosure undefined\"><div class=\"Chevron\"><img src=\"/resources/images/foundation/chevron_gr.svg\" loading=\"lazy\" alt=\"chevron\" width=\"16\" height=\"16\"></div></div></button></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__content--empty TrackList__content--empty--singleDisc\"><div class=\"type-base-medium py-8.5 text-center\">収録内容未定</div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "id": 5567,
+      "url": "https://helloproject.com/morningmusume/release/5567/",
+      "type": "配信シングル",
+      "media": [
+        "STREAMING"
+      ],
+      "trackCount": 0,
+      "emptyLabel": "収録内容未定",
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\"><div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">配信シングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        モーニングコーヒー(20th Anniversary Ver.)\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。20th\n                                    </div>\n                                </div><div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2018.1.28\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>UP-FRONT WORKS</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    \n                                </div></div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">STREAMING</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">UFDL-1389</div><div class=\"ml-auto\"><button class=\"DisclosureControl group\" data-toggle-button=\"edition-0-disc-0\" aria-expanded=\"true\"><div class=\"Disclosure undefined\"><div class=\"Chevron\"><img src=\"/resources/images/foundation/chevron_gr.svg\" loading=\"lazy\" alt=\"chevron\" width=\"16\" height=\"16\"></div></div></button></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__content--empty TrackList__content--empty--singleDisc\"><div class=\"type-base-medium py-8.5 text-center\">収録内容未定</div></div></div></div></div></div></div></div></body></html>"
+    }
+  ],
+  "feed": [
+    {
+      "year": 2017,
+      "url": "https://helloproject.com/json/2610111910-VohNWVJ35XVF6dJy/2017_releases.json",
+      "items": [
+        {
+          "id": 5448,
+          "artistsSearch": [
+            104,
+            84,
+            85,
+            3
+          ],
+          "releaseNamesSearch": [
+            559,
+            560
+          ],
+          "releaseName": "モーニング娘。20th",
+          "date": "2017-11-03",
+          "category": [
+            "single",
+            "distribution"
+          ],
+          "categoryLabel": "配信シングル",
+          "title": "愛の種(20th Anniversary Ver.)",
+          "image": {
+            "alt": "愛の種(20th Anniversary Ver.)",
+            "url": "/upload/images/4673f094a5d806fc19bb03e0e33836cef6716632.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "UFDL-1366",
+          "link": "/release/5448/"
+        },
+        {
+          "id": 5369,
+          "artistsSearch": [
+            3
+          ],
+          "releaseNamesSearch": [
+            556,
+            521,
+            560,
+            492
+          ],
+          "releaseName": "船木結(アンジュルム/カントリー・ガールズ）、横山玲奈(モーニング娘。'17)",
+          "date": "2017-07-28",
+          "category": [
+            "distribution"
+          ],
+          "categoryLabel": "配信",
+          "title": "ミンミンロケンロー！",
+          "image": {
+            "alt": "ミンミンロケンロー！",
+            "url": "/upload/images/c6b2231b228336124160c295f0a0260e34a69710.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "UFDL-1356",
+          "link": "/release/5369/"
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "url": "https://helloproject.com/json/2610111910-VohNWVJ35XVF6dJy/2018_releases.json",
+      "items": [
+        {
+          "id": 5567,
+          "artistsSearch": [
+            104,
+            85,
+            84,
+            3
+          ],
+          "releaseNamesSearch": [
+            559,
+            594
+          ],
+          "releaseName": "モーニング娘。20th",
+          "date": "2018-01-28",
+          "category": [
+            "single",
+            "distribution"
+          ],
+          "categoryLabel": "配信シングル",
+          "title": "モーニングコーヒー(20th Anniversary Ver.)",
+          "image": {
+            "alt": "モーニングコーヒー(20th Anniversary Ver.)",
+            "url": "/upload/images/e788921bb521d42bdf1c6c3005ec2bed78a981b5.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "UFDL-1389",
+          "link": "/release/5567/"
+        }
+      ]
+    }
+  ]
+}

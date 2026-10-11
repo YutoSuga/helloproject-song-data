@@ -72,21 +72,29 @@ export function mergeCandidates(previous, observed, now) {
     if (byId.has(candidate.candidate_id)) throw new Error(`Duplicate source position: ${candidate.candidate_id}`);
     byId.set(candidate.candidate_id, candidate);
   }
+  const countsByArtist = new Map();
   let added = 0;
   let rediscovered = 0;
   for (const candidate of observed) {
+    const slug = candidate.source_artist_slug ?? candidate.artist_slug;
+    const counts = countsByArtist.get(slug) ?? { added: 0, rediscovered: 0 };
+    countsByArtist.set(slug, counts);
     const old = byId.get(candidate.candidate_id);
-    if (!old) { added += 1; byId.set(candidate.candidate_id, candidate); continue; }
+    if (!old) { added += 1; counts.added += 1; byId.set(candidate.candidate_id, candidate); continue; }
     if (JSON.stringify(storedPosition(old)) !== JSON.stringify(storedPosition(candidate))) {
       throw new Error(`Candidate ID collision: ${candidate.candidate_id}`);
     }
     rediscovered += 1;
+    counts.rediscovered += 1;
     byId.set(candidate.candidate_id, {
       ...old,
       ...candidate,
       status: old.status,
       notes: old.notes,
       detected_at: old.detected_at,
+      match: { ...old.match, ...candidate.match,
+        confirmed_song_id: old.match?.confirmed_song_id ?? candidate.match.confirmed_song_id,
+        confirmed_work_id: old.match?.confirmed_work_id ?? candidate.match.confirmed_work_id },
       last_seen_at: now
     });
   }
@@ -102,5 +110,5 @@ export function mergeCandidates(previous, observed, now) {
     related_candidates: (groups.get(`${candidate.artist_name}\0${candidate.title?.normalize("NFKC").replace(/\s+/g, "")}`) ?? [])
       .filter((id) => id !== candidate.candidate_id).sort()
   }));
-  return { candidates, added, rediscovered };
+  return { candidates, added, rediscovered, countsByArtist };
 }
