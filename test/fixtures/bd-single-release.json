@@ -1,0 +1,92 @@
+{
+  "captured_at": "2026-10-11",
+  "description": "Official Hello! Project 2022 feed excerpt for BDシングル and detail HTML excerpts. The CDシングル mixed-media example retains the first track in each media section of its first edition; originalTrackCounts records the complete first-edition counts.",
+  "feed": [
+    {
+      "year": 2021,
+      "url": "https://helloproject.com/json/2610111910-VohNWVJ35XVF6dJy/2021_releases.json",
+      "items": [
+        {
+          "id": 6631,
+          "artistsSearch": [
+            3
+          ],
+          "releaseNamesSearch": [
+            638
+          ],
+          "releaseName": "モーニング娘。'21",
+          "date": "2021-12-08",
+          "category": [
+            "single"
+          ],
+          "categoryLabel": "CDシングル",
+          "title": "Teenage Solution/よしよししてほしいの/ビートの惑星",
+          "image": {
+            "alt": "Teenage Solution/よしよししてほしいの/ビートの惑星",
+            "url": "/upload/images/fa479bec0e2c65412eeb393002e17c80c1169792.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "EPCE-7649,EPCE-7651,EPCE-7653,EPCE-7655,EPCE-7656,EPCE-7657,EPCE-7658,EPCE-7659,EPCE-7650,EPCE-7652,EPCE-7654",
+          "link": "/release/6631/"
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "url": "https://helloproject.com/json/2610111910-VohNWVJ35XVF6dJy/2022_releases.json",
+      "items": [
+        {
+          "id": 6719,
+          "artistsSearch": [
+            3
+          ],
+          "releaseNamesSearch": [
+            638
+          ],
+          "releaseName": "モーニング娘。'21",
+          "date": "2022-04-13",
+          "category": [
+            "video"
+          ],
+          "categoryLabel": "BDシングル",
+          "title": "シングルV「ビートの惑星」",
+          "image": {
+            "alt": "シングルV「ビートの惑星」",
+            "url": "/upload/images/e11fbb27d0c6885e21b368e6728c19f0d9eb1d3f.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "UFXW-1026",
+          "link": "/release/6719/"
+        }
+      ]
+    }
+  ],
+  "details": [
+    {
+      "id": 6719,
+      "url": "https://helloproject.com/morningmusume/release/6719/",
+      "type": "BDシングル",
+      "media": [
+        "BD"
+      ],
+      "originalTrackCounts": [
+        4
+      ],
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\"><div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">BDシングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        シングルV「ビートの惑星」\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。'21\n                                    </div>\n                                </div><div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2022.4.13\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>UP-FRONT WORKS</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    <div class=\"col-span-2 pt-[9px]\">\n                                                    <p class=\"paragraph-sm text-blueGray-300\">\n                                                            UFXW-1026\n                                                        </p>\n                                                    <p class=\"paragraph-sm\">\n                                                        \n                                                        ￥1,980\n                                                        （税抜価格 ￥1,800\n                                                        ）\n                                                    </p>\n                                                </div>\n                                </div></div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">BD</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">UFXW-1026</div><div class=\"ml-auto\"><button class=\"DisclosureControl group\" data-toggle-button=\"edition-0-disc-0\" aria-expanded=\"true\"><div class=\"Disclosure undefined\"><div class=\"Chevron\"><img src=\"/resources/images/foundation/chevron_gr.svg\" loading=\"lazy\" alt=\"chevron\" width=\"16\" height=\"16\"></div></div></button></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"><label for=\"edition-0-disc-0-group-0-track\" class=\"Checkbox group \"><input id=\"edition-0-disc-0-group-0-track\" data-toggle-button=\"edition-0-disc-0-group-0-track\" type=\"checkbox\" class=\"Checkbox__input\"><span class=\"Checkbox__marker\"><span class=\"Checkbox__checked\"><img src=\"/resources/images/foundation/icon-check.svg\" alt=\"check\" width=\"14\" height=\"14\"></span></span>作詞・作曲等の情報を表示する</label></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"mr-[0.5em]\">ビートの惑星</span><span>(Music Video)</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">05:36</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->児玉雨子</span><span class=\"pr-[1em]\">作曲：<!-- -->Erik Lidbom/miwaflower</span><span class=\"pr-[1em]\">出演：<!-- -->モーニング娘。'21</span></div></div></div><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">2<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"mr-[0.5em]\">ビートの惑星</span><span>(Dance Shot Ver.)</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">03:58</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->児玉雨子</span><span class=\"pr-[1em]\">作曲：<!-- -->Erik Lidbom/miwaflower</span><span class=\"pr-[1em]\">出演：<!-- -->モーニング娘。'21</span></div></div></div><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">3<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"mr-[0.5em]\">ビートの惑星</span><span>(Dance Shot Ver.Ⅱ)</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">03:50</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->児玉雨子</span><span class=\"pr-[1em]\">作曲：<!-- -->Erik Lidbom/miwaflower</span><span class=\"pr-[1em]\">出演：<!-- -->モーニング娘。'21</span></div></div></div><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">4<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">メイキング映像</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">14:42</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">出演：<!-- -->モーニング娘。'21</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "id": 6631,
+      "url": "https://helloproject.com/morningmusume/release/6631/",
+      "type": "CDシングル",
+      "media": [
+        "CD",
+        "BD"
+      ],
+      "originalTrackCounts": [
+        6,
+        3
+      ],
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\"><div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">CDシングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        Teenage Solution/よしよししてほしいの/ビートの惑星\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。'21\n                                    </div>\n                                </div><div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2021.12.8\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>zetima</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    \n                                </div></div><div class=\"ReleaseEdition \"><div class=\"ReleaseEdition__name\"><h2 class=\"subTitle-lg-semibold text-black\">【初回生産限定盤A】</h2></div><div id=\"edition-0\" class=\"ReleaseEdition__image\"><div class=\"ReleaseEdition__cover\"><img src=\"/upload/images/fa479bec0e2c65412eeb393002e17c80c1169792.webp\" alt=\"\" width=\"100\" height=\"100\" class=\"h-auto w-auto object-contain\" loading=\"lazy\"></div><div class=\"paragraph-sm ReleaseEdition__coverName\">￥2,200<!-- -->（税抜価格 ￥2,000<!-- -->）</div></div><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__head\"><div class=\"paragraph-md\">BD付</div></div><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">CD</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">EPCE-7649</div><div class=\"ml-auto\"><button class=\"DisclosureControl group\" data-toggle-button=\"edition-0-disc-0\" aria-expanded=\"true\"><div class=\"Disclosure undefined\"><div class=\"Chevron\"><img src=\"/resources/images/foundation/chevron_gr.svg\" loading=\"lazy\" alt=\"chevron\" width=\"16\" height=\"16\"></div></div></button></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"><label for=\"edition-0-disc-0-group-0-track\" class=\"Checkbox group \"><input id=\"edition-0-disc-0-group-0-track\" data-toggle-button=\"edition-0-disc-0-group-0-track\" type=\"checkbox\" class=\"Checkbox__input\"><span class=\"Checkbox__marker\"><span class=\"Checkbox__checked\"><img src=\"/resources/images/foundation/icon-check.svg\" alt=\"check\" width=\"14\" height=\"14\"></span></span>作詞・作曲等の情報を表示する</label></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">Teenage Solution</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:25</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->平田祥一郎</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。'21</span></div></div></div></div></div></div></div></div></div><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-1\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">BD</div><div class=\"paragraph font-figtree text-[15px] md:text-base\">【初回生産限定盤A】BD</div><div class=\"ml-auto\"><button class=\"DisclosureControl group\" data-toggle-button=\"edition-0-disc-1\" aria-expanded=\"true\"><div class=\"Disclosure undefined\"><div class=\"Chevron\"><img src=\"/resources/images/foundation/chevron_gr.svg\" loading=\"lazy\" alt=\"chevron\" width=\"16\" height=\"16\"></div></div></button></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-1\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-1-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"><label for=\"edition-0-disc-1-group-0-track\" class=\"Checkbox group \"><input id=\"edition-0-disc-1-group-0-track\" data-toggle-button=\"edition-0-disc-1-group-0-track\" type=\"checkbox\" class=\"Checkbox__input\"><span class=\"Checkbox__marker\"><span class=\"Checkbox__checked\"><img src=\"/resources/images/foundation/icon-check.svg\" alt=\"check\" width=\"14\" height=\"14\"></span></span>作詞・作曲等の情報を表示する</label></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"mr-[0.5em]\">Teenage Solution</span><span>(Music Video)</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">05:26</div><div data-toggle-target=\"edition-0-disc-1-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">出演：<!-- -->モーニング娘。'21</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    }
+  ]
+}

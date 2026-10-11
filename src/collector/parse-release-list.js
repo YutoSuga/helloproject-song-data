@@ -1,12 +1,15 @@
 import { byClass, clean, firstClass, parseHtml } from "./html.js";
 
-const audioTypes = new Set(["CDシングル", "CDアルバム", "ミニアルバム", "アルバム", "EP", "配信"]);
-const excludedTypes = new Set(["写真集", "書籍", "グッズ", "映像", "Blu-ray", "DVD"]);
+const audioTypes = new Set(["CDシングル", "CDアルバム", "ミニアルバム", "アルバム", "EP", "配信", "配信シングル", "CDMD", "アナログシングル", "アナログアルバム", "MDアルバム", "CDミニアルバム"]);
+// CDMD: official examples 1134/1135/1136 have CD audio sections. Keep the raw label.
+const videoTypes = new Set(["映像", "Blu-ray", "BD", "DVD", "VHS", "VHSシングルV", "DVDシングルV", "BDシングル"]);
+const nonAudioTypes = new Set(["写真集", "書籍", "グッズ"]);
 
 export function parseReleaseList(html, config) {
   const root = parseHtml(html);
   const cards = byClass(root, "ReleasePanel");
-  if (!cards.length) throw new Error("Release list structure changed: no ReleasePanel");
+  // An official list can have no New Release cards. Validate its feed instead.
+  if (!cards.length) parseReleaseFeed(html, config);
   const releases = new Map();
   const unknownTypes = new Set();
   for (const card of cards) {
@@ -14,7 +17,7 @@ export function parseReleaseList(html, config) {
     const href = card.attrs.href;
     const title = clean(firstClass(card, "ReleasePanel__title"));
     if (!type || !href || !title) throw new Error("Release list card is missing required fields");
-    if (excludedTypes.has(type)) continue;
+    if (videoTypes.has(type) || nonAudioTypes.has(type)) continue;
     if (!audioTypes.has(type)) { unknownTypes.add(type); continue; }
     const url = new URL(href, config.releaseUrl);
     if (url.origin !== new URL(config.releaseUrl).origin || !url.pathname.startsWith(`/${config.slug}/release/`)) {
@@ -30,8 +33,6 @@ export function parseReleaseList(html, config) {
 // Astro's version directory and years for its official year-by-year JSON feed.
 export function parseReleaseFeed(html, config) {
   const root = parseHtml(html);
-  const island = byClass(root, "ReleasePanel"); // Confirm the list page rendered.
-  if (!island.length) throw new Error("Release list HTML missing");
   const components = [];
   const visit = (node) => {
     for (const child of node.children ?? []) {
@@ -44,12 +45,17 @@ export function parseReleaseFeed(html, config) {
   if (components.length !== 1) throw new Error("Official release feed metadata missing");
   const props = JSON.parse(components[0].attrs.props ?? "{}");
   const versionDir = props.versionDir?.[1];
-  const years = props.years?.[1]?.map((entry) => Number(entry[1])).filter((year) => year >= config.firstReleaseYear);
+  const sourceYears = props.years?.[1];
+  const years = Array.isArray(sourceYears) ? sourceYears.map((entry) => Number(entry?.[1])) : [];
+  if (!years.length || years.some((year) => !Number.isInteger(year) || year < 1900) || new Set(years).size !== years.length) {
+    throw new Error("Official release feed years changed");
+  }
+  const selectedYears = years.filter((year) => config.firstReleaseYear === undefined || year >= config.firstReleaseYear);
   const groupId = props.fixedFilterProps?.[1]?.selectedGroupIds?.[1]?.[0]?.[1];
-  if (!/^[\w-]+$/.test(versionDir ?? "") || !years?.length || groupId !== config.officialGroupId || props.groupSlug?.[1] !== config.slug) {
+  if (!/^[\w-]+$/.test(versionDir ?? "") || !selectedYears.length || groupId !== config.officialGroupId || props.groupSlug?.[1] !== config.slug) {
     throw new Error("Official release feed metadata changed");
   }
-  return { versionDir, years };
+  return { versionDir, years: selectedYears };
 }
 
 export function parseReleaseFeedYear(payload, config) {
@@ -59,7 +65,7 @@ export function parseReleaseFeedYear(payload, config) {
   for (const item of payload.items) {
     if (!item.artistsSearch?.includes(config.officialGroupId)) continue;
     const type = item.categoryLabel;
-    if (excludedTypes.has(type)) continue;
+    if (videoTypes.has(type) || nonAudioTypes.has(type)) continue;
     if (!audioTypes.has(type)) { unknownTypes.add(String(type)); continue; }
     if (!Number.isInteger(item.id) || !item.title || item.link !== `/release/${item.id}/`) {
       throw new Error("Official release feed item changed");

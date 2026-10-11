@@ -51,9 +51,10 @@ Juice=Juice（`G00001`）を対象に、以下を実装済みです。
 
 ## Milestone 3：他Hello! Projectグループへの展開
 
-最初の対象はロージークロニクル。将来はOCHA NORMA、BEYOOOOONDS、つばきファクトリー、アンジュルム、モーニング娘。などへ展開する。ランキング処理は特定の`artist_id`をハードコードせず、指定して集計できる構成を維持する。
+3-A Follow-upで候補collectorをモーニング娘。、アンジュルム、Juice=Juice、つばきファクトリー、BEYOOOOONDS、OCHA NORMA、ロージークロニクルの7グループに展開済み。ランキング処理は特定の`artist_id`をハードコードせず、指定して集計できる構成を維持する。
 
 - **3-A 候補収集バッチ + 中間JSON**：公式release一覧・詳細から音声トラックを収集し、正本CSVと参考照合して `staging/song-candidates.json` に保存する。人間のstatusとnotesを再実行時も保持する。詳細は[収集仕様](collection-spec.md)。
+- **3-A Follow-up 複数artist収集**：通常運用は `npm run collect:candidates` で全対象、個別確認は `npm run collect:candidates -- --artist rosychronicle`。全選択artistの成功後だけ共通stagingを一度保存し、途中失敗時は全体を更新しない。期間指定は実装しない。旧名義・関連ユニットはsourceと実名義を区別して保持し、artist identityを自動統合しない。これは3-Bではなく、正本反映・ID採番・管理画面・認証・週次実行・通知は追加しない。
 - **3-B 候補から正本への反映**：人間が確定した候補だけを正本CSVに反映する。song/work/creatorのID採番やversion判定はここで扱う。
 - **3-C 認証付き管理画面**：候補を確認・修正し、確定・保留・除外を選べる画面を作る。
 - **3-D 週次自動実行・通知**：収集と差分確認を定期化し、必要な通知を整える。

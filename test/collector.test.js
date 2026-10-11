@@ -145,7 +145,7 @@ test("detail failure never overwrites existing staging", async () => {
       text: async () => String(url).includes("?pc=1") ? list : await fixture("release-detail.html"),
       json: async () => ({ type: "release", items: [] })
     });
-    await assert.rejects(collectCandidates({ root, fetchImpl, outputPath }), /Collection aborted/);
+    await assert.rejects(collectCandidates({ root, artistSlug: "rosychronicle", fetchImpl, outputPath }), /Collection aborted/);
     assert.equal(await readFile(outputPath, "utf8"), original);
     const parseFailure = async (url) => ({
       ok: true, status: 200,
@@ -154,7 +154,7 @@ test("detail failure never overwrites existing staging", async () => {
         : await fixture("release-detail.html"),
       json: async () => ({ type: "release", items: [] })
     });
-    await assert.rejects(collectCandidates({ root, fetchImpl: parseFailure, outputPath }), /Collection aborted/);
+    await assert.rejects(collectCandidates({ root, artistSlug: "rosychronicle", fetchImpl: parseFailure, outputPath }), /Collection aborted/);
     assert.equal(await readFile(outputPath, "utf8"), original);
   } finally {
     await rm(root, { recursive: true, force: true });

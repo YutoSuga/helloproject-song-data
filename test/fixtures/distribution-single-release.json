@@ -1,0 +1,86 @@
+{
+  "captured_at": "2026-10-11",
+  "description": "Official Hello! Project 2018 feed excerpts and detail HTML excerpts for 配信シングル. Detail 5567 currently displays 収録内容未定 and has no tracks.",
+  "feed": [
+    {
+      "year": 2018,
+      "url": "https://helloproject.com/json/2610111910-VohNWVJ35XVF6dJy/2018_releases.json",
+      "items": [
+        {
+          "id": 5567,
+          "artistsSearch": [
+            104,
+            85,
+            84,
+            3
+          ],
+          "releaseNamesSearch": [
+            559,
+            594
+          ],
+          "releaseName": "モーニング娘。20th",
+          "date": "2018-01-28",
+          "category": [
+            "single",
+            "distribution"
+          ],
+          "categoryLabel": "配信シングル",
+          "title": "モーニングコーヒー(20th Anniversary Ver.)",
+          "image": {
+            "alt": "モーニングコーヒー(20th Anniversary Ver.)",
+            "url": "/upload/images/e788921bb521d42bdf1c6c3005ec2bed78a981b5.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "UFDL-1389",
+          "link": "/release/5567/"
+        },
+        {
+          "id": 5552,
+          "artistsSearch": [
+            3
+          ],
+          "releaseNamesSearch": [
+            594
+          ],
+          "releaseName": "モーニング娘。'18",
+          "date": "2018-01-28",
+          "category": [
+            "single",
+            "distribution"
+          ],
+          "categoryLabel": "配信シングル",
+          "title": "花が咲く 太陽浴びて",
+          "image": {
+            "alt": "花が咲く 太陽浴びて",
+            "url": "/upload/images/270857556b3f9d871a77ec95b46d22278235cdbb.webp",
+            "hasBorder": false
+          },
+          "catalogNo": "UFDL-1390",
+          "link": "/release/5552/"
+        }
+      ]
+    }
+  ],
+  "details": [
+    {
+      "id": 5567,
+      "url": "https://helloproject.com/morningmusume/release/5567/",
+      "type": "配信シングル",
+      "media": [
+        "STREAMING"
+      ],
+      "trackCount": 0,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\"><div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">配信シングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        モーニングコーヒー(20th Anniversary Ver.)\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。20th\n                                    </div>\n                                </div><div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2018.1.28\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>UP-FRONT WORKS</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    \n                                </div></div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">STREAMING</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">UFDL-1389</div><div class=\"ml-auto\"><button class=\"DisclosureControl group\" data-toggle-button=\"edition-0-disc-0\" aria-expanded=\"true\"><div class=\"Disclosure undefined\"><div class=\"Chevron\"><img src=\"/resources/images/foundation/chevron_gr.svg\" loading=\"lazy\" alt=\"chevron\" width=\"16\" height=\"16\"></div></div></button></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__content--empty TrackList__content--empty--singleDisc\"><div class=\"type-base-medium py-8.5 text-center\">収録内容未定</div></div></div></div></div></div></div></div></body></html>"
+    },
+    {
+      "id": 5552,
+      "url": "https://helloproject.com/morningmusume/release/5552/",
+      "type": "配信シングル",
+      "media": [
+        "STREAMING"
+      ],
+      "trackCount": 2,
+      "html": "<!doctype html><html><body><div class=\"ReleaseHead\"><div class=\"ReleaseHead__mainTitle\">\n                                    <div class=\"paragraph-sm\">\n                                                <span class=\"StatusLabel StatusLabel--category\">配信シングル</span>\n                                            </div>\n                                    <h1 class=\"ReleaseHead__mainName\">\n                                        花が咲く 太陽浴びて\n                                    </h1>\n                                    <div class=\"paragraph-sm\">\n                                        モーニング娘。'18\n                                    </div>\n                                </div><div class=\"ReleaseHead__mainDetails paragraph-sm\">\n                                    <dl class=\"contents\">\n                                        <dt>発売日:</dt>\n                                        <dd>\n                                            2018.1.28\n                                        </dd>\n                                    </dl>\n                                    <dl class=\"contents\">\n                                                <dt>レーベル: </dt>\n                                                <dd>UP-FRONT WORKS</dd>\n                                            </dl>\n                                    \n                                    \n                                    \n                                    \n                                </div></div><div class=\"ReleaseEdition ReleaseEdition--single\"><div class=\"ReleaseEdition__content\"><div class=\"ReleaseEdition__discs\"><div class=\"TrackList\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0\" class=\"TrackList__inner\"><div class=\"ReleaseEdition__headline\"><div class=\"paragraph-sm ReleaseEdition__mediaType\">STREAMING</div><div class=\"paragraph text-blueGray-300 font-figtree text-[15px] md:text-base\">UFDL-1390</div><div class=\"ml-auto\"><button class=\"DisclosureControl group\" data-toggle-button=\"edition-0-disc-0\" aria-expanded=\"true\"><div class=\"Disclosure undefined\"><div class=\"Chevron\"><img src=\"/resources/images/foundation/chevron_gr.svg\" loading=\"lazy\" alt=\"chevron\" width=\"16\" height=\"16\"></div></div></button></div></div><div class=\"toggleTarget\" data-toggle-target=\"edition-0-disc-0\" aria-hidden=\"false\"><div class=\"TrackList__group\"><div data-toggle-container=\"true\" data-toggle-group-id=\"edition-0-disc-0-group-0-track\"><div class=\"TrackList__head paragraph-sm\"><div class=\"paragraph-xs text-blueGray-300\">収録内容</div><div class=\"paragraph-ssm\"><label for=\"edition-0-disc-0-group-0-track\" class=\"Checkbox group \"><input id=\"edition-0-disc-0-group-0-track\" data-toggle-button=\"edition-0-disc-0-group-0-track\" type=\"checkbox\" class=\"Checkbox__input\"><span class=\"Checkbox__marker\"><span class=\"Checkbox__checked\"><img src=\"/resources/images/foundation/icon-check.svg\" alt=\"check\" width=\"14\" height=\"14\"></span></span>作詞・作曲等の情報を表示する</label></div></div><div class=\"TrackList__content\"><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"mr-[0.5em]\">花が咲く 太陽浴びて</span><span>(Instrumental)</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:17</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->平田祥一郎</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。'18</span></div></div></div><div class=\"TrackListItem\"><div class=\"paragraph-md TrackListItem__index\">1<!-- -->.</div><div class=\"TrackListItem__title\"><span><span class=\"\">花が咲く 太陽浴びて</span></span></div><div class=\"paragraph-sm TrackListItem__duration\">04:17</div><div data-toggle-target=\"edition-0-disc-0-group-0-track\" class=\"toggleTarget TrackListItem__notes\" aria-hidden=\"true\"><div class=\"pt-1\"><span class=\"pr-[1em]\">作詞：<!-- -->つんく</span><span class=\"pr-[1em]\">作曲：<!-- -->つんく</span><span class=\"pr-[1em]\">編曲：<!-- -->平田祥一郎</span><span class=\"pr-[1em]\">歌：<!-- -->モーニング娘。'18</span></div></div></div></div></div></div></div></div></div></div></div></div></body></html>"
+    }
+  ]
+}

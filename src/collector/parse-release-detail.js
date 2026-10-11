@@ -1,7 +1,7 @@
-import { byClass, clean, firstClass, parseHtml } from "./html.js";
+import { byClass, clean, firstClass, hasClass, parseHtml } from "./html.js";
 
-const audioMedia = new Set(["CD", "STREAMING", "DIGITAL"]);
-const videoMedia = new Set(["BD", "BLU-RAY", "DVD"]);
+const audioMedia = new Set(["CD", "STREAMING", "DIGITAL", "ANALOG", "MD"]);
+const videoMedia = new Set(["BD", "BLU-RAY", "DVD", "VHS"]);
 const instrumental = /[（(]\s*(?:instrumental|inst\.?|カラオケ)\s*[)）]\s*$/i;
 export const isInstrumental = (title) => instrumental.test(title);
 const dateValue = (value) => {
@@ -40,17 +40,31 @@ export function parseReleaseDetail(html, release, config) {
   if (!editions.length) throw new Error(`No release editions: ${release.url}`);
   const tracks = [];
   const counts = { audioTracks: 0, instrumentalExcluded: 0, videoExcluded: 0 };
+  let emptyAudioSections = 0;
+  let audioSections = 0;
   for (const [editionIndex, edition] of editions.entries()) {
     const editionName = clean(firstClass(edition, "ReleaseEdition__name")) || `edition-${editionIndex}`;
-    const discs = byClass(edition, "TrackList__inner");
+    const discs = byClass(edition, "TrackList").flatMap((list) => byClass(list, "TrackList__inner"));
     if (!discs.length) throw new Error(`No media sections: ${release.url}`);
     for (const [discIndex, disc] of discs.entries()) {
       const headline = firstClass(disc, "ReleaseEdition__headline");
       const mediaType = clean(firstClass(headline, "ReleaseEdition__mediaType")).toUpperCase();
       if (!audioMedia.has(mediaType) && !videoMedia.has(mediaType)) throw new Error(`Unknown media section ${mediaType}: ${release.url}`);
-      const productNumber = clean(headline?.children?.find?.((n) => typeof n !== "string" && (n.attrs?.class ?? "").includes("font-figtree"))) || null;
+      if (audioMedia.has(mediaType)) audioSections += 1;
+      const productNumber = clean(headline?.children?.find?.((n) => typeof n !== "string" &&
+        (n.attrs?.class ?? "").includes("font-figtree") && !/^＜Disc\d+＞$/.test(clean(n)))) || null;
       const items = byClass(disc, "TrackListItem");
-      if (!items.length && audioMedia.has(mediaType)) throw new Error(`Audio section has no tracks: ${release.url}`);
+      if (!items.length && audioMedia.has(mediaType)) {
+        const empty = byClass(disc, "TrackList__content--empty");
+        if (empty.length !== 1 || !hasClass(empty[0], "TrackList__content--empty--singleDisc") ||
+          !hasClass(empty[0].parent, "toggleTarget") || empty[0].parent.parent !== disc ||
+          byClass(disc, "TrackList__group").length || byClass(disc, "TrackList__content").length ||
+          clean(empty[0]) !== "収録内容未定") {
+          throw new Error(`Audio section has no tracks or verified empty state: ${release.url}`);
+        }
+        emptyAudioSections += 1;
+        continue;
+      }
       for (const item of items) {
         if (videoMedia.has(mediaType)) { counts.videoExcluded += 1; continue; }
         counts.audioTracks += 1;
@@ -62,6 +76,9 @@ export function parseReleaseDetail(html, release, config) {
       }
     }
   }
-  if (!counts.audioTracks) throw new Error(`No audio tracks: ${release.url}`);
-  return { title, type, artist, date: dateValue(date), tracks, counts };
+  if (!counts.audioTracks && (!audioSections || emptyAudioSections !== audioSections)) {
+    throw new Error(`No audio tracks: ${release.url}`);
+  }
+  return { title, type, artist, date: dateValue(date), tracks, counts,
+    officialEmptyAudioRelease: !counts.audioTracks };
 }
