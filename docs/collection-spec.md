@@ -4,7 +4,7 @@
 
 Hello! Project公式サイトを一次情報として、リリース一覧から各詳細ページの音声トラックを収集する。候補は `staging/song-candidates.json` に保存し、人間が確認・修正して確定、保留、除外を選ぶ。確定候補だけを後続処理で正本CSVに反映し、ランキングJSONを再生成する。
 
-Milestone 3-Aは収集、解析、既存CSVとの参考照合、中間JSONへの安全な保存まで。正本CSV、ランキングJSON、管理画面、スケジュール実行は扱わない。
+Milestone 3-A / FN-002 楽曲候補収集機能は収集、解析、既存CSVとの参考照合、中間JSONへの安全な保存まで。正本CSV、ランキングJSON、管理画面、スケジュール実行は扱わない。将来のJOB-001 楽曲候補定期収集ジョブがFN-002を定期的に起動するが、JOB-001は未実装で、通知は含めない。機能の責務は[候補収集基本設計](design/candidate-collector.md)、命名ルールは[機能ID体系](feature-ids.md)を参照。
 
 ## 実行
 
@@ -233,4 +233,4 @@ statusは `pending`（未確認）、`confirmed`（人間が確定）、`hold`�
 
 照合は正本の `data/songs.csv` と `data/works.csv` を既存CSV parserで読み、NFKC正規化と空白除去によるタイトル一致を `match` に保存する。song_idとwork_idのリストは参考候補にすぎず、`confirmed_song_id`、`confirmed_work_id` は `null`。version_type、cover、同一recording、同一workを自動確定しない。
 
-Milestone 3-B1はこの中間JSONを読み取り専用のsource入力とし、canonical CSVおよび過去の人間判断と照合して `staging/song-reviews.json` を再生成する。人間の新しい判断は将来 `staging/review-results.json` に保存する。3-B2で確定した判断だけを正本に反映し、3-Cで認証付き管理画面を実装する。
+Milestone 3-B1 / FN-003 レビュー準備機能はこの中間JSONを読み取り専用のsource入力とし、canonical CSVおよび過去の人間判断と照合して `staging/song-reviews.json` を再生成する。人間の新しい判断は将来 `staging/review-results.json` に保存する。3-B2 / FN-004 canonical反映機能で確定した判断だけを正本に反映し、3-C / SCR-002 楽曲管理画面で認証付き管理画面を実装する。SCR-002によるFN-003 / FN-004の呼出タイミングや事前生成済みJSONを読む方式は3-C設計時に決める。

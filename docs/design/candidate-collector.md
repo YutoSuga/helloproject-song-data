@@ -1,8 +1,10 @@
-# 候補収集 基本設計
+# FN-002 楽曲候補収集機能 基本設計
 
 ## 目的
 
 Hello! Project 公式サイトの release 情報から音声トラックの候補を収集し、レビュー待ちデータとして `staging/song-candidates.json` に保存する。正本への登録判断はこの処理では行わない。
+
+Milestone 3-A / 3-A Follow-upで実装済み。本書はFN-002の基本設計であり、手動CLI `npm run collect:candidates` はその実行入口である。
 
 ## 入力と出力
 
@@ -21,8 +23,18 @@ Hello! Project 公式サイトの release 情報から音声トラックの候�
 
 未知の release type または media、必要な詳細構造の欠落、取得・解析失敗は STOP とする。途中失敗時は staging を更新しない。collector は canonical CSV を参考照合のために読むが、直接更新せず、ID 採番や artist identity の自動確定もしない。
 
+## JOB-001 楽曲候補定期収集ジョブとの関係
+
+将来、Milestone 3-D / JOB-001がFN-002を定期的に起動する。JOB-001は未実装であり、既存の手動CLIによる収集と区別する。定期起動側の責務をJOB-001、収集・解析・候補統合・保存をFN-002とする。
+
+JOB-001の実行環境・スケジュール等の詳細は実装着手時に専用設計書を追加して決める。通知はJOB-001に含めず、必要になった場合はJOB-002等の別ジョブとして定義する。
+
+収集結果はFN-003 レビュー準備機能へ渡り、人間が確定したdecisionのcanonical反映はFN-004 canonical反映機能が担う。FN-002はcanonicalを直接更新しない。
+
 ## 関連仕様
 
 - [収集詳細仕様](../collection-spec.md)
 - [canonical CSV 仕様](../data-spec.md)
 - [マイルストーン](../roadmap.md)
+- [canonical registration 基本設計（FN-003 / FN-004）](canonical-registration.md)
+- [機能ID体系](../feature-ids.md)

@@ -4,9 +4,25 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 ## プロジェクト概要
 
-このリポジトリは、`data/*.csv` を唯一の正本（canonical CSV）として管理します。Hello! Project 公式サイトから楽曲候補を収集する candidate collector、確認待ちの候補と収集履歴を置く `staging/song-candidates.json`、レビュー準備用の `staging/song-reviews.json`、正本から集計・生成する作家ランキングと公開静的サイトを含みます。Milestone 3-B1 の review preparation まで実装済みで、canonical への反映は今後の段階です。
+このリポジトリは、`data/*.csv` を唯一の正本（canonical CSV）として管理します。Hello! Project 公式サイトから楽曲候補を収集する FN-002 楽曲候補収集機能、確認待ちの候補と収集履歴を置く `staging/song-candidates.json`、レビュー準備用の `staging/song-reviews.json`、正本から集計・生成する作家ランキングと公開静的サイトを含みます。Milestone 3-B1 / FN-003 レビュー準備機能まで実装済みで、FN-004 canonical反映機能は次フェーズです。
 
 現在の公開サイトは Juice=Juice のランキングを表示します。collector は設定済みの主要7グループに対応していますが、収集した候補がそのまま公開サイトや正本 CSV に反映されるわけではありません。
+
+## 機能一覧
+
+| ID | 機能名 | 種別 | 概要 | 実装状況 |
+| --- | --- | --- | --- | --- |
+| SCR-001 | 公開サイト画面 | Screen | canonical由来の公開用JSONをブラウザで表示する | 実装済み |
+| SCR-002 | 楽曲管理画面 | Screen | candidate / review情報を確認し、人間が確定・保留・却下等を判断する | 未実装 |
+| FN-001 | 公開サイトデータ生成機能 | Function | canonical CSVからランキング等の公開用JSONを生成する | 実装済み |
+| FN-002 | 楽曲候補収集機能 | Function | 公式release / track情報から `staging/song-candidates.json` を生成・更新する | 実装済み |
+| FN-003 | レビュー準備機能 | Function | candidate・canonical CSV・過去レビューから `staging/song-reviews.json` を生成する | 実装済み |
+| FN-004 | canonical反映機能 | Function | 人間が確定したdecisionを検証し、canonical CSVへ安全に反映する | 次フェーズ / 未実装 |
+| JOB-001 | 楽曲候補定期収集ジョブ | Job | FN-002を定期的に起動する | 未実装 |
+
+`SCR` = Screen（画面・UI）、`FN` = Function（画面やジョブから呼ばれるロジック）、`JOB` = Job（定期または手動で起動されFunctionを呼ぶジョブ・バッチ）。IDは種別ごとに `SCR-001`、`FN-003`、`JOB-001` のように3桁ゼロ埋めで付けます。現在の手動collector CLIはFN-002の実行入口であり、JOB-001の実装済みを意味しません。
+
+Milestone番号は開発順序・開発計画、SCR / FN / JOBはシステム上の機能識別子です。今後の設計・実装・PR・会話では、機能名に正式IDを併記します。命名・設計書構成の方針は[機能ID体系](docs/feature-ids.md)、Milestoneとの対応は[Roadmap](docs/roadmap.md)を参照してください。
 
 ## 管理対象
 
@@ -50,27 +66,43 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 ```text
 Hello! Project 公式 release 一覧・詳細
-  ↓ candidate collector（実装済み）
+  ↓
+FN-002 楽曲候補収集機能（実装済み）
+  ↓
 staging/song-candidates.json（確認待ち・収集履歴）
-↓ review preparation（Milestone 3-B1、実装済み）
+  ↓ + data/*.csv + staging/review-results.json（過去の人間判断）
+FN-003 レビュー準備機能（Milestone 3-B1、実装済み）
+  ↓
 staging/song-reviews.json（再生成可能なレビュー用派生データ）
-↓ 人間の判断・canonical apply（Milestone 3-B2、予定）
+  ↓
+SCR-002 楽曲管理画面（Milestone 3-C、未実装）
+  ↓ 人間が確認・判断 → decision
+FN-004 canonical反映機能（Milestone 3-B2、未実装）
+  ↓
 data/*.csv（唯一の正本）
-  ↓ ranking / site build（実装済み）
+  ↓
+FN-001 公開サイトデータ生成機能（実装済み）
+  ↓
 site/data/rankings/*.json（生成物）
-  ↓ GitHub Pages（実装済み）
-公開サイト
+  ↓
+SCR-001 公開サイト画面（GitHub Pages、実装済み）
+
+JOB-001 楽曲候補定期収集ジョブ（Milestone 3-D、未実装）
+  └──→ FN-002 楽曲候補収集機能
 ```
+
+この図はデータと責務の関係を示します。SCR-002からFN-003 / FN-004をどのタイミングで呼ぶか、または事前生成済みJSONを読むかは、Milestone 3-Cの管理画面設計時に決めます。人間判断の保存・受け渡し方式もその設計とFN-004の設計で具体化します。JOB-001に通知は含めず、必要になった場合はJOB-002等の別ジョブとして定義します。
 
 collector は正本 CSV を参考照合のために読みますが、直接更新しません。`staging/` は確認待ち候補と収集履歴の保存先であり、正本ではありません。`site/data/` などの生成物は正本 CSV から再生成する表示用データです。3-B では人間が確認した判断だけを正本へ反映する経路を設計・実装します。
 
-3-B1 は `npm run prepare:reviews` で全candidateを照合します。`staging/review-results.json` が存在すれば過去の人間判断を読み取り、存在しなければ空として扱います。B-1はcandidate、review結果、canonical CSVを更新しません。詳細は[canonical registration 基本設計](docs/design/canonical-registration.md)を参照してください。
+Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` で全candidateを照合します。`staging/review-results.json` が存在すれば過去の人間判断を読み取り、存在しなければ空として扱います。FN-003はcandidate、review結果、canonical CSVを更新しません。詳細は[canonical registration 基本設計](docs/design/canonical-registration.md)を参照してください。
 
 ## 設計書・仕様書
 
-- [公開サイト基本設計](docs/design/public-site.md)：正本からランキングを生成し公開する流れ
-- [候補収集基本設計](docs/design/candidate-collector.md)：公式 release から staging までの流れ
-- [canonical registration 基本設計](docs/design/canonical-registration.md)：Milestone 3-B の責務と段階
+- [機能ID体系](docs/feature-ids.md)：正式ID、命名運用、設計書の責務と整理方針
+- [公開サイト基本設計](docs/design/public-site.md)：FN-001 公開サイトデータ生成機能 / SCR-001 公開サイト画面
+- [候補収集基本設計](docs/design/candidate-collector.md)：FN-002 楽曲候補収集機能（将来のJOB-001との関係を含む）
+- [canonical registration 基本設計](docs/design/canonical-registration.md)：FN-003 レビュー準備機能 / FN-004 canonical反映機能
 - [データ仕様](docs/data-spec.md)：canonical CSV の列・制約・運用ルール
 - [収集仕様](docs/collection-spec.md)：collector の詳細仕様
 - [ランキング集計仕様](docs/ranking-spec.md)：集計・生成物の詳細仕様
@@ -86,7 +118,7 @@ collector は正本 CSV を参考照合のために読みますが、直接更�
 
 現在の実装状況と機能単位の実装予定は [Roadmap](docs/roadmap.md) を参照してください。
 
-現在の公開サイトは GitHub Pages 上の静的サイトです。作家・メンバー別の楽曲一覧、関連Version／カバー、所属履歴、限定ユニット、公式ライブ映像、および開始時刻付きYouTubeリンクなどは将来の拡張候補です。Milestone 3-C では認証付き管理画面を予定していますが、その実現方式や server-side 処理、DB、API、外部 backend の採否は未決定です。
+現在のSCR-001 公開サイト画面は GitHub Pages 上の静的サイトです。作家・メンバー別の楽曲一覧、関連Version／カバー、所属履歴、限定ユニット、公式ライブ映像、および開始時刻付きYouTubeリンクなどは将来の拡張候補です。Milestone 3-C / SCR-002 楽曲管理画面では認証付き管理画面を予定していますが、その実現方式や server-side 処理、DB、API、外部 backend の採否は未決定です。
 
 ## 開発フロー
 
@@ -131,7 +163,7 @@ git pull
 git branch -d feature/xxx
 ```
 
-## 楽曲候補collector（Milestone 3-A Follow-up）
+## FN-002 楽曲候補収集機能（Milestone 3-A / 3-A Follow-up）
 
 Node.js 20以降。通常運用は設定済み7グループ全体、個別確認は `--artist <slug>` で指定する。
 
@@ -145,7 +177,7 @@ node --test
 
 位置引数、未知オプション、未知slug、値なしは非0終了する。期間指定は実装しない。旧名義・関連ユニットを現在のartist IDへ自動統合せず、正本CSVへの反映やwork/songの採番も行わない。設定根拠・公式feedの範囲・summary仕様は[収集仕様](docs/collection-spec.md)を参照。
 
-## 作家ランキングの実行
+## FN-001 公開サイトデータ生成機能 / SCR-001 公開サイト画面の実行
 
 Node.js 20以降だけを使用し、外部dependencyはありません。
 
@@ -159,7 +191,7 @@ npm run site:preview        # http://localhost:4173 でsite/をpreview
 
 Webページは`/`（リポジトリ内では`site/index.html`）で、5カテゴリ、全順位、rank 3以内の強調、作家ごとの根拠work、作詞 × 作曲の組み合わせ分析を確認できます。組み合わせ分析では全pairとCreator起点の両方向、自己pair作品数を表示します。別artistを生成するときは`node scripts/generate-rankings.js Gxxxxx`を実行し、ページ側のartist設定を追加します。
 
-## ランキングデータ生成と公開の仕組み
+## FN-001 公開サイトデータ生成機能とSCR-001 公開サイト画面の関係
 
 `data/` 配下のCSVが正本データです。`site/data/rankings/G00001.json` は正本ではなく、CSVから生成されるWeb表示用の成果物です。`G00001` は Juice=Juice の `artist_id` です。
 
