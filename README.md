@@ -4,7 +4,7 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 ## プロジェクト概要
 
-このリポジトリは、`data/*.csv` を唯一の正本（canonical CSV）として管理します。Hello! Project 公式サイトから楽曲候補を収集する candidate collector、確認待ちの候補と収集履歴を置く `staging/song-candidates.json`、正本から集計・生成する作家ランキングと公開静的サイトを含みます。人間の判断を経て候補を正本へ登録する canonical registration は Milestone 3-B の予定です。
+このリポジトリは、`data/*.csv` を唯一の正本（canonical CSV）として管理します。Hello! Project 公式サイトから楽曲候補を収集する candidate collector、確認待ちの候補と収集履歴を置く `staging/song-candidates.json`、レビュー準備用の `staging/song-reviews.json`、正本から集計・生成する作家ランキングと公開静的サイトを含みます。Milestone 3-B1 の review preparation まで実装済みで、canonical への反映は今後の段階です。
 
 現在の公開サイトは Juice=Juice のランキングを表示します。collector は設定済みの主要7グループに対応していますが、収集した候補がそのまま公開サイトや正本 CSV に反映されるわけではありません。
 
@@ -52,7 +52,9 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 Hello! Project 公式 release 一覧・詳細
   ↓ candidate collector（実装済み）
 staging/song-candidates.json（確認待ち・収集履歴）
-  ↓ review / canonical registration（Milestone 3-B、planned）
+↓ review preparation（Milestone 3-B1、実装済み）
+staging/song-reviews.json（再生成可能なレビュー用派生データ）
+↓ 人間の判断・canonical apply（Milestone 3-B2、予定）
 data/*.csv（唯一の正本）
   ↓ ranking / site build（実装済み）
 site/data/rankings/*.json（生成物）
@@ -61,6 +63,8 @@ site/data/rankings/*.json（生成物）
 ```
 
 collector は正本 CSV を参考照合のために読みますが、直接更新しません。`staging/` は確認待ち候補と収集履歴の保存先であり、正本ではありません。`site/data/` などの生成物は正本 CSV から再生成する表示用データです。3-B では人間が確認した判断だけを正本へ反映する経路を設計・実装します。
+
+3-B1 は `npm run prepare:reviews` で全candidateを照合します。`staging/review-results.json` が存在すれば過去の人間判断を読み取り、存在しなければ空として扱います。B-1はcandidate、review結果、canonical CSVを更新しません。詳細は[canonical registration 基本設計](docs/design/canonical-registration.md)を参照してください。
 
 ## 設計書・仕様書
 

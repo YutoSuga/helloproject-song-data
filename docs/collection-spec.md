@@ -233,4 +233,4 @@ statusは `pending`（未確認）、`confirmed`（人間が確定）、`hold`�
 
 照合は正本の `data/songs.csv` と `data/works.csv` を既存CSV parserで読み、NFKC正規化と空白除去によるタイトル一致を `match` に保存する。song_idとwork_idのリストは参考候補にすぎず、`confirmed_song_id`、`confirmed_work_id` は `null`。version_type、cover、同一recording、同一workを自動確定しない。
 
-管理画面は将来この中間JSONの候補を表示・編集する。Milestone 3-Bで人間が確定した内容だけを正本に反映し、3-Cで認証付き管理画面を実装する。
+Milestone 3-B1はこの中間JSONを読み取り専用のsource入力とし、canonical CSVおよび過去の人間判断と照合して `staging/song-reviews.json` を再生成する。人間の新しい判断は将来 `staging/review-results.json` に保存する。3-B2で確定した判断だけを正本に反映し、3-Cで認証付き管理画面を実装する。

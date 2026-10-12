@@ -8,6 +8,7 @@
     "site:build": "npm run rankings:generate",
     "site:preview": "node scripts/preview-site.js",
     "test": "node --test",
-    "collect:candidates": "node scripts/collect-candidates.js"
+    "collect:candidates": "node scripts/collect-candidates.js",
+    "prepare:reviews": "node scripts/prepare-reviews.js"
   }
 }
