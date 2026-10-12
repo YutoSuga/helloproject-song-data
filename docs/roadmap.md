@@ -55,13 +55,13 @@ Juice=Juice（`G00001`）を対象に、以下を実装済みです。
 
 - **3-A 候補収集バッチ + 中間JSON（完了）**：公式 release 一覧・詳細から音声トラックを収集し、正本 CSV と参考照合して `staging/song-candidates.json` に保存する。人間の status と notes を再実行時も保持する。詳細は[収集仕様](collection-spec.md)。
 - **3-A Follow-up 複数artist収集（完了）**：通常運用は設定済み7グループ全体、個別確認は `--artist <slug>` を使用する。全選択 artist の成功後だけ共通 staging を一度保存し、途中失敗時は更新しない。旧名義・関連ユニットは source と実名義を区別して保持し、artist identity を自動統合しない。
-- **3-B0 structure / docs refresh（今回）**：現行構造、実装機能、データフローを README と基本設計に反映し、3-B1 / 3-B2 の入口を整理する。既存機能・データ形式は変更しない。
-- **3-B1 review preparation（次）**：候補と正本 CSV を照合し、自動で分かる情報と人間判断が必要な項目をレビュー可能に整理する。正本 CSV は書き換えない。
+- **3-B0 structure / docs refresh（完了）**：現行構造、実装機能、データフローを README と基本設計に反映し、3-B1 / 3-B2 の入口を整理した。
+- **3-B1 review preparation（完了）**：候補と正本 CSV、過去レビューを照合し、自動で分かる情報と人間判断が必要な項目を `staging/song-reviews.json` に整理する。正本 CSV は書き換えない。
 - **3-B2 canonical apply（予定）**：人間が確定した decision を検証し、ID 採番と正本 CSV 反映を行う。途中失敗時に部分更新を残さない。
 - **3-C 認証付き管理画面（予定）**：3-B1 の結果を表示し、人間の判断を 3-B2 へ渡す。実現方式は着手時に検討する。
 - **3-D 定期収集・通知（予定）**：収集と差分確認を定期化し、必要な通知を整える。
 
-3-B の基本設計は[canonical registration 基本設計](design/canonical-registration.md)を参照。review JSON と decision JSON の詳細 schema は 3-B1 / 3-B2 の着手時に決める。
+3-B の基本設計とreview JSON schemaは[canonical registration 基本設計](design/canonical-registration.md)を参照。3-B2の確定decision schemaは3-B2着手時に決める。
 
 公開サイトはGitHub Pagesを継続する。独自ドメインは将来の公開設定として検討する。
 
