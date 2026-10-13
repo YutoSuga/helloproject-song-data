@@ -124,6 +124,10 @@ Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` �
 
 基本方針は **1作業 = 1ブランチ → PR → merge → 作業ブランチ削除** です。
 
+### Development environment
+
+このリポジトリはローカル環境またはクラウド開発環境から開発できます。変更は作業ブランチで行い、Pull Request を通して `main` へ反映します。
+
 ### 作業開始
 
 `main` を最新化し、作業用ブランチを作成します。
