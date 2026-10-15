@@ -233,4 +233,4 @@ statusは `pending`（未確認）、`confirmed`（人間が確定）、`hold`�
 
 照合は正本の `data/songs.csv` と `data/works.csv` を既存CSV parserで読み、NFKC正規化と空白除去によるタイトル一致を `match` に保存する。song_idとwork_idのリストは参考候補にすぎず、`confirmed_song_id`、`confirmed_work_id` は `null`。version_type、cover、同一recording、同一workを自動確定しない。
 
-Milestone 3-B1 / FN-003 レビュー準備機能はこの中間JSONを読み取り専用のsource入力とし、canonical CSVおよび過去の人間判断と照合して `staging/song-reviews.json` を再生成する。人間の新しい判断は将来 `staging/review-results.json` に保存する。3-B2 / FN-004 canonical反映機能で確定した判断だけを正本に反映し、3-C / SCR-002 楽曲管理画面で認証付き管理画面を実装する。SCR-002によるFN-003 / FN-004の呼出タイミングや事前生成済みJSONを読む方式は3-C設計時に決める。
+Milestone 3-B1 / FN-003 レビュー準備機能はこの中間JSONを読み取り専用sourceとし、canonical CSVおよびlegacy `staging/review-results.json` と照合して `staging/song-reviews.json` を再生成する。FN-004の正式v1設計では新しい判断を `staging/decisions.json` のimmutable revisionへ保存し、Plan → Approval → durable Apply Request → transactionを経て正本へ反映する。現行review-resultsは正式Decision/成功Historyではなく、自動昇格させない。詳細は[全体設計](design/canonical-registration.md)、[Decision](design/fn004-decision.md)、[CLI / SCR-002](design/song-admin.md)を参照。FN-004 runtimeとSCR-002は未実装であり、collectorのcandidate schema/ID/再収集動作は変更しない。
