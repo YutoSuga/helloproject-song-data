@@ -12,8 +12,8 @@ Milestoneは開発順序・開発計画、SCR / FN / JOBはシステム上の機
 | 3-A / 3-A Follow-up | FN-002 楽曲候補収集機能 | 完了 / 実装済み |
 | 3-B0 | 文書・構成の整理（独立した機能IDなし） | 完了 |
 | 3-B1 | FN-003 レビュー準備機能 | 完了 / 実装済み |
-| 3-B2 | FN-004 canonical反映機能 | 次フェーズ / 未実装 |
-| 3-C | SCR-002 楽曲管理画面 | 予定 / 未実装 |
+| 3-B2 | FN-004 canonical反映機能 | Design 1〜4統合済み / runtime未実装 |
+| 3-C | SCR-002 楽曲管理画面 | interface・6内部view設計済み / runtime未実装 |
 | 3-D | JOB-001 楽曲候補定期収集ジョブ | 予定 / 未実装。FN-002を定期起動 |
 
 通知はJOB-001に含めません。必要になった場合はJOB-002等の別ジョブとして定義し、開発計画への追加もその時点で検討します。未確定の将来拡張には今回IDを割り当てません。
@@ -77,11 +77,11 @@ Milestoneは開発順序・開発計画、SCR / FN / JOBはシステム上の機
 - **3-A Follow-up / FN-002 複数artist収集（完了）**：通常運用は設定済み7グループ全体、個別確認は `--artist <slug>` を使用する。全選択 artist の成功後だけ共通 staging を一度保存し、途中失敗時は更新しない。旧名義・関連ユニットは source と実名義を区別して保持し、artist identity を自動統合しない。
 - **3-B0 structure / docs refresh（完了）**：現行構造、実装機能、データフローを README と基本設計に反映し、3-B1 / 3-B2 の入口を整理した。
 - **3-B1 / FN-003 レビュー準備機能（完了）**：候補と正本 CSV、過去レビューを照合し、自動で分かる情報と人間判断が必要な項目を `staging/song-reviews.json` に整理する。正本 CSV は書き換えない。
-- **3-B2 / FN-004 canonical反映機能（次フェーズ / 未実装）**：人間が確定した decision を検証し、ID 採番と正本 CSV 反映を行う。途中失敗時に部分更新を残さない。
-- **3-C / SCR-002 楽曲管理画面（予定 / 未実装）**：candidate / review情報を表示し、人間の確定・保留・却下等の判断を受け付ける。FN-003 / FN-004の呼出タイミングや事前生成済みJSONを読む方式、認証を含む実現方式は3-C設計時に決める。
+- **3-B2 / FN-004 canonical反映機能（正式v1設計統合済み / runtime未実装）**：有効confirmed Decisionから不変Planを作り、Approval・request_id付きdurable受付を通して既存参照/新規追加をall-or-nothingに反映する。COMMIT_DECIDED前は原則rollback、後はHistory等をfinalizeする。bootstrap・ID上限・再送/復旧契約を含む。
+- **3-C / SCR-002 楽曲管理画面（interface設計済み / runtime未実装）**：管理一覧・レビュー編集・Decision確認・Apply Preflight・Apply結果・System Statusの6内部view。CLIと同じserviceを使い、bootstrap/recovery実行はv1ではCLIのみ。認証/hosting等は別途選定する。
 - **3-D / JOB-001 楽曲候補定期収集ジョブ（予定 / 未実装）**：FN-002を定期的に起動する。実装着手時に専用の詳細設計書を追加する。通知は別ジョブとして必要時に定義する。
 
-FN-003 / FN-004の基本設計とreview JSON schemaは[canonical registration 基本設計](design/canonical-registration.md)を参照。FN-004の確定decision schemaは3-B2着手時に決める。
+FN-003の現行schemaとFN-004正式v1設計の入口は[canonical registration](design/canonical-registration.md)。詳細は[Decision](design/fn004-decision.md)、[Plan](design/fn004-apply-plan.md)、[Transaction](design/fn004-transaction.md)、[CLI / SCR-002](design/song-admin.md)を参照する。設計PRのreview/merge後、schema/validator → repository/gate/bootstrap → Decision → Plan → Approval/Request → transaction → History/recovery → CLI実Apply → backend → frontendの順で実装する。目安10 sliceだがPR数は固定せず、大きさと独立検証可能性に応じて分割する。recoveryの障害試験が通るまで実Apply入口を公開しない。
 
 公開サイトはGitHub Pagesを継続する。独自ドメインは将来の公開設定として検討する。
 

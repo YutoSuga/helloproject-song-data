@@ -2,9 +2,9 @@
 
 ## 目的・境界
 
-`data/*.csv` が唯一の正本。Milestone 3-B1 / FN-003 レビュー準備機能は実装済みで、公式sourceのcandidate、現行canonical、人間の過去判断を照合し、レビュー用派生JSONを作る。FN-003はcanonical CSV、candidate JSON、review結果を更新しない。Milestone 3-B2 / FN-004 canonical反映機能は次フェーズ / 未実装であり、本書では概要のみを扱う。Milestone 3-C / SCR-002 楽曲管理画面も未実装。既存canonical登録済みcandidateの初期移行はFN-003の対象外。
+`data/*.csv` が唯一の正本。Milestone 3-B1 / FN-003 レビュー準備機能は実装済みで、公式sourceのcandidate、現行canonical、人間の過去判断を照合し、レビュー用派生JSONを作る。FN-003はcanonical CSV、candidate JSON、review結果を更新しない。Milestone 3-B2 / FN-004 canonical反映機能とMilestone 3-C / SCR-002 楽曲管理画面は、以下の正式v1設計を持つがruntimeは未実装。既存canonical登録済みcandidateの初期移行は対象外。
 
-本文はFN-003の詳細が中心で、FN-004は確定decision schemaも未設計のため、現時点では統合設計書として維持する。
+本書は全体フロー・責務と現行FN-003の入口を担う。Design 1〜4を横断統合した詳細は、[Decision Model](fn004-decision.md)、[Apply Plan](fn004-apply-plan.md)、[Transaction / Recovery](fn004-transaction.md)、[CLI / SCR-002・Approval / Request](song-admin.md)へ分割する。概念JSONは仕様説明であり、この設計反映でschema/runtime/CLIを実装したものではない。
 
 ## FN-003 / FN-004の関係
 
@@ -19,14 +19,18 @@ staging/song-reviews.json
   ↓
 人間レビュー（将来のSCR-002 楽曲管理画面）
   ↓
-decision（人間が確定した判断）
+Decision draft → confirmed revision（人間のidentity判断）
   ↓
-FN-004 canonical反映機能（次フェーズ / 未実装）
+FN-004：immutable Apply Plan → Approval（同Plan hashを承認）
+  ↓
+durable Apply Request（request_id）→ Transaction
   ↓
 data/*.csv（canonical）
+  ↓ 全体検証・成功確定後
+successful Apply History
 ```
 
-これはデータの関係であり、SCR-002からFN-003 / FN-004をどのタイミングで呼ぶか、または事前生成済みJSONを読むかは固定しない。Milestone 3-Cの管理画面設計時に決める。
+図のTransactionがcanonicalを変更し、成功Historyが結果を記録する。Decision確定・Plan生成・Approval・Request受付だけではCSVを変更しない。SCR-002はreview表示、判断確認、明示的Plan生成、反映確認、結果確認を共通application service経由で行う。現行FN-003の派生JSONを取得・再生成するadapterの技術方式は実装段階で決める。
 
 ## staging の責務
 
@@ -34,10 +38,10 @@ data/*.csv（canonical）
 staging/
 ├── song-candidates.json   FN-002が保持する公式source事実、candidate_id、収集情報・履歴
 ├── song-reviews.json      FN-003が毎回再生成するレビュー用派生データ
-└── review-results.json    人間の判断結果を永続保存するデータ
+└── review-results.json    現行FN-003のlegacy過去判断入力（正式Decisionではない）
 ```
 
-`song-candidates.json` の既存status/notes/matchは従来どおり読み取り、B-1は書き換えない。`review-results.json` は今回入力専用。まだ存在しなければ `{"schema_version":1,"results":[]}` と同じ空の結果として扱う。存在する場合はschemaを検査し、不正なら全体STOPする。hold、confirmed、rejected、applied、notes、decision、reviewed_at、applied_result等の過去入力をreviewに添付する。holdでも現行candidateとcanonicalに対する照合は再計算する。
+`song-candidates.json` の既存status/notes/matchは従来どおり読み取り、B-1は書き換えない。現行`review-results.json` readerは入力専用。不在なら `{"schema_version":1,"results":[]}` と同じ空の結果とする。hold、confirmed、rejected、applied、notes、decision、reviewed_at、applied_result等をreviewに添付し、holdでも現行candidate/canonical照合を再計算する。これは既存FN-003の互換動作であり、FN-004の成功履歴不存在を空扱いする規則ではない。
 
 ## FN-003 レビュー準備機能（Milestone 3-B1、実装済み）
 
@@ -121,11 +125,51 @@ work/songはexact title一致でも `canonical_matches` の候補提示のみ。
 
 FN-004は人間が確定したdecisionを別途検証し、ID採番とcanonical CSVへの安全な反映を行う。途中失敗時に部分更新を残さない。FN-003のsuggestionや仮IDをそのまま正本へ反映しない。
 
-確定decision schemaは未設計であり、`review-results.json`の現行読込形式がFN-004への確定入力仕様を意味するわけではない。着手時に、確定decisionの必須項目・検証、ID採番、canonical整合性、再適用時の扱い、複数CSVへの反映・失敗時の復旧方式を具体化する。既存のデータ仕様とFN-003の読み取り専用境界を前提とする。
+正式入力は[Decision Model](fn004-decision.md)の有効confirmed revisionであり、legacy `review-results.json`ではない。FN-003 readerはversion=1、results配列、一意な非空candidate_id、status enum、任意notes/decision/reviewed_atの浅い型を検査するだけで、decision内部・applied_result・日時形式・candidate存在・指紋は保証しない。既存形式の自動version-upやapplied扱いをせず、人間による明示取込・再確認を必要とする。将来FN-003が正式Decision/Historyを表示するadapterもこの分離を維持する。
+
+### 責務とGit管理
+
+| データ | 責務 / 保存先 | Git |
+| --- | --- | --- |
+| Candidate | 公式観測facts。song-candidates.json | 管理 |
+| Review | derived / rebuildableな提案。song-reviews.json | 正本にしない。現mainに出力なし |
+| Decision | 人間のidentity判断。decisions.jsonのimmutable revisions | 管理 |
+| Apply Plan | 具体的変更計画。apply-plans/ | derived、原則非管理 |
+| Approval | 具体的Plan hashへの承認。apply-approvals/ | 管理。人間行為を追跡 |
+| Apply Request | 同じ実行要求のdurable受付。apply-requests/ | 非管理。local実行/再送情報、未完了は保持 |
+| Transaction Journal | 実行途中・失敗・復旧。transactions/ | 非管理。未完了は保持 |
+| Apply History | 正常適用結果。apply-history/ | 管理。失敗は含めない |
+| ID / repository state | high-water mark、成功head。fn004-state.json | 管理。採番・履歴整合に必須 |
+| Bootstrap | baseline/genesis/instance。fn004-bootstrap.json | 管理。未初期化と消失を区別 |
+| lock / temp / backup | 排他・一時生成・復元根拠 | 非管理。recovery前に削除しない |
+
+canonical以外は楽曲正本ではない。Git非管理とdurability不要を混同しない。requestが失われてもHistoryのrequest/Decision coverageから適用済みを検出し、不明ならSTOPする。上記保存先はすべてstaging/配下の将来構成で、今回JSONやdirectory、ignore規則を作成したものではない。
+
+### v1 scope
+
+existing work＋existing song、existing work＋new song、new work＋new song、existing/new creator・artist・release、song_artists / song_creators / song_performers / release_tracksの追加を扱う。memberはexistingのみ。公式発表済みfuture releaseを許可する。reuse/no_opだけでも承認・Request・transaction・成功Historyを通す。
+
+existing master/relationのfield update/patch/delete、work/song統合・分割・work付け替え、canonical correction、new member、member_affiliations変更、video関連、candidate初期migration、aggregate部分適用、rollback commandによる過去成功の取消し、自動Git操作、JOB/notificationはv1対象外。data-specが一般運用として許す訂正までFN-004が実行可能とは意味しない。失敗transactionを元へ復元する内部rollbackは必要な安全機構として含む。
+
+### 横断レビューの確定事項
+
+| 論点 | 統合した契約 / 詳細の正本 |
+| --- | --- |
+| revision / OCC / prefix | Decisionへ明示保存。draftと有効confirmedを分離。[Decision](fn004-decision.md) |
+| Plan hash / ID | 全preconditionとrowをhashし、予定IDは未予約。[Plan](fn004-apply-plan.md) |
+| Approvalとreceipt | 承認を先に保存し、その承認を使う要求をjournal前にdurable受付。[Interface](song-admin.md) |
+| 二重送信・受付中断 | 同ID同payloadは照会のみ。未完了receiptは新規受付を止める。未開始を証明できる場合だけABORTED |
+| 成功境界 | COMMIT_DECIDED前は原則rollback、後はforward finalize。[Transaction](fn004-transaction.md) |
+| 採番・rollback | Planで予約せず、commit開始で消費、復元後も上限不減 |
+| trace | Decision → Plan → Approval → Request → Transaction → History → actual IDs |
+| UI結果 | committedとreadinessを分け、pending finalizationを再Applyへ誘導しない |
+| 実装順 | schema/service/CLIを先にし、recovery検証後に実Apply公開。[Interfaceのslice](song-admin.md) |
+
+安全性・責務の重大未決事項はない。JSON Schema実装やbackend/認証provider等の技術選定は実装sliceで行うが、本書群の不変条件を緩めない。実装PR数は固定せず、review/test可能な分割を行う。
 
 ## SCR-002 楽曲管理画面との接点（Milestone 3-C、未実装）
 
-SCR-002はcandidate / review情報を表示し、人間の確定・保留・却下等の判断を受け付ける将来の画面。FN-003 / FN-004の呼出タイミング、事前生成済みJSONの読込、人間判断の保存・受け渡し方式、認証、backend/APIは3-C設計時に検討する。定期実行はJOB-001の責務であり、本書では詳細設計しない。
+SCR-002は一つの正式Feature IDのまま、管理一覧・レビュー編集・Decision確認・Apply Preflight・Apply結果・System Statusを内部viewとする。[interface設計](song-admin.md)でCLIと共通application service、承認・再送・異常表示を定義する。v1のbootstrap/recovery実行はCLIのみ。browserからfilesystem/Gitへ直接書かず、認証済み管理者backendを必要とする。providerやhosting方式は別途選定する。JOB-001や通知は今回実装しない。
 
 ## 関連仕様
 

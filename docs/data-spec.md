@@ -4,6 +4,8 @@
 
 `data/` 以下の UTF-8 CSV（RFC 4180 準拠、ヘッダーあり）を正本とする。1 レコードを物理的な 1 行とし、カンマ・改行・ダブルクォートを含む値はダブルクォートで囲み、内部のダブルクォートは二重化する。列順は本書および各 CSV のヘッダー順に固定する。
 
+本書はcanonical全体の仕様・一般運用を定義する。[FN-004 v1設計](design/canonical-registration.md)の自動反映範囲は既存参照と新規row追加に限定し、本書で一般的に許容する初出日訂正・version見直し等のexisting field update/deleteを実行する機能ではない。CSV列・enum・ID規則は今回変更しない。Decision/Plan/Approval/Request/Historyはcanonicalと区別する。
+
 ### work、song、release
 
 - **work** は「楽曲という作品」そのもの。同一の詞・曲を基礎とする関連版を束ねる。

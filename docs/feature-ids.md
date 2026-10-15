@@ -18,9 +18,13 @@ IDは種別ごとに3桁ゼロ埋めとします。設計・実装・PR・会話
 | --- | --- | --- | --- |
 | [public-site.md](design/public-site.md) | FN-001 公開サイトデータ生成機能、SCR-001 公開サイト画面 | 生成と表示の2機能。GitHub Pages公開手順も含む | 分割・rename不要。短い基本設計であり、2機能を章分けすると生成物を介した境界も一緒に確認できる |
 | [candidate-collector.md](design/candidate-collector.md) | FN-002 楽曲候補収集機能。将来の呼出元としてJOB-001に言及 | 本体はFN-002のみ。JOB-001の詳細は含まない | 分割・rename不要。単一Functionの責務が明確 |
-| [canonical-registration.md](design/canonical-registration.md) | FN-003 レビュー準備機能、FN-004 canonical反映機能。接点としてSCR-002に言及 | FN-003の詳細とFN-004の将来概要 | 統合設計書を維持。本文はFN-003が中心で、FN-004はdecision schemaも未設計。現時点の分割は概要だけの文書を増やすため、章分けで境界を示す |
+| [canonical-registration.md](design/canonical-registration.md) | FN-003 / FN-004の全体フロー・責務、現行FN-003 | 詳細書の入口 | FN-003の実装済み説明を維持し、FN-004 Design 1〜4を以下へ分割 |
+| [fn004-decision.md](design/fn004-decision.md) | FN-004 Decision Model | aggregate・revision・OCC・candidate binding・prefix | 判断モデルの正本 |
+| [fn004-apply-plan.md](design/fn004-apply-plan.md) | FN-004 Apply Plan | immutable計画・precondition・予定ID | 計画モデルの正本 |
+| [fn004-transaction.md](design/fn004-transaction.md) | FN-004 Validation / Transaction / Recovery | lock・journal・History・ID state・bootstrap | 実行/復旧契約の正本 |
+| [song-admin.md](design/song-admin.md) | FN-004のCLI/application service、SCR-002 | Approval・durable Request・内部view・操作契約 | UI/CLIが共有する境界を一か所で定義 |
 
-最終的にはScreen / Function / Jobごとの責務が分かる構成を目指します。今回は機能IDを付ける目的だけのrenameは行いません。独立した詳細設計が必要になった時点で分割・追加し、READMEと関連文書のリンクを同時に更新します。
+Screen / Function / Jobごとの責務を維持し、FN-004の大きな設計は判断・計画・transaction・interfaceへ分割します。既存設計書のrenameや機能IDの変更は行いません。SCR-002の6 viewは一つの画面機能の内部構成であり、viewごとの正式Feature IDは追加しません。
 
 将来の構成例（現時点のファイル名ではありません）：
 
@@ -37,6 +41,6 @@ docs/design/
 
 ## 未実装機能の境界
 
-- SCR-002 楽曲管理画面：candidate / reviewを確認し、人間が確定・保留・却下等を判断する。FN-003 / FN-004の呼出タイミングや事前生成済みJSONを読む方式はMilestone 3-Cの設計時に決める。
-- FN-004 canonical反映機能：人間が確定したdecisionを検証し、canonical CSVへ安全に反映する。確定decision schema、ID採番、整合性検証、部分更新を残さない反映方式を次フェーズで設計する。FN-003のsuggestionや仮IDは確定入力ではない。
+- SCR-002 楽曲管理画面：6内部viewと共通serviceを設計済み。管理者backendが必要で、provider等は未選定。runtimeは未実装。
+- FN-004 canonical反映機能：Decision → Plan → Approval → durable Request → Transaction → Historyの正式v1設計を上記文書で定義。既存参照・新規追加だけを対象にし、runtimeは未実装。FN-003のsuggestionや仮IDは確定入力ではない。
 - JOB-001 楽曲候補定期収集ジョブ：FN-002を定期的に起動する。実装着手時に詳細設計書を追加し、実行環境やスケジュール等を決める。通知は含めず、必要になった場合はJOB-002等の別ジョブとして定義する。
