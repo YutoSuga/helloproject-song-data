@@ -4,7 +4,7 @@
 
 `data/*.csv` が唯一の正本。Milestone 3-B1 / FN-003 レビュー準備機能は実装済みで、公式sourceのcandidate、現行canonical、人間の過去判断を照合し、レビュー用派生JSONを作る。FN-003はcanonical CSV、candidate JSON、review結果を更新しない。Milestone 3-B2 / FN-004 canonical反映機能とMilestone 3-C / SCR-002 楽曲管理画面は、以下の正式v1設計を持つがruntimeは未実装。既存canonical登録済みcandidateの初期移行は対象外。
 
-本書は全体フロー・責務と現行FN-003の入口を担う。Design 1〜4を横断統合した詳細は、[Decision Model](fn004-decision.md)、[Apply Plan](fn004-apply-plan.md)、[Transaction / Recovery](fn004-transaction.md)、[CLI / SCR-002・Approval / Request](song-admin.md)へ分割する。概念JSONは仕様説明であり、この設計反映でschema/runtime/CLIを実装したものではない。
+本書は全体フロー・責務と現行FN-003の入口を担う。Design 1〜4を横断統合した詳細は、[Decision Model](fn004-decision.md)、[Apply Plan](fn004-apply-plan.md)、[Transaction / Recovery](fn004-transaction.md)、[Bootstrap / ID state](fn004-bootstrap.md)、[CLI / SCR-002・Approval / Request](song-admin.md)へ分割する。概念JSONは仕様説明であり、この設計反映でschema/runtime/CLIを実装したものではない。
 
 ## FN-003 / FN-004の関係
 
@@ -140,7 +140,7 @@ FN-004は人間が確定したdecisionを別途検証し、ID採番とcanonical 
 | Transaction Journal | 実行途中・失敗・復旧。transactions/ | 非管理。未完了は保持 |
 | Apply History | 正常適用結果。apply-history/ | 管理。失敗は含めない |
 | ID / repository state | high-water mark、成功head。fn004-state.json | 管理。採番・履歴整合に必須 |
-| Bootstrap | baseline/genesis/instance。fn004-bootstrap.json | 管理。未初期化と消失を区別 |
+| Bootstrap | [監査・genesis・completion marker](fn004-bootstrap.md)。fn004-bootstrap.json | 管理。未初期化と消失を区別 |
 | lock / temp / backup | 排他・一時生成・復元根拠 | 非管理。recovery前に削除しない |
 
 canonical以外は楽曲正本ではない。Git非管理とdurability不要を混同しない。requestが失われてもHistoryのrequest/Decision coverageから適用済みを検出し、不明ならSTOPする。上記保存先はすべてstaging/配下の将来構成で、今回JSONやdirectory、ignore規則を作成したものではない。

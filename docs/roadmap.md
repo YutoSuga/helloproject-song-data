@@ -81,7 +81,7 @@ Milestoneは開発順序・開発計画、SCR / FN / JOBはシステム上の機
 - **3-C / SCR-002 楽曲管理画面（interface設計済み / runtime未実装）**：管理一覧・レビュー編集・Decision確認・Apply Preflight・Apply結果・System Statusの6内部view。CLIと同じserviceを使い、bootstrap/recovery実行はv1ではCLIのみ。認証/hosting等は別途選定する。
 - **3-D / JOB-001 楽曲候補定期収集ジョブ（予定 / 未実装）**：FN-002を定期的に起動する。実装着手時に専用の詳細設計書を追加する。通知は別ジョブとして必要時に定義する。
 
-FN-003の現行schemaとFN-004正式v1設計の入口は[canonical registration](design/canonical-registration.md)。詳細は[Decision](design/fn004-decision.md)、[Plan](design/fn004-apply-plan.md)、[Transaction](design/fn004-transaction.md)、[CLI / SCR-002](design/song-admin.md)を参照する。設計PRのreview/merge後、schema/validator → repository/gate/bootstrap → Decision → Plan → Approval/Request → transaction → History/recovery → CLI実Apply → backend → frontendの順で実装する。目安10 sliceだがPR数は固定せず、大きさと独立検証可能性に応じて分割する。recoveryの障害試験が通るまで実Apply入口を公開しない。
+FN-003の現行schemaとFN-004正式v1設計の入口は[canonical registration](design/canonical-registration.md)。詳細は[Decision](design/fn004-decision.md)、[Plan](design/fn004-apply-plan.md)、[Transaction](design/fn004-transaction.md)、[CLI / SCR-002](design/song-admin.md)を参照する。Slice 1のschema/validatorはPR #56、Slice 2のrepository/gate/persistenceはPR #57で実装済み。次は[Bootstrap / ID state正式契約](design/fn004-bootstrap.md)に従うSlice 3を最新mainから実装する。本番bootstrapは実装PR merge後の別明示タスクであり、この設計follow-upでは実行しない。その後Decision → Plan → Approval/Request → transaction → History/recovery → CLI実Apply → backend → frontendの順で進める。bootstrap分離後の目安11 sliceだがPR数は固定せず、大きさと独立検証可能性に応じて分割する。recoveryの障害試験が通るまで実Apply入口を公開しない。
 
 公開サイトはGitHub Pagesを継続する。独自ドメインは将来の公開設定として検討する。
 

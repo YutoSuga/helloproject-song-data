@@ -181,6 +181,8 @@ CLI workflowはbootstrap監査/確認 → 外部template入力/import → draft�
 
 ApplyはTTYにrepository、Decision、追加内容、予定ID、reuse/no_op、warning、変更CSVを表示し`[y/N]`で一度確認。その後独立approval保存→request受付を行う。`--yes`だけの迂回、非TTY承認、CIからのcanonical Applyはv1対象外。Plan生成とApplyを暗黙連結しない。確認取消しは承認/受付前で終える。receipt後のSIGINT/通信切断では勝手にlock削除せず元要求を照会する。
 
+bootstrapは[正式bootstrap契約](fn004-bootstrap.md)の必須external declaration・origin/main全reachable監査・expected audit hashを使う。check結果を表示し、人間確認後のinitializeで再監査する。CLIの外部declaration入力option名は実装sliceで決めるが、宣言の省略・自動補完は不可。片側state/markerや不一致を初期設定buttonへ誘導せず、BOOTSTRAP_INCOMPLETE / RECOVERY_REQUIREDとして案内する。
+
 bootstrap・全recovery実行はCLIのみ。inspectで観測state hashと一意な推奨actionを示し、runで同hash/actionを再検証する。action不一致・状態不明ならSTOP。stale強制Apply、validation/lock bypass、arbitrary patch、force delete lockは提供しない。
 
 `--json`のstdoutは単一JSON、prompt/進捗はstderr。outcome、canonical_effect、readiness、各identity、diagnostics、allowed_actionsを返す。exit codeは0=取得/操作成功（already_applied含む）、1=想定外/不明、2=引数、3=validation/blocked/unsupported、4=stale、5=busy、6=recovery、7=成功後finalize/cleanup待ち、8=OCC/integrity conflict、9=権限、10=実行前取消し、11=aborted/rolled_back、12=bootstrap required/incomplete。status/showは問題状態を正常取得できれば0で、Apply可能と同義ではない。
@@ -197,17 +199,18 @@ domain / validator → repository / gate → bootstrap/state → Decision → Pl
 
 | slice | 主対象・依存 | 完了条件 |
 | --- | --- | --- |
-| 1 | schema/hash・全14表validator | 正式契約と検証。実canonical変更なし |
-| 2 | repository・gate・bootstrap/state（1） | 安定読込、監査、初期化/中断の整合 |
-| 3 | immutable Decision・OCC・draft/confirm CLI（1,2） | scope/revision/再送/指紋を保証 |
-| 4 | deterministic Plan・表示/検査CLI（1〜3） | 分類・mapping・staleを検証 |
-| 5 | Approval・失効・durable Request（3,4） | hash binding、receipt前後の中断/重複を検証 |
-| 6 | transaction prepare/commit/rollback（1〜5） | journal/temp/backup/ID消費、fault injection。実Apply入口は非公開 |
-| 7 | History・forward finalize・recovery（6） | 全crash matrix、receipt-only復旧を含む |
-| 8 | CLI Apply/recovery統合（7） | end-to-end/障害試験合格後に実Apply公開 |
-| 9 | backend adapter・管理者境界（8） | 同service利用、認証未設定write拒否 |
-| 10 | SCR-002の6 view（9） | OCC・承認・再送・異常UXを検証 |
+| 1 | schema/hash・全14表validator | PR #56で実装済み。実canonical変更なし |
+| 2 | repository・gate・persistence（1） | PR #57で実装済み。安定読込・排他・durability primitive |
+| 3 | bootstrap / repository instance / ID state（1,2） | 次回実装。[正式契約](fn004-bootstrap.md)の監査・宣言・genesis・初期化/中断整合。正式CLIなし |
+| 4 | immutable Decision・OCC・draft/confirm CLI（1〜3） | scope/revision/再送/指紋を保証 |
+| 5 | deterministic Plan・表示/検査CLI（1〜4） | 分類・mapping・staleを検証 |
+| 6 | Approval・失効・durable Request（4,5） | hash binding、receipt前後の中断/重複を検証 |
+| 7 | transaction prepare/commit/rollback（1〜6） | journal/temp/backup/ID消費、fault injection。実Apply入口は非公開 |
+| 8 | History・forward finalize・recovery（7） | 全crash matrix、receipt-only復旧を含む |
+| 9 | CLI Apply/recovery統合（8） | end-to-end/障害試験合格後に実Apply公開 |
+| 10 | backend adapter・管理者境界（9） | 同service利用、認証未設定write拒否 |
+| 11 | SCR-002の6 view（10） | OCC・承認・再送・異常UXを検証 |
 
-目安10 PRであり固定数ではない。slice 2/6/7/10が大きければ分割し、単独review・復元・test可能性を優先する。frontend mockは先行可能だが実write接続はslice 8完了後。認証providerの選定は別途でも、無認証writeを暫定公開しない。
+当初の目安10 sliceからbootstrapを独立Slice 3へ分離した現行の目安11 sliceであり、PR数は固定しない。大きければさらに分割し、単独review・復元・test可能性を優先する。frontend mockは先行可能だが実write接続はCLI実Apply統合完了後。認証providerの選定は別途でも、無認証writeを暫定公開しない。
 
 interface testsはCLI success/stale/already_applied/busy/blocked/確認取消し/非TTY/wrong hash/exit・JSON、UI複数tab/refresh/back/double submit/timeout、approval actor/repository/hash不一致、同request異payload、承認後receipt前・receipt後journal前のcrash、結果不明時の照会を含む。transactionの全rename/sync/journal/History/state前後でfault injectionを行い、UIがpending finalizationを失敗へ潰さないことも検証する。
