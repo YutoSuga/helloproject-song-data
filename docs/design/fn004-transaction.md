@@ -199,35 +199,15 @@ HistoryはID stateの最終hashへ循環参照せず、消費済みstateと上�
 
 ## ID state・bootstrap
 
-`staging/fn004-state.json`をGit管理する。schema_version、repository_instance_id、bootstrap_hash、initialized_at、generation、baseline manifest、namespace別high_water_marks、append-only allocation_events、History count/head hash/last apply、pending_transaction、state_hashを持つ。
+bootstrap・genesis・initial stateの正式schema/hash契約は[Bootstrap / ID state](fn004-bootstrap.md)を正とする。Git auditは`origin/main` HEADから全parentを辿るreachable history、external declarationは全namespaceの人間監査upper boundとして必須。declared < current/history maxはblocking contradictionで、自動補正しない。
 
-namespaceはwork:W / creator:C / artist:G / release:L / member:P / video:Vとsong:M/A/J/T/B/O/R/Hを分ける。v1でmember/videoへ採番はしないが初期使用済み上限は記録する。5桁枯渇はSTOP。
+`staging/fn004-bootstrap.json`はGit-managedなimmutable genesis record兼completion marker、`staging/fn004-state.json`はGit-managedなmutable current state。repository_instance_idはstate lineageを識別し通常cloneで継承する。bootstrap identity payloadだけをJCS/SHA-256でhashし、audit/manifestをhash経由でbindingする。初期History headはbootstrap_hash、count=0、last_apply_id=null、allocation_events=[]、pending_transaction=null、generation=0。架空Apply/transaction recordを作らない。
 
-Planは上限を読むだけ。COMMITTINGをdurable記録後、最初のCSV置換前にplanned IDsのrangeとtransactionをallocation eventとして消費し、high-water mark・generation・pendingを保存する。保存失敗ならCSVに触れない。rollbackでもこの消費を残す。正式entity登録は成功時、再利用禁止の技術的消費はそれより前であり区別する。rollbackで古いstate backup全体を戻してはならない。
+bootstrapは明示check → 人間確認 → expected audit hash付きinitializeだけ。initializeでは監査を再検証し、stateを先にdurable/no-clobber公開、bootstrap markerを最後に公開する。片側file・残存bootstrap intent/temp・不一致は`BOOTSTRAP_INCOMPLETE`等で通常利用を止め、未初期化扱いや自動再bootstrapをしない。bootstrap専用intentは最小の中断証跡で、実Apply transaction journalやrecovery実行とは区別する。
 
-History公開後に成功head/countを更新してpendingを解除する。no-opでも成功headは進む。state更新はtemp/sync/rename/directory sync。同transactionの消費は再度増やさず、保存内容から照合する。
+stateのnamespace keyはcanonical ID prefix（W/C/P/G/L/V、song M/A/J/T/B/O/R/H）。全14個を保持し、0〜99999のinteger。99999はvalidな過去状態だが以後のallocationは枯渇STOP。Planは上限を読むだけ。COMMITTINGをdurable記録後、最初のCSV置換前にplanned IDsのrangeとtransactionをallocation eventとして消費し、high-water mark・generation・pendingを保存する。保存失敗ならCSVに触れない。
 
-初回はCLI明示bootstrap。whole validation → baseline固定 → current IDs＋取得済み完全Git履歴＋既知の外部使用済みID上限を監査 → repository UUID / History genesis → 初期state・空History directory → immutable `staging/fn004-bootstrap.json`公開の順。bootstrap自身も排他・journal・sync対象で、markerを最後に公開する。shallow履歴・消失履歴等を未使用の証拠にせず、監査範囲とoperator確認を記録し、上限を確定できなければ初期化STOP。
-
-ID stateの概念例（上限は説明用、実初期値はbootstrap監査で決める）：
-
-```json
-{
-  "schema_version": 1,
-  "repository_instance_id": "repo_<uuid>",
-  "bootstrap_hash": "<hash>",
-  "initialized_at": "2026-10-16T09:00:00+09:00",
-  "generation": 2,
-  "baseline_manifest_hash": "<hash>",
-  "high_water_marks": {"work:W": 91, "creator:C": 86, "artist:G": 3, "release:L": 136, "member:P": 17, "video:V": 0, "song:M": 0, "song:A": 0, "song:J": 120, "song:T": 0, "song:B": 0, "song:O": 0, "song:R": 0, "song:H": 1},
-  "allocation_events": [{"transaction_id": "tx_<uuid>", "namespace": "work:W", "first": 91, "last": 91}],
-  "history": {"count": 0, "head_hash": "<genesis-hash>", "last_apply_id": null},
-  "pending_transaction": "tx_<uuid>",
-  "state_hash": "<hash>"
-}
-```
-
-marker/state/genesis/count=0/空History/pendingなしの一致が正常初期状態。不存在だけで空Historyとしない。導入済みのstate/marker欠落やchain欠落はSTOP。bootstrap途中はINITIALIZATION_INCOMPLETEとして復旧し、上書き初期化しない。
+rollbackでも消費済み上限/イベントを残し、古いstate backup全体を戻さない。History公開後に成功head/countを更新してpendingを解除する。no-opでも成功headは進む。state更新はtemp/sync/rename/directory sync。同transactionの消費を再度増やさず照合する。bootstrapの全namespace genesis、current/history max、直前valid stateより上限を下げない。初期化・clone・中断・schema validation・capacity・TOCTOUの詳細は上記専用契約に従う。
 
 ## 成功・cleanup・Git
 

@@ -64,7 +64,7 @@ Decision内部の同entity複数ref、完全重複relation、重複track位置�
 
 ## deterministic ID allocation
 
-namespaceごとに`max(current IDs, persistent high-water mark) + 1`から計算し、5桁上限超過はSTOP。使用済み欠番を再利用しない。persistent stateの初期化・消費は[Transaction](fn004-transaction.md)で定義する。
+namespaceごとに`max(current IDs, persistent high-water mark) + 1`から計算し、5桁上限超過はSTOP。使用済み欠番を再利用しない。persistent stateの初期化・genesisは[Bootstrap契約](fn004-bootstrap.md)、消費は[Transaction](fn004-transaction.md)で定義する。99999は保存可能なhigh-waterだが、そのnamespaceへの追加採番は不可。
 
 順序はwork / creator / artist / release / song、songはprefix ASCII順、各namespace内はASCII local ref昇順。配列順、title、release_date、locale sortに依存しない。Decisionで確定したsong_id_prefixの整合だけを検証し、plannerは推測しない。
 
