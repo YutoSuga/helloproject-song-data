@@ -2,6 +2,7 @@ import { createHash, randomUUID } from "node:crypto";
 import { readFile, readdir, mkdir, rename, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { parseCsv, readCsv } from "./csv.js";
+import { withCanonicalRead } from "./fn004-repository.js";
 import { CANONICAL_TABLES, ID_PATTERNS as idPatterns } from "./canonical-schema.js";
 
 // Preserve FN-003's legacy subset validation while sharing canonical metadata.
@@ -19,7 +20,11 @@ const append = (map, key, value) => { if (!map.has(key)) map.set(key, []); map.g
 const find = (map, key) => map.get(key) ?? [];
 const distinct = (rows, id) => [...new Map(rows.map((row) => [row[id], row])).values()].sort((a, b) => a[id].localeCompare(b[id]));
 
-export async function loadReviewCanonical(root) {
+export async function loadReviewCanonical(root, { gate } = {}) {
+  return withCanonicalRead({ root, gate, fn: (resolvedRoot) => readReviewCanonical(resolvedRoot) });
+}
+
+async function readReviewCanonical(root) {
   const dir = join(root, "data"), names = await readdir(dir);
   for (const name of tables) if (!names.includes(name + ".csv")) throw new Error("Missing canonical CSV: " + name);
   for (const name of tables) {
@@ -27,7 +32,10 @@ export async function loadReviewCanonical(root) {
     const required = [...keys[name], ...(name === "works" || name === "songs" ? ["title"] : []), ...(name === "artists" || name === "creators" ? ["name"] : [])];
     if (required.some((field) => !header.includes(field)) || new Set(header).size !== header.length) throw new Error("Canonical invalid header: " + name);
   }
-  const data = Object.fromEntries(await Promise.all(tables.map(async (name) => [name, await readCsv(join(dir, name + ".csv"))])));
+  const reads = await Promise.allSettled(tables.map(async (name) => [name, await readCsv(join(dir, name + ".csv"))]));
+  const failure = reads.find((result) => result.status === "rejected");
+  if (failure) throw failure.reason;
+  const data = Object.fromEntries(reads.map((result) => result.value));
   const ids = {};
   for (const name of tables) {
     const seen = new Set();
