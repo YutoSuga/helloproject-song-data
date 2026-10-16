@@ -37,11 +37,12 @@ async function fixture(t) {
   return dir;
 }
 
-test("current canonical: all 14 tables pass without changing legacy readers", async () => {
+test("current canonical: all 14 tables pass without changing legacy readers", async (t) => {
+  const dir = await fixture(t);
   assert.equal(CANONICAL_TABLES.length, 14);
   assert.deepEqual(current.validation, { ok: true, diagnostics: [] });
-  assert.deepEqual(await loadReviewCanonical(root), current.tables);
-  const legacy = await loadCanonicalData(root);
+  assert.deepEqual(await loadReviewCanonical(dir), current.tables);
+  const legacy = await loadCanonicalData(dir);
   for (const [name, rows] of Object.entries({ artists: legacy.artists, creators: legacy.creators, works: legacy.works, songs: legacy.songs, song_artists: legacy.songArtists, song_creators: legacy.songCreators })) assert.deepEqual(rows, current.tables[name]);
 });
 

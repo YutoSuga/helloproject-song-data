@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFile, mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
+import { readFile, mkdtemp, mkdir, writeFile, rm, cp } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -120,8 +120,11 @@ test("a related unit keeps its official artist name without inheriting the group
   assert.equal(candidate.artist_slug, null);
   assert.equal(candidate.source_artist_slug, "rosychronicle");
 });
-test("canonical title match remains reference-only", async () => {
-  const index = await loadTitleIndex(fileURLToPath(new URL("../", import.meta.url)));
+test("canonical title match remains reference-only", async (t) => {
+  const root = await mkdtemp(join(tmpdir(), "hp-title-index-"));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  await cp(fileURLToPath(new URL("../data", import.meta.url)), join(root, "data"), { recursive: true });
+  const index = await loadTitleIndex(root);
   const match = matchExisting("微炭酸", index);
   assert.equal(match.state, "exact_title_match");
   assert.ok(match.song_ids.length);

@@ -58,6 +58,19 @@ original、メモリtarget、temp再読込、commit後で検証する。既存ro
 
 ## directory・durability
 
+### Slice 2 runtime API（repository / persistence / gate）
+
+- [`fn004-gate.js`](../../src/fn004-gate.js) の `acquireGate` / `releaseGate` / `withCanonicalGate` がread/write共通のexclusive leaseを扱う。rootはrealpath、lockは`staging/.fn004.lock`の`open("wx")`。schema_version=1、lock_id UUID、PID、operation/mode、開始時刻、caller、host、platform、process identityをfile sync・directory syncして保持する。Linuxではboot ID・PID namespace・process start ticksも記録し、取得不能なOS情報はnull。repository UUIDは発行しない。
+- releaseはprocess内WeakMapに登録されたlive token、fileのdev/ino、metadataの全bytesを照合する。serialized/copied tokenは無効。callback例外でもreleaseするが、ownership不明ならunlinkしない。release/sync失敗は`GATE_RELEASE_FAILED`等とcleanup_requiredを返し、本体例外があればoperation_errorに保持する。crash後lock、古いPID/時刻、空・破損・未知version・読込不能lockを削除しない。force unlock / recovery APIはない。
+- gateはnon-reentrant。`withCanonicalGate({root, operation, fn: async (gate) => ...})`内から内側APIへ同じ`gate`を明示する。暗黙のnested取得は`GATE_NESTED`、競合する取得は`GATE_BUSY`、破損は`GATE_CORRUPT`。leaseはrootとprocess内の実体にbindingし、release開始で再利用不可。callback完了前に作業をすべてawaitし、別作業とleaseを共有したままreleaseしない。
+- [`fn004-repository.js`](../../src/fn004-repository.js) の `createFn004Repository(root)` / `readValidatedCanonicalSnapshot(root, {gate}?)` は同gate下でSlice 1のsnapshotを読み、validation失敗を`CANONICAL_INVALID`＋元diagnosticsとしてthrowする。snapshotはreadonlyの一時点のcopyで、release後も現在値との一致は保証しない。後続writeは再取得・manifest再検証が必要。
+- `withCanonicalRead`はFN-001 / FN-003 / collectorにも適用するが、既存readerの返却形・部分検証は維持する。collectorのネットワーク取得・candidate保存やranking生成処理全体をgate内へ入れない。testsは実canonicalを一時directoryへcopyし、production stagingにlockを作らない。
+- journal/request/stateのschemaは本slice対象外。存在するruntime state/bootstrap、非空transactions/apply-requests directoryは現時点で健康・完了済みと判定せず`RECOVERY_REQUIRED`に倒す。後続sliceがtyped state/chain/pending検証へ置き換えるまで、未知artifactを普通のcanonical readで無視しない。domain schemaを推測したrecoveryやbootstrapは実装しない。
+- [`persistence.js`](../../src/persistence.js) の `createPersistence(root)` はroot内POSIX pathだけを扱う低水準primitive。readJsonはobject rootのみで、missing / I/O / UTF-8 / JSON構文 / root型を別codeで区別し、domain schema/versionは判定しない。writeJsonAtomicは同directoryのUUID付きtempをwx作成→write→file sync→close→再読込一致確認→rename→directory sync。createJsonExclusiveは完成tempをhard linkでno-clobber公開→directory sync→自己temp unlink→directory syncする。
+- 永続化失敗はphase・published・tempを伝え、公開後のdirectory sync/cleanup失敗も成功扱いしない。rename前の失敗で元fileを触らず、失敗tempは無差別削除しない。directory新設時はparentをsyncする。primitive自体はgateを取らず、repositoryのwrite/createはlive leaseを要求する。repositoryのJSON pathは正式staging artifactに限定し、canonical write APIを持たない。artifactごとのschema・immutable/mutable policyは後続domain layerが担う。
+- traversal、絶対path、Windows drive/backslash、symlink ancestor/final pathを拒否する。Node標準APIによるpath検査とunlinkは非協調processの置換との競合を完全には防げない。local・同filesystem・協調operation前提を維持し、NFS/SMB/cloud同期filesystemへ保証を拡張しない。Linux/Node 20 CIで検証し、Windows等でdirectory sync/hard link/renameが成立しなければ明示失敗とし、弱いdurabilityへfallbackしない。
+- Git管理方針は[全体設計](canonical-registration.md)を維持する。今回ignoreするのは導入したgateと`.fn004-*.tmp-*`のみ。Decision/Approval/History/bootstrap/stateをignoreしない。Plan/Request/journal/backupのignore追加は各runtime導入時に行う。
+
 ```text
 staging/transactions/<transaction_id>/
 ├── transaction.json          最新journal recordの参照cache
