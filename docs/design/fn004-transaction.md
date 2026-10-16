@@ -47,6 +47,15 @@ FN-001 / FN-003 / collector等のcanonical読込は、snapshot読込全体で同
 
 original、メモリtarget、temp再読込、commit後で検証する。既存rowの値・timestamp不変、削除なし、許可tableへのinsertだけかも検証する。original判定例外・音源同一性等は人間根拠を検査し、推測で再判断しない。意味的制約の検査をwarningだけに落とさない。
 
+### Slice 1 runtime API（読み取り基盤のみ）
+
+- [`canonical-schema.js`](../../src/canonical-schema.js) の `CANONICAL_TABLES` / `CANONICAL_SCHEMA` が14表の列順、必須性、型、PK/FK、enum、order/期間等のruntime契約。`CANONICAL_SCHEMA_VERSION = 1`。FN-003もこのmetadataを参照するが、既存の部分検証・reader APIは維持する。
+- [`canonical-validator.js`](../../src/canonical-validator.js) の `validateCanonicalTables(tables)` は全14表のrow配列を受けるpure function。rowは全列をCSV文字列で保持し、未確認の任意値は空文字。整数は全fieldを検査し、比較keyを任意精度で正規化する。`ok, diagnostics`を返し、processを終了せず入力を変更しない。header検査はsnapshot読込側が担う。
+- [`canonical-snapshot.js`](../../src/canonical-snapshot.js) の `readCanonicalSnapshot(root)` はrepository rootから各fileを一度読み、同じBufferを厳密UTF-8 decode・共通CSV parserのstrict mode・hashに使う。戻り値は `{rawBytes, tables, manifest, validation: {ok, diagnostics}}`。rawBytesはPOSIX pathをkeyとするBuffer、tablesはtable名をkeyとするrow配列。返却値はcallerが読み取り専用として扱う。
+- manifestは `{schema_version: 1, files, manifest_hash}`。filesの各entryは `{path, byte_length, sha256}`、path ASCII昇順。hashは[Plan設計](fn004-apply-plan.md)どおり **SHA-256(JCS(files))** であり、schema_versionやmanifest_hashをhash対象へ追加しない。個別hashはCSVの生bytes、hexは小文字64桁。共通の [`canonical-hash.js`](../../src/canonical-hash.js) がRFC 8785のJSON canonicalizationとSHA-256を提供する。
+- file欠落・読込不能・未知CSVでは完全manifestを返さずnull。CSV内容がinvalidでも読めたbytesのmanifestは取得できるが、`validation.ok=false`なら利用可能canonicalとはみなさない。診断はerror severity、安定code、file/table、該当時record番号/column/key、messageを持つ。row番号はheaderを1とする論理CSV record番号（引用内改行は同record）。未来releaseやoptional notes欠如は正常。
+- Slice 1にはgateがない。複数fileの読込中に外部変更されない保証はなく、**後続sliceが共通gate下で呼ぶ必要がある**。hash用とparse用の再読込は行わない。CSV書込、diff、既存値変更禁止の比較、serializer、transaction/recovery、ID採番、CLIは未実装。
+
 ## directory・durability
 
 ```text
