@@ -2,12 +2,16 @@ import { createHash, randomUUID } from "node:crypto";
 import { readFile, readdir, mkdir, rename, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { parseCsv, readCsv } from "./csv.js";
+import { CANONICAL_TABLES, ID_PATTERNS as idPatterns } from "./canonical-schema.js";
 
-const tables = ["artists", "creators", "works", "songs", "song_artists", "song_creators", "members", "member_affiliations", "song_performers", "releases", "release_tracks", "videos", "video_songs", "video_song_performers"];
-const keys = { artists: ["artist_id"], creators: ["creator_id"], works: ["work_id"], songs: ["song_id"], song_artists: ["song_id", "artist_id", "role"], song_creators: ["song_id", "creator_id", "role"], members: ["member_id"], member_affiliations: ["member_id", "artist_id", "start_date"], song_performers: ["song_id", "member_id"], releases: ["release_id"], release_tracks: ["release_id", "disc_number", "track_number"], videos: ["video_id"], video_songs: ["video_id", "song_id", "start_seconds"], video_song_performers: ["video_id", "song_id", "start_seconds", "member_id"] };
-const foreignKeys = { songs: { work_id: "works" }, song_artists: { song_id: "songs", artist_id: "artists" }, song_creators: { song_id: "songs", creator_id: "creators" }, member_affiliations: { member_id: "members", artist_id: "artists" }, song_performers: { song_id: "songs", member_id: "members" }, release_tracks: { release_id: "releases", song_id: "songs" }, video_songs: { video_id: "videos", song_id: "songs", performer_artist_id: "artists" }, video_song_performers: { video_id: "videos", song_id: "songs", member_id: "members" } };
-const idPatterns = { artists: /^G[0-9]{5}$/, creators: /^C[0-9]{5}$/, works: /^W[0-9]{5}$/, songs: /^[MAJTBORH][0-9]{5}$/, members: /^P[0-9]{5}$/, releases: /^L[0-9]{5}$/, videos: /^V[0-9]{5}$/ };
-const enums = { artists: { type: ["group", "solo", "temporary_unit", "shuffle_unit", "special_unit", "project", "trainee", "other"] }, songs: { version_type: ["original", "new_vocal", "re_recording", "cover", "other"] }, song_artists: { role: ["primary", "featured"] }, song_creators: { role: ["lyrics", "english_lyrics", "composition", "arrangement", "brass_arrangement"] }, releases: { release_type: ["single", "album", "digital", "other"] } };
+// Preserve FN-003's legacy subset validation while sharing canonical metadata.
+const tables = CANONICAL_TABLES.map((table) => table.name);
+const keys = Object.fromEntries(CANONICAL_TABLES.map((table) => [table.name, table.primaryKey]));
+const foreignKeys = Object.fromEntries(CANONICAL_TABLES.map((table) => [table.name,
+  Object.fromEntries(table.columns.filter((column) => column.target && column.target !== table.name)
+    .map((column) => [column.name, column.target]))]));
+const enums = Object.fromEntries(CANONICAL_TABLES.map((table) => [table.name,
+  Object.fromEntries(table.columns.filter((column) => column.type === "enum").map((column) => [column.name, column.values]))]));
 const object = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 const normalized = (value) => value.normalize("NFKC").replace(/\s+/g, "").toLocaleLowerCase();
 const dateValid = (value) => typeof value === "string" && /^\d{4}-\d\d-\d\d$/.test(value) && !Number.isNaN(Date.parse(value + "T00:00:00Z")) && new Date(value + "T00:00:00Z").toISOString().slice(0, 10) === value;
