@@ -18,6 +18,7 @@ __pycache__/
 # FN-004 gate and owned persistence temporary artifacts (never sweep on startup)
 /staging/.fn004.lock
 /staging/**/.fn004-*.tmp-*
+/staging/transactions/bootstrap_*/
 
 # Local environment files
 .env

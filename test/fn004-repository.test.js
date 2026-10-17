@@ -226,11 +226,11 @@ test("collector does not hold canonical gate over network fetch or staging save"
   await missing(join(root, GATE_PATH));
 });
 
-test("unknown pending state/artifacts fail closed without implementing domain schemas", async (t) => {
+test("partial bootstrap and unknown pending artifacts fail closed", async (t) => {
   const root = await fixture(t, true); await fs.mkdir(join(root, "staging"));
   for (const path of ["staging/fn004-state.json", "staging/fn004-bootstrap.json", "staging/apply-requests/r.json", "staging/transactions/tx/intent.json"]) {
     await fs.mkdir(join(root, path, ".."), { recursive: true }); await fs.writeFile(join(root, path), "{}");
-    await assert.rejects(readValidatedCanonicalSnapshot(root), hasCode("RECOVERY_REQUIRED"));
+    await assert.rejects(readValidatedCanonicalSnapshot(root), hasCode(path.includes("fn004-") ? "BOOTSTRAP_INCOMPLETE" : "RECOVERY_REQUIRED"));
     await fs.rm(join(root, path));
     if (path.includes("transactions")) await fs.rm(join(root, "staging/transactions"), { recursive: true });
   }
