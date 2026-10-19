@@ -1,6 +1,6 @@
 # FN-004 Bootstrap / ID state contract
 
-本書は[Transaction設計](fn004-transaction.md)のbootstrap・state部分の正式v1契約である。Slice 3で停止したGit監査scope、external declaration、genesis/state schemaを人間判断済み方針に基づき確定する。**本書のschemaは実装契約であり、単なる概念例ではない**。runtime・validator・CLI・production bootstrapは今回実装/実行しない。
+本書は[Transaction設計](fn004-transaction.md)のbootstrap・state部分の正式v1契約である。Slice 3で停止したGit監査scope、external declaration、genesis/state schemaを人間判断済み方針に基づき確定する。**本書のschemaは実装契約であり、単なる概念例ではない**。Slice 3のlibrary実装は後述する。正式CLI・production bootstrapは別タスクであり、本実装PRでは実行しない。
 
 ## 共通型・version・正本
 
@@ -252,6 +252,15 @@ Gitは空directoryを保存しないため、通常cloneではapply-history dire
 旧記述の`INITIALIZATION_INCOMPLETE`は本契約の`BOOTSTRAP_INCOMPLETE`へ名称統一する（既存runtimeには未実装）。messageで分岐せずRepositoryError.code/structured diagnosticsを使用。gate・persistence由来の既存codeは独自名へ置換しない。初期化完了後の両file消失も既知lineage/intent/History等の証跡があれば未初期化扱いせず停止する。Git全体を過去へ戻して証跡まで消した場合を自動検出できるという保証はしない。
 
 ## Slice 3への引き継ぎ
+
+### Slice 3 runtime API
+
+- [`fn004-bootstrap.js`](../../src/fn004-bootstrap.js) の `checkBootstrap({root, external_declaration})`、`inspectBootstrapStatus({root})`、`initializeBootstrap({root, external_declaration, expected_audit_hash, actor})` が上記のreadonly監査・照会・明示初期化を提供する。checkのblocking結果はstructured result、initializeの失敗は既存`RepositoryError`。gate/persistence由来のcodeも保持する。照会はstatus/readiness、既存identity、capacity、diagnosticsを返す。初期化済み状態でも現在canonical/Git上限を再検証する。
+- [`fn004-id-audit.js`](../../src/fn004-id-audit.js) は共通schemaのmaster ID patternから全namespaceを導出する。`currentIdMaxima`、`historicalCsvMaxima`、`maximumMaps` はID上限のprojectionのみで、採番や予約をしない。historical parserは共通CSV strict modeを使い、relation ID列も検査する。
+- [`fn004-git-audit.js`](../../src/fn004-git-audit.js) の `auditGitIds(root)` は非同期`execFile`のargument arrayでlocal Gitを読み、固定HEADの全parent graph・各commitのcanonical tree・path/blobごとのcontentを検証する。返却は`{git, maxima}`。同じpath/blobのparseを再利用し、暗黙fetch・Git設定変更はしない。未初期化check/initializeの長いscanはgate外で行い、gate内でref/completenessを照合する。
+- [`fn004-state.js`](../../src/fn004-state.js) はdeclaration、audit、bootstrap record、state、linkのdomain validatorと、共通JCS/SHA-256によるidentity生成を持つ。`validateExternalDeclaration`、`validateBootstrapRecord`、`validateFn004State`、`validateBootstrapLink` は不正時にtyped errorをthrowする。`hashState` はstate_hashだけを除外する。非初期stateのchainは後続sliceまでfail-closed。
+- [`fn004-runtime-state.js`](../../src/fn004-runtime-state.js) はgate内の保存済みartifact検査を担当する。既存readerのpresence guardはこのtyped guardへ接続する。正常genesisはcloneでも読めるが、未知request/transaction、未完了bootstrap、cleanup_requiredは通常readを阻止する。snapshotは引き続きgate保持中の一時点のcopyであり、返却後の最新性を保証しない。
+- publicationはSlice 2 repository/persistenceを再利用する。bootstrap intentだけを`staging/transactions/bootstrap_*/`としてGit非管理にし、bootstrap/stateはGit管理のまま。filesystem/Gitのfault injection用`createBootstrapService`はtrusted test seamであり、clientのbypass optionではない。canonical書込・production初期化・正式CLIは追加しない。
 
 実装するのはcheck/audit/initialize/status、ID上限監査、初期record/state、validatorとgate/persistence接続まで。actual ID allocation/reservation、Decision、Plan、Approval/Request、実Apply journal、canonical write/transaction、backup/rollback/recovery execution、successful History、正式CLI/UIを実装しない。本番bootstrap/stateは実装PRで生成せず、merge後の別明示タスクで実行する。
 

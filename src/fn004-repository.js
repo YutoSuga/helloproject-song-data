@@ -1,8 +1,8 @@
-import { readdir } from "node:fs/promises";
 import { createPersistence, RepositoryError } from "./persistence.js";
 import { withCanonicalGate, assertGateOwnership } from "./fn004-gate.js";
 import { CANONICAL_TABLES } from "./canonical-schema.js";
 import { readCanonicalSnapshot } from "./canonical-snapshot.js";
+import { inspectRuntimeState } from "./fn004-runtime-state.js";
 
 const fixedArtifacts = new Set(["staging/decisions.json", "staging/fn004-state.json", "staging/fn004-bootstrap.json"]);
 const artifactDirectories = new Set(["apply-plans", "apply-approvals", "apply-requests", "apply-history", "transactions"]);
@@ -16,20 +16,13 @@ function artifactPath(path) {
   return path;
 }
 
-// Domain state schemas do not exist in Slice 2. Never guess that an encountered
-// request/journal/state is terminal/healthy. Later slices replace this fail-closed
-// presence guard with typed pending/chain checks under the same live lease.
+// Slice 3 proves genesis state/lineage; non-genesis transaction chains remain
+// blocked until their later-slice validators exist. No pending bypass flag.
 async function assertReadableRuntime(store) {
-  for (const path of ["staging/fn004-state.json", "staging/fn004-bootstrap.json"]) {
-    if (await store.exists(path)) throw new RepositoryError("RECOVERY_REQUIRED", "Runtime state requires a later-slice validator before ordinary canonical reads", { path });
-  }
-  for (const path of ["staging/transactions", "staging/apply-requests"]) {
-    if (await store.exists(path)) {
-      let entries;
-      try { entries = await readdir(await store.resolvePath(path)); }
-      catch (cause) { throw new RepositoryError("RECOVERY_REQUIRED", "Cannot inspect runtime artifact directory", { path, cause }); }
-      if (entries.length) throw new RepositoryError("RECOVERY_REQUIRED", "Runtime artifacts require inspection before ordinary canonical reads", { path });
-    }
+  const result = await inspectRuntimeState(store);
+  if (!["BOOTSTRAP_REQUIRED", "READY"].includes(result.status) || result.readiness === "cleanup_required") {
+    throw new RepositoryError(result.status === "READY" ? "RECOVERY_REQUIRED" : result.status,
+      "Runtime state blocks ordinary canonical reads", { ...(result.diagnostics.length ? { diagnostics: result.diagnostics } : {}), readiness: result.readiness });
   }
 }
 
@@ -46,8 +39,8 @@ export async function withCanonicalRead({ root = process.cwd(), gate, fn }) {
   } });
 }
 
-export async function createFn004Repository(root = process.cwd()) {
-  const store = await createPersistence(root);
+export async function createFn004Repository(root = process.cwd(), options = {}) {
+  const store = await createPersistence(root, options);
   return Object.freeze({
     root: store.root,
     // Readonly, point-in-time snapshot. Release does not keep it current; any
