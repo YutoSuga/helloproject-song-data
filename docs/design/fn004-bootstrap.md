@@ -57,6 +57,8 @@ local Git object databaseを使用する。GitHub APIへの依存、監査中の
 
 shallow=falseの確認だけで完了とはしない。全parent/対象tree/blobへのアクセスとparse成功が必要。shallow boundary、欠損object、Git command failure、ref曖昧/不存在、unexpected encoding、解釈不能historical CSVはすべてblocking。replace/graft等で元のcommit parent graphが変更されている履歴を通常監査として受理しない。未取得objectを見えないまま除外しない。外部declarationでGit audit不完全を代替してはならない。
 
+初期化済みstateを読むCIのranking検証・site buildもこの前提を満たす。[Pages workflow](../../.github/workflows/deploy-pages.yml)は`actions/checkout@v6`の`fetch-depth: 0`を使い、[CI integration test](../../test/fn004-ci-integration.test.js)が実checkoutの`shallow=false`と`origin/main`解決を検証する。PRのdetached HEAD / merge refをauthoritative refへ置き換えず、初期化済みfixtureで実scriptの成功とshallow / ref欠落時の安全停止を継続検証する。
+
 audit payload内の`git` objectを以下に固定する。
 
 | field | 型・値 |
