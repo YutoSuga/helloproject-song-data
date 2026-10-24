@@ -1,6 +1,6 @@
 # CLI / SCR-002 Interface・Approval / Apply Request
 
-FN-004 canonical反映機能とSCR-002 楽曲管理画面の正式v1設計。runtime・CLI・backend・frontendはいずれも未実装。[全体設計](canonical-registration.md)、[Decision](fn004-decision.md)、[Plan](fn004-apply-plan.md)、[Transaction](fn004-transaction.md)を参照する。
+FN-004 canonical反映機能とSCR-002 楽曲管理画面の正式v1設計。runtime・CLI・backend・frontendはいずれも未実装。[全体設計](canonical-registration.md)、[Decision](fn004-decision.md)、[Plan](fn004-apply-plan.md)、[Transaction](fn004-transaction.md)、[History readonly契約](fn004-history.md)を参照する。
 
 ## application boundary
 
@@ -105,7 +105,7 @@ receiptはGit非管理だが、未完了中は削除・GC禁止。完了後もv1
 | inspectRecovery / recoverTransaction | request/transaction ID、観測state hash、許可action | readonly診断 / 元要求の復旧 |
 | initializeState / readCanonicalSnapshot | 監査hashの明示確認 / gate | bootstrap / 安定snapshot |
 
-Decision編集はbase headをserviceが比較し、古いtabを拒否する。変更操作のrequest keyは対象identity・actor・payloadへbindingし、duplicate confirmでrevisionを増やさない。未知versionはSTOP。runtimeの安全logicは共通serviceに置く。
+Decision保存schema・content hash・mutation key・source revisionのexact contractは[Decision](fn004-decision.md)、Plan payload/operation ID/orderは[Plan](fn004-apply-plan.md)、成功lookup/非初期state proofは[History](fn004-history.md)を正とする。Decision編集はbase headをserviceが比較し、古いtabを拒否する。変更操作のrequest keyは対象identity・actor・payloadへbindingし、duplicate confirmでrevisionを増やさない。未知versionはSTOP。runtimeの安全logicは共通serviceに置く。
 
 ## SCR-002 views・workflow
 
@@ -201,16 +201,15 @@ domain / validator → repository / gate → bootstrap/state → Decision → Pl
 | --- | --- | --- |
 | 1 | schema/hash・全14表validator | PR #56で実装済み。実canonical変更なし |
 | 2 | repository・gate・persistence（1） | PR #57で実装済み。安定読込・排他・durability primitive |
-| 3 | bootstrap / repository instance / ID state（1,2） | 次回実装。[正式契約](fn004-bootstrap.md)の監査・宣言・genesis・初期化/中断整合。正式CLIなし |
-| 4 | immutable Decision・OCC・draft/confirm CLI（1〜3） | scope/revision/再送/指紋を保証 |
-| 5 | deterministic Plan・表示/検査CLI（1〜4） | 分類・mapping・staleを検証 |
-| 6 | Approval・失効・durable Request（4,5） | hash binding、receipt前後の中断/重複を検証 |
-| 7 | transaction prepare/commit/rollback（1〜6） | journal/temp/backup/ID消費、fault injection。実Apply入口は非公開 |
-| 8 | History・forward finalize・recovery（7） | 全crash matrix、receipt-only復旧を含む |
-| 9 | CLI Apply/recovery統合（8） | end-to-end/障害試験合格後に実Apply公開 |
-| 10 | backend adapter・管理者境界（9） | 同service利用、認証未設定write拒否 |
-| 11 | SCR-002の6 view（10） | OCC・承認・再送・異常UXを検証 |
+| 3 | bootstrap / repository instance / ID state（1,2） | PR #59実装、#60 CI full history、#61 production genesis確立。正式CLIなし |
+| 4 | Decision + Apply Plan（1〜3） | 完全schema/revision/OCC/指紋、immutable payload・mapping・stale、History readonly。CLIなし |
+| 5 | Approval + Apply Request / idempotency（4） | hash binding、receipt前後の中断/重複を検証 |
+| 後続 | transaction prepare/commit/rollback（1〜5） | journal/temp/backup/ID消費、fault injection。実Apply入口は非公開 |
+| 後続 | History・forward finalize・recovery（transaction） | 全crash matrix、receipt-only復旧を含む |
+| 後続 | CLI Apply/recovery統合（recovery検証後） | end-to-end/障害試験合格後に実Apply公開 |
+| 後続 | backend adapter・管理者境界（CLI統合後） | 同service利用、認証未設定write拒否 |
+| 後続 | SCR-002の6 view（backend後） | OCC・承認・再送・異常UXを検証 |
 
-当初の目安10 sliceからbootstrapを独立Slice 3へ分離した現行の目安11 sliceであり、PR数は固定しない。大きければさらに分割し、単独review・復元・test可能性を優先する。frontend mockは先行可能だが実write接続はCLI実Apply統合完了後。認証providerの選定は別途でも、無認証writeを暫定公開しない。
+Slice 4をDecision + Plan、Slice 5をApproval + Requestとして統合し、後続slice/PR数は固定しない。大きければさらに分割し、単独review・復元・test可能性を優先する。frontend mockは先行可能だが実write接続はCLI実Apply統合完了後。認証providerの選定は別途でも、無認証writeを暫定公開しない。
 
 interface testsはCLI success/stale/already_applied/busy/blocked/確認取消し/非TTY/wrong hash/exit・JSON、UI複数tab/refresh/back/double submit/timeout、approval actor/repository/hash不一致、同request異payload、承認後receipt前・receipt後journal前のcrash、結果不明時の照会を含む。transactionの全rename/sync/journal/History/state前後でfault injectionを行い、UIがpending finalizationを失敗へ潰さないことも検証する。

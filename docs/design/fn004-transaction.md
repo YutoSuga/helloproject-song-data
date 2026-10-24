@@ -1,6 +1,6 @@
 # FN-004 Validation / Transaction / Recovery
 
-正式v1設計。runtimeは未実装。[全体設計](canonical-registration.md)、[Decision](fn004-decision.md)、[Plan](fn004-apply-plan.md)、[Approval / durable Request](song-admin.md)を参照する。
+正式v1設計。Slice 1〜3の読込/排他/bootstrap基盤は実装済み、実Apply/Transaction/Recoveryは未実装。[全体設計](canonical-registration.md)、[Decision](fn004-decision.md)、[Plan](fn004-apply-plan.md)、[Approval / durable Request](song-admin.md)を参照する。
 
 ## 保証範囲
 
@@ -55,6 +55,10 @@ original、メモリtarget、temp再読込、commit後で検証する。既存ro
 - manifestは `{schema_version: 1, files, manifest_hash}`。filesの各entryは `{path, byte_length, sha256}`、path ASCII昇順。hashは[Plan設計](fn004-apply-plan.md)どおり **SHA-256(JCS(files))** であり、schema_versionやmanifest_hashをhash対象へ追加しない。個別hashはCSVの生bytes、hexは小文字64桁。共通の [`canonical-hash.js`](../../src/canonical-hash.js) がRFC 8785のJSON canonicalizationとSHA-256を提供する。
 - file欠落・読込不能・未知CSVでは完全manifestを返さずnull。CSV内容がinvalidでも読めたbytesのmanifestは取得できるが、`validation.ok=false`なら利用可能canonicalとはみなさない。診断はerror severity、安定code、file/table、該当時record番号/column/key、messageを持つ。row番号はheaderを1とする論理CSV record番号（引用内改行は同record）。未来releaseやoptional notes欠如は正常。
 - Slice 1にはgateがない。複数fileの読込中に外部変更されない保証はなく、**後続sliceが共通gate下で呼ぶ必要がある**。hash用とparse用の再読込は行わない。CSV書込、diff、既存値変更禁止の比較、serializer、transaction/recovery、ID採番、CLIは未実装。
+
+### serializer rule v1
+
+Planがbindingするserializer=1は、変更するCSVをUTF-8/BOMなし、canonical schemaのheader/列順、record区切りLF、最終LFありで出力する。カンマ・CR・LF・二重引用符を含むfieldだけを二重引用符で囲み、内部引用符を二重化する。field内の文字/改行は無変換。既存rowは元の順序・全field値を維持し、新insertをtyped PK順で末尾へ追加する。非変更fileはbytesごと不変、変更fileの既存fieldのquote表現だけが再serializationで変わり得る。raw manifestはそれも含めtargetとして検証する。Plan生成でCSVを書かず、system apply_timeの実値とtarget bytesは実Transactionだけが決める。
 
 ## directory・durability
 
@@ -162,40 +166,13 @@ permission denied、disk full、file locked、fsync失敗も同じ段階規則�
 
 ## successful Apply History
 
-`staging/apply-history/<apply_id>.json`をGit管理する。1成功＝1 immutable JSON。JSONLの部分末尾や単一JSONの過去全体置換を避ける。完成済みtempをsync後、hard linkによる新規公開等のno-clobber方式で公開しdirectory sync。同ID同hashはrecoveryの公開済み、異hashはintegrity STOP。
+保存schema/hash/chain/set・readonly indexes・非初期state proofの正本は[History readonly契約](fn004-history.md)。従来のtrace部分だけの概念JSONを完全recordの代わりに使用しない。`staging/apply-history/<apply_id>.json`をGit管理し、成功1件につき1 immutable recordを完成tempからno-clobber・durable公開する。同ID同semantic hashは既存結果、異hashはintegrity STOP。
 
-必須fieldは次のとおり。
+recordはpayload、record_hash、検証済みDecision/Plan snapshot、metadataを持つ。payloadの全内容をhashし、source Decision/Planは各semantic hash経由でbindingする。最終state_hashへの循環参照は作らず、before/consumed stateとallocation rangeを記録し、最終stateがrecord_hashを参照する。apply_time/applied_atは元COMMIT_DECIDED intentで固定し、retry/recoveryで変えない。published_at等の表示metadataだけはsemantic hash外。
 
-| 分類 | 内容 |
-| --- | --- |
-| schema / chain | schema_version、repository_instance_id、sequence、previous_history_hash、record_hash |
-| trace | decision_id / revision / content_hash、Plan ID/hash、Approval ID/hash、request_id / payload_hash、transaction_id、apply_id |
-| result | candidate coverage/fingerprint、local ref→actual ID、insert/reuse/no_opのoperation ID・key・row/hash |
-| snapshots | before/afterの全14表manifest、ID消費state hash・上限遷移 |
-| time / rules | apply_time、applied_at、planner/validator/transaction/serializer version |
+成功HistoryはCOMMIT_DECIDED後に公開する。公開済みHistoryだけでjournal完了・owner停止・cleanup完了を断定しない。失敗・ABORTED・ROLLED_BACKは成功Historyに入れず、no-op成功も必ず記録する。History全体のchain/head/countと現在stateのproofを検証したうえで、通常reader/Planは既存runtime guardの未完了receipt/journal/pending/cleanup確認も必要とする。本人のrecoveryだけが保存intentを根拠に期待遷移を扱う。
 
-HistoryはID stateの最終hashへ循環参照せず、消費済みstateと上限遷移を記録する。最終ID stateがHistory hashを参照する。失敗・ABORTED・ROLLED_BACKは成功Historyに入れない。CSV変更0件でも承認・receipt・journal・Historyを通し、before/after manifestは同一。二回目はALREADY_APPLIED。
-
-成功recordのtrace部分の概念例（manifest/result全内容は上表の必須契約に従う）：
-
-```json
-{
-  "schema_version": 1,
-  "repository_instance_id": "repo_<uuid>",
-  "sequence": 1,
-  "previous_history_hash": "<genesis-hash>",
-  "record_hash": "<hash>",
-  "apply_id": "apply_<uuid>", "transaction_id": "tx_<same-uuid>",
-  "request_id": "<uuid>", "request_payload_hash": "<hash>",
-  "approval_id": "apr_<uuid>", "approval_hash": "<hash>",
-  "decision": {"decision_id": "dec_<uuid>", "revision": 3, "content_hash": "<hash>"},
-  "plan": {"plan_id": "ap_<hash>", "plan_hash": "<hash>"},
-  "candidate_coverage": [{"candidate_id": "sc_example", "fingerprint": "<hash>"}],
-  "id_mappings": [{"local_ref": "work:w1", "canonical_id": "W00091"}],
-  "apply_time": "2026-10-16T10:00:01+09:00",
-  "applied_at": "2026-10-16T10:00:02+09:00"
-}
-```
+History-only readonly proofはsuccess-only-v1 profileである。rollbackの消費済みID/eventを成功chainに偽装せず、追加のterminal journal proofが必要ならSTATE_TRANSITION_PROOF_REQUIREDで止める。後続Transaction/Recovery validatorがterminal整合を証明するまで通常利用を再開しない。この設計follow-upはpublication/recovery実装を含まない。
 
 ## ID state・bootstrap
 
@@ -207,7 +184,7 @@ bootstrapは明示check → 人間確認 → expected audit hash付きinitialize
 
 stateのnamespace keyはcanonical ID prefix（W/C/P/G/L/V、song M/A/J/T/B/O/R/H）。全14個を保持し、0〜99999のinteger。99999はvalidな過去状態だが以後のallocationは枯渇STOP。Planは上限を読むだけ。COMMITTINGをdurable記録後、最初のCSV置換前にplanned IDsのrangeとtransactionをallocation eventとして消費し、high-water mark・generation・pendingを保存する。保存失敗ならCSVに触れない。
 
-rollbackでも消費済み上限/イベントを残し、古いstate backup全体を戻さない。History公開後に成功head/countを更新してpendingを解除する。no-opでも成功headは進む。state更新はtemp/sync/rename/directory sync。同transactionの消費を再度増やさず照合する。bootstrapの全namespace genesis、current/history max、直前valid stateより上限を下げない。初期化・clone・中断・schema validation・capacity・TOCTOUの詳細は上記専用契約に従う。
+rollbackでも消費済み上限/イベントを残し、古いstate backup全体を戻さない。成功transactionは消費/pending確立でgenerationを+1、History公開後の成功head/count更新・pending解除でさらに+1とする（no-opも同じ）。他のjournal/receipt/cache更新ではstate generationを増やさない。History公開後に成功head/countを更新してpendingを解除する。no-opでも成功headは進む。state更新はtemp/sync/rename/directory sync。同transactionの消費を再度増やさず照合する。bootstrapの全namespace genesis、current/history max、直前valid stateより上限を下げない。初期化・clone・中断・schema validation・capacity・TOCTOUの詳細は上記専用契約に従う。
 
 ## 成功・cleanup・Git
 

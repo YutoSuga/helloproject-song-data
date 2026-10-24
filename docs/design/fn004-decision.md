@@ -1,130 +1,202 @@
 # FN-004 Decision Model
 
-本書はFN-004 canonical反映機能の正式なv1設計であり、runtimeは未実装である。[全体設計](canonical-registration.md)、[Apply Plan](fn004-apply-plan.md)、[Transaction / Recovery](fn004-transaction.md)、[CLI / SCR-002](song-admin.md)と併せて読む。canonicalの列・意味は[データ仕様](../data-spec.md)を正とする。
+本書はFN-004のDecision store / revision、candidate projection、registry semantic projectionの**完全なv1実装契約**である。Decision runtimeは未実装。[全体設計](canonical-registration.md)、[Apply Plan](fn004-apply-plan.md)、[History readonly](fn004-history.md)、[Transaction](fn004-transaction.md)、[interface](song-admin.md)と併せて読む。canonical列・型・enumは[データ仕様](../data-spec.md)と[`canonical-schema.js`](../../src/canonical-schema.js)を正とする。Reviewはderived suggestionであり、正式Decision、`pw_xxx`、legacy review-resultsの間に自動昇格・migrationはない。
 
-## 責務・保存
+## schema記法・共通型
 
-Decisionは人間の判断を保存するpersistent dataで、canonicalではない。`staging/decisions.json`をGit管理する。candidateは観測事実、reviewは再生成可能な支援情報であり、candidateのstatusやFN-003のsuggestionを正式判断へ昇格させない。確定だけでCSVを書き換えない。
+以下のfield表は省略例ではない。列挙したfieldは**すべて必須、すべてのobjectはclosed**。`T|null`だけがnullを許し、optional fieldはない。空collectionは`[]`、空objectをnullの代わりに使わない。未知field/version/enum、duplicate JSON member、undefined、非有限数、孤立surrogateは拒否する。JSONは厳密UTF-8（BOMなし）。意味・required・projection変更は対応version更新と明示migrationを必要とする。
 
-保存rootは`schema_version: 1`と`revisions`配列。各revisionは全内容を持つimmutable snapshotとし、差分だけを保存しない。未知schema version・未知判断fieldはSTOP。意味・必須性・enum・fingerprint projectionを変更するときはversionを上げ、明示的migrationを行う。不足する人間判断を自動補完しない。
+hashは既存`hashCanonicalJson`によるSHA-256(UTF-8(RFC 8785 JCS(value)))、hexは小文字64文字（Hash）。JCS以外のtrim、NFKC/NFC、case fold、URL同一視、改行統一、日付補完は行わない。object key順はJCSに従う。`ASCII`比較はASCII文字のcode point辞書順（localeCompare不可）、数値は数値順。以下のsemantic配列は保存前に指定順へsortし、readerは非canonical順も拒否する。creditのnames等、明記した順序付き事実はsortしない。
 
-## identity・aggregate・revision
-
-- `decision_id`は`dec_`＋UUID v4。candidate ID、title、canonical IDから生成しない。
-- revisionは1からの正整数。`(decision_id, revision)`を一意にする。
-- 複数candidateの判断を1 aggregateにまとめられる。同じnew work / song / creator / artist / releaseはaggregate内で一度定義する。
-- candidate集合をscopeとする。同じ集合・同じ判断範囲の修正は新revision。candidate追加・削除、aggregate分割・統合は新Decisionとし、`replaces`に旧Decision identityを記録する。
-- `created_at`、`confirmed_at`、`actor`、`human_note`、`supersedes_revision`、必要なら`derived_from_revision`を保存する。日時はtimezone付きISO 8601。confirmedでは確認日時・判断者を必須とする。
-- draftは明示保存ごとに追記。confirmも新confirmed revisionを追記し、確認対象draftのidentity/hashを記録する。過去recordを更新・削除しない。
-
-| 保存status | 意味 | Plan対象 |
-| --- | --- | --- |
-| draft | 未確定・保留。必須判断不足を許容 | 不可 |
-| confirmed | 人間が判断を確定 | 現在有効なものだけ |
-| cancelled | 判断の撤回・除外。理由必須 | 不可 |
-
-`superseded`は後続confirmed / cancelledから導出する。draft追加だけでは旧confirmedを無効化しない。現在有効な判断は最新revision番号だけで決めず、confirmed / cancelledの履歴と`replaces`を評価する。置換確定時は元identityが期待した有効revisionのままかを同じgate下で検査し、元を適用不可にする。置換先取消しで元を自動復活させない。重複するcandidateに競合する有効判断があればSTOP。
-
-適用済みかは成功Historyから導出し、Decision statusに`applied`を追加しない。適用済みDecisionの訂正は同IDの新revisionとして記録できるが、v1は同IDの別revisionを自動再適用しない。新Decisionへ複製して二重適用することもcandidate coverage / replaces照合で拒否する。canonical correctionは別機能とする。
-
-## optimistic concurrency
-
-`saveDecisionDraft` / `confirmDecision` / `cancelDecision`は`decision_id, base_revision, base_content_hash`を要求する。新規作成はbaseをnullとして不存在を検査する。content hashはschemaで定義したrevision内容をRFC 8785（JCS）でcanonical JSON化したSHA-256。自己のhash fieldは計算対象外とする。
-
-application serviceは共通gate下でheadとbaseを比較し、revisionを採番して追記する。古いtabやCLI入力は`DECISION_HEAD_CONFLICT`として拒否し、自動mergeしない。確認画面のdraft hash・source tokenも照合する。request keyを持つ同一confirm再送は既存結果を返し、別のconfirmed revisionを増やさない。
-
-未保存bufferは破棄できるが保存済みdraftは履歴に残る。draft-only Decisionはcancel可能。既存confirmedの編集中止は、そのconfirmedの取消しとは分ける。新Decisionへの複製はdraftから始め、承認・成功状態はコピーしない。
-
-## candidate binding・自己完結性
-
-candidateごとに以下を保存する。
-
-1. `candidate_id`。
-2. source identity：`source_artist_slug, source_release_url, media_type, edition, product_number, disc_index, track_number`。
-3. source facts snapshot：identityに加え`title, release_title, release_date, release_type, artist_name, source_url, credits`。creditsはrawとnamesの全値・順序を保持する。
-4. `fingerprint: {profile: "candidate-source-v1", algorithm: "sha256", value}`。
-5. 人間が選んだwork / songとrelease_track、音源判断、evidence参照。
-
-projectionは上記field集合に固定し、欠落はnullに統一してJCS化する。文字列はsourceどおりで、NFKC変換やURLの意味的同一視をしない。credit配列順は保持する。`artist_id / artist_slug`の照合値、`match`、`related_candidates`、status、管理者notes、収集日時はhashに含めない。source facts内に未知fieldを導入するならprojection versionを改定する。
-
-snapshotからfingerprintを再計算し、現candidateの同projectionとも照合する。candidate不存在・source identity変更・fingerprint mismatchはSTOPし、人間が再レビューして新revisionを作る。IDだけ同じでも安全とはみなさない。last_seen_atだけの更新ではstaleにしない。
-
-confirmedはFN-003の`resolved`、suggestion、`pw_xxx`を入力にせずPlanを作れる内容を持つ。source factsは上記projectionだけを保存し、HTML全文やcollector管理fieldの完全コピーは要求しない。
-
-## entity reference
-
-参照は`{"existing_id":"W00001"}`または`{"local_ref":"work:w1"}`の排他的union。型を合わせる。
-
-| 新規entity | local ref例 | Decisionに持つ内容（canonical列名準拠） |
-| --- | --- | --- |
-| work | work:w1 | title、任意title_kana / notes、source_url |
-| song | song:s1 | work参照、title、version_name、version_type、release_date、notes、source_url、song_id_prefix |
-| creator | creator:c1 | name、name_kana、notes、source_url、identity根拠 |
-| artist | artist:a1 | name、type、start_date、end_date、notes、source_url、独立主体の根拠 |
-| release | release:r1 | title、release_type、release_date、catalog_number、notes、source_url、盤のidentity根拠 |
-
-local refはDecision namespace内で一意、ASCII小文字identifierを用い、同じentityではrevision間で維持する。廃止refを別entityへ再利用しない。v1は別Decisionの未採番local entityを参照しない。共有が必要なら同aggregateへまとめ、apply済みならHistoryで確定IDを確認した新判断からexisting参照する。`pw_xxx`は正式referenceとして禁止。
-
-new masterのcanonical ID・created_at・updated_atはDecisionでは確定しない。任意canonical値の未確認はnullで表し、PlanでCSV空欄へ変換する。必須判断を推測で埋めない。
-
-existing参照はIDと人間のidentity assertionsを持ち、必要なwork対応・version_type等を明示する。candidateの表記がcanonical titleと違うことと、既存rowを書き換える要求を区別する。v1のexisting masterはreference-onlyで、任意field patchも禁止する。
-
-## song・relation判断
-
-- existing work＋existing song、existing work＋new song、new work＋new songを表現する。
-- candidateごとにsame_audioによる既存/同local song再利用か、distinct_recordingによるnew songかを明示する。新規作品・音源として初めて登録する場合も、その判断と根拠を持つ。
-- version_typeは`original / new_vocal / re_recording / cover / other`。登録順・最古candidateから自動確定しない。
-- new songの`song_id_prefix`は`M / A / J / T / B / O / R / H`のいずれかを人間が確定する。primary artist、source slug、最小G IDからplannerが推測しない。カバーはカバー側、特殊unit等はデータ仕様に従う。複数primary等で系列を判断できなければconfirmed不可。
-- song.release_dateは確認できたfull audio初出日。release日を自動コピーしない。
-
-| relation | 判断に必要なfield |
+| 型 | 完全な定義 |
 | --- | --- |
-| song_artists | song、artist、role（primary / featured）、credit_order、source_url |
-| song_creators | song、creator、role、credit_name、credit_order、source_url |
-| song_performers | song、existing member_id、performer_order、notes、source_url |
-| release_tracks | release、disc_number、track_number、song、track_title、notes、source_url |
+| UUID | 小文字UUID v4（version=4、variant=8/9/a/b） |
+| DecisionID / DecisionIdentity | `dec_<UUID>` / `{decision_id:DecisionID, revision:正整数, content_hash:Hash}` |
+| Text / Nonempty | JSON string / 1文字以上のText。空白だけの必須入力はinvalid（判定のみ。trimした値を保存しない） |
+| Timestamp / Date / HTTPS | 実在するtimezone付きISO 8601日時 / 実在する`YYYY-MM-DD` / 絶対HTTPS URL。canonical validatorと同じ判定 |
+| Actor | `{id:Nonempty, assurance:"local_process"\|"authenticated_admin"}`。前者は`local:`、後者は`admin:`に続く非空stable ID。Webはtrusted backendだけが生成しclient申告不可。認証providerは本契約外。bootstrapのActorは引き続きlocal_processのみ |
+| EvidenceRefs | 本revision内evidence IDの重複なしASCII昇順array（0件可、confirmedの必要件数は後述） |
+| Fingerprint | `{profile:"candidate-source-v1", algorithm:"sha256", value:Hash}` |
+| NamespaceMap / Manifest / RepositoryID | [bootstrapの正式型](fn004-bootstrap.md#共通型version正本)。既存schema/hashを変更しない |
 
-creator roleは`lyrics / english_lyrics / composition / arrangement / brass_arrangement`を維持する。creator代表名とcredit_nameは別。共同担当の境界をraw区切り文字から推測しない。new artistはv1対象だが、参加文字列を機械的に複合artistへ変換しない。各songにprimaryを1件以上、根拠付き複数primaryも許可する。
+candidate IDはsourceで与えられた非空ASCII文字列をそのまま使う。canonical ID/local ref/evidence IDと同様、IDの比較はASCII順、表示title/noteはUnicodeを保持する。
 
-memberはexisting P IDのみ。new memberやmember_affiliations操作を要求する判断はconfirmed不可。performer未調査は明示できるが、その場合は行を生成しない。所属履歴から推定しない。
+数はすべてJSON numberのsafe integer、暗黙型変換なし。revision/sequence/generationもsafe integer上限を超えればSTOP。canonical CSV整数をJSON keyにする場合もsafe integerを要求する（canonical validator自体の任意精度整数受理を狭めず、plannerで表現不能な入力をblockする）。任意canonical文字列はDecisionでnullまたは非空Text、CSV空欄に相当する値はnullのみ。人間noteだけは空Textを許す。
 
-releaseのURL・title・catalog_numberは単独の一意identityではない。品番またはsong対象収録内容が違う盤は原則別release。edition / mediaの根拠はDecisionに保存し、現CSVで必要な盤説明はnotesに明示する。collectorのdisc_indexを機械的にdisc_numberへ変換しない。公式発表のevidenceがあれば未来release_dateも正常に許可する。
+## store / revision schema・hash
 
-## evidence・validation
+新規decision_idは`crypto.randomUUID()`等のrandom UUID v4から一度発行し、candidate/title/canonical ID/pathから導出しない。
 
-evidenceはID、kind、URL、publisher、official_basis、checked_at、引用または対象facts、candidate / snapshot参照、human_noteを持つ。`official_source`と`human_observation`を区別し、各identity判断・rowがどの根拠に依存するかを保存する。各canonical source_urlは当該rowの公式根拠を明示する。Decisionの補足をCSV notesへ無条件コピーしない。
+`staging/decisions.json`はGit-managed。rootの完全schemaは`{schema_version:1, revisions:Revision[]}`。storeとrevisionのversionは独立で、v1では双方1。不存在は新規storeとして扱えるが、存在する破損storeを空にしない。空storeはrevisions=[]。同DecisionIDの複数revisionは正常であり、重複identity `(decision_id,revision)`はinvalid。ID ASCII昇順、同ID内revision数値昇順、各IDは1から欠番なし。全revisionを検証し、headだけ検証しない。
 
-draftは構造検査を通すが必須判断不足を許す。confirmedには全candidate対応、entity必須値、prefix、型付き参照、evidence、日時・actorを要求する。duplicate revision / candidate / local ref / relation、未解決ref、未知enum、new member、unsupported操作を拒否する。existing ID存在とsource fingerprintはconfirm時にもPlan/Apply時にも検証する。
+Revisionの全fieldは次のとおり。
 
-同名new entityの既存候補があれば、明示的なdistinct判断と対象ID・根拠を必要とする。新しい候補が後で増えた場合は自動reuseせず再レビューする。canonical全体とtransactionの検証は[Transaction設計](fn004-transaction.md)の責務。
+| field | 型・制約 |
+| --- | --- |
+| schema_version | `1`（revision schema） |
+| decision_id / revision / status | DecisionID / 正整数 / `draft`、`confirmed`、`cancelled` |
+| parent | DecisionIdentity\|null。revision=1だけnull、以後直前headの同ID・revision-1・hash |
+| scope | `{schema_version:1, candidate_ids:Nonempty[], scope_hash:Hash}`。非空、ID重複なしASCII昇順。hash対象は`{schema_version:1,candidate_ids}`のみ |
+| replaces | Replacement[]、後述 |
+| derived_from_revision | DecisionIdentity\|null。複製・再編集の出典。承認/有効性を継承しない |
+| source_revision | DecisionIdentity\|null。confirm/cancel対象の保存済みsnapshot。draftだけnull |
+| cancellation | `{target:DecisionIdentity, reason:Nonempty}`\|null。cancelledだけ非null |
+| candidate_bindings | CandidateBinding[]、candidate_id ASCII順、scope IDsと完全一致 |
+| entities | `{works:NewWork[], creators:NewCreator[], artists:NewArtist[], releases:NewRelease[], songs:NewSong[]}`。各array local_ref ASCII順 |
+| relations | `{song_artists:SongArtist[], song_creators:SongCreator[], song_performers:SongPerformer[], release_tracks:ReleaseTrack[]}`。各array local_ref ASCII順 |
+| unsupported_requests | UnsupportedRequest[]、request_ref ASCII順。draftの未対応意図を残す。confirmedでは[] |
+| evidence | Evidence[]、evidence_id ASCII順 |
+| human_note | Text |
+| actor | このrevisionを保存/確定/取消したActor。semantic内容に含む |
+| content_hash | 下記semantic projectionのHash |
+| metadata | `{created_at:Timestamp, saved_at:Timestamp, confirmed_at:Timestamp\|null, cancelled_at:Timestamp\|null, mutation:{key:UUID, request_hash:Hash}}` |
 
-## 概念例
+`contentProjection(revision)`は**rootからcontent_hashとmetadataだけを除いた全field**。`content_hash=hashCanonicalJson(contentProjection)`。status、identity/revision、parent/source/hash、scope/replaces、判断/evidence（checked_atを含む）、human_note、actorを含む。保存時刻・確認操作時刻・request keyはmetadataであり除外。metadata.mutation.request_hashは保存commandから再計算し、重複mutation.keyも検査する。metadataの改変がsemantic hashだけで検出されるとは主張せず、保存済みrecord全体のimmutabilityとGitで追跡する。同semantic revisionでmetadataだけ違えば同hash。store全体のraw byte hashをOCCやPlan bindingに使わない。parent/source/derived_from_revision/replacesのidentity参照はstore内で存在・hash一致を検証し、参照DAGのcycleを拒否する。candidate source snapshotと違い、Decision provenanceを似たrevisionへ付け替えない。
 
-以下はpayloadの一部であり、実ファイルや適用可能な完全recordではない。
+created_atは初revisionのsaved_atを以後保持し、saved_atは各保存時に一度固定。confirmed_atはconfirmedだけsaved_atと同値、cancelled_atはcancelledだけ同値、他はnull。timezone表現の書換えをしない。actor・evidenceは確認の意味内容、metadata時刻は表示/追跡である。旧説明のsupersedes_revisionはparentから導出し、重複fieldとして保存しない。
 
-```json
-{
-  "decision_id": "dec_<uuid>",
-  "revision": 3,
-  "status": "confirmed",
-  "entities": {
-    "works": [{"local_ref": "work:w1", "title": "例示作品", "source_url": "https://example.invalid/release/1/"}],
-    "songs": [
-      {"local_ref": "song:s1", "work": {"existing_id": "W00001"}, "title": "例示別録音", "version_type": "re_recording", "song_id_prefix": "J", "release_date": null},
-      {"local_ref": "song:s2", "work": {"local_ref": "work:w1"}, "title": "例示作品", "version_type": "original", "song_id_prefix": "H", "release_date": null}
-    ],
-    "creators": [{"local_ref": "creator:c1", "name": "例示作家"}],
-    "artists": [{"local_ref": "artist:a1", "name": "例示unit", "type": "special_unit"}],
-    "releases": [{"local_ref": "release:r1", "title": "例示release", "release_type": "single", "release_date": "2027-01-01"}]
-  },
-  "candidate_bindings": [
-    {"candidate_id": "sc_example", "work": {"existing_id": "W00001"}, "song": {"existing_id": "J00001"}, "audio_identity": "same_audio", "accepted_version_type": "original", "release_track_ref": "track:t1"}
-  ],
-  "relations": {
-    "song_performers": [{"song": {"local_ref": "song:s2"}, "member_id": "P00001", "source_url": "https://example.invalid/release/1/"}],
-    "release_tracks": [{"local_ref": "track:t1", "release": {"local_ref": "release:r1"}, "disc_number": 1, "track_number": 1, "song": {"existing_id": "J00001"}, "track_title": "例示既存曲"}]
-  }
-}
-```
+## scope・status・immutable transitions
 
-完全recordではsnapshot / fingerprint、各必須source・evidence、new songのprimary artist等を省略してはならない。実採番ID・apply日時・反映結果はDecisionへ書き戻さずHistoryへ保存する。
+scopeは**canonical registrationという固定目的のcandidate ID集合**。順序は意味を持たず上記sortで固定。candidate追加/削除/分割/統合は新DecisionID。source facts変更の人間による再採用は同scopeの新draftで表現でき、元snapshotを変えない。source identityの変更も自動採用・似たcandidateへのreattachは禁止。
+
+| 保存操作 | source / required / semantic効果 |
+| --- | --- |
+| 新規draft | parent/source/cancellation=null。新ID、revision=1。bindingのsource snapshotとfingerprint、scope、actorは完全必須。judgmentのnullや未完new entityを許す |
+| draft → draft | parentは現在head、source=null。全内容再保存。scopeと一度使用したlocal_refのentity identityを維持 |
+| 保存済みdraft → confirmed | source_revisionは**現在headであるdraft**のidentity/hash、parentも同値。新revision。scope/replaces/bindings/entities/relations/unsupported_requests/evidence/human_note/derived_from_revisionはsourceとJCS一致。actorは確認者。全confirmed検証・current source照合・competing claim検査に成功した場合だけ追記 |
+| confirmed → draft | parentは現在head、source=null。旧confirmedは有効なまま。編集保存だけで取消さない |
+| cancelled → draft | 明示的な再検討を新revisionに保存可。permanentなreplacesで失効したIDは復活不可、新Decisionが必要 |
+| confirmed/draft → cancelled | source_revision=parent=現在head。cancellation.targetは現在有効confirmed identity、存在しないdraft-onlyならhead identity。reason必須。判断内容はsourceからそのまま複写し、cancellationだけ追加。新revisionのactor/metadataは操作主体。draft編集中のcancelは旧confirmedも取消す明示操作。未保存buffer破棄と混同しない |
+
+cancelled → cancelled、confirmed → confirmedの直接遷移は禁止。再確認は先にdraftを保存する。cancelledでもscope/source snapshotを省略しない。draftで既に欠けたjudgmentを持つdraft-only cancellationはその不完全さを保持できる。confirmedに由来するcontentを取消し時に編集しない。
+
+Effective confirmedはID内の最後のconfirmed/cancelled eventで決める（draftを無視）。最後がcancelledなら無し。最新confirmedがあるだけでは十分でなく、下記永久replacement失効も適用する。別revision成功済みDecisionの訂正draftは保存可だがv1再Applyは禁止。`applied`はstatusに追加せずHistoryから導出する。
+
+Replacementの完全schemaは`{target:DecisionIdentity, reason:Nonempty, evidence_refs:EvidenceRefs}`。0件または複数可、target.decision_id ASCII順、同ID重複/自己参照/cycle禁止。新Decisionのrevision 1で確定し以後全revisionで同一に保つ。targetは作成時の有効confirmedのみ、置換Decisionの最初のconfirm時にも同identityが有効かCASで照合する。以後の同Decisionの再confirmはその初回失効edgeを検証し直し、失効済みtargetへ再CASしない。成功confirmがtargetを**永久に失効**させ、置換先cancelでも復活しない。scope変更の理由/evidenceを必須（evidence_refs非空）とする。applied coverageを置換で二重適用しない。単なる同scope編集にreplacesを使わない。
+
+### OCC・保存・再送
+
+`saveDecisionDraft/confirmDecision/cancelDecision`入力は`{decision_id, base_revision, base_content_hash, source_revision, content, cancellation, actor, mutation_key}`。baseは両方null（新規）または現在headのrevision/hash。source_revisionは上表のIdentity|null。contentはrevisionの`scope,replaces,derived_from_revision,candidate_bindings,entities,relations,unsupported_requests,evidence,human_note`だけを持つclosed object。actionは呼出APIから`save_draft|confirm|cancel`に固定し、cancellationはcancelだけ非null、他はnullとする。
+
+mutation.request_hashのprojectionは`{schema_version:1, action, decision_id, base_revision, base_content_hash, source_revision, content, cancellation, actor}`。mutation_key自身とserver時刻/新revision採番を除く。保存前にcanonical orderingを適用し、未知fieldを消すnormalizationはしない。keyはstore内で一意。同key同request_hash再送は保存済み結果を返すだけ、異hashは`INTEGRITY_CONFLICT`。保存recordからparent/source/content/actor/action/cancellationを用い再計算できる。再送照合はhead OCCより先に行うが、その結果を現在有効と誤表示しない。
+
+bootstrap/runtime readiness guardを通過したcommon exclusive gate内でstore全検証→再送→head CAS→candidate source token→状態/競合検査→採番→append。base mismatchは`DECISION_HEAD_CONFLICT`、自動mergeなし。cancelは保存済みsourceのhash/複写を検証し、現candidateの存在や同一性を取消しの条件にしない。save/confirmのsource inputのfingerprintは確認画面のtoken。新source採用を求めるsaveも明示的input snapshot/tokenを現在candidateと照合する。confirmはsource draftと現在candidateの両方を再確認する。
+
+storeは単一JSONなので**同gate下のatomic replaceで既存snapshot不変の論理追記履歴**を保存する。新record追加後もstoreのID/revision順に並べるため、file arrayの末尾追加だけを意味しない。既存revisionの削除/再番号/record全内容変更を拒否し、full snapshotを追加する。新規storeはno-clobber、更新はSlice 2 writeJsonAtomicのtemp/file sync/reread/rename/directory syncを使う。失敗を成功/自動再送へ変換しない。revision単独fileを発明しない。get/listも検証済みhead/effective identityを返す。
+
+## candidate binding / fingerprint profile v1
+
+SourceIdentityは次の7fieldだけのclosed object：`source_artist_slug, source_release_url, media_type, edition, product_number, disc_index, track_number`。各値はText|null、ただしdisc_index/track_numberは正safe integer|null。source_release_urlは非nullならHTTPS。source schema versionはcandidate rootの1を要求する。
+
+SourceFactsはSourceIdentityの7fieldに`title, release_title, release_date, release_type, artist_name, source_url, credits`を加えた**合計14field**だけのclosed object。title等6文字列はText|null、source_url非nullならHTTPS。source日付/release_typeは観測Textとして保持しcanonical enumへの変換をしない。creditsはnullまたはroleをkeyとするobject。role keyは`lyrics,composition,arrangement,performer,english_lyrics,brass_arrangement`のsubset（未知roleはprofile更新までblocking）。各valueは`{raw:Text|null,names:Text[]}`。namesの順・重複をsourceどおり保持する。欠落roleと存在するempty creditは区別する。
+
+projectionは`{projection_version:1, source_schema_version:1, facts:SourceFacts}`。source top-levelの上記14fieldが欠けた場合だけnullへ埋め、存在する型違いをnullへ置換しない。credits自体は欠落/nullをnull、存在するrole objectのraw欠落はnull、names欠落は[]、未知credit fieldは拒否。同profile内の唯一のnormalizationはこれら欠落補完とobject keyのJCS順である。fingerprint.valueはこのprojectionのhash。
+
+identityはfactsから7fieldを抜き出したものと全値一致させる。source factsと現candidateの両projectionを再計算し保存fingerprintと照合する。candidate_id自体はfingerprint外だがscope/bindingで独立に固定。`artist_id/artist_slug`照合値、match、related_candidates、status、管理note、detected_at/last_seen_at等の**列挙外source top-level fieldはすべて除外**する。song-reviews whole-fileをbindingしない。意味ある新source fieldを採用するならprojection versionを更新する。
+
+CandidateBindingの全field：
+
+| field | 型・制約 |
+| --- | --- |
+| candidate_id | scope中のNonempty ID |
+| source_schema_version / projection_version | `1` / `1` |
+| source_identity / source_facts / fingerprint | 上記完全型 |
+| work / song | WorkRef\|null / SongRef\|null |
+| audio_identity | `same_audio`、`distinct_recording`、またはnull |
+| accepted_version_type | canonical song.version_type enum\|null |
+| release_track_refs | 同Decision内track local_refの重複なしASCII順array |
+| performer_review | `unreviewed`または`specified` |
+| evidence_refs / human_note | EvidenceRefs / Text |
+
+confirmedではwork/song/audio_identity/accepted_version_typeが非null、release_track_refs非空、全trackのsongが選択songと一致、songのwork/versionも一致する。既存songはsame_audio、新local songはdistinct_recording（同local songへの別candidateのsame_audioも許すが、少なくとも一bindingのdistinct_recording根拠必須）。全source identityの値は観測がなければnull可、source facts.title/source_urlは非空/HTTPSを必須。edition不明等を推測しない。unreviewed performerなら当該bindingからperformer rowを要求しない。specifiedでも「該当なし」を断定せず、保存した個別rowとevidenceだけを意味する。
+
+## typed refs・existing assertions
+
+Refは型ごとに`{local_ref:LocalRef}` XOR `{existing_id:CanonicalID, assertions:Assertions, evidence_refs:EvidenceRefs}`のclosed union。memberだけexisting variantのみ。`pw_`値・別Decision修飾・両variant混在は禁止。既存IDはmasterの正式pattern、localは以下の正規表現（Nは先頭0なし正整数のASCII数字列）。
+
+| 型 | LocalRef | existing assertionsの全field |
+| --- | --- | --- |
+| work | `^work:w[1-9][0-9]*$` | `{title:Nonempty}` |
+| song | `^song:s[1-9][0-9]*$` | `{work_id:W ID,title:Nonempty,version_name:Nonempty\|null,version_type:enum,primary_artist_ids:G ID[]}` |
+| creator | `^creator:c[1-9][0-9]*$` | `{name:Nonempty}` |
+| artist | `^artist:a[1-9][0-9]*$` | `{name:Nonempty,type:canonical enum}` |
+| release | `^release:r[1-9][0-9]*$` | `{title:Nonempty,release_type:canonical enum,release_date:Date\|null,catalog_number:Nonempty\|null}` |
+| member | なし | `{name:Nonempty}`、IDはPのみ |
+
+song.primary_artist_idsは非空、重複なしASCII順、canonicalの全primary ID集合と完全一致。nullable assertionはCSV空文字と対応し「検証を省略」ではない。assertionsは人間が選んだidentityの期待事実でありpatchではない。name/titleがsourceと異なっても明示判断なら正常だが、canonical assertions不一致は`EXISTING_IDENTITY_CONFLICT`。canonicalから不足assertionを自動補完しない。同IDの複数refは同assertions/evidenceを共有してよいが、矛盾するassertionsを許さない。existing songのwork_idはbinding.workの解決IDと一致させる。
+
+draftでも存在するRefは完全なunionで対象を解決できること。未選択は親fieldをnullにし、不完全existing objectを保存しない。local definitionは同Decision内で一意。同refが連続revisionに残る場合は同entityの判断修正を意味する。一度定義が消えたrefはretiredとし、その後同Decisionのどのrevisionでも再導入不可。別entityには過去未使用refを与え、廃止refを再利用しない。跨Decision依存はexisting IDで再レビューする。既存entityの任意patchやcanonical rowの上書きをRefへ足さない。
+
+## new entity / relation judgment完全schema
+
+以下は全field集合。各new entityは`local_ref, evidence_refs`に加え表のfieldをすべて持つ。draftでは表のjudgment値をnullにできる（配列は[]）、enum/型は非null時にも検証する。confirmedではcanonical required fieldだけ非null必須、canonical optional fieldはnull可。identity証拠のevidence_refsはconfirmedで非空。new master ID/timestampを持たない。
+
+| 型 | 追加field（canonical名、型はdata spec） |
+| --- | --- |
+| NewWork | `title, title_kana, notes, source_url, distinct_from` |
+| NewCreator | `name, name_kana, notes, source_url, distinct_from` |
+| NewArtist | `name, type, start_date, end_date, notes, source_url, distinct_from` |
+| NewRelease | `title, release_type, release_date, catalog_number, notes, source_url, distinct_from` |
+| NewSong | `work:WorkRef\|null, title, version_name, version_type, release_date, notes, source_url, song_id_prefix, distinct_from` |
+
+song_id_prefixはM/A/J/T/B/O/R/Hまたはdraftのnull、confirmedで非null。人間指定のみ。coverはカバー側系列、特殊unit・複数primary等は根拠を確認し、slug/artist名/最小G IDから推測しない。song.release_dateはfull audio初出日、release日をコピーしない。originalの例外根拠はnotes/evidenceへ保存する。new artistも既存artistの参加文字列から自動合成しない。releaseのURL/名称/品番だけを唯一identityとせず、edition/media根拠はevidenceとnotesに残す。公式発表済み未来日付は正常。
+
+distinct_fromは`{target:{existing_id:当該master ID}|{local_ref:同型master LocalRef},evidence_refs:EvidenceRefs,reason:Nonempty}[]`（targetだけがclosed XOR union）。existing targetを先、local targetを後、それぞれID/ref ASCII順、重複/自己target禁止。confirmedのsame-name検査は**title/nameの完全一致（正規化なし）**の全既存候補と他のnew local候補がdistinct_fromで根拠付き宣言されていること。new同士は双方が明示distinctとする。songは同work Refの解決identity内title完全一致を候補とする。類似表記のsuggestionは人間レビュー補助、未記録を自動reuseしない。後から完全一致候補が増えればPlan conflict。
+
+relationはすべて`local_ref,evidence_refs`と以下の全fieldを持つ。local_refはそれぞれ`^song_artist:sa[1-9][0-9]*$`、`^song_creator:sc[1-9][0-9]*$`、`^song_performer:sp[1-9][0-9]*$`、`^track:t[1-9][0-9]*$`。master local refと同じくrevision間で同じ要求のidentityを保つ。draftではjudgment値null可、confirmedではcanonical requiredは非null、refは対応型。
+
+| 型 | 追加fieldの全一覧 |
+| --- | --- |
+| SongArtist | `song:SongRef\|null, artist:ArtistRef\|null, role, credit_order, source_url` |
+| SongCreator | `song:SongRef\|null, creator:CreatorRef\|null, role, credit_name, credit_order, source_url` |
+| SongPerformer | `song:SongRef\|null, member:MemberRef\|null, performer_order, notes, source_url` |
+| ReleaseTrack | `release:ReleaseRef\|null, disc_number, track_number, song:SongRef\|null, track_title, notes, source_url` |
+
+roleはcanonical enum（song_artists primary/featured、song_creators lyrics/english_lyrics/composition/arrangement/brass_arrangement）。order/disc/trackは正safe integer|null、必須disc/trackはconfirmed非null。creator nameとcredit_nameは分離。collector disc_indexからdisc_numberを自動決定しない。confirmedの全new songにprimaryが1件以上必要。複数primaryはevidence付きで許可。既存songはcanonicalと追加relationを合わせて制約検査する。
+
+relation PK・order一意性はcanonical schemaから導出。Decision内の重複PK/同じrelation・重複track位置を自動collapseしない。optional null→CSV空欄、正整数→base10（先頭0なし）以外の値変換をしない。existing canonical rowを変更・削除しない。
+
+UnsupportedRequestは`{request_ref:Nonempty, kind:"new_member"|"update_existing"|"delete"|"member_affiliation"|"video"|"large_correction", target:Nonempty|null, description:Nonempty, evidence_refs:EvidenceRefs}`。request_refは`^unsupported:u[1-9][0-9]*$`。targetは説明用ID/local_ref/表名だけで実行payloadではない。new member要求はこの型でdraftに残し、MemberRef local variantを作らない。confirmedでは1件でも`UNSUPPORTED_OPERATION`で拒否する。
+
+## evidence / confirmed completeness
+
+Evidenceは`{evidence_id,kind,url,publisher,official_basis,checked_at,facts,candidate_ids,source_fingerprints,human_note}`のclosed object。
+
+| field | 型・制約 |
+| --- | --- |
+| evidence_id / kind | `^ev_[a-z][a-z0-9_]*$` / `official_source`または`human_observation` |
+| url / publisher / official_basis | HTTPS\|null / Nonempty\|null / Nonempty\|null。official_sourceでは全て非null |
+| checked_at / facts / human_note | Timestamp / Nonempty（引用または確認した事実） / Text |
+| candidate_ids | scope中IDの重複なしASCII順array |
+| source_fingerprints | `{candidate_id:Nonempty,fingerprint:Fingerprint}[]`、candidate_id ASCII順、重複なし。bindingの保存値に一致 |
+
+human_observationはofficial_basis=null、publisher/urlはnull可。source_fingerprintsのID集合はcandidate_idsと一致（entity共通根拠なら両者[]）。evidence自身はdraftでもこの構造を満たす。evidence_refsは参照切れ禁止。confirmedの各binding/new entity/relation/existing Ref/distinct_from/replacesには非空evidence_refsを要求。canonical source_urlが非nullのrowは、そのURLに一致するofficial_source evidenceを少なくとも1件参照する。音源比較等のhuman observationをofficial sourceと偽らない。
+
+confirmedは全候補の完全judgment、全new定義が少なくともbindingまたはrelationから到達可能、全relationが対象candidateのsong/release mappingに到達可能、全Ref/identity存在、source照合、PK/order/primary、evidence、明示prefixを検証する。draftは未選択/未完成を許すが、non-nullの型・参照・重複は厳格。cancelledはsourceの構造と複写を検証し、現在candidate消失を理由に取消しを妨げない。source変更後のconfirmだけをblockする。
+
+## Decision registry semantic projection v1
+
+registry全体を検証した上で、**全Decisionのactive effective confirmed claims**だけをhash対象とする。対象Decisionだけでは競合を証明できない。projectionの完全schemaは`{schema_version:1, active_confirmed:[{identity:DecisionIdentity,scope_hash:Hash,candidate_ids:Nonempty[]}]}`。arrayはidentity.decision_id ASCII順、candidate_idsはscopeの順。`registry_hash=hashCanonicalJson(projection)`。
+
+effective判定は各IDのconfirmed/cancelled eventと、**一度成功confirmした全replacesの永久失効edge**から導出する。失効edgeのtarget identityを持つIDはその後のdraft/confirmでも再活性化不可。元storeの全revision/hash/transition/replacement DAGを毎回検証するため、inactiveのtombstoneをprojectionへ重複コピーする必要はない。取消し先から元を復活させる実装は不正である。
+
+無関係なdraftの追加、metadata変更、never-confirmedの取消しはactive claimsを変えずPlanをstaleにしない。active confirmedの追加/取消し/置換/新confirmedはprojectionを変え、無関係candidateでもv1ではregistry全体へのbindingとしてstale。既にinactiveなDecisionの追加取消し等でactive setが変わらなければstaleにしない。selected DecisionのidentityもPlanで別bindingする。
+
+同一candidateを2件以上のactive confirmedがclaimしたら`COMPETING_CONFIRMED_DECISION`。confirm/Planの両方でblocking、hashが作れたことを利用許可にしない。取消し/replacesで適用済みcoverageを消せず、二重適用はHistory indexesでも独立に拒否する。
+
+## version registry・実装境界
+
+以下は独立したversion constantの正式名とv1値。対応objectのschema_versionやprojection_versionと一致必須。nested型のshape変更はそれを含む保存schemaもversion更新し、既存recordを別projectionで解釈し直さない。変更した意味に対応するversionを上げ、未知versionを現行扱いしない。
+
+| constant / rule名 | v1 |
+| --- | --- |
+| decision_store / decision_revision / decision_scope | 1 / 1 / 1 |
+| candidate_source_schema / candidate_fingerprint | 1 / 1（profile candidate-source-v1） |
+| decision_registry / decision_mutation | 1 / 1 |
+| apply_plan / plan_payload / plan_operation / operation_order | 1 / 1 / 1 / 1 |
+| id_allocation / planner / hypothetical_validation | 1 / 1 / 1 |
+| history_record / history_hash / history_chain / history_set / state_proof | 1 / 1 / 1 / 1 / 1 |
+| canonical_schema / canonical_validator / canonical_manifest / id_namespace / state / bootstrap / git_id_audit / serializer | 1（既存のschema/規則を参照。serializerはTransactionのUTF-8/LF/列順契約） |
+| canonical_json / hash_algorithm | rfc8785 / sha256 |
+
+Slice 4はDecision APIとimmutable Plan、History readonly検証まで。Approval/Apply Request identityは[Historyの最小参照型](fn004-history.md)だけを使い、受付・publication・transaction・state mutation・CLIは実装しない。production Decision/Planをこの設計変更で作らない。

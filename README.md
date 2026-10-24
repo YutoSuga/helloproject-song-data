@@ -109,6 +109,7 @@ Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` �
 - [Decision Model](docs/design/fn004-decision.md)：aggregate、revision、OCC、candidate binding、song_id_prefix
 - [Apply Plan](docs/design/fn004-apply-plan.md)：不変の反映計画、予定ID、preconditions
 - [Transaction / Recovery](docs/design/fn004-transaction.md)：全体検証、journal、ID state、commit・復旧
+- [History readonly contract](docs/design/fn004-history.md)：成功record/hash/chain/set、非初期state proof、適用済みlookup
 - [CLI / SCR-002](docs/design/song-admin.md)：Approval、durable Apply Request、共通service、内部view、実装slice
 - [データ仕様](docs/data-spec.md)：canonical CSV の列・制約・運用ルール
 - [収集仕様](docs/collection-spec.md)：collector の詳細仕様

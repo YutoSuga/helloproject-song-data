@@ -198,7 +198,7 @@ operator_confirmationはbootstrap監査への明示確認であり、canonical A
 
 state_hashはinitialized_at等の保存済み値も含む。時刻はinitialize中に一度決め、再試行やcheckの現在時刻で更新しない。state_hashとbootstrap_hashの循環はない。History recordが最終state_hashを参照しない既存Transaction契約も維持する。
 
-将来のallocation_events要素は既存Design 3どおり`{transaction_id, namespace, first, last}`で、namespaceは本書のprefix key、first/lastは1〜99999のinteger、first<=last。transaction_idは実在する`tx_<UUID v4>`。historyは非負integer count、Hash head_hash、nullまたは`apply_<UUID v4>`のlast_apply_idを持つ。pending_transactionはnullまたは`tx_<UUID v4>`。**Slice 3はこれらの進行recordを作らず、非初期stateのchain/pending整合を証明できなければREADYにしない**。実行・recoveryは後続sliceの責務。
+将来のallocation_events要素は既存Design 3どおり`{transaction_id, namespace, first, last}`で、namespaceは本書のprefix key、first/lastは1〜99999のinteger、first<=last。transaction_idは実在する`tx_<UUID v4>`。historyは非負integer count、Hash head_hash、nullまたは`apply_<UUID v4>`のlast_apply_idを持つ。pending_transactionはnullまたは`tx_<UUID v4>`。**Slice 3はこれらの進行recordを作らず、非初期stateのchain/pending整合を証明できなければREADYにしない**。非初期stateのsuccess-only readonly proofは[History契約](fn004-history.md)で定義する。実行・recoveryは後続sliceの責務。
 
 high-waterはnamespaceごとにmonotonic。genesis値、current canonical max、完全Git historical maxのいずれよりも低いstateはREADYではない。将来の更新は直前valid stateと全namespace比較し、減少を拒否する。rollbackで消費済み上限やallocation_eventsを戻さない。自己整合した古いstateのcheckoutまでhashだけで検出できるとは主張せず、既存の単一lineage・巻戻し/分岐再照合方針を維持する。
 
