@@ -22,6 +22,7 @@ IDは種別ごとに3桁ゼロ埋めとします。設計・実装・PR・会話
 | [fn004-decision.md](design/fn004-decision.md) | FN-004 Decision Model | aggregate・revision・OCC・candidate binding・prefix | 判断モデルの正本 |
 | [fn004-apply-plan.md](design/fn004-apply-plan.md) | FN-004 Apply Plan | immutable計画・precondition・予定ID | 計画モデルの正本 |
 | [fn004-transaction.md](design/fn004-transaction.md) | FN-004 Validation / Transaction / Recovery | lock・journal・History・ID state・bootstrap | 実行/復旧契約の正本 |
+| [fn004-history.md](design/fn004-history.md) | FN-004 successful Apply History readonly | record/hash/chain/set、非初期state proof、lookup | 読み取り検証契約の正本。publicationはTransaction |
 | [fn004-bootstrap.md](design/fn004-bootstrap.md) | FN-004 Bootstrap / ID state | authoritative history・declaration・audit/genesis/state hash | 初期監査契約の正本 |
 | [song-admin.md](design/song-admin.md) | FN-004のCLI/application service、SCR-002 | Approval・durable Request・内部view・操作契約 | UI/CLIが共有する境界を一か所で定義 |
 

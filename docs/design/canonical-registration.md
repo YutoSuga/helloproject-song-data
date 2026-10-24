@@ -4,7 +4,7 @@
 
 `data/*.csv` が唯一の正本。Milestone 3-B1 / FN-003 レビュー準備機能は実装済みで、公式sourceのcandidate、現行canonical、人間の過去判断を照合し、レビュー用派生JSONを作る。FN-003はcanonical CSV、candidate JSON、review結果を更新しない。Milestone 3-B2 / FN-004 canonical反映機能とMilestone 3-C / SCR-002 楽曲管理画面は、以下の正式v1設計を持つがruntimeは未実装。既存canonical登録済みcandidateの初期移行は対象外。
 
-本書は全体フロー・責務と現行FN-003の入口を担う。Design 1〜4を横断統合した詳細は、[Decision Model](fn004-decision.md)、[Apply Plan](fn004-apply-plan.md)、[Transaction / Recovery](fn004-transaction.md)、[Bootstrap / ID state](fn004-bootstrap.md)、[CLI / SCR-002・Approval / Request](song-admin.md)へ分割する。概念JSONは仕様説明であり、この設計反映でschema/runtime/CLIを実装したものではない。
+本書は全体フロー・責務と現行FN-003の入口を担う。Design 1〜4を横断統合した詳細は、[Decision Model](fn004-decision.md)、[Apply Plan](fn004-apply-plan.md)、[Transaction / Recovery](fn004-transaction.md)、[Bootstrap / ID state](fn004-bootstrap.md)、[History readonly contract](fn004-history.md)、[CLI / SCR-002・Approval / Request](song-admin.md)へ分割する。Decision / Plan / Historyのschema・hash projection・orderingは各文書の完全なversioned契約を正とする。本follow-upは実装を追加しない。
 
 ## FN-003 / FN-004の関係
 
@@ -165,7 +165,7 @@ existing master/relationのfield update/patch/delete、work/song統合・分割�
 | UI結果 | committedとreadinessを分け、pending finalizationを再Applyへ誘導しない |
 | 実装順 | schema/service/CLIを先にし、recovery検証後に実Apply公開。[Interfaceのslice](song-admin.md) |
 
-安全性・責務の重大未決事項はない。JSON Schema実装やbackend/認証provider等の技術選定は実装sliceで行うが、本書群の不変条件を緩めない。実装PR数は固定せず、review/test可能な分割を行う。
+Slice 4前のSTOP項目（Decision完全schema/content hash、Plan operation/registry、History readonly proof）は各専用文書で確定する。JSON Schema実装やbackend/認証provider等の技術選定は実装sliceで行うが、本書群の不変条件を緩めない。実装PR数は固定せず、review/test可能な分割を行う。
 
 ## SCR-002 楽曲管理画面との接点（Milestone 3-C、未実装）
 
