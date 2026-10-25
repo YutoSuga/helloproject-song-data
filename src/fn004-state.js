@@ -86,16 +86,20 @@ export function validateAuditPayload(value) {
   shape(value, ["audit_schema_version", "canonical_manifest_hash", "git", "current_maxima", "historical_maxima", "external_declaration", "resulting_high_water_marks", "rule_versions"], code);
   demand(value.audit_schema_version === 1 && hash(value.canonical_manifest_hash), code, "Invalid audit identity");
   rules(value.rule_versions, code);
-  const git = value.git;
+  validateGitAuditIdentity(value.git, code);
+  validateNamespaceMap(value.resulting_high_water_marks, code);
+  demand(equal(value.resulting_high_water_marks, resultingHighWater(value.current_maxima, value.historical_maxima, value.external_declaration)), code, "Audit maxima mismatch");
+  return value;
+}
+
+export function validateGitAuditIdentity(git, code = "BOOTSTRAP_AUDIT_INCOMPLETE") {
   shape(git, ["authoritative_ref", "audited_head", "object_format", "history_scope", "history_rule_version", "shallow", "complete", "reachable_commit_count", "root_commits"], code);
   const sha = git.object_format === "sha1" ? /^[0-9a-f]{40}$/ : git.object_format === "sha256" ? /^[0-9a-f]{64}$/ : null;
   demand(git.authoritative_ref === "origin/main" && sha && matches(sha, git.audited_head) && git.history_scope === "all_reachable_parents" &&
     git.history_rule_version === 1 && git.shallow === false && git.complete === true && integer(git.reachable_commit_count, 1) &&
     Array.isArray(git.root_commits) && git.root_commits.length > 0 && git.root_commits.length <= git.reachable_commit_count &&
     git.root_commits.every((id, i, all) => matches(sha, id) && (i === 0 || all[i - 1] < id)), code, "Invalid complete Git audit identity");
-  validateNamespaceMap(value.resulting_high_water_marks, code);
-  demand(equal(value.resulting_high_water_marks, resultingHighWater(value.current_maxima, value.historical_maxima, value.external_declaration)), code, "Audit maxima mismatch");
-  return value;
+  return git;
 }
 
 function validateManifest(value) {
@@ -196,3 +200,5 @@ export function createBootstrapRecords({ audit_payload, canonical_manifest, repo
   validateBootstrapLink(record, state);
   return structuredClone({ record, state });
 }
+
+export { validateManifest, timestamp as isFn004Timestamp };
