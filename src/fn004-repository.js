@@ -1,3 +1,4 @@
+import { readApplyHistoryDirectory, applyHistoryPath } from "./fn004-history-directory.js";
 import { canonicalJson } from "./canonical-hash.js";
 import { validateDecisionStore, assertImmutableDecisionStore } from "./fn004-decision-core.js";
 import { createPersistence, RepositoryError } from "./persistence.js";
@@ -7,8 +8,9 @@ import { readCanonicalSnapshot } from "./canonical-snapshot.js";
 import { inspectRuntimeState } from "./fn004-runtime-state.js";
 
 const fixedArtifacts = new Set(["staging/decisions.json", "staging/fn004-state.json", "staging/fn004-bootstrap.json"]);
-const artifactDirectories = new Set(["apply-plans", "apply-approvals", "apply-requests", "apply-history", "transactions"]);
-function artifactPath(path) {
+const artifactDirectories = new Set(["apply-plans", "apply-approvals", "apply-requests", "transactions"]);
+function artifactPath(path, { readonly = false } = {}) {
+  if (readonly && typeof path === "string" && path.startsWith("staging/apply-history/") && path.endsWith(".json")) return applyHistoryPath(path.slice("staging/apply-history/".length, -5));
   const parts = typeof path === "string" ? path.split("/") : [];
   if (fixedArtifacts.has(path)) return path;
   if (parts[0] !== "staging" || !artifactDirectories.has(parts[1]) || parts.length < 3 ||
@@ -18,8 +20,8 @@ function artifactPath(path) {
   return path;
 }
 
-// Slice 3 proves genesis state/lineage; non-genesis transaction chains remain
-// blocked until their later-slice validators exist. No pending bypass flag.
+// Only proven genesis or success-only History chains permit ordinary reads.
+// Unknown transitions, pending work and cleanup continue to block reads.
 async function assertReadableRuntime(store) {
   const result = await inspectRuntimeState(store);
   if (!["BOOTSTRAP_REQUIRED", "READY"].includes(result.status) || result.readiness === "cleanup_required") {
@@ -60,6 +62,7 @@ export async function createFn004Repository(root = process.cwd(), options = {}) 
   };
   return Object.freeze({
     root: store.root,
+    readApplyHistoryDirectory: ({ gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "history_read", fn: () => readApplyHistoryDirectory(store, options) }),
     readDecisionStore: ({ gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "decision_read", fn: readDecisions }),
     writeDecisionStore: (value, { gate } = {}) => writeDecisions(value, gate),
     // Readonly, point-in-time snapshot. Release does not keep it current; any
@@ -69,7 +72,7 @@ export async function createFn004Repository(root = process.cwd(), options = {}) 
       if (!snapshot.validation.ok) throw new RepositoryError("CANONICAL_INVALID", "Canonical validation failed", { diagnostics: snapshot.validation.diagnostics });
       return snapshot;
     } }),
-    readJson: (path, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "runtime_read", fn: () => path === decisionPath ? readDecisions() : store.readJson(artifactPath(path)) }),
+    readJson: (path, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "runtime_read", fn: () => path === decisionPath ? readDecisions() : store.readJson(artifactPath(path, { readonly: true }), { strict: path.startsWith("staging/apply-history/") }) }),
     writeJsonAtomic: async (path, value, { gate } = {}) => {
       await assertGateOwnership(gate, store.root);
       if (path === decisionPath) await writeDecisions(value, gate);

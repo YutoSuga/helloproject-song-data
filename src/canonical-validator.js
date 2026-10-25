@@ -150,3 +150,6 @@ export function validateCanonicalTables(tables) {
   }
   return { ok: diagnostics.length === 0, diagnostics };
 }
+
+// Shared cell rules for readonly stored-row verification.
+export { valueError as canonicalValueError };

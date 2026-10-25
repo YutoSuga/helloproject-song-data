@@ -259,7 +259,7 @@ test("status blocks partial, corrupt, mismatched and unproven advanced state wit
     }
     const status = await inspectBootstrapStatus({ root });
     const expected = { "bad-state": "STATE_CORRUPT", "bad-marker": "BOOTSTRAP_CORRUPT", link: "STATE_BOOTSTRAP_MISMATCH",
-      low: "STATE_HIGH_WATER_INVALID", "unknown-work": "RECOVERY_REQUIRED" }[scenario] ?? "BOOTSTRAP_INCOMPLETE";
+      low: "STATE_HIGH_WATER_INVALID", history: "HISTORY_CHAIN_MISMATCH", pending: "RECOVERY_REQUIRED", "unknown-work": "RECOVERY_REQUIRED" }[scenario] ?? "BOOTSTRAP_INCOMPLETE";
     assert.equal(status.status, expected, scenario);
     await assert.rejects(initializeBootstrap(input));
     await assert.rejects(readValidatedCanonicalSnapshot(root));
