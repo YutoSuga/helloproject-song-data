@@ -1,6 +1,7 @@
 import * as fs from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { basename, dirname, join, relative, sep } from "node:path";
+import { parseStrictJson } from "./strict-json.js";
 import { canonicalJson } from "./canonical-hash.js";
 
 // One small machine-readable error type for repository, gate and persistence.
@@ -81,7 +82,7 @@ export async function createPersistence(root, { io = fs } = {}) {
       throw new RepositoryError("PERSISTENCE_READ_FAILED", "Cannot inspect artifact", { path, cause });
     }
   }
-  async function readJson(path) {
+  async function readJson(path, { strict = false } = {}) {
     let bytes, text, value;
     try { bytes = await io.readFile(await resolvePath(path)); }
     catch (cause) {
@@ -90,7 +91,7 @@ export async function createPersistence(root, { io = fs } = {}) {
     }
     try { text = new TextDecoder("utf-8", { fatal: true }).decode(bytes); }
     catch (cause) { throw new RepositoryError("PERSISTENCE_INVALID_UTF8", "JSON artifact is not UTF-8", { path, cause }); }
-    try { value = JSON.parse(text); }
+    try { value = strict ? parseStrictJson(bytes) : JSON.parse(text); }
     catch (cause) { throw new RepositoryError("PERSISTENCE_PARSE_FAILED", "Malformed JSON artifact", { path, cause }); }
     if (value === null || typeof value !== "object" || Array.isArray(value)) throw new RepositoryError("PERSISTENCE_ROOT_TYPE", "JSON artifact must have an object root", { path });
     return value; // Domain schema/version validation belongs to the caller.

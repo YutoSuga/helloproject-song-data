@@ -1,3 +1,5 @@
+import { canonicalJson } from "./canonical-hash.js";
+import { validateDecisionStore, assertImmutableDecisionStore } from "./fn004-decision-core.js";
 import { createPersistence, RepositoryError } from "./persistence.js";
 import { withCanonicalGate, assertGateOwnership } from "./fn004-gate.js";
 import { CANONICAL_TABLES } from "./canonical-schema.js";
@@ -41,8 +43,25 @@ export async function withCanonicalRead({ root = process.cwd(), gate, fn }) {
 
 export async function createFn004Repository(root = process.cwd(), options = {}) {
   const store = await createPersistence(root, options);
+  const decisionPath = "staging/decisions.json";
+  const readDecisions = async () => {
+    if (!await store.exists(decisionPath)) return { schema_version: 1, revisions: [] };
+    return validateDecisionStore(await store.readJson(decisionPath, { strict: true }));
+  };
+  const writeDecisions = async (value, gate, exclusive = false) => {
+    await assertGateOwnership(gate, store.root);
+    value = JSON.parse(canonicalJson(value));
+    validateDecisionStore(value);
+    const exists = await store.exists(decisionPath);
+    if (exists) assertImmutableDecisionStore(await readDecisions(), value);
+    await assertGateOwnership(gate, store.root);
+    if (exclusive || !exists) await store.createJsonExclusive(decisionPath, value);
+    else await store.writeJsonAtomic(decisionPath, value);
+  };
   return Object.freeze({
     root: store.root,
+    readDecisionStore: ({ gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "decision_read", fn: readDecisions }),
+    writeDecisionStore: (value, { gate } = {}) => writeDecisions(value, gate),
     // Readonly, point-in-time snapshot. Release does not keep it current; any
     // later write must reacquire the gate and revalidate manifest preconditions.
     readCanonicalSnapshot: ({ gate } = {}) => withCanonicalRead({ root: store.root, gate, fn: async (resolvedRoot) => {
@@ -50,14 +69,16 @@ export async function createFn004Repository(root = process.cwd(), options = {}) 
       if (!snapshot.validation.ok) throw new RepositoryError("CANONICAL_INVALID", "Canonical validation failed", { diagnostics: snapshot.validation.diagnostics });
       return snapshot;
     } }),
-    readJson: (path, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "runtime_read", fn: () => store.readJson(artifactPath(path)) }),
+    readJson: (path, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "runtime_read", fn: () => path === decisionPath ? readDecisions() : store.readJson(artifactPath(path)) }),
     writeJsonAtomic: async (path, value, { gate } = {}) => {
       await assertGateOwnership(gate, store.root);
-      await store.writeJsonAtomic(artifactPath(path), value);
+      if (path === decisionPath) await writeDecisions(value, gate);
+      else await store.writeJsonAtomic(artifactPath(path), value);
     },
     createJsonExclusive: async (path, value, { gate } = {}) => {
       await assertGateOwnership(gate, store.root);
-      await store.createJsonExclusive(artifactPath(path), value);
+      if (path === decisionPath) await writeDecisions(value, gate, true);
+      else await store.createJsonExclusive(artifactPath(path), value);
     }
   });
 }
