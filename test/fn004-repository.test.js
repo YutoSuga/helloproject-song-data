@@ -244,8 +244,8 @@ test("repository only exposes known artifact paths and requires a live write lea
     for (const path of ["data/songs.csv", "../../outside.json", "staging/../x.json", "staging/unknown/x.json", "staging/apply-plans/../../outside.json", "staging\\decisions.json"]) {
       await assert.rejects(repo.writeJsonAtomic(path, {}, { gate }), hasCode("PATH_UNSAFE"));
     }
-    await repo.writeJsonAtomic("staging/decisions.json", { example: "primitive test only" }, { gate });
-    assert.deepEqual(await repo.readJson("staging/decisions.json", { gate }), { example: "primitive test only" });
+    await repo.writeJsonAtomic("staging/decisions.json", { schema_version: 1, revisions: [] }, { gate });
+    assert.deepEqual(await repo.readJson("staging/decisions.json", { gate }), { schema_version: 1, revisions: [] });
     await repo.createJsonExclusive("staging/apply-plans/example.json", { test: true }, { gate });
     await assert.rejects(repo.createJsonExclusive("staging/apply-plans/example.json", {}, { gate }), hasCode("PERSISTENCE_ALREADY_EXISTS"));
   } });
