@@ -4,7 +4,7 @@
 
 `data/*.csv` が唯一の正本。Milestone 3-B1 / FN-003 レビュー準備機能は実装済みで、公式sourceのcandidate、現行canonical、人間の過去判断を照合し、レビュー用派生JSONを作る。FN-003はcanonical CSV、candidate JSON、review結果を更新しない。Milestone 3-B2 / FN-004 canonical反映機能とMilestone 3-C / SCR-002 楽曲管理画面は、以下の正式v1設計を持つがruntimeは未実装。既存canonical登録済みcandidateの初期移行は対象外。
 
-本書は全体フロー・責務と現行FN-003の入口を担う。Design 1〜4を横断統合した詳細は、[Decision Model](fn004-decision.md)、[Apply Plan](fn004-apply-plan.md)、[Transaction / Recovery](fn004-transaction.md)、[Bootstrap / ID state](fn004-bootstrap.md)、[History readonly contract](fn004-history.md)、[CLI / SCR-002・Approval / Request](song-admin.md)へ分割する。Decision / Plan / Historyのschema・hash projection・orderingは各文書の完全なversioned契約を正とする。本follow-upは実装を追加しない。
+本書は全体フロー・責務と現行FN-003の入口を担う。Design 1〜4を横断統合した詳細は、[Decision Model](fn004-decision.md)、[Apply Plan](fn004-apply-plan.md)、[Transaction / Recovery](fn004-transaction.md)、[Bootstrap / ID state](fn004-bootstrap.md)、[History readonly contract](fn004-history.md)、[CLI / SCR-002・Approval / Request](song-admin.md)へ分割する。Decision / Plan / Historyのschema・hash projection・orderingは各文書の完全なversioned契約を正とする。Approval / Request / Receiptの完全schemaとhashは[Approval / Request Hash Contract](fn004-approval-request.md)を正とする。本follow-upは実装を追加しない。
 
 ## FN-003 / FN-004の関係
 
@@ -157,7 +157,7 @@ existing master/relationのfield update/patch/delete、work/song統合・分割�
 | --- | --- |
 | revision / OCC / prefix | Decisionへ明示保存。draftと有効confirmedを分離。[Decision](fn004-decision.md) |
 | Plan hash / ID | 全preconditionとrowをhashし、予定IDは未予約。[Plan](fn004-apply-plan.md) |
-| Approvalとreceipt | 承認を先に保存し、その承認を使う要求をjournal前にdurable受付。[Interface](song-admin.md) |
+| Approvalとreceipt | 承認全体hash → exact Plan/Approvalを参照するcommand hash → version/receipt hashでbinding。承認後、journal前にdurable受付。[Hash Contract](fn004-approval-request.md) / [Interface](song-admin.md) |
 | 二重送信・受付中断 | 同ID同payloadは照会のみ。未完了receiptは新規受付を止める。未開始を証明できる場合だけABORTED |
 | 成功境界 | COMMIT_DECIDED前は原則rollback、後はforward finalize。[Transaction](fn004-transaction.md) |
 | 採番・rollback | Planで予約せず、commit開始で消費、復元後も上限不減 |

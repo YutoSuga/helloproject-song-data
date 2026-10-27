@@ -50,7 +50,7 @@ payloadはrecord_hash自身を持たない。decision_snapshotはDecision conten
 
 ### 最小Approval / Request参照境界
 
-Historyに必要なのは上記immutable identity/hash参照だけであり、Approval/Receiptの完全snapshotやprocessing cacheを要求しない。これらのfull schema / approval hash / request payload hashの実行時照合は[interface契約](song-admin.md)を正とし、本書は新しい受付方式を定義しない。
+Historyに必要なのは上記immutable identity/hash参照だけであり、Approval/Receiptの完全snapshotやprocessing cacheを要求しない。これらのfull schema / approval hash / request payload hashのprojectionは[Hash Contract](fn004-approval-request.md)、実行時の受付・retry照合は[interface契約](song-admin.md)を正とし、本書は新しい受付方式を定義しない。
 
 future writerはpublication前に元Approvalが同repository/Decision/Plan・purpose=canonical_apply・intended_request_id=request_id、元receiptが同approval/hash/request payload/actor/tx/apply identityであることを検証する。readonly History validatorはreference grammarと同record/Plan内のlinkを検証し、GC済み非Git receiptの不在を成功取消しと扱わない。Approval原本を現在の有効性で再承認する操作でもない。逆に、参照Hashの形式だけでreceiptを復元/再dispatchしてよいとは意味しない。
 

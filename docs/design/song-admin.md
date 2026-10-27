@@ -24,24 +24,7 @@ Decision confirmationは「identity判断は正しい」、Apply approvalは「�
 
 `staging/apply-approvals/<approval_id>.json`へ独立immutable recordを保存しGit管理する。Decision/Planへ埋め込むと不変性と責務が混ざり、journalだけではtransaction前の承認を保存できないため採用しない。
 
-schema_version=1、approval_id（`apr_<UUID v4>`）、repository_instance_id、decision_id/revision/decision_content_hash、plan_id/plan_hash、approved_at、trusted actor、purpose=`canonical_apply`、`intended_request_id`を必須とする。request UUIDを先にclient/applicationで生成してApprovalへbindingするが、実行受付はまだ行わない。Approvalは一つのrequest IDにだけ使え、別IDへの流用は拒否する。
-
-```json
-{
-  "schema_version": 1,
-  "approval_id": "apr_<uuid>",
-  "repository_instance_id": "repo_<uuid>",
-  "decision_id": "dec_<uuid>",
-  "revision": 3,
-  "decision_content_hash": "<hash>",
-  "plan_id": "ap_<hash>",
-  "plan_hash": "<hash>",
-  "approved_at": "2026-10-16T10:00:00+09:00",
-  "actor": {"id": "local:<stable-id>", "assurance": "local_process"},
-  "purpose": "canonical_apply",
-  "intended_request_id": "<request-uuid>"
-}
-```
+Approvalの完全closed schema・approval_hashは[Approval / Request Hash Contract](fn004-approval-request.md)を正とする。既存のschema_version=1、apr_UUID、exact repository/Decision/Plan binding、approved_at、actor、purpose=canonical_apply、intended_request_idを維持する。approval_hashはartifact全体（schema_version・approval_id・approved_atを含む）のJCS/SHA-256であり、artifactに自己hash fieldは置かない。request UUIDを先にclient/applicationで生成してApprovalへbindingし、一つのrequest IDだけに使用する。
 
 新Planへ旧承認を引き継がない。失効は`staging/apply-approvals/invalidations/<event_id>.json`にschema/version、対象approval_id/hash、reason、actor、時刻を追記してGit管理する。used / stale / invalidatedはHistory・receipt・失効recordから導出し、承認を書き換えない。一度失効した承認はデータが元へ戻っても復活させない。未知version・hash不整合はSTOP。
 
@@ -51,34 +34,15 @@ UIでは確認check＋「反映する」を一連にするが、内部はapprove
 
 `staging/apply-requests/<request_id>.json`をtransaction journal開始前にdurable保存する。Requestは承認の証跡でも成功の証拠でもなく、実行要求と唯一のtransactionの対応を固定する。UUIDのrequest_idをclient/applicationで生成する。
 
-immutable receipt部分：schema_version、repository_instance_id、request_id、request_payload_hash、Decision identity、Plan identity、approval_id/approval_hash、trusted actor、requested_at、transaction_id、apply_id、receipt_hash。transaction/applyのUUIDは初回受付時に一度だけ生成する。
+ApplyRequestArtifactは`{schema_version:1,receipt,receipt_hash,processing}`。完全closed schemaと省略なしの例は[Hash Contract](fn004-approval-request.md)を正とする。schema_versionはenvelopeの外側だけ、Receiptにはrequest/repository/Decision/Plan/Approval identity、request_payload_hash、actor、requested_at、transaction/apply IDを置く。transaction/apply UUIDとrequested_atは初回durable受付時に一度だけ固定する。
 
-payload hashはschema version、repository、request ID、Decision identity/hash、Plan identity/hash、approval identity/hash、actor、purposeをJCS化してSHA-256で計算する。server生成時刻・transaction ID・可変processing情報はpayload hashに含めない。receipt_hashは生成済みidentity/時刻を含むimmutable receipt全体のhash。自己hash fieldは除外する。これによりretry時に時刻が違っても同要求を照合できる。
-
-```json
-{
-  "schema_version": 1,
-  "receipt": {
-    "repository_instance_id": "repo_<uuid>",
-    "request_id": "<uuid>",
-    "request_payload_hash": "<hash>",
-    "decision": {"decision_id": "dec_<uuid>", "revision": 3, "content_hash": "<hash>"},
-    "plan_id": "ap_<hash>", "plan_hash": "<hash>",
-    "approval_id": "apr_<uuid>", "approval_hash": "<hash>",
-    "actor": {"id": "local:<stable-id>", "assurance": "local_process"},
-    "requested_at": "2026-10-16T10:00:01+09:00",
-    "transaction_id": "tx_<uuid>", "apply_id": "apply_<same-uuid>"
-  },
-  "receipt_hash": "<hash>",
-  "processing": {"state": "accepted", "journal_ref": null, "history_ref": null, "diagnostic_code": null}
-}
-```
+request_payload_hashはversion/repository/request ID/Decision/Plan/Approval/actor/purposeのformal projectionをJCS/SHA-256でhashする。purposeは検証済みApprovalのexact literal canonical_applyをcopyするが、Receiptには重複保存せずschema v1から導出する。receipt_hashは`{schema_version:1,receipt}`のJCS/SHA-256。外側versionを含み、receipt_hash自身とprocessingを含めない。同ID同payload retryは元receiptの時刻/tx/apply IDを保持する。
 
 processingはatomic replace可能なcacheであり、journal/Historyから照合・再構築する。受付拒否等のjournal開始前terminal結果はreceipt hashにbindingしたimmutable completion recordとして`staging/apply-requests/completions/<request_id>.json`へ保存する。cacheだけで実行済み/未実行を断定しない。
 
 ### 受付・retry・中断の契約
 
-1. 認証/contextを確認し、既存requestを先に照会する。同ID同payloadは現在状態/既存結果を返し、新dispatchしない。同ID異payloadはINTEGRITY_CONFLICT。
+1. 認証/contextを確認し、既存requestを先に照会する。strict schema/両hashとformal semantic projectionを検証し、同ID同payloadは元receiptと現在状態/既存結果を返し、新dispatchしない。同ID異payloadはINTEGRITY_CONFLICT。新規受付preconditionより先にretryを判定し、stale/pendingでも照会を再実行許可と混同しない。
 2. 新規要求は短い受付gate下でApproval存在/hash/actor/purpose/intended_request_id、有効性を検証する。他の未完了receipt/journal/ID pendingがあればBUSYまたはRECOVERY_REQUIRED。
 3. receiptをexclusiveに完成・sync・no-clobber公開・directory syncして受付確定する。未完成fileや失敗は成功受付と返さない。受け付けたtransaction IDを以後変えない。
 4. 初回受付者だけが同requestをexecution gate下で再検証しjournalへ進める。gate leaseを継続してもよい。新しいcallerによる同request再送は照会のみ。

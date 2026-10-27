@@ -12,7 +12,7 @@ Node.js 20以降、単一authoritative working tree、協調するreader / write
 
 ## 受付とtransactionの境界
 
-順序は**Approval保存 → durable Apply Request受付 → transaction journal開始**。Approvalなしの実行要求を受け付けない。詳細schemaとidempotencyは[interface設計](song-admin.md)を正とする。
+順序は**Approval保存 → durable Apply Request受付 → transaction journal開始**。Approvalなしの実行要求を受け付けない。完全schema・approval_hash/request_payload_hash/receipt_hash projectionは[Hash Contract](fn004-approval-request.md)、受付とidempotency lifecycleは[interface設計](song-admin.md)を正とする。receipt hashは外側schema_versionとreceiptのwrapperを対象とし、processing cacheを含めない。元receiptのrequested_at/transaction_id/apply_idは同request retryで再生成しない。
 
 receipt保存は短い受付gate内で行い、transactionの実行排他とは責務を分ける。同一gateを継続保持する実装も可。新規受付前にlock・unfinished journal・未完了receipt・ID pendingを確認し、他要求があればBUSY / RECOVERY_REQUIRED。受付後gateを解放しても未完了receiptが次の新規受付を阻止するためqueueや複数claimは生じない。
 
