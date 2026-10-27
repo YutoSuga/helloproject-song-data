@@ -1,3 +1,5 @@
+import { applyPlanPath } from "./fn004-plan-path.js";
+import { validateApplyPlan } from "./fn004-plan-validator.js";
 import { readApplyHistoryDirectory, applyHistoryPath } from "./fn004-history-directory.js";
 import { canonicalJson } from "./canonical-hash.js";
 import { validateDecisionStore, assertImmutableDecisionStore } from "./fn004-decision-core.js";
@@ -8,7 +10,7 @@ import { readCanonicalSnapshot } from "./canonical-snapshot.js";
 import { inspectRuntimeState } from "./fn004-runtime-state.js";
 
 const fixedArtifacts = new Set(["staging/decisions.json", "staging/fn004-state.json", "staging/fn004-bootstrap.json"]);
-const artifactDirectories = new Set(["apply-plans", "apply-approvals", "apply-requests", "transactions"]);
+const artifactDirectories = new Set(["apply-approvals", "apply-requests", "transactions"]);
 function artifactPath(path, { readonly = false } = {}) {
   if (readonly && typeof path === "string" && path.startsWith("staging/apply-history/") && path.endsWith(".json")) return applyHistoryPath(path.slice("staging/apply-history/".length, -5));
   const parts = typeof path === "string" ? path.split("/") : [];
@@ -60,8 +62,29 @@ export async function createFn004Repository(root = process.cwd(), options = {}) 
     if (exclusive || !exists) await store.createJsonExclusive(decisionPath, value);
     else await store.writeJsonAtomic(decisionPath, value);
   };
+  const readPlan = async (id) => {
+    const value = await store.readJson(applyPlanPath(id), { strict: true });
+    validateApplyPlan(value);
+    if (value.plan_id !== id) throw new RepositoryError("PLAN_INTEGRITY_CONFLICT", "Plan filename/identity mismatch");
+    return value;
+  };
+  const savePlan = async (value, gate) => {
+    await assertGateOwnership(gate, store.root);
+    value = JSON.parse(canonicalJson(value)); validateApplyPlan(value);
+    const path = applyPlanPath(value.plan_id);
+    if (await store.exists(path)) {
+      const existing = await readPlan(value.plan_id);
+      if (canonicalJson(existing.payload) !== canonicalJson(value.payload)) throw new RepositoryError("PLAN_INTEGRITY_CONFLICT", "Immutable Plan payload differs");
+      return existing; // generated_at is presentation metadata; keep the original.
+    }
+    await assertGateOwnership(gate, store.root);
+    await store.createJsonExclusive(path, value);
+    return value;
+  };
   return Object.freeze({
     root: store.root,
+    getApplyPlan: (id, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "plan_read", fn: () => readPlan(id) }),
+    saveApplyPlan: (value, { gate } = {}) => savePlan(value, gate),
     readApplyHistoryDirectory: ({ gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "history_read", fn: () => readApplyHistoryDirectory(store, options) }),
     readDecisionStore: ({ gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "decision_read", fn: readDecisions }),
     writeDecisionStore: (value, { gate } = {}) => writeDecisions(value, gate),
@@ -72,7 +95,7 @@ export async function createFn004Repository(root = process.cwd(), options = {}) 
       if (!snapshot.validation.ok) throw new RepositoryError("CANONICAL_INVALID", "Canonical validation failed", { diagnostics: snapshot.validation.diagnostics });
       return snapshot;
     } }),
-    readJson: (path, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "runtime_read", fn: () => path === decisionPath ? readDecisions() : store.readJson(artifactPath(path, { readonly: true }), { strict: path.startsWith("staging/apply-history/") }) }),
+    readJson: (path, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "runtime_read", fn: () => typeof path === "string" && path.startsWith("staging/apply-plans/") && path.endsWith(".json") ? readPlan(path.slice("staging/apply-plans/".length, -5)) : path === decisionPath ? readDecisions() : store.readJson(artifactPath(path, { readonly: true }), { strict: path.startsWith("staging/apply-history/") }) }),
     writeJsonAtomic: async (path, value, { gate } = {}) => {
       await assertGateOwnership(gate, store.root);
       if (path === decisionPath) await writeDecisions(value, gate);
