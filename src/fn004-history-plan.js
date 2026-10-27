@@ -1,5 +1,6 @@
 // Static verification of an embedded successful Plan only. No planning,
 // allocation, target reconstruction, repository access or publication.
+import { comparePlanOperations, equivalentCanonicalRows } from './fn004-plan-primitives.js';
 import { hashCanonicalJson, canonicalJson } from './canonical-hash.js';
 import { CANONICAL_SCHEMA, ID_PATTERNS } from './canonical-schema.js';
 import { validateDecisionIdentity } from './fn004-decision-core.js';
@@ -56,10 +57,6 @@ export function validateStoredSuccessfulPlan(plan,d){
   demand(p.planned_id_mappings.length===Object.values(d.entities).flat().length,'Incomplete master mapping set');
   demand(Array.isArray(p.operations)&&p.operations.length===requests.size,'Incomplete Plan operations');
   const operations=new Map(),byRequest=new Map(),actualRows=new Map();
-  function operationCompare(a,b){const sa=a.source.subject,sb=b.source.subject;let n=cmp(TABLE_ORDER.indexOf(a.table),TABLE_ORDER.indexOf(b.table));if(n)return n;
-    if(a.table==='songs'){n=cmp(a.key.song_id[0],b.key.song_id[0]);if(n)return n;}
-    n=cmp(['local','existing','relation'].indexOf(sa.kind),['local','existing','relation'].indexOf(sb.kind));if(n)return n;
-    n=sa.kind==='relation'?compareKeys(a.table,a.key,b.key):cmp(sa.ref,sb.ref);return n||cmp(sa.ref,sb.ref)||cmp(a.operation_id,b.operation_id);}
   for(const op of p.operations){shape(op,['schema_version','operation_id','classification','table','source','dependencies','key','result']);demand(op.schema_version===1&&['reuse','insert','no_op'].includes(op.classification)&&TABLE_ORDER.indexOf(op.table)>=0,'Invalid successful operation');
     shape(op.source,['subject','decision_paths','candidate_ids','evidence_refs']);shape(op.source.subject,['kind','ref']);const subject=op.source.subject,r=requests.get(tupleKey(op.table,subject.ref));
     demand(r&&!byRequest.has(tupleKey(op.table,subject.ref)),'Unknown/duplicate operation subject');demand(subject.kind===(defs.has(subject.ref)?(singular[op.table]?'local':'relation'):'existing'),'Wrong subject variant');
@@ -77,11 +74,11 @@ export function validateStoredSuccessfulPlan(plan,d){
     }else{
       shape(result,['requested_row','existing_row','row_hash','reason_code']);demand(subject.kind==='relation'&&result.reason_code==='RELATION_ALL_COLUMNS_EQUAL','Invalid no_op');row(op.table,result.requested_row);row(op.table,result.existing_row);
       demand(same(result.requested_row,expectedRow(def))&&result.row_hash===rowHash(op.table,result.existing_row),'Invalid no_op requested row/hash');
-      for(const c of CANONICAL_SCHEMA[op.table].columns)demand(c.type==='integer'?BigInt(result.requested_row[c.name]||'0')===BigInt(result.existing_row[c.name]||'0'):result.requested_row[c.name]===result.existing_row[c.name],'no_op row mismatch');actualRows.set(op.operation_id,result.existing_row);
+      demand(equivalentCanonicalRows(op.table,result.requested_row,result.existing_row),'no_op row mismatch');actualRows.set(op.operation_id,result.existing_row);
     }
     demand(same(op.key,rowKey(op.table,actualRows.get(op.operation_id))),'Operation key/row mismatch');operations.set(op.operation_id,op);byRequest.set(tupleKey(op.table,subject.ref),op);
   }
-  ordered(p.operations,v=>v,operationCompare);
+  ordered(p.operations,v=>v,(a,b)=>comparePlanOperations(a,b,d));
   for(const op of p.operations){const dependencies=[];const s=CANONICAL_SCHEMA[op.table],row=actualRows.get(op.operation_id);
     for(const fk of s.foreignKeys){const col=fk.columns[0],id=row[col];if(id==='')continue;const target=[...operations.values()].find(o=>o.table===fk.table&&actualRows.get(o.operation_id)[col]===id);demand(target,'Missing foreign-key requirement');dependencies.push(target.operation_id);}
     demand(same(op.dependencies,[...new Set(dependencies)].sort()),'Dependency set mismatch');
@@ -99,3 +96,6 @@ export function validateStoredSuccessfulPlan(plan,d){
   shape(p.applicability,['applicable','blocking_diagnostics','conflict_operation_ids','unsupported_operation_ids']);demand(same(p.applicability,{applicable:true,blocking_diagnostics:[],conflict_operation_ids:[],unsupported_operation_ids:[]}),'Non-applicable saved Plan');
   return {mappings,operations,resolve};
 }
+
+// Shared readonly requirement graph for planning and stored-Plan verification.
+export { requirements as collectDecisionRequirements };

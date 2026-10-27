@@ -19,8 +19,8 @@ export function historyFixture(){
   const {record:bootstrap,state}=createBootstrapRecords({audit_payload,canonical_manifest:manifest,repository_instance_id:`repo_${randomUUID()}`,initialized_at:time,actor:{id:'local:test',assurance:'local_process'},expected_audit_hash:hashCanonicalJson(audit_payload)});
   return {bootstrap,state,snapshot,git_audit,history_directory:{present:false,entries:[]}};
 }
-export function syntheticSuccess(f,previous=[],{allocate=false}={}){
-  const before=structuredClone(f.state),draft=completeDraft(),candidate=`candidate-${previous.length+1}`;
+export function syntheticSuccess(f,previous=[],{allocate=false,candidate_id}={}){
+  const before=structuredClone(f.state),draft=completeDraft(),candidate=candidate_id??`candidate-${previous.length+1}`;
   draft.scope.candidate_ids=[candidate];draft.scope.scope_hash=hashCanonicalJson({schema_version:1,candidate_ids:[candidate]});
   draft.candidate_bindings[0].candidate_id=candidate;draft.evidence[0].candidate_ids=[candidate];draft.evidence[0].source_fingerprints[0].candidate_id=candidate;
   draft.relations.release_tracks[0].track_number=previous.length+1;

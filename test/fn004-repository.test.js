@@ -246,8 +246,8 @@ test("repository only exposes known artifact paths and requires a live write lea
     }
     await repo.writeJsonAtomic("staging/decisions.json", { schema_version: 1, revisions: [] }, { gate });
     assert.deepEqual(await repo.readJson("staging/decisions.json", { gate }), { schema_version: 1, revisions: [] });
-    await repo.createJsonExclusive("staging/apply-plans/example.json", { test: true }, { gate });
-    await assert.rejects(repo.createJsonExclusive("staging/apply-plans/example.json", {}, { gate }), hasCode("PERSISTENCE_ALREADY_EXISTS"));
+    await repo.createJsonExclusive("staging/transactions/example.json", { test: true }, { gate });
+    await assert.rejects(repo.createJsonExclusive("staging/transactions/example.json", {}, { gate }), hasCode("PERSISTENCE_ALREADY_EXISTS"));
   } });
   assert.equal(repo.writeCanonical, undefined);
 });
