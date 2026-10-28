@@ -12,11 +12,13 @@ Node.js 20以降、単一authoritative working tree、協調するreader / write
 
 ## 受付とtransactionの境界
 
-順序は**Approval保存 → durable Apply Request受付 → transaction journal開始**。Approvalなしの実行要求を受け付けない。詳細schemaとidempotencyは[interface設計](song-admin.md)を正とする。
+順序は**Approval保存 → durable Apply Request受付 → transaction journal開始**。Approvalなしの実行要求を受け付けない。完全schema・approval_hash/request_payload_hash/receipt_hash projectionは[Hash Contract](fn004-approval-request.md)、受付とidempotency lifecycleは[interface設計](song-admin.md)を正とする。receipt hashは外側schema_versionとreceiptのwrapperを対象とし、processing cacheを含めない。元receiptのrequested_at/transaction_id/apply_idは同request retryで再生成しない。
 
 receipt保存は短い受付gate内で行い、transactionの実行排他とは責務を分ける。同一gateを継続保持する実装も可。新規受付前にlock・unfinished journal・未完了receipt・ID pendingを確認し、他要求があればBUSY / RECOVERY_REQUIRED。受付後gateを解放しても未完了receiptが次の新規受付を阻止するためqueueや複数claimは生じない。
 
 同request再送は既存状態を返すだけで、新transactionをdispatchしない。初回受付者だけがreceiptに固定したtransaction_idで実行へ進む。receipt公開後にprocessが終了した場合はrecoveryで元要求を終了させる。journal不存在だけで未開始と断定せず、ID state・History・canonical・owner・残存artifactを検証する。実行/recovery内部の読込は、所有gate leaseと期待する本人request/pendingをcontextに含める。本人の期待遷移だけを認め、他要求や通常readerにpending検査の迂回optionを公開しない。
+
+Approvalの現在の新規利用可否と、受付時のexact bindingは[Approval Invalidation Contract v1](fn004-approval-request.md#approval-invalidation-contract-v1)で区別する。受付後eventは元Receiptへのaccepted_request参照で検証し、それだけで既存Requestのexecution/Recoveryを取消し・拒否・rollbackしない。受付前event（accepted_request=null）と同Approvalのreceipt共存はINTEGRITY_CONFLICT。これはexecution再検証における承認の解釈であり、COMMIT_DECIDED、journal、History成功、high-waterの規則を変更しない。
 
 ## exclusive gate・stale lock
 
