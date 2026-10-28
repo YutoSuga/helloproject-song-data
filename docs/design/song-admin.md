@@ -28,6 +28,8 @@ Approvalの完全closed schema・approval_hashは[Approval / Request Hash Contra
 
 新Planへ旧承認を引き継がない。失効は`staging/apply-approvals/invalidations/<event_id>.json`にschema/version、対象approval_id/hash、reason、actor、時刻を追記してGit管理する。used / stale / invalidatedはHistory・receipt・失効recordから導出し、承認を書き換えない。一度失効した承認はデータが元へ戻っても復活させない。未知version・hash不整合はSTOP。
 
+完全なversioned schema、ainv_UUID identity、受付前後のReceipt参照、全件readonly validation、duplicate/conflict、immutable persistenceは[Approval Invalidation Contract v1](fn004-approval-request.md#approval-invalidation-contract-v1)を正とする。新規受付の永久失効はAPPROVAL_INVALIDATED。durable受付後も失効eventは作成できるが、既存Requestの取消しにはならない。受付前失効とreceiptの矛盾はINTEGRITY_CONFLICTとする。
+
 UIでは確認check＋「反映する」を一連にするが、内部はapproveApplyPlan → submitApplyRequest → executeTransaction。Approvalだけ保存してprocessが落ちた場合はApply未受付であり、GETや再読込によって自動実行しない。明示submitで元承認・元request ID・全preconditionを検証する。
 
 ## durable Apply Request（実行要求）
@@ -49,6 +51,8 @@ processingはatomic replace可能なcacheであり、journal/Historyから照合
 5. stale/invalidでtransaction開始前に拒否する場合はcompletion recordをdurable保存してterminal化する。保存に失敗した場合は未完了要求として新規Applyを止める。
 6. receipt後・journal前でcrashした場合は、他要求を開始せずrecoveryで元owner終了・元Plan・receipt・canonical/History/ID state/artifactsを検査する。副作用なしを証明できればABORTED completionを保存。証明不能ならSTOP。同requestのdispatchを推測で再開しない。
 7. journal開始後は元transactionをrecoveryする。成功はHistory、途中はjournalが正式根拠。成功History/terminal journalがあればcompletion/cacheを修復できる。別request IDでも同Decision適用済み/進行中なら二重実行しない。
+
+4〜7の承認再検証は、現在の新規利用可否と受付時のexact Approval bindingを区別する。[Invalidation contract](fn004-approval-request.md#approval-invalidation-contract-v1)のaccepted_requestが元receiptへexact bindする受付後eventだけを理由として、既存Requestをreject/cancel/rollbackしない。nullの受付前eventとreceiptの共存はINTEGRITY_CONFLICT。Invalidationはprocessing/Transaction/pending/Historyを変更せず、他の再検証・completion・Recovery契約は維持する。
 
 receiptはGit非管理だが、未完了中は削除・GC禁止。完了後もv1は保管し、通常retryを照会可能にする。receiptが失われた場合も、approval・journal・Historyを照合せず新規実行しない。未適用を証明できなければSTOP。Historyにrequest identityを残すことで、local request cacheを失っても適用済みを判定できる。
 
@@ -99,6 +103,7 @@ confirmedから「反映内容を確認」でPlanを生成。entity/relation単�
 | applicable | 反映予定を確認 | 再検証後可 / 新revision / 不要 |
 | blocked / UNSUPPORTED_OPERATION | 要対応/対象外。判断へ戻る | 不可 / 新revision / 原則不要 |
 | STALE_PLAN | 確認後にデータが変わった。再生成・再確認 | 不可 / 新revision / 原則不要 |
+| APPROVAL_INVALIDATED | 承認は永久失効。現在のPlan/Historyを確認して新承認 | 新規受付不可 / 可否は既存条件 / 既存受付の取消しではない |
 | CANDIDATE_FINGERPRINT_MISMATCH | 公式factsが変わった。Decisionから再確認 | 不可 / 新revision / 原則不要 |
 | ALREADY_APPLIED | すでに反映済み。既存Historyへ | 不可 / 履歴修正のみ / 不要 |
 | BUSY | 別処理進行中。状態再取得 | 不可 / 保存待ち・buffer保持 / 必要なら診断 |

@@ -18,6 +18,8 @@ receipt保存は短い受付gate内で行い、transactionの実行排他とは�
 
 同request再送は既存状態を返すだけで、新transactionをdispatchしない。初回受付者だけがreceiptに固定したtransaction_idで実行へ進む。receipt公開後にprocessが終了した場合はrecoveryで元要求を終了させる。journal不存在だけで未開始と断定せず、ID state・History・canonical・owner・残存artifactを検証する。実行/recovery内部の読込は、所有gate leaseと期待する本人request/pendingをcontextに含める。本人の期待遷移だけを認め、他要求や通常readerにpending検査の迂回optionを公開しない。
 
+Approvalの現在の新規利用可否と、受付時のexact bindingは[Approval Invalidation Contract v1](fn004-approval-request.md#approval-invalidation-contract-v1)で区別する。受付後eventは元Receiptへのaccepted_request参照で検証し、それだけで既存Requestのexecution/Recoveryを取消し・拒否・rollbackしない。受付前event（accepted_request=null）と同Approvalのreceipt共存はINTEGRITY_CONFLICT。これはexecution再検証における承認の解釈であり、COMMIT_DECIDED、journal、History成功、high-waterの規則を変更しない。
+
 ## exclusive gate・stale lock
 
 realpathでrepository rootを確定し、`staging/.fn004.lock`を`fs.open(path, "wx")`で取得する。schema、owner token UUID、mode、PID・process開始識別子、host / boot / PID namespace、root、request / transaction / apply / Plan identity、取得時刻、journal pathを保存・syncする。EEXISTはBUSY。途中で切れたmetadataも無条件削除しない。

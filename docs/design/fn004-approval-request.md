@@ -126,6 +126,8 @@ Approval → exact Plan、Request → exact Approval + exact Plan、Receipt → 
 
 Approval checkはPlan checkを再利用し、Planがstaleなら旧Approvalを別Planへ付け替えない。既存の失効recordによる永久失効も維持し、データが戻っただけで復活させない。同requestの再照会は認可されたcallerだけに許可し、actorを差し替えた再submitは同payloadとして受け入れない。
 
+失効recordの完全schema、全件validation、受付後失効と既存Requestの境界は[Approval Invalidation Contract v1](#approval-invalidation-contract-v1)に従う。新規受付はcurrent permanent invalidationを検査し、既存receiptのretry/execution/Recoveryと混同しない。
+
 | 条件 | 正式code / 扱い |
 | --- | --- |
 | 壊れたApproval/Receipt、参照approval_hash・request_payload_hash・receipt_hash不一致、同ID異payload/異immutable Approval | INTEGRITY_CONFLICT |
@@ -137,6 +139,127 @@ Approval checkはPlan checkを再利用し、Planがstaleなら旧Approvalを別
 | History同Decision/revision異hash / 別revision成功 | INTEGRITY_CONFLICT / APPLIED_DECISION_REVISION_UNSUPPORTED |
 
 `APPROVAL_MISMATCH` / `IDEMPOTENCY_CONFLICT`という新codeを導入せず、上表へ統一する。Plan自体の破損は既存PLAN_INTEGRITY_CONFLICT、非applicableは既存Plan checkのBLOCKED/診断、その他のtyped errorは元codeを保持しmessageで分岐しない。Receiptが消失した場合、未適用/未受付を証明せず再発行しない。[既存中断契約](song-admin.md)とTransaction/Recoveryのsafe-stopを維持する。
+
+## Approval Invalidation Contract v1
+
+### artifact・identity・完全schema
+
+Git-managedなimmutable eventを`staging/apply-approvals/invalidations/<event_id>.json`へ保存する。Approval本体を更新しない。全fieldは次表だけで、すべてrequired、nested objectもclosed。optional fieldはなく、`accepted_request`だけnullを許す。共通型・strict JSON・version規則は本書冒頭をそのまま適用する。
+
+| field | 型・制約 |
+| --- | --- |
+| schema_version | integer literal `1`。Invalidation artifact独自のwire version |
+| event_id | `ainv_<UUID>`。UUIDは小文字v4、variant=8/9/a/b |
+| repository_instance_id | RepositoryID。対象Approvalと検証済みbootstrap/state lineageに一致 |
+| approval_id | ApprovalID。対象の保存済みApproval filenameと内容にexact一致 |
+| approval_hash | Hash。対象の検証済みApproval全体のH(A)にexact一致 |
+| reason | Nonempty。人間向けの失効理由、下記自由文規則 |
+| actor | Actor。失効操作主体のtrusted application context |
+| invalidated_at | Timestamp。初回作成のgate内で、全precondition検証後・publication intent作成時にapplicationが一度固定 |
+| accepted_request | `null`または`{request_id:RequestID, receipt_hash:Hash}`。下記の受付前後の証跡 |
+
+event_idの完全grammarは`^ainv_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$`。filenameは正確に`<event_id>.json`（caseも一致）。random UUIDを一度発行し、content-derivedでなく、Approval/hash/reason/時刻から再生成できない。retryは元event IDと固定した全内容を保持する。別IDを自動発行してretry成功に見せない。同じApprovalに複数eventを許す。`ainv_`は既存の`apr_`、`ap_`、`dec_`、`tx_`、`apply_`、`op_`、`repo_`、`ev_`と衝突しない独立namespaceで、既存ID grammarを拡張しない。
+
+reasonはenumでもtyped error codeでもなく、空文字・空白だけを拒否するUnicode自由文。trimはNonempty判定だけに使い、保存値へtrim/NFC/NFKC/case変換をしない。前後空白も保存された意味内容の一部。別note fieldは設けず、このfieldが人間向け説明を担う。未知の理由文もNonemptyなら受理する。runtimeのsecurity-sensitive branching、取消し種別、retry可否をreason文字列で決めない。
+
+actorは既存Actor型を再利用し、local stable identityまたは認証済み管理者backendが固定する。clientの自由申告actorは不可。対象Approval.actorと同一であることは要求しない（別の認可済みoperatorも失効可能）。invalidated_atはtimezone付き実在日時でimmutable、retryで再生成せず、保存表現を書き換えない。時刻大小・mtime・UUID・filesystem listing順を受付前後の証明に使わない。
+
+### target binding・受付前後の証跡
+
+作成・readonly全件検証の両方で、各eventについて対象Approval原本の存在、strict schema、filename/approval_id、再計算H(A)、repository_instance_idを検証する。保存Planのstrict schema/id/hash/内部整合とApprovalのrepository/Decision identity/plan_id/hashの全一致も検証する。Decision storeの全revision/hash/transitionを検証し、参照するconfirmed revisionの存在・content_hashとPlanのidentity/scope bindingを照合する。現在のeffective confirmedであること、current candidate/canonicalへの一致、current Plan APPLICABLE、未適用であることは**失効作成・eventのstatic validationの条件にしない**。stale/usedな承認の失効も記録でき、過去eventも現在のPlan check結果によって無効にならない。原本が欠けたらhashから復元しない。
+
+`accepted_request`は将来用途のmetadataではなく、受付後失効を受付前の不正受付から区別するための必須の因果参照である。Receipt schema/hashへfieldを追加しない。
+
+1. Invalidation作成と新規Request受付は同じcommon exclusive gateで直列化する。Invalidation作成時はApproval.intended_request_idの既存Requestを先に読む。存在すればstrict envelope/receipt schema、両hash、filename、repository/Decision/Plan/Approval ID/hash、actor、intended_request_id/purposeの既存exact bindingをすべて検証する。この検証は現在のApproval利用可否判定とは分離し、再帰的なevent検証を呼ばない。
+2. 検証済みdurable receiptが存在するときだけ`accepted_request={request_id,receipt_hash}`をその保存値から固定する。acceptedはprocessing.stateの文字列でなくdurable immutable receiptの存在を意味するため、terminalな既存Requestも含む。receiptが存在しなければnull。ただしHistory/journal/completion等に受付済みの証跡があるのにreceiptがない、または受付有無を証明できない場合はRECOVERY_REQUIREDで作成を止め、nullを推測しない。
+3. 既存eventを全件検証する。対象Approvalにnullのeventが既にあり、同Approvalにbindするreceiptも存在する場合はINTEGRITY_CONFLICT。受付前失効を受付後参照付きの新eventで上書き・正当化しない。
+4. eventを同gate内でdurable no-clobber公開する。新規Request受付は公開済みvalid eventが1件でもあれば禁止する。従って協調writerによる正常遷移は、receiptなし＋nullの失効event、またはreceiptあり＋そのexact参照を持つ受付後eventのいずれかとなる。
+
+readonly検証では非null参照のRequest原本と両hash・全bindingを上と同じく検証する。参照receiptが欠落・破損・別内容なら安全に受付後と認定できずfail-closed（欠落はRECOVERY_REQUIRED、内容矛盾はINTEGRITY_CONFLICT）。nullのeventと対象receiptの共存は、timestampの見かけに関係なくINTEGRITY_CONFLICT。異なるApproval hashへ同IDを付け替えることもINTEGRITY_CONFLICT。同Approvalの全非null参照は同一request_id/receipt_hashでなければならない。既存v1のReceipt保持方針を維持し、GC後の新しい証明方式は発明しない。
+
+nullのeventについてもApproval.intended_request_idのRequest有無を読み、存在する不正receiptを「不存在」として扱わない。receiptがなくても同RequestのHistory/journal/completionに受付済みの証跡があればRECOVERY_REQUIREDとし、順序を推測しない。Git-managed eventだけをcloneして非Git receiptがない場合も、非null参照を検証できるまで新規承認利用を許可しない。この不足は過去の成功Historyを取消す意味ではなく、History readonly validatorの既存参照境界・成功proofにInvalidation全件scanやReceipt存在条件を追加しない。
+
+### integrity・immutable persistence
+
+**独立したinvalidation_hashは持たない。** event全体のJCS内容（schema_version、ID、repository、target、reason、actor、invalidated_at、accepted_requestをすべて含む）をimmutable保存・retry比較の単位とする。hash対象外の可変metadataはない。approval_hashは失効対象の内容を、receipt_hashは既存受付の内容をbindingする。event自体の無断変更はno-clobberとGit追跡で禁止・監査する。Decisionのmetadataと同じく、immutable record全体とGitを信頼境界とする。独立hashを同じfileへ追加しても自己整合した書換えやevent削除を証明できず、他artifactから参照される新しいdigestも不要なので追加しない。Approval/Historyのhashがreason/actor/時刻を暗号学的に保護すると主張しない。署名・悪意あるfilesystem writer・Git台帳全巻戻しの検出保証を追加しない。
+
+既存repositoryのknown artifact pathとlive gate lease、Slice 2 `createJsonExclusive`を使う。完成tempのexclusive wx作成→write→file fsync→close→再読込一致→hard linkによるexclusive no-clobber公開→directory fsync→自己temp unlink→directory fsync、directory新設時のparent syncを再利用する。renameによる既存eventのreplace、writeJsonAtomic、overwrite、削除・GCによる復活は不可。publicationのsync/cleanup失敗は既存typed persistence errorのphase/published/tempを保持し、成功へ潰さず再照合する。残存temp・不明な公開結果を黙ってskip/削除しない。
+
+同event IDの既存fileは先にstrict/static検証する。全fieldのJCS一致なら元eventを返すだけでactor/時刻/受付参照を再生成しない。違えばINTEGRITY_CONFLICT。JSON書式・key順・escape表現の差だけは同内容。作成retryで既存eventを返すことと現在のRequest受付可否は別判定である。gate競合・path安全性・I/O失敗は既存typed codeを保持する。non-reentrant gateの同じleaseを伝播し、stale lockを解除しない。
+
+Invalidation作成はcanonical snapshotを使う通常Applyではなく、上記immutable artifactとlineageを照合する操作である。既知の本人receiptやpendingがあるだけで作成を禁止しないが、gateの所有・bootstrap/stateのschema/hash/lineage検査は省略しない。未知/破損の受付・実行証跡はRECOVERY_REQUIREDまたは既存integrity errorで止める。通常reader/Plan checkにpending bypassを追加せず、既存Requestのprocessing、Transaction、pending_transaction、high-water、Historyを一切変更しない。
+
+### readonly validation・permanent invalidation・Approval check
+
+同gate内で`staging/apply-approvals/invalidations/`の**全entry・全event**を読む。対象Approvalだけをfilenameや未検証approval_idでfilterしない。正規event名のregular JSON fileだけを許し、subdirectory/symlink/非JSON/未知file/temp/filename mismatch/重複event identityは拒否する。全件strict parse→closed schema/共通型→target/static binding→accepted_request整合検証を行う。未知field/version、duplicate JSON member、BOM、不正UTF-8、孤立surrogate、invalid UUID/hash/timestamp、型違い、missing required/null違反を拒否し、unknown field削除による受理は禁止。JSON/schema/identity/binding破損はINTEGRITY_CONFLICT、path/I/Oは既存typed errorを保持する。全件の検証が終わるまで「invalidatedでない」を返さない。別Approvalの壊れたeventも全体をfail-closedにする。
+
+directory不存在は、既知のevent消失の証跡がない新規/通常cloneでは0件として読める（作成はしない）。既知eventの欠落、Git追跡済みeventの削除を認識した場合はINTEGRITY_CONFLICTで止める。空directoryだけを復活の根拠にしない。通常のevent削除操作は存在せず、Git checkout/branch mergeで失効を落とすことも禁止する。証跡ごとの全巻戻しをローカルhashだけで検出できるとはしない。
+
+全件検証後、exact `(repository_instance_id,approval_id,approval_hash)`に一致するeventが1件以上あれば、そのApprovalは**今後の新規受付に永久失効**。reason/actor/時刻で優先順位を付けず、後続eventが先行eventを取消す意味を持たない。canonical/state/Planが戻っても復活せず、新Planへ付け替えず、別request_idへ流用しない。再承認は新Approvalで行う（既存のcurrent Plan/History/readiness条件も必要）。
+
+Slice 5の新規利用用Approval checkは、(1)原本存在、(2)strict schema、(3)H(A)、(4)exact Plan/Decision/repository binding、(5)current Plan check、(6)History precheck、(7)本節の全件検証とpermanent invalidation、(8)intended_request_id、(9)trusted actor、(10)purpose=canonical_applyをすべて要求する。Plan check内の既存History優先順を維持する。全件の破損は失効の有無より先にfail-closed。複数の通常拒否条件がある場合、既存History/readiness/Plan診断を保持し、永久失効も別のtyped診断として保持する。APPLICABLEは失効を打ち消さない。
+
+新規受付でvalid eventがあること自体のcodeは**APPROVAL_INVALIDATED**（新しい限定domain code）。既存APPROVAL_PLAN_MISMATCHは要求とのbinding相違、STALE_PLANは現在inputとの相違、ALREADY_APPLIEDは成功History、RECOVERY_REQUIREDは未完了/証明不足であり、どれもvalidな永久失効を一意に表さないため追加する。破損や受付前失効＋receipt共存は従来どおりINTEGRITY_CONFLICT、message/reason分岐は不可。CLIの既存validation/blocked exit=3に対応し、新しいexit code・Plan diagnostic enum・Receipt field・Processing stateを追加しない。
+
+### duplicate / conflict・durable Request境界
+
+| ケース | 一意な扱い |
+| --- | --- |
+| A. same event_id + same semantic content | 全field JCS一致、strict検証後に元eventを返す。再公開・時刻再生成なし |
+| B. same event_id + different content | INTEGRITY_CONFLICT。上書き・別IDで自動retryなし |
+| C. different event_id + same Approval + same reason/actor | 明示的な別操作なら追記可。duplicate semantic invalidationで、失効効果は集合のOR、追加効果なし |
+| D. different event_id + same Approval + different reason/actor | 追記可。別の失効理由/主体であり、それだけではconflictでない。再有効化・取消しにはならない |
+| E. same approval_id + different approval_hash | 原本のH(A)に一致しない参照はINTEGRITY_CONFLICT。IDだけで失効を適用しない |
+| F. 不存在Approvalへの作成 | INTEGRITY_CONFLICT、event公開なし。tombstone先行作成は不可 |
+| G. 壊れたApprovalへの作成 | INTEGRITY_CONFLICT、event公開なし。Plan/Decision等の既存typed integrity errorは保持 |
+| H. durable accepted Request後の作成 | 許可。検証済みReceiptへのaccepted_requestを固定する。既存Requestの取消し/無効化/再受付/再dispatchをしない |
+
+C/Dも全static binding・受付参照条件を満たす必要がある。同Approvalへの複数eventは正常で、event数・理由・actorの相違はvalidityを曖昧にしない。event_id再利用による内容相違、target hash相違、受付参照矛盾は理由文に関係なくconflict。
+
+既存durable Requestのretryは本書の既存順序どおり元receipt/semantic projectionを先に検証し、同payloadなら照会のみ。execution/Recoveryでは「現在の新規Approval利用可否」と「このreceiptが受付時の正当な承認へexact bindしているか」を分離する。eventが同receiptへのaccepted_requestを持つ場合、それは受付後失効であり、**それだけを理由にexecution/retry/Recoveryをreject/cancel/rollbackしない**。受付時のrepository、Decision identity/hash、Plan ID/hash、Approval ID/hash、request ID/payload hash、Receiptを固定証跡として検証する。他のstale/不正入力/中断条件とCOMMIT_DECIDED境界は従来どおり。nullの先行eventがあるのにreceiptが存在する状態はINTEGRITY_CONFLICTでfail-closedとし、正常な受付後失効へ読み替えない。timestamp比較による救済もしない。
+
+### 完全artifact例
+
+保存filenameは`ainv_66666666-6666-4666-8666-666666666666.json`。下記は後述のApproval/Request例への受付後失効で、参照approval_hash/receipt_hashは既存vectorの値そのもの。例の外部Plan/Decisionは説明用参照で、完全repository検証の成功を主張するfixtureではない。
+
+```json
+{
+  "schema_version": 1,
+  "event_id": "ainv_66666666-6666-4666-8666-666666666666",
+  "repository_instance_id": "repo_11111111-1111-4111-8111-111111111111",
+  "approval_id": "apr_22222222-2222-4222-8222-222222222222",
+  "approval_hash": "4e2a1737cfad8ebb06b6fbd7c90b84d60cd5c899d30d7574ae2e334f71740d7c",
+  "reason": "今後の利用を停止する。受付済み要求の取消しではない。",
+  "actor": {
+    "id": "local:operator-1",
+    "assurance": "local_process"
+  },
+  "invalidated_at": "2026-10-16T10:00:02+09:00",
+  "accepted_request": {
+    "request_id": "44444444-4444-4444-8444-444444444444",
+    "receipt_hash": "69024a028f80c30396118b31088e3dfd0f0c86d0a859a270e3e8214da19f72ec"
+  }
+}
+```
+
+受付前eventは同じclosed field setでaccepted_requestの値だけnullとなる（その後このApprovalで新規受付は不可）。独立hashを持たないのでInvalidationHashProjectionやexpected invalidation hashは存在しない。
+
+### Invalidation readiness review
+
+| 問い | 一意な答え |
+| --- | --- |
+| A. 完全schema | 本節9 required field、optionalなし、accepted_requestだけnullable、nestedもclosed、schema_version=1 |
+| B. event_id | ainv_＋小文字random UUID v4、正規表現/filename exact binding、再導出不可 |
+| C. Approval exact binding | 原本strict schema/H(A)、repository/Decision/Plan static bindingを作成・readonly双方で検証 |
+| D. integrity | 独立hashなし。全field immutable no-clobber＋Git、approval_hash/receipt_hash exact参照。署名/台帳巻戻し保証なし |
+| E. reason | Nonempty自由文、無変換、code/制御分岐に使わない |
+| F. actor/timestamp | trusted Actor、invalidated_atは初回publication intentで固定、retry不変 |
+| G. duplicate | 同ID同全内容は照会、異内容conflict、別IDの追加理由はORで失効維持 |
+| H. permanent判定 | 全件検証済み集合にexact targetが1件以上。データ復元/後続eventで復活不可 |
+| I. corrupt/unknown | 全event strict検証、未知version/破損をskipせずfail-closed |
+| J. stale/applied/invalidated | current input不一致／成功History／永久失効を別typed診断で保持 |
+| K. 受付後 | accepted_requestのexact Receipt参照で識別、既存Requestの取消しなし。null eventとreceipt共存はINTEGRITY_CONFLICT |
+| L. Slice 5 readiness | schema・全件scan・static binding・因果参照・拒否code・10条件が確定。runtimeを追加せず推測なしで実装可能 |
 
 ## 完全例とhash projection
 
