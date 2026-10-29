@@ -67,13 +67,23 @@ receiptはGit非管理だが、未完了中は削除・GC禁止。完了後もv1
 | confirmDecision / cancelDecision | 表示snapshot/hash、base head、request key | 新immutable revision。再送は同結果 |
 | generateApplyPlan / getApplyPlan | confirmed identity / Plan ID | immutable保存/取得 |
 | approveApplyPlan | Plan identity、actor、確認token、intended request ID | immutable承認保存 |
-| submitApplyRequest / getApplyRequest | receipt用payload / request ID | durable受付・初回dispatch / 結果照会 |
+| submitApplyRequest | receipt用semantic payload | 初回durable受付／同payload retry。共通Request response DTO。retryはdispatchしない |
+| checkApplyRequest | request ID | readonly current-state照会。submitと同じRequest response DTO |
+| getApplyRequest | request ID | strict/static検証済み保存artifact原本だけを取得 |
 | inspectState / validatePlanForApply | repository / Plan identity | ready/busy/recovery、現時点診断 |
 | executeTransaction | receipt・承認・固定Plan・gate lease | Design 3。browserへ直接公開しない |
 | inspectRecovery / recoverTransaction | request/transaction ID、観測state hash、許可action | readonly診断 / 元要求の復旧 |
 | initializeState / readCanonicalSnapshot | 監査hashの明示確認 / gate | bootstrap / 安定snapshot |
 
 Decision保存schema・content hash・mutation key・source revisionのexact contractは[Decision](fn004-decision.md)、Plan payload/operation ID/orderは[Plan](fn004-apply-plan.md)、成功lookup/非初期state proofは[History](fn004-history.md)を正とする。Decision編集はbase headをserviceが比較し、古いtabを拒否する。変更操作のrequest keyは対象identity・actor・payloadへbindingし、duplicate confirmでrevisionを増やさない。未知versionはSTOP。runtimeの安全logicは共通serviceに置く。
+
+### Apply Request response
+
+初回submit成功・same-payload retry・checkの完全response契約は[Apply Request application response contract v1](fn004-approval-request.md#apply-request-application-response-contract-v1)を正とする。全field requiredの`{artifact,readiness,diagnostics,result}`を返す。artifactは保存原本、readinessは現在のrepository利用可否、diagnosticsは現在の検証code、resultはnullまたは検証済みsuccessful Historyへの`{apply_id,record_hash}`参照。HistoryRecord全体を含めず、詳細は既存History readonly APIから取得する。
+
+保存artifactのprocessingはadvisory cacheのままで、responseへ合わせて書き換えない。result非nullとrecovery_requiredは共存し、成功Historyだけでjournal完了・pending解消・cleanup完了を断定しない。accepted/completed/already_appliedをreadiness enumに追加しない。現Slice 5ではRequest存在が通常runtimeをblockするため、初回受付直後でもrecovery_required / RECOVERY_REQUIREDを返し得る。受付成功と通常利用可能は別である。
+
+既存Request照会では元Receiptを維持し、新規受付preconditionを再適用しない。受付後失効は現在診断として返し、Plan staleは既存guardを迂回せず検証できた場合だけ診断する。同ID異payload・原本破損・参照不整合は引き続きtyped error。code別のthrow/diagnostic境界、評価順、null resultの意味はリンク先matrixに従う。初回submitだけartifactを直接返す旧実装説明は採用しない。未mergeのSlice 5実装/testsは別PRで本契約へ追従する。Transaction dispatch/execution、Recovery、History publicationをこのresponse評価に含めない。
 
 ## SCR-002 views・workflow
 
