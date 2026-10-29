@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import * as fs from 'node:fs/promises';
 import {join} from 'node:path';
 import {approvalFixture,actor,execute} from './fixtures/approval-runtime.js';
-import {newApprovalId,newInvalidationId,newRequestId,approvalHash,receiptHash,requestPayloadHash} from '../src/fn004-approval-schema.js';
+import {newApprovalId,newInvalidationId,newRequestId,approvalHash,receiptHash,requestPayloadHash,requestPayloadProjectionV1} from '../src/fn004-approval-schema.js';
 import {createApprovalRequestService} from '../src/fn004-approval-application.js';
 import {createFn004Repository} from '../src/fn004-repository.js';
 import {withCanonicalGate} from '../src/fn004-gate.js';
@@ -185,4 +185,47 @@ test('unrelated Approval cannot bypass a corrupt event; known untracked event de
 test('Request check reports recovery readiness without altering receipt or deriving success from processing',async t=>{
  const f=await approvalFixture(t),receipt=await f.service.submitApplyRequest(f.payload,f.context),checked=await f.service.checkApplyRequest(f.payload.request_id,f.context);
  assert.deepEqual(checked.artifact,receipt);assert.notEqual(checked.readiness,'initialized');assert.ok(checked.diagnostics.some(d=>d.code==='RECOVERY_REQUIRED'));
+});
+
+test('accepted_request creation rejects another Approval receipt for the same Plan and intended Request',async t=>{
+ const f=await approvalFixture(t),b=await f.service.approveApplyPlan({...f.command,approval_id:newApprovalId()},f.context);
+ assert.equal(b.plan_id,f.approval.plan_id);assert.equal(b.intended_request_id,f.approval.intended_request_id);
+ assert.notEqual(b.approval_id,f.approval.approval_id);assert.notEqual(approvalHash(b),approvalHash(f.approval));
+ const receipt=await f.service.submitApplyRequest(f.payload,f.context);
+ const command={...inv(f),approval_id:b.approval_id,approval_hash:approvalHash(b)};
+ await assert.rejects(f.service.invalidateApproval(command,f.context),{code:'INTEGRITY_CONFLICT'});
+ await assert.rejects(fs.stat(path(f,`apply-approvals/invalidations/${command.event_id}.json`)),{code:'ENOENT'});
+ const valid=await f.service.invalidateApproval(inv(f),f.context);
+ assert.deepEqual(valid.accepted_request,{request_id:receipt.receipt.request_id,receipt_hash:receipt.receipt_hash});
+ assert.deepEqual(await f.service.getApprovalInvalidation(valid.event_id,f.context),valid);
+});
+
+test('accepted_request global scan rejects a stored event bound to another valid Approval receipt',async t=>{
+ const f=await approvalFixture(t),b=await f.service.approveApplyPlan({...f.command,approval_id:newApprovalId()},f.context);
+ const receipt=await f.service.submitApplyRequest(f.payload,f.context);
+ const event={schema_version:1,event_id:newInvalidationId(),repository_instance_id:b.repository_instance_id,approval_id:b.approval_id,approval_hash:approvalHash(b),reason:'wrong Approval receipt',actor,invalidated_at:'2026-10-29T00:00:00Z',accepted_request:{request_id:receipt.receipt.request_id,receipt_hash:receipt.receipt_hash}};
+ const dir=path(f,'apply-approvals/invalidations');await fs.mkdir(dir,{recursive:true});await write(join(dir,`${event.event_id}.json`),event);
+ await assert.rejects(f.service.getApprovalInvalidations(f.context),{code:'INTEGRITY_CONFLICT'});
+ await assert.rejects(f.service.getApprovalInvalidation(event.event_id,f.context),{code:'INTEGRITY_CONFLICT'});
+ await assert.rejects(f.service.getApplyRequest(f.payload.request_id,f.context),{code:'INTEGRITY_CONFLICT'});
+});
+
+test('Invalidation create and scan reject wrong Approval hash, cross-repository and corrupt Request originals',async t=>{
+ const f=await approvalFixture(t),receipt=await f.service.submitApplyRequest(f.payload,f.context);
+ await f.service.invalidateApproval(inv(f),f.context);
+ for(const mutate of [e=>e.receipt.approval_hash='0'.repeat(64),e=>e.receipt.repository_instance_id=`repo_${newRequestId()}`]) {
+  const bad=structuredClone(receipt);mutate(bad);
+  // Keep both hashes self-consistent: exact target binding must still reject.
+  bad.receipt.request_payload_hash=requestPayloadHash(requestPayloadProjectionV1(bad));bad.receipt_hash=receiptHash(bad);
+  await write(requestFile(f),bad);
+  const command=inv(f);
+  await assert.rejects(f.service.invalidateApproval(command,f.context),{code:'INTEGRITY_CONFLICT'});
+  await assert.rejects(fs.stat(path(f,`apply-approvals/invalidations/${command.event_id}.json`)),{code:'ENOENT'});
+  await assert.rejects(f.service.getApprovalInvalidations(f.context),{code:'INTEGRITY_CONFLICT'});
+ }
+ await write(requestFile(f),{});
+ await assert.rejects(f.service.invalidateApproval(inv(f),f.context),{code:'INTEGRITY_CONFLICT'});
+ await assert.rejects(f.service.getApprovalInvalidations(f.context),{code:'INTEGRITY_CONFLICT'});
+ await write(requestFile(f),receipt);
+ assert.equal((await f.service.getApprovalInvalidations(f.context)).length,1);
 });

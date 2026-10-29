@@ -51,14 +51,16 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
     if(a.repository_instance_id!==state.repository_instance_id || p.payload.repository_instance_id!==a.repository_instance_id || p.payload.bootstrap_hash!==state.bootstrap_hash || !same(approvalDecision(a),p.payload.decision.identity) || p.plan_hash!==a.plan_hash || p.payload.decision.scope_hash!==revision.scope.scope_hash) integrity('Approval static Plan/Decision/repository mismatch');
     return a;
   }
-  async function staticRequest(e,c) {
+  async function staticRequest(e,c,expectedApproval) {
     validateApplyRequest(e);
-    const a=await staticApproval(e.receipt.approval_id,c),r=e.receipt;
-    if(r.repository_instance_id!==a.repository_instance_id || !same(r.decision,approvalDecision(a)) || r.plan_id!==a.plan_id || r.plan_hash!==a.plan_hash || r.approval_hash!==approvalHash(a) || r.request_id!==a.intended_request_id || !same(r.actor,a.actor)) integrity('Receipt exact Approval binding mismatch');
+    // Invalidation callers supply the validated target original; request-ID
+    // lookup alone cannot establish which Approval authorized the Receipt.
+    const a=expectedApproval ?? await staticApproval(e.receipt.approval_id,c),r=e.receipt;
+    if(r.approval_id!==a.approval_id || r.repository_instance_id!==a.repository_instance_id || !same(r.decision,approvalDecision(a)) || r.plan_id!==a.plan_id || r.plan_hash!==a.plan_hash || r.approval_hash!==approvalHash(a) || r.request_id!==a.intended_request_id || !same(r.actor,a.actor)) integrity('Receipt exact Approval binding mismatch');
     return e;
   }
-  async function optionalRequest(id,c) {
-    return await c.store.exists(requestPath(id)) ? staticRequest(await c.repository.getApplyRequest(id,{gate:c.gate}),c) : null;
+  async function optionalRequest(id,c,expectedApproval) {
+    return await c.store.exists(requestPath(id)) ? staticRequest(await c.repository.getApplyRequest(id,{gate:c.gate}),c,expectedApproval) : null;
   }
   async function noUnknownWork(c) {
     // Slice 5 cannot prove terminal journals/completions. Preserve conservative
@@ -83,7 +85,7 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
     for(const e of events) {
       const a=await staticApproval(e.approval_id,c);
       if(e.repository_instance_id!==a.repository_instance_id || e.approval_hash!==approvalHash(a)) integrity('Invalidation target mismatch');
-      const r=await optionalRequest(a.intended_request_id,c);
+      const r=await optionalRequest(a.intended_request_id,c,a);
       if(e.accepted_request===null) {
         if(r) integrity('Pre-acceptance Invalidation coexists with Receipt');
         await absenceEvidence(a.intended_request_id,c);
@@ -140,7 +142,7 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
         await scan(c); return old;
       }
       await noUnknownWork(c);
-      const r=await optionalRequest(a.intended_request_id,c);
+      const r=await optionalRequest(a.intended_request_id,c,a);
       if(!r) await absenceEvidence(a.intended_request_id,c);
       await scan(c);
       const e=validateInvalidation({schema_version:1,event_id:input.event_id,repository_instance_id:a.repository_instance_id,approval_id:a.approval_id,approval_hash:input.approval_hash,reason:input.reason,actor:c.actor,invalidated_at:clock(),accepted_request:r?{request_id:r.receipt.request_id,receipt_hash:r.receipt_hash}:null});
