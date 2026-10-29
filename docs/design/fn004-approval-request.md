@@ -140,6 +140,87 @@ Approval checkはPlan checkを再利用し、Planがstaleなら旧Approvalを別
 
 `APPROVAL_MISMATCH` / `IDEMPOTENCY_CONFLICT`という新codeを導入せず、上表へ統一する。Plan自体の破損は既存PLAN_INTEGRITY_CONFLICT、非applicableは既存Plan checkのBLOCKED/診断、その他のtyped errorは元codeを保持しmessageで分岐しない。Receiptが消失した場合、未適用/未受付を証明せず再発行しない。[既存中断契約](song-admin.md)とTransaction/Recoveryのsafe-stopを維持する。
 
+## Apply Request application response contract v1
+
+本節は保存artifactとは別のapplication response DTOを定義する。`submitApplyRequest`の初回durable受付成功、同ID同semantic payloadのretry、`checkApplyRequest`はすべて次の**同じclosed object**を返す。rootの全field required、rootでnullableなのはresultだけ。responseをfileへ保存せず、artifact schema/versionや三つのhash projectionを変更しない。
+
+```text
+{
+  artifact: ApplyRequestArtifact,
+  readiness: "initialized" | "cleanup_required" | "recovery_required" | "blocked",
+  diagnostics: [{code: Nonempty}],
+  result: null | {apply_id: ApplyID, record_hash: Hash}
+}
+```
+
+diagnosticとresultのnested objectも上記fieldだけのclosed object。diagnosticsはcodeのASCII昇順、同codeは1件、検出条件がなければ空array。codeは既存runtime/History/Plan/Approvalのtyped codeを使い、新しいexecution codeやmessage分岐を導入しない。元validatorの詳細diagnostics型を変更するものではなく、このresponseではcodeだけへ明示projectionする。callerはmessageや配列位置から意味を推測しない。
+
+### 四つの独立した軸
+
+| field | 正式な意味 |
+| --- | --- |
+| artifact | strict/static binding検証済みの保存Request envelope原本。初回はdurable公開した内容、retry/checkはその保存内容を無変換で返す。Receipt、両hash、requested_at、transaction_id、apply_id、全binding、processingを現在状態へ合わせて変更しない |
+| readiness | 同gate内で観測したrepository/runtimeの通常利用可否。Requestの受付状態・実行状態・成功結果ではない |
+| diagnostics | 同じ観測で実際に検証できた現在条件のcode。artifactや受付結果を書き換えず、後の照会では変化し得る |
+| result | 当該Requestへのexact bindingを検証できたsuccessful Historyの参照。成功のauthoritative sourceはHistoryのまま。HistoryRecord全体を含めない |
+
+`artifact.processing`は従来のadvisory cacheでreceipt_hash対象外。例えばstateがaccepted、diagnostic_codeがnullの元artifactと、responseのrecovery_required / RECOVERY_REQUIREDが共存する。responseのためのprocessing更新、結果cacheの保存、Request/Approval作成、IDs再生成、dispatch、Transaction継続、Recovery実行はしない。保存済みprocessingの許容型や将来の明示cache更新契約を変更しない。
+
+`getApplyRequest`はstrict/static検証済みartifactだけを返す原本取得APIとして維持する。現在状態／結果が必要なcallerはcheckを使う。submit/retry/checkの共通DTOと、repositoryのartifact read/write APIを混同しない。
+
+### readinessと評価順
+
+readinessは既存`inspectRuntimeState`と同じtaxonomy・意味を使う。initializedは初期化済みで通常利用可能、cleanup_requiredは検証済みbootstrapの残存後片付けにより通常利用不可、recovery_requiredは未完了／未知runtime証跡またはstate transition proof不足、blockedはその他の通常利用阻害。accepted、ready、completed、already_appliedをこのenumへ追加しない。History verifier内部のreadyとも区別する。
+
+1. trusted context・入力grammarを検証し、同gate内で既存Requestを新規受付preconditionより先にlookupする。同ID異semantic payloadならINTEGRITY_CONFLICTを優先し、現在状態の評価へ進まない。既存Request自体のstrict schema/hash/filename/static binding failureはerrorで、正常DTOへ丸めない。
+2. 同payload retry/checkではcurrent PlanのAPPLICABLEや未失効を要求し直さない。既存契約のInvalidation全件scan・exact accepted_request照合を実施する。null eventとReceipt共存等のintegrity failureはerrorで止める。
+3. 初回は新規受付preconditionとdurable publicationを完了した後、retry/checkと共通のreadonly current-state評価を同じlive lease内で行う。初回だけ受付前readinessを返すことは禁止。gateを再取得せず、共通内部評価logicへleaseを伝播する。
+4. repository readinessとその診断は既存runtime guardから取得する。現Slice 5 guardはRequest fileの存在だけでもRECOVERY_REQUIREDを返す。このため、正常な初回受付直後・状態変化なしのretry/checkもreadiness=recovery_required、diagnosticsにRECOVERY_REQUIREDを含む。これはdurable受付失敗でも新規受付許可でもない。terminal validatorが未実装のままinitializedへ昇格させない。
+5. successful Historyの評価は下節のreadonly検証で独立に行う。runtime guardがRequest/pendingを検出したからといってHistoryを未検証のまま「存在しない」と決めない。これは結果照会のための読み取りで、通常canonical reader/Plan checkのguard bypass、本人pendingの実行許可、terminal proofの追加ではない。
+6. exact-targetの受付後Invalidationが全件検証で確認できればAPPROVAL_INVALIDATEDをdiagnosticへ含める。既存Requestの拒否・取消し・execution不能の断定には使わない。
+7. 通常Plan checkを既存guardのまま実行可能な場合に限り、そのcurrent診断を取り込む。STALE_PLANは検証で確定した場合だけdiagnosticとする。receipt/pendingによりPlan checkがRECOVERY_REQUIREDで止まる現Slice 5では、そのcodeを返し、candidate等の変化だけからSTALE_PLANを推測しない。STALE_PLANがないことはPlanのcurrent性の証明ではない。successful Historyの存在に伴う通常のPlan stale判定を、既存結果の取消しにしない。
+
+readinessはruntime評価の値をそのまま使う。追加のAPPROVAL_INVALIDATED / STALE_PLAN / ALREADY_APPLIED diagnosticからreadinessを書き換えない。検証可能な複数条件のcodeは併記する。壊れた証跡、I/O、gate failureを通常のrecovery diagnosticで隠さない。
+
+初回publication後にresponse評価・gate release等が失敗した場合も、元artifactを削除／再発行しない。既存typed errorとpublication evidenceを保持し、callerは同request ID・同payloadで再照会する。response取得失敗を「受付されなかった」証明にしない。
+
+### successful Historyとresult
+
+同gate内で既存History readonly APIのdirectory全件strict検証、schema/hash/chain/set/index検証、bootstrap/state/canonical/Git入力検証を再利用する。`verifySuccessfulHistory`のvalidとstate_proof/readinessを区別する。valid=trueのsuccessful_records/indexesだけから対応recordを検索し、state proof不足やpending等の診断は現在状態としてruntime診断と併合する。valid=false、破損／競合したHistoryや参照bindingを、result=nullの通常応答へ丸めない。verifierがvalid=falseを返した場合は、そのdiagnosticsの先頭codeをRepositoryErrorのcodeとして保持する（verifierの既存順序に従う）。read/path/parse等がthrowした場合はそのtyped errorを伝播する。未検証recordから成功参照を組み立てない。
+
+対応recordは少なくともrepository、Request ID/request_payload_hash、Decision identity/hash、Plan ID/hash、Approval ID/hash、actor、transaction_id、apply_idが元Receiptとexact一致しなければならない。request/apply identityに対応するrecordの矛盾はINTEGRITY_CONFLICT。Decisionに対する別成功のlookup code（INTEGRITY_CONFLICT、APPLIED_DECISION_REVISION_UNSUPPORTED、APPLIED_CANDIDATE_COVERAGE_UNSUPPORTED）は既存History contractどおりerrorとして保持し、当該Requestの成功resultへ読み替えない。同Decisionの別Request成功によるALREADY_APPLIEDはdiagnosticに含めるが、exact対応recordがなければresult=null。通常のlookupがstate proof/readiness不足で利用不可なら、その阻害codeをcurrent diagnosticとして保持し、indexから独自に再実行可否を決めない。
+
+対応する検証済みrecordがあれば、`result={apply_id:record.payload.apply_id,record_hash:record.record_hash}`、diagnosticsへALREADY_APPLIEDを含める。詳細が必要なcallerは既存History readonly APIで参照先のrecordを取得・検証し、apply_idとrecord_hashを照合する。参照は成功情報の別保存先でも署名でもない。対応recordがないことを有効な全件検証で確認した場合だけresult=nullとする。nullは未実行証明、terminal失敗証明、再dispatch許可を意味しない。
+
+`result != null`と`readiness="recovery_required"`は共存できる。successful Historyの存在だけでpending解消、journal完了、owner停止、cleanup完了、runtime正常化を推測しない。History verifierのvalidな成功集合と未証明stateの分離を維持し、成功Historyを書き換えたり成功を取り消さない。ABORTED/ROLLED_BACK等の非成功terminal結果はsuccessful History resultに含めず、未実装のcompletion/journal validatorや新たなterminal response unionを本節で発明しない。検証不能な実行証跡は既存recovery-required境界のまま。
+
+### error / current diagnostic matrix
+
+以下のreturnは共通DTOを意味する。複数条件は上の順序に従い、integrity・path/I/O・gate failureを通常診断より優先する。checkはcommandを受け取らないので「異payload比較」は適用されない。対象Request不存在のcheck/getはPERSISTENCE_NOT_FOUNDで、架空artifactを返さない。
+
+| 状態 | 新規submit（既存Requestなし） | existing same-payload retry | check |
+| --- | --- | --- | --- |
+| normal | durable受付後return。現Slice 5ではrecovery_required / RECOVERY_REQUIRED、result=null | 元artifactで同じ評価をreturn | retryと同じ評価をreturn |
+| same ID / different semantic payload | 既存があれば必ずretry比較へ進む | INTEGRITY_CONFLICTをthrow、更新なし | payload比較なし。保存artifactのintegrityを検証 |
+| Approval無効／要求binding不一致（受付前） | validな失効はAPPROVAL_INVALIDATED、valid原本と要求の不一致はAPPROVAL_PLAN_MISMATCH。原本破損はintegrity error | 新規受付条件として再適用しない。元Receiptのstatic binding failureはthrow | retryと同じ |
+| Approval invalidated（受付後） | その失効Approvalを使う新規受付はAPPROVAL_INVALIDATED | return＋APPROVAL_INVALIDATED diagnostic。受付取消しなし | retryと同じ |
+| Plan stale（受付前） | current checkで確定したSTALE_PLANをthrow | 新規受付条件として再適用しない | retryと同じ |
+| Plan stale（受付後） | stale Planによる新規受付はSTALE_PLAN（通常guardが先に止める場合はそのcode） | return。既存guardが許す評価で確定した場合のみSTALE_PLAN diagnostic。それ以外はRECOVERY_REQUIRED等の実際の阻害code | retryと同じ |
+| pending（受付前） | RECOVERY_REQUIREDをthrow、受付なし | 既存があれば下段のpending（受付後）扱い | 対象Request不存在ならPERSISTENCE_NOT_FOUND |
+| pending（受付後） | 他の未完了Request/pendingによる新規受付はRECOVERY_REQUIRED | 元artifactをreturn、readiness=recovery_required、RECOVERY_REQUIRED diagnostic | retryと同じ |
+| successful History | 通常History precheckのALREADY_APPLIED。異hash／別revision等は既存code | exact対応ならreturn＋result参照＋ALREADY_APPLIED diagnostic。readinessは独立 | retryと同じ |
+| 非成功terminal／未検証journal・completion | 新規受付はRECOVERY_REQUIRED | 勝手にterminal化せずrecovery_required。成功を証明できないresultはnull。証跡破損ならtyped error | retryと同じ |
+| artifact integrity failure／Receipt tamper／bad hash | 壊れた原本を使って受付しない。INTEGRITY_CONFLICT等の既存typed error | throw。既存artifactを置換しない | retryと同じ |
+| repository mismatch | valid原本と要求の相違はAPPROVAL_PLAN_MISMATCH。原本間lineage破損は既存typed integrity error | payloadのrepository変更はINTEGRITY_CONFLICT。保存Receipt/Approvalのbinding破損もINTEGRITY_CONFLICT、state lineage errorは元code | 保存原本間の不整合をthrow |
+
+新規submitの通常拒否と既存Requestの状態照会を同じthrowへ丸めない。一方、受付済みという理由でintegrity failureを成功DTOへ丸めない。live gate競合はGATE_BUSY、ownership/release/path/persistence失敗は既存typed errorを保持する。診断応答は実行許可ではない。
+
+### compatibility / implementation follow-up
+
+未mergeのSlice 5実装がsubmitでartifactを直接返す形から、初回・retryとも共通DTOへ変更するapplication API correctionである。checkにはresultと上記diagnostic projectionが加わる。現testsのartifact直接比較やreceipt直接参照は後続implementation PRで`response.artifact`へ追従し、同じrepository stateにおけるretry/checkのreadiness/diagnostics/result一致、file bytes不変、clock/IDs再生成なしを検証する。future CLI/SCR-002 backendも共通DTOを使用する。raw artifact取得のget/repository APIは維持する。
+
+本follow-upはdocs-onlyで、runtime/testを変更しない。PR #68のruntime説明は本節へ追従が必要。Hash Contractのartifact例・schema・三つのprojection/vector、PR #67のInvalidation target/accepted_request契約、History保存schema/proof、Transaction state machine/publication/Recoveryは変更しない。responseからstate/pending/high-water/journal/Historyを変更するAPIを導入しない。
+
 ## Approval Invalidation Contract v1
 
 ### artifact・identity・完全schema
