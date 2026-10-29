@@ -209,9 +209,10 @@ Approval creation accepts `{approval_id, plan_id, plan_hash, intended_request_id
 Invalidation accepts `{event_id, approval_id, approval_hash, reason}`. Generate
 random IDs once with the schema module's helpers and retain them across retries.
 The application fixes publication timestamps. Submission takes the complete
-closed RequestPayloadProjectionV1 command. Create/read/submit return the original
-artifact; check APIs provide current diagnostics (Request check includes the
-artifact and runtime readiness). Receipt presence means durable acceptance only.
+closed RequestPayloadProjectionV1 command. Approval create/read and Request get
+return the original artifact. Request submit (initial/retry) and check return the
+common response DTO defined above, including current diagnostics and a verified
+History reference. Receipt presence means durable acceptance only.
 Retry does not dispatch work, and a recovery diagnostic does not cancel receipt
 acceptance. Repository methods retain immutable/no-clobber publication, strict
 loads and full Invalidation listing under the common live lease.

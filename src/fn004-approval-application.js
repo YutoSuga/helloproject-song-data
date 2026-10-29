@@ -6,7 +6,9 @@ import { withCanonicalGate, assertGateOwnership } from './fn004-gate.js';
 import { createApplyPlanService } from './fn004-plan-application.js';
 import { validateApplyPlan } from './fn004-plan-validator.js';
 import { validateBootstrapRecord, validateFn004State } from './fn004-state.js';
-import { inspectRuntimeState, directoryEntries } from './fn004-runtime-state.js';
+import { inspectRuntimeState, directoryEntries, validatedSnapshot } from './fn004-runtime-state.js';
+import { auditGitIds } from './fn004-git-audit.js';
+import { verifySuccessfulHistory, lookupVerifiedHistory } from './fn004-history-verify.js';
 import { buildDecisionRegistry } from './fn004-decision-lifecycle.js';
 import { approvalPath, requestPath, invalidationPath } from './fn004-approval-repository.js';
 import { actor as validateActor, closed, integrity, validateApproval, validateInvalidation, validateRequestPayload, validateApplyRequest, approvalHash, approvalDecision, requestPayloadProjectionV1, requestPayloadHash, receiptHash, initialProcessing, newApprovalId, newInvalidationId } from './fn004-approval-schema.js';
@@ -113,6 +115,47 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
     if(invalidated) throw new RepositoryError('APPROVAL_INVALIDATED','Approval permanently invalidated',{diagnostics});
     return {approval:a,approval_hash:approvalHash(a),status:'APPLICABLE',diagnostics};
   }
+  // One readonly evaluation for initial acceptance, retry and check. The caller
+  // has already validated the immutable artifact and holds the live lease.
+  async function requestResponse(artifact,c) {
+    const events=await scan(c),runtime=await inspectRuntimeState(c.store);
+    const bootstrap=await c.store.readJson('staging/fn004-bootstrap.json',{strict:true});
+    const state=await lineage(c),snapshot=await validatedSnapshot(c.store);
+    const history=verifySuccessfulHistory({bootstrap,state,snapshot,
+      git_audit:await auditGitIds(c.store.root),
+      history_directory:await c.repository.readApplyHistoryDirectory({gate:c.gate})});
+    if(!history.valid) fail(history.diagnostics[0].code,'History cannot establish a verified result');
+    const codes=new Set([...runtime.diagnostics,...history.diagnostics].map(d=>d.code));
+    const r=artifact.receipt;
+    const matches=history.successful_records.filter(({payload:p})=>p.request.request_id===r.request_id || p.apply_id===r.apply_id || p.transaction_id===r.transaction_id);
+    if(matches.length>1) integrity('Request identities refer to different History records');
+    let result=null;
+    if(matches.length) {
+      const record=matches[0],p=record.payload;
+      if(p.repository_instance_id!==r.repository_instance_id || p.request.request_id!==r.request_id || p.request.request_payload_hash!==r.request_payload_hash || !same(p.decision,r.decision) || p.plan.plan_id!==r.plan_id || p.plan.plan_hash!==r.plan_hash || p.approval.approval_id!==r.approval_id || p.approval.approval_hash!==r.approval_hash || !same(p.actor,r.actor) || p.transaction_id!==r.transaction_id || p.apply_id!==r.apply_id) integrity('History exact Receipt binding mismatch');
+      result={apply_id:p.apply_id,record_hash:record.record_hash};
+      codes.add('ALREADY_APPLIED');
+    }
+    // Preserve the ready-only lookup boundary. A valid success set can expose
+    // an exact result above even when pending/state proof blocks normal use.
+    if(history.state_proof.verified && history.readiness==='ready') {
+      const plan=await c.repository.getApplyPlan(r.plan_id,{gate:c.gate});
+      const store=await c.repository.readDecisionStore({gate:c.gate});
+      const decision=store.revisions.find(d=>d.decision_id===r.decision.decision_id && d.revision===r.decision.revision);
+      const match=lookupVerifiedHistory(history,r.decision,{candidate_ids:plan.payload.candidate_preconditions.map(b=>b.candidate_id),replaces:decision.replaces??[]});
+      if(match.code==='ALREADY_APPLIED') codes.add(match.code);
+      else if(match.code) fail(match.code,'History conflicts with the accepted Decision');
+    }
+    if(events.some(e=>e.approval_id===r.approval_id)) codes.add('APPROVAL_INVALIDATED');
+    // Never bypass the normal Plan guard to infer staleness from changed input.
+    if(runtime.status==='READY' && runtime.readiness==='initialized') {
+      const check=await createApplyPlanService({root,io}).checkApplyPlan(r.plan_id,{gate:c.gate});
+      if(check.status==='INTEGRITY_CONFLICT') fail(check.status,'Plan History conflict');
+      if(check.status!=='APPLICABLE') codes.add(check.status);
+      check.diagnostics.forEach(d=>codes.add(d.code));
+    }
+    return {artifact,readiness:runtime.readiness,diagnostics:[...codes].sort().map(code=>({code})),result};
+  }
   return Object.freeze({
     approveApplyPlan:(command,context={})=>run('approval_create',command,context,async(input,c)=>{
       closed(input,['approval_id','plan_id','plan_hash','intended_request_id']);
@@ -159,8 +202,7 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
       const old=await optionalRequest(input.request_id,c);
       if(old) {
         if(!same(requestPayloadProjectionV1(old),input)) integrity('Same Request ID with different semantic payload');
-        await scan(c);
-        return old;
+        return requestResponse(old,c);
       }
       const a=await staticApproval(input.approval_id,c);
       const expected={schema_version:1,repository_instance_id:a.repository_instance_id,request_id:a.intended_request_id,decision:approvalDecision(a),plan_id:a.plan_id,plan_hash:a.plan_hash,approval_id:a.approval_id,approval_hash:approvalHash(a),actor:a.actor,purpose:a.purpose};
@@ -169,14 +211,13 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
       const id=randomUUID(),{schema_version,purpose,...payload}=input;
       const e={schema_version,receipt:{...payload,request_payload_hash:requestPayloadHash(input),requested_at:clock(),transaction_id:`tx_${id}`,apply_id:`apply_${id}`},receipt_hash:'',processing:initialProcessing()};
       e.receipt_hash=receiptHash(e); validateApplyRequest(e);
-      return c.repository.saveApplyRequest(e,{gate:c.gate});
+      const artifact=await c.repository.saveApplyRequest(e,{gate:c.gate});
+      return requestResponse(artifact,c);
     }),
     checkApplyRequest:(id,context={})=>run('request_check',{id},context,async(input,c)=>{
       const artifact=await staticRequest(await c.repository.getApplyRequest(input.id,{gate:c.gate}),c);
       if(!same(artifact.receipt.actor,c.actor)) fail('APPROVAL_PLAN_MISMATCH','Request belongs to another actor');
-      await scan(c);
-      const runtime=await inspectRuntimeState(c.store);
-      return {artifact,readiness:runtime.readiness,diagnostics:runtime.diagnostics};
+      return requestResponse(artifact,c);
     }),
     getApplyRequest:(id,context={})=>run('request_read',{id},context,async(input,c)=>{
       const e=await staticRequest(await c.repository.getApplyRequest(input.id,{gate:c.gate}),c);
