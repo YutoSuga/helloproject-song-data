@@ -24,3 +24,6 @@ __pycache__/
 .env
 .env.*
 !.env.example
+
+# Durable local FN-004 receipts (retain for retry/recovery; never startup-GC)
+/staging/apply-requests/

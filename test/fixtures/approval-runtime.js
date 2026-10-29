@@ -1,0 +1,31 @@
+import * as fs from 'node:fs/promises';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+import {planFixture} from './plan-input.js';
+import {CANONICAL_TABLES} from '../../src/canonical-schema.js';
+import {currentIdMaxima} from '../../src/fn004-id-audit.js';
+import {createAuditPayload,createBootstrapRecords,DECLARATION_STATEMENT} from '../../src/fn004-state.js';
+import {readCanonicalSnapshot} from '../../src/canonical-snapshot.js';
+import {auditGitIds} from '../../src/fn004-git-audit.js';
+import {hashCanonicalJson} from '../../src/canonical-hash.js';
+import {createApplyPlanService} from '../../src/fn004-plan-application.js';
+import {createApprovalRequestService} from '../../src/fn004-approval-application.js';
+import {newApprovalId,newRequestId,approvalDecision,approvalHash} from '../../src/fn004-approval-schema.js';
+export const actor={id:'local:test',assurance:'local_process'};
+export const execute=promisify(execFile);
+export async function approvalFixture(t){
+ const root=await fs.mkdtemp(join(tmpdir(),'fn004-approval-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+ await fs.mkdir(join(root,'data'));await fs.mkdir(join(root,'staging'));const f=planFixture();
+ for(const table of CANONICAL_TABLES)await fs.writeFile(join(root,table.path),[table.columns.map(c=>c.name).join(','),...f.snapshot.tables[table.name].map(row=>table.columns.map(c=>row[c.name]).join(','))].join('\n')+'\n');
+ for(const args of [['init','-q','-b','main'],['add','data'],['-c','user.name=Test','-c','user.email=test@example.invalid','commit','-qm','canonical'],['update-ref','refs/remotes/origin/main','HEAD']])await execute('git',['-C',root,...args]);
+ const snapshot=await readCanonicalSnapshot(root),git=await auditGitIds(root),max=currentIdMaxima(snapshot),audit_payload=createAuditPayload({...snapshot,current_maxima:max},git,{schema_version:1,namespaces:max,statement:DECLARATION_STATEMENT,evidence:[]});
+ const {record:bootstrap,state}=createBootstrapRecords({audit_payload,canonical_manifest:snapshot.manifest,repository_instance_id:f.state.repository_instance_id,initialized_at:'2026-10-25T00:00:00Z',actor,expected_audit_hash:hashCanonicalJson(audit_payload)});
+ for(const [name,value]of [['fn004-bootstrap',bootstrap],['fn004-state',state],['song-candidates',f.candidates],['decisions',f.store]])await fs.writeFile(join(root,`staging/${name}.json`),JSON.stringify(value));
+ const plans=createApplyPlanService({root}),plan=await plans.generateApplyPlan({decision_id:f.decision.decision_id});await plans.saveApplyPlan(plan);
+ const service=createApprovalRequestService({root}),context={actor},command={approval_id:newApprovalId(),plan_id:plan.plan_id,plan_hash:plan.plan_hash,intended_request_id:newRequestId()};
+ const approval=await service.approveApplyPlan(command,context);
+ const payload={schema_version:1,repository_instance_id:state.repository_instance_id,request_id:approval.intended_request_id,decision:approvalDecision(approval),plan_id:plan.plan_id,plan_hash:plan.plan_hash,approval_id:approval.approval_id,approval_hash:approvalHash(approval),actor,purpose:'canonical_apply'};
+ return {...f,root,state,bootstrap,snapshot,plan,plans,service,context,command,approval,payload};
+}

@@ -182,3 +182,32 @@ domain / validator → repository / gate → bootstrap/state → Decision → Pl
 Slice 4をDecision + Plan、Slice 5をApproval + Requestとして統合し、後続slice/PR数は固定しない。大きければさらに分割し、単独review・復元・test可能性を優先する。frontend mockは先行可能だが実write接続はCLI実Apply統合完了後。認証providerの選定は別途でも、無認証writeを暫定公開しない。
 
 interface testsはCLI success/stale/already_applied/busy/blocked/確認取消し/非TTY/wrong hash/exit・JSON、UI複数tab/refresh/back/double submit/timeout、approval actor/repository/hash不一致、同request異payload、承認後receipt前・receipt後journal前のcrash、結果不明時の照会を含む。transactionの全rename/sync/journal/History/state前後でfault injectionを行い、UIがpending finalizationを失敗へ潰さないことも検証する。
+
+### Slice 5 runtime API
+
+`src/fn004-approval-schema.js` defines the closed v1 Approval, Invalidation,
+Request/Receipt validators, ID generators and the three projections from
+[the formal contract](fn004-approval-request.md). `createApprovalRequestService`
+in `src/fn004-approval-application.js` exposes `approveApplyPlan`, `getApproval`,
+`checkApproval`, `invalidateApproval`, `getApprovalInvalidation`,
+`getApprovalInvalidations`, `submitApplyRequest`, `getApplyRequest` and
+`checkApplyRequest`. The service is a trusted in-process boundary: the second
+argument supplies `{actor, gate?}` from operator/backend context, never directly
+from an untrusted client's actor field. Caller inputs are captured before awaits.
+
+Approval creation accepts `{approval_id, plan_id, plan_hash, intended_request_id}`;
+Invalidation accepts `{event_id, approval_id, approval_hash, reason}`. Generate
+random IDs once with the schema module's helpers and retain them across retries.
+The application fixes publication timestamps. Submission takes the complete
+closed RequestPayloadProjectionV1 command. Create/read/submit return the original
+artifact; check APIs provide current diagnostics (Request check includes the
+artifact and runtime readiness). Receipt presence means durable acceptance only.
+Retry does not dispatch work, and a recovery diagnostic does not cancel receipt
+acceptance. Repository methods retain immutable/no-clobber publication, strict
+loads and full Invalidation listing under the common live lease.
+
+Only initial `accepted` processing is generated. Unknown execution evidence,
+missing referenced receipts and unresolved publication temps stop normal use;
+no completion/journal validator, cancellation, cleanup or execution is inferred.
+Receipt files are local and ignored by Git; Approval/Invalidation remain tracked.
+Tests publish artifacts exclusively inside temporary fixture repositories.

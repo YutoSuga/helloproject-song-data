@@ -1,3 +1,4 @@
+import { approvalRepository } from "./fn004-approval-repository.js";
 import { applyPlanPath } from "./fn004-plan-path.js";
 import { validateApplyPlan } from "./fn004-plan-validator.js";
 import { readApplyHistoryDirectory, applyHistoryPath } from "./fn004-history-directory.js";
@@ -81,8 +82,10 @@ export async function createFn004Repository(root = process.cwd(), options = {}) 
     await store.createJsonExclusive(path, value);
     return value;
   };
+  const approvals = approvalRepository(store, options);
   return Object.freeze({
     root: store.root,
+    ...approvals,
     getApplyPlan: (id, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "plan_read", fn: () => readPlan(id) }),
     saveApplyPlan: (value, { gate } = {}) => savePlan(value, gate),
     readApplyHistoryDirectory: ({ gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "history_read", fn: () => readApplyHistoryDirectory(store, options) }),
@@ -95,16 +98,24 @@ export async function createFn004Repository(root = process.cwd(), options = {}) 
       if (!snapshot.validation.ok) throw new RepositoryError("CANONICAL_INVALID", "Canonical validation failed", { diagnostics: snapshot.validation.diagnostics });
       return snapshot;
     } }),
-    readJson: (path, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "runtime_read", fn: () => typeof path === "string" && path.startsWith("staging/apply-plans/") && path.endsWith(".json") ? readPlan(path.slice("staging/apply-plans/".length, -5)) : path === decisionPath ? readDecisions() : store.readJson(artifactPath(path, { readonly: true }), { strict: path.startsWith("staging/apply-history/") }) }),
+    readJson: (path, { gate } = {}) => withCanonicalGate({ root: store.root, gate, operation: "runtime_read", fn: (lease) => {
+      if (typeof path === "string" && path.endsWith(".json")) {
+        if (path.startsWith("staging/apply-plans/")) return readPlan(path.slice("staging/apply-plans/".length, -5));
+        if (path.startsWith("staging/apply-approvals/invalidations/")) return approvals.getApprovalInvalidation(path.slice("staging/apply-approvals/invalidations/".length, -5), { gate: lease });
+        if (path.startsWith("staging/apply-approvals/")) return approvals.getApproval(path.slice("staging/apply-approvals/".length, -5), { gate: lease });
+        if (path.startsWith("staging/apply-requests/")) return approvals.getApplyRequest(path.slice("staging/apply-requests/".length, -5), { gate: lease });
+      }
+      return path === decisionPath ? readDecisions() : store.readJson(artifactPath(path, { readonly: true }), { strict: path.startsWith("staging/apply-history/") });
+    } }),
     writeJsonAtomic: async (path, value, { gate } = {}) => {
       await assertGateOwnership(gate, store.root);
       if (path === decisionPath) await writeDecisions(value, gate);
-      else await store.writeJsonAtomic(artifactPath(path), value);
+      else { if (/^staging\/apply-(approvals|requests)\//.test(path)) throw new RepositoryError("PATH_UNSAFE", "Use immutable artifact APIs"); await store.writeJsonAtomic(artifactPath(path), value); }
     },
     createJsonExclusive: async (path, value, { gate } = {}) => {
       await assertGateOwnership(gate, store.root);
       if (path === decisionPath) await writeDecisions(value, gate, true);
-      else await store.createJsonExclusive(artifactPath(path), value);
+      else { if (/^staging\/apply-(approvals|requests)\//.test(path)) throw new RepositoryError("PATH_UNSAFE", "Use validated artifact APIs"); await store.createJsonExclusive(artifactPath(path), value); }
     }
   });
 }
