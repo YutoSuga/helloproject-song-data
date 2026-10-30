@@ -81,7 +81,7 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
     // success-only proof can be established. Never reissue its missing receipt.
     for(const entry of history.entries) if(entry.document?.payload?.request?.request_id===id) fail('RECOVERY_REQUIRED','History references a missing Receipt');
   }
-  async function scan(c) {
+  async function scan(c,prospectiveApproval=null) {
     const events=await c.repository.listApprovalInvalidations({gate:c.gate});
     for(const id of knownEvents) if(!events.some(e=>e.event_id===id)) integrity('Known Invalidation disappeared');
     for(const e of events) {
@@ -95,6 +95,10 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
         if(!r) fail('RECOVERY_REQUIRED','Invalidation referenced Receipt is missing');
         if(!same(e.accepted_request,{request_id:r.receipt.request_id,receipt_hash:r.receipt_hash})) integrity('Invalidation Receipt reference mismatch');
       }
+      // A new Receipt at this shared Request path would make the next scan
+      // bind it to the other Approval. Reject before publication, while the
+      // target original and event have been validated under the same lease.
+      if(prospectiveApproval && a.approval_id!==prospectiveApproval.approval_id && a.intended_request_id===prospectiveApproval.intended_request_id) integrity('Request publication conflicts with another Approval Invalidation');
     }
     events.forEach(e=>knownEvents.add(e.event_id));
     return events;
@@ -105,7 +109,7 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
     return r;
   }
   async function current(a,c) {
-    const events=await scan(c); // Collection integrity precedes ordinary rejection.
+    const events=await scan(c,a); // New-use compatibility and collection integrity precede ordinary rejection.
     const invalidated=events.some(e=>e.approval_id===a.approval_id);
     let check;
     try {check=await createApplyPlanService({root,io}).checkApplyPlan(a.plan_id,{gate:c.gate});}
