@@ -94,23 +94,23 @@ JOB-001 楽曲候補定期収集ジョブ（Milestone 3-D、未実装）
   └──→ FN-002 楽曲候補収集機能
 ```
 
-この図はデータと責務の関係を示します。正式v1設計は[canonical registration](docs/design/canonical-registration.md)を入口とします。Decision・Plan・Approval・要求受付だけではCSVを変更しません。FN-004 v1は既存entityを参照し新規行だけ追加する設計で、field update/deleteは対象外です。CLIとSCR-002は同じapplication serviceを使い、bootstrap/recovery実行はv1ではCLIのみです。ここに示すFN-004 CLIや保存先は未実装です。JOB-001に通知は含めません。
+この図はデータと責務の関係を示します。正式v1設計は[canonical registration](docs/design/レビュー準備・canonical反映の全体フロー.md)を入口とします。Decision・Plan・Approval・要求受付だけではCSVを変更しません。FN-004 v1は既存entityを参照し新規行だけ追加する設計で、field update/deleteは対象外です。CLIとSCR-002は同じapplication serviceを使い、bootstrap/recovery実行はv1ではCLIのみです。ここに示すFN-004 CLIや保存先は未実装です。JOB-001に通知は含めません。
 
 collector は正本 CSV を参考照合のために読みますが、直接更新しません。`staging/` は確認待ち候補と収集履歴の保存先であり、正本ではありません。`site/data/` などの生成物は正本 CSV から再生成する表示用データです。3-B では人間が確認した判断だけを正本へ反映する経路を設計・実装します。
 
-Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` で全candidateを照合します。`staging/review-results.json` が存在すれば過去の人間判断を読み取り、存在しなければ空として扱います。FN-003はcandidate、review結果、canonical CSVを更新しません。詳細は[canonical registration 基本設計](docs/design/canonical-registration.md)を参照してください。
+Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` で全candidateを照合します。`staging/review-results.json` が存在すれば過去の人間判断を読み取り、存在しなければ空として扱います。FN-003はcandidate、review結果、canonical CSVを更新しません。詳細は[canonical registration 基本設計](docs/design/レビュー準備・canonical反映の全体フロー.md)を参照してください。
 
 ## 設計書・仕様書
 
 - [機能ID体系](docs/feature-ids.md)：正式ID、命名運用、設計書の責務と整理方針
-- [公開サイト基本設計](docs/design/public-site.md)：FN-001 公開サイトデータ生成機能 / SCR-001 公開サイト画面
-- [候補収集基本設計](docs/design/candidate-collector.md)：FN-002 楽曲候補収集機能（将来のJOB-001との関係を含む）
-- [canonical registration 基本設計](docs/design/canonical-registration.md)：FN-003 レビュー準備機能 / FN-004 canonical反映機能
-- [Decision Model](docs/design/fn004-decision.md)：aggregate、revision、OCC、candidate binding、song_id_prefix
-- [Apply Plan](docs/design/fn004-apply-plan.md)：不変の反映計画、予定ID、preconditions
-- [Transaction / Recovery](docs/design/fn004-transaction.md)：全体検証、journal、ID state、commit・復旧
-- [History readonly contract](docs/design/fn004-history.md)：成功record/hash/chain/set、非初期state proof、適用済みlookup
-- [CLI / SCR-002](docs/design/song-admin.md)：Approval、durable Apply Request、共通service、内部view、実装slice
+- [公開サイト基本設計](docs/design/公開サイトのデータ生成・表示.md)：FN-001 公開サイトデータ生成機能 / SCR-001 公開サイト画面
+- [候補収集基本設計](docs/design/FN-002-楽曲候補収集.md)：FN-002 楽曲候補収集機能（将来のJOB-001との関係を含む）
+- [canonical registration 基本設計](docs/design/レビュー準備・canonical反映の全体フロー.md)：FN-003 レビュー準備機能 / FN-004 canonical反映機能
+- [Decision Model](docs/design/FN-004-判断モデル.md)：aggregate、revision、OCC、candidate binding、song_id_prefix
+- [Apply Plan](docs/design/FN-004-反映計画.md)：不変の反映計画、予定ID、preconditions
+- [Transaction / Recovery](docs/design/FN-004-反映処理・復旧.md)：全体検証、journal、ID state、commit・復旧
+- [History readonly contract](docs/design/FN-004-成功履歴・読取検証.md)：成功record/hash/chain/set、非初期state proof、適用済みlookup
+- [CLI / SCR-002](docs/design/楽曲管理のCLI・画面連携.md)：Approval、durable Apply Request、共通service、内部view、実装slice
 - [データ仕様](docs/data-spec.md)：canonical CSV の列・制約・運用ルール
 - [収集仕様](docs/collection-spec.md)：collector の詳細仕様
 - [ランキング集計仕様](docs/ranking-spec.md)：集計・生成物の詳細仕様

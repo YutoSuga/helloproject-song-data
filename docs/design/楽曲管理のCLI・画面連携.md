@@ -1,6 +1,6 @@
 # CLI / SCR-002 Interface・Approval / Apply Request
 
-FN-004 canonical反映機能とSCR-002 楽曲管理画面の正式v1設計。runtime・CLI・backend・frontendはいずれも未実装。[全体設計](canonical-registration.md)、[Decision](fn004-decision.md)、[Plan](fn004-apply-plan.md)、[Transaction](fn004-transaction.md)、[History readonly契約](fn004-history.md)を参照する。
+FN-004 canonical反映機能とSCR-002 楽曲管理画面の正式v1設計。runtime・CLI・backend・frontendはいずれも未実装。[全体設計](レビュー準備・canonical反映の全体フロー.md)、[Decision](FN-004-判断モデル.md)、[Plan](FN-004-反映計画.md)、[Transaction](FN-004-反映処理・復旧.md)、[History readonly契約](FN-004-成功履歴・読取検証.md)を参照する。
 
 ## application boundary
 
@@ -24,11 +24,11 @@ Decision confirmationは「identity判断は正しい」、Apply approvalは「�
 
 `staging/apply-approvals/<approval_id>.json`へ独立immutable recordを保存しGit管理する。Decision/Planへ埋め込むと不変性と責務が混ざり、journalだけではtransaction前の承認を保存できないため採用しない。
 
-Approvalの完全closed schema・approval_hashは[Approval / Request Hash Contract](fn004-approval-request.md)を正とする。既存のschema_version=1、apr_UUID、exact repository/Decision/Plan binding、approved_at、actor、purpose=canonical_apply、intended_request_idを維持する。approval_hashはartifact全体（schema_version・approval_id・approved_atを含む）のJCS/SHA-256であり、artifactに自己hash fieldは置かない。request UUIDを先にclient/applicationで生成してApprovalへbindingし、一つのrequest IDだけに使用する。
+Approvalの完全closed schema・approval_hashは[Approval / Request Hash Contract](FN-004-承認・反映リクエスト.md)を正とする。既存のschema_version=1、apr_UUID、exact repository/Decision/Plan binding、approved_at、actor、purpose=canonical_apply、intended_request_idを維持する。approval_hashはartifact全体（schema_version・approval_id・approved_atを含む）のJCS/SHA-256であり、artifactに自己hash fieldは置かない。request UUIDを先にclient/applicationで生成してApprovalへbindingし、一つのrequest IDだけに使用する。
 
 新Planへ旧承認を引き継がない。失効は`staging/apply-approvals/invalidations/<event_id>.json`にschema/version、対象approval_id/hash、reason、actor、時刻を追記してGit管理する。used / stale / invalidatedはHistory・receipt・失効recordから導出し、承認を書き換えない。一度失効した承認はデータが元へ戻っても復活させない。未知version・hash不整合はSTOP。
 
-完全なversioned schema、ainv_UUID identity、受付前後のReceipt参照、全件readonly validation、duplicate/conflict、immutable persistenceは[Approval Invalidation Contract v1](fn004-approval-request.md#approval-invalidation-contract-v1)を正とする。新規受付の永久失効はAPPROVAL_INVALIDATED。durable受付後も失効eventは作成できるが、既存Requestの取消しにはならない。受付前失効とreceiptの矛盾はINTEGRITY_CONFLICTとする。
+完全なversioned schema、ainv_UUID identity、受付前後のReceipt参照、全件readonly validation、duplicate/conflict、immutable persistenceは[Approval Invalidation Contract v1](FN-004-承認・反映リクエスト.md#approval-invalidation-contract-v1)を正とする。新規受付の永久失効はAPPROVAL_INVALIDATED。durable受付後も失効eventは作成できるが、既存Requestの取消しにはならない。受付前失効とreceiptの矛盾はINTEGRITY_CONFLICTとする。
 
 UIでは確認check＋「反映する」を一連にするが、内部はapproveApplyPlan → submitApplyRequest → executeTransaction。Approvalだけ保存してprocessが落ちた場合はApply未受付であり、GETや再読込によって自動実行しない。明示submitで元承認・元request ID・全preconditionを検証する。
 
@@ -36,7 +36,7 @@ UIでは確認check＋「反映する」を一連にするが、内部はapprove
 
 `staging/apply-requests/<request_id>.json`をtransaction journal開始前にdurable保存する。Requestは承認の証跡でも成功の証拠でもなく、実行要求と唯一のtransactionの対応を固定する。UUIDのrequest_idをclient/applicationで生成する。
 
-ApplyRequestArtifactは`{schema_version:1,receipt,receipt_hash,processing}`。完全closed schemaと省略なしの例は[Hash Contract](fn004-approval-request.md)を正とする。schema_versionはenvelopeの外側だけ、Receiptにはrequest/repository/Decision/Plan/Approval identity、request_payload_hash、actor、requested_at、transaction/apply IDを置く。transaction/apply UUIDとrequested_atは初回durable受付時に一度だけ固定する。
+ApplyRequestArtifactは`{schema_version:1,receipt,receipt_hash,processing}`。完全closed schemaと省略なしの例は[Hash Contract](FN-004-承認・反映リクエスト.md)を正とする。schema_versionはenvelopeの外側だけ、Receiptにはrequest/repository/Decision/Plan/Approval identity、request_payload_hash、actor、requested_at、transaction/apply IDを置く。transaction/apply UUIDとrequested_atは初回durable受付時に一度だけ固定する。
 
 request_payload_hashはversion/repository/request ID/Decision/Plan/Approval/actor/purposeのformal projectionをJCS/SHA-256でhashする。purposeは検証済みApprovalのexact literal canonical_applyをcopyするが、Receiptには重複保存せずschema v1から導出する。receipt_hashは`{schema_version:1,receipt}`のJCS/SHA-256。外側versionを含み、receipt_hash自身とprocessingを含めない。同ID同payload retryは元receiptの時刻/tx/apply IDを保持する。
 
@@ -52,7 +52,7 @@ processingはatomic replace可能なcacheであり、journal/Historyから照合
 6. receipt後・journal前でcrashした場合は、他要求を開始せずrecoveryで元owner終了・元Plan・receipt・canonical/History/ID state/artifactsを検査する。副作用なしを証明できればABORTED completionを保存。証明不能ならSTOP。同requestのdispatchを推測で再開しない。
 7. journal開始後は元transactionをrecoveryする。成功はHistory、途中はjournalが正式根拠。成功History/terminal journalがあればcompletion/cacheを修復できる。別request IDでも同Decision適用済み/進行中なら二重実行しない。
 
-4〜7の承認再検証は、現在の新規利用可否と受付時のexact Approval bindingを区別する。[Invalidation contract](fn004-approval-request.md#approval-invalidation-contract-v1)のaccepted_requestが元receiptへexact bindする受付後eventだけを理由として、既存Requestをreject/cancel/rollbackしない。nullの受付前eventとreceiptの共存はINTEGRITY_CONFLICT。Invalidationはprocessing/Transaction/pending/Historyを変更せず、他の再検証・completion・Recovery契約は維持する。
+4〜7の承認再検証は、現在の新規利用可否と受付時のexact Approval bindingを区別する。[Invalidation contract](FN-004-承認・反映リクエスト.md#approval-invalidation-contract-v1)のaccepted_requestが元receiptへexact bindする受付後eventだけを理由として、既存Requestをreject/cancel/rollbackしない。nullの受付前eventとreceiptの共存はINTEGRITY_CONFLICT。Invalidationはprocessing/Transaction/pending/Historyを変更せず、他の再検証・completion・Recovery契約は維持する。
 
 receiptはGit非管理だが、未完了中は削除・GC禁止。完了後もv1は保管し、通常retryを照会可能にする。receiptが失われた場合も、approval・journal・Historyを照合せず新規実行しない。未適用を証明できなければSTOP。Historyにrequest identityを残すことで、local request cacheを失っても適用済みを判定できる。
 
@@ -75,11 +75,11 @@ receiptはGit非管理だが、未完了中は削除・GC禁止。完了後もv1
 | inspectRecovery / recoverTransaction | request/transaction ID、観測state hash、許可action | readonly診断 / 元要求の復旧 |
 | initializeState / readCanonicalSnapshot | 監査hashの明示確認 / gate | bootstrap / 安定snapshot |
 
-Decision保存schema・content hash・mutation key・source revisionのexact contractは[Decision](fn004-decision.md)、Plan payload/operation ID/orderは[Plan](fn004-apply-plan.md)、成功lookup/非初期state proofは[History](fn004-history.md)を正とする。Decision編集はbase headをserviceが比較し、古いtabを拒否する。変更操作のrequest keyは対象identity・actor・payloadへbindingし、duplicate confirmでrevisionを増やさない。未知versionはSTOP。runtimeの安全logicは共通serviceに置く。
+Decision保存schema・content hash・mutation key・source revisionのexact contractは[Decision](FN-004-判断モデル.md)、Plan payload/operation ID/orderは[Plan](FN-004-反映計画.md)、成功lookup/非初期state proofは[History](FN-004-成功履歴・読取検証.md)を正とする。Decision編集はbase headをserviceが比較し、古いtabを拒否する。変更操作のrequest keyは対象identity・actor・payloadへbindingし、duplicate confirmでrevisionを増やさない。未知versionはSTOP。runtimeの安全logicは共通serviceに置く。
 
 ### Apply Request response
 
-初回submit成功・same-payload retry・checkの完全response契約は[Apply Request application response contract v1](fn004-approval-request.md#apply-request-application-response-contract-v1)を正とする。全field requiredの`{artifact,readiness,diagnostics,result}`を返す。artifactは保存原本、readinessは現在のrepository利用可否、diagnosticsは現在の検証code、resultはnullまたは検証済みsuccessful Historyへの`{apply_id,record_hash}`参照。HistoryRecord全体を含めず、詳細は既存History readonly APIから取得する。
+初回submit成功・same-payload retry・checkの完全response契約は[Apply Request application response contract v1](FN-004-承認・反映リクエスト.md#apply-request-application-response-contract-v1)を正とする。全field requiredの`{artifact,readiness,diagnostics,result}`を返す。artifactは保存原本、readinessは現在のrepository利用可否、diagnosticsは現在の検証code、resultはnullまたは検証済みsuccessful Historyへの`{apply_id,record_hash}`参照。HistoryRecord全体を含めず、詳細は既存History readonly APIから取得する。
 
 保存artifactのprocessingはadvisory cacheのままで、responseへ合わせて書き換えない。result非nullとrecovery_requiredは共存し、成功Historyだけでjournal完了・pending解消・cleanup完了を断定しない。accepted/completed/already_appliedをreadiness enumに追加しない。現Slice 5ではRequest存在が通常runtimeをblockするため、初回受付直後でもrecovery_required / RECOVERY_REQUIREDを返し得る。受付成功と通常利用可能は別である。
 
@@ -160,7 +160,7 @@ CLI workflowはbootstrap監査/確認 → 外部template入力/import → draft�
 
 ApplyはTTYにrepository、Decision、追加内容、予定ID、reuse/no_op、warning、変更CSVを表示し`[y/N]`で一度確認。その後独立approval保存→request受付を行う。`--yes`だけの迂回、非TTY承認、CIからのcanonical Applyはv1対象外。Plan生成とApplyを暗黙連結しない。確認取消しは承認/受付前で終える。receipt後のSIGINT/通信切断では勝手にlock削除せず元要求を照会する。
 
-bootstrapは[正式bootstrap契約](fn004-bootstrap.md)の必須external declaration・origin/main全reachable監査・expected audit hashを使う。check結果を表示し、人間確認後のinitializeで再監査する。CLIの外部declaration入力option名は実装sliceで決めるが、宣言の省略・自動補完は不可。片側state/markerや不一致を初期設定buttonへ誘導せず、BOOTSTRAP_INCOMPLETE / RECOVERY_REQUIREDとして案内する。
+bootstrapは[正式bootstrap契約](FN-004-初期化・ID状態.md)の必須external declaration・origin/main全reachable監査・expected audit hashを使う。check結果を表示し、人間確認後のinitializeで再監査する。CLIの外部declaration入力option名は実装sliceで決めるが、宣言の省略・自動補完は不可。片側state/markerや不一致を初期設定buttonへ誘導せず、BOOTSTRAP_INCOMPLETE / RECOVERY_REQUIREDとして案内する。
 
 bootstrap・全recovery実行はCLIのみ。inspectで観測state hashと一意な推奨actionを示し、runで同hash/actionを再検証する。action不一致・状態不明ならSTOP。stale強制Apply、validation/lock bypass、arbitrary patch、force delete lockは提供しない。
 
@@ -197,7 +197,7 @@ interface testsはCLI success/stale/already_applied/busy/blocked/確認取消し
 
 `src/fn004-approval-schema.js` defines the closed v1 Approval, Invalidation,
 Request/Receipt validators, ID generators and the three projections from
-[the formal contract](fn004-approval-request.md). `createApprovalRequestService`
+[the formal contract](FN-004-承認・反映リクエスト.md). `createApprovalRequestService`
 in `src/fn004-approval-application.js` exposes `approveApplyPlan`, `getApproval`,
 `checkApproval`, `invalidateApproval`, `getApprovalInvalidation`,
 `getApprovalInvalidations`, `submitApplyRequest`, `getApplyRequest` and

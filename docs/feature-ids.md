@@ -16,15 +16,15 @@ IDは種別ごとに3桁ゼロ埋めとします。設計・実装・PR・会話
 
 | 設計書 | 扱う機能 | 複数機能の混在 | 今回の分割・rename判断 |
 | --- | --- | --- | --- |
-| [public-site.md](design/public-site.md) | FN-001 公開サイトデータ生成機能、SCR-001 公開サイト画面 | 生成と表示の2機能。GitHub Pages公開手順も含む | 分割・rename不要。短い基本設計であり、2機能を章分けすると生成物を介した境界も一緒に確認できる |
-| [candidate-collector.md](design/candidate-collector.md) | FN-002 楽曲候補収集機能。将来の呼出元としてJOB-001に言及 | 本体はFN-002のみ。JOB-001の詳細は含まない | 分割・rename不要。単一Functionの責務が明確 |
-| [canonical-registration.md](design/canonical-registration.md) | FN-003 / FN-004の全体フロー・責務、現行FN-003 | 詳細書の入口 | FN-003の実装済み説明を維持し、FN-004 Design 1〜4を以下へ分割 |
-| [fn004-decision.md](design/fn004-decision.md) | FN-004 Decision Model | aggregate・revision・OCC・candidate binding・prefix | 判断モデルの正本 |
-| [fn004-apply-plan.md](design/fn004-apply-plan.md) | FN-004 Apply Plan | immutable計画・precondition・予定ID | 計画モデルの正本 |
-| [fn004-transaction.md](design/fn004-transaction.md) | FN-004 Validation / Transaction / Recovery | lock・journal・History・ID state・bootstrap | 実行/復旧契約の正本 |
-| [fn004-history.md](design/fn004-history.md) | FN-004 successful Apply History readonly | record/hash/chain/set、非初期state proof、lookup | 読み取り検証契約の正本。publicationはTransaction |
-| [fn004-bootstrap.md](design/fn004-bootstrap.md) | FN-004 Bootstrap / ID state | authoritative history・declaration・audit/genesis/state hash | 初期監査契約の正本 |
-| [song-admin.md](design/song-admin.md) | FN-004のCLI/application service、SCR-002 | Approval・durable Request・内部view・操作契約 | UI/CLIが共有する境界を一か所で定義 |
+| [公開サイトのデータ生成・表示.md](design/公開サイトのデータ生成・表示.md) | FN-001 公開サイトデータ生成機能、SCR-001 公開サイト画面 | 生成と表示の2機能。GitHub Pages公開手順も含む | 分割・rename不要。短い基本設計であり、2機能を章分けすると生成物を介した境界も一緒に確認できる |
+| [FN-002-楽曲候補収集.md](design/FN-002-楽曲候補収集.md) | FN-002 楽曲候補収集機能。将来の呼出元としてJOB-001に言及 | 本体はFN-002のみ。JOB-001の詳細は含まない | 分割・rename不要。単一Functionの責務が明確 |
+| [レビュー準備・canonical反映の全体フロー.md](design/レビュー準備・canonical反映の全体フロー.md) | FN-003 / FN-004の全体フロー・責務、現行FN-003 | 詳細書の入口 | FN-003の実装済み説明を維持し、FN-004 Design 1〜4を以下へ分割 |
+| [FN-004-判断モデル.md](design/FN-004-判断モデル.md) | FN-004 Decision Model | aggregate・revision・OCC・candidate binding・prefix | 判断モデルの正本 |
+| [FN-004-反映計画.md](design/FN-004-反映計画.md) | FN-004 Apply Plan | immutable計画・precondition・予定ID | 計画モデルの正本 |
+| [FN-004-反映処理・復旧.md](design/FN-004-反映処理・復旧.md) | FN-004 Validation / Transaction / Recovery | lock・journal・History・ID state・bootstrap | 実行/復旧契約の正本 |
+| [FN-004-成功履歴・読取検証.md](design/FN-004-成功履歴・読取検証.md) | FN-004 successful Apply History readonly | record/hash/chain/set、非初期state proof、lookup | 読み取り検証契約の正本。publicationはTransaction |
+| [FN-004-初期化・ID状態.md](design/FN-004-初期化・ID状態.md) | FN-004 Bootstrap / ID state | authoritative history・declaration・audit/genesis/state hash | 初期監査契約の正本 |
+| [楽曲管理のCLI・画面連携.md](design/楽曲管理のCLI・画面連携.md) | FN-004のCLI/application service、SCR-002 | Approval・durable Request・内部view・操作契約 | UI/CLIが共有する境界を一か所で定義 |
 
 Screen / Function / Jobごとの責務を維持し、FN-004の大きな設計は判断・計画・transaction・interfaceへ分割します。既存設計書のrenameや機能IDの変更は行いません。SCR-002の6 viewは一つの画面機能の内部構成であり、viewごとの正式Feature IDは追加しません。
 
@@ -32,10 +32,10 @@ Screen / Function / Jobごとの責務を維持し、FN-004の大きな設計は
 
 ```text
 docs/design/
-├── SCR-001-public-site.md
+├── 公開サイトのデータ生成・表示.md
 ├── SCR-002-admin.md
 ├── FN-001-site-data-generation.md
-├── FN-002-candidate-collector.md
+├── FN-002-楽曲候補収集.md
 ├── FN-003-review-preparation.md
 ├── FN-004-canonical-apply.md
 └── JOB-001-candidate-collection.md
