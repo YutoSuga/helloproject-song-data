@@ -4,7 +4,7 @@
 
 Hello! Project公式サイトを一次情報として、リリース一覧から各詳細ページの音声トラックを収集する。候補は `staging/song-candidates.json` に保存し、人間が確認・修正して確定、保留、除外を選ぶ。確定候補だけを後続処理で正本CSVに反映し、ランキングJSONを再生成する。
 
-Milestone 3-A / FN-002 楽曲候補収集機能は収集、解析、既存CSVとの参考照合、中間JSONへの安全な保存まで。正本CSV、ランキングJSON、管理画面、スケジュール実行は扱わない。将来のJOB-001 楽曲候補定期収集ジョブがFN-002を定期的に起動するが、JOB-001は未実装で、通知は含めない。機能の責務は[候補収集基本設計](design/candidate-collector.md)、命名ルールは[機能ID体系](feature-ids.md)を参照。
+Milestone 3-A / FN-002 楽曲候補収集機能は収集、解析、既存CSVとの参考照合、中間JSONへの安全な保存まで。正本CSV、ランキングJSON、管理画面、スケジュール実行は扱わない。将来のJOB-001 楽曲候補定期収集ジョブがFN-002を定期的に起動するが、JOB-001は未実装で、通知は含めない。機能の責務は[候補収集基本設計](design/FN-002-楽曲候補収集.md)、命名ルールは[機能ID体系](feature-ids.md)を参照。
 
 ## 実行
 
@@ -233,4 +233,4 @@ statusは `pending`（未確認）、`confirmed`（人間が確定）、`hold`�
 
 照合は正本の `data/songs.csv` と `data/works.csv` を既存CSV parserで読み、NFKC正規化と空白除去によるタイトル一致を `match` に保存する。song_idとwork_idのリストは参考候補にすぎず、`confirmed_song_id`、`confirmed_work_id` は `null`。version_type、cover、同一recording、同一workを自動確定しない。
 
-Milestone 3-B1 / FN-003 レビュー準備機能はこの中間JSONを読み取り専用sourceとし、canonical CSVおよびlegacy `staging/review-results.json` と照合して `staging/song-reviews.json` を再生成する。FN-004の正式v1設計では新しい判断を `staging/decisions.json` のimmutable revisionへ保存し、Plan → Approval → durable Apply Request → transactionを経て正本へ反映する。現行review-resultsは正式Decision/成功Historyではなく、自動昇格させない。詳細は[全体設計](design/canonical-registration.md)、[Decision](design/fn004-decision.md)、[CLI / SCR-002](design/song-admin.md)を参照。FN-004 runtimeとSCR-002は未実装であり、collectorのcandidate schema/ID/再収集動作は変更しない。
+Milestone 3-B1 / FN-003 レビュー準備機能はこの中間JSONを読み取り専用sourceとし、canonical CSVおよびlegacy `staging/review-results.json` と照合して `staging/song-reviews.json` を再生成する。FN-004の正式v1設計では新しい判断を `staging/decisions.json` のimmutable revisionへ保存し、Plan → Approval → durable Apply Request → transactionを経て正本へ反映する。現行review-resultsは正式Decision/成功Historyではなく、自動昇格させない。詳細は[全体設計](design/レビュー準備・canonical反映の全体フロー.md)、[Decision](design/FN-004-判断モデル.md)、[CLI / SCR-002](design/楽曲管理のCLI・画面連携.md)を参照。FN-004 runtimeとSCR-002は未実装であり、collectorのcandidate schema/ID/再収集動作は変更しない。

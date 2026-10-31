@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {parseStrictJson} from '../src/strict-json.js';
 import {hashCanonicalJson} from '../src/canonical-hash.js';
 import {validateApproval,validateInvalidation,validateApplyRequest,approvalHash,requestPayloadHash,receiptHash,requestPayloadProjectionV1,newApprovalId,newRequestId,newInvalidationId,approvalId,requestId,invalidationId} from '../src/fn004-approval-schema.js';
-const text=await readFile(new URL('../docs/design/fn004-approval-request.md',import.meta.url),'utf8');
+const text=await readFile(new URL('../docs/design/FN-004-承認・反映リクエスト.md',import.meta.url),'utf8');
 const [inv,a,ap,e,p,r,rp]=[...text.matchAll(/```json\n([\s\S]*?)\n```/g)].map(m=>parseStrictJson(Buffer.from(m[1])));
 test('formal complete examples, exact projections and three published hash vectors',()=>{
  validateApproval(a);validateInvalidation(inv);validateApplyRequest(e);

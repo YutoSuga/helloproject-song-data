@@ -12,8 +12,8 @@ Current phase: Milestone 3-B2 / FN-004 canonical反映機能 — Slice 5（Appro
 
 - 確認したmain: `c200c1c95e6daf0dba060a26c7d29aa2368bceb8`。FN-002 楽曲候補収集機能、FN-003 レビュー準備機能、FN-001 公開サイトデータ生成機能、SCR-001 公開サイト画面は実装済み。
 - FN-004はSlice 1〜3（schema / repository / bootstrap）、Slice 4（Decision / Apply Plan）とHistory readonlyがmainへ反映済み。Slice 5は終盤で、Approval / Apply Requestの実装・修正・最終レビュー中。Transaction / Recovery・実Apply入口は未完成。
-- 基準日時点の参考情報：[PR #68](https://github.com/YutoSuga/helloproject-song-data/pull/68)はOPEN。mainには[Request response契約](design/fn004-approval-request.md#apply-request-application-response-contract-v1)のfollow-upもmerge済みで、未mergeの実装は正式契約への追従・レビューを経て完了とする。OPENは完了を意味しない。
-- 確認資料：[README](../README.md)、[機能ID体系](feature-ids.md)、[候補収集](design/candidate-collector.md)、[公開サイト](design/public-site.md)、[canonical registration](design/canonical-registration.md)、[Decision](design/fn004-decision.md)、[Apply Plan](design/fn004-apply-plan.md)、[Approval / Request](design/fn004-approval-request.md)、[Transaction / Recovery](design/fn004-transaction.md)、[History readonly](design/fn004-history.md)、[Bootstrap](design/fn004-bootstrap.md)、[CLI / SCR-002](design/song-admin.md)。正式設計書やREADMEに残る「runtime未実装」は初期設計時の記載であり、上記の部分実装とFN-004全体の完成を区別する。
+- 基準日時点の参考情報：[PR #68](https://github.com/YutoSuga/helloproject-song-data/pull/68)はOPEN。mainには[Request response契約](design/FN-004-承認・反映リクエスト.md#apply-request-application-response-contract-v1)のfollow-upもmerge済みで、未mergeの実装は正式契約への追従・レビューを経て完了とする。OPENは完了を意味しない。
+- 確認資料：[README](../README.md)、[機能ID体系](feature-ids.md)、[候補収集](design/FN-002-楽曲候補収集.md)、[公開サイト](design/公開サイトのデータ生成・表示.md)、[canonical registration](design/レビュー準備・canonical反映の全体フロー.md)、[Decision](design/FN-004-判断モデル.md)、[Apply Plan](design/FN-004-反映計画.md)、[Approval / Request](design/FN-004-承認・反映リクエスト.md)、[Transaction / Recovery](design/FN-004-反映処理・復旧.md)、[History readonly](design/FN-004-成功履歴・読取検証.md)、[Bootstrap](design/FN-004-初期化・ID状態.md)、[CLI / SCR-002](design/楽曲管理のCLI・画面連携.md)。正式設計書やREADMEに残る「runtime未実装」は初期設計時の記載であり、上記の部分実装とFN-004全体の完成を区別する。
 
 ## メインロードマップ（計画値）
 
@@ -34,7 +34,7 @@ Milestone 3の正式名称は「他Hello! Projectグループへの展開」。3
 | 2027年2月〜3月 | Milestone 3 全体安定化 | 実運用テスト・不具合修正・不足機能調整 |
 | 2027年3月ごろ | Milestone 3 全体完成目標 | 自動収集 → 管理画面で確認 → canonical反映 → 公開サイト更新が一連で動く |
 
-正式な[実装順](design/song-admin.md#実装順・検証)はSlice 5後のslice / PR数を固定していない。「Slice 6」は本計画のTransaction着手フェーズの呼称で、契約上の番号追加ではない。実Apply公開はRecovery・障害試験・CLI統合の検証後とする。FN-004完成から3-B完了までの期間はフロー全体の確認を想定する。
+正式な[実装順](design/楽曲管理のCLI・画面連携.md#実装順・検証)はSlice 5後のslice / PR数を固定していない。「Slice 6」は本計画のTransaction着手フェーズの呼称で、契約上の番号追加ではない。実Apply公開はRecovery・障害試験・CLI統合の検証後とする。FN-004完成から3-B完了までの期間はフロー全体の確認を想定する。
 
 ## 3パターンの完成見込み
 
@@ -194,7 +194,7 @@ Milestoneは開発順序・開発計画、SCR / FN / JOBはシステム上の機
 - **3-C / SCR-002 楽曲管理画面（interface設計済み / runtime未実装）**：管理一覧・レビュー編集・Decision確認・Apply Preflight・Apply結果・System Statusの6内部view。CLIと同じserviceを使い、bootstrap/recovery実行はv1ではCLIのみ。認証/hosting等は別途選定する。
 - **3-D / JOB-001 楽曲候補定期収集ジョブ（予定 / 未実装）**：FN-002を定期的に起動する。実装着手時に専用の詳細設計書を追加する。通知は別ジョブとして必要時に定義する。
 
-FN-003の現行schemaとFN-004正式v1設計の入口は[canonical registration](design/canonical-registration.md)。詳細は[Decision](design/fn004-decision.md)、[Plan](design/fn004-apply-plan.md)、[Transaction](design/fn004-transaction.md)、[CLI / SCR-002](design/song-admin.md)を参照する。Slice 1/2はPR #56/#57、Slice 3はPR #59、full-history CIはPR #60、本番bootstrap genesisはPR #61で完了。Slice 4（Decision + Apply Plan）とHistory readonlyはmain反映済み。現在はSlice 5（Approval + Apply Request / idempotency）の実装・修正・最終レビュー中で、その後Transaction / History publication / Recovery・CLI統合へ進む。PR数は固定せず、recovery障害試験前に実Apply入口を公開しない。
+FN-003の現行schemaとFN-004正式v1設計の入口は[canonical registration](design/レビュー準備・canonical反映の全体フロー.md)。詳細は[Decision](design/FN-004-判断モデル.md)、[Plan](design/FN-004-反映計画.md)、[Transaction](design/FN-004-反映処理・復旧.md)、[CLI / SCR-002](design/楽曲管理のCLI・画面連携.md)を参照する。Slice 1/2はPR #56/#57、Slice 3はPR #59、full-history CIはPR #60、本番bootstrap genesisはPR #61で完了。Slice 4（Decision + Apply Plan）とHistory readonlyはmain反映済み。現在はSlice 5（Approval + Apply Request / idempotency）の実装・修正・最終レビュー中で、その後Transaction / History publication / Recovery・CLI統合へ進む。PR数は固定せず、recovery障害試験前に実Apply入口を公開しない。
 
 公開サイトはGitHub Pagesを継続する。独自ドメインは将来の公開設定として検討する。
 
