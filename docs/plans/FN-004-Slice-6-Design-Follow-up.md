@@ -121,27 +121,46 @@ serialized tokenからの採用、保持条件、Recovery自身のcrash、inspec
 2. すべての通常wrapperを例外時retainへ変更する。
 3. 通常wrapperを保ち、同canonical gateにRecovery限定authorityを追加する。
 
-### D. Selected contract
+### D. Selected contract・H-01による訂正
 
-3を選択。Transactionは明示lifecycleでReceipt以後のlockを保持。Recoveryは独立mutex anchorとno-clobber successor chainを使い、終了済みownerから同inode/bytesのcanonical gateを採用する。元lock metadataは書き換えない。二者のsuccessor競合は同じ次sequence pathへのexclusive publicationで一意にする。
+13f75bbではmutex anchor＋successor chainを選び、cleanupでclaim/anchorを削除可能としていた。独立Review & MergeはHIGH H-01を発見し、mergeせずSTOPした。A終了→B claim→Bがgateを解放して末尾claimを削除→anchor削除前にB停止、ではAの有効prefixしか残らない。B未取得とB取得後削除を区別する正本がなく、同sequenceを再利用できる。terminal Journal/Proof/Completionはimmutableで補記できない。旧「prefixならSTOP」はprefix退行の検出証拠を欠き、不十分だった。
 
-Linuxの同host/boot/namespace、start identityとPID不存在を移管直前/直後に実probe。PID再利用、null、別host、partial/unknown mutex/claimはSTOP。inspectは二重収集によるreadonly best-effortで、reservationではない。runで排他取得後に再検証する。
+訂正案を次の観点で比較した。
+
+| 観点 | A: ownership永久保持＋独立retirement | B: tombstone公開後claim削除 | C: monotonic head/epoch更新 |
+| --- | --- | --- | --- |
+| safety / crash | 最新claimが常に残り、未完retirementも検証可能 | tombstone自体の永久保持・全claim内容の証明が必要 | head退行を防ぐ別の正本が必要 |
+| concurrency | 同次sequenceのno-clobber、旧owner終了証明 | claim/tombstone競合と削除順の追加証明 | CASとhead/recordの二重publicationが必要 |
+| hash / proof | 元chain不変、別retiring/retired hash参照 | tombstoneへ削除内容と全依存参照を複製 | mutable head単体ではprefix退行を検出不能 |
+| cleanup | archiveは消さずbarrier/temp等だけ削除 | 永久tombstoneを残すのでGC利得が限定的 | head履歴も残せばAに近づく |
+| restart / clone | 同treeで全履歴、cloneは過去proofと区別 | tombstone不足ならSTOP、持運び方針も必要 | head単独cloneでは過去所有者を証明不能 |
+| common gate | 同lock、barrierでrelease窓を保護 | 同lockだが削除protocolが増える | 別head更新primitiveを排他へ接続 |
+| complexity | record数は増えるが削除証明不要 | 削除・圧縮と二重証明が複雑 | CAS/epoch crash証明が複雑 |
+| 6A / later slices | pure chain/retirement分類、runtimeは6C | 削除proof validatorが追加で必要 | head整合性validatorとruntimeが必要 |
+
+Aを選択する。anchor/claim/retiring/retiredをruntime-local immutable archiveへ永久保持し、ephemeral barrierを別artifactとする。旧anchor/claim payload/hashは維持し、新kind MutexBarrier / MutexRetiring / MutexRetiredを追加する。正確なclosed schema・path・hashは[Transaction正本](../design/FN-004-反映処理・復旧.md)のDG-03に置く。
+
+最大連続sequenceがlatest historical owner。retirement未公開はACTIVE、retiringのみはRETIRING、対応retiredまで完成はRETIRED。retiredとbarrier不在とterminal検証が揃って初めてSEALEDとなりcurrent ownerなし。古いownerへ戻さない。同txの再anchor/sequence再利用は禁止。全recordを検証し、fork/gap/unknown/partialはSTOP。
+
+cleanup→MutexRetiring公開→同common canonical gate release/sync→MutexRetired公開→同inode/bytesのephemeral barrier release/syncの順。claim/anchor/retirementは削除しない。retiring以後はrelease-only。barrierが残る間のsuccessorは、retiredでも直前ownerの同host/boot/namespaceでのOS終了証明を必須とし、次sequenceへ進む。live handoffは提供しない。retiring途中の旧記録は保持し、dead ownerをsuccessorが置き換えて自分のretirementを作る。
+
+初回は候補anchor hashを持つbarrierをexclusive公開し、内部構築capabilityで対応anchorを公開する。barrier→anchor間crashはmanual STOP。barrierだけからownerを復元しない。terminal cleanupでcommon gateが既に不在なら検証済みclaim capability下で同wx primitiveを一度取得する。unfinished Transactionのgate消失には適用しない。
 
 ### E. Rejected alternatives
 
-unlink/reacquireは無排他窓を作る。全wrapper変更は既存readerの例外release契約を壊す。別canonical lockの併用は協調writer間の排他を分裂させる。
+Bはtombstoneの永久保持と削除済み全内容の検証が必要で、今回の安全性に不要なGC契約を増やす。Cのmutable headだけでは退行問題を移すだけで、append-only head履歴を加えるとAと同等以上の複雑さになる。古いclaimを消す旧案はH-01により棄却。PID/時間だけのstale unlink、別canonical lock、全wrapperの例外retainも従来どおり採用しない。
 
 ### F. Compatibility impact
 
-通常gate v1/token/metadataは不変。future normal acquisitionのRecovery mutex前後確認を追加する。自動takeover対応profile外は明示STOPで、弱い保証へfallbackしない。
+通常gate v1/token/metadata、既存Owner/MutexAnchor/MutexClaim/MutexProof、Terminal Proof/Journal/Completion、state/History/Receiptは不変。未実装draftのmutex layoutは置換し黙って移行しない。production bootstrapの移行なし。archiveはruntime-local永久保持、Terminal Proofのhistorical MutexProofはGit-managed package内で従来どおり。fresh cloneは旧Recovery再開権限を取得せず、別txも単一authoritative working tree等の既存guardが必要。
 
 ### G. Implementation consequence
 
-6AはMutex/Authority schema・chain・pure owner分類。6Cで実probe/adoption/retain/release。normal callerにbypass/force optionを公開しない。
+6Aは新schema/hash、archive/retirement検証・discovery・pure分類。claim/retirementのruntime、OS probe/adoption/cleanupは6C以降。normal gate guard接続は6C/E。既存gateの意味を今回のdocs変更で実装済みとしない。永久archive容量はv1で許容し、GCは提供しない。
 
 ### H. Test consequence
 
-二重Recovery、live/PID再利用/別namespace、partial claim、successor公開前後kill、adoption/release前後のinode置換、復元途中の再起動、mutex cleanup途中の不明状態を検証する。
+single owner、successor、fork/gap/duplicate sequence/異bytes、publication途中、cleanup途中、retiring/retired公開前後、gate/barrier release前後、Recovery自身のcrash、parallel Recovery、PID reuse、repository mismatch、observation race、旧prefix退行、fresh restart/cloneを検証する。H-01のB claimは全crash点で残り、Cはlive B拒否または終了証明付き次sequenceだけを選ぶ。retirementが失われてもownerを古いprefixへ戻さない。未知partial/参照不足は正常なfail-closed結果として扱う。
 
 ## 7. DG-04 — Post-Rollback Terminal Proof and Readiness Contract
 
@@ -203,7 +222,9 @@ journal不正のmapping、readonly観測schema、actionのclosed set、競合時
 
 3を選択。Actionはabort / rollback / finalize_success / finish_terminal / cleanup。allowedは一観測0件または1件。manual_stop/active/terminalはactionなし。all-target例外のsuccess確定もfinalize_successで既存条件を再検証する。
 
-観測tokenは全file inventory/hashとactual canonical/state/History/journal/owner/再検証結果へbindingする。inspectの二重収集は排他保証ではなく、runがhash/action照合→mutex/gate所有→本人追加分以外の再検証を必須とする。new evidence不正はINTEGRITY_CONFLICT、gate不正はGATE_CORRUPT、証拠不足はRECOVERY_REQUIRED、state gapはSTATE_TRANSITION_PROOF_REQUIRED。元I/Oのphase/published/temp/codeを保持する。History publication直後の正当なstate-head遅延は、元decision/consumed state/exact recordの限定観測で扱い、既存success-only結果のfalseを書き換えない。
+H-01訂正後の観測はObservationHashProjectionV2を用いる。永久ownership archive全体・retirement・barrier、actual canonical/state/History/journal/owner/再検証結果へbindingする。latest cacheと保存Requestのprocessingを含むraw bytesは除外し、Requestはimmutable Receipt hashへbindingする。旧v1観測/command/tokenは拒否する。既存Slice 1〜5のartifact version/hashは不変。inspectの二重収集は排他保証ではなく、runがhash/action照合→mutex/gate所有→本人追加分以外の再検証を必須とする。new evidence不正はINTEGRITY_CONFLICT、gate不正はGATE_CORRUPT、証拠不足はRECOVERY_REQUIRED、state gapはSTATE_TRANSITION_PROOF_REQUIRED。元I/Oのphase/published/temp/codeを保持する。History publication直後の正当なstate-head遅延は、元decision/consumed state/exact recordの限定観測で扱い、既存success-only結果のfalseを書き換えない。
+
+cleanupはsemantic terminalizationを行わず、finish_terminalとは別。検証済みterminalでもretirement/barrier解放が残ればcleanup_required。live head ownerには外部actionなし、dead ownerの終了証明後だけ次claimでcleanup可能。unknown ownership/retirement、head退行、observation差分はactionなし。5 action/readiness enumは増やさない。
 
 ### E. Rejected alternatives
 
@@ -258,14 +279,14 @@ throwは通常cleanupを走らせるためprocess killと別試験にする。�
 
 - 新closed artifact/schema、hash/projection、固定vectorと完全fixture。
 - immutable publisher/cache、full chain validation、safe discovery。
-- ownership/terminal proofのpure modelとRecovery classification。
+- ownership archive/retirement/terminal proofのpure modelとRecovery classification。
 - publisher I/O・clock・trusted probe inputを分離するtest seam。
 
 実装してはいけないもの：
 
 - canonical/ID/state mutation、rollback/forward実行、History publication。
 - normal canonical commit、Request initial dispatch。
-- live Recovery adoption、公開CLI、UI/API/DB/Git automation。
+- claim/retirement runtime、live Recovery adoption、cleanup実行、公開CLI、UI/API/DB/Git automation。
 - 通常reader guardや旧success-only proofの解除。
 
 fixtureのauthorityはproductionのlive leaseを偽造できない。新module/API名やclass分割は実装判断であり、本書で固定しない。
@@ -274,11 +295,13 @@ fixtureのauthorityはproductionのlive leaseを偽造できない。新module/A
 
 実装、production Apply、bootstrap再発行、Planning本文変更、roadmap日程/進捗更新、Feature ID変更、architecture意味変更、古いruntime記述cleanupは行わない。React/Vite/API/auth/DB/JOB-001は非対象。今回PRはmergeせず独立Review & Mergeへ渡す。
 
+H-01修正時のLOW L-01も独立確認した。Transaction正本に残ったliteral\n\n（2段落）と表のliteral\nを実改行へ修正し、意味は変更していない。
+
 ## 14. Open issues
 
 | 分類 | 状態 |
 | --- | --- |
-| 6A blocking | 0。schema/hash/phase/ownership evidence/terminal proof/action/errorの選択はTransaction正本で確定 |
+| 6A blocking | H-01訂正後のself-reviewでは0。独立Review & Mergeで全DGを再監査する。schema/hash/phase/ownership evidence/terminal proof/action/errorの選択はTransaction正本で確定 |
 | later-slice only | 6B〜6Fのmodule分割、adapterの具体API名、CLI optionの配置、対応OS probeの実装方法。正式Linux profileを満たせなければSTOPし、別profileを暗黙追加しない |
 | non-blocking | 古いroadmap/runtime表記等は別cleanup候補。本scopeへ混ぜない |
 
