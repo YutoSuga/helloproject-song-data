@@ -222,3 +222,7 @@ missing referenced receipts and unresolved publication temps stop normal use;
 no completion/journal validator, cancellation, cleanup or execution is inferred.
 Receipt files are local and ignored by Git; Approval/Invalidation remain tracked.
 Tests publish artifacts exclusively inside temporary fixture repositories.
+
+## Slice 6 ownershipとRecovery actionの正本
+
+[TransactionのSlice 6 evidence contract v1](FN-004-反映処理・復旧.md)で初回submitの同live lease継続、immutable completion/terminal proof、readonly inspectと明示runのclosed action/観測hashを定義する。retry/checkは引き続き非dispatch、Request response DTOとCLI既存exit tableは不変。初回接続は6E/F、公開CLIは6Fで実装する。bootstrap/Recovery実行のCLI-onlyを維持し、Browser/API用実行入口は追加しない。ProcessingCacheの将来更新許容を、この接続での保存原本更新要件にしない。

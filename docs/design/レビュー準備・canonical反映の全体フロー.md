@@ -139,6 +139,7 @@ FN-004は人間が確定したdecisionを別途検証し、ID採番とcanonical 
 | Apply Request | 同じ実行要求のdurable受付。apply-requests/ | 非管理。local実行/再送情報、未完了は保持 |
 | Transaction Journal | 実行途中・失敗・復旧。transactions/ | 非管理。未完了は保持 |
 | Apply History | 正常適用結果。apply-history/ | 管理。失敗は含めない |
+| Terminal state proof | 失敗消費を含む検証可能な終端証跡。transaction-proofs/。完全schemaは[Transaction](FN-004-反映処理・復旧.md) | 管理。成功Historyとは別、v1 GCなし |
 | ID / repository state | high-water mark、成功head。fn004-state.json | 管理。採番・履歴整合に必須 |
 | Bootstrap | [監査・genesis・completion marker](FN-004-初期化・ID状態.md)。fn004-bootstrap.json | 管理。未初期化と消失を区別 |
 | lock / temp / backup | 排他・一時生成・復元根拠 | 非管理。recovery前に削除しない |

@@ -267,3 +267,7 @@ Gitは空directoryを保存しないため、通常cloneではapply-history dire
 実装するのはcheck/audit/initialize/status、ID上限監査、初期record/state、validatorとgate/persistence接続まで。actual ID allocation/reservation、Decision、Plan、Approval/Request、実Apply journal、canonical write/transaction、backup/rollback/recovery execution、successful History、正式CLI/UIを実装しない。本番bootstrap/stateは実装PRで生成せず、merge後の別明示タスクで実行する。
 
 次回のreviewでは、temp Git repositoryでmerge parentを含むorigin/main reachable監査、docs/未merge/削除refの除外、削除済みcanonical ID保持、historical schema、shallow/欠損停止、全namespace宣言/矛盾、99999/欠番、determinism、全TOCTOU input変更、clone lineage、state/marker片側・hash/link異常、gate競合、no-clobber・fsync・中断各段階を検証する。既存Slice 1/2 APIを再実装しない。
+
+## Slice 6 failure terminal stateとの接続
+
+[TransactionのSlice 6 evidence contract v1](FN-004-反映処理・復旧.md)が消費後rollbackのpending解除・追加generation・terminal proofの正本。before→consumedは既存成功遷移と同じ、失敗terminalはconsumedからgeneration+1とpending=nullだけを変更し、high-water/events/Historyを保持する。消費前abortはstate不変。state/bootstrap保存schema・hash・genesisは変更しない。新composite proofで証明できるまで通常利用不可であり、schema/hashのvalidだけでREADYへ昇格しない。
