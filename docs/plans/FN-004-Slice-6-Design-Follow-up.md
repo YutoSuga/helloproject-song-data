@@ -65,6 +65,39 @@ cache単独はcrash後の根拠と順序を失う。実装任せのfield追加�
 
 全required/null/enum/unknown/version、chain gap/fork、別Approval/Receipt/repository、時刻変更、no-op、cache欠損/破損、sync前後、success後rollback禁止を検証。projection-only固定vectorと完全domain fixtureを区別する。
 
+### 6A-DG01-01 — 6A開始時に発見したpre-Intent abortの訂正
+
+PR #75のReview #3はH-01/M-01を含む全体reviewをPASSしmainへmergeされたが、その後の6A開始時、実装前のschema/phase具体化で追加のblocking contradictionを発見した。6Aはsource/test/docs変更・commit・push・PR・runtime mutationを一切行わずSTOPした。過去の「6A blocking 0」はこの発見で覆っており、過去reviewを完全だったとして扱わない。
+
+**反例・root cause**：Receipt→Owner→初回PREPARING(intent_hash=null)をdurable公開し、Intent作成前にcrashする。元canonical/state/History・未消費・valid prefixを検証すれば既存abort条件を満たす。しかし旧field規則はnullをPREPARINGだけに限定し、ABORTED(null)を拒否する。存在しないIntentへのHを捏造することも、公開journalを捨てreceipt-onlyへ変更することもできない。phase単独のnull制約とIntent existence lifecycleを結合しなかったことが原因である。
+
+| 比較軸 | A 未作成Intentのnull継承 | B 早期abort専用terminal表現 | C pre-Intent crashをmanual STOP |
+| --- | --- | --- | --- |
+| 既存contract変更量 | field制約・chain/存在条件の訂正と公開窓の明確化 | 新terminal分岐を各schemaへ追加 | 既存abort/crash matrixの保証を縮小 |
+| safety | 完全prefix/実artifact照合、H固定、terminal後作成禁止で閉じる | 別表現と既存ABORTEDの二重解釈を新規防止する必要 | 自動mutationはないが安全にabort可能な状態も停止 |
+| determinism | phase×prefix×artifactの排他的状態 | 表現の選択規則をさらに設計 | 常にSTOPだが既存Recovery可能条件と不一致 |
+| schema impact | 保存field/enum/projection変更なし | representation/version/proof分岐が増える | field変更なし、意味上の保証を後退 |
+| H-01 impact | ownership archive/retirement不変 | 新terminalのretirement bindingが必要 | owner/gateを長期保全し手動対応 |
+| M-01 impact | terminal優先・Proof再利用・Completion境界不変 | terminal優先表へ新branch追加 | receipt-onlyと区別は可能だが進行不能 |
+| Terminal Proof impact | journal-based ABORTEDのintent=nullを制約付き許可 | 新family/bindingが必要 | 未公開のままSTOP |
+| Completion impact | 非null terminal_journalと既存proof hashを使用 | 新terminal参照規則が必要 | 未公開のままSTOP |
+| 6A実装 | lifecycle validatorとpure分類へ直接対応 | validator/classifierの追加設計が必要 | 実装容易でも元要件を満たさない |
+| 6B〜6F影響 | prepare→Intent durable→H bindingを確定 | 全terminal publisher/action対応を拡張 | 運用手順/手動復旧の追加設計が必要 |
+
+**採用判断**：Aを採用。単にABORTEDでnullを許すのではなく、未作成検証済み・確立済みH・未解決を区別する。Bは既存ABORTEDで表現できる結果に新表現を持ち込み、Cは既存の安全なabort保証を狭めるため不採用。正式contractはTransaction文書の「Intent lifecycle・pre-Intent abort（6A-DG01-01訂正）」とphase×Intent表・crash A〜Kに置く。
+
+**formal correction**：初回PREPARING(null)→全prepare完成→単一Intentのno-clobber公開/sync/readback→journalへH binding→PREPAREDの順に固定。Intent公開が確立境界であり、journal参照の遅延はPREPARING/resume PREPARINGのnonterminal prefixだけで許す。完全Intent Hと古いnull prefixなら、全入力/refs・original/before/未消費を再検証し既存bytesのdurabilityを確認してABORTED(H)へ進む。未解決temp-only/partialは未作成扱いせずSTOPする。RecoveryはIntentの新規作成・再prepare・commit再開をしない。
+
+未作成検証済みのPREPARINGからABORTED(null)へ進める。Hを一度確立すれば同Hを維持し、H→null/H1→H2を拒否する。ABORTED(null)後にIntentを後付けしない。既知target/完成refs subsetを消さない。Intent不在だけで未作成と推測しない。COMMITTING/rollback/successのnull許可を広げない。
+
+**DG-04/DG-05 consequence**：pre-Intent ABORTEDはjournal-basedで、Proof.intent=null・元canonical/state・未消費・完全ABORTED chainを検証し、Completion.terminal_journalは元ABORTED entryの非null参照とする。receipt-onlyのjournal=[]/terminal_journal=nullとは別。Proof-onlyは元proof再利用のfinish_terminal、Completion後はcleanup/不要で、re-abortしない。terminal evidence優先・5 actionの排他性・4 readiness・closed diagnostic/errorは不変。observation v2は正規Intentのmissing/bytes、publisher temp、全chainを既にbindingするため、Intent公開は参照追記前でもhashを変える。旧観測でのabortは再検証で拒否し、projection/version変更はしない。
+
+**compatibility**：H-01の永久archive/claim削除禁止/sequence/Retiring/Retiredを変更しない。M-01の優先順を変更しない。Request/Receipt、History success-only、state/high-water/generation、COMMIT_DECIDED・all-target条件、ProcessingCacheの非正本性は不変。既存Slice 1〜5のJSON/hash vectorを変更しない。未実装Transaction v1のnullable fieldに対する矛盾訂正で保存field・hash projectionは同一なので、新schema versionやartifact migrationを追加しない。
+
+**implementation/test consequence**：6Aは実装未再開。再開後はphase/prefix/実Intentの照合、Proof/Completion binding、pure分類/観測hashまでを実装し、sync/abort/retirement実行は後続sliceに残す。6Bは上記publication順に従う。将来testsはnull→null/null→H/H保持、H→null/H変更、Intent存在＋旧null prefix、terminal nullとの矛盾、Intent missing/corrupt/duplicate/unsupported、ABORTED後の後付け、proof/Completion不整合、成功/消費証跡との矛盾、crash A〜K、Intent追加時のobservation race、H-01/M-01回帰を含む。今回runtime test/sourceは変更しない。
+
+本訂正のself-review後も独立「Pre-Intent Abort Contract Review & Merge」が必要。そのPASS・main merge後にだけ最新mainから6Aを改めて開始する。Review #3のPASSを本訂正への承認として流用しない。
+
 ## 5. DG-02 — Completion, Initial Execution Ownership and Observation Contract
 
 ### A. Existing evidence
@@ -330,7 +363,7 @@ H-01修正時のLOW L-01も独立確認した。Transaction正本に残ったlit
 
 | 分類 | 状態 |
 | --- | --- |
-| 6A blocking | M-01訂正後のself-reviewでは0。以前のH-01訂正時の0判定はReview #2でM-01が見つかり覆った。独立Review & Mergeで全DGを再監査する。schema/hash/phase/ownership evidence/terminal proof/action/errorの選択はTransaction正本で確定 |
+| 6A blocking | 6A-DG01-01訂正後のself-reviewでは0。H-01訂正時の0判定はReview #2のM-01発見で、M-01訂正・Review #3後の0判定は6A開始時の6A-DG01-01発見で覆った。今回の独立Pre-Intent Abort Contract Review & Mergeを経るまで6Aを再開しない。schema/hash/phase/ownership evidence/terminal proof/action/errorの選択はTransaction正本で確定 |
 | later-slice only | 6B〜6Fのmodule分割、adapterの具体API名、CLI optionの配置、対応OS probeの実装方法。正式Linux profileを満たせなければSTOPし、別profileを暗黙追加しない |
 | non-blocking | 古いroadmap/runtime表記等は別cleanup候補。本scopeへ混ぜない |
 
