@@ -202,6 +202,35 @@ state巻戻しはID再利用を招く。失敗Historyはsuccess-onlyを破壊す
 
 消費前abort、未消費rollback、消費後rollback、no-op、success→rollback→次success、消費二重加算、missing proof、cloneでlocal journalなし、cleanup failureとunknown evidenceを検証する。
 
+### M-01 — Review #2によるreceipt-only分類の訂正
+
+**Existing evidence / 発見経緯**：H-01修正head 034440eの独立Review #2はMEDIUM M-01を発見し、mergeせずSTOPした。receipt-onlyはABORTED proofのjournal=[]とCompletion.terminal_journal=nullを正式に許す。一方、旧DG-05表は「ownerあり・journalなし→abort」をterminal行より先に置き、finish_terminalをterminal journal前提で記述していた。Receipt→Owner→proof→Completion→retirement前crashではabort/cleanupが重なり、proof後Completion前crashでは既存proofを保持して完了する境界が不足した。これはruntime bugではなく、前回self-reviewの「6A blocking 0」では見落としたformal gapである。
+
+**Missing decision / root cause**：Owner/journalの形だけで初期状態を判定し、公開terminal証拠によるsemantic進行をpredicateへ反映していなかった。順序表がformal priorityなのかも曖昧で、proof公開済みと初回abort可能を分離できていなかった。
+
+| Options considered | 評価 |
+| --- | --- |
+| 1. terminal行を上へ移すだけ | 完成済みcaseは改善するが、proof-only、完成publisher temp、Completion-only、不正証拠の境界が残る |
+| 2. abortをidempotent万能terminalizerにする | 完了後もabortを選ぶ意味が残り、re-abortと元proof再利用を混同。今回のsemantic単調性に不適合 |
+| 3. terminal evidenceによる段階分割＋排他的predicate | 元schemaを維持して、公開済み/未完publication/初回abortを区別できる。pure分類とcrash検証が可能 |
+
+**Selected correction**：3。正本は[Transaction正式設計](../design/FN-004-反映処理・復旧.md)の「Terminal evidence優先・排他的なaction契約」。全証跡validation→Completion済み→公開proof/完成proof intent/terminal journal→不可逆成功→pre-terminal commit/abortという段階で分割する。owner live/終了証明/gate/raceは実行許可を制限し、terminal stageを初期状態へ戻さない。
+
+receipt-only B（Ownerあり、terminal証拠なし）はabort、C（proofありCompletionなし）はfinish_terminal、D（proof＋Completion）はcleanupまたは不要。A（Ownerなし）はmanual STOP。E/FはDから進んだretirementであり、semantic再実行不可。Completion-only、不正partial、失敗proofと成功History/decisionの共存はintegrity STOP。全valid行はmutation候補1つ以下、不要またはmanual STOPも明示し、第6actionを追加しない。
+
+既存proofはhashだけでなくauthority/ended_at/inputs/diagnostics/state/manifestを全内容保持。successorの現在authorityを独立archiveで証明し、過去proofへ上書きしない。Completionは元proofから一意に導出し、完成tempがあれば同内容を再利用する。新しいproof/時刻/identityを作らず、no-clobberで公開する。proof/Completion完成前のcleanup/retirementは禁止。
+
+**Rejected alternatives**：1は部分公開とaction排他性の証明を閉じない。2は再abort禁止とclosed actionの責務を曖昧にする。新receipt schema、失敗History、新readiness/action/error literalの追加も不要で採用しない。
+
+**Compatibility impact / DG-04**：proof/Completion schema・HashProjectionV1・固定pathは不変。receipt-onlyは未消費ABORTED、state不変、Historyなし。消費後rollbackのgeneration/high-water/events、成功state、composite proofは変更しない。COMMIT_DECIDED・all-target例外を弱めない。
+
+**Compatibility impact / DG-05・H-01**：分類semanticsだけを閉じ、5 actionと4 readinessを維持。ObservationHashProjectionV2はproof/Completion/tempを既にbindingするのでfield/version変更なし。runはproof/Completionが増えた古いtoken/actionを拒否し、他者のterminal publicationを本人claim追加の例外へ混ぜない。H-01のarchive永久保持、claim削除/reset禁止、Retiring/Retired、OS終了証明、barrier順序は変更しない。
+
+**Implementation consequence / 6A**：pure validator/classifierでterminal stage・receipt-only A〜F・action排他性を実装可能にする。proof/Completion/tempの検証と観測だけを6Aの責務とし、abort/finish_terminal/cleanup/ownership/retirementの実行は6C以降。現Slice 5のsaveApplyRequest→response終端は変えない。runtimeのtyped error/DTOも変更しない。
+
+**Test consequence**：正本に20 crash点と全5 action可否表を追加した。proof-onlyでabort不可、Completion済みでfinish_terminal不可、Completion-only拒否、異bytes同identity、異outcome、成功との矛盾、完成tempとpartialの差、owner successor、inspect/run race、retirement後再abort禁止を必須negative caseにする。H-01のold prefix/crash/parallel Recoveryも継続検証する。throwとprocess killは別試験、今回runtime testは実装しない。
+
+
 ## 8. DG-05 — Typed Error Mapping and Recovery Inspect / Run Action Contract
 
 ### A. Existing evidence
@@ -220,7 +249,7 @@ journal不正のmapping、readonly観測schema、actionのclosed set、競合時
 
 ### D. Selected contract
 
-3を選択。Actionはabort / rollback / finalize_success / finish_terminal / cleanup。allowedは一観測0件または1件。manual_stop/active/terminalはactionなし。all-target例外のsuccess確定もfinalize_successで既存条件を再検証する。
+3を選択。M-01訂正でterminal evidenceによる段階分割と排他的predicateを正本へ追加した（前章のReview #2記録）。Actionはabort / rollback / finalize_success / finish_terminal / cleanup。allowedは一観測0件または1件。manual_stop/active/terminalはactionなし。all-target例外のsuccess確定もfinalize_successで既存条件を再検証する。
 
 H-01訂正後の観測はObservationHashProjectionV2を用いる。永久ownership archive全体・retirement・barrier、actual canonical/state/History/journal/owner/再検証結果へbindingする。latest cacheと保存Requestのprocessingを含むraw bytesは除外し、Requestはimmutable Receipt hashへbindingする。旧v1観測/command/tokenは拒否する。既存Slice 1〜5のartifact version/hashは不変。inspectの二重収集は排他保証ではなく、runがhash/action照合→mutex/gate所有→本人追加分以外の再検証を必須とする。new evidence不正はINTEGRITY_CONFLICT、gate不正はGATE_CORRUPT、証拠不足はRECOVERY_REQUIRED、state gapはSTATE_TRANSITION_PROOF_REQUIRED。元I/Oのphase/published/temp/codeを保持する。History publication直後の正当なstate-head遅延は、元decision/consumed state/exact recordの限定観測で扱い、既存success-only結果のfalseを書き換えない。
 
@@ -279,14 +308,14 @@ throwは通常cleanupを走らせるためprocess killと別試験にする。�
 
 - 新closed artifact/schema、hash/projection、固定vectorと完全fixture。
 - immutable publisher/cache、full chain validation、safe discovery。
-- ownership archive/retirement/terminal proofのpure modelとRecovery classification。
+- ownership archive/retirement/Terminal Proof/Completionのpure検証と、排他的Recovery classification。
 - publisher I/O・clock・trusted probe inputを分離するtest seam。
 
 実装してはいけないもの：
 
 - canonical/ID/state mutation、rollback/forward実行、History publication。
 - normal canonical commit、Request initial dispatch。
-- claim/retirement runtime、live Recovery adoption、cleanup実行、公開CLI、UI/API/DB/Git automation。
+- abort/finish_terminal/cleanup実行、claim/retirement runtime、live Recovery adoption、公開CLI、UI/API/DB/Git automation。
 - 通常reader guardや旧success-only proofの解除。
 
 fixtureのauthorityはproductionのlive leaseを偽造できない。新module/API名やclass分割は実装判断であり、本書で固定しない。
@@ -301,7 +330,7 @@ H-01修正時のLOW L-01も独立確認した。Transaction正本に残ったlit
 
 | 分類 | 状態 |
 | --- | --- |
-| 6A blocking | H-01訂正後のself-reviewでは0。独立Review & Mergeで全DGを再監査する。schema/hash/phase/ownership evidence/terminal proof/action/errorの選択はTransaction正本で確定 |
+| 6A blocking | M-01訂正後のself-reviewでは0。以前のH-01訂正時の0判定はReview #2でM-01が見つかり覆った。独立Review & Mergeで全DGを再監査する。schema/hash/phase/ownership evidence/terminal proof/action/errorの選択はTransaction正本で確定 |
 | later-slice only | 6B〜6Fのmodule分割、adapterの具体API名、CLI optionの配置、対応OS probeの実装方法。正式Linux profileを満たせなければSTOPし、別profileを暗黙追加しない |
 | non-blocking | 古いroadmap/runtime表記等は別cleanup候補。本scopeへ混ぜない |
 
