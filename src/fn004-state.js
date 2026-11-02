@@ -147,6 +147,18 @@ export function stateContent(state) {
 }
 export const hashState = (state) => hashCanonicalJson(stateContent(state));
 
+// Pure expected transition shared by History and Transaction evidence validators.
+// This constructs a value only; it does not consume IDs or persist state.
+export function deriveConsumedState(before, transactionId, ranges) {
+  const expected = structuredClone(before);
+  expected.generation++;
+  expected.pending_transaction = transactionId;
+  expected.allocation_events.push(...structuredClone(ranges));
+  for (const event of ranges) expected.high_water_marks[event.namespace] = event.last;
+  expected.state_hash = hashState(expected);
+  return expected;
+}
+
 export function validateFn004State(state) {
   const code = "STATE_CORRUPT";
   shape(state, ["schema_version", "repository_instance_id", "bootstrap_hash", "initialized_at", "generation", "baseline_manifest_hash", "high_water_marks", "allocation_events", "history", "pending_transaction", "state_hash"], code);

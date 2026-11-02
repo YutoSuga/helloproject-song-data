@@ -11,6 +11,8 @@ import { classifyExistingReference,classifyNewEntity,classifyRelation } from './
 import { validateHypotheticalTarget,operationDiagnostics } from './fn004-plan-target.js';
 import { validateApplyPlan } from './fn004-plan-validator.js';
 import { RepositoryError } from './persistence.js';
+import { proveTerminalHistory } from './fn004-terminal-history.js';
+import { buildHistoryIndexes, lookupAppliedDecision, historySemanticHash } from './fn004-history-projections.js';
 const fail=(code,message)=>{throw new RepositoryError(code,message);};
 const same=(a,b)=>canonicalJson(a)===canonicalJson(b);
 const token=(table,ref)=>`${table}/${ref}`;
@@ -84,10 +86,29 @@ export function diagnoseUnsupportedRequests(decision){
 export function generatePlanFromInput({decision,registry,candidates,snapshot,state,history},{generated_at=new Date().toISOString()}={}){
   validateDecisionRevision(decision);validateFn004State(state);
   if(state.pending_transaction!==null)fail('RECOVERY_REQUIRED','Pending transaction blocks planning');
-  const identity={decision_id:decision.decision_id,revision:decision.revision,content_hash:decision.content_hash};
   if(!history?.state_proof?.verified||history.readiness!=='ready'||history.state_proof.terminal_state_hash!==state.state_hash||!same(state.history,{count:history.count,head_hash:history.head_hash,last_apply_id:history.last_apply_id}))fail('RECOVERY_REQUIRED','History proof does not bind the supplied state');
+  return buildPlan({decision,registry,candidates,snapshot,state,history},generated_at,
+    (identity,options)=>lookupVerifiedHistory(history,identity,options));
+}
+
+// Internal pure evidence path. It proves the supplied checkpoint itself and
+// never changes a success-only result's validity/readiness flags.
+export function generatePlanFromTerminalInput(input,{bootstrap,records,proofs},{generated_at}){
+  const verified=proveTerminalHistory({bootstrap,records,proofs});
+  if(!same(verified.terminal,input.state))fail('STATE_TRANSITION_PROOF_REQUIRED','Original Plan checkpoint is unproven');
+  const identity={repository_instance_id:bootstrap.payload.repository_instance_id,bootstrap_hash:bootstrap.bootstrap_hash};
+  const ordered=verified.histories,indexes=buildHistoryIndexes(ordered,identity),head=ordered.at(-1);
+  const history={count:ordered.length,head_hash:head?.record_hash??bootstrap.bootstrap_hash,
+    last_apply_id:head?.payload.apply_id??null,semantic_hash:historySemanticHash(ordered,identity)};
+  return buildPlan({...input,history},generated_at,(decision,options)=>lookupAppliedDecision(indexes,decision,options));
+}
+
+function buildPlan({decision,registry,candidates,snapshot,state,history},generated_at,lookup){
+  validateDecisionRevision(decision);validateFn004State(state);
+  if(state.pending_transaction!==null)fail('RECOVERY_REQUIRED','Pending transaction blocks planning');
+  const identity={decision_id:decision.decision_id,revision:decision.revision,content_hash:decision.content_hash};
   if(!registry?.projection||hashCanonicalJson(registry.projection)!==registry.registry_hash||!same(registry.projection.active_confirmed,registry.active_confirmed.map(r=>({identity:{decision_id:r.decision_id,revision:r.revision,content_hash:r.content_hash},scope_hash:r.scope.scope_hash,candidate_ids:r.scope.candidate_ids}))))fail('INTEGRITY_CONFLICT','Registry projection/hash mismatch');
-  const match=lookupVerifiedHistory(history,identity,{candidate_ids:decision.scope.candidate_ids,replaces:decision.replaces});
+  const match=lookup(identity,{candidate_ids:decision.scope.candidate_ids,replaces:decision.replaces});
   if(match.code)fail(match.code,'Decision/candidate coverage was already applied');
   if(decision.status!=='confirmed'||!registry.active_confirmed.some(r=>same(identity,{decision_id:r.decision_id,revision:r.revision,content_hash:r.content_hash})))fail('DECISION_NOT_EFFECTIVE','Decision is not effective confirmed');
   if(candidates?.schema_version!==1||!Array.isArray(candidates.candidates))fail('CANDIDATE_FINGERPRINT_MISMATCH','Invalid current candidate source');

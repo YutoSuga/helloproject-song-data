@@ -16,6 +16,23 @@ const repositoryPattern = new RegExp(`^repo_${uuid}$`), requestPattern = new Reg
 const compare = (a,b) => a < b ? -1 : a > b ? 1 : 0;
 export const historyRecordHash = payload => hashCanonicalJson(payload);
 
+export function historyPrefixPrecondition(records, identity) {
+  return { schema_version: 1, bootstrap_hash: identity.bootstrap_hash, count: records.length,
+    head_hash: records.at(-1)?.record_hash ?? identity.bootstrap_hash,
+    last_apply_id: records.at(-1)?.payload.apply_id ?? null, semantic_hash: historySemanticHash(records, identity) };
+}
+
+export function validateHistoryPlanPrefixes(records, identity) {
+  const prefix = [];
+  for (const record of records) {
+    const expected = historyPrefixPrecondition(prefix, identity);
+    check(canonicalJson(record.plan_snapshot.payload.history_precondition) === canonicalJson(expected),
+      'HISTORY_CHAIN_MISMATCH', 'Saved Plan History prefix mismatch');
+    prefix.push(record);
+  }
+  return records;
+}
+
 export function validateHistoryChain(records, { repository_instance_id, bootstrap_hash }) {
   check(typeof repository_instance_id === 'string' && repositoryPattern.test(repository_instance_id) && hash(bootstrap_hash), 'HISTORY_CORRUPT', 'Invalid chain identity');
   check(Array.isArray(records), 'HISTORY_CORRUPT', 'Expected History record array');
