@@ -1,4 +1,4 @@
-import { validateEvidenceInputs } from './fn004-transaction-evidence.js';
+import { validateEvidenceInputs, transactionPaths } from './fn004-transaction-evidence.js';
 import { validateJournalChain, validateJournalCache } from './fn004-journal-chain.js';
 import { validateTerminalProof, validateCompletion } from './fn004-terminal-evidence.js';
 import { validateOwnershipArchive } from './fn004-evidence-ownership.js';
@@ -43,8 +43,8 @@ export function validateOtherLocalEvidence({ selected, requests, docs, files, ra
           'Other terminal runtime evidence differs from proof');
         for (const entry of entries) check(docs[evidencePath(entry)] === entry, 'Other journal filename mismatch');
         if (docs[`${root}/transaction.json`]) validateJournalCache(docs[`${root}/transaction.json`], { owner, entries });
-        for (const [key, ref] of Object.entries(intent?.payload.inputs ?? {})) {
-          if (docs[ref.path]) check(same(docs[ref.path], inputs[key]), 'Other terminal input copy changed');
+        for (const [key, path] of Object.entries(transactionPaths(b).inputs)) {
+          if (docs[path]) check(same(docs[path], inputs[key]), 'Other terminal input copy changed');
         }
       } else check(entries.length === 0 && intent === null && !files.some(file => file.path.startsWith(`${root}/`) && file.kind === 'file'),
         'Incomplete other runtime package without Owner');

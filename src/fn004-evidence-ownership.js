@@ -141,8 +141,13 @@ export function validateOwnershipArchive({ anchor, claims, retirements, barrier 
         p.mutex_id === anchor.payload.mutex_id, 'Retirement without exact owner');
       const key = `${p.owner.sequence}/${record.kind}`;
       check(!records.has(key), 'Duplicate retirement'); records.set(key, record);
-      if (retiring) check(p.barrier.artifact.payload.anchor_hash === anchor.hash,
-        'Retirement refers to another anchor');
+      if (retiring) {
+        check(p.barrier.artifact.payload.anchor_hash === anchor.hash, 'Retirement refers to another anchor');
+        const gate = owner.payload.gate;
+        check(gate !== null ? same(p.canonical_gate, gate) :
+          p.canonical_gate.metadata.operation === 'recovery_cleanup' && same(gateOwner(p.canonical_gate), owner.payload.owner),
+        'Retirement does not bind the claimed/adopted cleanup gate');
+      }
     }
     for (const record of retirements) {
       if (record.kind !== 'fn004-recovery-retired') continue;

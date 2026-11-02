@@ -67,6 +67,9 @@ export function classifyRecoverySnapshot(snapshot) {
     const failureAfter = terminalStateForEntry({ phase: 'ROLLED_BACK', id_consumed: true,
       consumed_state: s.intent.payload.expected_consumed_state });
     if (!(before || consumed || phase === 'ROLLING_BACK' && same(s.state, failureAfter))) return stop('STATE_TRANSITION_PROOF_REQUIRED');
+    // Replacement follows consumption; failure-after follows complete restore.
+    // A lagging journal does not permit actual state to lead either side effect.
+    if (!original && (before || phase === 'ROLLING_BACK' && same(s.state, failureAfter))) return stop('INTEGRITY_CONFLICT');
     if (phase === 'ROLLING_BACK') action = 'rollback';
     else if (target && !noop && before) return stop('INTEGRITY_CONFLICT');
     else if (noop && before || !target) action = 'rollback';

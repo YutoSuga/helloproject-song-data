@@ -45,11 +45,20 @@ H-01のarchiveは全claimを数値chainとして検証し、最後のclaimを保
 | H-01、claim fork/gap、retirement binding | [ownership](../../test/fn004-evidence-ownership.test.js) |
 | readonly discovery、live lease、no-clobber、sync/publication failure | [I/O](../../test/fn004-evidence-io.test.js) |
 | H-01 × M-01 × pre-Intent、5 action排他性、成功/rollback/state合成、observation race | [decision](../../test/fn004-recovery-decision.test.js) |
+| 独立Review：actual state/canonical順序、退役gate参照、別Transactionのinput copy | [review regressions](../../test/fn004-review-regressions.test.js) |
 
 fixtureのCSV生成・state/History構築はtest内だけで行い、production artifactを更新しない。I/O失敗注入は既存persistenceと同じtrusted dependency injectionを使う。caught throwではphase/published/temp/causeと残存bytesを確認する。process killはcatch/finallyが実行されない別境界であり、後続sliceのprocess-kill harnessでも同じI/O publication境界を利用できる。6Aは全Recovery実行のkill E2Eを提供しない。
 
 Focused検証：
 
 ```sh
-node --test test/fn004-evidence-schema.test.js test/fn004-evidence-ownership.test.js test/fn004-evidence-io.test.js test/fn004-recovery-decision.test.js
+node --test test/fn004-evidence-schema.test.js test/fn004-evidence-ownership.test.js test/fn004-evidence-io.test.js test/fn004-recovery-decision.test.js test/fn004-review-regressions.test.js
 ```
+
+## 独立Reviewでの修正
+
+- R77-H01：消費前state＋partial target、failure-after state＋未復元canonicalをrollback候補としていた。正式publication順序と矛盾するactual組合せを拒否し、合法なcheckpoint lagは維持する。
+- R77-H02：gate解放後のretirementでcanonical gateとclaimの参照照合が不足していた。採用gateとのexact一致、gateなしで取得したcleanup gateのoperation/current owner bindingを全retirementで検証する。
+- R77-M01：別のpre-Intent終端Transactionのinput copyがIntent参照なしでは照合されなかった。Intentの有無によらず残存copyを元inputsへexact bindingする。
+
+いずれも既存正式契約の実装漏れを修正したもので、保存schema・hash projection・action/readiness・runtime scopeは変更しない。回帰testsは修正前の誤分類を再現し、合法な継続caseも確認する。
