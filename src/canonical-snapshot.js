@@ -9,12 +9,21 @@ import { hashCanonicalJson, sha256 } from "./canonical-hash.js";
 // prevent concurrent writers (the shared gate belongs to the next slice).
 // Treat returned rawBytes/rows as readonly. Hash and parse use each same Buffer.
 export async function readCanonicalSnapshot(root = process.cwd()) {
+  return readCanonicalSnapshotFromAdapter({
+    list: () => readdir(join(root, 'data')),
+    read: path => readFile(join(root, ...path.split('/')))
+  });
+}
+
+// Same parser/validator/hash pipeline for readonly recovery evidence bytes.
+// This adapter never serializes or writes canonical data.
+export async function readCanonicalSnapshotFromAdapter({ list, read }) {
   const rawBytes = {}, tables = {}, files = [], diagnostics = [];
   const schemas = [...CANONICAL_TABLES].sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0);
   let complete = true;
   try {
     const expected = new Set(schemas.map((schema) => schema.path.slice(5)));
-    for (const name of (await readdir(join(root, "data"))).sort()) {
+    for (const name of (await list()).sort()) {
       if (name.endsWith(".csv") && !expected.has(name)) {
         diagnostics.push({ code: "UNEXPECTED_CANONICAL_TABLE", severity: "error", file: `data/${name}`, message: "Unknown canonical CSV" });
         complete = false;
@@ -28,7 +37,7 @@ export async function readCanonicalSnapshot(root = process.cwd()) {
     tables[schema.name] = [];
     const add = (code, message, details) => diagnostics.push(canonicalDiagnostic(code, schema, message, details));
     let bytes;
-    try { bytes = await readFile(join(root, ...schema.path.split("/"))); }
+    try { bytes = await read(schema.path); }
     catch (error) { add(error.code === "ENOENT" ? "CANONICAL_FILE_MISSING" : "CANONICAL_FILE_UNREADABLE", error.code ?? "Cannot read CSV"); complete = false; continue; }
     rawBytes[schema.path] = bytes;
     files.push({ path: schema.path, byte_length: bytes.byteLength, sha256: sha256(bytes) });

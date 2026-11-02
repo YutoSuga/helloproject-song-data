@@ -1,27 +1,27 @@
-import { validateBootstrapRecord,validateFn004State,validateGitAuditIdentity,validateNamespaceMap,hashState } from './fn004-state.js';
+import { validateBootstrapRecord,validateFn004State,validateGitAuditIdentity,validateNamespaceMap,hashState,deriveConsumedState } from './fn004-state.js';
 import { currentIdMaxima,ID_NAMESPACES } from './fn004-id-audit.js';
 import { validateCanonicalTables } from './canonical-validator.js';
 import { RepositoryError } from './persistence.js';
 import { validateHistoryRecord } from './fn004-history-record.js';
-import { validateHistoryChain,historySemanticHash,buildHistoryIndexes,lookupAppliedDecision } from './fn004-history-projections.js';
+import { validateHistoryChain,historySemanticHash,buildHistoryIndexes,lookupAppliedDecision,validateHistoryPlanPrefixes } from './fn004-history-projections.js';
 import { APPLY_ID_PATTERN } from './fn004-history-directory.js';
 import { demand,shape,same,integer,cmp,manifest } from './fn004-history-schema.js';
 
-function genesis(bootstrap){const state={schema_version:1,repository_instance_id:bootstrap.payload.repository_instance_id,bootstrap_hash:bootstrap.bootstrap_hash,initialized_at:bootstrap.metadata.initialized_at,generation:0,baseline_manifest_hash:bootstrap.canonical_manifest.manifest_hash,high_water_marks:structuredClone(bootstrap.payload.high_water_marks),allocation_events:[],history:{count:0,head_hash:bootstrap.bootstrap_hash,last_apply_id:null},pending_transaction:null};state.state_hash=hashState(state);return state;}
+export function historyGenesisState(bootstrap){const state={schema_version:1,repository_instance_id:bootstrap.payload.repository_instance_id,bootstrap_hash:bootstrap.bootstrap_hash,initialized_at:bootstrap.metadata.initialized_at,generation:0,baseline_manifest_hash:bootstrap.canonical_manifest.manifest_hash,high_water_marks:structuredClone(bootstrap.payload.high_water_marks),allocation_events:[],history:{count:0,head_hash:bootstrap.bootstrap_hash,last_apply_id:null},pending_transaction:null};state.state_hash=hashState(state);return state;}
 function lineage(state,bootstrap){demand(state.repository_instance_id===bootstrap.payload.repository_instance_id&&state.bootstrap_hash===bootstrap.bootstrap_hash&&state.initialized_at===bootstrap.metadata.initialized_at&&state.baseline_manifest_hash===bootstrap.canonical_manifest.manifest_hash,'State/bootstrap lineage mismatch','STATE_BOOTSTRAP_MISMATCH');}
-function expectedRanges(p,before){const values=new Map();for(const m of p.id_mappings){if(!values.has(m.namespace))values.set(m.namespace,[]);values.get(m.namespace).push(Number(m.canonical_id.slice(1)));}
+export function expectedHistoryAllocationRanges(p,before){const values=new Map();for(const m of p.id_mappings){if(!values.has(m.namespace))values.set(m.namespace,[]);values.get(m.namespace).push(Number(m.canonical_id.slice(1)));}
   return [...values].sort(([a],[b])=>cmp(a,b)).map(([namespace,ids])=>{ids.sort((a,b)=>a-b);demand(ids.every((v,i)=>v===before.high_water_marks[namespace]+i+1),'Unproven/noncontiguous ID consumption','STATE_TRANSITION_PROOF_REQUIRED');return {transaction_id:p.transaction_id,namespace,first:ids[0],last:ids.at(-1)};});}
 function deriveTerminal(bootstrap,records){
   validateBootstrapRecord(bootstrap);
   records.forEach(validateHistoryRecord);validateHistoryChain(records,{repository_instance_id:bootstrap.payload.repository_instance_id,bootstrap_hash:bootstrap.bootstrap_hash});
-  let terminal=genesis(bootstrap);
+  let terminal=historyGenesisState(bootstrap);
   for(const r of records){const p=r.payload,before=p.state_transition.before,consumed=p.state_transition.consumed;
     lineage(before,bootstrap);lineage(consumed,bootstrap);
     demand(same(before,terminal),'History before state has an unproven transition gap','STATE_TRANSITION_PROOF_REQUIRED');
     demand(same(r.plan_snapshot.payload.id_state_precondition,{schema_version:1,state_hash:before.state_hash,generation:before.generation,high_water_marks:before.high_water_marks,pending_transaction:null}),'Plan state precondition mismatch','STATE_TRANSITION_PROOF_REQUIRED');
     demand(ID_NAMESPACES.every(n=>consumed.high_water_marks[n]>=before.high_water_marks[n]),'High-water decreased','STATE_HIGH_WATER_INVALID');
-    const ranges=expectedRanges(p,before);demand(same(ranges,p.state_transition.allocation_ranges),'Allocation range/Plan mismatch','STATE_TRANSITION_PROOF_REQUIRED');
-    const expected=structuredClone(before);expected.generation++;expected.pending_transaction=p.transaction_id;expected.allocation_events.push(...ranges);for(const e of ranges)expected.high_water_marks[e.namespace]=e.last;expected.state_hash=hashState(expected);
+    const ranges=expectedHistoryAllocationRanges(p,before);demand(same(ranges,p.state_transition.allocation_ranges),'Allocation range/Plan mismatch','STATE_TRANSITION_PROOF_REQUIRED');
+    const expected=deriveConsumedState(before,p.transaction_id,ranges);
     demand(same(expected,consumed),'Consumed state differs from proven successful transition','STATE_TRANSITION_PROOF_REQUIRED');
     terminal=structuredClone(consumed);terminal.generation++;terminal.pending_transaction=null;terminal.history={count:p.sequence,head_hash:r.record_hash,last_apply_id:p.apply_id};terminal.state_hash=hashState(terminal);validateFn004State(terminal);
   }
@@ -55,7 +55,7 @@ export function verifySuccessfulHistory({bootstrap,state,history_directory,snaps
       demand(entry.name===`${entry.document.payload.apply_id}.json`,'Filename/Apply identity mismatch');records.push(entry.document);
     }
     records=validateHistoryChain(records,identity);buildHistoryIndexes(records,identity);
-    const prefix=[];for(const r of records){const expected={schema_version:1,bootstrap_hash:identity.bootstrap_hash,count:prefix.length,head_hash:prefix.at(-1)?.record_hash??identity.bootstrap_hash,last_apply_id:prefix.at(-1)?.payload.apply_id??null,semantic_hash:historySemanticHash(prefix,identity)};demand(same(r.plan_snapshot.payload.history_precondition,expected),'Saved Plan History prefix mismatch','HISTORY_CHAIN_MISMATCH');prefix.push(r);}
+    validateHistoryPlanPrefixes(records,identity);
   }catch(error){add(['HISTORY_CORRUPT','HISTORY_CHAIN_MISMATCH','HISTORY_IDENTITY_CONFLICT'].includes(error.code)?error.code:'HISTORY_CORRUPT');return finish();}
   const head=records.at(-1);const summary={count:records.length,head_hash:head?.record_hash??bootstrap.bootstrap_hash,last_apply_id:head?.payload.apply_id??null};
   let stateValid=true;try{validateFn004State(state);}catch(error){stateValid=false;add(error.code==='STATE_HIGH_WATER_INVALID'?error.code:'STATE_CORRUPT');}
