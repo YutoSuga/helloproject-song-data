@@ -21,6 +21,7 @@ import { validatePreparedTargetBytes } from './fn004-prepared-target-validation.
 import { validateOtherLocalEvidence } from './fn004-local-evidence-validation.js';
 import { validateCandidates } from './prepare-reviews.js';
 import { validateHistoryRecord } from './fn004-history-record.js';
+import { materializeCanonicalTarget } from './fn004-target-materialization.js';
 import { check, same, closed, binding as validateBinding, processOwner, gateWitness, TERMINAL_PHASES } from './fn004-evidence-types.js';
 
 const clone = value => JSON.parse(canonicalJson(value));
@@ -266,6 +267,14 @@ export async function prepareRecoverySnapshot({ binding: b, discovery, git_audit
     }
   });
   const head = chain?.head?.payload ?? null, phase = head?.phase === 'RECOVERY_REQUIRED' ? head.resume_phase : head?.phase ?? null;
+  let unboundTarget = null;
+  if (chain && !intent && head?.target_manifest && original && inputs) {
+    try {
+      unboundTarget = await materializeCanonicalTarget({ owner, inputs, original, apply_time: head.apply_time });
+      check(same(unboundTarget.target.manifest, head.target_manifest) && same(unboundTarget.changed_paths, head.changed_paths),
+        'Pre-Intent computed target differs from saved Plan/original/time');
+    } catch (error) { if (!(error instanceof RepositoryError)) throw error; add(error.code); }
+  }
   const ownHistory = histories.filter(record => record?.payload?.transaction_id === b.transaction_id || record?.payload?.apply_id === b.apply_id);
   if (owner && chain) attempt(() => {
     const record = chain.decision?.record;
@@ -279,6 +288,7 @@ export async function prepareRecoverySnapshot({ binding: b, discovery, git_audit
   for (const file of files.filter(file => file.kind === 'file' && publisherTarget(file.path))) {
     const target = publisherTarget(file.path), value = docs[file.path];
     if (target === `${root}/transaction.json` && value && chain) attempt(() => validateJournalCache(value, { owner, entries: chain.entries }));
+    else if (!jsonFile(target) && bytes[target]) attempt(() => check(bytes[file.path].equals(bytes[target]), 'Conflicting raw publisher temporary evidence'));
     else if (docs[target]) attempt(() => check(value && same(value, docs[target]), 'Conflicting publisher temporary evidence'));
     else if (target === `staging/transaction-proofs/${b.transaction_id}.json` && value) {
       const valid = attempt(() => {
@@ -345,6 +355,9 @@ export async function prepareRecoverySnapshot({ binding: b, discovery, git_audit
         const expected = owner.payload.original_manifest.files.find(value => value.path === canonicalPath);
         check(intent && intent.payload.changed_paths.includes(canonicalPath) && ['ROLLING_BACK', 'ROLLED_BACK'].includes(phase) &&
           expected && expected.byte_length === file.byte_length && expected.sha256 === file.sha256, 'Restore evidence differs from rollback original');
+      } else if (file.path.startsWith(`${root}/temp/data/`) && unboundTarget) {
+        const path = file.path.slice(`${root}/temp/`.length), expected = unboundTarget.target.rawBytes[path];
+        check(unboundTarget.changed_paths.includes(path) && expected && bytes[file.path].equals(expected), 'Unbound target temp differs from saved Plan');
       } else add('RECOVERY_REQUIRED');
     }
   });

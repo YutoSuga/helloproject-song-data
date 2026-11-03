@@ -96,11 +96,13 @@ export async function createPersistence(root, { io = fs } = {}) {
     if (value === null || typeof value !== "object" || Array.isArray(value)) throw new RepositoryError("PERSISTENCE_ROOT_TYPE", "JSON artifact must have an object root", { path });
     return value; // Domain schema/version validation belongs to the caller.
   }
-  async function publish(path, value, exclusive) {
+  async function publish(path, value, exclusive, raw = false) {
     let temp, handle, published = false, phase = "encode";
     try {
-      if (value === null || typeof value !== "object" || Array.isArray(value)) throw new RepositoryError("PERSISTENCE_ROOT_TYPE", "JSON artifact must have an object root", { path });
-      const bytes = Buffer.from(canonicalJson(value) + "\n", "utf8");
+      if (raw ? !Buffer.isBuffer(value) : value === null || typeof value !== "object" || Array.isArray(value)) {
+        throw new RepositoryError(raw ? "PERSISTENCE_WRITE_FAILED" : "PERSISTENCE_ROOT_TYPE", raw ? "Expected immutable artifact bytes" : "JSON artifact must have an object root", { path });
+      }
+      const bytes = raw ? Buffer.from(value) : Buffer.from(canonicalJson(value) + "\n", "utf8");
       const target = await resolvePath(path);
       const parent = dirname(target);
       phase = "ensure_directory";
@@ -140,5 +142,6 @@ export async function createPersistence(root, { io = fs } = {}) {
   }
   return Object.freeze({ root: resolvedRoot, resolvePath, ensureDirectory, exists, readJson, syncDirectory,
     writeJsonAtomic: (path, value) => publish(path, value, false),
-    createJsonExclusive: (path, value) => publish(path, value, true) });
+    createJsonExclusive: (path, value) => publish(path, value, true),
+    createBytesExclusive: (path, bytes) => publish(path, bytes, true, true) });
 }
