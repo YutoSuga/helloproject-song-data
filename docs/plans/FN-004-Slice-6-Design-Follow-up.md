@@ -376,3 +376,44 @@ DG-01〜DG-05のA〜Hを記録し、正式設計へ反映、全cross-reference�
 6Aの実装終了条件はvalid chainの完全検証、invalid/unknownのdeterministic拒否、pure分類、mutationなし、既存Slice 1〜5回帰維持、各publisher durable boundaryのfailure seamを持つこと。schemaだけ通るhappy pathを完成条件にしない。
 
 次工程は本Design Follow-upの独立Review & Merge。そのmerge後にのみ6Aを開始する。本taskではいずれも実施しない。
+
+## 16. 6C-DG05-01 — Known-mixed Canonical Recovery Contract Fix
+
+PR #78の6B Review & Mergeは、R78-M01（Intent/PREPAREDのIO fault・実SIGKILL coverage）とR78-M02（raw readbackのtyped error/publication情報）を修正しPASSした。そのmerge後main `526c4e32dd9b0774ca642e9de0a712eb5a339e0e`から6Cを開始した際、実装前のcontract具体化で新しいHIGH finding **6C-DG05-01**を発見しSTOPした。6Cのcommit/push/PR/runtime executionはなく、未採用試作は撤去されsource/test/docs差分なし・production不変で終了した。過去のreview PASSや「blocking 0」を、今回も無条件で成立する根拠へ使わない。
+
+### 反例・root cause
+
+valid original/target、正しいconsumed state、15 backup、valid Intent/Journal/元入力、unknown bytes=0、成功History/COMMIT_DECIDEDなしでも、songsまでtarget・song_artistsがoriginalのCOMMITTINGはPRIMARY_ARTIST_MISSINGとなる。song_artistsまでtargetならvalidへ戻る。ROLLING_BACKでsong_artistsを先にoriginalへ戻した直後にも同じvalidation failureが生じる。現6A実装はCANONICAL_INVALIDを一律blocked/manual_stop/[]とし、known mixedのrollback規則へ到達しない。
+
+全表semantic validityとtransaction byte provenanceを同じblocking判定へ集約し、正常なmulti-file途中状態をどの条件で区別するかが未定義だった。relationを先行させてもsongへのFKが欠けるため順序変更だけでは解消しない。新曲のprimary/FKを弱めたりmulti-file OS atomicityを仮定する問題でもない。
+
+### Alternativesと採用
+
+| 比較軸 | A Verified Known-Mixedを狭く正式化 | B semantic FAILは常にmanual STOP | C 順序変更/制約緩和/複数file atomic化 |
+| --- | --- | --- | --- |
+| 設計目標 | 通常readerを止めたままsafe rollbackを維持 | 合法なcommit/restore途中も自動復旧不能 | 順序だけでは循環依存を解消できない |
+| safety | exact O/T、full-valid endpoints、state/phase/trace/backup/authority等の全証明が必要 | fail-closedだが既存Recovery保証を狭める | validator緩和は不正canonical受理、atomic化はv1前提外 |
+| determinism/crash | raw evidenceから同predicateで再分類、再起動後も同じ | 一律STOPで単純 | 新storage/protocolの設計が必要 |
+| schema/action/readiness | 新field/enum/projection不要 | 不要だがPlanning/exit条件変更が必要 | 大きな互換性変更になり得る |
+| 6A/6C影響 | Snapshot/ID audit/classifierを本契約へ対応し、既存rollback kernelへ接続 | 自動rollbackできるcaseが著しく縮小 | 6Cの範囲を越える |
+| 6D/6E影響 | post-decision全target要件と既存file順は不変 | 正常新曲transactionのcrash matrixを手動対応へ変更 | canonical contract/architectureを再設計 |
+
+**Aを採用**。error名allowlistやsemantic近似ではなく、全14 raw bytesのprovenanceとphase/stateの正当性で判定する。Bは安全に戻せる途中状態も停止してしまうため不採用、Cは不成立またはv1境界を越えるため不採用。正式contractの唯一の正本は[Canonical byte provenance・known-mixed Recovery](../design/FN-004-反映処理・復旧.md#known-mixed-recovery-contract)に置く。
+
+### Formal correction・closure
+
+- O/Tのfull validity、Binding/全refs/source原本、actual C raw bytesを別々に検証する。nonchanged fileはO/T両membership、mixedはchanged_paths上のORIGINAL-only/TARGET-only各1以上・UNKNOWN=0。no-opやAll-Targetをmixedへ誤分類しない。
+- byte membershipはorder独立。Verified資格にはCOMMITTINGの正規prefixと、ROLLING_BACKの固定P/逆順実restore・progress lagへの整合を要求する。commit方向だけでなくrollback中の別combinationも認定し、不可能な任意組合せはSTOP。
+- semantic PASS/FAILの両方で、pre-decision・rollback-safeのVerified Known-Mixedは**rollbackable / recovery_required / rollback**。FAILなら既存CANONICAL_INVALIDとvalidator全codesを残しRECOVERY_REQUIREDを併記する。codeだけでblocking/non-blockingを選ばず、新codeは追加しない。
+- O/Tとbefore/consumedをexact検証し、Mixedにはactual consumedを必須とする。current/Git high-water検査を省略せず、whole-valid O/TのID maximaによるupper boundでactual usageもcoverする。canonical復元でID上限/eventsを戻さず、pending/generationの二重処理をしない。
+- 全terminal/success evidenceを先に評価する。COMMIT_DECIDED/当該successful History＋mixedはtarget条件違反でSTOPし、rollback/強制forwardへ落とさない。Proof/Completion後の再実行を許さず、終端は全original/whole validを必須とする。
+- current input_revalidation=unavailable、必要ref欠損/破損、unknown bytes、state/phase/trace矛盾、wrong repository/transaction、ownership不正を推測で救済しない。必要な元owner停止/同gate/claim/retirement guardとstale observation拒否は不変。
+- COMMITTINGのconsumption/replacement確認checkpointをROLLING_BACK前に確定する。targetのメモリreplayは元O/Plan/固定時刻の検証用だけで、失われた必須artifactの再生成や新prepareを許可しない。
+
+**6C-DG05-01: OPEN → CLOSED（formal contract上）**。18 closure項目（定義、UNKNOWN境界、exact provenance、state/phase、semantic優先順位、readiness、diagnostics、action、eligibility、restore再分類、decision/History境界、terminal priority、ownership/gate、ID、crash matrix、反例、実装handoff）を上記正本に閉じた。これはruntime対応完了の意味ではない。現在mainの保守的な6A classifierはCase Cを止めるため、修正版formal contractの独立Review & Merge後、6CでSnapshot/純粋classifier/ID auditをまず対応させる。追加safety判断は不要だが、code実装・regression testは後続6Cの必要作業である。
+
+### Compatibility・handoff
+
+Pre-Intent/null/H単調性は不変。H-01 archive永久保持/sequence/OS proof、M-01 terminal priority/Proof再利用/Completion、R77-H01 state/canonical順序、R77-H02 gate、R77-M01 source copy、R78-M01 crash、R78-M02 typed evidenceを維持する。successful Historyはsuccess-only、正常reader/Plan/Requestのfull-valid条件・response schema、bootstrap/state schema、allocation/high-water規則は変更しない。既存JSON/hash vectors、Observation v2 projection、5 action/4 readiness/closed diagnostic inventoryも不変。
+
+本taskはformal docsのみ。Planningの6A〜6F分割、roadmap、architecture、feature IDを変更せず、6C runtime/restore/ownership executor/Proof・Completion publicationを実装しない。次は別タスクの **Known-mixed Canonical Recovery Contract Fix — Review & Merge**。そのPASS・merge後だけ、最新mainから6Cを再開する。
