@@ -65,6 +65,16 @@ export async function createPrepareArtifactPublisher(root, source, { io = fs } =
     backup_refs: refs.filter(ref => ref.path.startsWith(`${paths.root}/backup/`)).sort((a, b) => a.path < b.path ? -1 : 1),
     temp_refs: refs.filter(ref => ref.path.startsWith(`${paths.root}/temp/`)).sort((a, b) => a.path < b.path ? -1 : 1),
     inputs: Object.fromEntries(Object.entries(paths.inputs).map(([key, path]) => [key, refs.find(ref => ref.path === path)])) };
+  async function readIO(path, operation, published = null) {
+    try { return await operation(await store.resolvePath(path)); }
+    catch (cause) {
+      if (cause instanceof RepositoryError) throw cause;
+      // These are artifact/metadata reads outside the persistence primitive's
+      // nine phases. Preserve errno as cause; do not invent a phase/code.
+      throw new RepositoryError(cause.code === 'ENOENT' ? 'PERSISTENCE_NOT_FOUND' : 'PERSISTENCE_READ_FAILED',
+        'Cannot verify prepare artifact or metadata', { path, phase: null, published, cause });
+    }
+  }
   async function publish(path) {
     check(expected.has(path), 'Write path is outside this prepared transaction');
     await guard();
@@ -72,10 +82,10 @@ export async function createPrepareArtifactPublisher(root, source, { io = fs } =
     const absolute = await store.resolvePath(path);
     const parent = path.slice(0, path.lastIndexOf('/'));
     await store.ensureDirectory(parent);
-    const device = (await io.stat(await store.resolvePath('data'), { bigint: true })).dev.toString();
-    check((await io.stat(await store.resolvePath(parent), { bigint: true })).dev.toString() === device, 'Prepare artifacts cross filesystem boundary');
+    const device = (await readIO('data', absolute => io.stat(absolute, { bigint: true }))).dev.toString();
+    check((await readIO(parent, absolute => io.stat(absolute, { bigint: true }))).dev.toString() === device, 'Prepare artifacts cross filesystem boundary');
     if (await store.exists(path)) {
-      const existing = await io.readFile(absolute);
+      const existing = await readIO(path, absolute => io.readFile(absolute), true);
       check(existing.equals(raw), 'Immutable prepare artifact differs from bound source');
       let handle, phase = 'file_sync';
       try {
@@ -86,7 +96,7 @@ export async function createPrepareArtifactPublisher(root, source, { io = fs } =
         throw new RepositoryError('PERSISTENCE_SYNC_FAILED', 'Prepare artifact durability unconfirmed', { path, phase, published: true, cause });
       }
     } else await store.createBytesExclusive(path, raw);
-    check((await io.readFile(absolute)).equals(raw), 'Prepare artifact readback differs');
+    check((await readIO(path, absolute => io.readFile(absolute), true)).equals(raw), 'Prepare artifact readback differs');
     await guard();
     return prepareArtifactRef(path, raw);
   }

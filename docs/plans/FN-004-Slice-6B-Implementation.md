@@ -29,7 +29,7 @@
 
 ## Crash evidenceとtest seam
 
-`onBoundary`は内部dependency injectionで、phase通知の戻り値は制御に使わない。validation/sync/hashをskipする公開switchは存在しない。IO adapter faultは既存publisherのphase/published/temp情報を保持する。通常throwによる中断とprocess terminationは異なり、このSliceではpublication境界のthrow/IO failureを検証する。実process-kill E2E全体は後続sliceの対象として残す。
+`onBoundary`は内部dependency injectionで、phase通知の戻り値は制御に使わない。validation/sync/hashをskipする公開switchは存在しない。IO adapter faultは既存publisherのphase/published/temp情報を保持する。通常throwによる中断とprocess terminationは異なり、このSliceではpublication境界のthrow/IO failureを検証する。実process-kill E2E全体は後続sliceの対象として残す。独立Reviewで追加したテストは、Intent/PREPARED公開直後の子processをSIGKILLし、catch/finallyを通さずgateと証跡が残ることも確認する。
 
 | 中断点 | 残る証跡と後続判断 |
 | --- | --- |
@@ -52,3 +52,9 @@ prepareのjournal時刻は初回に固定したapply_timeを使用し、clockを
 [durable prepare tests](../../test/fn004-durable-prepare.test.js)はtemp Git repositoryと実live gateを使用し、15 backup・changed temps・全input copies・PREPARED chain、Intent前後の中断、raw publisher各IO failure、同bytes retry/no-clobber、原本/foreign namespace/retirement/Git ref変更の拒否を検証する。canonical/state/bootstrap/Receiptのhashを前後比較し、successful History directoryが作られないことも確認する。既存6A suiteでPre-Intent/H-01/M-01/R77修正を継続検証する。
 
 canonical replacement、ID consumption、state mutation、History publication、Recovery action execution、Request dispatch、public CLIを実装しない。次工程は独立したSlice 6B Review & Mergeとし、6Cを開始しない。
+
+## 独立Reviewでの検証補強
+
+R78-M01（MEDIUM）：backupのIO faultとIntent/PREPARED前後のthrowだけでは、後二者のpublication途中と実process停止を直接固定できなかった。[crash regression tests](../../test/fn004-prepare-crash.test.js)へIntent/PREPARED各3 IO boundary（partial write、no-clobber publication、directory sync）と2 SIGKILL caseを追加した。partial JSONは元parse error、完成tempだけはmanual STOP、公開済み完全recordは全refs確認後のabort候補として検証する。再観測の一致・canonical/state/Receipt不変・History未公開もassertする。production実装・正式契約・action/readinessは変更しない。
+
+R78-M02（MEDIUM）：raw artifactのfinal readbackが直接IO errorをthrowし、既存typed codeと公開済み情報を保持しなかった。既存PERSISTENCE_READ_FAILED/PERSISTENCE_NOT_FOUNDへcause付きで変換する。primitive外の読込なのでphase=null、確認対象が公開済みであることをpublished=trueで保持する。EIO/ENOENT回帰でprepareが停止し、元証跡・canonical/state不変と再観測可能性を確認する。filesystem metadata読込にも同じtyped mappingを使い、公開状態の根拠がない場合はpublished=nullを維持する。
