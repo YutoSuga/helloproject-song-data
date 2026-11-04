@@ -18,13 +18,23 @@ import { RECOVERY_CODES, PERSISTENCE_PHASES } from './fn004-evidence-errors.js';
 import { confirmExistingBytes } from './fn004-recovery-durability.js';
 
 const rawJson = value => Buffer.from(canonicalJson(value) + '\n');
+function nativeIoCode(error) {
+  let cause = error.cause;
+  const seen = new Set();
+  while (cause instanceof RepositoryError && !seen.has(cause)) { seen.add(cause); cause = cause.cause; }
+  return !(cause instanceof RepositoryError) && typeof cause?.code === 'string' ? cause.code : null;
+}
 async function durableUnlink(store, io, path) {
-  let published = false, phase = 'publish';
+  let published = null, phase = 'publish';
   try {
     await io.unlink(await store.resolvePath(path)); published = true; phase = 'directory_sync';
     await store.syncDirectory(path.slice(0, path.lastIndexOf('/')));
   } catch (cause) {
-    throw new RepositoryError(published ? 'PERSISTENCE_SYNC_FAILED' : 'PERSISTENCE_WRITE_FAILED',
+    if (phase === 'publish') {
+      try { published = !await store.exists(path); }
+      catch { /* An unreadable outcome remains unknown, never unpublished. */ }
+    }
+    throw new RepositoryError(phase === 'directory_sync' ? 'PERSISTENCE_SYNC_FAILED' : 'PERSISTENCE_WRITE_FAILED',
       'Evidence removal did not establish durability', { path, phase, published, cause });
   }
 }
@@ -188,6 +198,20 @@ export async function createFailureRecoveryService(root, { io = fs, audit = audi
         }, 'rollback');
         await journal({ restored_paths: [...s.chain.head.payload.restored_paths, path] });
       }
+      // A previous rename may have reached its destination while directory
+      // sync failed. All-Original readback proves bytes, not their durability.
+      // Reconfirm the existing original files before publishing terminal state.
+      const originals = new Map(owner.payload.original_manifest.files.map(file =>
+        [file.path, ledger.rawBytes[`${txRoot}/backup/${file.path}`]]));
+      await effect('rollback_confirm', originals, async () => {
+        for (const [path, raw] of originals) await confirmExistingBytes(store, io, path, raw);
+        const directory = `${txRoot}/restore/data`;
+        if (await store.exists(directory)) {
+          try { await store.syncDirectory(directory); }
+          catch (cause) { throw new RepositoryError('PERSISTENCE_SYNC_FAILED', 'Restore source directory durability is unconfirmed',
+            { cause, path: directory, phase: 'directory_sync', published: true }); }
+        }
+      }, 'rollback');
       await onBoundary({ phase: 'rollback_validation:before' }); await guard('rollback');
       check(s.provenance.all_original && s.semantic_codes.length === 0 && same(s.canonical_manifest, owner.payload.original_manifest),
         'Rollback requires exact all-original and full semantic validation');
@@ -255,7 +279,7 @@ export async function createFailureRecoveryService(root, { io = fs, audit = audi
                 recovery: { anchor: session.anchor, claims: data.archive.chain } },
               error: { code: error.code, operation: command.action === 'rollback' ? 'rollback' : 'recover', path: error.path ?? null,
                 persistence_phase: PERSISTENCE_PHASES.includes(error.phase) ? error.phase : null,
-                published: typeof error.published === 'boolean' ? error.published : null, io_code: error.cause?.code ?? null } });
+                published: typeof error.published === 'boolean' ? error.published : null, io_code: nativeIoCode(error) } });
             await publisher.publish(value, { gate, context: { owner, inputs, intent, prefix: data.chain.entries } });
           }
         } catch (recordError) { error.recovery_record_error = recordError; }

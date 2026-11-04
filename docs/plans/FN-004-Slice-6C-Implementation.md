@@ -38,6 +38,12 @@ COMMITTINGは実target集合が正式順prefixであり、recorded progressが�
 
 remaining target-only fileを逆順でrestoreし、既にoriginalのfileは触らない。全14 All-Original raw manifest＋full validator PASSを確認してから、消費済みhigh-water/eventsを保持したfailure state遷移を一度だけ行う。未消費rollbackではbefore stateを変更しない。
 
+R80-H01訂正：最後のrestoreのrenameだけが成功しdirectory syncが失敗した場合、再起動後のAll-Original readbackはdurabilityの証明にはならない。terminal state公開前に全14の既存original fileをsync・exact readbackし、destinationとrestore sourceのdirectory syncも再確認する。bytesを書き直さず、不足/不正を修復しない。再確認失敗ならstate/Proofを公開せず証拠とgateを保持する。[durability regression](../../test/fn004-recovery-durability.test.js)は実sync失敗→SIGKILL→restartと、再確認自体の失敗を検証する。
+
+R80-M01訂正：cleanup/barrier unlinkの例外でも削除未実施と断定しない。同pathの不在/残存を再観測してpublished=true/false、観測不能ならnullを保持する。元cause/path/phaseを失わず、失敗は成功結果へ変換しない。同regressionで削除前・削除後・結果不明の3ケースを検証する。
+
+R80-M02訂正：JournalのErrorEvidence.io_codeにはnested RepositoryErrorのdomain codeではなく元causeのerrnoだけを保存する。元error/cause chainはそのままthrowし、errnoがなければnull。directory sync障害の回帰でEIOを保持することを検証する。
+
 ## Terminalizationとretirement
 
 PREPARING(null)→ABORTED(null)は未作成検証済みの場合のみ。正規Intent Hが先行したpublication lagでは、既存同bytesのdurabilityを再確認してHをbindingし、nullへ戻さない。Proofには完全Journalを保持しreceipt-onlyへ偽装しない。

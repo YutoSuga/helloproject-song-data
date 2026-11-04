@@ -41,13 +41,30 @@ if (process.argv[2] === 'setup') {
 } else if (process.argv[2] === 'run') {
   const { createFailureRecoveryService } = await import('../../src/fn004-failure-recovery.js');
   const root = process.argv[3], binding = JSON.parse(process.argv[4]), boundary = process.argv[5];
-  const service = await createFailureRecoveryService(root, { onBoundary: async e => {
+  let lastRestore = false, injected = false;
+  const faultIo = boundary === 'last_restore_sync_failure' ? { ...fs,
+    rename: async (from,to) => { await fs.rename(from,to); if(to === join(root,'data/works.csv')) lastRestore = true; },
+    open: async (path,...args) => {
+      const handle = await fs.open(path,...args);
+      if (String(path) !== join(root,'data')) return handle;
+      return { close: () => handle.close(), sync: async () => {
+        if(lastRestore && !injected) { injected = true; throw Object.assign(new Error('last restore directory sync'),{code:'EIO'}); }
+        await handle.sync();
+      } };
+    } } : fs;
+  const service = await createFailureRecoveryService(root, { io: faultIo, onBoundary: async e => {
     if(e.phase === boundary || boundary === 'restore_last:after' && e.phase === 'restore:after' && e.path === 'data/works.csv') {
       process.send({ boundary }); await new Promise(() => {});
     }
   } });
   const o = await service.inspect(binding);
-  const result = await service.run({ binding, command:{ schema_version:2, request_id:binding.request_id,transaction_id:binding.transaction_id,
-    expected_observed_state_hash:o.observed_state_hash,action:o.allowed_actions[0] } });
-  process.send({ result });
+  try {
+    const result = await service.run({ binding, command:{ schema_version:2, request_id:binding.request_id,transaction_id:binding.transaction_id,
+      expected_observed_state_hash:o.observed_state_hash,action:o.allowed_actions[0] } });
+    process.send({ result });
+  } catch(error) {
+    if(boundary !== 'last_restore_sync_failure') throw error;
+    process.send({ error: {code:error.code,phase:error.phase,published:error.published}, injected });
+    await new Promise(() => {});
+  }
 }
