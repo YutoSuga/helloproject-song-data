@@ -13,15 +13,17 @@ const blocked = code => !['RECOVERY_REQUIRED', 'STATE_TRANSITION_PROOF_REQUIRED'
 export function classifyRecoverySnapshot(snapshot) {
   const s = recoverySnapshotData(snapshot), e = s.base.evidence;
   const codes = new Set(s.diagnostics.map(diagnostic => diagnostic.code));
+  const mixedException = s.provenance?.mixed && e.input_revalidation !== 'unavailable';
+  const blockingCodes = () => [...codes].filter(code => !(mixedException && s.semantic_codes.includes(code)));
   const result = (classification, action, readiness, code = null) => {
     if (code) codes.add(code);
     return validateRecoveryObservation({ ...s.base, classification, allowed_actions: action === null ? [] : [action], readiness,
       diagnostics: [...codes].sort().map(code => ({ code })) });
   };
   const stop = (code = 'RECOVERY_REQUIRED') => result('manual_stop', null,
-    (code === null ? [...codes] : [...codes, code]).some(blocked) ? 'blocked' : 'recovery_required', code);
-  if ([...codes].some(blocked)) return stop(null);
-  if (codes.size > 0) return codes.size === 1 && codes.has('GATE_BUSY') ?
+    (code === null ? blockingCodes() : [...blockingCodes(), code]).some(blocked) ? 'blocked' : 'recovery_required', code);
+  if (blockingCodes().some(blocked)) return stop(null);
+  if (blockingCodes().length > 0) return blockingCodes().length === 1 && codes.has('GATE_BUSY') ?
     result('active', null, 'recovery_required') : stop(null);
   if (e.consistency !== 'stable' || e.git_audit === null || e.historical_maxima === null) return stop();
   if (!s.owner || !s.chain || !s.state || !s.canonical_manifest) return stop();
@@ -92,8 +94,9 @@ export function classifyRecoverySnapshot(snapshot) {
     }
   }
   if (s.archive?.state === 'RETIRED' && s.gate !== null) return stop('GATE_CORRUPT');
-  if (e.owner_status === 'live') return result('active', null, readiness, 'GATE_BUSY');
-  if (e.owner_status !== 'exited' && !(action === 'cleanup' && e.owner_status === 'none' && s.gate === null)) return stop();
+  const selfOwned = s.self_owned === true;
+  if (e.owner_status === 'live' && !selfOwned) return result('active', null, readiness, 'GATE_BUSY');
+  if (!selfOwned && e.owner_status !== 'exited' && !(action === 'cleanup' && e.owner_status === 'none' && s.gate === null)) return stop();
   const classification = action === 'finalize_success' && phase === 'COMMITTING' ? 'decidable_success' : classifications[action];
   return result(classification, action, readiness, 'RECOVERY_REQUIRED');
 }

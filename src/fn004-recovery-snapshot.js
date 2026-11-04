@@ -22,6 +22,8 @@ import { validateOtherLocalEvidence } from './fn004-local-evidence-validation.js
 import { validateCandidates } from './prepare-reviews.js';
 import { validateHistoryRecord } from './fn004-history-record.js';
 import { materializeCanonicalTarget } from './fn004-target-materialization.js';
+import { validateCanonicalProvenance } from './fn004-canonical-provenance.js';
+import { ownedRecoverySnapshot } from './fn004-recovery-authority.js';
 import { check, same, closed, binding as validateBinding, processOwner, gateWitness, TERMINAL_PHASES } from './fn004-evidence-types.js';
 
 const clone = value => JSON.parse(canonicalJson(value));
@@ -34,6 +36,14 @@ class RecoverySnapshot {
 // Private-field validity is nominal input validation, not a cache of filesystem
 // truth. Every value in the immutable input is derived afresh by the builder.
 export const recoverySnapshotData = snapshot => RecoverySnapshot.read(snapshot);
+// Mint an immutable derived self-ownership context from the freshly validated
+// nominal runtime session. It is not a caller boolean or a persisted field.
+// The classifier subsequently reads this frozen input without consulting IO or
+// mutable session state; the executor separately rechecks the live capability.
+export function asOwnedRecoverySnapshot(snapshot, authority) {
+  check(ownedRecoverySnapshot(snapshot, authority), 'Snapshot lacks freshly verified self ownership');
+  return new RecoverySnapshot({ ...recoverySnapshotData(snapshot), self_owned: true });
+}
 
 const jsonFile = path => path.endsWith('.json') || path.endsWith('.lock') || /\.(?:json|lock)\.tmp-/.test(path);
 const missing = path => new RepositoryError('PERSISTENCE_NOT_FOUND', 'Required evidence is absent', { path });
@@ -362,6 +372,12 @@ export async function prepareRecoverySnapshot({ binding: b, discovery, git_audit
     }
   });
   validateOtherLocalEvidence({ selected: b, requests, docs, files, rawBytes: bytes, histories, attempt, add });
+  let provenance = null;
+  if (owner && intent && chain && original && !checkedProof && !proofIntent && !checkedCompletion && !chain.decision) {
+    try { provenance = await validateCanonicalProvenance({ owner, intent, inputs, original, canonical,
+      rawBytes: bytes, chain, state, bootstrap, git_audit }); }
+    catch (error) { if (!(error instanceof RepositoryError)) throw error; add(error.code); }
+  }
   let effective = archive?.state === 'SEALED' ? null : archive?.head.payload.owner ?? null;
   if (!effective && archive?.state !== 'SEALED' && gate) {
     effective = Object.fromEntries(['process_id', 'hostname', 'platform', 'process_instance_id', 'process_started_at',
@@ -389,7 +405,9 @@ export async function prepareRecoverySnapshot({ binding: b, discovery, git_audit
     completion_hash: checkedCompletion?.hash ?? null, effective_owner: effective, owner_status: ownerStatus,
     input_revalidation: revalidation, consistency };
   const base = { schema_version: 2, binding: b, evidence, observed_state_hash: observationHashV2({ binding: b, evidence, requests }) };
-  return new RecoverySnapshot({ base, diagnostics, owner, intent, chain, proof: checkedProof, proof_intent: proofIntent, completion: checkedCompletion,
+  return new RecoverySnapshot({ base, diagnostics, owner, intent, chain, provenance,
+    semantic_codes: canonical.validation.ok ? [] : ['CANONICAL_INVALID', ...canonical.validation.diagnostics.map(d => d.code)],
+    proof: checkedProof, proof_intent: proofIntent, completion: checkedCompletion,
     archive, barrier: ownBarrier, gate, state, cleanup_required: cleanupFiles.length > 0 || relatedGate || archive !== null && archive.state !== 'SEALED',
     canonical_manifest: canonical.manifest, original_manifest: chain ? owner.payload.original_manifest : null,
     histories: profile?.histories ?? [], profile_terminal: profile?.terminal ?? null,
