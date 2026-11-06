@@ -4,22 +4,29 @@ import { validateEvidence } from './fn004-evidence-persistence.js';
 import { sha256 } from './canonical-hash.js';
 import { check } from './fn004-evidence-types.js';
 
-export function failureProof({ binding, owner, inputs, intent, chain, authority, ended_at, histories }) {
+export function failureProof(args) {
+  check(!args.chain.head || ['ABORTED','ROLLED_BACK'].includes(args.chain.head.payload.phase), 'Expected failure terminal');
+  return terminalProof(args);
+}
+export function terminalProof({ binding, owner, inputs, intent, chain, authority, ended_at, histories }) {
   const terminal = chain.head?.payload;
-  check(!terminal || ['ABORTED','ROLLED_BACK'].includes(terminal.phase), 'Failure proof requires a failure terminal journal');
+  check(!terminal || ['ABORTED','ROLLED_BACK','COMPLETED'].includes(terminal.phase), 'Proof requires a terminal journal');
   const value = recoveryEnvelope('fn004-terminal-proof', { binding, owner, inputs, intent, journal: chain.entries,
     phase: terminal?.phase ?? 'ABORTED', before_state: owner.payload.before_state,
     consumed_state: terminal?.id_consumed ? intent.payload.expected_consumed_state : null,
-    after_state: terminal?.terminal_state ?? owner.payload.before_state, final_manifest: owner.payload.original_manifest,
-    history: null, authority: terminal?.authority ?? authority, ended_at: terminal?.recorded_at ?? ended_at, diagnostics: [] });
+    after_state: terminal?.terminal_state ?? owner.payload.before_state, final_manifest: terminal?.phase === 'COMPLETED' ? intent.payload.target_manifest : owner.payload.original_manifest,
+    history: terminal?.phase === 'COMPLETED' ? chain.decision.record : null, authority: terminal?.authority ?? authority, ended_at: terminal?.recorded_at ?? ended_at, diagnostics: [] });
   return validateTerminalProof(value, { histories });
 }
 export function failureCompletion(proof) {
+  check(proof.payload.phase !== 'COMPLETED', 'Expected failure Completion');
+  return terminalCompletion(proof);
+}
+export function terminalCompletion(proof) {
   const p = proof.payload, head = p.journal.at(-1);
-  check(p.phase !== 'COMPLETED', 'Success completion belongs to Slice 6D');
   return validateCompletion(recoveryEnvelope('fn004-completion', { binding: p.binding, phase: p.phase, proof_hash: proof.hash,
     terminal_journal: head ? { sequence: head.payload.sequence, entry_hash: head.hash } : null,
-    ended_at: p.ended_at, diagnostics: p.diagnostics, result: null }), proof);
+    ended_at: p.ended_at, diagnostics: p.diagnostics, result: p.history ? { apply_id: p.binding.apply_id, record_hash: p.history.record_hash } : null }), proof);
 }
 export function retiringEvidence({ binding, session, snapshot: s, barrierRaw, archive, at }) {
   const value = recoveryEnvelope('fn004-recovery-retiring', { binding, mutex_id: session.anchor.payload.mutex_id,

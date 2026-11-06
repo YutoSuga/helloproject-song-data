@@ -1,6 +1,23 @@
 import { RepositoryError } from './persistence.js';
 import { check } from './fn004-evidence-types.js';
 
+export async function readPublishedBytes(store, io, path) {
+  try { return await io.readFile(await store.resolvePath(path)); }
+  catch (cause) {
+    if (cause instanceof RepositoryError) throw cause;
+    throw new RepositoryError(cause.code === 'ENOENT' ? 'PERSISTENCE_NOT_FOUND' : 'PERSISTENCE_READ_FAILED',
+      'Cannot read published immutable bytes', { cause, path, phase: null, published: true });
+  }
+}
+
+export async function readPublishedJson(store, path) {
+  try { return await store.readJson(path, { strict: true }); }
+  catch (error) {
+    if (error instanceof RepositoryError) Object.assign(error, { phase: error.phase ?? null, published: true });
+    throw error;
+  }
+}
+
 // Reconfirm an already published immutable artifact without replacing it.
 // Used after crash/uncertain sync; no missing/partial evidence is repaired.
 export async function confirmExistingBytes(store, io, path, expected) {

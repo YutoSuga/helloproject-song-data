@@ -63,16 +63,23 @@ function compareAcquisition(before, after, allowed) {
 
 // Internal lifecycle service. No public CLI, serialized witness or client flag
 // can create a session: it is minted only after actual observation and OS proof.
-export async function acquireRecoveryAuthority(root, binding, command, { io = fs, audit = auditGitIds,
-  probeOwner = probeRecoveryOwner, clock = () => new Date().toISOString(), onBoundary = async () => {} } = {}) {
+export const acquireRecoveryAuthority = (root, binding, command, options) => acquireAuthority(root, binding, command, options, false);
+export const acquireSuccessRecoveryAuthority = (root, binding, command, options) => acquireAuthority(root, binding, command, options, true);
+async function acquireAuthority(root, binding, command, { io = fs, audit = auditGitIds,
+  probeOwner = probeRecoveryOwner, clock = () => new Date().toISOString(), onBoundary = async () => {} } = {}, successSide) {
   binding = JSON.parse(canonicalJson(binding)); command = JSON.parse(canonicalJson(command));
   const store = await createPersistence(root, { io });
   const initial = await collectRecoverySnapshot(store.root, binding, { discover: r => discoverEvidence(r, { io }), audit, probeOwner });
   const observation = classifyRecoverySnapshot(initial);
   if (!matchesRecoveryObservation(command, observation)) changed('Stale or ineligible Recovery command');
-  if (command.action === 'finalize_success') changed('Success-side Recovery belongs to Slice 6D');
   const old = recoverySnapshotData(initial), self = await recoveryProcessIdentity();
-  if (old.chain?.decision || old.proof?.payload.phase === 'COMPLETED') changed('Success-side Recovery belongs to Slice 6D');
+  const terminal = old.proof?.payload ?? old.proof_intent?.payload ?? old.chain?.head?.payload;
+  if (successSide) {
+    if (!['finalize_success', 'finish_terminal', 'cleanup'].includes(command.action) ||
+        (command.action !== 'finalize_success' && terminal?.phase !== 'COMPLETED')) changed('Failure-side work is not a success Recovery');
+  } else if (command.action === 'finalize_success' || old.chain?.decision || terminal?.phase === 'COMPLETED') {
+    changed('Success-side Recovery belongs to Slice 6D');
+  }
   const d0 = await discoverEvidence(store.root, { io }), ga = await audit(store.root);
   const again = await prepareRecoverySnapshot({ binding, discovery: d0, git_audit: ga,
     probe: old.base.evidence.effective_owner ? await probeOwner(old.base.evidence.effective_owner) : null });
