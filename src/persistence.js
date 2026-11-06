@@ -133,12 +133,12 @@ export async function createPersistence(root, { io = fs } = {}) {
       if (handle) { try { await handle.close(); } catch { /* original failure retained */ } }
       // Adapters may throw after the syscall took effect. A failed syscall is
       // not proof of non-publication. Observe both names; uncertainty stays null.
-      if (phase === "publish" && cause.code !== "EEXIST") {
+      if (phase === "publish") {
         published = null;
         try {
           if (exclusive) {
-            const a = await io.stat(temp);
-            try { const b = await io.stat(target); published = a.dev === b.dev && a.ino === b.ino; }
+            const a = await io.stat(temp, { bigint: true });
+            try { const b = await io.stat(target, { bigint: true }); published = a.dev === b.dev && a.ino === b.ino; }
             catch (error) { if (error.code === "ENOENT") published = false; }
           } else {
             try { await io.lstat(temp); published = false; }

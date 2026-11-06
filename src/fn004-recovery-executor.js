@@ -114,18 +114,20 @@ export async function createRecoveryExecutor(root, { io = fs, audit = auditGitId
       'Fresh evidence no longer proves owned continuation');
       return s;
     }
+    function publishedError(error, changes) {
+      if (error instanceof RepositoryError && /^PERSISTENCE_/.test(error.code) && changes.has(error.path)) {
+        Object.assign(error, { phase: error.phase ?? null, published: true });
+      }
+      return error;
+    }
     async function effect(phase, changes, fn, action = null) {
       const path = [...changes.keys()].find(path => path.startsWith('data/')) ?? changes.keys().next().value;
       await guard(action); await onBoundary({ phase: `${phase}:before`, path }); await guard(action);
       await fn();
-      try { await refresh(changes); }
-      catch (error) {
-        if (error instanceof RepositoryError && /^PERSISTENCE_/.test(error.code) && changes.has(error.path)) {
-          Object.assign(error, { phase: error.phase ?? null, published: true });
-        }
-        throw error;
-      }
-      await onBoundary({ phase: `${phase}:after`, path }); await guard();
+      try {
+        await refresh(changes);
+        await onBoundary({ phase: `${phase}:after`, path }); await guard();
+      } catch (error) { throw publishedError(error, changes); }
     }
     async function publish(value, phase) {
       const context = { owner, inputs, intent, prefix: s.chain.entries, proof: s.proof,
@@ -278,7 +280,7 @@ export async function createRecoveryExecutor(root, { io = fs, audit = auditGitId
       await releaseGate(gate); revoke();
       await onBoundary({phase:'gate_release:after'});
       return { schema_version:2,request_id:binding.request_id,transaction_id:binding.transaction_id,
-        action:command.action,outcome:'completed',observation:await inspect(binding) };
+        action:command.action,outcome:command.action==='cleanup'?'cleaned':'completed',observation:await inspect(binding) };
     }
     const barrierPath = 'staging/.fn004-recovery.lock', barrierRaw = ledger.rawBytes[barrierPath];
     const archiveContext = () => ({ anchor: session.anchor, claims: s.archive.chain,
@@ -292,8 +294,11 @@ export async function createRecoveryExecutor(root, { io = fs, audit = auditGitId
     const retired = retiredEvidence({ binding, session, retiring, snapshot: s, archive: archiveContext(), at: clock() });
     await onBoundary({ phase: 'retired:before' }); await refresh();
     await store.createJsonExclusive(evidencePath(retired), retired);
-    await refresh(new Map([[evidencePath(retired), rawJson(retired)]]));
-    await onBoundary({ phase: 'retired:after' }); await refresh();
+    const retiredChanges = new Map([[evidencePath(retired), rawJson(retired)]]);
+    try {
+      await refresh(retiredChanges);
+      await onBoundary({ phase: 'retired:after' }); await refresh();
+    } catch (error) { throw publishedError(error, retiredChanges); }
     check(s.archive.state === 'RETIRED' && s.gate === null, 'Retirement release conditions changed');
     await durableUnlink(store, io, barrierPath); revoke();
     const observation = await inspect(binding);

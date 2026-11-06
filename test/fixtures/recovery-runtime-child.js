@@ -4,6 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { acquireGate } from '../../src/fn004-gate.js';
 import { sha256 } from '../../src/canonical-hash.js';
 import { commitFixture, transactionFixture, append, recoveryDiscovery } from './transaction-evidence.js';
+import { terminalProof, terminalCompletion } from '../../src/fn004-failure-terminal.js';
 
 // Keep the IPC handle referenced while paused. An unsettled top-level await
 // alone may exit naturally and is not a substitute for a real SIGKILL.
@@ -25,11 +26,17 @@ if (['setup','setup-normal'].includes(process.argv[2])) {
     journal.push(append(f.consumed, { replaced_paths: P }));
   }
   if(mode==='decided'||mode==='history')journal=f.journal.slice(0,mode==='decided'?6:7);
-  if(mode.startsWith('success-'))journal=f.journal.slice(0,mode==='success-completed'?8:mode==='success-state'?7:mode==='success-lag'?3:['success-candidate','success-noop-exception'].includes(mode)?5:6);
+  if(mode.startsWith('success-'))journal=f.journal.slice(0,['success-completed','success-cleanup'].includes(mode)?8:mode==='success-state'?7:mode==='success-lag'?3:['success-candidate','success-noop-exception'].includes(mode)?5:6);
   const d = recoveryDiscovery(f, { journal, intent: ['abort','receipt'].includes(mode) ? null : f.intent,
-    state: ['success-state','success-completed'].includes(mode) ? f.after : abortMode || ['noop','unconsumed'].includes(mode) ? f.state : f.intent.payload.expected_consumed_state,
+    state: ['success-state','success-completed','success-cleanup'].includes(mode) ? f.after : abortMode || ['noop','unconsumed'].includes(mode) ? f.state : f.intent.payload.expected_consumed_state,
     omit: P.map(path => `staging/transactions/${f.binding.transaction_id}/temp/${path}`) });
-  if(['history','success-state','success-completed'].includes(mode))d.rawBytes[`staging/apply-history/${f.binding.apply_id}.json`]=Buffer.from(JSON.stringify(f.record));
+  if(['history','success-state','success-completed','success-cleanup'].includes(mode))d.rawBytes[`staging/apply-history/${f.binding.apply_id}.json`]=Buffer.from(JSON.stringify(f.record));
+  if(mode==='success-cleanup') {
+    const proof=terminalProof({binding:f.binding,owner:f.owner,inputs:f.inputs,intent:f.intent,
+      chain:{entries:journal,head:journal.at(-1),decision:{record:f.record}},histories:[f.record]});
+    d.rawBytes[`staging/transaction-proofs/${f.binding.transaction_id}.json`]=Buffer.from(JSON.stringify(proof));
+    d.rawBytes[`staging/apply-requests/completions/${f.binding.request_id}.json`]=Buffer.from(JSON.stringify(terminalCompletion(proof)));
+  }
   if(mode==='success-candidate')d.rawBytes[`staging/transactions/${f.binding.transaction_id}/temp/apply-history.json`]=Buffer.from(JSON.stringify(f.record));
   for (const [path, bytes] of Object.entries(d.rawBytes)) {
     if (path === 'staging/.fn004.lock') continue;
@@ -44,8 +51,12 @@ if (['setup','setup-normal'].includes(process.argv[2])) {
     const service=await createSuccessRecoveryService(root,{onBoundary:async e=>{
       if(e.phase===boundary){process.send({binding:f.binding,boundary});await new Promise(()=>{});}
     }});
+    const semantic_before=mode==='success-cleanup'?Object.fromEntries(await Promise.all([
+      'staging/fn004-state.json',`staging/apply-history/${f.binding.apply_id}.json`,
+      `staging/transaction-proofs/${f.binding.transaction_id}.json`
+    ].map(async path=>[path,sha256(await fs.readFile(join(root,path)))]))):null;
     const result=await service.finalize({gate:liveGate,binding:f.binding});
-    process.send({binding:f.binding,result});
+    process.send({binding:f.binding,result,semantic_before});
   } else process.send({ binding:f.binding });
   await new Promise(() => {});
 } else if (['run','run-success'].includes(process.argv[2])) {
@@ -85,7 +96,8 @@ if (['setup','setup-normal'].includes(process.argv[2])) {
       if(to===join(root,'staging/fn004-state.json')&&successFault==='state-rename-after'&&!injected){injected=true;throw cause;}
     },
     readFile:async(path,...args)=>{
-      if(!injected&&(successFault==='history-readback'&&activePhase==='history:before'&&path===historyPath||
+      if(!injected&&(['history-readback','history-guard-readback'].includes(successFault)&&activePhase===(successFault==='history-readback'?'history:before':'history:after')&&path===historyPath||
+        successFault==='retired-readback'&&activePhase==='retired:before'&&String(path).endsWith('.retired.json')||
         successFault==='completion-readback'&&activePhase==='completion:before'&&String(path).endsWith(`/completions/${binding.request_id}.json`))) {
         try{await fs.stat(path);}catch(e){if(e.code==='ENOENT')return fs.readFile(path,...args);throw e;}
         injected=true;throw cause;

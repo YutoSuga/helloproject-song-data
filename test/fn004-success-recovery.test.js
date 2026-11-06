@@ -9,6 +9,7 @@ import {fork} from 'node:child_process';
 import {once} from 'node:events';
 import {tmpdir} from 'node:os';
 import {hashState} from '../src/fn004-state.js';
+import {sha256} from '../src/canonical-hash.js';
 
 // Every case owns an isolated repository and real worker processes.
 describe('6D success runtime', {concurrency:2},()=>{
@@ -65,7 +66,7 @@ for(const boundary of ['decided:after','history:after','success_state:after','co
   assert.deepEqual(await fs.readdir(join(root,`staging/recovery-ownership/${binding.transaction_id}/claims`)),['000001.json']);
 });
 
-for(const fault of ['target-sync','target-source-sync','consumption-sync','decision-sync','terminal-sync','history-link-before','history-link-after','history-readback','state-rename-after','state-confirm-sync','completion-readback'])test(`6D I/O ${fault}: retained typed evidence, process exit and forward-only restart`,{timeout:900000},async t=>{
+for(const fault of ['target-sync','target-source-sync','consumption-sync','decision-sync','terminal-sync','history-link-before','history-link-after','history-readback','history-guard-readback','retired-readback','state-rename-after','state-confirm-sync','completion-readback'])test(`6D I/O ${fault}: retained typed evidence, process exit and forward-only restart`,{timeout:900000},async t=>{
   const {root,binding}=await fixture(t,fault.startsWith('target-')?'alltarget':fault==='consumption-sync'?'success-noop-exception':fault==='terminal-sync'?'success-completed':fault==='state-confirm-sync'?'success-state':'decided');
   if(fault==='target-source-sync')await fs.mkdir(join(root,`staging/transactions/${binding.transaction_id}/temp/data`),{recursive:true});
   const before=(await readCanonicalSnapshot(root)).manifest;
@@ -83,6 +84,14 @@ for(const fault of ['target-sync','target-source-sync','consumption-sync','decis
   assert.ok(['finalize_success','finish_terminal','cleanup'].includes(o.allowed_actions[0]),JSON.stringify(o));
   assert.equal((await service.run({binding,command:command(binding,o)})).observation.readiness,'initialized');
   assert.deepEqual((await readCanonicalSnapshot(root)).manifest,before);
+});
+
+test('R82-M02 original owner cleanup returns cleaned without new semantic finalization',async t=>{
+  const root=await fs.mkdtemp(join(tmpdir(),'fn004-success-cleanup-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+  const worker=await pausedChild(t,root,['setup-normal',root,'success-cleanup']);
+  assert.equal(worker.message.result.action,'cleanup');assert.equal(worker.message.result.outcome,'cleaned');
+  for(const [path,hash] of Object.entries(worker.message.semantic_before))assert.equal(sha256(await fs.readFile(join(root,path))),hash);
+  assert.equal(worker.message.result.observation.readiness,'initialized');await worker.kill();
 });
 
 test('normal owner SIGKILL after COMPLETED resumes only finish_terminal under successor authority',async t=>{

@@ -81,3 +81,35 @@ for(const mode of ['before','after','unknown'])test(`atomic success state rename
     assert.equal(error.published,mode==='unknown'?null:mode==='after');return true;
   });
 });
+
+for(const operation of ['link','rename'])test(`R82-M03 ${operation} EEXIST after side effect still reports published`,async t=>{
+  const {root}=await setup(t),path='staging/review82-state.json';
+  if(operation==='rename')await fs.writeFile(join(root,path),'{}');
+  const cause=Object.assign(new Error('post-syscall error'),{code:'EEXIST'});
+  const io={...fs,[operation]:async(...args)=>{await fs[operation](...args);throw cause;}};
+  const store=await createPersistence(root,{io});
+  await assert.rejects(store[operation==='link'?'createJsonExclusive':'writeJsonAtomic'](path,{generation:2}),error=>{
+    assert.equal(error.cause,cause);assert.equal(error.path,path);assert.equal(error.phase,'publish');
+    assert.equal(error.published,true);return true;
+  });
+  assert.deepEqual(JSON.parse(await fs.readFile(join(root,path))),{generation:2});
+});
+test('R82-M03 real no-clobber EEXIST remains unpublished and retains existing bytes',async t=>{
+  const {root}=await setup(t),path='staging/review82-existing.json',store=await createPersistence(root);
+  await store.createJsonExclusive(path,{original:true});
+  await assert.rejects(store.createJsonExclusive(path,{replacement:true}),error=>error.code==='PERSISTENCE_ALREADY_EXISTS'&&error.published===false);
+  assert.deepEqual(JSON.parse(await fs.readFile(join(root,path))),{original:true});
+});
+test('R82-M03 no-clobber identity comparison retains full-width inode precision',async t=>{
+  const {root}=await setup(t),path='staging/review82-inode.json',target=join(root,path);
+  await fs.writeFile(target,'{"original":true}');
+  const io={...fs,stat:async(p,options)=>{
+    if(p!==target&&!String(p).includes('.tmp-'))return fs.stat(p,options);
+    const ino=2n**54n+(p===target?1n:0n);
+    return {dev:options?.bigint?1n:1,ino:options?.bigint?ino:Number(ino)};
+  }};
+  await assert.rejects((await createPersistence(root,{io})).createJsonExclusive(path,{replacement:true}),error=>{
+    assert.equal(error.code,'PERSISTENCE_ALREADY_EXISTS');assert.equal(error.published,false);return true;
+  });
+  assert.equal(await fs.readFile(target,'utf8'),'{"original":true}');
+});

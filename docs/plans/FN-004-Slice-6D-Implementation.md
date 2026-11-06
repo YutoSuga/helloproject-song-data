@@ -48,6 +48,14 @@ Recoveryは6Cのcleanup→RETIRING→gate release→RETIRED→barrier releaseを
 
 全テストはfixture/temp repositoryを使用する。production canonical/staging、既存Request原本、通常の成功Historyを試験目的で更新しない。
 
+## PR #82 独立レビュー修正
+
+R82-M01：公開primitiveが成功した後の追加guard、およびgate解放後のRETIRED readbackで、当該公開pathのI/O errorがpublished情報を失わないようにする。cause/pathを保持し、既知の公開済み操作にだけpublished=true・readback phase=nullを付ける。例外を成功へ変換せず、barrier/evidenceを保持して再起動後に再分類する。History公開後guardとRETIRED公開後readbackへのEIO→SIGKILL→successor再開を回帰固定する。
+
+R82-M02：元live ownerのfinalizeがcleanup段階から入った場合も、既存v2 action/outcome規則どおりcleanup→cleanedを返す。state/History/Proofの元bytesは保持し、semantic finalizationを再実行しない。
+
+R82-M03：publication syscall後のadapter例外は、EEXISTでも未実施の単独証明にしない。temp/targetのinode・残存・bytesからpublished=true/false/nullを再観測し、元cause/code/path/phaseを保持する。inode/devはBigIntで比較し、Number丸めで別fileを同一と認定しない。既存の別inodeへの通常no-clobber衝突はpublished=falseのままで、既存bytesを変更しない。
+
 ## 6Eへのhandoff
 
 6Eへ残すのは通常Applyのinitial dispatch、prepare→ID消費→canonical置換→成功方針のcritical section、両側kernelの合成、Request response/通常readerのterminal接続である。公開CLIは6F、UI/API/DBは今回追加しない。候補status変更・削除、Git自動化、既存canonical rowの訂正/削除も追加しない。
