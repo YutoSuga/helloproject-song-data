@@ -80,7 +80,7 @@ export function createDecisionService({ root = process.cwd(), io, clock = () => 
     const persistence = await createPersistence(root, io ? {io} : {});
     return gated(repository.root, `decision_${action}`, async gate => {
       const snapshot = await validatedSnapshot(persistence);
-      const ready = await inspectRuntimeState(persistence,{snapshot});
+      const ready = await inspectRuntimeState(persistence,{snapshot,gate});
       if (ready.status !== 'READY' || ready.readiness !== 'initialized') fail(ready.status === 'READY' ? 'RECOVERY_REQUIRED' : ready.status,'Runtime blocks Decision mutation');
       const current = await repository.readDecisionStore({gate});
       const preflight = inspectDecisionMutation(current,action,input);
@@ -102,7 +102,7 @@ export function createDecisionService({ root = process.cwd(), io, clock = () => 
       const repository = await createFn004Repository(root,io ? {io} : {});
       return gated(repository.root,'decision_registry',async gate => {
         const persistence = await createPersistence(root,io ? {io} : {});
-        const ready = await inspectRuntimeState(persistence);
+        const ready = await inspectRuntimeState(persistence,{gate});
         if (ready.status !== 'READY' || ready.readiness !== 'initialized') fail(ready.status === 'READY' ? 'RECOVERY_REQUIRED' : ready.status,'Runtime blocks Decision registry reads');
         return buildDecisionRegistry(await repository.readDecisionStore({gate}));
       });

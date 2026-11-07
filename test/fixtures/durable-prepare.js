@@ -11,7 +11,8 @@ const exec = promisify(execFile);
 export async function prepareFixture(t, options = {}) {
   const root = await fs.mkdtemp(join(tmpdir(), 'fn004-prepare-'));
   const gate = await acquireGate({ root, operation: 'apply' });
-  t.after(async () => { try { await releaseGate(gate); } finally { await fs.rm(root, { recursive: true, force: true }); } });
+  let ownsGate=true;
+  t.after(async () => { try { if(ownsGate)await releaseGate(gate); } finally { await fs.rm(root, { recursive: true, force: true }); } });
   const raw = await fs.readFile(join(root, 'staging/.fn004.lock')), stat = await fs.stat(join(root, 'staging/.fn004.lock'), { bigint: true });
   const witness = { metadata: JSON.parse(raw), byte_length: raw.length, sha256: sha256(raw), device: stat.dev.toString(), inode: stat.ino.toString() };
   const f = transactionFixture({ ...options, gate: witness });
@@ -31,5 +32,7 @@ export async function prepareFixture(t, options = {}) {
     return Object.fromEntries(entries);
   }
   const before = await protectedHashes();
-  return { ...f, root, gate, before, protectedHashes, apply_time: f.genesis.payload.apply_time };
+  async function releaseFixtureGate(){if(ownsGate){await releaseGate(gate);ownsGate=false;}}
+  if(options.releaseGate)await releaseFixtureGate();
+  return { ...f, root, gate, releaseFixtureGate, before, protectedHashes, apply_time: f.genesis.payload.apply_time };
 }

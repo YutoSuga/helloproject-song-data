@@ -8,14 +8,14 @@ export function failureProof(args) {
   check(!args.chain.head || ['ABORTED','ROLLED_BACK'].includes(args.chain.head.payload.phase), 'Expected failure terminal');
   return terminalProof(args);
 }
-export function terminalProof({ binding, owner, inputs, intent, chain, authority, ended_at, histories }) {
+export function terminalProof({ binding, owner, inputs, intent, chain, authority, ended_at, histories, diagnostics = [] }) {
   const terminal = chain.head?.payload;
   check(!terminal || ['ABORTED','ROLLED_BACK','COMPLETED'].includes(terminal.phase), 'Proof requires a terminal journal');
   const value = recoveryEnvelope('fn004-terminal-proof', { binding, owner, inputs, intent, journal: chain.entries,
     phase: terminal?.phase ?? 'ABORTED', before_state: owner.payload.before_state,
     consumed_state: terminal?.id_consumed ? intent.payload.expected_consumed_state : null,
     after_state: terminal?.terminal_state ?? owner.payload.before_state, final_manifest: terminal?.phase === 'COMPLETED' ? intent.payload.target_manifest : owner.payload.original_manifest,
-    history: terminal?.phase === 'COMPLETED' ? chain.decision.record : null, authority: terminal?.authority ?? authority, ended_at: terminal?.recorded_at ?? ended_at, diagnostics: [] });
+    history: terminal?.phase === 'COMPLETED' ? chain.decision.record : null, authority: terminal?.authority ?? authority, ended_at: terminal?.recorded_at ?? ended_at, diagnostics });
   return validateTerminalProof(value, { histories });
 }
 export function failureCompletion(proof) {

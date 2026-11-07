@@ -143,8 +143,10 @@ export async function releaseGate(token) {
     await lease.store.syncDirectory("staging");
   } catch (cause) {
     lease.active = false;
-    if (cause instanceof RepositoryError && cause.code === "GATE_OWNERSHIP_MISMATCH") throw cause;
-    throw new RepositoryError("GATE_RELEASE_FAILED", "Gate release/sync failed; cleanup required", { path: GATE_PATH, cleanup_required: true, cause });
+    const error = cause instanceof RepositoryError && cause.code === "GATE_OWNERSHIP_MISMATCH" ? cause :
+      new RepositoryError("GATE_RELEASE_FAILED", "Gate release/sync failed; cleanup required", { path: GATE_PATH, cleanup_required: true, cause });
+    lease.release_error = error;
+    throw error;
   } finally {
     if (lease.handle) { try { await lease.handle.close(); } catch { /* failure already propagated */ } lease.handle = null; }
   }
@@ -156,6 +158,7 @@ export async function closeRetainedGate(token) {
   const lease = token && leases.get(token);
   if (!lease) throw new RepositoryError('GATE_OWNERSHIP_MISMATCH', 'Unknown retained gate lease');
   lease.active = false;
+  lease.retained = true;
   if (lease.handle) { const handle = lease.handle; lease.handle = null; await handle.close(); }
 }
 
@@ -165,7 +168,15 @@ export async function withCanonicalGate({ root = process.cwd(), operation = "can
   let result, operationError, failed = false;
   try { result = await scope.run(new Map([...(scope.getStore() ?? []), [token.root, token]]), () => fn(token)); }
   catch (error) { operationError = error; failed = true; }
-  try { await releaseGate(token); }
+  try {
+    const lease = leases.get(token);
+    if (lease.active) await releaseGate(token);
+    // An awaited internal owner may consume the same lease. Never release a
+    // second time, or unlink a retained failure gate. Caught release failures
+    // still cannot be presented as a successful callback.
+    else if (lease.release_error) throw lease.release_error;
+    else if (lease.retained && !failed) throw new RepositoryError('RECOVERY_REQUIRED', 'Owner retained the gate for explicit Recovery');
+  }
   catch (error) {
     if (failed) { error.operation_error = operationError; error.diagnostics = [...(operationError?.diagnostics ?? []), ...error.diagnostics]; }
     throw error;

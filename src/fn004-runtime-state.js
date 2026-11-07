@@ -28,7 +28,7 @@ export async function validatedSnapshot(store) {
 // Called only while holding the common gate. No writes, repairs or cleanup.
 // An absent empty History directory in a clone is proven by valid genesis,
 // never by directory absence alone. Unknown runtime work stays fail-closed.
-export async function inspectRuntimeState(store, { historical, snapshot } = {}) {
+export async function inspectRuntimeState(store, { historical, snapshot, gate, io } = {}) {
   const stateExists = await store.exists(STATE_PATH), markerExists = await store.exists(BOOTSTRAP_PATH);
   const transactions = await directoryEntries(store, "staging/transactions");
   const requests = await directoryEntries(store, "staging/apply-requests");
@@ -36,7 +36,26 @@ export async function inspectRuntimeState(store, { historical, snapshot } = {}) 
   const temps = (await directoryEntries(store, "staging")).filter((name) => name.startsWith(".fn004-") && name.includes(".tmp-"));
   const base = { readiness: "blocked", existing_identity: null, exhausted_namespaces: [], diagnostics: [] };
   const fail = (code, message, cause) => ({ ...base, readiness: code === "STATE_TRANSITION_PROOF_REQUIRED" || code === "RECOVERY_REQUIRED" ? "recovery_required" : "blocked", status: code, diagnostics: cause?.diagnostics ?? [{ code, severity: "error", message }], cause });
-  if (requests.length || transactions.some((name) => !bootstrapDirectory.test(name))) return fail("RECOVERY_REQUIRED", "Unknown or pending runtime work requires inspection");
+  const proofs = await directoryEntries(store, "staging/transaction-proofs");
+  if (requests.length || proofs.length || transactions.some((name) => !bootstrapDirectory.test(name))) {
+    // Without a Receipt or independent terminal Proof, work remains unbound.
+    // Preserve the legacy recovery-required boundary; a live lease alone does
+    // not turn an unknown directory into a validated transaction package.
+    if (!gate || !stateExists || !markerExists || !requests.length && !proofs.length) return fail('RECOVERY_REQUIRED', 'A live lease and bound evidence are required to prove local terminal work');
+    try {
+      snapshot ??= await validatedSnapshot(store); historical ??= await auditGitIds(store.root);
+      const { inspectTerminalRuntime } = await import('./fn004-terminal-runtime.js');
+      const runtime = await inspectTerminalRuntime(store, { gate, snapshot, historical, io });
+      // Preserve the old success-only DTO and its failure boundary separately.
+      const history_verification = verifySuccessfulHistory({ bootstrap: runtime.terminal_context.bootstrap,
+        state: await store.readJson(STATE_PATH, { strict: true }), snapshot, git_audit: historical,
+        history_directory: await readApplyHistoryDirectory(store) });
+      return { ...runtime, history_verification };
+    } catch (cause) {
+      if(cause instanceof RepositoryError && /^(PERSISTENCE_|PATH_)/.test(cause.code))throw cause;
+      return fail(cause instanceof RepositoryError ? cause.code : 'INTEGRITY_CONFLICT',
+      'Transaction terminal proof does not permit ordinary use', cause); }
+  }
   if (!stateExists && !markerExists && !transactions.length && !temps.length && !history.length) {
     return { ...base, status: "BOOTSTRAP_REQUIRED" };
   }

@@ -1,3 +1,4 @@
+import { validateEvidenceCollections } from './fn004-evidence-collections.js';
 import { canonicalJson, hashCanonicalJson, sha256 } from './canonical-hash.js';
 import { parseStrictJson } from './strict-json.js';
 import { RepositoryError } from './persistence.js';
@@ -134,36 +135,7 @@ export async function prepareRecoverySnapshot({ binding: b, discovery, git_audit
   plan: required(`staging/apply-plans/${b.plan_id}.json`), approval: required(`staging/apply-approvals/${b.approval_id}.json`),
   request: receiptHashProjectionV1(request) }));
   if (inputs) attempt(() => validateEvidenceInputs(b, inputs));
-  for (const [path, value] of Object.entries(docs)) {
-    if (publisherTarget(path)) continue;
-    if (/^staging\/apply-plans\//.test(path)) attempt(() => {
-      validateApplyPlan(value); check(path === `staging/apply-plans/${value.plan_id}.json`, 'Plan filename mismatch');
-    });
-    if (/^staging\/apply-approvals\/apr_/.test(path)) attempt(() => {
-      validateApproval(value); check(path === `staging/apply-approvals/${value.approval_id}.json`, 'Approval filename mismatch');
-      const plan = required(`staging/apply-plans/${value.plan_id}.json`);
-      validateApplyPlan(plan);
-      check(value.repository_instance_id === b.repository_instance_id && plan.payload.bootstrap_hash === b.bootstrap_hash &&
-        plan.plan_hash === value.plan_hash && same(plan.payload.decision.identity, { decision_id: value.decision_id,
-          revision: value.revision, content_hash: value.decision_content_hash }), 'Approval static binding mismatch');
-    });
-    if (path.startsWith('staging/apply-history/')) attempt(() => check(path === `staging/apply-history/${value?.payload?.apply_id}.json`, 'History filename mismatch'));
-    if (path.startsWith('staging/transaction-proofs/')) attempt(() => check(path === `staging/transaction-proofs/${value?.payload?.binding?.transaction_id}.json`, 'Proof filename mismatch'));
-    if (path.startsWith('staging/apply-approvals/invalidations/')) attempt(() => {
-      validateInvalidation(value, path.split('/').at(-1).slice(0, -5));
-      const approval = validateApproval(required(`staging/apply-approvals/${value.approval_id}.json`));
-      check(value.approval_hash === approvalHash(approval) && value.repository_instance_id === approval.repository_instance_id,
-        'Invalidation does not bind Approval');
-      const accepted = requests.find(request => request.receipt.request_id === approval.intended_request_id);
-      if (value.accepted_request === null) check(!accepted, 'Pre-accept Invalidation coexists with Receipt');
-      else {
-        if (!accepted) { add('RECOVERY_REQUIRED'); return; }
-        check(accepted.receipt.approval_id === approval.approval_id && accepted.receipt.approval_hash === value.approval_hash &&
-          same(value.accepted_request, { request_id: accepted.receipt.request_id, receipt_hash: accepted.receipt_hash }),
-        'Invalidation does not bind exact Receipt');
-      }
-    });
-  }
+  validateEvidenceCollections({ docs, requests, binding: b, required, attempt, add });
   const journalFiles = files.filter(file => file.path.startsWith(`${root}/journal/`) && !publisherTarget(file.path));
   const journal = journalFiles.map(file => docs[file.path]);
   const chain = owner ? attempt(() => {
@@ -312,6 +284,21 @@ export async function prepareRecoverySnapshot({ binding: b, discovery, git_audit
   for (const file of files.filter(file => file.kind === 'file' && publisherTarget(file.path))) {
     const target = publisherTarget(file.path), value = docs[file.path];
     if (target === `${root}/transaction.json` && value && chain) attempt(() => validateJournalCache(value, { owner, entries: chain.entries }));
+    else if (target === 'staging/fn004-state.json' && value && owner && chain) attempt(() => {
+      // Atomic state publication may stop before rename. A complete temporary
+      // expected consumed/terminal state is not the actual current state and
+      // cannot prove consumption. Bind it to this transaction's exact evidence
+      // while the ordinary state/phase predicate still examines only current.
+      validateFn004State(value);
+      const expected = [state, ...chain.entries.map(entry => entry.payload.terminal_state)].filter(Boolean);
+      if (intent && chain.entries.some(entry => entry.payload.phase === 'COMMITTING')) expected.push(intent.payload.expected_consumed_state);
+      const currentPhase = chain.head?.payload.phase === 'RECOVERY_REQUIRED' ? chain.head.payload.resume_phase : chain.head?.payload.phase;
+      if (chain.decision && ['HISTORY_COMMITTED','COMPLETED'].includes(currentPhase)) expected.push(terminalStateForEntry({
+        phase:'COMPLETED',consumed_state:intent.payload.expected_consumed_state,history:chain.decision }));
+      if (chain.rollback && ['ROLLING_BACK','ROLLED_BACK'].includes(currentPhase)) expected.push(terminalStateForEntry({
+        ...chain.head.payload,phase:'ROLLED_BACK' }));
+      check(expected.some(state => same(state, value)), 'Conflicting state publisher temporary evidence');
+    });
     else if (!jsonFile(target) && bytes[target]) attempt(() => check(bytes[file.path].equals(bytes[target]), 'Conflicting raw publisher temporary evidence'));
     else if (docs[target]) attempt(() => check(value && same(value, docs[target]), 'Conflicting publisher temporary evidence'));
     else if (target === `staging/apply-history/${b.apply_id}.json` && value && chain?.decision) {
