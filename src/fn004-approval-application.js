@@ -1,3 +1,5 @@
+import { closeRetainedGate } from './fn004-gate.js';
+import { lookupAppliedDecision } from './fn004-history-projections.js';
 import { randomUUID } from 'node:crypto';
 import { canonicalJson } from './canonical-hash.js';
 import { createPersistence, RepositoryError } from './persistence.js';
@@ -18,19 +20,25 @@ const freeze=v=>{try{return JSON.parse(canonicalJson(v));}catch{integrity('Input
 
 // Trusted in-process application boundary, not an HTTP/input authentication
 // adapter. context.actor must be supplied by the trusted operator/backend.
-// No dispatcher, canonical writer, completion writer or recovery executor.
-export function createApprovalRequestService({root=process.cwd(),io,clock=()=>new Date().toISOString()}={}) {
+// The default remains acceptance-only until the 6F public release. The 6E
+// internal composition supplies an executor through trusted factory options.
+export function createApprovalRequestService({root=process.cwd(),io,clock=()=>new Date().toISOString(),onBoundary=async()=>{},execute=async()=>{}}={}) {
   const options=io?{io}:{};
   const knownEvents=new Set();
+  async function acceptanceNamespace(c){
+    for(const directory of ['staging/apply-approvals','staging/apply-requests']) {
+      if((await directoryEntries(c.store,directory)).some(name=>name.startsWith('.fn004-')&&name.includes('.tmp-'))) fail('RECOVERY_REQUIRED','Unresolved artifact publication evidence');
+    }
+  }
   async function run(operation,command,context,fn) {
     const input=freeze(command), trusted=freeze(context.actor);
     validateActor(trusted);
     return withCanonicalGate({root,gate:context.gate,operation,fn:async gate=>{
       const store=await createPersistence(root,options),repository=await createFn004Repository(root,options);
       const c={store,repository,gate,actor:trusted};
-      for(const directory of ['staging/apply-approvals','staging/apply-requests']) {
-        if((await directoryEntries(store,directory)).some(name=>name.startsWith('.fn004-')&&name.includes('.tmp-'))) fail('RECOVERY_REQUIRED','Unresolved artifact publication evidence');
-      }
+      // Saved Request identity/static integrity precedes current work checks.
+      // Request methods invoke the same namespace guard after that comparison.
+      if(!['request_accept','request_check','request_read'].includes(operation))await acceptanceNamespace(c);
       return fn(input,c);
     }});
   }
@@ -65,21 +73,32 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
     return await c.store.exists(requestPath(id)) ? staticRequest(await c.repository.getApplyRequest(id,{gate:c.gate}),c,expectedApproval) : null;
   }
   async function noUnknownWork(c) {
-    // Slice 5 cannot prove terminal journals/completions. Preserve conservative
-    // recovery blocking until those versioned validators exist.
-    if((await directoryEntries(c.store,'staging/transactions')).length || (await directoryEntries(c.store,'staging/apply-requests/completions')).length) fail('RECOVERY_REQUIRED','Execution evidence requires recovery inspection');
+    if((await directoryEntries(c.store,'staging/transactions')).length || (await directoryEntries(c.store,'staging/apply-requests/completions')).length) {
+      const runtime=await inspectRuntimeState(c.store,{gate:c.gate,io});
+      if(runtime.status!=='READY'||runtime.readiness!=='initialized')fail(runtime.status==='READY'?'RECOVERY_REQUIRED':runtime.status,'Local evidence is not fully terminal and clean');
+    }
     for(const name of await directoryEntries(c.store,'staging/apply-requests')) {
       if(name==='completions') continue;
       if(!name.endsWith('.json')) fail('RECOVERY_REQUIRED','Unknown Request publication evidence');
       await c.repository.getApplyRequest(name.slice(0,-5),{gate:c.gate});
     }
   }
-  async function absenceEvidence(id,c) {
+  async function absenceEvidence(id,c,readyRuntime=null) {
     await noUnknownWork(c);
     const history=await c.repository.readApplyHistoryDirectory({gate:c.gate});
     // Any matching historical acceptance is evidence even before a current
     // success-only proof can be established. Never reissue its missing receipt.
     for(const entry of history.entries) if(entry.document?.payload?.request?.request_id===id) fail('RECOVERY_REQUIRED','History references a missing Receipt');
+    if((await directoryEntries(c.store,'staging/transaction-proofs')).length){
+      // A clone can retain Git-managed failure Proofs without local Receipts
+      // or a successful History. Absence of those local files never frees the
+      // original Request identity for a new transaction.
+      const runtime=readyRuntime??await inspectRuntimeState(c.store,{gate:c.gate,io});
+      if(runtime.status!=='READY'||!runtime.terminal_context)throw runtime.cause??new RepositoryError(
+        runtime.status==='READY'?'RECOVERY_REQUIRED':runtime.status,'Terminal acceptance evidence is not verifiable');
+      if(runtime.terminal_context.proofs.some(proof=>proof.payload.binding.request_id===id))
+        fail('RECOVERY_REQUIRED','Terminal Proof references a missing Receipt');
+    }
   }
   async function scan(c,prospectiveApproval=null) {
     const events=await c.repository.listApprovalInvalidations({gate:c.gate});
@@ -104,7 +123,7 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
     return events;
   }
   async function ready(c) {
-    const r=await inspectRuntimeState(c.store);
+    const r=await inspectRuntimeState(c.store,{gate:c.gate,io});
     if(r.status!=='READY' || r.readiness!=='initialized') fail(r.status==='READY'?'RECOVERY_REQUIRED':r.status,'Runtime blocks new acceptance');
     return r;
   }
@@ -122,14 +141,20 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
   // One readonly evaluation for initial acceptance, retry and check. The caller
   // has already validated the immutable artifact and holds the live lease.
   async function requestResponse(artifact,c) {
-    const events=await scan(c),runtime=await inspectRuntimeState(c.store);
+    const events=await scan(c),runtime=await inspectRuntimeState(c.store,{gate:c.gate,io});
+    if(runtime.cause&&!['RECOVERY_REQUIRED','STATE_TRANSITION_PROOF_REQUIRED'].includes(runtime.status))throw runtime.cause;
+    if(['INTEGRITY_CONFLICT','GATE_CORRUPT','HISTORY_CORRUPT','STATE_CORRUPT','BOOTSTRAP_CORRUPT'].includes(runtime.status))
+      throw runtime.cause??new RepositoryError(runtime.status,'Runtime evidence is corrupt');
     const bootstrap=await c.store.readJson('staging/fn004-bootstrap.json',{strict:true});
     const state=await lineage(c),snapshot=await validatedSnapshot(c.store);
     const history=verifySuccessfulHistory({bootstrap,state,snapshot,
       git_audit:await auditGitIds(c.store.root),
       history_directory:await c.repository.readApplyHistoryDirectory({gate:c.gate})});
-    if(!history.valid) fail(history.diagnostics[0].code,'History cannot establish a verified result');
-    const codes=new Set([...runtime.diagnostics,...history.diagnostics].map(d=>d.code));
+    if(!history.valid)fail(history.diagnostics[0].code,'History cannot establish a verified result');
+    // The legacy object remains untouched. An independently complete composite
+    // state proof supplies current-state diagnostics after failure edges.
+    const currentHistoryDiagnostics=runtime.terminal_context?history.diagnostics.filter(d=>d.code!=='STATE_TRANSITION_PROOF_REQUIRED'):history.diagnostics;
+    const codes=new Set([...runtime.diagnostics,...currentHistoryDiagnostics].map(d=>d.code));
     const r=artifact.receipt;
     const matches=history.successful_records.filter(({payload:p})=>p.request.request_id===r.request_id || p.apply_id===r.apply_id || p.transaction_id===r.transaction_id);
     if(matches.length>1) integrity('Request identities refer to different History records');
@@ -142,11 +167,12 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
     }
     // Preserve the ready-only lookup boundary. A valid success set can expose
     // an exact result above even when pending/state proof blocks normal use.
-    if(history.state_proof.verified && history.readiness==='ready') {
+    const compositeLookup=runtime.terminal_context&&runtime.readiness==='initialized';
+    if(compositeLookup || history.state_proof.verified && history.readiness==='ready') {
       const plan=await c.repository.getApplyPlan(r.plan_id,{gate:c.gate});
       const store=await c.repository.readDecisionStore({gate:c.gate});
       const decision=store.revisions.find(d=>d.decision_id===r.decision.decision_id && d.revision===r.decision.revision);
-      const match=lookupVerifiedHistory(history,r.decision,{candidate_ids:plan.payload.candidate_preconditions.map(b=>b.candidate_id),replaces:decision.replaces??[]});
+      const match=(compositeLookup?lookupAppliedDecision.bind(null,runtime.terminal_context.indexes):lookupVerifiedHistory.bind(null,history))(r.decision,{candidate_ids:plan.payload.candidate_preconditions.map(b=>b.candidate_id),replaces:decision.replaces??[]});
       if(match.code==='ALREADY_APPLIED') codes.add(match.code);
       else if(match.code) fail(match.code,'History conflicts with the accepted Decision');
     }
@@ -206,26 +232,56 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
       const old=await optionalRequest(input.request_id,c);
       if(old) {
         if(!same(requestPayloadProjectionV1(old),input)) integrity('Same Request ID with different semantic payload');
+        await acceptanceNamespace(c);
         return requestResponse(old,c);
       }
+      await acceptanceNamespace(c);
       const a=await staticApproval(input.approval_id,c);
       const expected={schema_version:1,repository_instance_id:a.repository_instance_id,request_id:a.intended_request_id,decision:approvalDecision(a),plan_id:a.plan_id,plan_hash:a.plan_hash,approval_id:a.approval_id,approval_hash:approvalHash(a),actor:a.actor,purpose:a.purpose};
       if(!same(expected,input)) fail('APPROVAL_PLAN_MISMATCH','Request differs from Approval');
-      await current(a,c); await ready(c); await absenceEvidence(input.request_id,c);
+      await current(a,c); const readyRuntime=await ready(c); await absenceEvidence(input.request_id,c,readyRuntime);
       const id=randomUUID(),{schema_version,purpose,...payload}=input;
       const e={schema_version,receipt:{...payload,request_payload_hash:requestPayloadHash(input),requested_at:clock(),transaction_id:`tx_${id}`,apply_id:`apply_${id}`},receipt_hash:'',processing:initialProcessing()};
       e.receipt_hash=receiptHash(e); validateApplyRequest(e);
-      const artifact=await c.repository.saveApplyRequest(e,{gate:c.gate});
-      return requestResponse(artifact,c);
+      // Capture the original under the same acceptance lease, before Receipt.
+      const original=await validatedSnapshot(c.store),before_state=await lineage(c);
+      const plan=await c.repository.getApplyPlan(input.plan_id,{gate:c.gate});
+      if(!same(original.manifest,plan.payload.canonical_precondition)||before_state.state_hash!==plan.payload.id_state_precondition.state_hash)
+        fail('STALE_PLAN','Acceptance snapshot no longer matches the immutable Plan');
+      await onBoundary({phase:'receipt:before',path:requestPath(input.request_id)});
+      let artifact,terminalResponse;
+      try {
+        artifact=await c.repository.saveApplyRequest(e,{gate:c.gate});
+        await onBoundary({phase:'receipt:after',path:requestPath(input.request_id)});
+        await execute({root:c.store.root,gate:c.gate,artifact,original,before_state,
+          evaluateTerminal:async()=>{
+            await onBoundary({phase:'response:before'});
+            terminalResponse=await requestResponse(artifact,c);
+            await onBoundary({phase:'response:after'});
+          }},{io,clock,onBoundary});
+      } catch(error) {
+        // Receipt publication alone has not handed the lease to an executor.
+        // Preserve its evidence/temp and let the normal wrapper release the
+        // gate; retries remain readonly and the existing readiness guard blocks.
+        if(artifact) {
+          try {await closeRetainedGate(c.gate);} catch(close_error){error.retained_gate_close_error=close_error;}
+        }
+        throw error;
+      }
+      // Evaluated under the original lease before its owner releases it.
+      // The fallback is only for trusted acceptance unit-test executors.
+      return terminalResponse??requestResponse(artifact,c);
     }),
     checkApplyRequest:(id,context={})=>run('request_check',{id},context,async(input,c)=>{
       const artifact=await staticRequest(await c.repository.getApplyRequest(input.id,{gate:c.gate}),c);
       if(!same(artifact.receipt.actor,c.actor)) fail('APPROVAL_PLAN_MISMATCH','Request belongs to another actor');
+      await acceptanceNamespace(c);
       return requestResponse(artifact,c);
     }),
     getApplyRequest:(id,context={})=>run('request_read',{id},context,async(input,c)=>{
       const e=await staticRequest(await c.repository.getApplyRequest(input.id,{gate:c.gate}),c);
       if(!same(e.receipt.actor,c.actor)) fail('APPROVAL_PLAN_MISMATCH','Request belongs to another actor');
+      await acceptanceNamespace(c);
       await scan(c); return e;
     })
   });

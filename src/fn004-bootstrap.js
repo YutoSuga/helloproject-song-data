@@ -29,7 +29,7 @@ export function createBootstrapService({ io = fs, gitOptions = {} } = {}) {
   async function inspectBootstrapStatus({ root = process.cwd() } = {}) {
     return withCanonicalGate({ root, operation: "bootstrap_status", fn: async (gate) => {
       const store = await createPersistence(gate.root, { io });
-      const result = await inspectRuntimeState(store);
+      const {terminal_context,...result} = await inspectRuntimeState(store,{gate,io});
       await assertGateOwnership(gate);
       return result;
     } });
@@ -43,7 +43,7 @@ export function createBootstrapService({ io = fs, gitOptions = {} } = {}) {
       let historical = await scan(root); // expensive graph scan outside the gate
       return await withCanonicalGate({ root, operation: "bootstrap_check", fn: async (gate) => {
         const store = await createPersistence(gate.root, { io });
-        const status = await inspectRuntimeState(store, { historical });
+        const status = await inspectRuntimeState(store, { historical, gate, io });
         assertInitializable(status);
         const repository = await createFn004Repository(gate.root, { io });
         const snapshot = await repository.readCanonicalSnapshot({ gate });
@@ -65,7 +65,7 @@ export function createBootstrapService({ io = fs, gitOptions = {} } = {}) {
     return withCanonicalGate({ root, operation: "bootstrap_initialize", actor: confirmedActor.id, fn: async (gate) => {
       const store = await createPersistence(gate.root, { io });
       historical = await refresh(gate.root, historical);
-      const status = await inspectRuntimeState(store, { historical });
+      const status = await inspectRuntimeState(store, { historical, gate, io });
       if (status.status === "READY") return identityResult(status, "BOOTSTRAP_ALREADY_INITIALIZED");
       assertInitializable(status);
       const repository = await createFn004Repository(gate.root, { io });
@@ -94,7 +94,7 @@ export function createBootstrapService({ io = fs, gitOptions = {} } = {}) {
       await store.ensureDirectory(HISTORY_PATH);
       await store.syncDirectory(HISTORY_PATH);
       await repository.createJsonExclusive(BOOTSTRAP_PATH, record, { gate }); // completion marker LAST
-      const completed = await inspectRuntimeState(store, { historical, snapshot: finalSnapshot });
+      const completed = await inspectRuntimeState(store, { historical, snapshot: finalSnapshot, gate, io });
       if (completed.status !== "READY") throw new RepositoryError(completed.status, "Published bootstrap failed verification", { diagnostics: completed.diagnostics });
       // Remove only this owner's exact verified intent. No sweep or recovery.
       try {

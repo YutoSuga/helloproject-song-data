@@ -1,3 +1,4 @@
+import { replaceCanonicalBytes } from './fn004-recovery-durability.js';
 import * as fs from 'node:fs/promises';
 import { createPersistence, RepositoryError } from './persistence.js';
 import { acquireRecoveryAuthority, acquireSuccessRecoveryAuthority, refreshRecoveryAuthority, recoverySessionDetails, revokeRecoveryAuthority,
@@ -16,7 +17,7 @@ import { auditGitIds } from './fn004-git-audit.js';
 import { same, check } from './fn004-evidence-types.js';
 import { RECOVERY_CODES, PERSISTENCE_PHASES } from './fn004-evidence-errors.js';
 import { confirmExistingBytes } from './fn004-recovery-durability.js';
-import { originalSuccessAuthority } from './fn004-original-authority.js';
+import { originalSuccessAuthority, originalFailureAuthority } from './fn004-original-authority.js';
 import { finalizeSuccessfulTransaction } from './fn004-success-finalization.js';
 
 const rawJson = value => Buffer.from(canonicalJson(value) + '\n');
@@ -44,7 +45,7 @@ async function durableUnlink(store, io, path) {
 // Shared internal owned executor. The two factories choose a fixed domain side;
 // caller options cannot skip validation or provide an owned snapshot.
 export async function createRecoveryExecutor(root, { io = fs, audit = auditGitIds,
-  probeOwner = probeRecoveryOwner, clock = () => new Date().toISOString(), onBoundary = async () => {} } = {}, successSide = false) {
+  probeOwner = probeRecoveryOwner, clock = () => new Date().toISOString(), onBoundary = async () => {}, beforeOriginalRelease = async () => {} } = {}, successSide = false) {
   const store = await createPersistence(root, { io });
   const options = { io, audit, probeOwner, clock, onBoundary };
   async function inspect(binding) {
@@ -52,9 +53,10 @@ export async function createRecoveryExecutor(root, { io = fs, audit = auditGitId
     return classifyRecoverySnapshot(await collectRecoverySnapshot(store.root, binding,
       { discover: async r => (await import('./fn004-evidence-discovery.js')).discoverEvidence(r, { io }), audit, probeOwner }));
   }
-  async function execute({ binding, command }, originalGate = null) {
+  async function execute({ binding, command, diagnostics = [] }, originalGate = null) {
     binding = JSON.parse(canonicalJson(binding));
-    const original = originalGate ? await originalSuccessAuthority(store.root, binding, originalGate, options) : null;
+    diagnostics = JSON.parse(canonicalJson(diagnostics));
+    const original = originalGate ? await (successSide ? originalSuccessAuthority : originalFailureAuthority)(store.root, binding, originalGate, options) : null;
     command = original ? original.command : JSON.parse(canonicalJson(command));
     const authority = original ? null : await (successSide ? acquireSuccessRecoveryAuthority : acquireRecoveryAuthority)(store.root, binding, command, options);
     const session = original ? original.session : recoverySessionDetails(authority), gate = originalGate ?? await adoptRecoveryGate(authority);
@@ -182,35 +184,7 @@ export async function createRecoveryExecutor(root, { io = fs, audit = auditGitId
             () => confirmExistingBytes(store, io, restorePath, backup), 'rollback');
         }
         await effect('restore', new Map([[restorePath, null], [path, backup]]), async () => {
-          let phase = 'publish', published = null;
-          try {
-            await io.rename(await store.resolvePath(restorePath), await store.resolvePath(path)); published = true;
-            phase = 'directory_sync'; await store.syncDirectory('data');
-            await store.syncDirectory(`${txRoot}/restore/data`);
-            phase = null;
-            const raw = await io.readFile(await store.resolvePath(path));
-            check(raw.equals(backup), 'Restored destination readback differs');
-          } catch (cause) {
-            if (phase === 'publish' && published === null) {
-              // A syscall/adapter error may follow the rename itself. Observe
-              // both paths rather than claiming that publication did not occur.
-              try {
-                const destination = await io.readFile(await store.resolvePath(path));
-                let source = null;
-                try { source = await io.readFile(await store.resolvePath(restorePath)); }
-                catch (error) { if (error.code !== 'ENOENT') throw error; }
-                if (destination.equals(backup) && source === null) published = true;
-                else if (destination.equals(current) && source?.equals(backup)) published = false;
-              } catch { /* unresolved publication remains null; keep original cause */ }
-            }
-            if (cause instanceof RepositoryError && ['INTEGRITY_CONFLICT', 'PATH_UNSAFE'].includes(cause.code)) {
-              Object.assign(cause, { path, phase, published }); throw cause;
-            }
-            const code = phase === null ? cause.code === 'ENOENT' ? 'PERSISTENCE_NOT_FOUND' : 'PERSISTENCE_READ_FAILED' :
-              phase === 'directory_sync' ? 'PERSISTENCE_SYNC_FAILED' : 'PERSISTENCE_WRITE_FAILED';
-            throw new RepositoryError(code,
-              'Rollback replacement did not establish durability', { cause, path, phase, published });
-          }
+          await replaceCanonicalBytes(store, io, { from: restorePath, path, bytes: backup, previous: current });
         }, 'rollback');
         await journal({ restored_paths: [...s.chain.head.payload.restored_paths, path] });
       }
@@ -255,7 +229,7 @@ export async function createRecoveryExecutor(root, { io = fs, audit = auditGitId
       }
       if (!s.proof) {
         const value = s.proof_intent ?? terminalProof({ binding, owner, inputs, intent, chain: s.chain,
-          authority: authorityPayload(), ended_at: s.chain.head?.payload.recorded_at ?? clock(), histories: s.histories });
+          authority: authorityPayload(), ended_at: s.chain.head?.payload.recorded_at ?? clock(), histories: s.histories, diagnostics });
         await publish(value, 'proof');
       }
     }
@@ -276,11 +250,12 @@ export async function createRecoveryExecutor(root, { io = fs, audit = auditGitId
     }
     await guard();
     if (original) {
+      await beforeOriginalRelease(); await guard('cleanup');
       await onBoundary({phase:'gate_release:before'}); await guard('cleanup');
       await releaseGate(gate); revoke();
       await onBoundary({phase:'gate_release:after'});
       return { schema_version:2,request_id:binding.request_id,transaction_id:binding.transaction_id,
-        action:command.action,outcome:command.action==='cleanup'?'cleaned':'completed',observation:await inspect(binding) };
+        action:command.action,outcome:command.action==='cleanup'?'cleaned':successSide?'completed':s.proof.payload.phase==='ABORTED'?'aborted':'rolled_back',observation:await inspect(binding) };
     }
     const barrierPath = 'staging/.fn004-recovery.lock', barrierRaw = ledger.rawBytes[barrierPath];
     const archiveContext = () => ({ anchor: session.anchor, claims: s.archive.chain,
@@ -333,6 +308,6 @@ export async function createRecoveryExecutor(root, { io = fs, audit = auditGitId
       throw error;
     }
   }
-  const run = request => execute(request);
-  return Object.freeze({inspect,run,...(successSide ? {finalize:({gate,binding})=>execute({binding},gate)} : {})});
+  const run = ({binding,command}) => execute({binding,command});
+  return Object.freeze({inspect,run,finalize:({gate,binding,diagnostics})=>execute({binding,diagnostics},gate)});
 }
