@@ -8,6 +8,7 @@ import { validateTerminalProof, validateCompletion } from './fn004-terminal-evid
 import { validateMutexAnchor, validateMutexClaim, validateMutexBarrier, validateMutexRetiring,
   validateMutexRetired, validateOwnershipArchive } from './fn004-evidence-ownership.js';
 import { check, same } from './fn004-evidence-types.js';
+import { readPublishedJson } from './fn004-recovery-durability.js';
 
 export function evidencePath(value) {
   const p = value.payload, tx = p.binding.transaction_id, root = `staging/transactions/${tx}`;
@@ -92,7 +93,7 @@ export async function createEvidencePublisher(root, { io = fs } = {}) {
     } else {
       await store.createJsonExclusive(path, original);
     }
-    const reread = await store.readJson(path, { strict: true });
+    const reread = await readPublishedJson(store, path);
     validateEvidence(reread, context);
     check(same(reread, original), 'Evidence readback differs');
     await assertGateOwnership(gate, store.root);

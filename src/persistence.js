@@ -97,13 +97,13 @@ export async function createPersistence(root, { io = fs } = {}) {
     return value; // Domain schema/version validation belongs to the caller.
   }
   async function publish(path, value, exclusive, raw = false) {
-    let temp, handle, published = false, phase = "encode";
+    let temp, target, bytes, handle, published = false, phase = "encode";
     try {
       if (raw ? !Buffer.isBuffer(value) : value === null || typeof value !== "object" || Array.isArray(value)) {
         throw new RepositoryError(raw ? "PERSISTENCE_WRITE_FAILED" : "PERSISTENCE_ROOT_TYPE", raw ? "Expected immutable artifact bytes" : "JSON artifact must have an object root", { path });
       }
-      const bytes = raw ? Buffer.from(value) : Buffer.from(canonicalJson(value) + "\n", "utf8");
-      const target = await resolvePath(path);
+      bytes = raw ? Buffer.from(value) : Buffer.from(canonicalJson(value) + "\n", "utf8");
+      target = await resolvePath(path);
       const parent = dirname(target);
       phase = "ensure_directory";
       if (parent !== resolvedRoot) await ensureDirectory(relativePath(parent));
@@ -131,6 +131,21 @@ export async function createPersistence(root, { io = fs } = {}) {
       }
     } catch (cause) {
       if (handle) { try { await handle.close(); } catch { /* original failure retained */ } }
+      // Adapters may throw after the syscall took effect. A failed syscall is
+      // not proof of non-publication. Observe both names; uncertainty stays null.
+      if (phase === "publish") {
+        published = null;
+        try {
+          if (exclusive) {
+            const a = await io.stat(temp, { bigint: true });
+            try { const b = await io.stat(target, { bigint: true }); published = a.dev === b.dev && a.ino === b.ino; }
+            catch (error) { if (error.code === "ENOENT") published = false; }
+          } else {
+            try { await io.lstat(temp); published = false; }
+            catch (error) { if (error.code === "ENOENT" && (await io.readFile(target)).equals(bytes)) published = true; }
+          }
+        } catch { /* preserve the original error and unknown publication */ }
+      }
       if (cause instanceof RepositoryError) {
         Object.assign(cause, { phase, published, temp: temp && relativePath(temp) });
         throw cause;

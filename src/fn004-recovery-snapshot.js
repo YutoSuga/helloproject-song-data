@@ -45,6 +45,20 @@ export function asOwnedRecoverySnapshot(snapshot, authority) {
   return new RecoverySnapshot({ ...recoverySnapshotData(snapshot), self_owned: true });
 }
 
+// Original execution requires the actual live lease and exact current process,
+// not a serialized witness or a caller-supplied owned flag.
+export async function asInitialOwnedSnapshot(snapshot, gate, root) {
+  const { assertGateOwnership } = await import('./fn004-gate.js');
+  const { recoveryProcessIdentity } = await import('./fn004-recovery-process.js');
+  await assertGateOwnership(gate, root);
+  const s = recoverySnapshotData(snapshot), self = await recoveryProcessIdentity();
+  check(s.owner && s.gate && !s.archive && !s.barrier && same(s.gate, s.owner.payload.gate) &&
+    s.gate.metadata.root === root && s.gate.metadata.lock_id === gate.lock_id &&
+    same(Object.fromEntries(Object.keys(self).map(k => [k, s.gate.metadata[k]])), self) &&
+    s.chain?.entries.every(e => e.payload.authority.recovery === null), 'Original finalizer lacks its live initial owner');
+  return new RecoverySnapshot({ ...s, self_owned: true });
+}
+
 const jsonFile = path => path.endsWith('.json') || path.endsWith('.lock') || /\.(?:json|lock)\.tmp-/.test(path);
 const missing = path => new RepositoryError('PERSISTENCE_NOT_FOUND', 'Required evidence is absent', { path });
 
@@ -300,6 +314,9 @@ export async function prepareRecoverySnapshot({ binding: b, discovery, git_audit
     if (target === `${root}/transaction.json` && value && chain) attempt(() => validateJournalCache(value, { owner, entries: chain.entries }));
     else if (!jsonFile(target) && bytes[target]) attempt(() => check(bytes[file.path].equals(bytes[target]), 'Conflicting raw publisher temporary evidence'));
     else if (docs[target]) attempt(() => check(value && same(value, docs[target]), 'Conflicting publisher temporary evidence'));
+    else if (target === `staging/apply-history/${b.apply_id}.json` && value && chain?.decision) {
+      attempt(() => { validateHistoryRecord(value); check(same(value, chain.decision.record), 'History publication intent conflicts with decision'); });
+    }
     else if (target === `staging/transaction-proofs/${b.transaction_id}.json` && value) {
       const valid = attempt(() => {
         validateTerminalProof(value, { histories });
