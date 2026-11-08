@@ -23,10 +23,10 @@ function artifactPath(path, { readonly = false } = {}) {
   return path;
 }
 
-// Only proven genesis or success-only History chains permit ordinary reads.
+// Proven genesis or independently validated terminal History/state permits reads.
 // Unknown transitions, pending work and cleanup continue to block reads.
-async function assertReadableRuntime(store) {
-  const result = await inspectRuntimeState(store);
+async function assertReadableRuntime(store, gate) {
+  const result = await inspectRuntimeState(store, { gate });
   if (!["BOOTSTRAP_REQUIRED", "READY"].includes(result.status) || result.readiness === "cleanup_required") {
     throw new RepositoryError(result.status === "READY" ? "RECOVERY_REQUIRED" : result.status,
       "Runtime state blocks ordinary canonical reads", { ...(result.diagnostics.length ? { diagnostics: result.diagnostics } : {}), readiness: result.readiness });
@@ -38,7 +38,7 @@ async function assertReadableRuntime(store) {
 export async function withCanonicalRead({ root = process.cwd(), gate, fn }) {
   return withCanonicalGate({ root, gate, operation: "canonical_read", fn: async (lease) => {
     const store = await createPersistence(lease.root);
-    await assertReadableRuntime(store);
+    await assertReadableRuntime(store, lease);
     for (const schema of CANONICAL_TABLES) await store.resolvePath(schema.path);
     const result = await fn(lease.root, lease);
     await assertGateOwnership(lease);
