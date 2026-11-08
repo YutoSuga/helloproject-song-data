@@ -195,15 +195,17 @@ test('R83-M03 pre-Intent ABORTED retains Journal refs for cleanup, rejects unexp
   assert.deepEqual(await f.protectedHashes(),f.before);
 });
 
-test('R83-M04 unbound Journal and published Intent refs cannot hide a same-path contradiction',async()=>{
+for (const missing of [false, true]) test(`R83-M04 conflicting same-path Journal/Intent refs reject ${missing ? 'missing' : 'present'} artifacts`, async () => {
   const {transactionFixture,append,recoveryDiscovery}=await import('./fixtures/transaction-evidence.js');
   const {validateJournalChain}=await import('../src/fn004-journal-chain.js');
   const {validateOtherLocalEvidence}=await import('../src/fn004-local-evidence-validation.js');
-
-const f=transactionFixture(),p=f.intent.payload;
-const refs=structuredClone(p.backup_refs);refs.find(r=>r.path.endsWith('/backup/fn004-state.json')).sha256='0'.repeat(64);
-const head=append(f.genesis,{target_manifest:p.target_manifest,changed_paths:p.changed_paths,backup_refs:refs,temp_refs:p.temp_refs});
-validateJournalChain({owner:f.owner,intent:f.intent,entries:[f.genesis,head],inputs:f.inputs});
-const d=recoveryDiscovery(f,{journal:[f.genesis,head],intent:f.intent}),codes=[];
-assert.throws(()=>validateOtherLocalEvidence({selected:{request_id:null},requests:[f.request],docs:d.documents,files:d.files,rawBytes:d.rawBytes,histories:[],attempt:fn=>fn(),add:c=>codes.push(c)}),{code:'INTEGRITY_CONFLICT'});
+  const f=transactionFixture(),p=f.intent.payload,refs=structuredClone(p.backup_refs);
+  const ref=refs.find(r=>r.path.endsWith('/backup/fn004-state.json'));
+  ref.sha256='0'.repeat(64);
+  const head=append(f.genesis,{target_manifest:p.target_manifest,changed_paths:p.changed_paths,backup_refs:refs,temp_refs:p.temp_refs});
+  validateJournalChain({owner:f.owner,intent:f.intent,entries:[f.genesis,head],inputs:f.inputs});
+  const d=recoveryDiscovery(f,{journal:[f.genesis,head],intent:f.intent,omit:missing?[ref.path]:[]});
+  if(missing)delete d.documents[ref.path];
+  assert.throws(()=>validateOtherLocalEvidence({selected:{request_id:null},requests:[f.request],docs:d.documents,
+    files:d.files,rawBytes:d.rawBytes,histories:[],attempt:fn=>fn(),add:()=>{}}),{code:'INTEGRITY_CONFLICT'});
 });

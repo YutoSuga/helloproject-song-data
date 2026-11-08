@@ -63,8 +63,14 @@ export function validateOtherLocalEvidence({ selected, requests, docs, files, ra
       // conflicting immutable reference from the other.
       const refs = [...(head?.backup_refs ?? []), ...(head?.temp_refs ?? []),
         ...(intent?.payload.backup_refs ?? []), ...(intent?.payload.temp_refs ?? []), ...Object.values(intent?.payload.inputs ?? {})];
-      for (const ref of refs) if (rawBytes[ref.path]) check(rawBytes[ref.path].length === ref.byte_length &&
-        sha256(rawBytes[ref.path]) === ref.sha256, 'Other retained evidence differs from immutable reference');
+      const byPath = new Map();
+      for (const ref of refs) {
+        const previous = byPath.get(ref.path);
+        check(previous === undefined || same(previous, ref), 'Conflicting immutable references for one path');
+        byPath.set(ref.path, ref); // Only identical duplicate refs may share this index.
+        if (rawBytes[ref.path]) check(rawBytes[ref.path].length === ref.byte_length &&
+          sha256(rawBytes[ref.path]) === ref.sha256, 'Other retained evidence differs from immutable reference');
+      }
       if(owner) for(const file of files.filter(file=>file.kind==='file'&&!publisherTarget(file.path))) {
         if(file.path===`${root}/backup/fn004-state.json`)
           check(same(docs[file.path],owner.payload.before_state),'Unbound state backup differs from original');
