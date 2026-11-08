@@ -33,7 +33,7 @@ for(const kind of ['consume-before','consume-after','mixed-replace-after','last-
   });
   const request=JSON.parse(await fs.readFile(join(f.root,`staging/apply-requests/${f.payload.request_id}.json`)));
   const beforeRetry=await fs.readFile(join(f.root,'staging/fn004-state.json'));
-  const retry=createApprovalRequestService({root:f.root,execute:()=>{throw Error('IO retry dispatched');},clock:()=>{throw Error('IO retry generated time');}});
+  const retry=createApprovalRequestService({root:f.root,onBoundary:()=>{throw Error('IO retry dispatched');},clock:()=>{throw Error('IO retry generated time');}});
   const response=await retry.submitApplyRequest(f.payload,f.context);
   const success=kind==='last-replace-after';assert.equal(response.result!==null,success);assert.equal(response.readiness,'initialized');
   assert.deepEqual(response.artifact,request);assert.deepEqual(await fs.readFile(join(f.root,'staging/fn004-state.json')),beforeRetry);

@@ -30,7 +30,7 @@ for(const options of [{},{newEntities:true},{noop:true}])test(`6E real initial s
  assert.equal(phases.filter(p=>p==='owner:after').length,1);
  const bytes=await fs.readFile(join(f.root,'staging/fn004-state.json'));
  const retry=createApprovalRequestService({root:f.root,clock:()=>{throw Error('retry allocated time');},
-   execute:()=>{throw Error('retry dispatched');}});
+   onBoundary:()=>{throw Error('retry dispatched');}});
  const again=await retry.submitApplyRequest(f.payload,f.context);assert.equal(again.readiness,'initialized');assert.deepEqual(again.artifact,response.artifact);assert.deepEqual(again.result,response.result);
  assert.deepEqual(await fs.readFile(join(f.root,'staging/fn004-state.json')),bytes);
  await readValidatedCanonicalSnapshot(f.root);

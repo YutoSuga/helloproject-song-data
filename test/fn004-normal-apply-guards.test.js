@@ -21,7 +21,7 @@ for(const kind of ['candidate','Approval','canonical','state'])test(`6E rejects 
     state.state_hash=hashState(state);await write('staging/fn004-state.json',state);
   }
   let executed=false;
-  const service=createApprovalRequestService({root:f.root,execute:()=>{executed=true;throw Error('invalid inputs dispatched');}});
+  const service=createApprovalRequestService({root:f.root,onBoundary:()=>{executed=true;throw Error('invalid inputs reached acceptance');}});
   await assert.rejects(service.submitApplyRequest(f.payload,f.context));assert.equal(executed,false);
   await assert.rejects(fs.stat(join(f.root,`staging/apply-requests/${f.payload.request_id}.json`)),{code:'ENOENT'});
   if(kind!=='state')assert.deepEqual(await fs.readFile(join(f.root,'staging/fn004-state.json')),before);
@@ -39,7 +39,7 @@ test('6E initial dispatch observes partial gate metadata fail-closed, without st
   }};
   const pending=acquireGate({root:f.root,io});await paused;
   try {
-    const service=createApprovalRequestService({root:f.root,execute:()=>{throw Error('contender dispatched');}});
+    const service=createApprovalRequestService({root:f.root,onBoundary:()=>{throw Error('contender reached acceptance');}});
     await assert.rejects(service.submitApplyRequest(f.payload,f.context),error=>{
       assert.equal(error.code,'GATE_CORRUPT');assert.equal(error.cause.code,'PERSISTENCE_PARSE_FAILED');return true;
     });

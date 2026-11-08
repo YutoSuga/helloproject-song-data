@@ -30,7 +30,7 @@ for(const [boundary,path,success,newEntities=false] of [
   const exit=once(child,'exit');child.kill('SIGKILL');assert.equal((await exit)[1],'SIGKILL');
   const binding=message.binding,requestPath=join(f.root,`staging/apply-requests/${binding.request_id}.json`);
   const receipt=await fs.readFile(requestPath),stateBefore=JSON.parse(await fs.readFile(join(f.root,'staging/fn004-state.json')));
-  const retry=createApprovalRequestService({root:f.root,execute:()=>{throw Error('retry redispatch');}});
+  const retry=createApprovalRequestService({root:f.root,onBoundary:()=>{throw Error('retry redispatch');}});
   await assert.rejects(retry.submitApplyRequest(f.payload,f.context));
   assert.deepEqual(await fs.readFile(requestPath),receipt);
   const recovery=await (success?createSuccessRecoveryService:createFailureRecoveryService)(f.root);

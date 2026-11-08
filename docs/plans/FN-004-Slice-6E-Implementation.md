@@ -78,3 +78,17 @@ Known-Mixedのsemantic diagnosticsは保持する。各fileのexact ORIGINAL/TAR
 検証は隔離したtemp repositoryで実施する。production canonical/stagingをApply対象にしない。公開CLI・UI/API・DB・Git自動化・candidate削除/status変更・既存canonical rowのupdate/deleteは含めない。6Fへは公開adapterとrelease validationを引き継ぐ。
 
 本実装タスクではPRをOPENで止め、独立したFN-004 Slice 6E — Review & Mergeへ進む。6Fは開始しない。
+
+## PR #83 独立レビュー修正
+
+正式contract・schema・hash・readiness/action vocabularyは変更しない。以下は実装と検証の修正である。
+
+| ID | Severity | 問題と修正 | 回帰検証 |
+| --- | --- | --- | --- |
+| R83-M01 | MEDIUM | Proof/Completion未公開を理由に、既存のOwner/Intent/Journal/input copy/backupの破損検証を省略していた。Receipt/genesis由来bindingで公開済みprefixを先に検証し、Proof-onlyのlocal package矛盾も拒否する。未公開Owner tempは採用せずRecovery待ちを維持する | 修正前は8件の破損ケースで期待した拒否が欠落。pre-Intentのcheckpoint済み・未checkpoint backup、Proof-only、合法な未公開tempも検証 |
+| R83-M02 | MEDIUM | 専用compositionが置換するexecute spyでは実dispatchを観測できず、正常Applyの同時submit検証も不足していた。実onBoundary hookで非dispatchを検証し、ID採番を伴う同一/別Requestの同時submitを追加する | durable Receiptで初回実行を停止し、競合受付・二重Receipt/Owner/History/ID消費を拒否。初回完了とreadonly retryまで実行 |
+| R83-M03 | MEDIUM | pre-Intent ABORTED(null)の正当な残存artifactがIntent不在のためcleanup_requiredにならなかった。検証済みProof内terminal Journalの既存refsを使用する | 修正前recovery_required、修正後cleanup_required。予期しないrestoreを拒否し、既知cleanupとgate解放後のみreader再開 |
+
+追補再レビューではR83-M04（MEDIUM）も修正した。M01修正案のpath別Mapが、Intent公開・Journal checkpoint前の同path異hash参照を上書きしていた。公開前の修正案で再現し、全参照を独立検証する配列へ変更した。valid Journal chainでもphysical bytesと矛盾する参照が一つあればtyped integrity errorとなる。元PRへこの修正案を公開した事実はない。
+
+追加回帰は[独立レビュー安全性テスト](../../test/fn004-review83-safety.test.js)に保存する。orphan barrier/archiveについては既存gate guardが既に拒否していることを確認し、runtime変更は行わない。Decision metadataの未完成公開窓をBUSYへ読み替えたり、自動unlockで回避したりしない。詳細な実行結果・review head・CI・production比較は独立レビュー報告に記録する。

@@ -60,8 +60,8 @@ export async function inspectTerminalRuntime(store, { gate, snapshot, historical
   const cleanupOnly=!unknownPublisherTemps&&!bootstrapWork&&!docs['staging/.fn004-recovery.lock']&&requests.length>0&&requests.every(request=>{
     const tx=request.receipt.transaction_id,proof=docs[`staging/transaction-proofs/${tx}.json`];
     if(!proof||!docs[`staging/apply-requests/completions/${request.receipt.request_id}.json`])return false;
-    const intent=proof.payload.intent;
-    const refs=new Map([...(intent?.payload.backup_refs??[]),...(intent?.payload.temp_refs??[])]
+    const preparation=proof.payload.intent?.payload??proof.payload.journal.at(-1)?.payload;
+    const refs=new Map([...(preparation?.backup_refs??[]),...(preparation?.temp_refs??[])]
       .map(ref=>[ref.path,ref]));
     return d.files.filter(f=>f.kind==='file'&&['backup','temp','restore'].some(kind=>
       f.path.startsWith(`staging/transactions/${tx}/${kind}/`))).every(file=>{
