@@ -9,6 +9,7 @@
     "site:preview": "node scripts/preview-site.js",
     "test": "node --test",
     "collect:candidates": "node scripts/collect-candidates.js",
-    "prepare:reviews": "node scripts/prepare-reviews.js"
+    "prepare:reviews": "node scripts/prepare-reviews.js",
+    "canonical:manage": "node scripts/canonical-manage.js"
   }
 }

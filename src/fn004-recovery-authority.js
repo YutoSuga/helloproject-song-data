@@ -12,7 +12,7 @@ import { evidencePath } from './fn004-evidence-persistence.js';
 import { validateMutexAnchor, validateMutexClaim, validateMutexBarrier } from './fn004-evidence-ownership.js';
 import { readRecoveryArchive } from './fn004-recovery-archive.js';
 import { recoveryProcessIdentity, probeRecoveryOwner } from './fn004-recovery-process.js';
-import { same, check } from './fn004-evidence-types.js';
+import { same, check, actor as validateActor } from './fn004-evidence-types.js';
 import { canonicalJson } from './canonical-hash.js';
 import { confirmExistingBytes } from './fn004-recovery-durability.js';
 
@@ -66,8 +66,10 @@ function compareAcquisition(before, after, allowed) {
 export const acquireRecoveryAuthority = (root, binding, command, options) => acquireAuthority(root, binding, command, options, false);
 export const acquireSuccessRecoveryAuthority = (root, binding, command, options) => acquireAuthority(root, binding, command, options, true);
 async function acquireAuthority(root, binding, command, { io = fs, audit = auditGitIds,
-  probeOwner = probeRecoveryOwner, clock = () => new Date().toISOString(), onBoundary = async () => {} } = {}, successSide) {
+  operator = { id: 'local:recovery', assurance: 'local_process' }, probeOwner = probeRecoveryOwner, clock = () => new Date().toISOString(), onBoundary = async () => {} } = {}, successSide) {
   binding = JSON.parse(canonicalJson(binding)); command = JSON.parse(canonicalJson(command));
+  operator = JSON.parse(canonicalJson(operator));
+  validateActor(operator); check(operator.assurance === 'local_process', 'Recovery requires a local operator');
   const store = await createPersistence(root, { io });
   const initial = await collectRecoverySnapshot(store.root, binding, { discover: r => discoverEvidence(r, { io }), audit, probeOwner });
   const observation = classifyRecoverySnapshot(initial);
@@ -100,7 +102,7 @@ async function acquireAuthority(root, binding, command, { io = fs, audit = audit
   if (!old.archive) {
     check(!old.barrier, 'Unanchored barrier cannot be adopted');
     anchor = recoveryEnvelope('fn004-recovery-mutex', { mutex_id: randomUUID(), binding, gate: old.gate,
-      owner: self, operator: { id: 'local:recovery', assurance: 'local_process' }, predecessor_exit: exit,
+      owner: self, operator, predecessor_exit: exit,
       observed_state_hash: observation.observed_state_hash, acquired_at: now });
     validateMutexAnchor(anchor);
     barrier = recoveryEnvelope('fn004-recovery-barrier', { binding, mutex_id: anchor.payload.mutex_id,
@@ -125,7 +127,7 @@ async function acquireAuthority(root, binding, command, { io = fs, audit = audit
     }
     claim = recoveryEnvelope('fn004-recovery-claim', { mutex_id: anchor.payload.mutex_id, binding,
       sequence: old.archive.sequence + 1, previous_claim_hash: old.archive.head.hash, owner: self,
-      operator: { id: 'local:recovery', assurance: 'local_process' }, gate: old.gate, predecessor_exit: exit,
+      operator, gate: old.gate, predecessor_exit: exit,
       observed_state_hash: observation.observed_state_hash, acquired_at: now }); validateMutexClaim(claim);
     await publish(claim, 'claim');
   }

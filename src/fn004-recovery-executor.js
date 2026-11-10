@@ -14,7 +14,7 @@ import { canonicalJson } from './canonical-hash.js';
 import { terminalProof, terminalCompletion, retiringEvidence, retiredEvidence } from './fn004-failure-terminal.js';
 import { probeRecoveryOwner } from './fn004-recovery-process.js';
 import { auditGitIds } from './fn004-git-audit.js';
-import { same, check } from './fn004-evidence-types.js';
+import { same, check, actor as validateActor } from './fn004-evidence-types.js';
 import { RECOVERY_CODES, PERSISTENCE_PHASES } from './fn004-evidence-errors.js';
 import { confirmExistingBytes } from './fn004-recovery-durability.js';
 import { originalSuccessAuthority, originalFailureAuthority } from './fn004-original-authority.js';
@@ -45,9 +45,12 @@ async function durableUnlink(store, io, path) {
 // Shared internal owned executor. The two factories choose a fixed domain side;
 // caller options cannot skip validation or provide an owned snapshot.
 export async function createRecoveryExecutor(root, { io = fs, audit = auditGitIds,
-  probeOwner = probeRecoveryOwner, clock = () => new Date().toISOString(), onBoundary = async () => {}, beforeOriginalRelease = async () => {} } = {}, successSide = false) {
+  operator = { id: 'local:recovery', assurance: 'local_process' }, probeOwner = probeRecoveryOwner, clock = () => new Date().toISOString(), onBoundary = async () => {}, beforeOriginalRelease = async () => {} } = {}, successSide = false) {
+  // Capture trusted context before any await; mutable caller objects are not authority.
+  operator = JSON.parse(canonicalJson(operator));
+  validateActor(operator); check(operator.assurance === 'local_process', 'Recovery requires a local operator');
   const store = await createPersistence(root, { io });
-  const options = { io, audit, probeOwner, clock, onBoundary };
+  const options = { io, audit, probeOwner, clock, onBoundary, operator };
   async function inspect(binding) {
     binding = JSON.parse(canonicalJson(binding));
     return classifyRecoverySnapshot(await collectRecoverySnapshot(store.root, binding,

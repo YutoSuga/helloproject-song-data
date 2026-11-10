@@ -111,6 +111,7 @@ Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` �
 - [Apply Plan](docs/design/FN-004-反映計画.md)：不変の反映計画、予定ID、preconditions
 - [Transaction / Recovery](docs/design/FN-004-反映処理・復旧.md)：全体検証、journal、ID state、commit・復旧
 - [History readonly contract](docs/design/FN-004-成功履歴・読取検証.md)：成功record/hash/chain/set、非初期state proof、適用済みlookup
+- [canonical CLI利用ガイド](docs/canonical-cli.md)：TTY確認、bootstrap、Decision/Plan/Apply、result、明示Recovery、JSON/exit
 - [CLI / SCR-002](docs/design/楽曲管理のCLI・画面連携.md)：Approval、durable Apply Request、共通service、内部view、実装slice
 - [データ仕様](docs/data-spec.md)：canonical CSV の列・制約・運用ルール
 - [収集仕様](docs/collection-spec.md)：collector の詳細仕様
