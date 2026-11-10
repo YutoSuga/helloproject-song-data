@@ -101,7 +101,8 @@ test('6F actual npm JSON is one document; malformed arguments/input never mutate
  await fs.writeFile(join(f.root,'.npmrc'),'loglevel=silent\n');
  const npm=await exec('npm',['run','canonical:manage','--','status','--json'],{cwd:f.root,maxBuffer:1024*1024});
  assert.equal(JSON.parse(npm.stdout).data.status,'READY');assert.equal(npm.stderr,'');
- for(const args of [['apply','--yes'],['recovery','run','--force'],['plan','check','bad'],['result','--request','not-id']])must(await cli(f.root,args),2);
+ for(const args of [['apply','--yes'],['recovery','run','--force'],['plan','check','bad'],['result','--request','not-id'],
+  ['plan','show',f.plan.plan_id,'--$id','ignored']])must(await cli(f.root,args),2);
  const input=join(f.root,'bad.json');await fs.writeFile(input,'{"schema_version":1,"schema_version":1}');
  must(await cli(f.root,['decision','import','--input',input]),8);
  await fs.writeFile(input,JSON.stringify({actor:{id:'admin:spoof'},schema_version:1}));

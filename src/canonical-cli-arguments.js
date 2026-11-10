@@ -24,7 +24,7 @@ export function parseCanonicalArguments(argv) {
  if(spec.includes('$id')) {options.id=args.shift();if(!options.id||options.id.startsWith('-'))fail('Missing ID');}
  while(args.length){
   const flag=args.shift();if(!flag.startsWith('--'))fail('Unexpected argument');
-  const name=flag.slice(2),entry=spec.find(v=>v.replace('?','')===name);
+  const name=flag.slice(2),entry=spec.find(v=>!v.startsWith('$')&&v.replace('?','')===name);
   if(!entry||Object.hasOwn(options,name))fail('Unknown or duplicate option: '+flag);
   if(name==='check')options[name]=true;
   else {const value=args.shift();if(!value||value.startsWith('--'))fail('Missing option value: '+flag);options[name]=value;}

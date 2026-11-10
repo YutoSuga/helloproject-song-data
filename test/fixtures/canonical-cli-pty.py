@@ -12,7 +12,7 @@ selector=selectors.DefaultSelector()
 selector.register(master,selectors.EVENT_READ,'stderr')
 selector.register(process.stdout,selectors.EVENT_READ,'stdout')
 chunks={'stdout':b'','stderr':b''}
-answered=False;killed=False;started=time.monotonic()
+answered=False;killed=False;prompt_notified=False;started=time.monotonic()
 try:
     while selector.get_map():
         if time.monotonic()-started>request.get('timeout',850):
@@ -28,7 +28,12 @@ try:
             chunks[key.data]+=chunk
         text=chunks['stderr'].decode('utf-8',errors='replace')
         if not answered and 'Continue? [y/N]' in text:
-            os.write(master,request.get('answer','n\n').encode());answered=True
+            answer_file=request.get('answer_file')
+            if answer_file and not prompt_notified:
+                print('TRUSTED_PROMPT',file=sys.stderr,flush=True);prompt_notified=True
+            if not answer_file or os.path.exists(answer_file):
+                answer=open(answer_file,encoding='utf-8').read() if answer_file else request.get('answer','n\n')
+                os.write(master,answer.encode());answered=True
         if request.get('kill_boundary') and 'TRUSTED_TEST_BOUNDARY\n' in text.replace('\r\n','\n') and not killed:
             os.kill(process.pid,getattr(signal,request.get('stop_signal','SIGKILL')));killed=True
     result=process.wait(timeout=5)

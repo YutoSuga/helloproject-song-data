@@ -10,7 +10,8 @@ test('6F closed parser rejects bypasses, duplicate options and malformed identit
   ['decision','confirm','bad','--revision','1','--expect-head','f'.repeat(64)],['plan','create','--decision','dec_'+randomUUID(),'--revision','0','--expect-decision-hash','f'.repeat(64)],
   ['recovery','run','--transaction','tx_'+randomUUID(),'--expect-state-hash','f'.repeat(64),'--action','force_restore'],
   ['init','--check','--expect-audit-hash','f'.repeat(64),'--external-declaration','d.json'],['status','--json=true'],
-  ['apply','--plan','ap_'+'f'.repeat(64),'--expect-plan-hash','f'.repeat(64)+'\n']])
+  ['apply','--plan','ap_'+'f'.repeat(64),'--expect-plan-hash','f'.repeat(64)+'\n'],
+  ['plan','show','ap_'+'f'.repeat(64),'--$id','ignored']])
   assert.throws(()=>parseCanonicalArguments(args),CliArgumentError);
  assert.equal(COMMANDS.length,15);
  assert.equal(parseCanonicalArguments(['--json','decision','validate','dec_'+randomUUID(),'--revision','2']).options.revision,2);

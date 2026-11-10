@@ -58,6 +58,21 @@ export function createCanonicalManagementService({root=process.cwd(),actor,...op
     const snapshot=await collectRecoverySnapshot(root,binding,{...options,probeOwner:options.probeOwner??probeRecoveryOwner});
     return {binding,snapshot,observation:classifyRecoverySnapshot(snapshot)};
   }
+  async function annotateExecutionFailure(error,request_id) {
+    // An earlier inspect result cannot establish the effect after a failed
+    // execution. Reuse the normal Apply's full readonly reobservation only;
+    // never retry, repair evidence or replace the original exception here.
+    try {
+      const {snapshot,observation}=await resolveRecovery({request_id});
+      const s=recoverySnapshotData(snapshot);
+      if(s.base.evidence.consistency==='stable'&&observation.readiness!=='blocked') {
+        if(s.chain?.decision&&s.semantic_codes.length===0&&s.canonical_manifest?.manifest_hash===s.intent?.payload.target_manifest.manifest_hash)
+          Object.assign(error,{canonical_effect:'applied',finalization_pending:observation.readiness!=='initialized'});
+        if(s.proof&&s.completion&&observation.classification==='terminal'&&['ABORTED','ROLLED_BACK'].includes(s.proof.payload.phase))
+          Object.assign(error,{terminal_outcome:s.proof.payload.phase==='ABORTED'?'aborted':'rolled_back',canonical_effect:s.proof.payload.phase==='ABORTED'?'none':'restored'});
+      }
+    } catch(inspection_error) {error.recovery_inspection_error=inspection_error;}
+  }
   return Object.freeze({
     createPlan:async({decision_id,revision,expected_decision_hash})=>{
       const plan=await plans.generateApplyPlan({decision_id});
@@ -95,16 +110,7 @@ export function createCanonicalManagementService({root=process.cwd(),actor,...op
         if(error&&typeof error==='object') {
           Object.assign(error,{intended_request_id:request_id,plan_id,...(approvalEstablished?{approval_id}:{intended_approval_id:approval_id})});
           if(accepted.has(requestPath(request_id)))error.request_id=request_id;
-          try {
-            const {snapshot,observation}=await resolveRecovery({request_id});
-            const s=recoverySnapshotData(snapshot);
-            if(observation.readiness!=='blocked') {
-              if(s.chain?.decision&&s.semantic_codes.length===0&&s.canonical_manifest?.manifest_hash===s.intent?.payload.target_manifest.manifest_hash)
-                Object.assign(error,{canonical_effect:'applied',finalization_pending:observation.readiness!=='initialized'});
-              if(s.proof&&s.completion&&observation.classification==='terminal'&&['ABORTED','ROLLED_BACK'].includes(s.proof.payload.phase))
-                Object.assign(error,{terminal_outcome:s.proof.payload.phase==='ABORTED'?'aborted':'rolled_back',canonical_effect:s.proof.payload.phase==='ABORTED'?'none':'restored'});
-            }
-          } catch(inspection_error) {error.recovery_inspection_error=inspection_error;}
+          await annotateExecutionFailure(error,request_id);
         }
         throw error;
       }
@@ -129,9 +135,17 @@ export function createCanonicalManagementService({root=process.cwd(),actor,...op
       const s=recoverySnapshotData(snapshot);
       const terminal=s.proof?.payload??s.proof_intent?.payload??s.chain?.head?.payload;
       const success=action==='finalize_success'||s.chain?.decision!==null&&s.chain?.decision!==undefined||terminal?.phase==='COMPLETED';
-      const service=await (success?createSuccessRecoveryService:createFailureRecoveryService)(root,{...options,operator:actor});
-      return service.run({binding,command:{schema_version:2,request_id:binding.request_id,transaction_id,
-        expected_observed_state_hash,action}});
+      try {
+        const service=await (success?createSuccessRecoveryService:createFailureRecoveryService)(root,{...options,operator:actor});
+        return await service.run({binding,command:{schema_version:2,request_id:binding.request_id,transaction_id,
+          expected_observed_state_hash,action}});
+      } catch(error) {
+        // Keep stale-command, busy and integrity refusals unchanged. Only
+        // success-side execution I/O failures can need the known-commit exit7.
+        if(success&&error instanceof RepositoryError&&(/^PERSISTENCE_/.test(error.code)||error.code==='GATE_RELEASE_FAILED'))
+          await annotateExecutionFailure(error,binding.request_id);
+        throw error;
+      }
     }
   });
 }

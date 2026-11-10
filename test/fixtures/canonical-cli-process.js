@@ -7,7 +7,15 @@ import {runCanonicalCli,managementServices} from '../../src/canonical-cli.js';
 if(process.argv[2]) {
  const [root,mode,target,...argv]=process.argv.slice(2);
  let fired=false;
- const io={...fs,link:async(from,to)=>{if(mode==='io-request'&&to.startsWith(join(root,'staging/apply-requests')+'/')||mode==='io-history'&&to.startsWith(join(root,'staging/apply-history')+'/'))throw Object.assign(Error('trusted persistent History failure'),{code:'EIO'});return fs.link(from,to);},rename:async(from,to)=>{
+ const io={...fs,link:async(from,to)=>{
+  const requestFault=mode==='io-request'&&to.startsWith(join(root,'staging/apply-requests')+'/');
+  const historyFault=['io-history','io-history-unknown'].includes(mode)&&to.startsWith(join(root,'staging/apply-history')+'/');
+  if(requestFault||historyFault){
+   if(mode==='io-history-unknown'&&!fired){fired=true;await fs.appendFile(join(root,'data/works.csv'),'UNKNOWN');}
+   throw Object.assign(Error('trusted persistent History failure'),{code:'EIO'});
+  }
+  return fs.link(from,to);
+ },rename:async(from,to)=>{
   const hit=!fired&&mode==='io'&&to===join(root,'staging/fn004-state.json');
   await fs.rename(from,to);
   if(hit){fired=true;throw Object.assign(Error('trusted syscall failure'),{code:'EIO'});}

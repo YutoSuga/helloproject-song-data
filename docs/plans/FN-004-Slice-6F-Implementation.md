@@ -97,3 +97,21 @@ TTY確認後は既存initialize serviceのfresh gate/revalidation/idempotencyを
 READY／BOOTSTRAP_REQUIRED以外のcheck statusは、readinessがrecovery_requiredの場合も元codeで拒否する。
 修正前は実TTY再送で4対期待0、構造化Recovery preconditionで4対期待6のFAILを記録した。
 これらの修正後は全CLIファイルを再実行し、旧CLI結果を最終件数へ重複計上しない。
+
+## PR #84 独立レビュー修正
+
+R84-M02（MEDIUM）：通常Applyと異なり、Recovery runの成功確定後I/O失敗では、元errorだけを返し、
+検証可能なcanonical effectとexit 7（成功後の後処理待ち）が失われていた。
+通常Applyの既存readonly再観測を共有し、stableかつ矛盾のない観測を得た成功側のtyped I/O失敗にだけ適用する。
+元exceptionのcode/cause/path/phase/published等は変更せず、再実行・修復・新identity生成を行わない。
+runの初回hash/action拒否、排他下のstale/busy/integrity拒否は従来どおりである。
+
+[独立CLI回帰](../../test/fn004-cli-review84.test.js)はCOMMIT_DECIDED後のHistory公開EIOを実processで再現し、
+exit 7・元error保持・明示resume・元History record/timeとID stateの一度だけの確定を検証する。
+同じ失敗境界で外部UNKNOWN bytesが入った場合はfreshな再観測で成功effectを認定せず、強制forwardも行わない。
+同testsはhuman prompt中のApply/bootstrap変更、保持gate/retirement、古いinspect tokenとprivate option拒否も追加する。
+正式schema、hash、Recovery predicate、readiness/action vocabularyは変更しない。
+
+R84-L01（LOW）：位置引数の内部marker `$id`をoption検索にも含めていたため、`--$id <value>`を
+未知optionとして拒否せず無視していた。位置引数markerをnamed optionの候補から除き、
+contract testと実CLI processの双方でexit 2・保存証跡不変を検証する。対象ID/OCC/authorityの迂回はなかった。
