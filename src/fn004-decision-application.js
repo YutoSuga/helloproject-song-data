@@ -1,3 +1,6 @@
+import {validateCandidates} from './prepare-reviews.js';
+import {randomUUID} from 'node:crypto';
+import {candidateSourceProjection,candidateFingerprint,createDecisionScope,validateCandidateSource} from './fn004-decision-core.js';
 import { setTimeout as delay } from 'node:timers/promises';
 import { canonicalJson } from './canonical-hash.js';
 import { CANONICAL_SCHEMA, ID_PATTERNS } from './canonical-schema.js';
@@ -5,7 +8,7 @@ import { createPersistence, RepositoryError } from './persistence.js';
 import { createFn004Repository } from './fn004-repository.js';
 import { withCanonicalGate, assertGateOwnership } from './fn004-gate.js';
 import { inspectRuntimeState, validatedSnapshot } from './fn004-runtime-state.js';
-import { proposeDecisionRevision, inspectDecisionMutation, buildDecisionRegistry } from './fn004-decision-lifecycle.js';
+import { createDecisionId, decisionContent, decisionIdentity, getDecisionHead, proposeDecisionRevision, inspectDecisionMutation, buildDecisionRegistry } from './fn004-decision-lifecycle.js';
 const fail = (code, message) => { throw new RepositoryError(code, message); };
 const key = ref => ref?.existing_id ?? ref?.local_ref ?? null;
 const same = (a,b) => canonicalJson(a) === canonicalJson(b);
@@ -73,9 +76,9 @@ async function gated(root, operation, fn) {
   }
 }
 export function createDecisionService({ root = process.cwd(), io, clock = () => new Date().toISOString() } = {}) {
-  async function mutate(action, command) {
+  async function mutate(action, command, build = null) {
     // Freeze caller input before any await; no buffer mutation during gate wait.
-    const input = JSON.parse(canonicalJson(command));
+    const captured = JSON.parse(canonicalJson(command));
     const repository = await createFn004Repository(root, io ? {io} : {});
     const persistence = await createPersistence(root, io ? {io} : {});
     return gated(repository.root, `decision_${action}`, async gate => {
@@ -83,6 +86,7 @@ export function createDecisionService({ root = process.cwd(), io, clock = () => 
       const ready = await inspectRuntimeState(persistence,{snapshot,gate});
       if (ready.status !== 'READY' || ready.readiness !== 'initialized') fail(ready.status === 'READY' ? 'RECOVERY_REQUIRED' : ready.status,'Runtime blocks Decision mutation');
       const current = await repository.readDecisionStore({gate});
+      const input = build ? build(current,captured) : captured;
       const preflight = inspectDecisionMutation(current,action,input);
       if (preflight.replay) return {revision:preflight.replay,replayed:true};
       const candidates = action === 'cancel' ? undefined : await persistence.readJson('staging/song-candidates.json',{strict:true});
@@ -94,7 +98,76 @@ export function createDecisionService({ root = process.cwd(), io, clock = () => 
       return {revision:result.revision,replayed:false};
     });
   }
+  async function read(operation, fn) {
+    const repository=await createFn004Repository(root,io?{io}:{});
+    return gated(repository.root,operation,async gate=>{
+      const persistence=await createPersistence(root,io?{io}:{});
+      const ready=await inspectRuntimeState(persistence,{gate});
+      if(ready.status!=='READY'||ready.readiness!=='initialized')fail(ready.status==='READY'?'RECOVERY_REQUIRED':ready.status,'Runtime blocks Decision operation');
+      const store=await repository.readDecisionStore({gate});buildDecisionRegistry(store);
+      return fn({store,persistence,gate});
+    });
+  }
+  async function sources(persistence) {
+    const source=await persistence.readJson('staging/song-candidates.json',{strict:true});
+    try {validateCandidates(source);}catch(cause){throw new RepositoryError('CANDIDATE_FINGERPRINT_MISMATCH','Candidate source collection is invalid',{cause});}
+    return source;
+  }
+  function selected(store,id,revision) {
+    const head=getDecisionHead(store,id);
+    const value=revision===undefined?head:store.revisions.find(r=>r.decision_id===id&&r.revision===revision);
+    if(!value)fail('PERSISTENCE_NOT_FOUND','Decision revision not found');
+    return {head,revision:value};
+  }
+  function confirmation(store,input) {
+    const {head}=selected(store,input.decision_id);
+    if(head.revision!==input.revision||head.content_hash!==input.expected_head)fail('DECISION_HEAD_CONFLICT','Decision head changed');
+    return {decision_id:head.decision_id,base_revision:head.revision,base_content_hash:head.content_hash,
+      source_revision:decisionIdentity(head),content:decisionContent(head),cancellation:null,actor:input.actor,mutation_key:input.mutation_key};
+  }
   return Object.freeze({
+    getDecision: (id,revision)=>read('decision_show',async({store})=>selected(store,id,revision)),
+    createDecisionTemplate: candidateId=>read('decision_template',async({persistence})=>{
+      const source=await sources(persistence);
+      const found=source.candidates.filter(c=>c.candidate_id===candidateId);
+      if(source.schema_version!==1||found?.length!==1)fail('CANDIDATE_FINGERPRINT_MISMATCH','Candidate missing or duplicate');
+      const projection=candidateSourceProjection(found[0],source.schema_version);
+      const facts=projection.facts;
+      return {schema_version:1,decision_id:null,base_revision:null,base_content_hash:null,mutation_key:randomUUID(),content:{
+        scope:createDecisionScope([candidateId]),replaces:[],derived_from_revision:null,
+        candidate_bindings:[{candidate_id:candidateId,source_schema_version:1,projection_version:1,
+          source_identity:Object.fromEntries(['source_artist_slug','source_release_url','media_type','edition','product_number','disc_index','track_number'].map(k=>[k,facts[k]])),
+          source_facts:facts,fingerprint:candidateFingerprint(found[0]),work:null,song:null,audio_identity:null,accepted_version_type:null,
+          release_track_refs:[],performer_review:'unreviewed',evidence_refs:[],human_note:''}],
+        entities:{works:[],creators:[],artists:[],releases:[],songs:[]},relations:{song_artists:[],song_creators:[],song_performers:[],release_tracks:[]},
+        unsupported_requests:[],evidence:[],human_note:''}};
+    }),
+    importDecisionDraft: (document,actor)=>mutate('save_draft',{document,actor},(store,{document:d,actor})=>{
+      const keys=['schema_version','decision_id','base_revision','base_content_hash','mutation_key','content'];
+      if(!d||typeof d!=='object'||Object.keys(d).length!==keys.length||keys.some(k=>!Object.hasOwn(d,k))||d.schema_version!==1)fail('DECISION_INVALID','Invalid external draft document');
+      if(d.decision_id===null&&(d.base_revision!==null||d.base_content_hash!==null))fail('DECISION_INVALID','New draft cannot claim a base');
+      if(d.decision_id!==null&&!getDecisionHead(store,d.decision_id))fail('DECISION_HEAD_CONFLICT','Update target does not exist');
+      const replay=store.revisions.find(r=>r.metadata.mutation.key===d.mutation_key);
+      return {decision_id:d.decision_id??replay?.decision_id??createDecisionId(),base_revision:d.base_revision,base_content_hash:d.base_content_hash,
+        source_revision:null,content:d.content,cancellation:null,actor,mutation_key:d.mutation_key};
+    }),
+    confirmDecisionHead: input=>mutate('confirm',input,confirmation),
+    validateDecision: (id,revision,actor)=>read('decision_validate',async({store,persistence})=>{
+      const chosen=selected(store,id,revision);
+      if(chosen.head.revision!==revision)fail('DECISION_HEAD_CONFLICT','Validation requires current head');
+      const input={decision_id:id,revision,expected_head:chosen.head.content_hash,actor,mutation_key:randomUUID()};
+
+      try {
+        const candidates=await sources(persistence);
+        for(const b of chosen.revision.candidate_bindings){const found=candidates.candidates.filter(c=>c.candidate_id===b.candidate_id);if(found.length!==1)fail('CANDIDATE_FINGERPRINT_MISMATCH','Candidate missing or duplicate');try{validateCandidateSource(b,found[0],candidates.schema_version);}catch(cause){throw new RepositoryError('CANDIDATE_FINGERPRINT_MISMATCH','Candidate source token mismatch',{cause});}}
+        const value=chosen.head.status==='draft'?proposeDecisionRevision(store,'confirm',confirmation(store,input),{now:clock(),candidates}).revision:chosen.revision;
+        validateDecisionCanonicalContext(value,(await validatedSnapshot(persistence)).tables);
+        return {revision:chosen.revision,valid:true,confirmable:chosen.head.status==='draft',diagnostics:[]};
+      } catch(error) {
+        if(!['DECISION_INVALID','DECISION_INCOMPLETE','UNSUPPORTED_OPERATION','CANDIDATE_FINGERPRINT_MISMATCH','EXISTING_IDENTITY_CONFLICT'].includes(error.code))throw error;
+        return {revision:chosen.revision,valid:false,confirmable:false,diagnostics:[{code:error.code}]};
+      }
+    }),
     saveDecisionDraft: command => mutate('save_draft',command),
     confirmDecision: command => mutate('confirm',command),
     cancelDecision: command => mutate('cancel',command),

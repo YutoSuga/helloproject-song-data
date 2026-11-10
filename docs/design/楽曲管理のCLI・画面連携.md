@@ -1,6 +1,6 @@
 # CLI / SCR-002 Interface・Approval / Apply Request
 
-FN-004 canonical反映機能とSCR-002 楽曲管理画面の正式v1設計。runtime・CLI・backend・frontendはいずれも未実装。[全体設計](レビュー準備・canonical反映の全体フロー.md)、[Decision](FN-004-判断モデル.md)、[Plan](FN-004-反映計画.md)、[Transaction](FN-004-反映処理・復旧.md)、[History readonly契約](FN-004-成功履歴・読取検証.md)を参照する。
+FN-004 canonical反映機能とSCR-002 楽曲管理画面の正式v1設計。runtimeはSlice 6A〜6E、公開CLI adapterはSlice 6Fで実装する。backend・frontendは未実装。[CLI操作ガイド](../canonical-cli.md)を参照。[全体設計](レビュー準備・canonical反映の全体フロー.md)、[Decision](FN-004-判断モデル.md)、[Plan](FN-004-反映計画.md)、[Transaction](FN-004-反映処理・復旧.md)、[History readonly契約](FN-004-成功履歴・読取検証.md)を参照する。
 
 ## application boundary
 
@@ -133,9 +133,9 @@ UIはmessage文字列で分岐せずcodeとallowed_actionsを使う。warningだ
 
 double clickは同request、refresh/backはGET相当の結果取得、timeoutは失敗と断定しない。UI button disableだけで二重実行を防いだと扱わない。busy中は安全なimmutable履歴・状態照会のみ可能。未完了時はblocking bannerとし、System StatusでCLIへ案内する。lock削除・force操作・recovery自由選択は提供しない。
 
-## CLI（未実装の提案command）
+## CLI（設計例とSlice 6F接続）
 
-新npm scriptを`canonical:manage`にまとめる。既存の`collect:candidates` / `prepare:reviews` / `rankings:generate`は維持する。以下は設計例で、現package.jsonには追加していない。
+新npm scriptを`canonical:manage`にまとめる。既存の`collect:candidates` / `prepare:reviews` / `rankings:generate`は維持する。以下は設計例。Slice 6Fの実装command・厳密なoption・外部入力・exit・安全上の制約は[操作ガイド](../canonical-cli.md)を参照する。
 
 ```text
 npm run canonical:manage -- status

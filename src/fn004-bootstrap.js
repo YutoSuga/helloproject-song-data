@@ -9,9 +9,9 @@ import { createAuditPayload, createBootstrapRecords, validateActor, validateExte
 import { BOOTSTRAP_PATH, STATE_PATH, HISTORY_PATH, directoryEntries, inspectRuntimeState } from "./fn004-runtime-state.js";
 import { hashCanonicalJson } from "./canonical-hash.js";
 
-const failure = (error) => ({ status: error.code ?? "BOOTSTRAP_AUDIT_INCOMPLETE", readiness: "blocked", audit_payload: null,
+const failure = (error) => Object.defineProperty({ status: error.code ?? "BOOTSTRAP_AUDIT_INCOMPLETE", readiness: "blocked", audit_payload: null,
   audit_hash: null, canonical_manifest: null, existing_identity: null, exhausted_namespaces: [],
-  diagnostics: error.diagnostics ?? [{ code: "BOOTSTRAP_AUDIT_INCOMPLETE", severity: "error", message: error.message }], metadata: { generated_at: new Date().toISOString() } });
+  diagnostics: error.diagnostics ?? [{ code: "BOOTSTRAP_AUDIT_INCOMPLETE", severity: "error", message: error.message }], metadata: { generated_at: new Date().toISOString() } }, "cause", {value:error});
 function assertInitializable(result) {
   if (result.status !== "BOOTSTRAP_REQUIRED") throw new RepositoryError(result.status, "Bootstrap state is not initializable", { diagnostics: result.diagnostics, readiness: result.readiness });
 }

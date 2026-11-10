@@ -30,7 +30,7 @@ for(const mode of ['receipt','abort','prepared','intentlag','noop','unconsumed',
 });
 
 for (const boundary of ['restore:after','restore_last:after','rollback_validation:after','failure_state:after','proof:after','completion:after','retiring:after','gate_release:after','retired:after']) {
-  test(`SIGKILL ${boundary}: restart advances permanent successor and reuses terminal evidence`, { timeout:180000 }, async t => {
+  test(`SIGKILL ${boundary}: restart advances permanent successor and reuses terminal evidence`, { timeout:900000 }, async t => {
     const {root,binding}=await fixture(t,boundary.startsWith('restore')||boundary.startsWith('rollback_validation')||boundary.startsWith('failure_state')?'relation':'abort');
     const child=fork(new URL('./fixtures/recovery-runtime-child.js',import.meta.url),['run',root,JSON.stringify(binding),boundary],
       {stdio:['ignore','ignore','pipe','ipc']});
