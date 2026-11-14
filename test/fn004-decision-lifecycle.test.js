@@ -116,6 +116,7 @@ import { emptyMaxima } from '../src/fn004-id-audit.js';
 import { checkBootstrap, initializeBootstrap } from '../src/fn004-bootstrap.js';
 import { createDecisionService } from '../src/fn004-decision-application.js';
 import { createFn004Repository } from '../src/fn004-repository.js';
+import { acquireGate, releaseGate } from '../src/fn004-gate.js';
 const execute = promisify(execFile);
 async function applicationFixture(t) {
   const root = await fs.mkdtemp(join(tmpdir(),'fn004-lifecycle-')); t.after(()=>fs.rm(root,{recursive:true,force:true}));
@@ -153,6 +154,26 @@ test('concurrent draft writers serialize through one gate and stale writer gets 
   const outcomes=await Promise.allSettled([service.saveDecisionDraft(one),createDecisionService({root}).saveDecisionDraft(two)]);
   assert.equal(outcomes.filter(r=>r.status==='fulfilled').length,1);assert.equal(outcomes.find(r=>r.status==='rejected').reason.code,'DECISION_HEAD_CONFLICT');
   assert.equal((await history(root)).revisions.length,2);
+});
+test('GP12 paused pre-publication metadata cannot turn a real Decision OCC race into GATE_CORRUPT',async t=>{
+  const {root,service}=await applicationFixture(t);
+  const a=resultRevision(await service.saveDecisionDraft(command(completeDraft())));
+  const before=await fs.readFile(join(root,'staging/fn004-state.json'));
+  let resume,reached;const paused=new Promise(r=>{reached=r;}),ready=new Promise(r=>{resume=r;});
+  const pending=acquireGate({root,io:{...fs,open:async(p,flags,...args)=>{
+    const h=await fs.open(p,flags,...args);if(flags!=='wx')return h;
+    return new Proxy(h,{get(target,key){if(key==='writeFile')return async bytes=>{reached();await ready;return h.writeFile(bytes);};
+      const v=target[key];return typeof v==='function'?v.bind(target):v;}});
+  }}});await paused;
+  try {
+    const one=command(a,a),two=command(a,a);one.content.human_note='one';two.content.human_note='two';
+    const results=await Promise.allSettled([service.saveDecisionDraft(one),createDecisionService({root}).saveDecisionDraft(two)]);
+    assert.equal(results.filter(r=>r.status==='fulfilled').length,1,
+      JSON.stringify(results.map(r=>r.status==='rejected'?r.reason.code:'fulfilled')));
+    assert.equal(results.find(r=>r.status==='rejected').reason.code,'DECISION_HEAD_CONFLICT');
+  }finally{resume();await releaseGate(await pending);}
+  assert.equal((await history(root)).revisions.length,2);
+  assert.deepEqual(await fs.readFile(join(root,'staging/fn004-state.json')),before);
 });
 test('draft/confirm and confirm/cancel races cannot lose an update',async t=>{
   const {root,service}=await applicationFixture(t);const a=resultRevision(await service.saveDecisionDraft(command(completeDraft())));

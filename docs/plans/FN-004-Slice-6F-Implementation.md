@@ -115,3 +115,8 @@ exit 7・元error保持・明示resume・元History record/timeとID stateの一
 R84-L01（LOW）：位置引数の内部marker `$id`をoption検索にも含めていたため、`--$id <value>`を
 未知optionとして拒否せず無視していた。位置引数markerをnamed optionの候補から除き、
 contract testと実CLI processの双方でexit 2・保存証跡不変を検証する。対象ID/OCC/authorityの迂回はなかった。
+
+
+### FA-M01 Gate publication follow-up
+
+旧wx公開窓の試験は当時の実装記録として保持する。採用済みD1〜D4に基づく変更・回帰証拠は[Gate publication実装](FN-004-FA-M01-Gate-Publication.md)を参照。過去のPASSを新実装の検証結果として流用しない。

@@ -5,6 +5,9 @@ import {join} from 'node:path';
 import {randomUUID} from 'node:crypto';
 import {readCanonicalSnapshot} from '../src/canonical-snapshot.js';
 import {cli,tty,cliFixture,evidenceHashes} from './fixtures/canonical-cli.js';
+import {isGateCandidate,gateCandidatePath} from '../src/fn004-gate-candidate.js';
+import {gateWitness} from '../src/fn004-evidence-types.js';
+import {sha256} from '../src/canonical-hash.js';
 
 test('6F public stale/wrong Plan and current source validation reject before Approval/Receipt',{timeout:900000},async t=>{
  const f=await cliFixture(t),before=await evidenceHashes(f.root);
@@ -25,18 +28,44 @@ test('6F public stale/wrong Plan and current source validation reject before App
  assert.deepEqual(await evidenceHashes(f.root),corrupt);
 });
 
-test('6F public adapters preserve metadata-race STOP without unlocking or dispatching',{timeout:900000},async t=>{
+test('6F public adapters preserve incomplete-final STOP and nonauthoritative candidate evidence',{timeout:900000},async t=>{
  const f=await cliFixture(t),path=join(f.root,'staging/.fn004.lock');
- // Exact observed incomplete-publication window from the existing gate race
- // regression. 6F does not modify acquireGate or reinterpret malformed metadata.
- await fs.writeFile(path,'');const before=await evidenceHashes(f.root);
+ // Legacy/injected partial final is still corrupt. FA-M01 may retain only the
+ // invocation's own unpublished candidate; no domain evidence may be changed.
+ await fs.writeFile(path,'');let before=await evidenceHashes(f.root);
+ async function preserved(expectedNewCandidates){
+  const identities=new Map();
+  for(const p of Object.keys(before)){
+   const s=await fs.lstat(join(f.root,p),{bigint:true});identities.set(p,{dev:s.dev,ino:s.ino});
+  }
+  return async()=>{
+   const after=await evidenceHashes(f.root),added=Object.keys(after).filter(p=>!Object.hasOwn(before,p));
+   assert.equal(added.length,expectedNewCandidates);
+   const comparable={...after};
+   for(const p of added){
+    assert.equal(isGateCandidate(p),true);const s=await fs.lstat(join(f.root,p),{bigint:true});
+    assert.ok(s.isFile()&&!s.isSymbolicLink());const raw=await fs.readFile(join(f.root,p)),metadata=JSON.parse(raw);
+    // Structural metadata/bytes check only: the candidate is NOT adopted as
+    // a GateWitness, lease, Owner, or transaction ArtifactRef.
+    gateWitness({metadata,byte_length:raw.length,sha256:sha256(raw),device:s.dev.toString(),inode:s.ino.toString()});
+    assert.equal(metadata.root,await fs.realpath(f.root));assert.equal(p,gateCandidatePath(metadata.lock_id));
+    delete comparable[p];
+   }
+   assert.deepEqual(comparable,before);
+   for(const [p,identity] of identities){
+    const s=await fs.lstat(join(f.root,p),{bigint:true});assert.equal(s.dev,identity.dev);assert.equal(s.ino,identity.ino);
+   }
+   before=after;
+  };
+ }
  for(const args of [['status'],['plan','show',f.plan.plan_id],['result','--request',f.binding.request_id],
   ['recovery','inspect','--request',f.binding.request_id],['recovery','run','--transaction',f.binding.transaction_id,'--expect-state-hash','f'.repeat(64),'--action','abort']]){
+  const verify=await preserved(args[0]==='recovery'?0:1);
   const r=await cli(f.root,args);assert.equal(r.code,8,JSON.stringify(r));assert.equal(r.data.error.code,args[0]==='recovery'?'PERSISTENCE_PARSE_FAILED':'GATE_CORRUPT');
-  assert.deepEqual(await evidenceHashes(f.root),before);
+  await verify();
  }
- const apply=await tty(f.root,f.args);assert.equal(apply.code,8);assert.equal(apply.answered,false);
- assert.deepEqual(await evidenceHashes(f.root),before);
+ const verify=await preserved(1),apply=await tty(f.root,f.args);
+ assert.equal(apply.code,8);assert.equal(apply.answered,false);await verify();
 });
 
 test('6F actual OS permission failure maps to 9 and external malformed input remains non-mutating',{timeout:900000},async t=>{

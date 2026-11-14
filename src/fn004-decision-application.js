@@ -1,3 +1,4 @@
+import { gateNow, gateDeadline, withGateAcquisitionBudget } from './fn004-gate-budget.js';
 import {validateCandidates} from './prepare-reviews.js';
 import {randomUUID} from 'node:crypto';
 import {candidateSourceProjection,candidateFingerprint,createDecisionScope,validateCandidateSource} from './fn004-decision-core.js';
@@ -68,12 +69,15 @@ export function validateDecisionCanonicalContext(revision, tables) {
 // retried before reading any state; once acquired, OCC decides stale requests.
 // Existing stale/corrupt locks are never removed or treated as successful work.
 async function gated(root, operation, fn) {
-  const deadline = Date.now()+5000;
+  return withGateAcquisitionBudget(5000, async () => {
+  let lastBusy;
   for (;;) {
+    if (lastBusy && gateNow() >= gateDeadline()) throw lastBusy;
     let entered = false;
     try { return await withCanonicalGate({root,operation,fn: async gate => { entered=true; return fn(gate); }}); }
-    catch (error) { if (entered || error.code !== 'GATE_BUSY' || Date.now() >= deadline) throw error; await delay(10); }
+    catch (error) { if (entered || error.code !== 'GATE_BUSY' || gateNow() >= gateDeadline()) throw error; lastBusy = error; await delay(Math.min(10, Math.max(0, gateDeadline() - gateNow()))); }
   }
+  });
 }
 export function createDecisionService({ root = process.cwd(), io, clock = () => new Date().toISOString() } = {}) {
   async function mutate(action, command, build = null) {

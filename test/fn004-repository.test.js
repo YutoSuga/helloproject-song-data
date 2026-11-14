@@ -93,7 +93,7 @@ for (const content of ["", "{", "[]", '{"schema_version":99}']) test(`malformed/
 test("lock read failure is corrupt/busy, never absence", async (t) => {
   const root = await fixture(t), lease = await acquireGate({ root });
   const before = await fs.readFile(join(root, GATE_PATH));
-  const io = { ...fs, readFile: async (path, ...args) => { if (path.endsWith(".fn004.lock")) throw fault(); return fs.readFile(path, ...args); } };
+  const io = { ...fs, open: injectedOpen((path, flags, name) => path.endsWith(".fn004.lock") && flags === "r" && name === "readFile" ? async () => { throw fault(); } : null) };
   await assert.rejects(acquireGate({ root, io }), hasCode("GATE_CORRUPT"));
   assert.deepEqual(await fs.readFile(join(root, GATE_PATH)), before);
   await releaseGate(lease);
@@ -146,7 +146,7 @@ test("concurrent release cannot unlink a later owner's lock", async (t) => {
 
 test("unlink failure is cleanup_required, preserves operation error and lock", async (t) => {
   const root = await fixture(t);
-  const io = { ...fs, unlink: async () => { throw fault(); } };
+  const io = { ...fs, unlink: async path => { if (path.endsWith(".fn004.lock")) throw fault(); return fs.unlink(path); } };
   const domain = new Error("original operation error");
   await assert.rejects(withCanonicalGate({ root, io, fn: () => { throw domain; } }), (error) => {
     assert.equal(error.code, "GATE_RELEASE_FAILED"); assert.equal(error.cleanup_required, true);
@@ -158,25 +158,28 @@ test("unlink failure is cleanup_required, preserves operation error and lock", a
 
 test("successful callback cannot hide release sync failure", async (t) => {
   const root = await fixture(t); await fs.mkdir(join(root, "staging"));
-  let directorySyncs = 0;
-  const io = { ...fs, open: injectedOpen((path, flags, name) => flags === "r" && name === "sync" ? async () => { if (++directorySyncs === 2) throw fault(); } : null) };
-  await assert.rejects(withCanonicalGate({ root, io, fn: () => 42 }), (error) => error.code === "GATE_RELEASE_FAILED" && error.cleanup_required);
+  let callbackFinished = false;
+  const io = { ...fs, open: injectedOpen((path, flags, name) => flags === "r" && name === "sync" && callbackFinished ? async () => { throw fault(); } : null) };
+  await assert.rejects(withCanonicalGate({ root, io, fn: () => { callbackFinished = true; return 42; } }), (error) => error.code === "GATE_RELEASE_FAILED" && error.cleanup_required);
 });
 
-test("acquire fsync failure retains partial lock and never runs callback", async (t) => {
+test("acquire fsync failure retains its candidate, publishes no final and never runs callback", async (t) => {
   const root = await fixture(t);
   const io = { ...fs, open: injectedOpen((path, flags, name) => flags === "wx" && name === "sync" ? async () => { throw fault(); } : null) };
   await assert.rejects(withCanonicalGate({ root, io, fn: () => assert.fail("must not execute") }), hasCode("GATE_ACQUIRE_FAILED"));
-  assert.ok(await fs.stat(join(root, GATE_PATH)));
-  await assert.rejects(acquireGate({ root }), hasCode("GATE_BUSY"));
+  await missing(join(root, GATE_PATH));
+  assert.equal((await fs.readdir(join(root, "staging"))).filter(n => n.startsWith(".fn004-gate-candidate.tmp-")).length, 1);
+  const next = await acquireGate({ root }); await releaseGate(next);
 });
 
-test("metadata write failure leaves an incomplete lock, never unlocks someone else's file", async (t) => {
+test("metadata write failure leaves an incomplete candidate without publishing a final", async (t) => {
   const root = await fixture(t);
   const io = { ...fs, open: injectedOpen((path, flags, name) => flags === "wx" && name === "writeFile" ? async () => { throw fault(); } : null) };
   await assert.rejects(acquireGate({ root, io }), hasCode("GATE_ACQUIRE_FAILED"));
-  assert.equal((await fs.readFile(join(root, GATE_PATH))).length, 0);
-  await assert.rejects(acquireGate({ root }), hasCode("GATE_CORRUPT"));
+  await missing(join(root, GATE_PATH));
+  const candidate = (await fs.readdir(join(root, "staging"))).find(n => n.startsWith(".fn004-gate-candidate.tmp-"));
+  assert.equal((await fs.readFile(join(root, "staging", candidate))).length, 0);
+  const next = await acquireGate({ root }); await releaseGate(next);
 });
 
 test("safe read: Slice 1 manifest/14 tables, stable bytes retained after gate release", async (t) => {

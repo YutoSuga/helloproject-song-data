@@ -1,3 +1,4 @@
+import { isGateCandidate } from './fn004-gate-candidate.js';
 import { CANONICAL_TABLES } from './canonical-schema.js';
 import { UUID_PATTERN } from './fn004-approval-schema.js';
 import { check, observedPath, COMMIT_PATHS } from './fn004-evidence-types.js';
@@ -34,6 +35,7 @@ const directoryPatterns = [txRoot, `${txRoot}/(?:journal|backup|temp|restore)`,
   .map(pattern => new RegExp(`^(?:${pattern})$`));
 
 export function publisherTarget(path) {
+  if (isGateCandidate(path)) return null;
   const slash = path.lastIndexOf('/'), name = path.slice(slash + 1);
   const match = new RegExp(`^\\.fn004-(.+)\\.tmp-(${UUID_PATTERN})$`).exec(name);
   return match ? path.slice(0, slash + 1) + match[1] : null;
@@ -47,6 +49,10 @@ export function validateEvidenceNamespace(files) {
   for (const file of files) {
     observedPath(file.path);
     if (file.kind === 'symlink' || file.kind === 'other') throw new RepositoryError('PATH_UNSAFE', 'Nonregular evidence namespace entry', { path: file.path });
+    if (isGateCandidate(file.path)) {
+      check(file.kind === 'file' || file.kind === 'missing', 'Nonregular Gate candidate');
+      continue;
+    }
     if (file.kind === 'directory' || file.kind === 'missing' && (directories.includes(file.path) || directoryPatterns.some(pattern => pattern.test(file.path)))) check(directories.includes(file.path) || directoryPatterns.some(pattern => pattern.test(file.path)), 'Unknown evidence directory');
     else check(isKnownEvidenceFile(file.path) || isKnownEvidenceFile(publisherTarget(file.path)), 'Unknown evidence file');
   }
