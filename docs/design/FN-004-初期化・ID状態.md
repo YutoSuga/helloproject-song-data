@@ -271,3 +271,8 @@ Gitは空directoryを保存しないため、通常cloneではapply-history dire
 ## Slice 6 failure terminal stateとの接続
 
 [TransactionのSlice 6 evidence contract v1](FN-004-反映処理・復旧.md)が消費後rollbackのpending解除・追加generation・terminal proofの正本。before→consumedは既存成功遷移と同じ、失敗terminalはconsumedからgeneration+1とpending=nullだけを変更し、high-water/events/Historyを保持する。消費前abortはstate不変。state/bootstrap保存schema・hash・genesisは変更しない。新composite proofで証明できるまで通常利用不可であり、schema/hashのvalidだけでREADYへ昇格しない。
+
+
+### FA-M01専用Gate candidateの分類
+
+[承認済みGate契約](FN-004-FA-M01-Gate公開契約案.md)の正確なroot-relative専用candidateだけは、未初期化/正常genesisの両経路でbootstrap intent/temp・cleanup判定から分離する。regular候補の存在をBOOTSTRAP_INCOMPLETEの理由にもREADYの証明にも使わず、他者候補を削除・再利用しない。symlink/nonregular/未知名/読取り失敗は停止する。marker/state片側、不明bootstrap temp、external declaration/audit hash、HWM、全domain guardは従来どおり全検証する。

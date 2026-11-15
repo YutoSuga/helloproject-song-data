@@ -142,11 +142,13 @@ Request resultには元DTOを保持し、canonical effectと通常readerの利�
 
 ## Known limitation / safe STOP
 
-既存gateはwx作成とmetadata書込みの間に未完成JSONを観測し得ます。
-mainの既存deterministic regressionと同じ`GATE_CORRUPT`／`PERSISTENCE_PARSE_FAILED`でSTOPします。
-CLIではintegrity exit 8であり、busyへの読み替え・自動unlockをしません。
-status/show/Apply/result/Recoveryにも影響する可用性制約です。再実行成功を根治と扱わないでください。
-lockの経過時間・PID不存在だけで削除せず、元証拠を保持して調査してください。
+FA-M01では完成済み専用candidateを同directoryからhard linkでno-clobber公開し、正常な公開・release途中の名前競合をboundedに再観測します。全reader/writerを同じ版へ揃え、旧wx writerとの混在運用を解消済みと扱わないでください。
+旧方式が残した空/partial final、実際の不正metadata・証明不能なgateは引き続き`GATE_CORRUPT`等でSTOPします。CLIのintegrity exit 8をbusyへ読み替えず、自動unlockしません。再実行成功を不正証拠の解消とは扱わず、lockの経過時間・PID不存在だけでも削除しません。孤立candidateも無断削除・再利用せず、容量監視と証拠保管を行ってください。
 自動継承に必要な実OS probeは現在Linuxのboot/start/namespace evidenceを使用します。別host・PID再利用・証明不能なplatformはmanual STOPであり、TTYやlocal actorだけでは継承しません。
 
 本CLIは既存row update/delete、Candidate削除/status変更、自動Recovery、SCR-002、HTTP API、DBを実装しません。
+
+
+### FA-M01 Gate公開異常の扱い
+
+[Gate公開契約](design/FN-004-FA-M01-Gate公開契約案.md)を適用する。安定valid BUSYはexit 5、不正finalは8、取得/公開不明は1、permissionは既存優先規則で9、release失敗は6。freshな正式証拠で成功効果を証明できるfinalization待ちだけ既存exit 7となる。candidateの存在から結果を推測しない。専用candidateは容量・inode/bytesをreadonly監視し、孤立物を無断削除/再利用しない。公開不明・容量枯渇・非regular・読取り失敗は証拠保管とmanual STOP。force unlock/GCは提供しない。

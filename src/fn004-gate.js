@@ -4,28 +4,17 @@ import { hostname } from "node:os";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { createPersistence, RepositoryError } from "./persistence.js";
 import { canonicalJson } from "./canonical-hash.js";
+import { publishGate, observeReleasedGate, verifyPublishedGate, gateErrorDescriptor } from './fn004-gate-publication.js';
 import { recoveryProcessIdentity } from './fn004-recovery-process.js';
+import { GATE_PATH } from './fn004-gate-candidate.js';
 
-export const GATE_PATH = "staging/.fn004.lock";
+export { GATE_PATH };
 const leases = new WeakMap();
 const scope = new AsyncLocalStorage();
-const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
 async function processIdentity() {
   const { process_id, hostname, platform, ...identity } = await recoveryProcessIdentity();
   return identity;
-}
-
-async function inspectExisting(store) {
-  try {
-    const metadata = await store.readJson(GATE_PATH);
-    if (metadata.schema_version !== 1 || !uuid.test(metadata.lock_id) || metadata.root !== store.root ||
-        !Number.isInteger(metadata.process_id) || metadata.process_id < 1 || typeof metadata.operation !== "string" || !metadata.operation ||
-        typeof metadata.started_at !== "string" || !Number.isFinite(Date.parse(metadata.started_at))) throw new Error("Invalid lock metadata");
-    return metadata;
-  } catch (cause) {
-    throw new RepositoryError("GATE_CORRUPT", "Existing lock is unreadable, incomplete or unsupported; recovery inspection required", { path: GATE_PATH, cause });
-  }
 }
 
 // Non-reentrant; explicitly pass the original live lease to inner operations.
@@ -41,35 +30,20 @@ async function acquireGateInternal({ root = process.cwd(), operation = "canonica
     process_id: process.pid, operation, mode: "exclusive", started_at: new Date().toISOString(),
     actor, hostname: hostname(), platform: process.platform, ...await processIdentity() });
   const bytes = Buffer.from(canonicalJson(metadata) + "\n");
-  await store.ensureDirectory("staging");
-  const path = await store.resolvePath(GATE_PATH);
-  let handle;
-  try { handle = await io.open(path, "wx", 0o600); }
-  catch (cause) {
-    if (cause.code === "EEXIST") {
-      const existing = await inspectExisting(store);
-      throw new RepositoryError("GATE_BUSY", "Repository gate is already held; it is never removed automatically", { path: GATE_PATH, metadata: existing });
-    }
-    throw new RepositoryError("GATE_ACQUIRE_FAILED", "Cannot create repository gate", { path: GATE_PATH, cause });
+  const guard = async () => {
+    if (recovery) await (await import('./fn004-recovery-authority.js')).assertRecoveryAuthority(recovery);
+    else await (await import('./fn004-gate-recovery-guard.js')).assertNormalRecoveryClear(store, io);
+  };
+  const created = await publishGate(store, io, metadata, bytes, guard);
+  const token = Object.freeze({ lock_id: metadata.lock_id, root: store.root, operation, acquired_at: metadata.started_at });
+  leases.set(token, { ...created, active: true, releasing: false, recovery });
+  try { await guard(); await assertGateOwnership(token, store.root); }
+  catch (error) {
+    try { await releaseGate(token); }
+    catch (releaseError) { releaseError.operation_error = error; throw releaseError; }
+    throw error;
   }
-  try {
-    await handle.writeFile(bytes);
-    await handle.sync();
-    await store.syncDirectory("staging");
-    const identity = await handle.stat({ bigint: true });
-    const token = Object.freeze({ lock_id: metadata.lock_id, root: store.root, operation, acquired_at: metadata.started_at });
-    leases.set(token, { store, io, path, handle, identity, bytes, active: true, releasing: false, recovery });
-    if (!recovery) {
-      try { await (await import('./fn004-gate-recovery-guard.js')).assertNormalRecoveryClear(store, io); }
-      catch (error) { await releaseGate(token); throw error; }
-    }
-    return token;
-  } catch (cause) {
-    try { await handle.close(); } catch { /* preserve acquire/sync failure */ }
-    // A partial lock is not absent. Keep it to stop other operations.
-    if (cause instanceof RepositoryError && ['GATE_BUSY','GATE_CORRUPT','RECOVERY_REQUIRED'].includes(cause.code)) throw cause;
-    throw new RepositoryError("GATE_ACQUIRE_FAILED", "Gate metadata/sync failed; lock retained for inspection", { path: GATE_PATH, cleanup_required: true, cause });
-  }
+  return token;
 }
 
 export async function assertGateOwnership(token, root) {
@@ -122,11 +96,11 @@ export async function adoptRecoveryGate(authority) {
 
 async function verifyLock(lease) {
   try {
-    const stat = await lease.io.lstat(lease.path, { bigint: true });
-    const bytes = await lease.io.readFile(lease.path);
-    if (!stat.isFile() || stat.isSymbolicLink() || stat.dev !== lease.identity.dev || stat.ino !== lease.identity.ino || !bytes.equals(lease.bytes)) throw new Error("Lock identity/content changed");
+    await verifyPublishedGate(lease);
   } catch (cause) {
-    throw new RepositoryError("GATE_OWNERSHIP_MISMATCH", "Lock ownership cannot be verified; lock retained", { path: GATE_PATH, cleanup_required: true, cause });
+    throw new RepositoryError("GATE_OWNERSHIP_MISMATCH", "Lock ownership cannot be verified; lock retained", {
+      path: GATE_PATH, cleanup_required: true, cause,
+      ...(gateErrorDescriptor(cause) === undefined ? {} : { descriptor: gateErrorDescriptor(cause) }) });
   }
 }
 
@@ -135,16 +109,21 @@ export async function releaseGate(token) {
   if (!lease?.active || lease.releasing) throw new RepositoryError("GATE_OWNERSHIP_MISMATCH", "Unknown, releasing or released gate lease");
   if (lease.recovery) await (await import('./fn004-recovery-authority.js')).assertRecoveryAuthority(lease.recovery);
   lease.releasing = true;
+  let published = false, phase = 'publish';
   try {
     await verifyLock(lease);
     lease.active = false; // revoke before closing/unlinking; cannot reuse token
     await lease.handle.close(); lease.handle = null;
-    await lease.io.unlink(lease.path);
+    await lease.io.unlink(lease.path); published = true; phase = 'directory_sync';
     await lease.store.syncDirectory("staging");
   } catch (cause) {
     lease.active = false;
     const error = cause instanceof RepositoryError && cause.code === "GATE_OWNERSHIP_MISMATCH" ? cause :
       new RepositoryError("GATE_RELEASE_FAILED", "Gate release/sync failed; cleanup required", { path: GATE_PATH, cleanup_required: true, cause });
+    const observation = await observeReleasedGate(lease);
+    Object.assign(error, { phase, published: published ? true : observation === 'same' ? false : null,
+      release_observation: observation,
+      ...(gateErrorDescriptor(cause) === undefined ? {} : { descriptor: gateErrorDescriptor(cause) }) });
     lease.release_error = error;
     throw error;
   } finally {

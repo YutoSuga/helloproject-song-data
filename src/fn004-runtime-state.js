@@ -1,4 +1,5 @@
-import { readdir } from "node:fs/promises";
+import * as fs from 'node:fs/promises';
+import { isGateCandidate } from './fn004-gate-candidate.js';
 import { canonicalJson } from "./canonical-hash.js";
 import { readCanonicalSnapshot } from "./canonical-snapshot.js";
 import { CANONICAL_TABLES } from "./canonical-schema.js";
@@ -13,9 +14,13 @@ export const BOOTSTRAP_PATH = "staging/fn004-bootstrap.json";
 export const STATE_PATH = "staging/fn004-state.json";
 export const HISTORY_PATH = "staging/apply-history";
 const bootstrapDirectory = /^bootstrap_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
-export async function directoryEntries(store, path) {
+export async function directoryEntries(store, path, io = fs) {
   if (!await store.exists(path)) return [];
-  return (await readdir(await store.resolvePath(path))).sort();
+  try { return (await io.readdir(await store.resolvePath(path))).sort(); }
+  catch (cause) {
+    if (cause instanceof RepositoryError) throw cause;
+    throw new RepositoryError('PERSISTENCE_READ_FAILED', 'Cannot list runtime evidence', { path, cause });
+  }
 }
 
 export async function validatedSnapshot(store) {
@@ -33,7 +38,24 @@ export async function inspectRuntimeState(store, { historical, snapshot, gate, i
   const transactions = await directoryEntries(store, "staging/transactions");
   const requests = await directoryEntries(store, "staging/apply-requests");
   const history = await directoryEntries(store, HISTORY_PATH);
-  const temps = (await directoryEntries(store, "staging")).filter((name) => name.startsWith(".fn004-") && name.includes(".tmp-"));
+  const temps = [];
+  for (const name of await directoryEntries(store, 'staging', io ?? fs)) {
+    const path = `staging/${name}`;
+    if (isGateCandidate(path)) {
+      // A filename never makes a symlink/directory safe. Resolve and inspect
+      // even on the uninitialized/genesis fast paths; never delete candidates.
+      let stat;
+      try { stat = await (io ?? fs).lstat(await store.resolvePath(path), { bigint: true }); }
+      catch (cause) {
+        if (cause.code === 'ENOENT') continue; // exact, nonauthoritative name disappeared; no domain proof inferred
+        if (cause instanceof RepositoryError) throw cause;
+        throw new RepositoryError('PERSISTENCE_READ_FAILED', 'Cannot inspect Gate candidate', { path, cause });
+      }
+      if (!stat.isFile() || stat.isSymbolicLink()) throw new RepositoryError('PATH_UNSAFE', 'Nonregular Gate candidate', { path });
+      continue;
+    }
+    if (name.startsWith('.fn004-') && name.includes('.tmp-')) temps.push(name);
+  }
   const base = { readiness: "blocked", existing_identity: null, exhausted_namespaces: [], diagnostics: [] };
   const fail = (code, message, cause) => ({ ...base, readiness: code === "STATE_TRANSITION_PROOF_REQUIRED" || code === "RECOVERY_REQUIRED" ? "recovery_required" : "blocked", status: code, diagnostics: cause?.diagnostics ?? [{ code, severity: "error", message }], cause });
   const proofs = await directoryEntries(store, "staging/transaction-proofs");

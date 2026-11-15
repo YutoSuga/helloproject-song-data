@@ -27,26 +27,16 @@ for(const kind of ['candidate','Approval','canonical','state'])test(`6E rejects 
   if(kind!=='state')assert.deepEqual(await fs.readFile(join(f.root,'staging/fn004-state.json')),before);
 });
 
-test('6E initial dispatch observes partial gate metadata fail-closed, without stealing or publishing a Receipt',async t=>{
+test('6E existing partial final still stops initial dispatch without Receipt or state mutation',async t=>{
   const f=await normalApplyFixture(t),before=await fs.readFile(join(f.root,'staging/fn004-state.json'));
-  let resume,created;
-  const paused=new Promise(resolve=>{created=resolve;}),ready=new Promise(resolve=>{resume=resolve;});
-  const io={...fs,open:async(p,...args)=>{
-    const h=await fs.open(p,...args);
-    if(p!==join(f.root,'staging/.fn004.lock')||args[0]!=='wx')return h;
-    return new Proxy(h,{get(o,k){if(k==='writeFile')return async bytes=>{created();await ready;return o.writeFile(bytes);};
-      const v=o[k];return typeof v==='function'?v.bind(o):v;}});
-  }};
-  const pending=acquireGate({root:f.root,io});await paused;
-  try {
-    const service=createApprovalRequestService({root:f.root,onBoundary:()=>{throw Error('contender reached acceptance');}});
-    await assert.rejects(service.submitApplyRequest(f.payload,f.context),error=>{
-      assert.equal(error.code,'GATE_CORRUPT');assert.equal(error.cause.code,'PERSISTENCE_PARSE_FAILED');return true;
-    });
-    assert.equal((await fs.readFile(join(f.root,'staging/.fn004.lock'))).length,0);
-    assert.deepEqual(await fs.readFile(join(f.root,'staging/fn004-state.json')),before);
-    await assert.rejects(fs.stat(join(f.root,`staging/apply-requests/${f.payload.request_id}.json`)),{code:'ENOENT'});
-  } finally {resume();await releaseGate(await pending);}
+  await fs.writeFile(join(f.root,'staging/.fn004.lock'),'');
+  const service=createApprovalRequestService({root:f.root,onBoundary:()=>{throw Error('contender reached acceptance');}});
+  await assert.rejects(service.submitApplyRequest(f.payload,f.context),error=>{
+    assert.equal(error.code,'GATE_CORRUPT');assert.equal(error.cause.code,'PERSISTENCE_PARSE_FAILED');return true;
+  });
+  assert.equal((await fs.readFile(join(f.root,'staging/.fn004.lock'))).length,0);
+  assert.deepEqual(await fs.readFile(join(f.root,'staging/fn004-state.json')),before);
+  await assert.rejects(fs.stat(join(f.root,`staging/apply-requests/${f.payload.request_id}.json`)),{code:'ENOENT'});
 });
 
 test('6E same-lease handoff releases once and never hides retained/release-failed outcomes',async t=>{
@@ -54,7 +44,7 @@ test('6E same-lease handoff releases once and never hides retained/release-faile
   assert.equal(await withCanonicalGate({root:f.root,fn:async gate=>{await releaseGate(gate);return 'consumed';}}),'consumed');
   await assert.rejects(fs.stat(join(f.root,'staging/.fn004.lock')),{code:'ENOENT'});
   const cause=Object.assign(Error('directory sync failure'),{code:'EIO'});
-  const io={...fs,unlink:async p=>{await fs.unlink(p);throw cause;}};
+  const io={...fs,unlink:async p=>{await fs.unlink(p);if(p.endsWith('/.fn004.lock'))throw cause;}};
   await assert.rejects(withCanonicalGate({root:f.root,io,fn:async gate=>{
     try {await releaseGate(gate);}catch(error){assert.equal(error.cause,cause);}
     return 'caught release is not success';

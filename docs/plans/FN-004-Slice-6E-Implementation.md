@@ -92,3 +92,8 @@ Known-Mixedのsemantic diagnosticsは保持する。各fileのexact ORIGINAL/TAR
 追補再レビューではR83-M04（MEDIUM）も修正した。M01修正案のpath別Mapが、Intent公開・Journal checkpoint前の同path異hash参照を上書きしていた。公開前の修正案で再現し、全参照を独立検証する配列へ変更した。復旧後の追加再監査ではphysical artifact欠損時の同path異hashも再現し、bytes照合より先に全参照同士の一致を検証する。参照indexへの登録は同内容確認後だけとし、欠損を理由に矛盾をRecovery待ちへ丸めない。valid Journal chainでもphysical bytesと矛盾する参照が一つあればtyped integrity errorとなる。元PRへこの修正案を公開した事実はない。
 
 追加回帰は[独立レビュー安全性テスト](../../test/fn004-review83-safety.test.js)に保存する。orphan barrier/archiveについては既存gate guardが既に拒否していることを確認し、runtime変更は行わない。Decision metadataの未完成公開窓をBUSYへ読み替えたり、自動unlockで回避したりしない。詳細な実行結果・review head・CI・production比較は独立レビュー報告に記録する。
+
+
+### FA-M01 Gate publication follow-up
+
+旧wx公開窓の試験は当時の実装記録として保持する。採用済みD1〜D4に基づく変更・回帰証拠は[Gate publication実装](FN-004-FA-M01-Gate-Publication.md)を参照。過去のPASSを新実装の検証結果として流用しない。
