@@ -1,0 +1,129 @@
+{
+  "validation": {
+    "ok": true,
+    "diagnostics": []
+  },
+  "manifest": {
+    "schema_version": 1,
+    "files": [
+      {
+        "path": "data/artists.csv",
+        "byte_length": 546,
+        "sha256": "e725fdb4c08f8807615b5d2e4a3cc3077b07660728cd32a913ad0f35445d5cbb"
+      },
+      {
+        "path": "data/creators.csv",
+        "byte_length": 10234,
+        "sha256": "d3cf042419262d8660288dae47c845f5c4d51b913f59cbbdf8c75c383fdb1451"
+      },
+      {
+        "path": "data/member_affiliations.csv",
+        "byte_length": 57,
+        "sha256": "664a19c17e7bfc35d64e23afdab33a22cf88f717c1d30b15f5f78a417ec42729"
+      },
+      {
+        "path": "data/members.csv",
+        "byte_length": 3418,
+        "sha256": "24f33feabd06b85a1dc82216e3e86c9b87fe84f556fb62c1b39da579e53dba74"
+      },
+      {
+        "path": "data/release_tracks.csv",
+        "byte_length": 53441,
+        "sha256": "9f068d2e7247a5d499e8b583ee710f84c9e16cba49c91e3e6dc1ec936abf799c"
+      },
+      {
+        "path": "data/releases.csv",
+        "byte_length": 33772,
+        "sha256": "df445f594d6cb3a8413d47c8fe412905e46a62a52dcd9088abb6d406ce270c8b"
+      },
+      {
+        "path": "data/song_artists.csv",
+        "byte_length": 8657,
+        "sha256": "9b0a0ba87c60bf08f65f90f1c5537cb897c85c3c8bee561ee14ec2574a0c258f"
+      },
+      {
+        "path": "data/song_creators.csv",
+        "byte_length": 33659,
+        "sha256": "b3de338bd634d976fa0b073fea3215afb549fe5554d3e9fbb6b3c6e3b888c6c8"
+      },
+      {
+        "path": "data/song_performers.csv",
+        "byte_length": 18338,
+        "sha256": "8eab74ec6ab8a53acef4283b0868e9c19a2dab57abb7dabb460370dd8773cadc"
+      },
+      {
+        "path": "data/songs.csv",
+        "byte_length": 25877,
+        "sha256": "e39a840af885deff4441e19e25fea6ded359629a207d05bc39ed75b1b7e343b3"
+      },
+      {
+        "path": "data/video_song_performers.csv",
+        "byte_length": 74,
+        "sha256": "2216390b9c5311e3a3690d29fb701452b16acd261added88f26b1850e00d3251"
+      },
+      {
+        "path": "data/video_songs.csv",
+        "byte_length": 107,
+        "sha256": "6f1863dbb3bf967762923a2ab346b8815f52aa8bbcdd082879e5919fff7b6a12"
+      },
+      {
+        "path": "data/videos.csv",
+        "byte_length": 114,
+        "sha256": "5a4d7d55360327d4ab85d119e3aa443d5162f16c2a4adfc920546fd53f72c349"
+      },
+      {
+        "path": "data/works.csv",
+        "byte_length": 12156,
+        "sha256": "e56bc6363c887f8f3e5f2188ba2c034f699d64fd6ea32597504fbe5fe07a40bc"
+      }
+    ],
+    "manifest_hash": "873c96ebee0003d09afeb8c13346d7fa8b3dcf3bbf6d8ec48dad1f31f88ae39f"
+  },
+  "rows": {
+    "artists": 3,
+    "creators": 86,
+    "member_affiliations": 0,
+    "members": 17,
+    "release_tracks": 562,
+    "releases": 136,
+    "song_artists": 124,
+    "song_creators": 397,
+    "song_performers": 173,
+    "songs": 121,
+    "video_song_performers": 0,
+    "video_songs": 0,
+    "videos": 0,
+    "works": 90
+  },
+  "audit": {
+    "maxima": {
+      "A": 0,
+      "B": 0,
+      "C": 86,
+      "G": 3,
+      "H": 1,
+      "J": 120,
+      "L": 136,
+      "M": 0,
+      "O": 0,
+      "P": 17,
+      "R": 0,
+      "T": 0,
+      "V": 0,
+      "W": 90
+    },
+    "git": {
+      "authoritative_ref": "origin/main",
+      "audited_head": "a265e8a165e13f2fdd525a79cb7bd86ede00217b",
+      "object_format": "sha1",
+      "history_scope": "all_reachable_parents",
+      "history_rule_version": 1,
+      "shallow": false,
+      "complete": true,
+      "reachable_commit_count": 196,
+      "root_commits": [
+        "1a2671442057743bf38d4821c587c28b324c125f"
+      ]
+    }
+  }
+}

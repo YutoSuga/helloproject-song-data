@@ -1,0 +1,474 @@
+{
+  "artist": {
+    "artist_id": "G00001",
+    "name": "Juice=Juice"
+  },
+  "primary_target_songs": 120,
+  "target_works": 90,
+  "featured_only_excluded": 1,
+  "multiple_primary_included": 2,
+  "categories": {
+    "lyrics": {
+      "creator_count": 26,
+      "creator_work_pairs": 93,
+      "top": [
+        {
+          "rank": 1,
+          "creator_id": "C00028",
+          "creator_name": "つんく",
+          "work_count": 25
+        },
+        {
+          "rank": 2,
+          "creator_id": "C00006",
+          "creator_name": "児玉雨子",
+          "work_count": 11
+        },
+        {
+          "rank": 3,
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_count": 10
+        }
+      ]
+    },
+    "composition": {
+      "creator_count": 44,
+      "creator_work_pairs": 107,
+      "top": [
+        {
+          "rank": 1,
+          "creator_id": "C00028",
+          "creator_name": "つんく",
+          "work_count": 26
+        },
+        {
+          "rank": 2,
+          "creator_id": "C00008",
+          "creator_name": "星部ショウ",
+          "work_count": 10
+        },
+        {
+          "rank": 3,
+          "creator_id": "C00002",
+          "creator_name": "KOUGA",
+          "work_count": 7
+        }
+      ]
+    },
+    "lyrics_composition": {
+      "creator_count": 12,
+      "creator_work_pairs": 47,
+      "top": [
+        {
+          "rank": 1,
+          "creator_id": "C00028",
+          "creator_name": "つんく",
+          "work_count": 25
+        },
+        {
+          "rank": 2,
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_count": 5
+        },
+        {
+          "rank": 3,
+          "creator_id": "C00003",
+          "creator_name": "中島卓偉",
+          "work_count": 4
+        }
+      ]
+    },
+    "lyrics_or_composition": {
+      "creator_count": 58,
+      "creator_work_pairs": 153,
+      "top": [
+        {
+          "rank": 1,
+          "creator_id": "C00028",
+          "creator_name": "つんく",
+          "work_count": 26
+        },
+        {
+          "rank": 2,
+          "creator_id": "C00006",
+          "creator_name": "児玉雨子",
+          "work_count": 11
+        },
+        {
+          "rank": 2,
+          "creator_id": "C00008",
+          "creator_name": "星部ショウ",
+          "work_count": 11
+        }
+      ]
+    },
+    "arrangement": {
+      "creator_count": 47,
+      "creator_work_pairs": 102,
+      "top": [
+        {
+          "rank": 1,
+          "creator_id": "C00009",
+          "creator_name": "平田祥一郎",
+          "work_count": 17
+        },
+        {
+          "rank": 2,
+          "creator_id": "C00005",
+          "creator_name": "炭竃智弘",
+          "work_count": 6
+        },
+        {
+          "rank": 2,
+          "creator_id": "C00011",
+          "creator_name": "Josef Melin",
+          "work_count": 6
+        },
+        {
+          "rank": 2,
+          "creator_id": "C00030",
+          "creator_name": "大久保薫",
+          "work_count": 6
+        },
+        {
+          "rank": 2,
+          "creator_id": "C00035",
+          "creator_name": "鈴木俊介",
+          "work_count": 6
+        }
+      ]
+    }
+  },
+  "song_vs_work": {
+    "lyrics": {
+      "song_pairs": 121,
+      "work_pairs": 93,
+      "difference": 28,
+      "examples": [
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00001",
+          "title": "微炭酸",
+          "song_ids": [
+            "J00001",
+            "J00103"
+          ]
+        },
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00004",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+          "song_ids": [
+            "J00004",
+            "J00006",
+            "J00104"
+          ]
+        },
+        {
+          "creator_id": "C00007",
+          "creator_name": "KAN",
+          "work_id": "W00006",
+          "title": "ポップミュージック",
+          "song_ids": [
+            "J00007",
+            "J00105"
+          ]
+        },
+        {
+          "creator_id": "C00012",
+          "creator_name": "近藤薫",
+          "work_id": "W00010",
+          "title": "続いていくSTORY",
+          "song_ids": [
+            "J00011",
+            "J00060"
+          ]
+        },
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00012",
+          "title": "がんばれないよ",
+          "song_ids": [
+            "J00013",
+            "J00029",
+            "J00030",
+            "J00031",
+            "J00032",
+            "J00033",
+            "J00034",
+            "J00035"
+          ]
+        }
+      ]
+    },
+    "composition": {
+      "song_pairs": 136,
+      "work_pairs": 107,
+      "difference": 29,
+      "examples": [
+        {
+          "creator_id": "C00002",
+          "creator_name": "KOUGA",
+          "work_id": "W00001",
+          "title": "微炭酸",
+          "song_ids": [
+            "J00001",
+            "J00103"
+          ]
+        },
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00004",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+          "song_ids": [
+            "J00004",
+            "J00006",
+            "J00104"
+          ]
+        },
+        {
+          "creator_id": "C00007",
+          "creator_name": "KAN",
+          "work_id": "W00006",
+          "title": "ポップミュージック",
+          "song_ids": [
+            "J00007",
+            "J00105"
+          ]
+        },
+        {
+          "creator_id": "C00012",
+          "creator_name": "近藤薫",
+          "work_id": "W00010",
+          "title": "続いていくSTORY",
+          "song_ids": [
+            "J00011",
+            "J00060"
+          ]
+        },
+        {
+          "creator_id": "C00002",
+          "creator_name": "KOUGA",
+          "work_id": "W00012",
+          "title": "がんばれないよ",
+          "song_ids": [
+            "J00013",
+            "J00029",
+            "J00030",
+            "J00031",
+            "J00032",
+            "J00033",
+            "J00034",
+            "J00035"
+          ]
+        }
+      ]
+    },
+    "arrangement": {
+      "song_pairs": 129,
+      "work_pairs": 102,
+      "difference": 27,
+      "examples": [
+        {
+          "creator_id": "C00002",
+          "creator_name": "KOUGA",
+          "work_id": "W00001",
+          "title": "微炭酸",
+          "song_ids": [
+            "J00001",
+            "J00103"
+          ]
+        },
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00004",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+          "song_ids": [
+            "J00004",
+            "J00006"
+          ]
+        },
+        {
+          "creator_id": "C00005",
+          "creator_name": "炭竃智弘",
+          "work_id": "W00006",
+          "title": "ポップミュージック",
+          "song_ids": [
+            "J00007",
+            "J00105"
+          ]
+        },
+        {
+          "creator_id": "C00002",
+          "creator_name": "KOUGA",
+          "work_id": "W00012",
+          "title": "がんばれないよ",
+          "song_ids": [
+            "J00013",
+            "J00029",
+            "J00030",
+            "J00031",
+            "J00032",
+            "J00033",
+            "J00034",
+            "J00035"
+          ]
+        },
+        {
+          "creator_id": "C00003",
+          "creator_name": "中島卓偉",
+          "work_id": "W00016",
+          "title": "GIRLS BE AMBITIOUS!",
+          "song_ids": [
+            "J00017",
+            "J00056",
+            "J00120"
+          ]
+        }
+      ]
+    }
+  },
+  "versions": {
+    "new_vocal": {
+      "target_songs": 1,
+      "duplicate_creator_work_examples": [
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00004",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+          "song_ids": [
+            "J00004",
+            "J00006",
+            "J00104"
+          ]
+        },
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00004",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+          "song_ids": [
+            "J00004",
+            "J00006",
+            "J00104"
+          ]
+        },
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00004",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+          "song_ids": [
+            "J00004",
+            "J00006"
+          ]
+        }
+      ]
+    },
+    "re_recording": {
+      "target_songs": 12,
+      "duplicate_creator_work_examples": [
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00001",
+          "title": "微炭酸",
+          "song_ids": [
+            "J00001",
+            "J00103"
+          ]
+        },
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00004",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+          "song_ids": [
+            "J00004",
+            "J00006",
+            "J00104"
+          ]
+        },
+        {
+          "creator_id": "C00012",
+          "creator_name": "近藤薫",
+          "work_id": "W00010",
+          "title": "続いていくSTORY",
+          "song_ids": [
+            "J00011",
+            "J00060"
+          ]
+        }
+      ]
+    },
+    "other": {
+      "target_songs": 18,
+      "duplicate_creator_work_examples": [
+        {
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_id": "W00012",
+          "title": "がんばれないよ",
+          "song_ids": [
+            "J00013",
+            "J00029",
+            "J00030",
+            "J00031",
+            "J00032",
+            "J00033",
+            "J00034",
+            "J00035"
+          ]
+        },
+        {
+          "creator_id": "C00002",
+          "creator_name": "KOUGA",
+          "work_id": "W00012",
+          "title": "がんばれないよ",
+          "song_ids": [
+            "J00013",
+            "J00029",
+            "J00030",
+            "J00031",
+            "J00032",
+            "J00033",
+            "J00034",
+            "J00035"
+          ]
+        },
+        {
+          "creator_id": "C00002",
+          "creator_name": "KOUGA",
+          "work_id": "W00012",
+          "title": "がんばれないよ",
+          "song_ids": [
+            "J00013",
+            "J00029",
+            "J00030",
+            "J00031",
+            "J00032",
+            "J00033",
+            "J00034",
+            "J00035"
+          ]
+        }
+      ]
+    }
+  },
+  "specialized_roles_excluded": {
+    "english_lyrics": 1,
+    "brass_arrangement": 6
+  },
+  "lyrics_composition_same_song_cases": 65,
+  "cross_version_only_lyrics_composition": [],
+  "anomaly_count": 0,
+  "anomalies": []
+}

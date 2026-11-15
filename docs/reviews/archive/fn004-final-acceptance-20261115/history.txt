@@ -1,0 +1,12 @@
+a265e8a Merge pull request #88 from YutoSuga/docs/fn004-fa-m01-validation-20261115
+f51399e docs: preserve FA-M01 sandbox diagnosis and fixed-main full-suite evidence
+7fb5f1b Merge pull request #87 from YutoSuga/docs/recover-fn004-final-acceptance-original
+e6e9674 docs: recover original FN-004 final acceptance report and provenance
+bc16c36 Merge pull request #86 from YutoSuga/fix/fn004-fa-m01-gate-publication
+4e80d51 fix(fn004): publish gate metadata atomically without clobbering owners
+3f3c67b Merge pull request #85 from YutoSuga/design/fn004-fa-m01-gate-publication
+0478507 docs: record D1-D4 approval and gate safety review supplements
+2142c7a docs: propose atomic gate publication contract for FA-M01
+e119556 Merge pull request #84 from YutoSuga/feat/fn004-slice6f-public-cli
+8b75098 fix(fn004): preserve committed recovery effects and reject private options
+7de0aa8 feat(fn004): expose canonical management CLI

@@ -1,0 +1,16 @@
+対象: a265e8a165e13f2fdd525a79cb7bd86ede00217b (origin/main取得後detached HEAD)
+実行root: /workspace/helloproject-song-data
+通常runner (require_escalated): npm test -- --test-concurrency=1 --test-reporter=tap
+stdout+stderr: full.tap; 終了直後の実exit: full.exit
+通常runner: node scripts/canonical-manage.js status --json
+通常runner: node scripts/canonical-manage.js help --json
+通常runner: npm run rankings:validate
+通常runner: npm run site:build
+sandbox: node --test-name-pattern='GP11/14' test/fn004-gate-candidate-integration.test.js
+sandbox: createFn004Repository().readCanonicalSnapshot(); auditGitIds(process.cwd()) [production-audit.json]
+PR88 archive: docs/reviews/archive/fn004-fa-m01-validation-20261115 で sha256sum -c SHA256SUMS
+最初のSHA256SUMS照合は誤ったrepository rootで実行しfile not found。archive-integrity.logはその補助commandのエラー。正しいdirectoryでの完了証拠はpr88-archive-integrity.log。
+CI取得: gh api actions/runs?head_sha=<固定SHA>; runs/43719740670/jobs
+gh api jobs/<id>/logs はredirect先Forbidden。GitHub connector fetch_workflow_job_logsで再取得。
+source-before.jsonは全追跡regular file、production-before.jsonはそのうちdata/staging 17file。終了時は同集合hashに加えて実directory全entryを比較する。
+禁止操作: Production Bootstrap/Apply/Recovery、強制unlock、SCR-002実write、コード変更、mergeは実行しない。

@@ -1,0 +1,18 @@
+from pathlib import Path
+import hashlib,json,subprocess,datetime,re
+r=Path('/workspace/helloproject-song-data'); e=Path('/workspace/fa-final-20261115')
+assert (e/'full.exit').exists(), 'not completed'
+for kind in ['source','production']:
+ b=json.loads((e/f'{kind}-before.json').read_text()); a={p:hashlib.sha256((r/p).read_bytes()).hexdigest() for p in b}
+ (e/f'{kind}-after.json').write_text(json.dumps(a,indent=2)+'\n'); assert b==a,(kind,'changed')
+entries={}
+for base in ['data','staging']:
+ for p in sorted((r/base).rglob('*')):
+  entries[str(p.relative_to(r))]={'kind':'symlink' if p.is_symlink() else 'file' if p.is_file() else 'directory',**({'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} if p.is_file() and not p.is_symlink() else {})}
+(e/'production-entries-after.json').write_text(json.dumps(entries,indent=2)+'\n')
+head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=r).decode().strip(); status=subprocess.check_output(['git','status','--porcelain=v1'],cwd=r).decode()
+assert head=='a265e8a165e13f2fdd525a79cb7bd86ede00217b';assert not status
+subprocess.run(['git','diff','--check'],cwd=r,check=True)
+t=(e/'full.tap').read_text(); summary={k:float(v) if '.' in v else int(v) for k,v in re.findall(r'^# (tests|suites|pass|fail|cancelled|skipped|todo|duration_ms) ([\d.]+)$',t,re.M)}
+summary.update(actual_exit=int((e/'full.exit').read_text()),head=head,observed_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),exit_file_mtime=datetime.datetime.fromtimestamp((e/'full.exit').stat().st_mtime,datetime.timezone.utc).isoformat(),source_files=len(json.loads((e/'source-before.json').read_text())),production_files=len(json.loads((e/'production-before.json').read_text())),working_tree_clean=not status)
+(e/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary))
