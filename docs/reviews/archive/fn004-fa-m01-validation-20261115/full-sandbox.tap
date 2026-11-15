@@ -1,0 +1,212 @@
+TAP version 13
+# Subtest: test/canonical-ranking.test.js
+ok 1 - test/canonical-ranking.test.js
+  ---
+  duration_ms: 223.696526
+  type: 'test'
+  ...
+# Subtest: test/canonical-validation.test.js
+ok 2 - test/canonical-validation.test.js
+  ---
+  duration_ms: 3920.553653
+  type: 'test'
+  ...
+# Subtest: test/collector-album-media.test.js
+ok 3 - test/collector-album-media.test.js
+  ---
+  duration_ms: 205.187095
+  type: 'test'
+  ...
+# Subtest: test/collector-analog-single.test.js
+ok 4 - test/collector-analog-single.test.js
+  ---
+  duration_ms: 262.522485
+  type: 'test'
+  ...
+# Subtest: test/collector-bd-single.test.js
+ok 5 - test/collector-bd-single.test.js
+  ---
+  duration_ms: 192.480226
+  type: 'test'
+  ...
+# Subtest: test/collector-cd-mini-album.test.js
+ok 6 - test/collector-cd-mini-album.test.js
+  ---
+  duration_ms: 153.478452
+  type: 'test'
+  ...
+# Subtest: test/collector-distribution-single.test.js
+ok 7 - test/collector-distribution-single.test.js
+  ---
+  duration_ms: 157.662748
+  type: 'test'
+  ...
+# Subtest: test/collector-legacy-types.test.js
+ok 8 - test/collector-legacy-types.test.js
+  ---
+  duration_ms: 196.24467
+  type: 'test'
+  ...
+# Subtest: test/collector-multi-artist.test.js
+not ok 9 - test/collector-multi-artist.test.js
+  ---
+  duration_ms: 413.626755
+  type: 'test'
+  location: '/workspace/fa-m01-main/test/collector-multi-artist.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: test/collector-official-empty-audio.test.js
+ok 10 - test/collector-official-empty-audio.test.js
+  ---
+  duration_ms: 188.200307
+  type: 'test'
+  ...
+# Subtest: test/collector-single-v.test.js
+ok 11 - test/collector-single-v.test.js
+  ---
+  duration_ms: 148.474337
+  type: 'test'
+  ...
+# Subtest: test/collector.test.js
+ok 12 - test/collector.test.js
+  ---
+  duration_ms: 152.646674
+  type: 'test'
+  ...
+# Subtest: test/fixtures/approval-runtime.js
+ok 13 - test/fixtures/approval-runtime.js
+  ---
+  duration_ms: 79.839231
+  type: 'test'
+  ...
+# Subtest: test/fixtures/canonical-cli-process.js
+ok 14 - test/fixtures/canonical-cli-process.js
+  ---
+  duration_ms: 94.581439
+  type: 'test'
+  ...
+# Subtest: test/fixtures/canonical-cli.js
+ok 15 - test/fixtures/canonical-cli.js
+  ---
+  duration_ms: 105.102398
+  type: 'test'
+  ...
+# Subtest: test/fixtures/decision-lifecycle.js
+ok 16 - test/fixtures/decision-lifecycle.js
+  ---
+  duration_ms: 43.206751
+  type: 'test'
+  ...
+# Subtest: test/fixtures/durable-prepare.js
+ok 17 - test/fixtures/durable-prepare.js
+  ---
+  duration_ms: 81.726781
+  type: 'test'
+  ...
+# Subtest: test/fixtures/gate-publication-child.js
+ok 18 - test/fixtures/gate-publication-child.js
+  ---
+  duration_ms: 46.234015
+  type: 'test'
+  ...
+# Subtest: test/fixtures/history-success.js
+ok 19 - test/fixtures/history-success.js
+  ---
+  duration_ms: 47.818409
+  type: 'test'
+  ...
+# Subtest: test/fixtures/normal-apply-child.js
+ok 20 - test/fixtures/normal-apply-child.js
+  ---
+  duration_ms: 104.89837
+  type: 'test'
+  ...
+# Subtest: test/fixtures/normal-apply.js
+ok 21 - test/fixtures/normal-apply.js
+  ---
+  duration_ms: 92.070101
+  type: 'test'
+  ...
+# Subtest: test/fixtures/plan-input.js
+ok 22 - test/fixtures/plan-input.js
+  ---
+  duration_ms: 72.65247
+  type: 'test'
+  ...
+# Subtest: test/fixtures/prepare-crash-child.js
+ok 23 - test/fixtures/prepare-crash-child.js
+  ---
+  duration_ms: 101.797956
+  type: 'test'
+  ...
+# Subtest: test/fixtures/recovery-runtime-child.js
+ok 24 - test/fixtures/recovery-runtime-child.js
+  ---
+  duration_ms: 81.482503
+  type: 'test'
+  ...
+# Subtest: test/fixtures/recovery-runtime.js
+ok 25 - test/fixtures/recovery-runtime.js
+  ---
+  duration_ms: 32.965513
+  type: 'test'
+  ...
+# Subtest: test/fixtures/transaction-evidence.js
+ok 26 - test/fixtures/transaction-evidence.js
+  ---
+  duration_ms: 78.710594
+  type: 'test'
+  ...
+# Subtest: test/fn004-apply-plan.test.js
+ok 27 - test/fn004-apply-plan.test.js
+  ---
+  duration_ms: 5565.37955
+  type: 'test'
+  ...
+# Subtest: test/fn004-approval-application.test.js
+ok 28 - test/fn004-approval-application.test.js
+  ---
+  duration_ms: 25677.388256
+  type: 'test'
+  ...
+# Subtest: test/fn004-approval-schema.test.js
+ok 29 - test/fn004-approval-schema.test.js
+  ---
+  duration_ms: 69.129653
+  type: 'test'
+  ...
+# Subtest: test/fn004-bootstrap.test.js
+ok 30 - test/fn004-bootstrap.test.js
+  ---
+  duration_ms: 13465.507808
+  type: 'test'
+  ...
+# Subtest: test/fn004-ci-integration.test.js
+ok 31 - test/fn004-ci-integration.test.js
+  ---
+  duration_ms: 2302.095333
+  type: 'test'
+  ...
+# Subtest: test/fn004-cli-contract.test.js
+ok 32 - test/fn004-cli-contract.test.js
+  ---
+  duration_ms: 99.538232
+  type: 'test'
+  ...
+# Subtest: test/fn004-cli-crash.test.js
+not ok 33 - test/fn004-cli-crash.test.js
+  ---
+  duration_ms: 203641.25045
+  type: 'test'
+  location: '/workspace/fa-m01-main/test/fn004-cli-crash.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Interrupted while running: test/fn004-cli-e2e.test.js at /workspace/fa-m01-main/test/fn004-cli-e2e.test.js:1:1

@@ -1,0 +1,18 @@
+{
+  "cwd": "/workspace/fa-m01-main",
+  "commands": {
+    "candidate-sandbox-standard": "node --test --test-concurrency=1 --test-reporter=tap test/fn004-gate-candidate-integration.test.js",
+    "candidate-unsandboxed": "node --test --test-concurrency=1 --test-reporter=tap test/fn004-gate-candidate-integration.test.js",
+    "candidate-direct-sandbox": "node test/fn004-gate-candidate-integration.test.js",
+    "candidate-direct-last-sandbox": "timeout --signal=TERM 15s node --test-name-pattern='GP11/14' test/fn004-gate-candidate-integration.test.js",
+    "candidate-direct-last-unsandboxed": "node --test-name-pattern='GP11/14' test/fn004-gate-candidate-integration.test.js",
+    "full-unsandboxed": "npm test -- --test-concurrency=1 --test-reporter=tap",
+    "full-sandbox": "npm test -- --test-concurrency=1 --test-reporter=tap (interrupted; exit143)",
+    "candidate-sandbox-detail": "node --test --test-isolation=none --test-reporter=tap test/fn004-gate-candidate-integration.test.js (diagnostic interrupted)",
+    "candidate-last-sandbox": "node --test --test-isolation=none --test-name-pattern='GP11/14' --test-reporter=tap test/fn004-gate-candidate-integration.test.js (diagnostic interrupted)",
+    "candidate-observed-sandbox": "timeout --signal=TERM 15s node --import=<archive>/observe-child.mjs --test --test-isolation=none --test-name-pattern=GP11/14 --test-reporter=tap test/fn004-gate-candidate-integration.test.js (timeout124; no captured stderr)",
+    "fixture-parent-sandbox": "invalid diagnostic: --input-type=module was inherited by fork; ERR_INPUT_TYPE_NOT_ALLOWED; superseded by fixture-parent-corrected-sandbox",
+    "fixture-parent-corrected-sandbox": "timeout --signal=TERM 15s node <archive>/fixture-parent.mjs"
+  },
+  "note": "Files ending .exit contain actual test/diagnostic command exit; wrapping shell exit can be 0 after cat/tail. sandbox_permissions=require_escalated only for unsandboxed entries. Interrupted/timeout diagnostics are not normal completed test results."
+}

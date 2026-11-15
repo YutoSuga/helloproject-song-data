@@ -1,0 +1,7 @@
+import pathlib,time,json,hashlib,subprocess
+p=pathlib.Path('/workspace/fa-m01-validation-20261115');r=pathlib.Path('/workspace/fa-m01-main')
+while not (p/'full-unsandboxed.exit').exists(): time.sleep(10)
+for stem in ['source','production']:
+ before=json.loads((p/(stem+'-before.json')).read_text());after={x:hashlib.sha256((r/x).read_bytes()).hexdigest() for x in before}
+ (p/(stem+'-after.json')).write_text(json.dumps(after,ensure_ascii=False,indent=2)+'\n')
+(p/'completion.json').write_text(json.dumps({'utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=r).decode().strip(),'status':subprocess.check_output(['git','status','--short'],cwd=r).decode(),'source_unchanged':(p/'source-before.json').read_bytes()==(p/'source-after.json').read_bytes(),'production_unchanged':(p/'production-before.json').read_bytes()==(p/'production-after.json').read_bytes()},indent=2)+'\n')

@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-15T11:42:46.396705+00:00",
+  "boot_id": "41cba665-a2cc-4fce-b5e4-7001045d2b72",
+  "clock_ticks": 100,
+  "btime": "btime 1794736799",
+  "processes": {
+    "39686": {
+      "stat": "39686 (bash) S 490 39686 39686 0 -1 4194560 3993 766 0 0 0 0 0 0 20 0 1 0 135620 4603904 448 18446744073709551615 1 1 0 0 0 0 65536 4 65538 0 0 0 17 1 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+      "cmdline": "/bin/bash -lc npm test -- --test-concurrency=1 --test-reporter=tap > /workspace/fa-m01-validation-20261115/full-unsandboxed.tap 2>&1; result=$?; echo \"$result\" > /workspace/fa-m01-validation-20261115/full-unsandboxed.exit; tail -12 /workspace/fa-m01-validation-20261115/full-unsandboxed.tap "
+    },
+    "39697": {
+      "stat": "39697 (npm test --test) S 39686 39686 39686 0 -1 4194560 20980 0 0 0 40 9 0 0 20 0 11 0 135622 1632698368 14923 18446744073709551615 1 1 0 0 0 0 0 16781312 83458 0 0 0 17 1 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+      "cmdline": "npm test --test-concurrency=1 --test-reporter=tap                                                                         "
+    }
+  }
+}

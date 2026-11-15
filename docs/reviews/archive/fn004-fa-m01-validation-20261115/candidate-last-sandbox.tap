@@ -1,0 +1,2 @@
+TAP version 13
+# Interrupted while running: GP11/14 candidate stale token blocks mutation; fresh abort/retirement excludes orphan from cleanup at /workspace/fa-m01-main/test/fn004-gate-candidate-integration.test.js:106:1
