@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "test/fixtures/recovery-runtime-child.js",
+    "setup",
+    "/tmp/fn004-diagnostic-fixture-q5rdcmea",
+    "abort"
+  ],
+  "root": "/tmp/fn004-diagnostic-fixture-q5rdcmea",
+  "returncode": 1,
+  "diagnostic_terminated_after_10_seconds": false,
+  "duration": 0.44875240325927734,
+  "stdout": "",
+  "stderr": "node:internal/child_process:1160\n    result.error = new ErrnoException(result.error, 'spawnSync ' + options.file);\n                   ^\n\n<ref *1> Error: spawnSync git EPERM\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at execFileSync (node:child_process:971:15)\n    at file:///workspace/fa-m01-main/test/fixtures/recovery-runtime-child.js:46:56 {\n  errno: -1,\n  code: 'EPERM',\n  syscall: 'spawnSync git',\n  path: 'git',\n  spawnargs: [\n    '-C',\n    '/tmp/fn004-diagnostic-fixture-q5rdcmea',\n    'init',\n    '-q',\n    '-b',\n    'main'\n  ],\n  error: [Circular *1],\n  status: 0,\n  signal: null,\n  output: [ null, Buffer(0) [Uint8Array] [], Buffer(0) [Uint8Array] [] ],\n  pid: 41573,\n  stdout: Buffer(0) [Uint8Array] [],\n  stderr: Buffer(0) [Uint8Array] []\n}\n\nNode.js v24.19.0\n"
+}

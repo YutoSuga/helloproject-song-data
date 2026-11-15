@@ -1,0 +1,19 @@
+{
+  "data/artists.csv": "e725fdb4c08f8807615b5d2e4a3cc3077b07660728cd32a913ad0f35445d5cbb",
+  "data/creators.csv": "d3cf042419262d8660288dae47c845f5c4d51b913f59cbbdf8c75c383fdb1451",
+  "data/member_affiliations.csv": "664a19c17e7bfc35d64e23afdab33a22cf88f717c1d30b15f5f78a417ec42729",
+  "data/members.csv": "24f33feabd06b85a1dc82216e3e86c9b87fe84f556fb62c1b39da579e53dba74",
+  "data/release_tracks.csv": "9f068d2e7247a5d499e8b583ee710f84c9e16cba49c91e3e6dc1ec936abf799c",
+  "data/releases.csv": "df445f594d6cb3a8413d47c8fe412905e46a62a52dcd9088abb6d406ce270c8b",
+  "data/song_artists.csv": "9b0a0ba87c60bf08f65f90f1c5537cb897c85c3c8bee561ee14ec2574a0c258f",
+  "data/song_creators.csv": "b3de338bd634d976fa0b073fea3215afb549fe5554d3e9fbb6b3c6e3b888c6c8",
+  "data/song_performers.csv": "8eab74ec6ab8a53acef4283b0868e9c19a2dab57abb7dabb460370dd8773cadc",
+  "data/songs.csv": "e39a840af885deff4441e19e25fea6ded359629a207d05bc39ed75b1b7e343b3",
+  "data/video_song_performers.csv": "2216390b9c5311e3a3690d29fb701452b16acd261added88f26b1850e00d3251",
+  "data/video_songs.csv": "6f1863dbb3bf967762923a2ab346b8815f52aa8bbcdd082879e5919fff7b6a12",
+  "data/videos.csv": "5a4d7d55360327d4ab85d119e3aa443d5162f16c2a4adfc920546fd53f72c349",
+  "data/works.csv": "e56bc6363c887f8f3e5f2188ba2c034f699d64fd6ea32597504fbe5fe07a40bc",
+  "staging/fn004-bootstrap.json": "4631e1d22aeb3abddcf92499d404dcd77aba9bb2853034b935daf8b665cc2d3c",
+  "staging/fn004-state.json": "0a3fb5c580871f384d65798ba9aa5d6f39e7b28da1e464ae4990c19640862a78",
+  "staging/song-candidates.json": "62dba7ffa08dcb34a4c270b83f7b5794199d2e2f0a2e76b14a5a0ebd53ddefe7"
+}

@@ -1,0 +1,2 @@
+import {fixture} from '/workspace/fa-m01-main/test/fixtures/recovery-runtime.js';
+try { await fixture({after(){}},'abort'); } catch(e) { console.error(e.stack); process.exitCode=1; }

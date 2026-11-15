@@ -1,0 +1,74 @@
+TAP version 13
+# Subtest: GP10 genesis ignores only nonauthoritative candidate content (0 bytes)
+ok 1 - GP10 genesis ignores only nonauthoritative candidate content (0 bytes)
+  ---
+  duration_ms: 198.848356
+  type: 'test'
+  ...
+# Subtest: GP10 genesis ignores only nonauthoritative candidate content (8 bytes)
+ok 2 - GP10 genesis ignores only nonauthoritative candidate content (8 bytes)
+  ---
+  duration_ms: 148.989628
+  type: 'test'
+  ...
+# Subtest: GP10 genesis ignores only nonauthoritative candidate content (1 bytes)
+ok 3 - GP10 genesis ignores only nonauthoritative candidate content (1 bytes)
+  ---
+  duration_ms: 164.603338
+  type: 'test'
+  ...
+# Subtest: GP10 symlink candidate is unsafe even on the genesis fast path
+ok 4 - GP10 symlink candidate is unsafe even on the genesis fast path
+  ---
+  duration_ms: 51.149429
+  type: 'test'
+  ...
+# Subtest: GP10 directory candidate is unsafe even on the genesis fast path
+ok 5 - GP10 directory candidate is unsafe even on the genesis fast path
+  ---
+  duration_ms: 56.592913
+  type: 'test'
+  ...
+# Subtest: GP10 candidate listing IO failure is not an empty/READY inventory
+ok 6 - GP10 candidate listing IO failure is not an empty/READY inventory
+  ---
+  duration_ms: 57.820674
+  type: 'test'
+  ...
+# Subtest: GP10 a final-linked orphan candidate is neither a lease nor cleanup work
+ok 7 - GP10 a final-linked orphan candidate is neither a lease nor cleanup work
+  ---
+  duration_ms: 153.922804
+  type: 'test'
+  ...
+# Subtest: GP13 paused candidate permits normal Apply and readonly retry without duplicate dispatch/ID/History
+ok 8 - GP13 paused candidate permits normal Apply and readonly retry without duplicate dispatch/ID/History
+  ---
+  duration_ms: 49137.178423
+  type: 'test'
+  ...
+# Subtest: GP11 raw candidate addition/change/removal affects Observation v2 and stale commands
+ok 9 - GP11 raw candidate addition/change/removal affects Observation v2 and stale commands
+  ---
+  duration_ms: 159.694536
+  type: 'test'
+  ...
+# Subtest: GP10 candidate cannot become inputs authority even with matching hashes
+ok 10 - GP10 candidate cannot become inputs authority even with matching hashes
+  ---
+  duration_ms: 24.709933
+  type: 'test'
+  ...
+# Subtest: GP10 candidate cannot become backup_refs authority even with matching hashes
+ok 11 - GP10 candidate cannot become backup_refs authority even with matching hashes
+  ---
+  duration_ms: 17.490086
+  type: 'test'
+  ...
+# Subtest: GP10 candidate cannot become temp_refs authority even with matching hashes
+ok 12 - GP10 candidate cannot become temp_refs authority even with matching hashes
+  ---
+  duration_ms: 17.035803
+  type: 'test'
+  ...
+# Interrupted while running: GP11/14 candidate stale token blocks mutation; fresh abort/retirement excludes orphan from cleanup at /workspace/fa-m01-main/test/fn004-gate-candidate-integration.test.js:106:1

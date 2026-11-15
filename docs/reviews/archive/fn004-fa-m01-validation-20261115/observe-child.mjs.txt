@@ -1,0 +1,6 @@
+import cp from 'node:child_process';
+import {syncBuiltinESMExports} from 'node:module';
+import fs from 'node:fs';
+const original=cp.fork;
+cp.fork=function(...args){const child=original.apply(this,args); child.stderr?.on('data',chunk=>fs.appendFileSync('/workspace/fa-m01-validation-20261115/observed-child.stderr',chunk));return child;};
+syncBuiltinESMExports();
