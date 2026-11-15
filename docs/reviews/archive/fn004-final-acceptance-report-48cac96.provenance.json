@@ -1,0 +1,67 @@
+{
+  "record_kind": "historical_original_recovery_not_reacceptance",
+  "recovered_at_utc": "2026-11-15T09:48:26.742137+00:00",
+  "repository": "YutoSuga/helloproject-song-data",
+  "recovery_base_commit": "bc16c362922835d2af1c98fd833032257a9c9473",
+  "audited_main_commit": "e119556c1703e7ea963a327832cacf5a3affb647",
+  "original_branch": "docs/fn004-final-acceptance",
+  "original_commit": "48cac96f36d913402c1be4c5b7e6ecc9d51eee58",
+  "original_parent_commit": "7f02277fbf891bc778d2e5e2d6025fa363f1dbf4",
+  "original_path": "docs/reviews/FN-004-Final-Acceptance.md",
+  "report": {
+    "saved_path": "docs/reviews/FN-004-Final-Acceptance.md",
+    "bytes": 37023,
+    "sha256": "bfab235e98731d4a441ee5f5c55a226f4f5ddbed8e25d66a1c52928070dc92a9",
+    "git_blob_sha1": "2fe144c5a3fa0fafbb3d7c75b7c05188a5e3ac10",
+    "sources": [
+      "local branch docs/fn004-final-acceptance at 48cac96f36d913402c1be4c5b7e6ecc9d51eee58",
+      "independent import of /workspace/scratch/fn004-final-acceptance-report.bundle"
+    ],
+    "byte_identical_across_sources": true
+  },
+  "bundle": {
+    "source": "/workspace/scratch/fn004-final-acceptance-report.bundle",
+    "saved_path": "docs/reviews/archive/fn004-final-acceptance-report-48cac96.bundle",
+    "bytes": 17171,
+    "sha256": "959e79f4cc8f7661328fc7b81a984ff9797b187aa328b5b014f0962cc281f9dc",
+    "head_ref": "refs/heads/docs/fn004-final-acceptance",
+    "head_commit": "48cac96f36d913402c1be4c5b7e6ecc9d51eee58",
+    "prerequisites": [
+      "e119556c1703e7ea963a327832cacf5a3affb647"
+    ],
+    "verification": "git bundle verify succeeded; separate bare repository with prerequisite imported the bundle and reproduced exact head and report bytes"
+  },
+  "other_recovered_versions": [
+    {
+      "source": "Git commit 7f02277fbf891bc778d2e5e2d6025fa363f1dbf4:docs/reviews/FN-004-Final-Acceptance.md",
+      "bytes": 36082,
+      "sha256": "4e5df44ce3157b5c93bccc50eab40ddbd21e28d572744fc334e7517bd63beb78",
+      "selected_as_original": false,
+      "reason": "Earlier committed report; requested branch tip includes publication-interruption supplement"
+    },
+    {
+      "source": "/workspace/scratch/fn004-final-acceptance-report-final.md",
+      "bytes": 36034,
+      "sha256": "10450ca798915210fd80c30d69e6f837b4e0b4b01c36884906a69447ed506025",
+      "selected_as_original": false,
+      "reason": "Scratch copy differs from both committed versions; not substituted for the Git/bundle original"
+    }
+  ],
+  "finding_rows_verbatim": {
+    "FA-M01": "| FA-M01 | MEDIUM / Slice2・4、既知問題の受入再現 | `draft/confirm and confirm/cancel races cannot lose an update`が期待DECISION_HEAD_CONFLICTに対しGATE_CORRUPTでFAIL。file並列度1でもtest内部のPromise.allSettledは並行。winner1件のassertは通過したが、その後半の検証へ進めない | 共通gateのwx/metadata検査窓に関係する既知可用性問題。新規データ破損は確認していないが、必須の現行main一括検証が未達。別fix PRで公開/検査競合を設計・修正し、deterministic regressionと全suiteを再検証する。corruptをBUSYへ一律に丸める/自動unlock/期待assert緩和はしない | OPEN、blocking。CIや過去/lucky再実行PASSで置換しない |",
+    "FA-L01": "| FA-L01 | LOW / 横断文書 | 現行sourceでは6D〜6F接続済みだが、正本Decision/Plan/Transaction冒頭に現在形の「runtime未実装」が残る。現在の進捗注記は実装済みAPIへの対応を示すべき。#81のI/S表は固定SHA時点の正しい調査として別扱い | 誤った運用理解を招く文書保守問題。schema/安全手順の矛盾や未実装codeの証拠ではない。本表/実装対応表とCLIガイドを現行auditの根拠とし、別docs PRで正本status注記/現行対応への案内を整理する。固定SHA調査の史実は書き換えない | OPEN、非blocking。今回のreport-only PRへ無関係な一括cleanupを混ぜない |"
+  },
+  "next_steps_verbatim": {
+    "FA-M01": "2. FA-M01を別fix PRで調査・修正。gate metadata公開/検査窓、破損lock拒否、同時Decision更新、実CLI code、crash/ownership/durabilityを回帰検証してmainへ取り込んだ後、新しい固定mainでFinal Acceptanceを再実施する。",
+    "FA-L01": "3. FA-L01は別docs PRでstatus注記を整理。固定SHA資料の史実やnormative contractを黙って書き換えない。"
+  },
+  "formal_closed_conditions": {
+    "explicit_per_finding_closed_criteria_present": false,
+    "source_sections": [
+      "9. Findings",
+      "14. 未完了事項・次の作業"
+    ],
+    "note": "The recovered original records both findings as OPEN and gives follow-up work. It contains no standalone formal CLOSED conditions for FA-M01 or FA-L01. No missing criteria are reconstructed."
+  },
+  "scope": "Recovery and archival only. No code or production operation, merge, finding closure, or Final Acceptance reassessment."
+}
