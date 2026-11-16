@@ -1,0 +1,24 @@
+{
+  "links": 50,
+  "fragments": 3,
+  "files": [
+    {
+      "file": "docs/design/FN-004-判断モデル.md",
+      "tables_identical": true,
+      "fenced_blocks_identical": true,
+      "runtime_unimplemented_lines": []
+    },
+    {
+      "file": "docs/design/FN-004-反映計画.md",
+      "tables_identical": true,
+      "fenced_blocks_identical": true,
+      "runtime_unimplemented_lines": []
+    },
+    {
+      "file": "docs/design/FN-004-反映処理・復旧.md",
+      "tables_identical": true,
+      "fenced_blocks_identical": true,
+      "runtime_unimplemented_lines": []
+    }
+  ]
+}

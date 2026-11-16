@@ -1,0 +1,74 @@
+{
+  "retrieved_at": "2026-11-16T10:09:59.108766+00:00",
+  "pr90": {
+    "number": 90,
+    "merged": true,
+    "merged_at": "2026-11-16T10:03:40Z",
+    "merge_commit_sha": "4fa7907fb54deec77ebfe6618a73fb2f720dab88",
+    "changed_files": 3
+  },
+  "pr90_jobs": [
+    {
+      "id": 133212265189,
+      "name": "Test and build",
+      "head_sha": "bc98dd9ba711223c38b44f0f58afce40be836039",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/YutoSuga/helloproject-song-data/actions/runs/43841873238/job/133212265189",
+      "started_at": "2026-11-16T09:40:37Z",
+      "completed_at": null
+    },
+    {
+      "id": 133212265461,
+      "name": "Gate publication (Node 24)",
+      "head_sha": "bc98dd9ba711223c38b44f0f58afce40be836039",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/YutoSuga/helloproject-song-data/actions/runs/43841873238/job/133212265461",
+      "started_at": "2026-11-16T09:40:37Z",
+      "completed_at": "2026-11-16T09:41:27Z"
+    },
+    {
+      "id": 133212265728,
+      "name": "Gate publication (Node 20)",
+      "head_sha": "bc98dd9ba711223c38b44f0f58afce40be836039",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/YutoSuga/helloproject-song-data/actions/runs/43841873238/job/133212265728",
+      "started_at": "2026-11-16T09:40:38Z",
+      "completed_at": "2026-11-16T09:41:43Z"
+    }
+  ],
+  "main_jobs": [
+    {
+      "id": 133224156947,
+      "name": "Test and build",
+      "head_sha": "4fa7907fb54deec77ebfe6618a73fb2f720dab88",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/YutoSuga/helloproject-song-data/actions/runs/43845391327/job/133224156947",
+      "started_at": "2026-11-16T10:03:45Z",
+      "completed_at": null
+    },
+    {
+      "id": 133224157378,
+      "name": "Gate publication (Node 20)",
+      "head_sha": "4fa7907fb54deec77ebfe6618a73fb2f720dab88",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/YutoSuga/helloproject-song-data/actions/runs/43845391327/job/133224157378",
+      "started_at": "2026-11-16T10:03:45Z",
+      "completed_at": "2026-11-16T10:04:51Z"
+    },
+    {
+      "id": 133224157539,
+      "name": "Gate publication (Node 24)",
+      "head_sha": "4fa7907fb54deec77ebfe6618a73fb2f720dab88",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/YutoSuga/helloproject-song-data/actions/runs/43845391327/job/133224157539",
+      "started_at": "2026-11-16T10:03:45Z",
+      "completed_at": "2026-11-16T10:04:51Z"
+    }
+  ]
+}
