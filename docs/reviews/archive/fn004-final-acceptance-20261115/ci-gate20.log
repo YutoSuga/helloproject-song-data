@@ -1,0 +1,587 @@
+﻿2026-11-15T13:34:58.5366699Z Current runner version: '2.338.2'
+2026-11-15T13:34:58.5389606Z ##[group]Runner Image Provisioner
+2026-11-15T13:34:58.5390451Z Hosted Compute Agent
+2026-11-15T13:34:58.5390965Z Version: 20261103.629
+2026-11-15T13:34:58.5391525Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-15T13:34:58.5392217Z Build Date: 2026-11-03T17:26:59Z
+2026-11-15T13:34:58.5393077Z Worker ID: {075754c1-e3c0-4b58-975c-a2cdffc17fdc}
+2026-11-15T13:34:58.5393761Z Region: eastus2
+2026-11-15T13:34:58.5394246Z Cloud: Azure
+2026-11-15T13:34:58.5394709Z ##[endgroup]
+2026-11-15T13:34:58.5396317Z ##[group]Operating System
+2026-11-15T13:34:58.5396869Z Ubuntu
+2026-11-15T13:34:58.5397417Z 26.04.1
+2026-11-15T13:34:58.5397881Z LTS
+2026-11-15T13:34:58.5398329Z ##[endgroup]
+2026-11-15T13:34:58.5398851Z ##[group]Runner Image
+2026-11-15T13:34:58.5399425Z Image: ubuntu-26.04
+2026-11-15T13:34:58.5399960Z Version: 20261111.196.1
+2026-11-15T13:34:58.5401042Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261111.196/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-15T13:34:58.5403053Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261111.196
+2026-11-15T13:34:58.5403914Z ##[endgroup]
+2026-11-15T13:34:58.5404922Z ##[group]GITHUB_TOKEN Permissions
+2026-11-15T13:34:58.5406823Z Contents: read
+2026-11-15T13:34:58.5407382Z Metadata: read
+2026-11-15T13:34:58.5407899Z ##[endgroup]
+2026-11-15T13:34:58.5410629Z Secret source: Actions
+2026-11-15T13:34:58.5411828Z Cache mode: write
+2026-11-15T13:34:58.5413019Z Prepare workflow directory
+2026-11-15T13:34:58.5696991Z Prepare all required actions
+2026-11-15T13:34:58.5739620Z Getting action download info
+2026-11-15T13:34:58.7254739Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-11-15T13:34:58.8414132Z Download action repository 'actions/setup-node@v7' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+2026-11-15T13:34:59.0876288Z Complete job name: Gate publication (Node 20)
+2026-11-15T13:34:59.1618613Z ##[group]Run actions/checkout@v6
+2026-11-15T13:34:59.1619369Z with:
+2026-11-15T13:34:59.1619724Z   fetch-depth: 0
+2026-11-15T13:34:59.1620137Z   repository: YutoSuga/helloproject-song-data
+2026-11-15T13:34:59.1623556Z   token: ***
+2026-11-15T13:34:59.1623920Z   ssh-strict: true
+2026-11-15T13:34:59.1624283Z   ssh-user: git
+2026-11-15T13:34:59.1624658Z   persist-credentials: true
+2026-11-15T13:34:59.1625058Z   clean: true
+2026-11-15T13:34:59.1625433Z   sparse-checkout-cone-mode: true
+2026-11-15T13:34:59.1625869Z   fetch-tags: false
+2026-11-15T13:34:59.1626236Z   show-progress: true
+2026-11-15T13:34:59.1626603Z   lfs: false
+2026-11-15T13:34:59.1626940Z   submodules: false
+2026-11-15T13:34:59.1627309Z   set-safe-directory: true
+2026-11-15T13:34:59.1627721Z   allow-unsafe-pr-checkout: false
+2026-11-15T13:34:59.1628309Z ##[endgroup]
+2026-11-15T13:34:59.6823665Z Syncing repository: YutoSuga/helloproject-song-data
+2026-11-15T13:34:59.6826281Z ##[group]Getting Git version info
+2026-11-15T13:34:59.6827615Z Working directory is '/home/runner/work/helloproject-song-data/helloproject-song-data'
+2026-11-15T13:34:59.6829273Z [command]/usr/bin/git version
+2026-11-15T13:34:59.6837272Z git version 2.56.1
+2026-11-15T13:34:59.6856930Z ##[endgroup]
+2026-11-15T13:34:59.6869240Z Temporarily overriding HOME='/home/runner/work/_temp/9a3a7a28-a11f-4e59-9036-7cc93cd6954a' before making global git config changes
+2026-11-15T13:34:59.6870499Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T13:34:59.6873656Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/helloproject-song-data/helloproject-song-data
+2026-11-15T13:34:59.7957862Z Deleting the contents of '/home/runner/work/helloproject-song-data/helloproject-song-data'
+2026-11-15T13:34:59.7961534Z ##[group]Determining repository object format
+2026-11-15T13:34:59.7963857Z ##[endgroup]
+2026-11-15T13:34:59.7964921Z ##[group]Initializing the repository
+2026-11-15T13:34:59.7969121Z [command]/usr/bin/git init /home/runner/work/helloproject-song-data/helloproject-song-data
+2026-11-15T13:34:59.8153435Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-15T13:34:59.8154487Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-15T13:34:59.8155286Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-15T13:34:59.8155913Z hint: call:
+2026-11-15T13:34:59.8156289Z hint:
+2026-11-15T13:34:59.8156763Z hint: 	git config --global init.defaultBranch <name>
+2026-11-15T13:34:59.8157303Z hint:
+2026-11-15T13:34:59.8157828Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-15T13:34:59.8158629Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-15T13:34:59.8159395Z hint:
+2026-11-15T13:34:59.8159769Z hint: 	git branch -m <name>
+2026-11-15T13:34:59.8160196Z hint:
+2026-11-15T13:34:59.8160799Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-15T13:34:59.8253911Z Initialized empty Git repository in /home/runner/work/helloproject-song-data/helloproject-song-data/.git/
+2026-11-15T13:34:59.8264309Z [command]/usr/bin/git remote add origin https://github.com/YutoSuga/helloproject-song-data
+2026-11-15T13:34:59.8317437Z ##[endgroup]
+2026-11-15T13:34:59.8318609Z ##[group]Disabling automatic garbage collection
+2026-11-15T13:34:59.8320534Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-15T13:34:59.8352921Z ##[endgroup]
+2026-11-15T13:34:59.8353898Z ##[group]Setting up auth
+2026-11-15T13:34:59.8354409Z Removing SSH command configuration
+2026-11-15T13:34:59.8357577Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T13:34:59.8389055Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T13:34:59.8961048Z Removing HTTP extra header
+2026-11-15T13:34:59.8967668Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T13:34:59.9002972Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T13:34:59.9269317Z Removing includeIf entries pointing to credentials config files
+2026-11-15T13:34:59.9273627Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T13:34:59.9307881Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T13:34:59.9572387Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-15T13:34:59.9612689Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git.path /home/runner/work/_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:34:59.9646887Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:34:59.9684552Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:34:59.9717268Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:34:59.9753050Z ##[endgroup]
+2026-11-15T13:34:59.9754029Z ##[group]Fetching the repository
+2026-11-15T13:34:59.9761343Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-15T13:35:00.4057230Z From https://github.com/YutoSuga/helloproject-song-data
+2026-11-15T13:35:00.4058874Z  * [new branch]      codex/2013911      -> origin/codex/2013911
+2026-11-15T13:35:00.4060240Z  * [new branch]      codex/csv          -> origin/codex/csv
+2026-11-15T13:35:00.4061567Z  * [new branch]      codex/csv-reuoag   -> origin/codex/csv-reuoag
+2026-11-15T13:35:00.4063405Z  * [new branch]      codex/github-pages -> origin/codex/github-pages
+2026-11-15T13:35:00.4065258Z  * [new branch]      codex/pr           -> origin/codex/pr
+2026-11-15T13:35:00.4067692Z  * [new branch]      design/fn004-fa-m01-gate-publication -> origin/design/fn004-fa-m01-gate-publication
+2026-11-15T13:35:00.4070787Z  * [new branch]      feature/song-candidate-collector -> origin/feature/song-candidate-collector
+2026-11-15T13:35:00.4073989Z  * [new branch]      fix/fn004-fa-m01-gate-publication -> origin/fix/fn004-fa-m01-gate-publication
+2026-11-15T13:35:00.4076327Z  * [new branch]      main               -> origin/main
+2026-11-15T13:35:00.4079778Z [command]/usr/bin/git branch --list --remote origin/main
+2026-11-15T13:35:00.4102095Z   origin/main
+2026-11-15T13:35:00.4110672Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-11-15T13:35:00.4134980Z a265e8a165e13f2fdd525a79cb7bd86ede00217b
+2026-11-15T13:35:00.4141016Z ##[endgroup]
+2026-11-15T13:35:00.4143124Z ##[group]Determining the checkout info
+2026-11-15T13:35:00.4145228Z ##[endgroup]
+2026-11-15T13:35:00.4146522Z [command]/usr/bin/git sparse-checkout disable
+2026-11-15T13:35:00.5295814Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-15T13:35:00.5329449Z ##[group]Checking out the ref
+2026-11-15T13:35:00.5332015Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-15T13:35:00.5668551Z Switched to a new branch 'main'
+2026-11-15T13:35:00.5673435Z branch 'main' set up to track 'origin/main'.
+2026-11-15T13:35:00.5685057Z ##[endgroup]
+2026-11-15T13:35:00.5735096Z [command]/usr/bin/git log -1 --format=%H
+2026-11-15T13:35:00.5765643Z a265e8a165e13f2fdd525a79cb7bd86ede00217b
+2026-11-15T13:35:00.6136937Z ##[group]Run actions/setup-node@v7
+2026-11-15T13:35:00.6137928Z with:
+2026-11-15T13:35:00.6138745Z   node-version: 20
+2026-11-15T13:35:00.6139544Z   package-manager-cache: false
+2026-11-15T13:35:00.6140522Z   check-latest: false
+2026-11-15T13:35:00.6148311Z   token: ***
+2026-11-15T13:35:00.6149078Z ##[endgroup]
+2026-11-15T13:35:00.7566081Z Attempting to download 20...
+2026-11-15T13:35:01.2582788Z Acquiring 20.20.2 - x64 from https://github.com/actions/node-versions/releases/download/20.20.2-23521894959/node-20.20.2-linux-x64.tar.gz
+2026-11-15T13:35:01.6293710Z Extracting ...
+2026-11-15T13:35:01.6406408Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/ebf392bd-d640-456f-8156-91f4dd25e5dc -f /home/runner/work/_temp/33b2d5a9-9273-4c57-8710-af6a905f92b4
+2026-11-15T13:35:02.1941635Z Adding to the cache ...
+2026-11-15T13:35:04.7174020Z ##[group]Environment details
+2026-11-15T13:35:04.9196171Z node: v20.20.2
+2026-11-15T13:35:04.9196737Z npm: 10.8.2
+2026-11-15T13:35:04.9197010Z yarn: 1.22.22
+2026-11-15T13:35:04.9197531Z ##[endgroup]
+2026-11-15T13:35:04.9375323Z ##[group]Run node --test --test-concurrency=1 test/fn004-gate-publication.test.js test/fn004-gate-publication-crash.test.js test/fn004-gate-candidate-integration.test.js
+2026-11-15T13:35:04.9376413Z [36;1mnode --test --test-concurrency=1 test/fn004-gate-publication.test.js test/fn004-gate-publication-crash.test.js test/fn004-gate-candidate-integration.test.js[0m
+2026-11-15T13:35:04.9428458Z shell: /usr/bin/bash -e {0}
+2026-11-15T13:35:04.9428720Z ##[endgroup]
+2026-11-15T13:35:04.9817556Z TAP version 13
+2026-11-15T13:35:05.3524194Z # Subtest: GP10 genesis ignores only nonauthoritative candidate content (0 bytes)
+2026-11-15T13:35:05.3531527Z ok 1 - GP10 genesis ignores only nonauthoritative candidate content (0 bytes)
+2026-11-15T13:35:05.3532307Z   ---
+2026-11-15T13:35:05.3533427Z   duration_ms: 293.968613
+2026-11-15T13:35:05.3533943Z   ...
+2026-11-15T13:35:05.5458949Z # Subtest: GP10 genesis ignores only nonauthoritative candidate content (8 bytes)
+2026-11-15T13:35:05.5459895Z ok 2 - GP10 genesis ignores only nonauthoritative candidate content (8 bytes)
+2026-11-15T13:35:05.5460830Z   ---
+2026-11-15T13:35:05.5461157Z   duration_ms: 193.866868
+2026-11-15T13:35:05.5461479Z   ...
+2026-11-15T13:35:05.6735276Z # Subtest: GP10 genesis ignores only nonauthoritative candidate content (1 bytes)
+2026-11-15T13:35:05.6735986Z ok 3 - GP10 genesis ignores only nonauthoritative candidate content (1 bytes)
+2026-11-15T13:35:05.6736377Z   ---
+2026-11-15T13:35:05.6736563Z   duration_ms: 127.642618
+2026-11-15T13:35:05.6736753Z   ...
+2026-11-15T13:35:05.7356145Z # Subtest: GP10 symlink candidate is unsafe even on the genesis fast path
+2026-11-15T13:35:05.7357053Z ok 4 - GP10 symlink candidate is unsafe even on the genesis fast path
+2026-11-15T13:35:05.7357368Z   ---
+2026-11-15T13:35:05.7357554Z   duration_ms: 62.005658
+2026-11-15T13:35:05.7357790Z   ...
+2026-11-15T13:35:05.7995893Z # Subtest: GP10 directory candidate is unsafe even on the genesis fast path
+2026-11-15T13:35:05.7996880Z ok 5 - GP10 directory candidate is unsafe even on the genesis fast path
+2026-11-15T13:35:05.7997368Z   ---
+2026-11-15T13:35:05.7997614Z   duration_ms: 63.944075
+2026-11-15T13:35:05.7997817Z   ...
+2026-11-15T13:35:05.8602755Z # Subtest: GP10 candidate listing IO failure is not an empty/READY inventory
+2026-11-15T13:35:05.8603598Z ok 6 - GP10 candidate listing IO failure is not an empty/READY inventory
+2026-11-15T13:35:05.8614476Z   ---
+2026-11-15T13:35:05.8615090Z   duration_ms: 60.514426
+2026-11-15T13:35:05.8615494Z   ...
+2026-11-15T13:35:05.9971582Z # Subtest: GP10 a final-linked orphan candidate is neither a lease nor cleanup work
+2026-11-15T13:35:05.9972411Z ok 7 - GP10 a final-linked orphan candidate is neither a lease nor cleanup work
+2026-11-15T13:35:05.9973035Z   ---
+2026-11-15T13:35:05.9973295Z   duration_ms: 136.72157
+2026-11-15T13:35:05.9973620Z   ...
+2026-11-15T13:35:54.8315241Z # Subtest: GP13 paused candidate permits normal Apply and readonly retry without duplicate dispatch/ID/History
+2026-11-15T13:35:54.8319981Z ok 8 - GP13 paused candidate permits normal Apply and readonly retry without duplicate dispatch/ID/History
+2026-11-15T13:35:54.8320859Z   ---
+2026-11-15T13:35:54.8321227Z   duration_ms: 48593.410475
+2026-11-15T13:35:54.8322203Z   ...
+2026-11-15T13:35:54.8323394Z # Subtest: GP11 raw candidate addition/change/removal affects Observation v2 and stale commands
+2026-11-15T13:35:54.8324796Z ok 9 - GP11 raw candidate addition/change/removal affects Observation v2 and stale commands
+2026-11-15T13:35:54.8327503Z   ---
+2026-11-15T13:35:54.8328602Z   duration_ms: 166.450992
+2026-11-15T13:35:54.8328916Z   ...
+2026-11-15T13:35:54.8330594Z # Subtest: GP10 candidate cannot become inputs authority even with matching hashes
+2026-11-15T13:35:54.8332267Z ok 10 - GP10 candidate cannot become inputs authority even with matching hashes
+2026-11-15T13:35:54.8334069Z   ---
+2026-11-15T13:35:54.8334351Z   duration_ms: 20.844409
+2026-11-15T13:35:54.8334661Z   ...
+2026-11-15T13:35:54.8336317Z # Subtest: GP10 candidate cannot become backup_refs authority even with matching hashes
+2026-11-15T13:35:54.8337921Z ok 11 - GP10 candidate cannot become backup_refs authority even with matching hashes
+2026-11-15T13:35:54.8338564Z   ---
+2026-11-15T13:35:54.8339185Z   duration_ms: 22.177144
+2026-11-15T13:35:54.8339650Z   ...
+2026-11-15T13:35:54.8341834Z # Subtest: GP10 candidate cannot become temp_refs authority even with matching hashes
+2026-11-15T13:35:54.8343465Z ok 12 - GP10 candidate cannot become temp_refs authority even with matching hashes
+2026-11-15T13:35:54.8344173Z   ---
+2026-11-15T13:35:54.8344523Z   duration_ms: 29.506012
+2026-11-15T13:35:54.8344825Z   ...
+2026-11-15T13:36:01.3165142Z # Subtest: GP11/14 candidate stale token blocks mutation; fresh abort/retirement excludes orphan from cleanup
+2026-11-15T13:36:01.3166689Z ok 13 - GP11/14 candidate stale token blocks mutation; fresh abort/retirement excludes orphan from cleanup
+2026-11-15T13:36:01.3168533Z   ---
+2026-11-15T13:36:01.3171315Z   duration_ms: 6486.148883
+2026-11-15T13:36:01.3172097Z   ...
+2026-11-15T13:36:01.5028311Z # Subtest: GP08 real SIGKILL/restart at before_temp_create
+2026-11-15T13:36:01.5030671Z ok 14 - GP08 real SIGKILL/restart at before_temp_create
+2026-11-15T13:36:01.5031312Z   ---
+2026-11-15T13:36:01.5031783Z   duration_ms: 100.347468
+2026-11-15T13:36:01.5032347Z   ...
+2026-11-15T13:36:01.5777852Z # Subtest: GP08 real SIGKILL/restart at after_temp_create
+2026-11-15T13:36:01.5778826Z ok 15 - GP08 real SIGKILL/restart at after_temp_create
+2026-11-15T13:36:01.5779368Z   ---
+2026-11-15T13:36:01.5779623Z   duration_ms: 74.77206
+2026-11-15T13:36:01.5779888Z   ...
+2026-11-15T13:36:01.6598436Z # Subtest: GP08 real SIGKILL/restart at during_temp_write
+2026-11-15T13:36:01.6599122Z ok 16 - GP08 real SIGKILL/restart at during_temp_write
+2026-11-15T13:36:01.6599505Z   ---
+2026-11-15T13:36:01.6599880Z   duration_ms: 82.104934
+2026-11-15T13:36:01.6600328Z   ...
+2026-11-15T13:36:01.7342212Z # Subtest: GP08 real SIGKILL/restart at metadata_complete_before_sync
+2026-11-15T13:36:01.7343508Z ok 17 - GP08 real SIGKILL/restart at metadata_complete_before_sync
+2026-11-15T13:36:01.7344369Z   ---
+2026-11-15T13:36:01.7344997Z   duration_ms: 74.210351
+2026-11-15T13:36:01.7345281Z   ...
+2026-11-15T13:36:01.8097587Z # Subtest: GP08 real SIGKILL/restart at after_file_sync
+2026-11-15T13:36:01.8098334Z ok 18 - GP08 real SIGKILL/restart at after_file_sync
+2026-11-15T13:36:01.8098722Z   ---
+2026-11-15T13:36:01.8099084Z   duration_ms: 75.383724
+2026-11-15T13:36:01.8099427Z   ...
+2026-11-15T13:36:01.8862195Z # Subtest: GP08 real SIGKILL/restart at before_link
+2026-11-15T13:36:01.8862961Z ok 19 - GP08 real SIGKILL/restart at before_link
+2026-11-15T13:36:01.8863611Z   ---
+2026-11-15T13:36:01.8863959Z   duration_ms: 76.528335
+2026-11-15T13:36:01.8864442Z   ...
+2026-11-15T13:36:01.9587295Z # Subtest: GP08 real SIGKILL/restart at after_link
+2026-11-15T13:36:01.9587933Z ok 20 - GP08 real SIGKILL/restart at after_link
+2026-11-15T13:36:01.9588230Z   ---
+2026-11-15T13:36:01.9588431Z   duration_ms: 72.506982
+2026-11-15T13:36:01.9588693Z   ...
+2026-11-15T13:36:02.0320226Z # Subtest: GP08 real SIGKILL/restart at after_directory_sync
+2026-11-15T13:36:02.0321121Z ok 21 - GP08 real SIGKILL/restart at after_directory_sync
+2026-11-15T13:36:02.0321554Z   ---
+2026-11-15T13:36:02.0321832Z   duration_ms: 73.140595
+2026-11-15T13:36:02.0322218Z   ...
+2026-11-15T13:36:02.1069316Z # Subtest: GP08 real SIGKILL/restart at after_candidate_unlink
+2026-11-15T13:36:02.1070007Z ok 22 - GP08 real SIGKILL/restart at after_candidate_unlink
+2026-11-15T13:36:02.1070407Z   ---
+2026-11-15T13:36:02.1070638Z   duration_ms: 74.659941
+2026-11-15T13:36:02.1070826Z   ...
+2026-11-15T13:36:02.1810121Z # Subtest: GP08 real SIGKILL/restart at before_response
+2026-11-15T13:36:02.1833614Z ok 23 - GP08 real SIGKILL/restart at before_response
+2026-11-15T13:36:02.1834717Z   ---
+2026-11-15T13:36:02.1835148Z   duration_ms: 73.896717
+2026-11-15T13:36:02.1835601Z   ...
+2026-11-15T13:36:02.3110481Z # Subtest: GP08 real SIGKILL/restart at owned_no_domain
+2026-11-15T13:36:02.3111435Z ok 24 - GP08 real SIGKILL/restart at owned_no_domain
+2026-11-15T13:36:02.3111698Z   ---
+2026-11-15T13:36:02.3111883Z   duration_ms: 130.220632
+2026-11-15T13:36:02.3112072Z   ...
+2026-11-15T13:36:02.3841983Z # Subtest: GP08 real SIGKILL/restart at release_before_unlink
+2026-11-15T13:36:02.3842808Z ok 25 - GP08 real SIGKILL/restart at release_before_unlink
+2026-11-15T13:36:02.3843350Z   ---
+2026-11-15T13:36:02.3843614Z   duration_ms: 73.085731
+2026-11-15T13:36:02.3843869Z   ...
+2026-11-15T13:36:02.4598544Z # Subtest: GP08 real SIGKILL/restart at release_after_unlink
+2026-11-15T13:36:02.4599196Z ok 26 - GP08 real SIGKILL/restart at release_after_unlink
+2026-11-15T13:36:02.4599547Z   ---
+2026-11-15T13:36:02.4599777Z   duration_ms: 75.656872
+2026-11-15T13:36:02.4600034Z   ...
+2026-11-15T13:36:02.5368215Z # Subtest: GP08 real SIGKILL/restart at release_after_directory_sync
+2026-11-15T13:36:02.5368927Z ok 27 - GP08 real SIGKILL/restart at release_after_directory_sync
+2026-11-15T13:36:02.5369352Z   ---
+2026-11-15T13:36:02.5369656Z   duration_ms: 76.622422
+2026-11-15T13:36:02.5369922Z   ...
+2026-11-15T13:36:02.6167318Z # Subtest: GP03 two independent completed publishers race one exclusive hard link
+2026-11-15T13:36:02.6168257Z ok 28 - GP03 two independent completed publishers race one exclusive hard link
+2026-11-15T13:36:02.6168780Z   ---
+2026-11-15T13:36:02.6169052Z   duration_ms: 80.181942
+2026-11-15T13:36:02.6169339Z   ...
+2026-11-15T13:36:02.7281466Z # Subtest: GP01 complete immutable inode is linked and synced before lease/callback
+2026-11-15T13:36:02.7282888Z ok 29 - GP01 complete immutable inode is linked and synced before lease/callback
+2026-11-15T13:36:02.7283698Z   ---
+2026-11-15T13:36:02.7284193Z   duration_ms: 39.725937
+2026-11-15T13:36:02.7284505Z   ...
+2026-11-15T13:36:02.8338482Z # Subtest: GP02 a paused incomplete candidate never publishes a partial final or reserves first place
+2026-11-15T13:36:02.8339410Z ok 30 - GP02 a paused incomplete candidate never publishes a partial final or reserves first place
+2026-11-15T13:36:02.8339773Z   ---
+2026-11-15T13:36:02.8339953Z   duration_ms: 105.817877
+2026-11-15T13:36:02.8340147Z   ...
+2026-11-15T13:36:02.8389141Z # Subtest: GP07 link before effect preserves publication evidence
+2026-11-15T13:36:02.8402165Z ok 31 - GP07 link before effect preserves publication evidence
+2026-11-15T13:36:02.8402752Z   ---
+2026-11-15T13:36:02.8403003Z   duration_ms: 5.162453
+2026-11-15T13:36:02.8403265Z   ...
+2026-11-15T13:36:02.8508957Z # Subtest: GP07 link after effect preserves publication evidence
+2026-11-15T13:36:02.8509678Z ok 32 - GP07 link after effect preserves publication evidence
+2026-11-15T13:36:02.8510235Z   ---
+2026-11-15T13:36:02.8510484Z   duration_ms: 10.66461
+2026-11-15T13:36:02.8510751Z   ...
+2026-11-15T13:36:02.8524458Z # Subtest: GP07 temp_create before effect has no lease
+2026-11-15T13:36:02.8524985Z ok 33 - GP07 temp_create before effect has no lease
+2026-11-15T13:36:02.8525314Z   ---
+2026-11-15T13:36:02.8525567Z   duration_ms: 2.967676
+2026-11-15T13:36:02.8525930Z   ...
+2026-11-15T13:36:02.8550428Z # Subtest: GP07 temp_create after effect has no lease
+2026-11-15T13:36:02.8551023Z ok 34 - GP07 temp_create after effect has no lease
+2026-11-15T13:36:02.8551381Z   ---
+2026-11-15T13:36:02.8551630Z   duration_ms: 2.492487
+2026-11-15T13:36:02.8551886Z   ...
+2026-11-15T13:36:02.8579288Z # Subtest: GP07 temp_write before effect has no lease
+2026-11-15T13:36:02.8579945Z ok 35 - GP07 temp_write before effect has no lease
+2026-11-15T13:36:02.8580305Z   ---
+2026-11-15T13:36:02.8580542Z   duration_ms: 2.608092
+2026-11-15T13:36:02.8580799Z   ...
+2026-11-15T13:36:02.8613556Z # Subtest: GP07 temp_write after effect has no lease
+2026-11-15T13:36:02.8614425Z ok 36 - GP07 temp_write after effect has no lease
+2026-11-15T13:36:02.8614909Z   ---
+2026-11-15T13:36:02.8615277Z   duration_ms: 3.099315
+2026-11-15T13:36:02.8615691Z   ...
+2026-11-15T13:36:02.8643485Z # Subtest: GP07 file_sync before effect has no lease
+2026-11-15T13:36:02.8644446Z ok 37 - GP07 file_sync before effect has no lease
+2026-11-15T13:36:02.8644817Z   ---
+2026-11-15T13:36:02.8645060Z   duration_ms: 3.133371
+2026-11-15T13:36:02.8645333Z   ...
+2026-11-15T13:36:03.0539449Z # Subtest: GP07 file_sync after effect has no lease
+2026-11-15T13:36:03.0540294Z ok 38 - GP07 file_sync after effect has no lease
+2026-11-15T13:36:03.0540659Z   ---
+2026-11-15T13:36:03.0540902Z   duration_ms: 189.594347
+2026-11-15T13:36:03.0541150Z   ...
+2026-11-15T13:36:03.0580923Z # Subtest: GP07 temp_verify before effect has no lease
+2026-11-15T13:36:03.0581737Z ok 39 - GP07 temp_verify before effect has no lease
+2026-11-15T13:36:03.0582190Z   ---
+2026-11-15T13:36:03.0582688Z   duration_ms: 4.092856
+2026-11-15T13:36:03.0582983Z   ...
+2026-11-15T13:36:03.0614341Z # Subtest: GP07 temp_verify after effect has no lease
+2026-11-15T13:36:03.0614928Z ok 40 - GP07 temp_verify after effect has no lease
+2026-11-15T13:36:03.0615576Z   ---
+2026-11-15T13:36:03.0615755Z   duration_ms: 3.319592
+2026-11-15T13:36:03.0616052Z   ...
+2026-11-15T13:36:03.0795041Z # Subtest: GP07 directory_sync before effect has no lease
+2026-11-15T13:36:03.0795796Z ok 41 - GP07 directory_sync before effect has no lease
+2026-11-15T13:36:03.0796183Z   ---
+2026-11-15T13:36:03.0796435Z   duration_ms: 17.934468
+2026-11-15T13:36:03.0796705Z   ...
+2026-11-15T13:36:03.0838320Z # Subtest: GP07 directory_sync after effect has no lease
+2026-11-15T13:36:03.0838911Z ok 42 - GP07 directory_sync after effect has no lease
+2026-11-15T13:36:03.0839280Z   ---
+2026-11-15T13:36:03.0839518Z   duration_ms: 4.272649
+2026-11-15T13:36:03.0839759Z   ...
+2026-11-15T13:36:03.0905492Z # Subtest: GP07 temp_cleanup before effect has no lease
+2026-11-15T13:36:03.0906231Z ok 43 - GP07 temp_cleanup before effect has no lease
+2026-11-15T13:36:03.0906831Z   ---
+2026-11-15T13:36:03.0907209Z   duration_ms: 6.513946
+2026-11-15T13:36:03.0907638Z   ...
+2026-11-15T13:36:03.0960792Z # Subtest: GP07 temp_cleanup after effect has no lease
+2026-11-15T13:36:03.0961401Z ok 44 - GP07 temp_cleanup after effect has no lease
+2026-11-15T13:36:03.0961837Z   ---
+2026-11-15T13:36:03.0962102Z   duration_ms: 5.463999
+2026-11-15T13:36:03.0962402Z   ...
+2026-11-15T13:36:03.1006461Z # Subtest: GP07 cleanup_directory_sync before effect has no lease
+2026-11-15T13:36:03.1007454Z ok 45 - GP07 cleanup_directory_sync before effect has no lease
+2026-11-15T13:36:03.1008124Z   ---
+2026-11-15T13:36:03.1008431Z   duration_ms: 4.747666
+2026-11-15T13:36:03.1008723Z   ...
+2026-11-15T13:36:03.1055588Z # Subtest: GP07 cleanup_directory_sync after effect has no lease
+2026-11-15T13:36:03.1056514Z ok 46 - GP07 cleanup_directory_sync after effect has no lease
+2026-11-15T13:36:03.1056974Z   ---
+2026-11-15T13:36:03.1057268Z   duration_ms: 4.745798
+2026-11-15T13:36:03.1057681Z   ...
+2026-11-15T13:36:03.1202968Z # Subtest: GP04 EEXIST then normal release/ENOENT reacquires exclusively, without fabricated BUSY
+2026-11-15T13:36:03.1203908Z ok 47 - GP04 EEXIST then normal release/ENOENT reacquires exclusively, without fabricated BUSY
+2026-11-15T13:36:03.1204398Z   ---
+2026-11-15T13:36:03.1204658Z   duration_ms: 14.415965
+2026-11-15T13:36:03.1204849Z   ...
+2026-11-15T13:36:03.1366303Z # Subtest: GP04 ABA validates the new owner, never removes its final
+2026-11-15T13:36:03.1367087Z ok 48 - GP04 ABA validates the new owner, never removes its final
+2026-11-15T13:36:03.1367685Z   ---
+2026-11-15T13:36:03.1367965Z   duration_ms: 16.345737
+2026-11-15T13:36:03.1368270Z   ...
+2026-11-15T13:36:03.1497793Z # Subtest: GP05 namespace races are bounded (eight retries)
+2026-11-15T13:36:03.1498963Z ok 49 - GP05 namespace races are bounded (eight retries)
+2026-11-15T13:36:03.1499659Z   ---
+2026-11-15T13:36:03.1499954Z   duration_ms: 12.9468
+2026-11-15T13:36:03.1500249Z   ...
+2026-11-15T13:36:03.1547178Z # Subtest: GP05 namespace races are bounded (shared expired budget)
+2026-11-15T13:36:03.1548234Z ok 50 - GP05 namespace races are bounded (shared expired budget)
+2026-11-15T13:36:03.1548704Z   ---
+2026-11-15T13:36:03.1548963Z   duration_ms: 4.81597
+2026-11-15T13:36:03.1549237Z   ...
+2026-11-15T13:36:03.1671955Z # Subtest: GP03/05 EIO never falls back to rename
+2026-11-15T13:36:03.1673127Z ok 51 - GP03/05 EIO never falls back to rename
+2026-11-15T13:36:03.1673866Z   ---
+2026-11-15T13:36:03.1674164Z   duration_ms: 12.699074
+2026-11-15T13:36:03.1674417Z   ...
+2026-11-15T13:36:03.1714180Z # Subtest: GP03/05 EACCES never falls back to rename
+2026-11-15T13:36:03.1714853Z ok 52 - GP03/05 EACCES never falls back to rename
+2026-11-15T13:36:03.1715525Z   ---
+2026-11-15T13:36:03.1715901Z   duration_ms: 4.199507
+2026-11-15T13:36:03.1716247Z   ...
+2026-11-15T13:36:03.1751712Z # Subtest: GP03/05 EPERM never falls back to rename
+2026-11-15T13:36:03.1752119Z ok 53 - GP03/05 EPERM never falls back to rename
+2026-11-15T13:36:03.1752373Z   ---
+2026-11-15T13:36:03.1752765Z   duration_ms: 3.757309
+2026-11-15T13:36:03.1753247Z   ...
+2026-11-15T13:36:03.1809160Z # Subtest: GP03/05 EXDEV never falls back to rename
+2026-11-15T13:36:03.1809779Z ok 54 - GP03/05 EXDEV never falls back to rename
+2026-11-15T13:36:03.1810149Z   ---
+2026-11-15T13:36:03.1810440Z   duration_ms: 5.54408
+2026-11-15T13:36:03.1810673Z   ...
+2026-11-15T13:36:03.1848229Z # Subtest: GP03/05 ENOTSUP never falls back to rename
+2026-11-15T13:36:03.1848714Z ok 55 - GP03/05 ENOTSUP never falls back to rename
+2026-11-15T13:36:03.1848973Z   ---
+2026-11-15T13:36:03.1849150Z   duration_ms: 3.8171
+2026-11-15T13:36:03.1849344Z   ...
+2026-11-15T13:36:03.1917013Z # Subtest: GP06 corrupt final retained: 
+2026-11-15T13:36:03.1917548Z ok 56 - GP06 corrupt final retained: 
+2026-11-15T13:36:03.1917896Z   ---
+2026-11-15T13:36:03.1918162Z   duration_ms: 6.86061
+2026-11-15T13:36:03.1918467Z   ...
+2026-11-15T13:36:03.1954809Z # Subtest: GP06 corrupt final retained: {
+2026-11-15T13:36:03.1955307Z ok 57 - GP06 corrupt final retained: {
+2026-11-15T13:36:03.1955648Z   ---
+2026-11-15T13:36:03.1955951Z   duration_ms: 3.823639
+2026-11-15T13:36:03.1956207Z   ...
+2026-11-15T13:36:03.2014553Z # Subtest: GP06 corrupt final retained: []
+2026-11-15T13:36:03.2015206Z ok 58 - GP06 corrupt final retained: []
+2026-11-15T13:36:03.2015556Z   ---
+2026-11-15T13:36:03.2015821Z   duration_ms: 5.601742
+2026-11-15T13:36:03.2016101Z   ...
+2026-11-15T13:36:03.2060638Z # Subtest: GP06 corrupt final retained: �
+2026-11-15T13:36:03.2061563Z ok 59 - GP06 corrupt final retained: �
+2026-11-15T13:36:03.2062295Z   ---
+2026-11-15T13:36:03.2062757Z   duration_ms: 3.984343
+2026-11-15T13:36:03.2063061Z   ...
+2026-11-15T13:36:03.2105839Z # Subtest: GP06 corrupt final retained: {"schema_version":99}
+2026-11-15T13:36:03.2106601Z ok 60 - GP06 corrupt final retained: {"schema_version":99}
+2026-11-15T13:36:03.2107191Z   ---
+2026-11-15T13:36:03.2107518Z   duration_ms: 5.092422
+2026-11-15T13:36:03.2107795Z   ...
+2026-11-15T13:36:03.2206487Z # Subtest: GP06 full metadata type/root validation, not merely JSON or hash
+2026-11-15T13:36:03.2207636Z ok 61 - GP06 full metadata type/root validation, not merely JSON or hash
+2026-11-15T13:36:03.2208363Z   ---
+2026-11-15T13:36:03.2208751Z   duration_ms: 10.086656
+2026-11-15T13:36:03.2209022Z   ...
+2026-11-15T13:36:03.2361626Z # Subtest: GP06 full metadata type/root validation, not merely JSON or hash
+2026-11-15T13:36:03.2362904Z ok 62 - GP06 full metadata type/root validation, not merely JSON or hash
+2026-11-15T13:36:03.2363544Z   ---
+2026-11-15T13:36:03.2363937Z   duration_ms: 15.374279
+2026-11-15T13:36:03.2364209Z   ...
+2026-11-15T13:36:03.2546873Z # Subtest: GP06 full metadata type/root validation, not merely JSON or hash
+2026-11-15T13:36:03.2547767Z ok 63 - GP06 full metadata type/root validation, not merely JSON or hash
+2026-11-15T13:36:03.2548231Z   ---
+2026-11-15T13:36:03.2548497Z   duration_ms: 18.261994
+2026-11-15T13:36:03.2548753Z   ...
+2026-11-15T13:36:03.2683950Z # Subtest: GP09 release unlink_after cannot delete a later owner
+2026-11-15T13:36:03.2684595Z ok 64 - GP09 release unlink_after cannot delete a later owner
+2026-11-15T13:36:03.2684995Z   ---
+2026-11-15T13:36:03.2685178Z   duration_ms: 13.508478
+2026-11-15T13:36:03.2875202Z   ...
+2026-11-15T13:36:03.2876114Z # Subtest: GP09 release dir_sync cannot delete a later owner
+2026-11-15T13:36:03.2876744Z ok 65 - GP09 release dir_sync cannot delete a later owner
+2026-11-15T13:36:03.2877031Z   ---
+2026-11-15T13:36:03.2877204Z   duration_ms: 19.296382
+2026-11-15T13:36:03.2877387Z   ...
+2026-11-15T13:36:03.2929261Z # Subtest: GP10 exact candidate classification precedes publisherTarget, but is not an ArtifactRef allowlist
+2026-11-15T13:36:03.2930045Z ok 66 - GP10 exact candidate classification precedes publisherTarget, but is not an ArtifactRef allowlist
+2026-11-15T13:36:03.2930431Z   ---
+2026-11-15T13:36:03.2930615Z   duration_ms: 5.419687
+2026-11-15T13:36:03.2930851Z   ...
+2026-11-15T13:36:03.2991403Z # Subtest: GP03 identical metadata/lock_id on a different inode never creates ownership
+2026-11-15T13:36:03.2992027Z ok 67 - GP03 identical metadata/lock_id on a different inode never creates ownership
+2026-11-15T13:36:03.2992915Z   ---
+2026-11-15T13:36:03.2993098Z   duration_ms: 6.111052
+2026-11-15T13:36:03.2993296Z   ...
+2026-11-15T13:36:03.3020788Z # Subtest: GP03 candidate name collision is never reused or removed without creation capability
+2026-11-15T13:36:03.3021835Z ok 68 - GP03 candidate name collision is never reused or removed without creation capability
+2026-11-15T13:36:03.3022393Z   ---
+2026-11-15T13:36:03.3022828Z   duration_ms: 2.952684
+2026-11-15T13:36:03.3023123Z   ...
+2026-11-15T13:36:03.3056094Z # Subtest: GP03 BigInt inode comparisons do not collapse adjacent values above 2^53
+2026-11-15T13:36:03.3056945Z ok 69 - GP03 BigInt inode comparisons do not collapse adjacent values above 2^53
+2026-11-15T13:36:03.3057427Z   ---
+2026-11-15T13:36:03.3057673Z   duration_ms: 3.497256
+2026-11-15T13:36:03.3058087Z   ...
+2026-11-15T13:36:03.3106677Z # Subtest: GP05 invalid final observation is not erased by its later ENOENT
+2026-11-15T13:36:03.3107550Z ok 70 - GP05 invalid final observation is not erased by its later ENOENT
+2026-11-15T13:36:03.3107989Z   ---
+2026-11-15T13:36:03.3108162Z   duration_ms: 4.774267
+2026-11-15T13:36:03.3108358Z   ...
+2026-11-15T13:36:03.3287282Z # Subtest: GP05 descriptor/path inode change validates the replacement (valid)
+2026-11-15T13:36:03.3288032Z ok 71 - GP05 descriptor/path inode change validates the replacement (valid)
+2026-11-15T13:36:03.3288500Z   ---
+2026-11-15T13:36:03.3288741Z   duration_ms: 18.131862
+2026-11-15T13:36:03.3289020Z   ...
+2026-11-15T13:36:03.5403019Z # Subtest: GP05 descriptor/path inode change validates the replacement (invalid)
+2026-11-15T13:36:03.5403706Z ok 72 - GP05 descriptor/path inode change validates the replacement (invalid)
+2026-11-15T13:36:03.5404033Z   ---
+2026-11-15T13:36:03.5404215Z   duration_ms: 211.525136
+2026-11-15T13:36:03.5404402Z   ...
+2026-11-15T13:36:03.5499626Z # Subtest: GP07 BUSY candidate cleanup failure preserves original contention and other owner
+2026-11-15T13:36:03.5500430Z ok 73 - GP07 BUSY candidate cleanup failure preserves original contention and other owner
+2026-11-15T13:36:03.5500946Z   ---
+2026-11-15T13:36:03.5501195Z   duration_ms: 9.46067
+2026-11-15T13:36:03.5501484Z   ...
+2026-11-15T13:36:03.5726264Z # Subtest: GP16 new Gate failures keep CLI codes and a single JSON error document
+2026-11-15T13:36:03.5727527Z ok 74 - GP16 new Gate failures keep CLI codes and a single JSON error document
+2026-11-15T13:36:03.5728402Z   ---
+2026-11-15T13:36:03.5728890Z   duration_ms: 22.576375
+2026-11-15T13:36:03.5729205Z   ...
+2026-11-15T13:36:05.6821702Z # Subtest: GP05 first EEXIST starts one monotonic second, never a fresh deadline per race
+2026-11-15T13:36:05.6822387Z ok 75 - GP05 first EEXIST starts one monotonic second, never a fresh deadline per race
+2026-11-15T13:36:05.6823304Z   ---
+2026-11-15T13:36:05.6823567Z   duration_ms: 2109.586329
+2026-11-15T13:36:05.6823839Z   ...
+2026-11-15T13:36:05.6920422Z # Subtest: GP05 wall-clock changes cannot reset or prematurely expire the monotonic retry bound
+2026-11-15T13:36:05.6921529Z ok 76 - GP05 wall-clock changes cannot reset or prematurely expire the monotonic retry bound
+2026-11-15T13:36:05.6922099Z   ---
+2026-11-15T13:36:05.6922889Z   duration_ms: 9.884951
+2026-11-15T13:36:05.6923218Z   ...
+2026-11-15T13:36:05.9811683Z # Subtest: GP09 descriptor close before effect retains final without unlink
+2026-11-15T13:36:05.9812864Z ok 77 - GP09 descriptor close before effect retains final without unlink
+2026-11-15T13:36:05.9813669Z   ---
+2026-11-15T13:36:05.9814046Z   duration_ms: 289.034976
+2026-11-15T13:36:05.9814312Z   ...
+2026-11-15T13:36:05.9917348Z # Subtest: GP09 descriptor close after effect retains final without unlink
+2026-11-15T13:36:05.9917869Z ok 78 - GP09 descriptor close after effect retains final without unlink
+2026-11-15T13:36:05.9918191Z   ---
+2026-11-15T13:36:05.9918371Z   duration_ms: 10.347575
+2026-11-15T13:36:06.0006855Z   ...
+2026-11-15T13:36:06.0007649Z # Subtest: GP07 read and close failures preserve the first native cause, permission code and descriptor
+2026-11-15T13:36:06.0008981Z ok 79 - GP07 read and close failures preserve the first native cause, permission code and descriptor
+2026-11-15T13:36:06.0009537Z   ---
+2026-11-15T13:36:06.0009809Z   duration_ms: 9.142228
+2026-11-15T13:36:06.0010046Z   ...
+2026-11-15T13:36:06.0101028Z 1..79
+2026-11-15T13:36:06.0101306Z # tests 79
+2026-11-15T13:36:06.0101536Z # suites 0
+2026-11-15T13:36:06.0101780Z # pass 79
+2026-11-15T13:36:06.0102001Z # fail 0
+2026-11-15T13:36:06.0102231Z # cancelled 0
+2026-11-15T13:36:06.0102589Z # skipped 0
+2026-11-15T13:36:06.0102819Z # todo 0
+2026-11-15T13:36:06.0106525Z # duration_ms 61036.055268
+2026-11-15T13:36:06.0268035Z Post job cleanup.
+2026-11-15T13:36:06.1477030Z Post job cleanup.
+2026-11-15T13:36:06.2281450Z [command]/usr/bin/git version
+2026-11-15T13:36:06.2323681Z git version 2.56.1
+2026-11-15T13:36:06.2361811Z Temporarily overriding HOME='/home/runner/work/_temp/a1b76a9b-7ce1-457e-8b0d-d403e6b40777' before making global git config changes
+2026-11-15T13:36:06.2363465Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T13:36:06.2369926Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/helloproject-song-data/helloproject-song-data
+2026-11-15T13:36:06.2414879Z Removing SSH command configuration
+2026-11-15T13:36:06.2434994Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T13:36:06.2482369Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T13:36:06.2790173Z Removing HTTP extra header
+2026-11-15T13:36:06.2795916Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T13:36:06.2840252Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T13:36:06.3149277Z Removing includeIf entries pointing to credentials config files
+2026-11-15T13:36:06.3156572Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T13:36:06.3191739Z includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git.path
+2026-11-15T13:36:06.3193251Z includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git/worktrees/*.path
+2026-11-15T13:36:06.3194468Z includeif.gitdir:/github/workspace/.git.path
+2026-11-15T13:36:06.3195064Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-15T13:36:06.3206756Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git.path
+2026-11-15T13:36:06.3241016Z /home/runner/work/_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:36:06.3256824Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git.path /home/runner/work/_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:36:06.3317883Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git/worktrees/*.path
+2026-11-15T13:36:06.3354297Z /home/runner/work/_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:36:06.3368222Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:36:06.3419146Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-11-15T13:36:06.3452405Z /github/runner_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:36:06.3463515Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:36:06.3511025Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-15T13:36:06.3543926Z /github/runner_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:36:06.3553017Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config
+2026-11-15T13:36:06.3604014Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T13:36:06.3926049Z Removing credentials config '/home/runner/work/_temp/git-credentials-72cb4392-9300-4f62-b944-af057d082014.config'
+2026-11-15T13:36:06.4116438Z Cleaning up orphan processes

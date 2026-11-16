@@ -1,0 +1,4837 @@
+TAP version 13
+# Subtest: current canonical Juice=Juice data aggregates by work
+ok 1 - current canonical Juice=Juice data aggregates by work
+  ---
+  duration_ms: 66.923908
+  type: 'test'
+  ...
+# Subtest: current canonical: all 14 tables pass without changing legacy readers
+ok 2 - current canonical: all 14 tables pass without changing legacy readers
+  ---
+  duration_ms: 71.864013
+  type: 'test'
+  ...
+# Subtest: manifest: fixed paths, raw byte lengths/hashes, independent JCS hash, deterministic
+ok 3 - manifest: fixed paths, raw byte lengths/hashes, independent JCS hash, deterministic
+  ---
+  duration_ms: 29.961339
+  type: 'test'
+  ...
+# Subtest: JCS: RFC 8785 primitive/number encoding, nested UTF-16 key sorting and no normalization
+ok 4 - JCS: RFC 8785 primitive/number encoding, nested UTF-16 key sorting and no normalization
+  ---
+  duration_ms: 1.009009
+  type: 'test'
+  ...
+# Subtest: CSV strict parsing preserves quotes, commas, quoted newlines, UTF-8, empty and final fields
+ok 5 - CSV strict parsing preserves quotes, commas, quoted newlines, UTF-8, empty and final fields
+  ---
+  duration_ms: 0.31836
+  type: 'test'
+  ...
+# Subtest: artists: required schema, PK/compound PK, ID and enum constraints
+ok 6 - artists: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 97.952663
+  type: 'test'
+  ...
+# Subtest: creators: required schema, PK/compound PK, ID and enum constraints
+ok 7 - creators: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 64.709695
+  type: 'test'
+  ...
+# Subtest: works: required schema, PK/compound PK, ID and enum constraints
+ok 8 - works: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 70.201049
+  type: 'test'
+  ...
+# Subtest: songs: required schema, PK/compound PK, ID and enum constraints
+ok 9 - songs: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 109.307488
+  type: 'test'
+  ...
+# Subtest: songs.work_id: FK/compound reference integrity
+ok 10 - songs.work_id: FK/compound reference integrity
+  ---
+  duration_ms: 10.241094
+  type: 'test'
+  ...
+# Subtest: song_artists: required schema, PK/compound PK, ID and enum constraints
+ok 11 - song_artists: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 114.09921
+  type: 'test'
+  ...
+# Subtest: song_artists.song_id: FK/compound reference integrity
+ok 12 - song_artists.song_id: FK/compound reference integrity
+  ---
+  duration_ms: 10.095345
+  type: 'test'
+  ...
+# Subtest: song_artists.artist_id: FK/compound reference integrity
+ok 13 - song_artists.artist_id: FK/compound reference integrity
+  ---
+  duration_ms: 9.480089
+  type: 'test'
+  ...
+# Subtest: song_creators: required schema, PK/compound PK, ID and enum constraints
+ok 14 - song_creators: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 103.899518
+  type: 'test'
+  ...
+# Subtest: song_creators.song_id: FK/compound reference integrity
+ok 15 - song_creators.song_id: FK/compound reference integrity
+  ---
+  duration_ms: 10.188104
+  type: 'test'
+  ...
+# Subtest: song_creators.creator_id: FK/compound reference integrity
+ok 16 - song_creators.creator_id: FK/compound reference integrity
+  ---
+  duration_ms: 10.151619
+  type: 'test'
+  ...
+# Subtest: members: required schema, PK/compound PK, ID and enum constraints
+ok 17 - members: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 68.269382
+  type: 'test'
+  ...
+# Subtest: member_affiliations: required schema, PK/compound PK, ID and enum constraints
+ok 18 - member_affiliations: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 102.353301
+  type: 'test'
+  ...
+# Subtest: member_affiliations.member_id: FK/compound reference integrity
+ok 19 - member_affiliations.member_id: FK/compound reference integrity
+  ---
+  duration_ms: 9.663995
+  type: 'test'
+  ...
+# Subtest: member_affiliations.artist_id: FK/compound reference integrity
+ok 20 - member_affiliations.artist_id: FK/compound reference integrity
+  ---
+  duration_ms: 11.38106
+  type: 'test'
+  ...
+# Subtest: song_performers: required schema, PK/compound PK, ID and enum constraints
+ok 21 - song_performers: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 73.996781
+  type: 'test'
+  ...
+# Subtest: song_performers.song_id: FK/compound reference integrity
+ok 22 - song_performers.song_id: FK/compound reference integrity
+  ---
+  duration_ms: 9.995194
+  type: 'test'
+  ...
+# Subtest: song_performers.member_id: FK/compound reference integrity
+ok 23 - song_performers.member_id: FK/compound reference integrity
+  ---
+  duration_ms: 9.365146
+  type: 'test'
+  ...
+# Subtest: releases: required schema, PK/compound PK, ID and enum constraints
+ok 24 - releases: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 86.172909
+  type: 'test'
+  ...
+# Subtest: release_tracks: required schema, PK/compound PK, ID and enum constraints
+ok 25 - release_tracks: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 101.166395
+  type: 'test'
+  ...
+# Subtest: release_tracks.release_id: FK/compound reference integrity
+ok 26 - release_tracks.release_id: FK/compound reference integrity
+  ---
+  duration_ms: 9.084283
+  type: 'test'
+  ...
+# Subtest: release_tracks.song_id: FK/compound reference integrity
+ok 27 - release_tracks.song_id: FK/compound reference integrity
+  ---
+  duration_ms: 9.800711
+  type: 'test'
+  ...
+# Subtest: videos: required schema, PK/compound PK, ID and enum constraints
+ok 28 - videos: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 99.752487
+  type: 'test'
+  ...
+# Subtest: video_songs: required schema, PK/compound PK, ID and enum constraints
+ok 29 - video_songs: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 101.932638
+  type: 'test'
+  ...
+# Subtest: video_songs.video_id: FK/compound reference integrity
+ok 30 - video_songs.video_id: FK/compound reference integrity
+  ---
+  duration_ms: 10.043376
+  type: 'test'
+  ...
+# Subtest: video_songs.song_id: FK/compound reference integrity
+ok 31 - video_songs.song_id: FK/compound reference integrity
+  ---
+  duration_ms: 8.991463
+  type: 'test'
+  ...
+# Subtest: video_songs.performer_artist_id: FK/compound reference integrity
+ok 32 - video_songs.performer_artist_id: FK/compound reference integrity
+  ---
+  duration_ms: 9.276723
+  type: 'test'
+  ...
+# Subtest: video_song_performers: required schema, PK/compound PK, ID and enum constraints
+ok 33 - video_song_performers: required schema, PK/compound PK, ID and enum constraints
+  ---
+  duration_ms: 122.203026
+  type: 'test'
+  ...
+# Subtest: video_song_performers.video_id+song_id+start_seconds: FK/compound reference integrity
+ok 34 - video_song_performers.video_id+song_id+start_seconds: FK/compound reference integrity
+  ---
+  duration_ms: 9.238796
+  type: 'test'
+  ...
+# Subtest: video_song_performers.member_id: FK/compound reference integrity
+ok 35 - video_song_performers.member_id: FK/compound reference integrity
+  ---
+  duration_ms: 10.219321
+  type: 'test'
+  ...
+# Subtest: integers: strict full field, positive/non-negative and optional empty, without precision loss
+ok 36 - integers: strict full field, positive/non-negative and optional empty, without precision loss
+  ---
+  duration_ms: 485.137827
+  type: 'test'
+  ...
+# Subtest: dates/datetimes: calendar, leap years, timezone and future releases
+ok 37 - dates/datetimes: calendar, leap years, timezone and future releases
+  ---
+  duration_ms: 148.161417
+  type: 'test'
+  ...
+# Subtest: URLs: absolute ASCII HTTPS; optional source_url/notes stay optional
+ok 38 - URLs: absolute ASCII HTTPS; optional source_url/notes stay optional
+  ---
+  duration_ms: 61.480573
+  type: 'test'
+  ...
+# Subtest: song_artists: order uniqueness uses specified context, no contiguity rule
+ok 39 - song_artists: order uniqueness uses specified context, no contiguity rule
+  ---
+  duration_ms: 24.29729
+  type: 'test'
+  ...
+# Subtest: song_creators: order uniqueness uses specified context, no contiguity rule
+ok 40 - song_creators: order uniqueness uses specified context, no contiguity rule
+  ---
+  duration_ms: 23.775324
+  type: 'test'
+  ...
+# Subtest: song_performers: order uniqueness uses specified context, no contiguity rule
+ok 41 - song_performers: order uniqueness uses specified context, no contiguity rule
+  ---
+  duration_ms: 24.400124
+  type: 'test'
+  ...
+# Subtest: video_song_performers: order uniqueness uses specified context, no contiguity rule
+ok 42 - video_song_performers: order uniqueness uses specified context, no contiguity rule
+  ---
+  duration_ms: 25.203894
+  type: 'test'
+  ...
+# Subtest: multiple primary artists and per-role artist order are allowed; missing primary rejected
+ok 43 - multiple primary artists and per-role artist order are allowed; missing primary rejected
+  ---
+  duration_ms: 17.647021
+  type: 'test'
+  ...
+# Subtest: artist/member periods: end >= start, same-pair overlap including open ends, different artist allowed
+ok 44 - artist/member periods: end >= start, same-pair overlap including open ends, different artist allowed
+  ---
+  duration_ms: 46.806839
+  type: 'test'
+  ...
+# Subtest: video: unique YouTube identity/URL and exact interval (not just separate video/song FKs)
+ok 45 - video: unique YouTube identity/URL and exact interval (not just separate video/song FKs)
+  ---
+  duration_ms: 24.751903
+  type: 'test'
+  ...
+# Subtest: diagnostics: structured, deterministic, pure and no process.exit
+ok 46 - diagnostics: structured, deterministic, pure and no process.exit
+  ---
+  duration_ms: 62.38838
+  type: 'test'
+  ...
+# Subtest: snapshot rejects missing header
+ok 47 - snapshot rejects missing header
+  ---
+  duration_ms: 82.441351
+  type: 'test'
+  ...
+# Subtest: snapshot rejects missing column
+ok 48 - snapshot rejects missing column
+  ---
+  duration_ms: 51.25983
+  type: 'test'
+  ...
+# Subtest: snapshot rejects reordered header
+ok 49 - snapshot rejects reordered header
+  ---
+  duration_ms: 52.97977
+  type: 'test'
+  ...
+# Subtest: snapshot rejects unexpected column
+ok 50 - snapshot rejects unexpected column
+  ---
+  duration_ms: 56.368004
+  type: 'test'
+  ...
+# Subtest: snapshot rejects duplicate column
+ok 51 - snapshot rejects duplicate column
+  ---
+  duration_ms: 50.189946
+  type: 'test'
+  ...
+# Subtest: snapshot rejects wrong record width
+ok 52 - snapshot rejects wrong record width
+  ---
+  duration_ms: 47.860474
+  type: 'test'
+  ...
+# Subtest: snapshot rejects quote after unquoted data
+ok 53 - snapshot rejects quote after unquoted data
+  ---
+  duration_ms: 48.16291
+  type: 'test'
+  ...
+# Subtest: snapshot rejects junk after quote
+ok 54 - snapshot rejects junk after quote
+  ---
+  duration_ms: 48.080245
+  type: 'test'
+  ...
+# Subtest: snapshot rejects unclosed quote
+ok 55 - snapshot rejects unclosed quote
+  ---
+  duration_ms: 40.020424
+  type: 'test'
+  ...
+# Subtest: snapshot rejects empty record
+ok 56 - snapshot rejects empty record
+  ---
+  duration_ms: 50.230753
+  type: 'test'
+  ...
+# Subtest: empty tables: all 14 headers required, empty rows are valid
+ok 57 - empty tables: all 14 headers required, empty rows are valid
+  ---
+  duration_ms: 33.270865
+  type: 'test'
+  ...
+# Subtest: missing file/unknown CSV suppress complete manifest; malformed UTF-8 is an error
+ok 58 - missing file/unknown CSV suppress complete manifest; malformed UTF-8 is an error
+  ---
+  duration_ms: 68.324034
+  type: 'test'
+  ...
+# Subtest: snapshot uses the returned bytes for parsing and hashes; LF/CRLF and quoting alter only identity
+ok 59 - snapshot uses the returned bytes for parsing and hashes; LF/CRLF and quoting alter only identity
+  ---
+  duration_ms: 104.850881
+  type: 'test'
+  ...
+# Subtest: official feed and list classify アナログアルバム and MDアルバム as audio
+ok 60 - official feed and list classify アナログアルバム and MDアルバム as audio
+  ---
+  duration_ms: 2.91647
+  type: 'test'
+  ...
+# Subtest: official detail excerpts retain both raw release labels, exact media, tracks and credits
+ok 61 - official detail excerpts retain both raw release labels, exact media, tracks and credits
+  ---
+  duration_ms: 4.412061
+  type: 'test'
+  ...
+# Subtest: unknown release type still stops in list and feed
+ok 62 - unknown release type still stops in list and feed
+  ---
+  duration_ms: 0.601625
+  type: 'test'
+  ...
+# Subtest: unverified detail media still stops for either release type
+ok 63 - unverified detail media still stops for either release type
+  ---
+  duration_ms: 0.626043
+  type: 'test'
+  ...
+# Subtest: both album types save once with raw fields and retain reviewed candidates on rerun
+ok 64 - both album types save once with raw fields and retain reviewed candidates on rerun
+  ---
+  duration_ms: 39.959342
+  type: 'test'
+  ...
+# Subtest: failure in a later artist leaves all earlier album observations unsaved
+ok 65 - failure in a later artist leaves all earlier album observations unsaved
+  ---
+  duration_ms: 10.4443
+  type: 'test'
+  ...
+# Subtest: unverified MD detail media aborts before staging is changed
+ok 66 - unverified MD detail media aborts before staging is changed
+  ---
+  duration_ms: 10.893415
+  type: 'test'
+  ...
+# Subtest: official feed and list classify アナログシングル as audio without changing its label
+ok 67 - official feed and list classify アナログシングル as audio without changing its label
+  ---
+  duration_ms: 2.565831
+  type: 'test'
+  ...
+# Subtest: official detail excerpts retain ANALOG media, product numbers, tracks and credits
+ok 68 - official detail excerpts retain ANALOG media, product numbers, tracks and credits
+  ---
+  duration_ms: 3.549833
+  type: 'test'
+  ...
+# Subtest: unknown release type in list or feed still stops
+ok 69 - unknown release type in list or feed still stops
+  ---
+  duration_ms: 0.736779
+  type: 'test'
+  ...
+# Subtest: unverified detail media is not inferred from アナログシングル
+ok 70 - unverified detail media is not inferred from アナログシングル
+  ---
+  duration_ms: 0.349576
+  type: 'test'
+  ...
+# Subtest: analog candidates save once with raw release_type and media_type, then rediscover without duplicates
+ok 71 - analog candidates save once with raw release_type and media_type, then rediscover without duplicates
+  ---
+  duration_ms: 38.096689
+  type: 'test'
+  ...
+# Subtest: a later unknown type leaves staging unchanged after analog observations
+ok 72 - a later unknown type leaves staging unchanged after analog observations
+  ---
+  duration_ms: 17.422082
+  type: 'test'
+  ...
+# Subtest: unverified analog media aborts before staging is changed
+ok 73 - unverified analog media aborts before staging is changed
+  ---
+  duration_ms: 14.059111
+  type: 'test'
+  ...
+# Subtest: official BDシングル feed category is video and list/feed exclude it
+ok 74 - official BDシングル feed category is video and list/feed exclude it
+  ---
+  duration_ms: 2.470198
+  type: 'test'
+  ...
+# Subtest: official BD detail is video despite song names and credits
+ok 75 - official BD detail is video despite song names and credits
+  ---
+  duration_ms: 1.716814
+  type: 'test'
+  ...
+# Subtest: an official audio single keeps CD tracks and excludes its BD section
+ok 76 - an official audio single keeps CD tracks and excludes its BD section
+  ---
+  duration_ms: 1.025934
+  type: 'test'
+  ...
+# Subtest: unknown release type and detail media still stop
+ok 77 - unknown release type and detail media still stop
+  ---
+  duration_ms: 1.20931
+  type: 'test'
+  ...
+# Subtest: collector skips BDシングル before detail fetch and saves only CD candidate
+ok 78 - collector skips BDシングル before detail fetch and saves only CD candidate
+  ---
+  duration_ms: 30.450321
+  type: 'test'
+  ...
+# Subtest: a later artist failure leaves earlier audio observation and video exclusion unsaved
+ok 79 - a later artist failure leaves earlier audio observation and video exclusion unsaved
+  ---
+  duration_ms: 11.098545
+  type: 'test'
+  ...
+# Subtest: unknown media aborts collection before staging changes
+ok 80 - unknown media aborts collection before staging changes
+  ---
+  duration_ms: 9.927101
+  type: 'test'
+  ...
+# Subtest: official list and feed select CDミニアルバム with its raw release type
+ok 81 - official list and feed select CDミニアルバム with its raw release type
+  ---
+  duration_ms: 3.004262
+  type: 'test'
+  ...
+# Subtest: official detail excerpts contain CD audio, DVD video, source product numbers, songs and credits
+ok 82 - official detail excerpts contain CD audio, DVD video, source product numbers, songs and credits
+  ---
+  duration_ms: 8.77003
+  type: 'test'
+  ...
+# Subtest: unknown release type still stops in list and feed
+ok 83 - unknown release type still stops in list and feed
+  ---
+  duration_ms: 0.53864
+  type: 'test'
+  ...
+# Subtest: the release name cannot authorize an unknown detail media
+ok 84 - the release name cannot authorize an unknown detail media
+  ---
+  duration_ms: 0.735848
+  type: 'test'
+  ...
+# Subtest: collector saves only official CD tracks once and preserves raw types and source identity
+ok 85 - collector saves only official CD tracks once and preserves raw types and source identity
+  ---
+  duration_ms: 32.419124
+  type: 'test'
+  ...
+# Subtest: a later artist error leaves all earlier CD mini-album observations unsaved
+ok 86 - a later artist error leaves all earlier CD mini-album observations unsaved
+  ---
+  duration_ms: 13.940833
+  type: 'test'
+  ...
+# Subtest: unknown detail media aborts collection before staging changes
+ok 87 - unknown detail media aborts collection before staging changes
+  ---
+  duration_ms: 11.546148
+  type: 'test'
+  ...
+# Subtest: official list and feed select raw 配信シングル with single/distribution category
+ok 88 - official list and feed select raw 配信シングル with single/distribution category
+  ---
+  duration_ms: 2.699412
+  type: 'test'
+  ...
+# Subtest: official detail has STREAMING audio tracks, exact product number and four credits
+ok 89 - official detail has STREAMING audio tracks, exact product number and four credits
+  ---
+  duration_ms: 2.022634
+  type: 'test'
+  ...
+# Subtest: missing detail product number remains null without borrowing the feed catalog number
+ok 90 - missing detail product number remains null without borrowing the feed catalog number
+  ---
+  duration_ms: 0.713184
+  type: 'test'
+  ...
+# Subtest: unknown release type and detail media still stop
+ok 91 - unknown release type and detail media still stop
+  ---
+  duration_ms: 0.953295
+  type: 'test'
+  ...
+# Subtest: official 5567 has a verified empty STREAMING TrackList and zero candidates
+ok 92 - official 5567 has a verified empty STREAMING TrackList and zero candidates
+  ---
+  duration_ms: 0.883179
+  type: 'test'
+  ...
+# Subtest: verified playable example saves once with official labels and product number
+ok 93 - verified playable example saves once with official labels and product number
+  ---
+  duration_ms: 31.89188
+  type: 'test'
+  ...
+# Subtest: later artist error leaves the earlier streaming observation unsaved
+ok 94 - later artist error leaves the earlier streaming observation unsaved
+  ---
+  duration_ms: 11.44765
+  type: 'test'
+  ...
+# Subtest: 5567 is counted as official empty while the listed song is collected
+ok 95 - 5567 is counted as official empty while the listed song is collected
+  ---
+  duration_ms: 10.526794
+  type: 'test'
+  ...
+# Subtest: unknown media still leaves staging unchanged
+ok 96 - unknown media still leaves staging unchanged
+  ---
+  duration_ms: 10.80309
+  type: 'test'
+  ...
+# Subtest: legacy official list and feed select CDMD and exclude VHS
+ok 97 - legacy official list and feed select CDMD and exclude VHS
+  ---
+  duration_ms: 2.660394
+  type: 'test'
+  ...
+# Subtest: three official CDMD excerpts expose CD audio tracks and preserve raw type and product numbers
+ok 98 - three official CDMD excerpts expose CD audio tracks and preserve raw type and product numbers
+  ---
+  duration_ms: 2.354994
+  type: 'test'
+  ...
+# Subtest: VHS detail sections are video even when they have track titles and credits
+ok 99 - VHS detail sections are video even when they have track titles and credits
+  ---
+  duration_ms: 3.274589
+  type: 'test'
+  ...
+# Subtest: unknown release type and unverified CDMD media still stop safely
+ok 100 - unknown release type and unverified CDMD media still stop safely
+  ---
+  duration_ms: 0.896679
+  type: 'test'
+  ...
+# Subtest: CDMD collection saves once, never fetches VHS, and retains review metadata on rerun
+ok 101 - CDMD collection saves once, never fetches VHS, and retains review metadata on rerun
+  ---
+  duration_ms: 37.4234
+  type: 'test'
+  ...
+# Subtest: unknown type in a later artist aborts the whole transaction after CDMD observations
+ok 102 - unknown type in a later artist aborts the whole transaction after CDMD observations
+  ---
+  duration_ms: 10.226202
+  type: 'test'
+  ...
+# Subtest: unverified CDMD detail media aborts without changing staging
+ok 103 - unverified CDMD detail media aborts without changing staging
+  ---
+  duration_ms: 11.476323
+  type: 'test'
+  ...
+# Subtest: A/B: no CLI args select every configured artist; --artist selects just one
+ok 104 - A/B: no CLI args select every configured artist; --artist selects just one
+  ---
+  duration_ms: 1.394089
+  type: 'test'
+  ...
+# Subtest: C: malformed CLI args fail safely with nonzero exit and JSON error
+ok 105 - C: malformed CLI args fail safely with nonzero exit and JSON error
+  ---
+  duration_ms: 472.755566
+  type: 'test'
+  ...
+# Subtest: D: all artists succeed, then existing plus all observations are saved once
+ok 106 - D: all artists succeed, then existing plus all observations are saved once
+  ---
+  duration_ms: 49.304995
+  type: 'test'
+  ...
+# Subtest: E: a later artist HTTP, parse or list failure leaves staging byte-for-byte unchanged
+ok 107 - E: a later artist HTTP, parse or list failure leaves staging byte-for-byte unchanged
+  ---
+  duration_ms: 41.426767
+  type: 'test'
+  ...
+# Subtest: F/G: single-artist runs keep other artists and preserve review fields on rediscovery
+ok 108 - F/G: single-artist runs keep other artists and preserve review fields on rediscovery
+  ---
+  duration_ms: 42.872643
+  type: 'test'
+  ...
+# Subtest: H: related units and old names never inherit source artist identity
+ok 109 - H: related units and old names never inherit source artist identity
+  ---
+  duration_ms: 29.660085
+  type: 'test'
+  ...
+# Subtest: current staging candidates retain IDs and review fields
+ok 110 - current staging candidates retain IDs and review fields
+  ---
+  duration_ms: 2.005469
+  type: 'test'
+  ...
+# Subtest: official metadata without latest cards supplies all advertised years; BD is excluded
+ok 111 - official metadata without latest cards supplies all advertised years; BD is excluded
+  ---
+  duration_ms: 2.728337
+  type: 'test'
+  ...
+# Subtest: invalid artist and unsupported staging fail before any source fetch or save
+ok 112 - invalid artist and unsupported staging fail before any source fetch or save
+  ---
+  duration_ms: 2.106791
+  type: 'test'
+  ...
+# Subtest: exclusive temp collision leaves existing staging and temp file unchanged
+ok 113 - exclusive temp collision leaves existing staging and temp file unchanged
+  ---
+  duration_ms: 1.838567
+  type: 'test'
+  ...
+# Subtest: all three official details have a recognizable empty STREAMING TrackList and zero candidates
+ok 114 - all three official details have a recognizable empty STREAMING TrackList and zero candidates
+  ---
+  duration_ms: 3.31462
+  type: 'test'
+  ...
+# Subtest: missing, changed or malformed empty structures are parser errors
+ok 115 - missing, changed or malformed empty structures are parser errors
+  ---
+  duration_ms: 1.886529
+  type: 'test'
+  ...
+# Subtest: three official empty releases finish with zero candidates and explicit summary URLs
+ok 116 - three official empty releases finish with zero candidates and explicit summary URLs
+  ---
+  duration_ms: 31.345972
+  type: 'test'
+  ...
+# Subtest: official empty releases do not prevent a real audio candidate from being collected
+ok 117 - official empty releases do not prevent a real audio candidate from being collected
+  ---
+  duration_ms: 11.659871
+  type: 'test'
+  ...
+# Subtest: unknown media, damaged TrackList and HTTP failure still abort without saving
+ok 118 - unknown media, damaged TrackList and HTTP failure still abort without saving
+  ---
+  duration_ms: 30.901164
+  type: 'test'
+  ...
+# Subtest: a later artist error aborts the transaction after three official empty successes
+ok 119 - a later artist error aborts the transaction after three official empty successes
+  ---
+  duration_ms: 10.19805
+  type: 'test'
+  ...
+# Subtest: A/B: official feed and list classify both single-V types as video and exclude them
+ok 120 - A/B: official feed and list classify both single-V types as video and exclude them
+  ---
+  duration_ms: 2.656118
+  type: 'test'
+  ...
+# Subtest: D: video details contain song and credits, but pure video has no audio candidate
+ok 121 - D: video details contain song and credits, but pure video has no audio candidate
+  ---
+  duration_ms: 3.757726
+  type: 'test'
+  ...
+# Subtest: G: DVD and VHS media sections in an audio release are excluded while CD remains
+ok 122 - G: DVD and VHS media sections in an audio release are excluded while CD remains
+  ---
+  duration_ms: 1.348911
+  type: 'test'
+  ...
+# Subtest: E/F: unregistered release types and detail media still stop
+ok 123 - E/F: unregistered release types and detail media still stop
+  ---
+  duration_ms: 0.869949
+  type: 'test'
+  ...
+# Subtest: C/G: collector skips both video details and saves only the audio candidate
+ok 124 - C/G: collector skips both video details and saves only the audio candidate
+  ---
+  duration_ms: 30.313313
+  type: 'test'
+  ...
+# Subtest: H: a later artist failure leaves staging byte-for-byte unchanged
+ok 125 - H: a later artist failure leaves staging byte-for-byte unchanged
+  ---
+  duration_ms: 13.020479
+  type: 'test'
+  ...
+# Subtest: list selects audio releases and excludes photobooks
+ok 126 - list selects audio releases and excludes photobooks
+  ---
+  duration_ms: 6.101744
+  type: 'test'
+  ...
+# Subtest: official year feed supplies additional releases for the configured artist
+ok 127 - official year feed supplies additional releases for the configured artist
+  ---
+  duration_ms: 2.172315
+  type: 'test'
+  ...
+# Subtest: detail parses audio media, credits and product number, excluding BD and Instrumental
+ok 128 - detail parses audio media, credits and product number, excluding BD and Instrumental
+  ---
+  duration_ms: 1.827611
+  type: 'test'
+  ...
+# Subtest: streaming media parses as audio
+ok 129 - streaming media parses as audio
+  ---
+  duration_ms: 1.324264
+  type: 'test'
+  ...
+# Subtest: stable candidate ID, rediscovery and administrative fields
+ok 130 - stable candidate ID, rediscovery and administrative fields
+  ---
+  duration_ms: 3.15556
+  type: 'test'
+  ...
+# Subtest: source position distinguishes editions and tracks, including streaming without a product number
+ok 131 - source position distinguishes editions and tracks, including streaming without a product number
+  ---
+  duration_ms: 1.471866
+  type: 'test'
+  ...
+# Subtest: legacy title-based IDs migrate without losing review fields or related candidates
+ok 132 - legacy title-based IDs migrate without losing review fields or related candidates
+  ---
+  duration_ms: 1.214368
+  type: 'test'
+  ...
+# Subtest: a related unit keeps its official artist name without inheriting the group ID
+ok 133 - a related unit keeps its official artist name without inheriting the group ID
+  ---
+  duration_ms: 0.906124
+  type: 'test'
+  ...
+# Subtest: canonical title match remains reference-only
+ok 134 - canonical title match remains reference-only
+  ---
+  duration_ms: 28.557727
+  type: 'test'
+  ...
+# Subtest: detail failure never overwrites existing staging
+ok 135 - detail failure never overwrites existing staging
+  ---
+  duration_ms: 22.752553
+  type: 'test'
+  ...
+# Subtest: test/fixtures/approval-runtime.js
+ok 13 - test/fixtures/approval-runtime.js
+  ---
+  duration_ms: 63.51173
+  type: 'test'
+  ...
+# Subtest: test/fixtures/canonical-cli-process.js
+ok 14 - test/fixtures/canonical-cli-process.js
+  ---
+  duration_ms: 112.441239
+  type: 'test'
+  ...
+# Subtest: test/fixtures/canonical-cli.js
+ok 15 - test/fixtures/canonical-cli.js
+  ---
+  duration_ms: 70.697887
+  type: 'test'
+  ...
+# Subtest: test/fixtures/decision-lifecycle.js
+ok 16 - test/fixtures/decision-lifecycle.js
+  ---
+  duration_ms: 39.202228
+  type: 'test'
+  ...
+# Subtest: test/fixtures/durable-prepare.js
+ok 17 - test/fixtures/durable-prepare.js
+  ---
+  duration_ms: 83.259845
+  type: 'test'
+  ...
+# Subtest: test/fixtures/gate-publication-child.js
+ok 18 - test/fixtures/gate-publication-child.js
+  ---
+  duration_ms: 45.363794
+  type: 'test'
+  ...
+# Subtest: test/fixtures/history-success.js
+ok 19 - test/fixtures/history-success.js
+  ---
+  duration_ms: 45.132585
+  type: 'test'
+  ...
+# Subtest: test/fixtures/normal-apply-child.js
+ok 20 - test/fixtures/normal-apply-child.js
+  ---
+  duration_ms: 92.788468
+  type: 'test'
+  ...
+# Subtest: test/fixtures/normal-apply.js
+ok 21 - test/fixtures/normal-apply.js
+  ---
+  duration_ms: 69.446954
+  type: 'test'
+  ...
+# Subtest: test/fixtures/plan-input.js
+ok 22 - test/fixtures/plan-input.js
+  ---
+  duration_ms: 44.270497
+  type: 'test'
+  ...
+# Subtest: test/fixtures/prepare-crash-child.js
+ok 23 - test/fixtures/prepare-crash-child.js
+  ---
+  duration_ms: 83.790664
+  type: 'test'
+  ...
+# Subtest: test/fixtures/recovery-runtime-child.js
+ok 24 - test/fixtures/recovery-runtime-child.js
+  ---
+  duration_ms: 97.851833
+  type: 'test'
+  ...
+# Subtest: test/fixtures/recovery-runtime.js
+ok 25 - test/fixtures/recovery-runtime.js
+  ---
+  duration_ms: 26.26176
+  type: 'test'
+  ...
+# Subtest: test/fixtures/transaction-evidence.js
+ok 26 - test/fixtures/transaction-evidence.js
+  ---
+  duration_ms: 64.567279
+  type: 'test'
+  ...
+# Subtest: complete bound Plan generates deterministically without consuming state or changing input
+ok 150 - complete bound Plan generates deterministically without consuming state or changing input
+  ---
+  duration_ms: 38.429235
+  type: 'test'
+  ...
+# Subtest: all new master/relation kinds and explicit member reuse form a whole valid target
+ok 151 - all new master/relation kinds and explicit member reuse form a whole valid target
+  ---
+  duration_ms: 21.403498
+  type: 'test'
+  ...
+# Subtest: candidate mismatch and non-effective Decisions never create artifacts
+ok 152 - candidate mismatch and non-effective Decisions never create artifacts
+  ---
+  duration_ms: 10.313394
+  type: 'test'
+  ...
+# Subtest: History precheck preserves already-applied/hash/revision distinctions
+ok 153 - History precheck preserves already-applied/hash/revision distinctions
+  ---
+  duration_ms: 7.762375
+  type: 'test'
+  ...
+# Subtest: blocked canonical conflicts and capacity produce valid diagnostic Plans, never partial applicability
+ok 154 - blocked canonical conflicts and capacity produce valid diagnostic Plans, never partial applicability
+  ---
+  duration_ms: 23.70441
+  type: 'test'
+  ...
+# Subtest: same relation is no_op only under full-column integer-aware equivalence
+ok 155 - same relation is no_op only under full-column integer-aware equivalence
+  ---
+  duration_ms: 8.121775
+  type: 'test'
+  ...
+# Subtest: unsupported requests use a diagnostic-only surface and cannot become formal Plans
+ok 156 - unsupported requests use a diagnostic-only surface and cannot become formal Plans
+  ---
+  duration_ms: 5.431565
+  type: 'test'
+  ...
+# Subtest: artifact closedness, IDs, hashes, ordering and applicability are enforced after rehash
+ok 157 - artifact closedness, IDs, hashes, ordering and applicability are enforced after rehash
+  ---
+  duration_ms: 23.249366
+  type: 'test'
+  ...
+# Subtest: runtime generate/save/load/check is immutable, no-clobber and leaves protected inputs unchanged
+ok 158 - runtime generate/save/load/check is immutable, no-clobber and leaves protected inputs unchanged
+  ---
+  duration_ms: 827.660425
+  type: 'test'
+  ...
+# Subtest: current candidate and canonical raw-byte changes make a saved Plan stale
+ok 159 - current candidate and canonical raw-byte changes make a saved Plan stale
+  ---
+  duration_ms: 465.142952
+  type: 'test'
+  ...
+# Subtest: later draft is not stale; changed active confirmation, registry or rules is stale
+ok 160 - later draft is not stale; changed active confirmation, registry or rules is stale
+  ---
+  duration_ms: 407.612931
+  type: 'test'
+  ...
+# Subtest: pending transactions block both generate and check
+ok 161 - pending transactions block both generate and check
+  ---
+  duration_ms: 282.354163
+  type: 'test'
+  ...
+# Subtest: persistence failure before publication preserves absent target and releases the gate
+ok 162 - persistence failure before publication preserves absent target and releases the gate
+  ---
+  duration_ms: 300.69774
+  type: 'test'
+  ...
+# Subtest: unrelated validated History/state progression makes a saved Plan stale
+ok 163 - unrelated validated History/state progression makes a saved Plan stale
+  ---
+  duration_ms: 240.599806
+  type: 'test'
+  ...
+# Subtest: runtime History precheck distinguishes applied identity, hash conflict and different revision
+ok 164 - runtime History precheck distinguishes applied identity, hash conflict and different revision
+  ---
+  duration_ms: 484.225833
+  type: 'test'
+  ...
+# Subtest: corrupt saved artifacts and generic Plan overwrite attempts are rejected
+ok 165 - corrupt saved artifacts and generic Plan overwrite attempts are rejected
+  ---
+  duration_ms: 546.400097
+  type: 'test'
+  ...
+# Subtest: file-sync failure never publishes a partial Plan and keeps failure evidence
+ok 166 - file-sync failure never publishes a partial Plan and keeps failure evidence
+  ---
+  duration_ms: 323.535334
+  type: 'test'
+  ...
+# Subtest: unsupported diagnostics preserve explicit target tables without inventing ambiguous targets
+ok 167 - unsupported diagnostics preserve explicit target tables without inventing ambiguous targets
+  ---
+  duration_ms: 18.801948
+  type: 'test'
+  ...
+# Subtest: standalone artifact validation rejects missing FK dependencies and insert ID inconsistencies
+ok 168 - standalone artifact validation rejects missing FK dependencies and insert ID inconsistencies
+  ---
+  duration_ms: 46.318724
+  type: 'test'
+  ...
+# Subtest: unsupported diagnostic operations cannot be persisted as formal Plan artifacts
+ok 169 - unsupported diagnostic operations cannot be persisted as formal Plan artifacts
+  ---
+  duration_ms: 236.573496
+  type: 'test'
+  ...
+# Subtest: create/read/check Approval and immutable full-content persistence; protected inputs unchanged after acceptance
+ok 170 - create/read/check Approval and immutable full-content persistence; protected inputs unchanged after acceptance
+  ---
+  duration_ms: 1023.326878
+  type: 'test'
+  ...
+# Subtest: same semantic retry retains receipt bytes, timestamps and IDs after pending/stale and post-acceptance invalidation
+ok 171 - same semantic retry retains receipt bytes, timestamps and IDs after pending/stale and post-acceptance invalidation
+  ---
+  duration_ms: 960.435746
+  type: 'test'
+  ...
+# Subtest: different semantic payload is a conflict before new preconditions; never overwrites or allocates
+ok 172 - different semantic payload is a conflict before new preconditions; never overwrites or allocates
+  ---
+  duration_ms: 939.09621
+  type: 'test'
+  ...
+# Subtest: pre-acceptance invalidation is permanent OR, duplicate-safe and rejects new Request
+ok 173 - pre-acceptance invalidation is permanent OR, duplicate-safe and rejects new Request
+  ---
+  duration_ms: 914.537258
+  type: 'test'
+  ...
+# Subtest: Invalidation exact target, missing and corrupt Approval fail closed
+ok 174 - Invalidation exact target, missing and corrupt Approval fail closed
+  ---
+  duration_ms: 461.41639
+  type: 'test'
+  ...
+# Subtest: global scan rejects unrelated corrupt events, tracked deletions, unknown entries and filenames
+ok 175 - global scan rejects unrelated corrupt events, tracked deletions, unknown entries and filenames
+  ---
+  duration_ms: 486.21782
+  type: 'test'
+  ...
+# Subtest: post-acceptance Receipt reference missing/tampered and null-event coexistence never become ordinary invalidation
+ok 176 - post-acceptance Receipt reference missing/tampered and null-event coexistence never become ordinary invalidation
+  ---
+  duration_ms: 895.912219
+  type: 'test'
+  ...
+# Subtest: strict JSON failures and filename binding are checked on readonly load
+ok 177 - strict JSON failures and filename binding are checked on readonly load
+  ---
+  duration_ms: 463.612297
+  type: 'test'
+  ...
+# Subtest: new Approval/Request reject stale Plan and pending; retry precedence is independent
+ok 178 - new Approval/Request reject stale Plan and pending; retry precedence is independent
+  ---
+  duration_ms: 817.588579
+  type: 'test'
+  ...
+# Subtest: Request binding mismatches reject without publication
+ok 179 - Request binding mismatches reject without publication
+  ---
+  duration_ms: 469.963958
+  type: 'test'
+  ...
+# Subtest: common live lease supports both operations without nested acquisition and defines both race orders
+ok 180 - common live lease supports both operations without nested acquisition and defines both race orders
+  ---
+  duration_ms: 1342.030228
+  type: 'test'
+  ...
+# Subtest: parallel double-click returns one receipt or BUSY, subsequent same-ID retry is original; different payload never wins twice
+ok 181 - parallel double-click returns one receipt or BUSY, subsequent same-ID retry is original; different payload never wins twice
+  ---
+  duration_ms: 1005.5437
+  type: 'test'
+  ...
+# Subtest: publication failures retain typed phase/evidence and do not mutate protected files
+ok 182 - publication failures retain typed phase/evidence and do not mutate protected files
+  ---
+  duration_ms: 639.726894
+  type: 'test'
+  ...
+# Subtest: actual concurrent Request/Invalidation and conflicting-submit races retain one serializable outcome
+ok 183 - actual concurrent Request/Invalidation and conflicting-submit races retain one serializable outcome
+  ---
+  duration_ms: 2684.806201
+  type: 'test'
+  ...
+# Subtest: file-sync and post-publication cleanup failures retain evidence and cannot become successful retry
+ok 184 - file-sync and post-publication cleanup failures retain evidence and cannot become successful retry
+  ---
+  duration_ms: 1331.477688
+  type: 'test'
+  ...
+# Subtest: successful History precheck prevents Approval and Request acceptance without modifying History proof
+ok 185 - successful History precheck prevents Approval and Request acceptance without modifying History proof
+  ---
+  duration_ms: 729.441913
+  type: 'test'
+  ...
+# Subtest: unrelated Approval cannot bypass a corrupt event; known untracked event deletion never restores validity
+ok 186 - unrelated Approval cannot bypass a corrupt event; known untracked event deletion never restores validity
+  ---
+  duration_ms: 670.033565
+  type: 'test'
+  ...
+# Subtest: Request check reports recovery readiness without altering receipt or deriving success from processing
+ok 187 - Request check reports recovery readiness without altering receipt or deriving success from processing
+  ---
+  duration_ms: 1016.74391
+  type: 'test'
+  ...
+# Subtest: accepted_request creation rejects another Approval receipt for the same Plan and intended Request
+ok 188 - accepted_request creation rejects another Approval receipt for the same Plan and intended Request
+  ---
+  duration_ms: 1049.46488
+  type: 'test'
+  ...
+# Subtest: accepted_request global scan rejects a stored event bound to another valid Approval receipt
+ok 189 - accepted_request global scan rejects a stored event bound to another valid Approval receipt
+  ---
+  duration_ms: 980.820829
+  type: 'test'
+  ...
+# Subtest: Invalidation create and scan reject wrong Approval hash, cross-repository and corrupt Request originals
+ok 190 - Invalidation create and scan reject wrong Approval hash, cross-repository and corrupt Request originals
+  ---
+  duration_ms: 921.799298
+  type: 'test'
+  ...
+# Subtest: formal complete examples, exact projections and three published hash vectors
+ok 191 - formal complete examples, exact projections and three published hash vectors
+  ---
+  duration_ms: 3.391034
+  type: 'test'
+  ...
+# Subtest: Approval: every required field, closedness/version/null and JSON domain
+ok 192 - Approval: every required field, closedness/version/null and JSON domain
+  ---
+  duration_ms: 1.057122
+  type: 'test'
+  ...
+# Subtest: Invalidation: every required field, closedness/version/null and JSON domain
+ok 193 - Invalidation: every required field, closedness/version/null and JSON domain
+  ---
+  duration_ms: 0.295145
+  type: 'test'
+  ...
+# Subtest: Request: every required field, closedness/version/null and JSON domain
+ok 194 - Request: every required field, closedness/version/null and JSON domain
+  ---
+  duration_ms: 0.545792
+  type: 'test'
+  ...
+# Subtest: UUID generation enforces prefix, lowercase v4 and variant
+ok 195 - UUID generation enforces prefix, lowercase v4 and variant
+  ---
+  duration_ms: 0.530248
+  type: 'test'
+  ...
+# Subtest: Approval types, actor, purpose, hashes, timestamps and filename binding
+ok 196 - Approval types, actor, purpose, hashes, timestamps and filename binding
+  ---
+  duration_ms: 0.589067
+  type: 'test'
+  ...
+# Subtest: Invalidation reason, nullable accepted_request and no independent hash
+ok 197 - Invalidation reason, nullable accepted_request and no independent hash
+  ---
+  duration_ms: 0.502546
+  type: 'test'
+  ...
+# Subtest: mutable cache excluded from hashes but strict, receipt tamper rejected
+ok 198 - mutable cache excluded from hashes but strict, receipt tamper rejected
+  ---
+  duration_ms: 1.210572
+  type: 'test'
+  ...
+# Subtest: declaration: exact versioned schema, optional note, evidence and all namespace bounds
+ok 199 - declaration: exact versioned schema, optional note, evidence and all namespace bounds
+  ---
+  duration_ms: 2.422677
+  type: 'test'
+  ...
+# Subtest: declaration contradiction is blocking; equal/higher upper bounds preserve gaps
+ok 200 - declaration contradiction is blocking; equal/higher upper bounds preserve gaps
+  ---
+  duration_ms: 0.474114
+  type: 'test'
+  ...
+# Subtest: current maxima derive all master/song namespaces and reject malformed identities
+ok 201 - current maxima derive all master/song namespaces and reject malformed identities
+  ---
+  duration_ms: 1.109399
+  type: 'test'
+  ...
+# Subtest: historical CSV permits non-ID schema evolution but rejects ambiguous/malformed content
+ok 202 - historical CSV permits non-ID schema evolution but rejects ambiguous/malformed content
+  ---
+  duration_ms: 0.876018
+  type: 'test'
+  ...
+# Subtest: Git audit retains deleted IDs, includes merge parents, excludes unmerged/docs/tests/messages/untracked
+ok 203 - Git audit retains deleted IDs, includes merge parents, excludes unmerged/docs/tests/messages/untracked
+  ---
+  duration_ms: 157.645142
+  type: 'test'
+  ...
+# Subtest: Git audit detects shallow, missing objects/commands, replacements and malformed historical CSV
+ok 204 - Git audit detects shallow, missing objects/commands, replacements and malformed historical CSV
+  ---
+  duration_ms: 103.341305
+  type: 'test'
+  ...
+# Subtest: audit is deterministic across time/path, binds declaration, manifest, HEAD and rule versions
+ok 205 - audit is deterministic across time/path, binds declaration, manifest, HEAD and rule versions
+  ---
+  duration_ms: 457.682946
+  type: 'test'
+  ...
+# Subtest: bootstrap identity/hash, state hash and strict validators reject tampering
+ok 206 - bootstrap identity/hash, state hash and strict validators reject tampering
+  ---
+  duration_ms: 157.048645
+  type: 'test'
+  ...
+# Subtest: explicit initialize publishes state before marker, reuses existing identity and supports clone lineage/readers
+ok 207 - explicit initialize publishes state before marker, reuses existing identity and supports clone lineage/readers
+  ---
+  duration_ms: 698.273339
+  type: 'test'
+  ...
+# Subtest: readonly checks/status never create domain artifacts and declaration is mandatory
+ok 208 - readonly checks/status never create domain artifacts and declaration is mandatory
+  ---
+  duration_ms: 246.357172
+  type: 'test'
+  ...
+# Subtest: status blocks partial, corrupt, mismatched and unproven advanced state without rebootstrap
+ok 209 - status blocks partial, corrupt, mismatched and unproven advanced state without rebootstrap
+  ---
+  duration_ms: 3998.963334
+  type: 'test'
+  ...
+# Subtest: status re-audits current and historical lower bounds after initialization
+ok 210 - status re-audits current and historical lower bounds after initialization
+  ---
+  duration_ms: 834.815181
+  type: 'test'
+  ...
+# Subtest: capacity exhausted 99999 is valid READY, 99998 not exhausted
+ok 211 - capacity exhausted 99999 is valid READY, 99998 not exhausted
+  ---
+  duration_ms: 710.832216
+  type: 'test'
+  ...
+# Subtest: initialize rejects stale audit after canonical, authoritative HEAD or declaration changes
+ok 212 - initialize rejects stale audit after canonical, authoritative HEAD or declaration changes
+  ---
+  duration_ms: 997.774263
+  type: 'test'
+  ...
+# Subtest: authoritative ref changing during audit is blocking, not a mixed complete result
+ok 213 - authoritative ref changing during audit is blocking, not a mixed complete result
+  ---
+  duration_ms: 74.215188
+  type: 'test'
+  ...
+# Subtest: initialize holds the common gate throughout durable publication
+ok 214 - initialize holds the common gate throughout durable publication
+  ---
+  duration_ms: 278.183622
+  type: 'test'
+  ...
+# Subtest: bootstrap initialize rechecks Git immediately before domain publication
+ok 215 - bootstrap initialize rechecks Git immediately before domain publication
+  ---
+  duration_ms: 289.76297
+  type: 'test'
+  ...
+# Subtest: gate contention, corrupt and stale locks never get removed by bootstrap
+ok 216 - gate contention, corrupt and stale locks never get removed by bootstrap
+  ---
+  duration_ms: 372.54611
+  type: 'test'
+  ...
+# Subtest: publication failures retain evidence, never return READY, and do not auto-rebootstrap
+ok 217 - publication failures retain evidence, never return READY, and do not auto-rebootstrap
+  ---
+  duration_ms: 2531.064103
+  type: 'test'
+  ...
+# Subtest: completed owner intent cleanup failure is distinguishable and blocks normal readers
+ok 218 - completed owner intent cleanup failure is distinguishable and blocks normal readers
+  ---
+  duration_ms: 559.8102
+  type: 'test'
+  ...
+# Subtest: bootstrap uses repository path safety and rejects invalid canonical without rewriting it
+ok 219 - bootstrap uses repository path safety and rejects invalid canonical without rewriting it
+  ---
+  duration_ms: 411.731297
+  type: 'test'
+  ...
+# Subtest: current production canonical is valid via temp copy; tests never initialize production
+ok 220 - current production canonical is valid via temp copy; tests never initialize production
+  ---
+  duration_ms: 50.329012
+  type: 'test'
+  ...
+# Subtest: actual GitHub Actions checkout has complete origin/main history
+ok 221 - actual GitHub Actions checkout has complete origin/main history # SKIP Checks the actual Actions checkout; local fixtures run below
+  ---
+  duration_ms: 1.354359
+  type: 'test'
+  ...
+# Subtest: initialized-state CI: full detached PR checkout succeeds; shallow/missing main stay blocked
+    # Subtest: full history, origin/main and detached PR HEAD: status/read/scripts/drift PASS
+    ok 1 - full history, origin/main and detached PR HEAD: status/read/scripts/drift PASS
+      ---
+      duration_ms: 804.581274
+      type: 'test'
+      ...
+    # Subtest: same initialized artifacts in a real depth=1 checkout: blocking
+    ok 2 - same initialized artifacts in a real depth=1 checkout: blocking
+      ---
+      duration_ms: 422.522801
+      type: 'test'
+      ...
+    # Subtest: complete history without origin/main: blocking
+    ok 3 - complete history without origin/main: blocking
+      ---
+      duration_ms: 430.73038
+      type: 'test'
+      ...
+    1..3
+ok 222 - initialized-state CI: full detached PR checkout succeeds; shallow/missing main stay blocked
+  ---
+  duration_ms: 2441.100157
+  type: 'test'
+  ...
+# Subtest: 6F closed parser rejects bypasses, duplicate options and malformed identities before service access
+ok 223 - 6F closed parser rejects bypasses, duplicate options and malformed identities before service access
+  ---
+  duration_ms: 1.717525
+  type: 'test'
+  ...
+# Subtest: 6F exit classification uses typed codes/errno, including unknown and cancellation outcomes
+ok 224 - 6F exit classification uses typed codes/errno, including unknown and cancellation outcomes
+  ---
+  duration_ms: 1.316281
+  type: 'test'
+  ...
+# Subtest: 6F initialize/check preserve blocked bootstrap and typed audit failures before hash comparison
+ok 225 - 6F initialize/check preserve blocked bootstrap and typed audit failures before hash comparison
+  ---
+  duration_ms: 174.618368
+  type: 'test'
+  ...
+# Subtest: 6F actual TTY process kill and public CLI-only restart
+    # Subtest: 6F CLI SIGKILL receipt:before
+    ok 1 - 6F CLI SIGKILL receipt:before
+      ---
+      duration_ms: 1035.833726
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL receipt:after
+    ok 2 - 6F CLI SIGKILL receipt:after
+      ---
+      duration_ms: 1729.0726
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL owner:before
+    ok 3 - 6F CLI SIGKILL owner:before
+      ---
+      duration_ms: 1813.743783
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL owner:after
+    ok 4 - 6F CLI SIGKILL owner:after
+      ---
+      duration_ms: 8146.005747
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL preparing:after
+    ok 5 - 6F CLI SIGKILL preparing:after
+      ---
+      duration_ms: 9707.654761
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL prepared:after
+    ok 6 - 6F CLI SIGKILL prepared:after
+      ---
+      duration_ms: 35212.626471
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL consume:before
+    ok 7 - 6F CLI SIGKILL consume:before
+      ---
+      duration_ms: 42062.655276
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL consume:after
+    ok 8 - 6F CLI SIGKILL consume:after
+      ---
+      duration_ms: 43740.323319
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL replace:before
+    ok 9 - 6F CLI SIGKILL replace:before
+      ---
+      duration_ms: 42569.930571
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL replace:after
+    ok 10 - 6F CLI SIGKILL replace:after
+      ---
+      duration_ms: 65601.449166
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL decided:before
+    ok 11 - 6F CLI SIGKILL decided:before
+      ---
+      duration_ms: 67020.196586
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL decided:after
+    ok 12 - 6F CLI SIGKILL decided:after
+      ---
+      duration_ms: 64681.453531
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL history:after
+    ok 13 - 6F CLI SIGKILL history:after
+      ---
+      duration_ms: 65517.774732
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL success_state:after
+    ok 14 - 6F CLI SIGKILL success_state:after
+      ---
+      duration_ms: 64385.730831
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL proof:after
+    ok 15 - 6F CLI SIGKILL proof:after
+      ---
+      duration_ms: 66175.939301
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL completion:after
+    ok 16 - 6F CLI SIGKILL completion:after
+      ---
+      duration_ms: 68079.964756
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL gate_release:before
+    ok 17 - 6F CLI SIGKILL gate_release:before
+      ---
+      duration_ms: 72999.017709
+      type: 'test'
+      ...
+    # Subtest: 6F CLI SIGKILL gate_release:after
+    ok 18 - 6F CLI SIGKILL gate_release:after
+      ---
+      duration_ms: 46895.887255
+      type: 'test'
+      ...
+    1..18
+ok 226 - 6F actual TTY process kill and public CLI-only restart
+  ---
+  duration_ms: 398475.604378
+  type: 'suite'
+  ...
+# Subtest: 6F actual CLI Decision/Plan/TTY Apply/result/History end-to-end and readonly terminal restart
+ok 227 - 6F actual CLI Decision/Plan/TTY Apply/result/History end-to-end and readonly terminal restart
+  ---
+  duration_ms: 98664.294408
+  type: 'test'
+  ...
+# Subtest: 6F actual CLI bootstrap audit/declaration/TTY confirmation and incomplete state
+ok 228 - 6F actual CLI bootstrap audit/declaration/TTY confirmation and incomplete state
+  ---
+  duration_ms: 2292.508387
+  type: 'test'
+  ...
+# Subtest: 6F actual npm JSON is one document; malformed arguments/input never mutate evidence
+ok 229 - 6F actual npm JSON is one document; malformed arguments/input never mutate evidence
+  ---
+  duration_ms: 1102.426585
+  type: 'test'
+  ...
+# Subtest: 6F actual TTY no-op Apply keeps all canonical files and high-water unchanged
+ok 230 - 6F actual TTY no-op Apply keeps all canonical files and high-water unchanged
+  ---
+  duration_ms: 39095.340008
+  type: 'test'
+  ...
+# Subtest: R84 review Request result and repository readiness remain independent axes
+ok 231 - R84 review Request result and repository readiness remain independent axes
+  ---
+  duration_ms: 1.230222
+  type: 'test'
+  ...
+# Subtest: R84 review History publication cannot bypass retained gate or pending retirement in public result
+ok 232 - R84 review History publication cannot bypass retained gate or pending retirement in public result
+  ---
+  duration_ms: 62222.612077
+  type: 'test'
+  ...
+# Subtest: R84 review stale inspect token cannot restore UNKNOWN bytes or acquire a successor
+ok 233 - R84 review stale inspect token cannot restore UNKNOWN bytes or acquire a successor
+  ---
+  duration_ms: 6943.669518
+  type: 'test'
+  ...
+# Subtest: R84 review private authority, seam and bypass options never reach services
+ok 234 - R84 review private authority, seam and bypass options never reach services
+  ---
+  duration_ms: 1.004352
+  type: 'test'
+  ...
+# Subtest: R84 review Apply revalidates after human confirmation without holding the gate
+ok 235 - R84 review Apply revalidates after human confirmation without holding the gate
+  ---
+  duration_ms: 634.640917
+  type: 'test'
+  ...
+# Subtest: R84 review bootstrap rechecks audited bytes after human confirmation and publishes nothing stale
+ok 236 - R84 review bootstrap rechecks audited bytes after human confirmation and publishes nothing stale
+  ---
+  duration_ms: 701.124632
+  type: 'test'
+  ...
+# Subtest: R84-M02 Recovery I/O failure preserves a freshly proven committed effect
+ok 237 - R84-M02 Recovery I/O failure preserves a freshly proven committed effect
+  ---
+  duration_ms: 68556.676678
+  type: 'test'
+  ...
+# Subtest: R84-M02 Recovery I/O failure rejects newly UNKNOWN bytes
+ok 238 - R84-M02 Recovery I/O failure rejects newly UNKNOWN bytes
+  ---
+  duration_ms: 14768.797648
+  type: 'test'
+  ...
+# Subtest: 6F public stale/wrong Plan and current source validation reject before Approval/Receipt
+ok 239 - 6F public stale/wrong Plan and current source validation reject before Approval/Receipt
+  ---
+  duration_ms: 1379.132058
+  type: 'test'
+  ...
+# Subtest: 6F public adapters preserve incomplete-final STOP and nonauthoritative candidate evidence
+ok 240 - 6F public adapters preserve incomplete-final STOP and nonauthoritative candidate evidence
+  ---
+  duration_ms: 698.213589
+  type: 'test'
+  ...
+# Subtest: 6F actual OS permission failure maps to 9 and external malformed input remains non-mutating
+ok 241 - 6F actual OS permission failure maps to 9 and external malformed input remains non-mutating
+  ---
+  duration_ms: 125.918435
+  type: 'test'
+  ...
+# Subtest: 6F kill during Recovery retirement: next public run cleans without recreating Proof
+ok 242 - 6F kill during Recovery retirement: next public run cleans without recreating Proof
+  ---
+  duration_ms: 30411.678597
+  type: 'test'
+  ...
+# Subtest: 6F actual SIGINT before confirmation cancels; after Receipt retains gate and evidence
+ok 243 - 6F actual SIGINT before confirmation cancels; after Receipt retains gate and evidence
+  ---
+  duration_ms: 1482.177438
+  type: 'test'
+  ...
+# Subtest: 6F actual CLI syscall io: original error and proven effect are distinct
+ok 244 - 6F actual CLI syscall io: original error and proven effect are distinct
+  ---
+  duration_ms: 30756.062001
+  type: 'test'
+  ...
+# Subtest: 6F actual CLI syscall io-history: original error and proven effect are distinct
+ok 245 - 6F actual CLI syscall io-history: original error and proven effect are distinct
+  ---
+  duration_ms: 66050.805583
+  type: 'test'
+  ...
+# Subtest: 6F actual CLI refuses UNKNOWN bytes after consumption; no forced restore
+ok 246 - 6F actual CLI refuses UNKNOWN bytes after consumption; no forced restore
+  ---
+  duration_ms: 8277.216398
+  type: 'test'
+  ...
+# Subtest: 6F Recovery resolves only exact retained originals, without relying on Intent
+ok 247 - 6F Recovery resolves only exact retained originals, without relying on Intent
+  ---
+  duration_ms: 310.785764
+  type: 'test'
+  ...
+# Subtest: 6F CLI known-mixed semantic failure preserves diagnostics and actually rolls back
+ok 248 - 6F CLI known-mixed semantic failure preserves diagnostics and actually rolls back
+  ---
+  duration_ms: 86685.33317
+  type: 'test'
+  ...
+# Subtest: 6F Receipt publication failure exposes intended identity without claiming acceptance
+ok 249 - 6F Receipt publication failure exposes intended identity without claiming acceptance
+  ---
+  duration_ms: 690.028282
+  type: 'test'
+  ...
+# Subtest: cross-Approval invalidation-first rejects before publication and preserves valid global scan
+ok 250 - cross-Approval invalidation-first rejects before publication and preserves valid global scan
+  ---
+  duration_ms: 1066.667431
+  type: 'test'
+  ...
+# Subtest: Approval check reports prospective conflict, but submit independently revalidates after an earlier applicable check
+ok 251 - Approval check reports prospective conflict, but submit independently revalidates after an earlier applicable check
+  ---
+  duration_ms: 805.325518
+  type: 'test'
+  ...
+# Subtest: a valid pre-request Invalidation with a different intended Request does not conflict
+ok 252 - a valid pre-request Invalidation with a different intended Request does not conflict
+  ---
+  duration_ms: 1563.010751
+  type: 'test'
+  ...
+# Subtest: concurrent cross-Approval Request/Invalidation cannot publish an incompatible pair
+ok 253 - concurrent cross-Approval Request/Invalidation cannot publish an incompatible pair
+  ---
+  duration_ms: 1375.612392
+  type: 'test'
+  ...
+# Subtest: scope uses a sorted nonempty ASCII set and exact JCS projection
+ok 254 - scope uses a sorted nonempty ASCII set and exact JCS projection
+  ---
+  duration_ms: 2.740334
+  type: 'test'
+  ...
+# Subtest: candidate profile has fourteen facts, exact missing defaults and ordered credits
+ok 255 - candidate profile has fourteen facts, exact missing defaults and ordered credits
+  ---
+  duration_ms: 1.596683
+  type: 'test'
+  ...
+# Subtest: profile rejects malformed present facts and unknown credit fields
+ok 256 - profile rejects malformed present facts and unknown credit fields
+  ---
+  duration_ms: 0.416738
+  type: 'test'
+  ...
+# Subtest: typed refs enforce exact union, ID namespace, local grammar and assertions
+ok 257 - typed refs enforce exact union, ID namespace, local grammar and assertions
+  ---
+  duration_ms: 0.792102
+  type: 'test'
+  ...
+# Subtest: content projection excludes only the two contracted root fields
+ok 258 - content projection excludes only the two contracted root fields
+  ---
+  duration_ms: 0.293331
+  type: 'test'
+  ...
+# Subtest: binding validates snapshot, identity, hash and explicit current-source token
+ok 259 - binding validates snapshot, identity, hash and explicit current-source token
+  ---
+  duration_ms: 2.5313
+  type: 'test'
+  ...
+# Subtest: new entity and relation formal shapes derive canonical types without assigning IDs
+ok 260 - new entity and relation formal shapes derive canonical types without assigning IDs
+  ---
+  duration_ms: 1.137582
+  type: 'test'
+  ...
+# Subtest: store accepts empty, draft, confirmed and draft-only cancelled snapshots
+ok 261 - store accepts empty, draft, confirmed and draft-only cancelled snapshots
+  ---
+  duration_ms: 7.725188
+  type: 'test'
+  ...
+# Subtest: revision rejects required/unknown fields, malformed identity/hash and status metadata
+ok 262 - revision rejects required/unknown fields, malformed identity/hash and status metadata
+  ---
+  duration_ms: 5.103332
+  type: 'test'
+  ...
+# Subtest: store checks every revision, order, gaps, hashes, mutation keys and identity DAG
+ok 263 - store checks every revision, order, gaps, hashes, mutation keys and identity DAG
+  ---
+  duration_ms: 6.099441
+  type: 'test'
+  ...
+# Subtest: evidence enforces closed schema, attribution, dates, scope and fingerprint agreement
+ok 264 - evidence enforces closed schema, attribution, dates, scope and fingerprint agreement
+  ---
+  duration_ms: 9.618628
+  type: 'test'
+  ...
+# Subtest: reference integrity rejects dangling refs, inconsistent assertions and duplicate relation PK/order
+ok 265 - reference integrity rejects dangling refs, inconsistent assertions and duplicate relation PK/order
+  ---
+  duration_ms: 6.608717
+  type: 'test'
+  ...
+# Subtest: immutable guard rejects deletion and changes to saved metadata as well as content
+ok 266 - immutable guard rejects deletion and changes to saved metadata as well as content
+  ---
+  duration_ms: 2.619393
+  type: 'test'
+  ...
+# Subtest: repository validates reads, creates without clobber, replaces atomically and preserves immutable snapshots
+ok 267 - repository validates reads, creates without clobber, replaces atomically and preserves immutable snapshots
+  ---
+  duration_ms: 51.75894
+  type: 'test'
+  ...
+# Subtest: repository rejects duplicate JSON members, BOM, invalid UTF8 and broken stores without replacing them
+ok 268 - repository rejects duplicate JSON members, BOM, invalid UTF8 and broken stores without replacing them
+  ---
+  duration_ms: 63.594394
+  type: 'test'
+  ...
+# Subtest: Decision persistence propagates failed rename and failed directory sync with publication state
+ok 269 - Decision persistence propagates failed rename and failed directory sync with publication state
+  ---
+  duration_ms: 41.977543
+  type: 'test'
+  ...
+# Subtest: Decision path rejects symlinks before reading or publishing
+ok 270 - Decision path rejects symlinks before reading or publishing
+  ---
+  duration_ms: 10.182507
+  type: 'test'
+  ...
+# Subtest: all entity and relation kinds retain closed draft schemas and typed foreign refs
+ok 271 - all entity and relation kinds retain closed draft schemas and typed foreign refs
+  ---
+  duration_ms: 0.951091
+  type: 'test'
+  ...
+# Subtest: confirmed local song requires primary, reachability, mapped relations and distinct audio judgment
+ok 272 - confirmed local song requires primary, reachability, mapped relations and distinct audio judgment
+  ---
+  duration_ms: 7.395681
+  type: 'test'
+  ...
+# Subtest: publication verifies temp bytes and file sync before rename and uses no-clobber for genesis
+ok 273 - publication verifies temp bytes and file sync before rename and uses no-clobber for genesis
+  ---
+  duration_ms: 27.155424
+  type: 'test'
+  ...
+# Subtest: store rejects retired local ref reintroduction and actor assurance prototype keys
+ok 274 - store rejects retired local ref reintroduction and actor assurance prototype keys
+  ---
+  duration_ms: 4.147412
+  type: 'test'
+  ...
+# Subtest: new draft and updated draft append immutable snapshots and bind the formal head
+ok 275 - new draft and updated draft append immutable snapshots and bind the formal head
+  ---
+  duration_ms: 22.644323
+  type: 'test'
+  ...
+# Subtest: mutation retries precede OCC and cannot change payload, action or actor
+ok 276 - mutation retries precede OCC and cannot change payload, action or actor
+  ---
+  duration_ms: 12.929971
+  type: 'test'
+  ...
+# Subtest: scope changes need a new Decision and changed candidate facts require explicit adoption
+ok 277 - scope changes need a new Decision and changed candidate facts require explicit adoption
+  ---
+  duration_ms: 7.113507
+  type: 'test'
+  ...
+# Subtest: confirm binds head/source and copies saved content into a complete immutable revision
+ok 278 - confirm binds head/source and copies saved content into a complete immutable revision
+  ---
+  duration_ms: 15.413881
+  type: 'test'
+  ...
+# Subtest: later drafts preserve confirmation; cancellation targets that effective confirmation and ignores current candidates
+ok 279 - later drafts preserve confirmation; cancellation targets that effective confirmation and ignores current candidates
+  ---
+  duration_ms: 21.793172
+  type: 'test'
+  ...
+# Subtest: registry rejects illegal transitions and semantic tampering, not just bad hashes
+ok 280 - registry rejects illegal transitions and semantic tampering, not just bad hashes
+  ---
+  duration_ms: 8.405677
+  type: 'test'
+  ...
+# Subtest: registry hash ignores drafts/metadata and changes with confirmations/cancellations
+ok 281 - registry hash ignores drafts/metadata and changes with confirmations/cancellations
+  ---
+  duration_ms: 11.86564
+  type: 'test'
+  ...
+# Subtest: competing confirmed claims block; cancelling previous claim allows another Decision
+ok 282 - competing confirmed claims block; cancelling previous claim allows another Decision
+  ---
+  duration_ms: 24.441188
+  type: 'test'
+  ...
+# Subtest: multiple replacements permanently retire claims even after replacing Decision is cancelled
+ok 283 - multiple replacements permanently retire claims even after replacing Decision is cancelled
+  ---
+  duration_ms: 63.779788
+  type: 'test'
+  ...
+# Subtest: replacement target CAS rejects changed hashes and stale effective confirmations
+ok 284 - replacement target CAS rejects changed hashes and stale effective confirmations
+  ---
+  duration_ms: 16.757162
+  type: 'test'
+  ...
+# Subtest: application publishes draft/confirmation/cancellation atomically with no successful-operation residuals
+ok 285 - application publishes draft/confirmation/cancellation atomically with no successful-operation residuals
+  ---
+  duration_ms: 595.121447
+  type: 'test'
+  ...
+# Subtest: concurrent draft writers serialize through one gate and stale writer gets head conflict
+ok 286 - concurrent draft writers serialize through one gate and stale writer gets head conflict
+  ---
+  duration_ms: 560.272088
+  type: 'test'
+  ...
+# Subtest: GP12 paused pre-publication metadata cannot turn a real Decision OCC race into GATE_CORRUPT
+ok 287 - GP12 paused pre-publication metadata cannot turn a real Decision OCC race into GATE_CORRUPT
+  ---
+  duration_ms: 534.559607
+  type: 'test'
+  ...
+# Subtest: draft/confirm and confirm/cancel races cannot lose an update
+ok 288 - draft/confirm and confirm/cancel races cannot lose an update
+  ---
+  duration_ms: 751.572478
+  type: 'test'
+  ...
+# Subtest: current canonical assertion changes and source changes block save/confirm
+ok 289 - current canonical assertion changes and source changes block save/confirm
+  ---
+  duration_ms: 486.771819
+  type: 'test'
+  ...
+# Subtest: failed atomic publication preserves complete old store and releases gate without automatic retry
+ok 290 - failed atomic publication preserves complete old store and releases gate without automatic retry
+  ---
+  duration_ms: 424.784619
+  type: 'test'
+  ...
+# Subtest: post-rename durability failure is reported as published and retry returns the original revision
+ok 291 - post-rename durability failure is reported as published and retry returns the original revision
+  ---
+  duration_ms: 413.959151
+  type: 'test'
+  ...
+# Subtest: reconfirmation of replacement preserves its original permanent invalidation edges
+ok 292 - reconfirmation of replacement preserves its original permanent invalidation edges
+  ---
+  duration_ms: 8.481796
+  type: 'test'
+  ...
+# Subtest: new draft after cancellation is allowed, while cancel target hash and source revision must match
+ok 293 - new draft after cancellation is allowed, while cancel target hash and source revision must match
+  ---
+  duration_ms: 13.113307
+  type: 'test'
+  ...
+# Subtest: registry reader rejects noncanonical store ordering and invalid semantic hashes
+ok 294 - registry reader rejects noncanonical store ordering and invalid semantic hashes
+  ---
+  duration_ms: 3.011112
+  type: 'test'
+  ...
+# Subtest: invalid draft is never published and READY guard blocks uninitialized repositories
+ok 295 - invalid draft is never published and READY guard blocks uninitialized repositories
+  ---
+  duration_ms: 280.282161
+  type: 'test'
+  ...
+# Subtest: same-scope replacement is invalid and replaced lineages cannot gain later confirmed events
+ok 296 - same-scope replacement is invalid and replaced lineages cannot gain later confirmed events
+  ---
+  duration_ms: 6.855038
+  type: 'test'
+  ...
+# Subtest: normalization sorts only semantic arrays and duplicate semantic entries still fail
+ok 297 - normalization sorts only semantic arrays and duplicate semantic entries still fail
+  ---
+  duration_ms: 10.034219
+  type: 'test'
+  ...
+# Subtest: registry excludes confirmation metadata while binding semantic evidence and actor
+ok 298 - registry excludes confirmation metadata while binding semantic evidence and actor
+  ---
+  duration_ms: 3.717345
+  type: 'test'
+  ...
+# Subtest: head OCC and mutation replay are checked before attempting current source reads
+ok 299 - head OCC and mutation replay are checked before attempting current source reads
+  ---
+  duration_ms: 555.359232
+  type: 'test'
+  ...
+# Subtest: confirm requires distinct evidence against same-name canonical masters without allocating IDs
+ok 300 - confirm requires distinct evidence against same-name canonical masters without allocating IDs
+  ---
+  duration_ms: 611.075049
+  type: 'test'
+  ...
+# Subtest: failure boundary original_verified retains classifiable evidence and original state
+ok 301 - failure boundary original_verified retains classifiable evidence and original state
+  ---
+  duration_ms: 284.070242
+  type: 'test'
+  ...
+# Subtest: failure boundary preparing:before retains classifiable evidence and original state
+ok 302 - failure boundary preparing:before retains classifiable evidence and original state
+  ---
+  duration_ms: 252.111786
+  type: 'test'
+  ...
+# Subtest: failure boundary preparing:after retains classifiable evidence and original state
+ok 303 - failure boundary preparing:after retains classifiable evidence and original state
+  ---
+  duration_ms: 325.452265
+  type: 'test'
+  ...
+# Subtest: failure boundary target_bound:after retains classifiable evidence and original state
+ok 304 - failure boundary target_bound:after retains classifiable evidence and original state
+  ---
+  duration_ms: 526.105496
+  type: 'test'
+  ...
+# Subtest: failure boundary backup:after retains classifiable evidence and original state
+ok 305 - failure boundary backup:after retains classifiable evidence and original state
+  ---
+  duration_ms: 774.308458
+  type: 'test'
+  ...
+# Subtest: failure boundary backup_complete:after retains classifiable evidence and original state
+ok 306 - failure boundary backup_complete:after retains classifiable evidence and original state
+  ---
+  duration_ms: 4705.08447
+  type: 'test'
+  ...
+# Subtest: failure boundary temp:before retains classifiable evidence and original state
+ok 307 - failure boundary temp:before retains classifiable evidence and original state
+  ---
+  duration_ms: 4856.23195
+  type: 'test'
+  ...
+# Subtest: failure boundary temp:after retains classifiable evidence and original state
+ok 308 - failure boundary temp:after retains classifiable evidence and original state
+  ---
+  duration_ms: 5078.826183
+  type: 'test'
+  ...
+# Subtest: failure boundary temp_checkpoint:after retains classifiable evidence and original state
+ok 309 - failure boundary temp_checkpoint:after retains classifiable evidence and original state
+  ---
+  duration_ms: 5259.982379
+  type: 'test'
+  ...
+# Subtest: failure boundary intent:before retains classifiable evidence and original state
+ok 310 - failure boundary intent:before retains classifiable evidence and original state
+  ---
+  duration_ms: 5178.814049
+  type: 'test'
+  ...
+# Subtest: failure boundary intent:after retains classifiable evidence and original state
+ok 311 - failure boundary intent:after retains classifiable evidence and original state
+  ---
+  duration_ms: 5301.077867
+  type: 'test'
+  ...
+# Subtest: failure boundary intent_bound:after retains classifiable evidence and original state
+ok 312 - failure boundary intent_bound:after retains classifiable evidence and original state
+  ---
+  duration_ms: 5578.199886
+  type: 'test'
+  ...
+# Subtest: failure boundary prepared:before retains classifiable evidence and original state
+ok 313 - failure boundary prepared:before retains classifiable evidence and original state
+  ---
+  duration_ms: 6223.849798
+  type: 'test'
+  ...
+# Subtest: failure boundary prepared:after retains classifiable evidence and original state
+ok 314 - failure boundary prepared:after retains classifiable evidence and original state
+  ---
+  duration_ms: 6792.761998
+  type: 'test'
+  ...
+# Subtest: immutable backup/temp publisher retries same bytes, refuses overwrite and foreign identity/path
+ok 315 - immutable backup/temp publisher retries same bytes, refuses overwrite and foreign identity/path
+  ---
+  duration_ms: 1192.946331
+  type: 'test'
+  ...
+# Subtest: raw publication partial_write failure never becomes PREPARED or mutates canonical
+ok 316 - raw publication partial_write failure never becomes PREPARED or mutates canonical
+  ---
+  duration_ms: 796.277046
+  type: 'test'
+  ...
+# Subtest: raw publication file_sync failure never becomes PREPARED or mutates canonical
+ok 317 - raw publication file_sync failure never becomes PREPARED or mutates canonical
+  ---
+  duration_ms: 734.693939
+  type: 'test'
+  ...
+# Subtest: raw publication publish failure never becomes PREPARED or mutates canonical
+ok 318 - raw publication publish failure never becomes PREPARED or mutates canonical
+  ---
+  duration_ms: 692.356085
+  type: 'test'
+  ...
+# Subtest: raw publication directory_sync failure never becomes PREPARED or mutates canonical
+ok 319 - raw publication directory_sync failure never becomes PREPARED or mutates canonical
+  ---
+  duration_ms: 758.721641
+  type: 'test'
+  ...
+# Subtest: publication guard rejects retirement before the next semantic write
+ok 320 - publication guard rejects retirement before the next semantic write
+  ---
+  duration_ms: 274.945999
+  type: 'test'
+  ...
+# Subtest: publication guard rejects foreign-transaction before the next semantic write
+ok 321 - publication guard rejects foreign-transaction before the next semantic write
+  ---
+  duration_ms: 318.516321
+  type: 'test'
+  ...
+# Subtest: publication guard rejects state before the next semantic write
+ok 322 - publication guard rejects state before the next semantic write
+  ---
+  duration_ms: 312.504587
+  type: 'test'
+  ...
+# Subtest: publication guard rejects canonical before the next semantic write
+ok 323 - publication guard rejects canonical before the next semantic write
+  ---
+  duration_ms: 302.656309
+  type: 'test'
+  ...
+# Subtest: publication guard rejects git-ref before the next semantic write
+ok 324 - publication guard rejects git-ref before the next semantic write
+  ---
+  duration_ms: 264.450603
+  type: 'test'
+  ...
+# Subtest: publication guard rejects backup-missing before the next semantic write
+ok 325 - publication guard rejects backup-missing before the next semantic write
+  ---
+  duration_ms: 5155.815653
+  type: 'test'
+  ...
+# Subtest: publication guard rejects temp-corrupt before the next semantic write
+ok 326 - publication guard rejects temp-corrupt before the next semantic write
+  ---
+  duration_ms: 5471.553457
+  type: 'test'
+  ...
+# Subtest: publication guard rejects intent-missing before the next semantic write
+ok 327 - publication guard rejects intent-missing before the next semantic write
+  ---
+  duration_ms: 5680.74327
+  type: 'test'
+  ...
+# Subtest: publication guard rejects intent-corrupt before the next semantic write
+ok 328 - publication guard rejects intent-corrupt before the next semantic write
+  ---
+  duration_ms: 5399.326124
+  type: 'test'
+  ...
+# Subtest: raw publisher cannot ignore unsupported journal or partial publisher evidence
+ok 329 - raw publisher cannot ignore unsupported journal or partial publisher evidence
+  ---
+  duration_ms: 640.025857
+  type: 'test'
+  ...
+# Subtest: durable prepare stops at PREPARED without canonical/state/History mutation: {}
+ok 330 - durable prepare stops at PREPARED without canonical/state/History mutation: {}
+  ---
+  duration_ms: 6277.836627
+  type: 'test'
+  ...
+# Subtest: durable prepare stops at PREPARED without canonical/state/History mutation: {"noop":true}
+ok 331 - durable prepare stops at PREPARED without canonical/state/History mutation: {"noop":true}
+  ---
+  duration_ms: 5597.442485
+  type: 'test'
+  ...
+# Subtest: durable prepare stops at PREPARED without canonical/state/History mutation: {"newEntities":true}
+ok 332 - durable prepare stops at PREPARED without canonical/state/History mutation: {"newEntities":true}
+  ---
+  duration_ms: 11061.436826
+  type: 'test'
+  ...
+# Subtest: immutable evidence publisher uses the live gate and no-clobber persistence, never arbitrary paths
+ok 333 - immutable evidence publisher uses the live gate and no-clobber persistence, never arbitrary paths
+  ---
+  duration_ms: 99.832807
+  type: 'test'
+  ...
+# Subtest: publisher preserves partial/corrupt existing evidence and directory-sync failure details
+ok 334 - publisher preserves partial/corrupt existing evidence and directory-sync failure details
+  ---
+  duration_ms: 101.52896
+  type: 'test'
+  ...
+# Subtest: publication fault seam distinguishes complete unpublished temp from published immutable evidence
+ok 335 - publication fault seam distinguishes complete unpublished temp from published immutable evidence
+  ---
+  duration_ms: 52.251425
+  type: 'test'
+  ...
+# Subtest: readonly discovery sorts files, retains unknown entries/symlinks, and rejects invalid JSON rather than skipping it
+ok 336 - readonly discovery sorts files, retains unknown entries/symlinks, and rejects invalid JSON rather than skipping it
+  ---
+  duration_ms: 10.626384
+  type: 'test'
+  ...
+# Subtest: two-pass collection refuses evidence/physical-owner races; unchanged collection is deterministic
+ok 337 - two-pass collection refuses evidence/physical-owner races; unchanged collection is deterministic
+  ---
+  duration_ms: 362.44013
+  type: 'test'
+  ...
+# Subtest: H-01: permanent full archive retains latest successor through all retirement stages
+ok 338 - H-01: permanent full archive retains latest successor through all retirement stages
+  ---
+  duration_ms: 46.277113
+  type: 'test'
+  ...
+# Subtest: ownership gap/fork/duplicate, predecessor mismatch and same-sequence different bytes are rejected
+ok 339 - ownership gap/fork/duplicate, predecessor mismatch and same-sequence different bytes are rejected
+  ---
+  duration_ms: 24.508939
+  type: 'test'
+  ...
+# Subtest: retirement cannot exist without owner/Retiring or exact reference/hash/owner/barrier
+ok 340 - retirement cannot exist without owner/Retiring or exact reference/hash/owner/barrier
+  ---
+  duration_ms: 19.357796
+  type: 'test'
+  ...
+# Subtest: active/retiring owners cannot become sealed merely because barrier disappeared
+ok 341 - active/retiring owners cannot become sealed merely because barrier disappeared
+  ---
+  duration_ms: 15.348872
+  type: 'test'
+  ...
+# Subtest: anchor closed schema, version and required fields
+ok 342 - anchor closed schema, version and required fields
+  ---
+  duration_ms: 13.114108
+  type: 'test'
+  ...
+# Subtest: claim closed schema, version and required fields
+ok 343 - claim closed schema, version and required fields
+  ---
+  duration_ms: 12.877913
+  type: 'test'
+  ...
+# Subtest: barrier closed schema, version and required fields
+ok 344 - barrier closed schema, version and required fields
+  ---
+  duration_ms: 12.720476
+  type: 'test'
+  ...
+# Subtest: retiring closed schema, version and required fields
+ok 345 - retiring closed schema, version and required fields
+  ---
+  duration_ms: 14.774658
+  type: 'test'
+  ...
+# Subtest: retired closed schema, version and required fields
+ok 346 - retired closed schema, version and required fields
+  ---
+  duration_ms: 12.068144
+  type: 'test'
+  ...
+# Subtest: formal projection vectors reuse JCS/SHA while empty payload is not domain-valid
+ok 347 - formal projection vectors reuse JCS/SHA while empty payload is not domain-valid
+  ---
+  duration_ms: 2.144959
+  type: 'test'
+  ...
+# Subtest: Owner: closed root/payload, required keys, version and rehashed unknown fields
+ok 348 - Owner: closed root/payload, required keys, version and rehashed unknown fields
+  ---
+  duration_ms: 43.657941
+  type: 'test'
+  ...
+# Subtest: Intent: closed root/payload, required keys, version and rehashed unknown fields
+ok 349 - Intent: closed root/payload, required keys, version and rehashed unknown fields
+  ---
+  duration_ms: 25.145828
+  type: 'test'
+  ...
+# Subtest: Journal: closed root/payload, required keys, version and rehashed unknown fields
+ok 350 - Journal: closed root/payload, required keys, version and rehashed unknown fields
+  ---
+  duration_ms: 17.056061
+  type: 'test'
+  ...
+# Subtest: Proof: closed root/payload, required keys, version and rehashed unknown fields
+ok 351 - Proof: closed root/payload, required keys, version and rehashed unknown fields
+  ---
+  duration_ms: 40.354058
+  type: 'test'
+  ...
+# Subtest: Completion: closed root/payload, required keys, version and rehashed unknown fields
+ok 352 - Completion: closed root/payload, required keys, version and rehashed unknown fields
+  ---
+  duration_ms: 19.395563
+  type: 'test'
+  ...
+# Subtest: 6A-DG01-01: PREPARING(null) can terminate ABORTED(null) with complete journal Proof/Completion
+ok 353 - 6A-DG01-01: PREPARING(null) can terminate ABORTED(null) with complete journal Proof/Completion
+  ---
+  duration_ms: 28.580908
+  type: 'test'
+  ...
+# Subtest: Intent establishment lag and H-bound abort are valid without rewriting genesis
+ok 354 - Intent establishment lag and H-bound abort are valid without rewriting genesis
+  ---
+  duration_ms: 44.837106
+  type: 'test'
+  ...
+# Subtest: null never stands for a missing/corrupt established Intent or a changed Intent hash
+ok 355 - null never stands for a missing/corrupt established Intent or a changed Intent hash
+  ---
+  duration_ms: 55.58987
+  type: 'test'
+  ...
+# Subtest: journal gap, duplicate/fork, bad predecessor, illegal phase, time drift and post-terminal append fail closed
+ok 356 - journal gap, duplicate/fork, bad predecessor, illegal phase, time drift and post-terminal append fail closed
+  ---
+  duration_ms: 38.837155
+  type: 'test'
+  ...
+# Subtest: Proof/Completion exact identity, terminal state, journal ordering and no success-only failure result
+ok 357 - Proof/Completion exact identity, terminal state, journal ordering and no success-only failure result
+  ---
+  duration_ms: 86.916911
+  type: 'test'
+  ...
+# Subtest: composite pure state profile keeps zero-change aborts on the proven checkpoint
+ok 358 - composite pure state profile keeps zero-change aborts on the proven checkpoint
+  ---
+  duration_ms: 38.940591
+  type: 'test'
+  ...
+# Subtest: 6C receipt: actual dead owner to failure proof/completion and sealed permanent archive
+ok 359 - 6C receipt: actual dead owner to failure proof/completion and sealed permanent archive
+  ---
+  duration_ms: 4038.865989
+  type: 'test'
+  ...
+# Subtest: 6C abort: actual dead owner to failure proof/completion and sealed permanent archive
+ok 360 - 6C abort: actual dead owner to failure proof/completion and sealed permanent archive
+  ---
+  duration_ms: 4989.079385
+  type: 'test'
+  ...
+# Subtest: 6C prepared: actual dead owner to failure proof/completion and sealed permanent archive
+ok 361 - 6C prepared: actual dead owner to failure proof/completion and sealed permanent archive
+  ---
+  duration_ms: 25892.169724
+  type: 'test'
+  ...
+# Subtest: 6C intentlag: actual dead owner to failure proof/completion and sealed permanent archive
+ok 362 - 6C intentlag: actual dead owner to failure proof/completion and sealed permanent archive
+  ---
+  duration_ms: 23822.060239
+  type: 'test'
+  ...
+# Subtest: 6C noop: actual dead owner to failure proof/completion and sealed permanent archive
+ok 363 - 6C noop: actual dead owner to failure proof/completion and sealed permanent archive
+  ---
+  duration_ms: 18640.777638
+  type: 'test'
+  ...
+# Subtest: 6C unconsumed: actual dead owner to failure proof/completion and sealed permanent archive
+ok 364 - 6C unconsumed: actual dead owner to failure proof/completion and sealed permanent archive
+  ---
+  duration_ms: 19403.03027
+  type: 'test'
+  ...
+# Subtest: 6C mixed: actual dead owner to failure proof/completion and sealed permanent archive
+ok 365 - 6C mixed: actual dead owner to failure proof/completion and sealed permanent archive
+  ---
+  duration_ms: 46632.467609
+  type: 'test'
+  ...
+# Subtest: 6C relation: actual dead owner to failure proof/completion and sealed permanent archive
+ok 366 - 6C relation: actual dead owner to failure proof/completion and sealed permanent archive
+  ---
+  duration_ms: 48700.035693
+  type: 'test'
+  ...
+# Subtest: SIGKILL restore:after: restart advances permanent successor and reuses terminal evidence
+ok 367 - SIGKILL restore:after: restart advances permanent successor and reuses terminal evidence
+  ---
+  duration_ms: 49179.168066
+  type: 'test'
+  ...
+# Subtest: SIGKILL restore_last:after: restart advances permanent successor and reuses terminal evidence
+ok 368 - SIGKILL restore_last:after: restart advances permanent successor and reuses terminal evidence
+  ---
+  duration_ms: 48073.738629
+  type: 'test'
+  ...
+# Subtest: SIGKILL rollback_validation:after: restart advances permanent successor and reuses terminal evidence
+ok 369 - SIGKILL rollback_validation:after: restart advances permanent successor and reuses terminal evidence
+  ---
+  duration_ms: 51702.104112
+  type: 'test'
+  ...
+# Subtest: SIGKILL failure_state:after: restart advances permanent successor and reuses terminal evidence
+ok 370 - SIGKILL failure_state:after: restart advances permanent successor and reuses terminal evidence
+  ---
+  duration_ms: 51588.930731
+  type: 'test'
+  ...
+# Subtest: SIGKILL proof:after: restart advances permanent successor and reuses terminal evidence
+ok 371 - SIGKILL proof:after: restart advances permanent successor and reuses terminal evidence
+  ---
+  duration_ms: 5750.820614
+  type: 'test'
+  ...
+# Subtest: SIGKILL completion:after: restart advances permanent successor and reuses terminal evidence
+ok 372 - SIGKILL completion:after: restart advances permanent successor and reuses terminal evidence
+  ---
+  duration_ms: 5646.577198
+  type: 'test'
+  ...
+# Subtest: SIGKILL retiring:after: restart advances permanent successor and reuses terminal evidence
+ok 373 - SIGKILL retiring:after: restart advances permanent successor and reuses terminal evidence
+  ---
+  duration_ms: 6802.849725
+  type: 'test'
+  ...
+# Subtest: SIGKILL gate_release:after: restart advances permanent successor and reuses terminal evidence
+ok 374 - SIGKILL gate_release:after: restart advances permanent successor and reuses terminal evidence
+  ---
+  duration_ms: 6668.459069
+  type: 'test'
+  ...
+# Subtest: SIGKILL retired:after: restart advances permanent successor and reuses terminal evidence
+ok 375 - SIGKILL retired:after: restart advances permanent successor and reuses terminal evidence
+  ---
+  duration_ms: 7589.8724
+  type: 'test'
+  ...
+# Subtest: stale inspect token refuses ownership publication and preserves canonical
+ok 376 - stale inspect token refuses ownership publication and preserves canonical
+  ---
+  duration_ms: 938.454491
+  type: 'test'
+  ...
+# Subtest: executor refuses unknown without touching canonical or creating ownership
+ok 377 - executor refuses unknown without touching canonical or creating ownership
+  ---
+  duration_ms: 1156.217658
+  type: 'test'
+  ...
+# Subtest: executor refuses state-before without touching canonical or creating ownership
+ok 378 - executor refuses state-before without touching canonical or creating ownership
+  ---
+  duration_ms: 1187.498017
+  type: 'test'
+  ...
+# Subtest: executor refuses nonprefix without touching canonical or creating ownership
+ok 379 - executor refuses nonprefix without touching canonical or creating ownership
+  ---
+  duration_ms: 1322.238902
+  type: 'test'
+  ...
+# Subtest: TOCTOU after ownership but before semantic journal publication rejects changed source
+ok 380 - TOCTOU after ownership but before semantic journal publication rejects changed source
+  ---
+  duration_ms: 1182.987587
+  type: 'test'
+  ...
+# Subtest: alltarget: valid success-side observation is never dispatched or rolled back by 6C
+ok 381 - alltarget: valid success-side observation is never dispatched or rolled back by 6C
+  ---
+  duration_ms: 1155.818663
+  type: 'test'
+  ...
+# Subtest: decided: valid success-side observation is never dispatched or rolled back by 6C
+ok 382 - decided: valid success-side observation is never dispatched or rolled back by 6C
+  ---
+  duration_ms: 1053.435659
+  type: 'test'
+  ...
+# Subtest: history: valid success-side observation is never dispatched or rolled back by 6C
+ok 383 - history: valid success-side observation is never dispatched or rolled back by 6C
+  ---
+  duration_ms: 1359.112856
+  type: 'test'
+  ...
+# Subtest: GP10 genesis ignores only nonauthoritative candidate content (0 bytes)
+ok 384 - GP10 genesis ignores only nonauthoritative candidate content (0 bytes)
+  ---
+  duration_ms: 157.193035
+  type: 'test'
+  ...
+# Subtest: GP10 genesis ignores only nonauthoritative candidate content (8 bytes)
+ok 385 - GP10 genesis ignores only nonauthoritative candidate content (8 bytes)
+  ---
+  duration_ms: 117.201249
+  type: 'test'
+  ...
+# Subtest: GP10 genesis ignores only nonauthoritative candidate content (1 bytes)
+ok 386 - GP10 genesis ignores only nonauthoritative candidate content (1 bytes)
+  ---
+  duration_ms: 116.286447
+  type: 'test'
+  ...
+# Subtest: GP10 symlink candidate is unsafe even on the genesis fast path
+ok 387 - GP10 symlink candidate is unsafe even on the genesis fast path
+  ---
+  duration_ms: 46.240645
+  type: 'test'
+  ...
+# Subtest: GP10 directory candidate is unsafe even on the genesis fast path
+ok 388 - GP10 directory candidate is unsafe even on the genesis fast path
+  ---
+  duration_ms: 48.537038
+  type: 'test'
+  ...
+# Subtest: GP10 candidate listing IO failure is not an empty/READY inventory
+ok 389 - GP10 candidate listing IO failure is not an empty/READY inventory
+  ---
+  duration_ms: 39.982963
+  type: 'test'
+  ...
+# Subtest: GP10 a final-linked orphan candidate is neither a lease nor cleanup work
+ok 390 - GP10 a final-linked orphan candidate is neither a lease nor cleanup work
+  ---
+  duration_ms: 99.504703
+  type: 'test'
+  ...
+# Subtest: GP13 paused candidate permits normal Apply and readonly retry without duplicate dispatch/ID/History
+ok 391 - GP13 paused candidate permits normal Apply and readonly retry without duplicate dispatch/ID/History
+  ---
+  duration_ms: 43423.93393
+  type: 'test'
+  ...
+# Subtest: GP11 raw candidate addition/change/removal affects Observation v2 and stale commands
+ok 392 - GP11 raw candidate addition/change/removal affects Observation v2 and stale commands
+  ---
+  duration_ms: 146.904694
+  type: 'test'
+  ...
+# Subtest: GP10 candidate cannot become inputs authority even with matching hashes
+ok 393 - GP10 candidate cannot become inputs authority even with matching hashes
+  ---
+  duration_ms: 20.097029
+  type: 'test'
+  ...
+# Subtest: GP10 candidate cannot become backup_refs authority even with matching hashes
+ok 394 - GP10 candidate cannot become backup_refs authority even with matching hashes
+  ---
+  duration_ms: 15.727951
+  type: 'test'
+  ...
+# Subtest: GP10 candidate cannot become temp_refs authority even with matching hashes
+ok 395 - GP10 candidate cannot become temp_refs authority even with matching hashes
+  ---
+  duration_ms: 16.03243
+  type: 'test'
+  ...
+# Subtest: GP11/14 candidate stale token blocks mutation; fresh abort/retirement excludes orphan from cleanup
+ok 396 - GP11/14 candidate stale token blocks mutation; fresh abort/retirement excludes orphan from cleanup
+  ---
+  duration_ms: 5094.030961
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at before_temp_create
+ok 397 - GP08 real SIGKILL/restart at before_temp_create
+  ---
+  duration_ms: 105.208842
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at after_temp_create
+ok 398 - GP08 real SIGKILL/restart at after_temp_create
+  ---
+  duration_ms: 72.759269
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at during_temp_write
+ok 399 - GP08 real SIGKILL/restart at during_temp_write
+  ---
+  duration_ms: 82.527035
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at metadata_complete_before_sync
+ok 400 - GP08 real SIGKILL/restart at metadata_complete_before_sync
+  ---
+  duration_ms: 78.536346
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at after_file_sync
+ok 401 - GP08 real SIGKILL/restart at after_file_sync
+  ---
+  duration_ms: 80.167602
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at before_link
+ok 402 - GP08 real SIGKILL/restart at before_link
+  ---
+  duration_ms: 77.432625
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at after_link
+ok 403 - GP08 real SIGKILL/restart at after_link
+  ---
+  duration_ms: 78.394433
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at after_directory_sync
+ok 404 - GP08 real SIGKILL/restart at after_directory_sync
+  ---
+  duration_ms: 76.595429
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at after_candidate_unlink
+ok 405 - GP08 real SIGKILL/restart at after_candidate_unlink
+  ---
+  duration_ms: 127.30652
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at before_response
+ok 406 - GP08 real SIGKILL/restart at before_response
+  ---
+  duration_ms: 77.397322
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at owned_no_domain
+ok 407 - GP08 real SIGKILL/restart at owned_no_domain
+  ---
+  duration_ms: 77.998447
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at release_before_unlink
+ok 408 - GP08 real SIGKILL/restart at release_before_unlink
+  ---
+  duration_ms: 77.915601
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at release_after_unlink
+ok 409 - GP08 real SIGKILL/restart at release_after_unlink
+  ---
+  duration_ms: 77.696983
+  type: 'test'
+  ...
+# Subtest: GP08 real SIGKILL/restart at release_after_directory_sync
+ok 410 - GP08 real SIGKILL/restart at release_after_directory_sync
+  ---
+  duration_ms: 78.040499
+  type: 'test'
+  ...
+# Subtest: GP03 two independent completed publishers race one exclusive hard link
+ok 411 - GP03 two independent completed publishers race one exclusive hard link
+  ---
+  duration_ms: 85.98452
+  type: 'test'
+  ...
+# Subtest: GP01 complete immutable inode is linked and synced before lease/callback
+ok 412 - GP01 complete immutable inode is linked and synced before lease/callback
+  ---
+  duration_ms: 27.105998
+  type: 'test'
+  ...
+# Subtest: GP02 a paused incomplete candidate never publishes a partial final or reserves first place
+ok 413 - GP02 a paused incomplete candidate never publishes a partial final or reserves first place
+  ---
+  duration_ms: 15.712025
+  type: 'test'
+  ...
+# Subtest: GP07 link before effect preserves publication evidence
+ok 414 - GP07 link before effect preserves publication evidence
+  ---
+  duration_ms: 3.708824
+  type: 'test'
+  ...
+# Subtest: GP07 link after effect preserves publication evidence
+ok 415 - GP07 link after effect preserves publication evidence
+  ---
+  duration_ms: 6.413384
+  type: 'test'
+  ...
+# Subtest: GP07 temp_create before effect has no lease
+ok 416 - GP07 temp_create before effect has no lease
+  ---
+  duration_ms: 3.556404
+  type: 'test'
+  ...
+# Subtest: GP07 temp_create after effect has no lease
+ok 417 - GP07 temp_create after effect has no lease
+  ---
+  duration_ms: 2.636138
+  type: 'test'
+  ...
+# Subtest: GP07 temp_write before effect has no lease
+ok 418 - GP07 temp_write before effect has no lease
+  ---
+  duration_ms: 2.419012
+  type: 'test'
+  ...
+# Subtest: GP07 temp_write after effect has no lease
+ok 419 - GP07 temp_write after effect has no lease
+  ---
+  duration_ms: 2.376217
+  type: 'test'
+  ...
+# Subtest: GP07 file_sync before effect has no lease
+ok 420 - GP07 file_sync before effect has no lease
+  ---
+  duration_ms: 2.544081
+  type: 'test'
+  ...
+# Subtest: GP07 file_sync after effect has no lease
+ok 421 - GP07 file_sync after effect has no lease
+  ---
+  duration_ms: 2.358741
+  type: 'test'
+  ...
+# Subtest: GP07 temp_verify before effect has no lease
+ok 422 - GP07 temp_verify before effect has no lease
+  ---
+  duration_ms: 3.734713
+  type: 'test'
+  ...
+# Subtest: GP07 temp_verify after effect has no lease
+ok 423 - GP07 temp_verify after effect has no lease
+  ---
+  duration_ms: 3.265636
+  type: 'test'
+  ...
+# Subtest: GP07 directory_sync before effect has no lease
+ok 424 - GP07 directory_sync before effect has no lease
+  ---
+  duration_ms: 2.455627
+  type: 'test'
+  ...
+# Subtest: GP07 directory_sync after effect has no lease
+ok 425 - GP07 directory_sync after effect has no lease
+  ---
+  duration_ms: 2.075265
+  type: 'test'
+  ...
+# Subtest: GP07 temp_cleanup before effect has no lease
+ok 426 - GP07 temp_cleanup before effect has no lease
+  ---
+  duration_ms: 2.727717
+  type: 'test'
+  ...
+# Subtest: GP07 temp_cleanup after effect has no lease
+ok 427 - GP07 temp_cleanup after effect has no lease
+  ---
+  duration_ms: 4.48993
+  type: 'test'
+  ...
+# Subtest: GP07 cleanup_directory_sync before effect has no lease
+ok 428 - GP07 cleanup_directory_sync before effect has no lease
+  ---
+  duration_ms: 3.241009
+  type: 'test'
+  ...
+# Subtest: GP07 cleanup_directory_sync after effect has no lease
+ok 429 - GP07 cleanup_directory_sync after effect has no lease
+  ---
+  duration_ms: 4.796801
+  type: 'test'
+  ...
+# Subtest: GP04 EEXIST then normal release/ENOENT reacquires exclusively, without fabricated BUSY
+ok 430 - GP04 EEXIST then normal release/ENOENT reacquires exclusively, without fabricated BUSY
+  ---
+  duration_ms: 13.4576
+  type: 'test'
+  ...
+# Subtest: GP04 ABA validates the new owner, never removes its final
+ok 431 - GP04 ABA validates the new owner, never removes its final
+  ---
+  duration_ms: 14.681463
+  type: 'test'
+  ...
+# Subtest: GP05 namespace races are bounded (eight retries)
+ok 432 - GP05 namespace races are bounded (eight retries)
+  ---
+  duration_ms: 9.71092
+  type: 'test'
+  ...
+# Subtest: GP05 namespace races are bounded (shared expired budget)
+ok 433 - GP05 namespace races are bounded (shared expired budget)
+  ---
+  duration_ms: 5.148291
+  type: 'test'
+  ...
+# Subtest: GP03/05 EIO never falls back to rename
+ok 434 - GP03/05 EIO never falls back to rename
+  ---
+  duration_ms: 2.889029
+  type: 'test'
+  ...
+# Subtest: GP03/05 EACCES never falls back to rename
+ok 435 - GP03/05 EACCES never falls back to rename
+  ---
+  duration_ms: 3.325656
+  type: 'test'
+  ...
+# Subtest: GP03/05 EPERM never falls back to rename
+ok 436 - GP03/05 EPERM never falls back to rename
+  ---
+  duration_ms: 2.693585
+  type: 'test'
+  ...
+# Subtest: GP03/05 EXDEV never falls back to rename
+ok 437 - GP03/05 EXDEV never falls back to rename
+  ---
+  duration_ms: 4.491602
+  type: 'test'
+  ...
+# Subtest: GP03/05 ENOTSUP never falls back to rename
+ok 438 - GP03/05 ENOTSUP never falls back to rename
+  ---
+  duration_ms: 2.495216
+  type: 'test'
+  ...
+# Subtest: GP06 corrupt final retained: 
+ok 439 - GP06 corrupt final retained: 
+  ---
+  duration_ms: 3.822234
+  type: 'test'
+  ...
+# Subtest: GP06 corrupt final retained: {
+ok 440 - GP06 corrupt final retained: {
+  ---
+  duration_ms: 3.48102
+  type: 'test'
+  ...
+# Subtest: GP06 corrupt final retained: []
+ok 441 - GP06 corrupt final retained: []
+  ---
+  duration_ms: 9.164948
+  type: 'test'
+  ...
+# Subtest: GP06 corrupt final retained: �
+ok 442 - GP06 corrupt final retained: �
+  ---
+  duration_ms: 2.987027
+  type: 'test'
+  ...
+# Subtest: GP06 corrupt final retained: {"schema_version":99}
+ok 443 - GP06 corrupt final retained: {"schema_version":99}
+  ---
+  duration_ms: 5.43331
+  type: 'test'
+  ...
+# Subtest: GP06 full metadata type/root validation, not merely JSON or hash
+ok 444 - GP06 full metadata type/root validation, not merely JSON or hash
+  ---
+  duration_ms: 7.420542
+  type: 'test'
+  ...
+# Subtest: GP06 full metadata type/root validation, not merely JSON or hash
+ok 445 - GP06 full metadata type/root validation, not merely JSON or hash
+  ---
+  duration_ms: 16.794213
+  type: 'test'
+  ...
+# Subtest: GP06 full metadata type/root validation, not merely JSON or hash
+ok 446 - GP06 full metadata type/root validation, not merely JSON or hash
+  ---
+  duration_ms: 7.316966
+  type: 'test'
+  ...
+# Subtest: GP09 release unlink_after cannot delete a later owner
+ok 447 - GP09 release unlink_after cannot delete a later owner
+  ---
+  duration_ms: 16.116883
+  type: 'test'
+  ...
+# Subtest: GP09 release dir_sync cannot delete a later owner
+ok 448 - GP09 release dir_sync cannot delete a later owner
+  ---
+  duration_ms: 10.752529
+  type: 'test'
+  ...
+# Subtest: GP10 exact candidate classification precedes publisherTarget, but is not an ArtifactRef allowlist
+ok 449 - GP10 exact candidate classification precedes publisherTarget, but is not an ArtifactRef allowlist
+  ---
+  duration_ms: 6.215607
+  type: 'test'
+  ...
+# Subtest: GP03 identical metadata/lock_id on a different inode never creates ownership
+ok 450 - GP03 identical metadata/lock_id on a different inode never creates ownership
+  ---
+  duration_ms: 4.896402
+  type: 'test'
+  ...
+# Subtest: GP03 candidate name collision is never reused or removed without creation capability
+ok 451 - GP03 candidate name collision is never reused or removed without creation capability
+  ---
+  duration_ms: 2.951954
+  type: 'test'
+  ...
+# Subtest: GP03 BigInt inode comparisons do not collapse adjacent values above 2^53
+ok 452 - GP03 BigInt inode comparisons do not collapse adjacent values above 2^53
+  ---
+  duration_ms: 3.025095
+  type: 'test'
+  ...
+# Subtest: GP05 invalid final observation is not erased by its later ENOENT
+ok 453 - GP05 invalid final observation is not erased by its later ENOENT
+  ---
+  duration_ms: 3.27448
+  type: 'test'
+  ...
+# Subtest: GP05 descriptor/path inode change validates the replacement (valid)
+ok 454 - GP05 descriptor/path inode change validates the replacement (valid)
+  ---
+  duration_ms: 10.325686
+  type: 'test'
+  ...
+# Subtest: GP05 descriptor/path inode change validates the replacement (invalid)
+ok 455 - GP05 descriptor/path inode change validates the replacement (invalid)
+  ---
+  duration_ms: 8.126374
+  type: 'test'
+  ...
+# Subtest: GP07 BUSY candidate cleanup failure preserves original contention and other owner
+ok 456 - GP07 BUSY candidate cleanup failure preserves original contention and other owner
+  ---
+  duration_ms: 6.520777
+  type: 'test'
+  ...
+# Subtest: GP16 new Gate failures keep CLI codes and a single JSON error document
+ok 457 - GP16 new Gate failures keep CLI codes and a single JSON error document
+  ---
+  duration_ms: 13.08578
+  type: 'test'
+  ...
+# Subtest: GP05 first EEXIST starts one monotonic second, never a fresh deadline per race
+ok 458 - GP05 first EEXIST starts one monotonic second, never a fresh deadline per race
+  ---
+  duration_ms: 2140.053773
+  type: 'test'
+  ...
+# Subtest: GP05 wall-clock changes cannot reset or prematurely expire the monotonic retry bound
+ok 459 - GP05 wall-clock changes cannot reset or prematurely expire the monotonic retry bound
+  ---
+  duration_ms: 10.288488
+  type: 'test'
+  ...
+# Subtest: GP09 descriptor close before effect retains final without unlink
+ok 460 - GP09 descriptor close before effect retains final without unlink
+  ---
+  duration_ms: 7.485059
+  type: 'test'
+  ...
+# Subtest: GP09 descriptor close after effect retains final without unlink
+ok 461 - GP09 descriptor close after effect retains final without unlink
+  ---
+  duration_ms: 5.868836
+  type: 'test'
+  ...
+# Subtest: GP07 read and close failures preserve the first native cause, permission code and descriptor
+ok 462 - GP07 read and close failures preserve the first native cause, permission code and descriptor
+  ---
+  duration_ms: 8.360497
+  type: 'test'
+  ...
+# Subtest: complete successful record, embedded Plan and success-only terminal state verify
+ok 463 - complete successful record, embedded Plan and success-only terminal state verify
+  ---
+  duration_ms: 43.554732
+  type: 'test'
+  ...
+# Subtest: empty/absent History is ready only with full genesis
+ok 464 - empty/absent History is ready only with full genesis
+  ---
+  duration_ms: 6.212833
+  type: 'test'
+  ...
+# Subtest: multiple successful records reconstruct generation, allocations and final head
+ok 465 - multiple successful records reconstruct generation, allocations and final head
+  ---
+  duration_ms: 25.170314
+  type: 'test'
+  ...
+# Subtest: closed complete schemas reject unknown/missing fields and malformed IDs, hashes, bindings
+ok 466 - closed complete schemas reject unknown/missing fields and malformed IDs, hashes, bindings
+  ---
+  duration_ms: 20.89027
+  type: 'test'
+  ...
+# Subtest: static Plan validation catches internally rehashed template, mapping, dependency and applicability tampering
+ok 467 - static Plan validation catches internally rehashed template, mapping, dependency and applicability tampering
+  ---
+  duration_ms: 25.460591
+  type: 'test'
+  ...
+# Subtest: metadata is excluded while semantic History fields remain hash-bound
+ok 468 - metadata is excluded while semantic History fields remain hash-bound
+  ---
+  duration_ms: 5.100169
+  type: 'test'
+  ...
+# Subtest: valid History remains distinct from state proof on generation, high-water, allocation and pending failures
+ok 469 - valid History remains distinct from state proof on generation, high-water, allocation and pending failures
+  ---
+  duration_ms: 44.406043
+  type: 'test'
+  ...
+# Subtest: state history head/count/last, absent records, bad chain and prefix are blocking
+ok 470 - state history head/count/last, absent records, bad chain and prefix are blocking
+  ---
+  duration_ms: 19.840961
+  type: 'test'
+  ...
+# Subtest: success-only reconstruction rejects consumed-generation gaps, unmatched allocation and high-water decreases
+ok 471 - success-only reconstruction rejects consumed-generation gaps, unmatched allocation and high-water decreases
+  ---
+  duration_ms: 38.1668
+  type: 'test'
+  ...
+# Subtest: fully verified indexes support required applied lookup precedence
+ok 472 - fully verified indexes support required applied lookup precedence
+  ---
+  duration_ms: 10.327438
+  type: 'test'
+  ...
+# Subtest: directory artifact integrity and external canonical/Git observations cannot be bypassed
+ok 473 - directory artifact integrity and external canonical/Git observations cannot be bypassed
+  ---
+  duration_ms: 10.954503
+  type: 'test'
+  ...
+# Subtest: readonly runtime proves actual empty/genesis and noninitial states under one gate
+ok 474 - readonly runtime proves actual empty/genesis and noninitial states under one gate
+  ---
+  duration_ms: 531.872317
+  type: 'test'
+  ...
+# Subtest: runtime rejects unproven noninitial generations and unknown transaction work even with valid History
+ok 475 - runtime rejects unproven noninitial generations and unknown transaction work even with valid History
+  ---
+  duration_ms: 245.012546
+  type: 'test'
+  ...
+# Subtest: reuse/no_op success has unchanged manifests but still proves both generation transitions
+ok 476 - reuse/no_op success has unchanged manifests but still proves both generation transitions
+  ---
+  duration_ms: 17.61521
+  type: 'test'
+  ...
+# Subtest: fully rehashed but noncontiguous allocation cannot certify consumed IDs
+ok 477 - fully rehashed but noncontiguous allocation cannot certify consumed IDs
+  ---
+  duration_ms: 16.966704
+  type: 'test'
+  ...
+# Subtest: current canonical and historical ID lower bounds remain mandatory after History proof
+ok 478 - current canonical and historical ID lower bounds remain mandatory after History proof
+  ---
+  duration_ms: 9.163044
+  type: 'test'
+  ...
+# Subtest: timestamp ordering retains sub-millisecond precision and timezone meaning
+ok 479 - timestamp ordering retains sub-millisecond precision and timezone meaning
+  ---
+  duration_ms: 2.473104
+  type: 'test'
+  ...
+# Subtest: chain and formal set projection order records by sequence independently of listing order
+ok 480 - chain and formal set projection order records by sequence independently of listing order
+  ---
+  duration_ms: 3.794793
+  type: 'test'
+  ...
+# Subtest: payload hash excludes display metadata and binds semantic payload changes
+ok 481 - payload hash excludes display metadata and binds semantic payload changes
+  ---
+  duration_ms: 0.859384
+  type: 'test'
+  ...
+# Subtest: sequence gaps, duplicate sequence/apply, forked previous hash and identity mismatch block chain
+ok 482 - sequence gaps, duplicate sequence/apply, forked previous hash and identity mismatch block chain
+  ---
+  duration_ms: 1.298816
+  type: 'test'
+  ...
+# Subtest: indexes follow formal fields/order and lookup distinguishes hashes, revisions and coverage
+ok 483 - indexes follow formal fields/order and lookup distinguishes hashes, revisions and coverage
+  ---
+  duration_ms: 1.010491
+  type: 'test'
+  ...
+# Subtest: repeated successful Decision, coverage, request or Plan identity is not silently collapsed
+ok 484 - repeated successful Decision, coverage, request or Plan identity is not silently collapsed
+  ---
+  duration_ms: 1.595552
+  type: 'test'
+  ...
+# Subtest: readonly directory snapshot distinguishes absent/empty and leaves unrelated staging alone
+ok 485 - readonly directory snapshot distinguishes absent/empty and leaves unrelated staging alone
+  ---
+  duration_ms: 35.190534
+  type: 'test'
+  ...
+# Subtest: History writes and traversal cannot pass the repository boundary
+ok 486 - History writes and traversal cannot pass the repository boundary
+  ---
+  duration_ms: 11.284539
+  type: 'test'
+  ...
+# Subtest: unknown filename is rejected and symlink/directory entries are captured without following them
+ok 487 - unknown filename is rejected and symlink/directory entries are captured without following them
+  ---
+  duration_ms: 23.657967
+  type: 'test'
+  ...
+# Subtest: History strict reader rejects duplicate members, BOM and invalid UTF8 without writing
+ok 488 - History strict reader rejects duplicate members, BOM and invalid UTF8 without writing
+  ---
+  duration_ms: 27.907049
+  type: 'test'
+  ...
+# Subtest: KM-02: exact known intermediate retains validation evidence and permits rollback
+ok 489 - KM-02: exact known intermediate retains validation evidence and permits rollback
+  ---
+  duration_ms: 208.636753
+  type: 'test'
+  ...
+# Subtest: KM-03/KM-04: exact known intermediate retains validation evidence and permits rollback
+ok 490 - KM-03/KM-04: exact known intermediate retains validation evidence and permits rollback
+  ---
+  duration_ms: 138.846523
+  type: 'test'
+  ...
+# Subtest: KM-05: exact known intermediate retains validation evidence and permits rollback
+ok 491 - KM-05: exact known intermediate retains validation evidence and permits rollback
+  ---
+  duration_ms: 154.346689
+  type: 'test'
+  ...
+# Subtest: KM-05 checkpoint lag: exact known intermediate retains validation evidence and permits rollback
+ok 492 - KM-05 checkpoint lag: exact known intermediate retains validation evidence and permits rollback
+  ---
+  duration_ms: 143.999631
+  type: 'test'
+  ...
+# Subtest: KM-06/07/11: unknown never authorizes restore
+ok 493 - KM-06/07/11: unknown never authorizes restore
+  ---
+  duration_ms: 83.060398
+  type: 'test'
+  ...
+# Subtest: KM-06/07/11: state-before never authorizes restore
+ok 494 - KM-06/07/11: state-before never authorizes restore
+  ---
+  duration_ms: 87.50572
+  type: 'test'
+  ...
+# Subtest: KM-06/07/11: state-after never authorizes restore
+ok 495 - KM-06/07/11: state-after never authorizes restore
+  ---
+  duration_ms: 116.085656
+  type: 'test'
+  ...
+# Subtest: KM-06/07/11: nonprefix never authorizes restore
+ok 496 - KM-06/07/11: nonprefix never authorizes restore
+  ---
+  duration_ms: 76.256129
+  type: 'test'
+  ...
+# Subtest: KM-06/07/11: backup-missing never authorizes restore
+ok 497 - KM-06/07/11: backup-missing never authorizes restore
+  ---
+  duration_ms: 63.628711
+  type: 'test'
+  ...
+# Subtest: KM-01: all-original consumed transaction is rollbackable
+ok 498 - KM-01: all-original consumed transaction is rollbackable
+  ---
+  duration_ms: 76.81383
+  type: 'test'
+  ...
+# Subtest: KM-08/09/10: COMMIT_DECIDED excludes known-mixed rollback
+ok 499 - KM-08/09/10: COMMIT_DECIDED excludes known-mixed rollback
+  ---
+  duration_ms: 114.515909
+  type: 'test'
+  ...
+# Subtest: KM-08/09/10: History excludes known-mixed rollback
+ok 500 - KM-08/09/10: History excludes known-mixed rollback
+  ---
+  duration_ms: 88.660484
+  type: 'test'
+  ...
+# Subtest: KM-08/09/10: Proof excludes known-mixed rollback
+ok 501 - KM-08/09/10: Proof excludes known-mixed rollback
+  ---
+  duration_ms: 250.318502
+  type: 'test'
+  ...
+# Subtest: KM-12: even a claimed all-original endpoint cannot bypass full validation
+ok 502 - KM-12: even a claimed all-original endpoint cannot bypass full validation
+  ---
+  duration_ms: 23.611216
+  type: 'test'
+  ...
+# Subtest: 6E real initial dispatch process termination
+    # Subtest: 6E SIGKILL owner:after : explicit Recovery preserves original Request
+    ok 1 - 6E SIGKILL owner:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 7491.229894
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL preparing:after : explicit Recovery preserves original Request
+    ok 2 - 6E SIGKILL preparing:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 8802.093686
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL prepared:after : explicit Recovery preserves original Request
+    ok 3 - 6E SIGKILL prepared:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 39992.89373
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL consume:after : explicit Recovery preserves original Request
+    ok 4 - 6E SIGKILL consume:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 51844.727838
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace_last:after : explicit Recovery preserves original Request
+    ok 5 - 6E SIGKILL replace_last:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 66960.380648
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL decided:after : explicit Recovery preserves original Request
+    ok 6 - 6E SIGKILL decided:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 83873.775037
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL history:after : explicit Recovery preserves original Request
+    ok 7 - 6E SIGKILL history:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 80538.701211
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL success_state:after : explicit Recovery preserves original Request
+    ok 8 - 6E SIGKILL success_state:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 89561.087558
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL proof:after : explicit Recovery preserves original Request
+    ok 9 - 6E SIGKILL proof:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 80377.31192
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL completion:after : explicit Recovery preserves original Request
+    ok 10 - 6E SIGKILL completion:after : explicit Recovery preserves original Request
+      ---
+      duration_ms: 73570.748744
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:before data/works.csv: explicit Recovery preserves original Request
+    ok 11 - 6E SIGKILL replace:before data/works.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 97006.205028
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:after data/works.csv: explicit Recovery preserves original Request
+    ok 12 - 6E SIGKILL replace:after data/works.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 114757.215593
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:before data/creators.csv: explicit Recovery preserves original Request
+    ok 13 - 6E SIGKILL replace:before data/creators.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 109372.909112
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:after data/creators.csv: explicit Recovery preserves original Request
+    ok 14 - 6E SIGKILL replace:after data/creators.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 119100.190872
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:before data/artists.csv: explicit Recovery preserves original Request
+    ok 15 - 6E SIGKILL replace:before data/artists.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 118883.193339
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:after data/artists.csv: explicit Recovery preserves original Request
+    ok 16 - 6E SIGKILL replace:after data/artists.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 124838.707789
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:before data/releases.csv: explicit Recovery preserves original Request
+    ok 17 - 6E SIGKILL replace:before data/releases.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 129918.114947
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:after data/releases.csv: explicit Recovery preserves original Request
+    ok 18 - 6E SIGKILL replace:after data/releases.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 133950.874011
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:before data/songs.csv: explicit Recovery preserves original Request
+    ok 19 - 6E SIGKILL replace:before data/songs.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 139868.853468
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:after data/songs.csv: explicit Recovery preserves original Request
+    ok 20 - 6E SIGKILL replace:after data/songs.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 144719.633056
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:before data/song_artists.csv: explicit Recovery preserves original Request
+    ok 21 - 6E SIGKILL replace:before data/song_artists.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 145015.312131
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:after data/song_artists.csv: explicit Recovery preserves original Request
+    ok 22 - 6E SIGKILL replace:after data/song_artists.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 147373.851954
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:before data/song_creators.csv: explicit Recovery preserves original Request
+    ok 23 - 6E SIGKILL replace:before data/song_creators.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 152294.015384
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:after data/song_creators.csv: explicit Recovery preserves original Request
+    ok 24 - 6E SIGKILL replace:after data/song_creators.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 157022.954826
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:before data/song_performers.csv: explicit Recovery preserves original Request
+    ok 25 - 6E SIGKILL replace:before data/song_performers.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 159495.520411
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:after data/song_performers.csv: explicit Recovery preserves original Request
+    ok 26 - 6E SIGKILL replace:after data/song_performers.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 163710.474059
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:before data/release_tracks.csv: explicit Recovery preserves original Request
+    ok 27 - 6E SIGKILL replace:before data/release_tracks.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 181180.966377
+      type: 'test'
+      ...
+    # Subtest: 6E SIGKILL replace:after data/release_tracks.csv: explicit Recovery preserves original Request
+    ok 28 - 6E SIGKILL replace:after data/release_tracks.csv: explicit Recovery preserves original Request
+      ---
+      duration_ms: 142444.753496
+      type: 'test'
+      ...
+    1..28
+ok 503 - 6E real initial dispatch process termination
+  ---
+  duration_ms: 1555577.585058
+  type: 'suite'
+  ...
+# Subtest: 6E rejects candidate before Receipt and execution
+ok 504 - 6E rejects candidate before Receipt and execution
+  ---
+  duration_ms: 239.824179
+  type: 'test'
+  ...
+# Subtest: 6E rejects Approval before Receipt and execution
+ok 505 - 6E rejects Approval before Receipt and execution
+  ---
+  duration_ms: 49.511362
+  type: 'test'
+  ...
+# Subtest: 6E rejects canonical before Receipt and execution
+ok 506 - 6E rejects canonical before Receipt and execution
+  ---
+  duration_ms: 70.059179
+  type: 'test'
+  ...
+# Subtest: 6E rejects state before Receipt and execution
+ok 507 - 6E rejects state before Receipt and execution
+  ---
+  duration_ms: 137.872197
+  type: 'test'
+  ...
+# Subtest: 6E existing partial final still stops initial dispatch without Receipt or state mutation
+ok 508 - 6E existing partial final still stops initial dispatch without Receipt or state mutation
+  ---
+  duration_ms: 39.738302
+  type: 'test'
+  ...
+# Subtest: 6E same-lease handoff releases once and never hides retained/release-failed outcomes
+ok 509 - 6E same-lease handoff releases once and never hides retained/release-failed outcomes
+  ---
+  duration_ms: 45.604231
+  type: 'test'
+  ...
+# Subtest: 6E normal dispatch I/O and fail-closed guards
+    # Subtest: 6E consume-before: original typed failure survives safe terminalization
+    ok 1 - 6E consume-before: original typed failure survives safe terminalization
+      ---
+      duration_ms: 52228.257683
+      type: 'test'
+      ...
+    # Subtest: 6E consume-after: original typed failure survives safe terminalization
+    ok 2 - 6E consume-after: original typed failure survives safe terminalization
+      ---
+      duration_ms: 52893.949892
+      type: 'test'
+      ...
+    # Subtest: 6E mixed-replace-after: original typed failure survives safe terminalization
+    ok 3 - 6E mixed-replace-after: original typed failure survives safe terminalization
+      ---
+      duration_ms: 125473.139941
+      type: 'test'
+      ...
+    # Subtest: 6E last-replace-after: original typed failure survives safe terminalization
+    ok 4 - 6E last-replace-after: original typed failure survives safe terminalization
+      ---
+      duration_ms: 57191.423777
+      type: 'test'
+      ...
+    # Subtest: 6E unknown bytes after consumption are preserved, never restored or terminalized
+    ok 5 - 6E unknown bytes after consumption are preserved, never restored or terminalized
+      ---
+      duration_ms: 21245.625871
+      type: 'test'
+      ...
+    1..5
+ok 510 - 6E normal dispatch I/O and fail-closed guards
+  ---
+  duration_ms: 177702.963141
+  type: 'suite'
+  ...
+# Subtest: 6E source change after Receipt aborts under the same owner, without fake Intent or redispatch
+ok 511 - 6E source change after Receipt aborts under the same owner, without fake Intent or redispatch
+  ---
+  duration_ms: 3148.319311
+  type: 'test'
+  ...
+# 6E continuity first rollback starting: 0ms
+# 6E continuity receipt:after: 218ms
+# 6E continuity prepared:after: 11550ms
+# 6E continuity consume:after: 13017ms
+# 6E continuity proof:after: 35840ms
+# 6E continuity completion:after: 39140ms
+# 6E continuity gate_release:after: 80257ms
+# 6E continuity first rollback finished: 82009ms
+# 6E continuity new Plan saved: 83196ms
+# 6E continuity new Approval saved: 84185ms
+# 6E continuity receipt:after: 85765ms
+# 6E continuity prepared:after: 127722ms
+# 6E continuity consume:after: 133112ms
+# 6E continuity replace_last:after: 175110ms
+# 6E continuity decided:after: 187075ms
+# 6E continuity history:after: 192484ms
+# 6E continuity success_state:after: 197538ms
+# 6E continuity proof:after: 209409ms
+# 6E continuity completion:after: 217663ms
+# 6E continuity gate_release:after: 293190ms
+# 6E continuity new success returned: 297160ms
+# 6E continuity reader and both retries verified: 302608ms
+# Subtest: 6E consumed rollback permits a newly approved Plan above burned IDs, then publishes one successful History
+ok 512 - 6E consumed rollback permits a newly approved Plan above burned IDs, then publishes one successful History
+  ---
+  duration_ms: 302662.368162
+  type: 'test'
+  ...
+# Subtest: 6E internal composition keeps the existing acceptance-only default until 6F
+ok 513 - 6E internal composition keeps the existing acceptance-only default until 6F
+  ---
+  duration_ms: 498.079997
+  type: 'test'
+  ...
+# Subtest: 6E terminal readiness requires Completion and exact cleanup, then evaluates response under the original lease
+ok 514 - 6E terminal readiness requires Completion and exact cleanup, then evaluates response under the original lease
+  ---
+  duration_ms: 46061.401095
+  type: 'test'
+  ...
+# Subtest: 6E SIGKILL receipt:after: no inferred dispatch or semantic re-execution
+ok 515 - 6E SIGKILL receipt:after: no inferred dispatch or semantic re-execution
+  ---
+  duration_ms: 811.437571
+  type: 'test'
+  ...
+# Subtest: 6E SIGKILL gate_release:before: no inferred dispatch or semantic re-execution
+ok 516 - 6E SIGKILL gate_release:before: no inferred dispatch or semantic re-execution
+  ---
+  duration_ms: 54594.310814
+  type: 'test'
+  ...
+# Subtest: 6E SIGKILL gate_release:after: no inferred dispatch or semantic re-execution
+ok 517 - 6E SIGKILL gate_release:after: no inferred dispatch or semantic re-execution
+  ---
+  duration_ms: 41940.324798
+  type: 'test'
+  ...
+# Subtest: 6E real initial submit completes and same Request never redispatches {}
+ok 518 - 6E real initial submit completes and same Request never redispatches {}
+  ---
+  duration_ms: 45082.269765
+  type: 'test'
+  ...
+# Subtest: 6E real initial submit completes and same Request never redispatches {"newEntities":true}
+ok 519 - 6E real initial submit completes and same Request never redispatches {"newEntities":true}
+  ---
+  duration_ms: 92109.665623
+  type: 'test'
+  ...
+# Subtest: 6E real initial submit completes and same Request never redispatches {"noop":true}
+ok 520 - 6E real initial submit completes and same Request never redispatches {"noop":true}
+  ---
+  duration_ms: 41155.950975
+  type: 'test'
+  ...
+# Subtest: allocation uses max+1 without consuming supplied high-water and sorts local refs in ASCII order
+ok 521 - allocation uses max+1 without consuming supplied high-water and sorts local refs in ASCII order
+  ---
+  duration_ms: 4.360413
+  type: 'test'
+  ...
+# Subtest: all song prefixes stay human-selected and namespaces allocate independently
+ok 522 - all song prefixes stay human-selected and namespaces allocate independently
+  ---
+  duration_ms: 1.74778
+  type: 'test'
+  ...
+# Subtest: overflow removes the whole namespace and registry rejects collisions/wrong namespaces/partial results
+ok 523 - overflow removes the whole namespace and registry rejects collisions/wrong namespaces/partial results
+  ---
+  duration_ms: 2.45193
+  type: 'test'
+  ...
+# Subtest: operation identity uses only the formal Decision/table/subject projection
+ok 524 - operation identity uses only the formal Decision/table/subject projection
+  ---
+  duration_ms: 1.669783
+  type: 'test'
+  ...
+# Subtest: operation comparator handles table, song prefix, subject/ref and typed relation PK before null keys
+ok 525 - operation comparator handles table, song prefix, subject/ref and typed relation PK before null keys
+  ---
+  duration_ms: 0.433653
+  type: 'test'
+  ...
+# Subtest: templates retain system bindings and reject unsafe PK integer representation
+ok 526 - templates retain system bindings and reject unsafe PK integer representation
+  ---
+  duration_ms: 0.816809
+  type: 'test'
+  ...
+# Subtest: classification distinguishes reuse, assertion conflicts, inserts, exact no_op and PK content conflict
+ok 527 - classification distinguishes reuse, assertion conflicts, inserts, exact no_op and PK content conflict
+  ---
+  duration_ms: 4.008573
+  type: 'test'
+  ...
+# Subtest: same-name new judgment requires explicit distinct evidence and never auto-reuses
+ok 528 - same-name new judgment requires explicit distinct evidence and never auto-reuses
+  ---
+  duration_ms: 1.320187
+  type: 'test'
+  ...
+# Subtest: hypothetical target preserves original bytes/rows and hashes templates independently of operation order
+ok 529 - hypothetical target preserves original bytes/rows and hashes templates independently of operation order
+  ---
+  duration_ms: 2.96328
+  type: 'test'
+  ...
+# Subtest: whole-target FK/PK/primary failures block the whole target
+ok 530 - whole-target FK/PK/primary failures block the whole target
+  ---
+  duration_ms: 2.41843
+  type: 'test'
+  ...
+# Subtest: conflict/unsupported diagnostics block applicability and allocation failures suppress incomplete target hashes
+ok 531 - conflict/unsupported diagnostics block applicability and allocation failures suppress incomplete target hashes
+  ---
+  duration_ms: 0.771191
+  type: 'test'
+  ...
+# Subtest: hash/ID are full JCS hashes over payload only; metadata stays outside
+ok 532 - hash/ID are full JCS hashes over payload only; metadata stays outside
+  ---
+  duration_ms: 0.468415
+  type: 'test'
+  ...
+# Subtest: R78-M01: intent partial_write never disguises incomplete publication as a successful prepare
+ok 533 - R78-M01: intent partial_write never disguises incomplete publication as a successful prepare
+  ---
+  duration_ms: 5630.230492
+  type: 'test'
+  ...
+# Subtest: R78-M01: intent publish never disguises incomplete publication as a successful prepare
+ok 534 - R78-M01: intent publish never disguises incomplete publication as a successful prepare
+  ---
+  duration_ms: 5947.097039
+  type: 'test'
+  ...
+# Subtest: R78-M01: intent directory_sync never disguises incomplete publication as a successful prepare
+ok 535 - R78-M01: intent directory_sync never disguises incomplete publication as a successful prepare
+  ---
+  duration_ms: 5552.866867
+  type: 'test'
+  ...
+# Subtest: R78-M01: prepared partial_write never disguises incomplete publication as a successful prepare
+ok 536 - R78-M01: prepared partial_write never disguises incomplete publication as a successful prepare
+  ---
+  duration_ms: 6856.929798
+  type: 'test'
+  ...
+# Subtest: R78-M01: prepared publish never disguises incomplete publication as a successful prepare
+ok 537 - R78-M01: prepared publish never disguises incomplete publication as a successful prepare
+  ---
+  duration_ms: 6521.980212
+  type: 'test'
+  ...
+# Subtest: R78-M01: prepared directory_sync never disguises incomplete publication as a successful prepare
+ok 538 - R78-M01: prepared directory_sync never disguises incomplete publication as a successful prepare
+  ---
+  duration_ms: 6306.274035
+  type: 'test'
+  ...
+# Subtest: R78-M01: SIGKILL at intent:after retains the original gate and restart evidence
+ok 539 - R78-M01: SIGKILL at intent:after retains the original gate and restart evidence
+  ---
+  duration_ms: 5792.255976
+  type: 'test'
+  ...
+# Subtest: R78-M01: SIGKILL at prepared:after retains the original gate and restart evidence
+ok 540 - R78-M01: SIGKILL at prepared:after retains the original gate and restart evidence
+  ---
+  duration_ms: 5612.683193
+  type: 'test'
+  ...
+# Subtest: R78-M02: final backup readback EIO preserves typed failure and publication evidence
+ok 541 - R78-M02: final backup readback EIO preserves typed failure and publication evidence
+  ---
+  duration_ms: 3632.214048
+  type: 'test'
+  ...
+# Subtest: R78-M02: final backup readback ENOENT preserves typed failure and publication evidence
+ok 542 - R78-M02: final backup readback ENOENT preserves typed failure and publication evidence
+  ---
+  duration_ms: 3549.13102
+  type: 'test'
+  ...
+# Subtest: R78-M02: prepare filesystem metadata read preserves typed errno without guessing publication
+ok 543 - R78-M02: prepare filesystem metadata read preserves typed errno without guessing publication
+  ---
+  duration_ms: 687.644725
+  type: 'test'
+  ...
+# Subtest: materialization preserves exact originals and typed append order: {}
+ok 544 - materialization preserves exact originals and typed append order: {}
+  ---
+  duration_ms: 49.695841
+  type: 'test'
+  ...
+# Subtest: materialization preserves exact originals and typed append order: {"noop":true}
+ok 545 - materialization preserves exact originals and typed append order: {"noop":true}
+  ---
+  duration_ms: 25.505431
+  type: 'test'
+  ...
+# Subtest: materialization preserves exact originals and typed append order: {"newEntities":true}
+ok 546 - materialization preserves exact originals and typed append order: {"newEntities":true}
+  ---
+  duration_ms: 37.229927
+  type: 'test'
+  ...
+# Subtest: serializer v1 handles UTF-8, comma, quote, embedded CR/LF, empty fields and exact schema order
+ok 547 - serializer v1 handles UTF-8, comma, quote, embedded CR/LF, empty fields and exact schema order
+  ---
+  duration_ms: 12.297059
+  type: 'test'
+  ...
+# Subtest: relation no_op preserves numeric spelling and relation inserts use numeric typed-PK ordering
+ok 548 - relation no_op preserves numeric spelling and relation inserts use numeric typed-PK ordering
+  ---
+  duration_ms: 50.370666
+  type: 'test'
+  ...
+# Subtest: bad original/Plan/identity/unknown operation cannot be materialized
+ok 549 - bad original/Plan/identity/unknown operation cannot be materialized
+  ---
+  duration_ms: 19.852511
+  type: 'test'
+  ...
+# Subtest: History builder matches independently validated full record: {}
+ok 550 - History builder matches independently validated full record: {}
+  ---
+  duration_ms: 61.060687
+  type: 'test'
+  ...
+# Subtest: History builder matches independently validated full record: {"noop":true}
+ok 551 - History builder matches independently validated full record: {"noop":true}
+  ---
+  duration_ms: 62.561125
+  type: 'test'
+  ...
+# Subtest: History builder matches independently validated full record: {"newEntities":true}
+ok 552 - History builder matches independently validated full record: {"newEntities":true}
+  ---
+  duration_ms: 89.242596
+  type: 'test'
+  ...
+# Subtest: 6A-DG01-01: pre-Intent journal crash is abortable; establishment lag remains H-bound
+ok 553 - 6A-DG01-01: pre-Intent journal crash is abortable; establishment lag remains H-bound
+  ---
+  duration_ms: 119.7938
+  type: 'test'
+  ...
+# Subtest: M-01 receipt-only A/B/C/D: terminal evidence wins over missing journal
+ok 554 - M-01 receipt-only A/B/C/D: terminal evidence wins over missing journal
+  ---
+  duration_ms: 145.66459
+  type: 'test'
+  ...
+# Subtest: pre-Intent and H-bound journal terminals reuse Proof, then select cleanup only
+ok 555 - pre-Intent and H-bound journal terminals reuse Proof, then select cleanup only
+  ---
+  duration_ms: 303.250073
+  type: 'test'
+  ...
+# Subtest: H-01 x M-01: successor archive survives every retirement boundary, without semantic regression
+ok 556 - H-01 x M-01: successor archive survives every retirement boundary, without semantic regression
+  ---
+  duration_ms: 218.698202
+  type: 'test'
+  ...
+# Subtest: ownership corruption and changed physical retirement barrier never fall back to an old prefix
+ok 557 - ownership corruption and changed physical retirement barrier never fall back to an old prefix
+  ---
+  duration_ms: 143.617222
+  type: 'test'
+  ...
+# Subtest: H-01: receipt-only Proof ownership prefix also prevents a missing/truncated archive from becoming a new lineage
+ok 558 - H-01: receipt-only Proof ownership prefix also prevents a missing/truncated archive from becoming a new lineage
+  ---
+  duration_ms: 133.367466
+  type: 'test'
+  ...
+# Subtest: owner liveness, unsupported boot/namespace, missing gate and raced snapshots never authorize actions
+ok 559 - owner liveness, unsupported boot/namespace, missing gate and raced snapshots never authorize actions
+  ---
+  duration_ms: 113.874459
+  type: 'test'
+  ...
+# Subtest: COMMIT_DECIDED is irreversible; all-target and History lag have distinct deterministic actions
+ok 560 - COMMIT_DECIDED is irreversible; all-target and History lag have distinct deterministic actions
+  ---
+  duration_ms: 1328.629648
+  type: 'test'
+  ...
+# Subtest: rollback before/after consumption preserves exact state and supports terminal continuation
+ok 561 - rollback before/after consumption preserves exact state and supports terminal continuation
+  ---
+  duration_ms: 794.696221
+  type: 'test'
+  ...
+# Subtest: consumed rollback followed by success composes generation/ID evidence without changing success-only readers
+ok 562 - consumed rollback followed by success composes generation/ID evidence without changing success-only readers
+  ---
+  duration_ms: 240.37481
+  type: 'test'
+  ...
+# Subtest: failed Proof conflicts with successful History and COMMIT_DECIDED, never falls back to abort
+ok 563 - failed Proof conflicts with successful History and COMMIT_DECIDED, never falls back to abort
+  ---
+  duration_ms: 123.192794
+  type: 'test'
+  ...
+# Subtest: partial publication: complete terminal publication intent resumes; Intent/journal uncertainty stops
+ok 564 - partial publication: complete terminal publication intent resumes; Intent/journal uncertainty stops
+  ---
+  duration_ms: 107.446074
+  type: 'test'
+  ...
+# Subtest: authoritative changes alter observation tokens and reject stale actions; cache does not become authority
+ok 565 - authoritative changes alter observation tokens and reject stale actions; cache does not become authority
+  ---
+  duration_ms: 187.532194
+  type: 'test'
+  ...
+# Subtest: filesystem order and caller mutation cannot alter the immutable pure snapshot decision
+ok 566 - filesystem order and caller mutation cannot alter the immutable pure snapshot decision
+  ---
+  duration_ms: 40.301553
+  type: 'test'
+  ...
+# Subtest: malformed and nonobject JSON evidence is an explicit typed failure, never absence
+ok 567 - malformed and nonobject JSON evidence is an explicit typed failure, never absence
+  ---
+  duration_ms: 28.495114
+  type: 'test'
+  ...
+# Subtest: correctly rehashed conflicting terminal evidence and missing established Intent fail closed
+ok 568 - correctly rehashed conflicting terminal evidence and missing established Intent fail closed
+  ---
+  duration_ms: 129.171852
+  type: 'test'
+  ...
+# Subtest: rehashed wrong repository/transaction/version/unknown evidence never authorizes automatic mutation
+ok 569 - rehashed wrong repository/transaction/version/unknown evidence never authorizes automatic mutation
+  ---
+  duration_ms: 95.409388
+  type: 'test'
+  ...
+# Subtest: R80-H01: last restore sync failure must be reconfirmed after SIGKILL before terminalization
+ok 570 - R80-H01: last restore sync failure must be reconfirmed after SIGKILL before terminalization
+  ---
+  duration_ms: 49426.568081
+  type: 'test'
+  ...
+# Subtest: R80-H01: failed original durability reconfirmation preserves consumed state and cannot publish Proof
+ok 571 - R80-H01: failed original durability reconfirmation preserves consumed state and cannot publish Proof
+  ---
+  duration_ms: 10510.664543
+  type: 'test'
+  ...
+# Subtest: R80-M01: before unlink failure preserves observed publication status
+ok 572 - R80-M01: before unlink failure preserves observed publication status
+  ---
+  duration_ms: 3228.621091
+  type: 'test'
+  ...
+# Subtest: R80-M01: after unlink failure preserves observed publication status
+ok 573 - R80-M01: after unlink failure preserves observed publication status
+  ---
+  duration_ms: 3094.777045
+  type: 'test'
+  ...
+# Subtest: R80-M01: unresolved unlink failure preserves observed publication status
+ok 574 - R80-M01: unresolved unlink failure preserves observed publication status
+  ---
+  duration_ms: 3256.929673
+  type: 'test'
+  ...
+# Subtest: ownership/terminal .fn004-recovery.lock I/O publication failure is typed and never restores unknown data
+ok 575 - ownership/terminal .fn004-recovery.lock I/O publication failure is typed and never restores unknown data
+  ---
+  duration_ms: 961.11671
+  type: 'test'
+  ...
+# Subtest: ownership/terminal anchor.json I/O publication failure is typed and never restores unknown data
+ok 576 - ownership/terminal anchor.json I/O publication failure is typed and never restores unknown data
+  ---
+  duration_ms: 674.781623
+  type: 'test'
+  ...
+# Subtest: ownership/terminal /journal/ I/O publication failure is typed and never restores unknown data
+ok 577 - ownership/terminal /journal/ I/O publication failure is typed and never restores unknown data
+  ---
+  duration_ms: 998.343614
+  type: 'test'
+  ...
+# Subtest: ownership/terminal transaction-proofs I/O publication failure is typed and never restores unknown data
+ok 578 - ownership/terminal transaction-proofs I/O publication failure is typed and never restores unknown data
+  ---
+  duration_ms: 1565.719413
+  type: 'test'
+  ...
+# Subtest: ownership/terminal /completions/ I/O publication failure is typed and never restores unknown data
+ok 579 - ownership/terminal /completions/ I/O publication failure is typed and never restores unknown data
+  ---
+  duration_ms: 2204.783694
+  type: 'test'
+  ...
+# Subtest: ownership/terminal /retirements/ I/O publication failure is typed and never restores unknown data
+ok 580 - ownership/terminal /retirements/ I/O publication failure is typed and never restores unknown data
+  ---
+  duration_ms: 3414.433842
+  type: 'test'
+  ...
+# Subtest: R78-M02 rollback rename preserves cause/path/phase/published and durable failure evidence
+ok 581 - R78-M02 rollback rename preserves cause/path/phase/published and durable failure evidence
+  ---
+  duration_ms: 3414.311548
+  type: 'test'
+  ...
+# Subtest: R78-M02 rollback rename_after preserves cause/path/phase/published and durable failure evidence
+ok 582 - R78-M02 rollback rename_after preserves cause/path/phase/published and durable failure evidence
+  ---
+  duration_ms: 3496.293133
+  type: 'test'
+  ...
+# Subtest: R78-M02 rollback readback preserves cause/path/phase/published and durable failure evidence
+ok 583 - R78-M02 rollback readback preserves cause/path/phase/published and durable failure evidence
+  ---
+  duration_ms: 3279.298451
+  type: 'test'
+  ...
+# Subtest: successor claim publication failure retains the original full ownership prefix
+ok 584 - successor claim publication failure retains the original full ownership prefix
+  ---
+  duration_ms: 1640.662249
+  type: 'test'
+  ...
+# Subtest: unresolved rename result remains published=null when immediate byte observation fails
+ok 585 - unresolved rename result remains published=null when immediate byte observation fails
+  ---
+  duration_ms: 3019.302438
+  type: 'test'
+  ...
+# Subtest: actual live current owner and stale-PID-only observation never grant takeover
+ok 586 - actual live current owner and stale-PID-only observation never grant takeover
+  ---
+  duration_ms: 948.941224
+  type: 'test'
+  ...
+# Subtest: H-01: B retirement crash then C claim crash then D keeps the entire prefix and uses sequence 2
+ok 587 - H-01: B retirement crash then C claim crash then D keeps the entire prefix and uses sequence 2
+  ---
+  duration_ms: 8071.497531
+  type: 'test'
+  ...
+# Subtest: unanchored barrier after real crash is manual STOP, never reconstructed
+ok 588 - unanchored barrier after real crash is manual STOP, never reconstructed
+  ---
+  duration_ms: 1301.448551
+  type: 'test'
+  ...
+# Subtest: owned classifier input stays pure after capability revocation; stale capability cannot adopt a gate
+ok 589 - owned classifier input stays pure after capability revocation; stale capability cannot adopt a gate
+  ---
+  duration_ms: 864.211031
+  type: 'test'
+  ...
+# Subtest: normal acquisition refuses an unsealed archive even when its barrier was lost
+ok 590 - normal acquisition refuses an unsealed archive even when its barrier was lost
+  ---
+  duration_ms: 3347.422023
+  type: 'test'
+  ...
+# Subtest: gate excludes independent worker, then permits next acquisition; metadata has no repository UUID
+ok 591 - gate excludes independent worker, then permits next acquisition; metadata has no repository UUID
+  ---
+  duration_ms: 94.24435
+  type: 'test'
+  ...
+# Subtest: callback throw releases normal lock, including falsy thrown values
+ok 592 - callback throw releases normal lock, including falsy thrown values
+  ---
+  duration_ms: 18.46316
+  type: 'test'
+  ...
+# Subtest: existing and simulated stale locks are never removed or rewritten
+ok 593 - existing and simulated stale locks are never removed or rewritten
+  ---
+  duration_ms: 13.213726
+  type: 'test'
+  ...
+# Subtest: malformed/incomplete/unknown lock is retained: ""
+ok 594 - malformed/incomplete/unknown lock is retained: ""
+  ---
+  duration_ms: 3.737698
+  type: 'test'
+  ...
+# Subtest: malformed/incomplete/unknown lock is retained: "{"
+ok 595 - malformed/incomplete/unknown lock is retained: "{"
+  ---
+  duration_ms: 3.995185
+  type: 'test'
+  ...
+# Subtest: malformed/incomplete/unknown lock is retained: "[]"
+ok 596 - malformed/incomplete/unknown lock is retained: "[]"
+  ---
+  duration_ms: 5.954856
+  type: 'test'
+  ...
+# Subtest: malformed/incomplete/unknown lock is retained: "{\\"schema_version\\":99}"
+ok 597 - malformed/incomplete/unknown lock is retained: "{\\"schema_version\\":99}"
+  ---
+  duration_ms: 3.558448
+  type: 'test'
+  ...
+# Subtest: lock read failure is corrupt/busy, never absence
+ok 598 - lock read failure is corrupt/busy, never absence
+  ---
+  duration_ms: 8.73325
+  type: 'test'
+  ...
+# Subtest: ownership checks bytes and inode; forged, stale and cross-root tokens are rejected
+ok 599 - ownership checks bytes and inode; forged, stale and cross-root tokens are rejected
+  ---
+  duration_ms: 8.068628
+  type: 'test'
+  ...
+# Subtest: nested implicit acquisition rejected; explicit original lease works and stays held
+ok 600 - nested implicit acquisition rejected; explicit original lease works and stays held
+  ---
+  duration_ms: 54.223933
+  type: 'test'
+  ...
+# Subtest: async context inherited after release can acquire a new gate
+ok 601 - async context inherited after release can acquire a new gate
+  ---
+  duration_ms: 9.333043
+  type: 'test'
+  ...
+# Subtest: concurrent release cannot unlink a later owner's lock
+ok 602 - concurrent release cannot unlink a later owner's lock
+  ---
+  duration_ms: 8.745448
+  type: 'test'
+  ...
+# Subtest: unlink failure is cleanup_required, preserves operation error and lock
+ok 603 - unlink failure is cleanup_required, preserves operation error and lock
+  ---
+  duration_ms: 5.878731
+  type: 'test'
+  ...
+# Subtest: successful callback cannot hide release sync failure
+ok 604 - successful callback cannot hide release sync failure
+  ---
+  duration_ms: 5.624699
+  type: 'test'
+  ...
+# Subtest: acquire fsync failure retains its candidate, publishes no final and never runs callback
+ok 605 - acquire fsync failure retains its candidate, publishes no final and never runs callback
+  ---
+  duration_ms: 4.056788
+  type: 'test'
+  ...
+# Subtest: metadata write failure leaves an incomplete candidate without publishing a final
+ok 606 - metadata write failure leaves an incomplete candidate without publishing a final
+  ---
+  duration_ms: 4.283249
+  type: 'test'
+  ...
+# Subtest: safe read: Slice 1 manifest/14 tables, stable bytes retained after gate release
+ok 607 - safe read: Slice 1 manifest/14 tables, stable bytes retained after gate release
+  ---
+  duration_ms: 73.329409
+  type: 'test'
+  ...
+# Subtest: invalid canonical rejects with original structured diagnostics and releases gate
+ok 608 - invalid canonical rejects with original structured diagnostics and releases gate
+  ---
+  duration_ms: 25.917994
+  type: 'test'
+  ...
+# Subtest: FN-001/FN-002/FN-003 cooperate, return original shapes, accept explicit lease
+ok 609 - FN-001/FN-002/FN-003 cooperate, return original shapes, accept explicit lease
+  ---
+  duration_ms: 70.01577
+  type: 'test'
+  ...
+# Subtest: collector does not hold canonical gate over network fetch or staging save
+ok 610 - collector does not hold canonical gate over network fetch or staging save
+  ---
+  duration_ms: 15.490483
+  type: 'test'
+  ...
+# Subtest: partial bootstrap and unknown pending artifacts fail closed
+ok 611 - partial bootstrap and unknown pending artifacts fail closed
+  ---
+  duration_ms: 51.012938
+  type: 'test'
+  ...
+# Subtest: repository only exposes known artifact paths and requires a live write lease
+ok 612 - repository only exposes known artifact paths and requires a live write lease
+  ---
+  duration_ms: 10.168491
+  type: 'test'
+  ...
+# Subtest: persistence: directory creation, atomic replace, UTF-8 roundtrip, no successful temp leftovers
+ok 613 - persistence: directory creation, atomic replace, UTF-8 roundtrip, no successful temp leftovers
+  ---
+  duration_ms: 46.488125
+  type: 'test'
+  ...
+# Subtest: JSON read distinguishes missing, invalid UTF-8, malformed JSON and wrong root
+ok 614 - JSON read distinguishes missing, invalid UTF-8, malformed JSON and wrong root
+  ---
+  duration_ms: 3.857248
+  type: 'test'
+  ...
+# Subtest: persistence temp_create failure preserves original and reports failure
+ok 615 - persistence temp_create failure preserves original and reports failure
+  ---
+  duration_ms: 1.237634
+  type: 'test'
+  ...
+# Subtest: persistence temp_write failure preserves original and reports failure
+ok 616 - persistence temp_write failure preserves original and reports failure
+  ---
+  duration_ms: 1.239696
+  type: 'test'
+  ...
+# Subtest: persistence file_sync failure preserves original and reports failure
+ok 617 - persistence file_sync failure preserves original and reports failure
+  ---
+  duration_ms: 1.038093
+  type: 'test'
+  ...
+# Subtest: persistence temp_verify failure preserves original and reports failure
+ok 618 - persistence temp_verify failure preserves original and reports failure
+  ---
+  duration_ms: 1.291285
+  type: 'test'
+  ...
+# Subtest: persistence rename failure preserves original and reports failure
+ok 619 - persistence rename failure preserves original and reports failure
+  ---
+  duration_ms: 2.246592
+  type: 'test'
+  ...
+# Subtest: post-publication directory fsync failure is not success and is explicitly published
+ok 620 - post-publication directory fsync failure is not success and is explicitly published
+  ---
+  duration_ms: 1.89961
+  type: 'test'
+  ...
+# Subtest: new directory parent fsync failure is not ignored
+ok 621 - new directory parent fsync failure is not ignored
+  ---
+  duration_ms: 1.485416
+  type: 'test'
+  ...
+# Subtest: immutable cleanup failure reports published and preserves complete artifact
+ok 622 - immutable cleanup failure reports published and preserves complete artifact
+  ---
+  duration_ms: 1.857848
+  type: 'test'
+  ...
+# Subtest: exclusive target is absent until complete temp has synced and been verified
+ok 623 - exclusive target is absent until complete temp has synced and been verified
+  ---
+  duration_ms: 1.818558
+  type: 'test'
+  ...
+# Subtest: exclusive publication exposes only complete bytes and never overwrites a racing creator
+ok 624 - exclusive publication exposes only complete bytes and never overwrites a racing creator
+  ---
+  duration_ms: 2.486895
+  type: 'test'
+  ...
+# Subtest: path traversal, Windows path syntax, symlink ancestors/final targets and data symlinks rejected
+ok 625 - path traversal, Windows path syntax, symlink ancestors/final targets and data symlinks rejected
+  ---
+  duration_ms: 12.969628
+  type: 'test'
+  ...
+# Subtest: realpath root aliases use the same gate
+ok 626 - realpath root aliases use the same gate
+  ---
+  duration_ms: 13.913509
+  type: 'test'
+  ...
+# Subtest: cross-process crash retains lock and next process cannot auto-unlock
+ok 627 - cross-process crash retains lock and next process cannot auto-unlock
+  ---
+  duration_ms: 106.392402
+  type: 'test'
+  ...
+# Subtest: initial publication and same-payload retry return the closed current DTO without rewriting or generating time/IDs
+ok 628 - initial publication and same-payload retry return the closed current DTO without rewriting or generating time/IDs
+  ---
+  duration_ms: 1220.837413
+  type: 'test'
+  ...
+# Subtest: pending and changed candidates retain original Receipt and report recovery rather than infer stale Plan
+ok 629 - pending and changed candidates retain original Receipt and report recovery rather than infer stale Plan
+  ---
+  duration_ms: 1154.491929
+  type: 'test'
+  ...
+# Subtest: post-accept invalidation is a sorted current diagnostic, not cancellation; original bytes and live lease retained
+ok 630 - post-accept invalidation is a sorted current diagnostic, not cancellation; original bytes and live lease retained
+  ---
+  duration_ms: 1175.460817
+  type: 'test'
+  ...
+# Subtest: verified successful History returns only its exact reference while runtime remains recovery_required
+ok 631 - verified successful History returns only its exact reference while runtime remains recovery_required
+  ---
+  duration_ms: 2462.504812
+  type: 'test'
+  ...
+# Subtest: self-consistent History with wrong Receipt binding and corrupt History never become successful responses
+ok 632 - self-consistent History with wrong Receipt binding and corrupt History never become successful responses
+  ---
+  duration_ms: 2880.145702
+  type: 'test'
+  ...
+# Subtest: post-publication evaluation failure retains the original durable artifact for same-ID retry
+ok 633 - post-publication evaluation failure retains the original durable artifact for same-ID retry
+  ---
+  duration_ms: 1053.351255
+  type: 'test'
+  ...
+# Subtest: corrupt Request, Receipt tamper, wrong receipt_hash and self-consistent cross-repository Receipt stay integrity errors
+ok 634 - corrupt Request, Receipt tamper, wrong receipt_hash and self-consistent cross-repository Receipt stay integrity errors
+  ---
+  duration_ms: 831.53273
+  type: 'test'
+  ...
+# Subtest: R77-H01: failure-after publication requires all original bytes, including checkpoint lag
+ok 635 - R77-H01: failure-after publication requires all original bytes, including checkpoint lag
+  ---
+  duration_ms: 322.449155
+  type: 'test'
+  ...
+# Subtest: R77-H01: partial replacement cannot precede consumption, even when no IDs are allocated
+ok 636 - R77-H01: partial replacement cannot precede consumption, even when no IDs are allocated
+  ---
+  duration_ms: 166.660053
+  type: 'test'
+  ...
+# Subtest: R77-H02: historical retirement must bind its own claimed gate after release
+ok 637 - R77-H02: historical retirement must bind its own claimed gate after release
+  ---
+  duration_ms: 56.438183
+  type: 'test'
+  ...
+# Subtest: R77-H02: gate-free cleanup can retire only its own recovery_cleanup gate
+ok 638 - R77-H02: gate-free cleanup can retire only its own recovery_cleanup gate
+  ---
+  duration_ms: 97.500083
+  type: 'test'
+  ...
+# Subtest: R77-M01: other pre-Intent terminal input copies cannot escape repository-wide validation
+ok 639 - R77-M01: other pre-Intent terminal input copies cannot escape repository-wide validation
+  ---
+  duration_ms: 129.544885
+  type: 'test'
+  ...
+# Subtest: R83 guard barrier: orphan Recovery work blocks genesis reader and Plan
+ok 640 - R83 guard barrier: orphan Recovery work blocks genesis reader and Plan
+  ---
+  duration_ms: 83.711852
+  type: 'test'
+  ...
+# Subtest: R83 guard barrier: reject before Receipt or Owner, preserve unknown evidence and state
+ok 641 - R83 guard barrier: reject before Receipt or Owner, preserve unknown evidence and state
+  ---
+  duration_ms: 52.768597
+  type: 'test'
+  ...
+# Subtest: R83 guard archive: orphan Recovery work blocks genesis reader and Plan
+ok 642 - R83 guard archive: orphan Recovery work blocks genesis reader and Plan
+  ---
+  duration_ms: 53.35133
+  type: 'test'
+  ...
+# Subtest: R83 guard archive: reject before Receipt or Owner, preserve unknown evidence and state
+ok 643 - R83 guard archive: reject before Receipt or Owner, preserve unknown evidence and state
+  ---
+  duration_ms: 45.93949
+  type: 'test'
+  ...
+# Subtest: R83-M01 corrupt unfinished Journal is a typed integrity error, not a normal recovery DTO
+ok 644 - R83-M01 corrupt unfinished Journal is a typed integrity error, not a normal recovery DTO
+  ---
+  duration_ms: 199.866524
+  type: 'test'
+  ...
+# Subtest: R83-M01 unfinished owner corruption is never a normal DTO
+ok 645 - R83-M01 unfinished owner corruption is never a normal DTO
+  ---
+  duration_ms: 118.187363
+  type: 'test'
+  ...
+# Subtest: R83-M01 unfinished intent corruption is never a normal DTO
+ok 646 - R83-M01 unfinished intent corruption is never a normal DTO
+  ---
+  duration_ms: 123.468896
+  type: 'test'
+  ...
+# Subtest: R83-M01 unfinished journal-hash corruption is never a normal DTO
+ok 647 - R83-M01 unfinished journal-hash corruption is never a normal DTO
+  ---
+  duration_ms: 123.748889
+  type: 'test'
+  ...
+# Subtest: R83-M01 unfinished cache corruption is never a normal DTO
+ok 648 - R83-M01 unfinished cache corruption is never a normal DTO
+  ---
+  duration_ms: 128.633292
+  type: 'test'
+  ...
+# Subtest: R83-M01 unfinished input-copy corruption is never a normal DTO
+ok 649 - R83-M01 unfinished input-copy corruption is never a normal DTO
+  ---
+  duration_ms: 127.085698
+  type: 'test'
+  ...
+# Subtest: R83-M01 unfinished backup hash mismatch remains a typed error
+ok 650 - R83-M01 unfinished backup hash mismatch remains a typed error
+  ---
+  duration_ms: 5830.514502
+  type: 'test'
+  ...
+# Subtest: R83-M01 unfinished temp hash mismatch remains a typed error
+ok 651 - R83-M01 unfinished temp hash mismatch remains a typed error
+  ---
+  duration_ms: 6305.925013
+  type: 'test'
+  ...
+# Subtest: R83-M02 concurrent valid same Request: exactly one real execution
+ok 652 - R83-M02 concurrent valid same Request: exactly one real execution
+  ---
+  duration_ms: 88995.943695
+  type: 'test'
+  ...
+# Subtest: R83-M02 concurrent valid different Request: exactly one real execution
+ok 653 - R83-M02 concurrent valid different Request: exactly one real execution
+  ---
+  duration_ms: 92744.21818
+  type: 'test'
+  ...
+# Subtest: R83-M01 complete unpublished Owner publication stays recovery-required and is never adopted
+ok 654 - R83-M01 complete unpublished Owner publication stays recovery-required and is never adopted
+  ---
+  duration_ms: 245.921637
+  type: 'test'
+  ...
+# Subtest: R83-M01 Proof-only conflicts with a different valid local Journal prefix and cannot hide behind missing Completion
+ok 655 - R83-M01 Proof-only conflicts with a different valid local Journal prefix and cannot hide behind missing Completion
+  ---
+  duration_ms: 197.694571
+  type: 'test'
+  ...
+# Subtest: R83-M01 pre-Intent checkpoint backup bytes bind to original evidence without Intent
+ok 656 - R83-M01 pre-Intent checkpoint backup bytes bind to original evidence without Intent
+  ---
+  duration_ms: 5929.652741
+  type: 'test'
+  ...
+# Subtest: R83-M01 pre-Intent unbound backup bytes bind to original evidence without Intent
+ok 657 - R83-M01 pre-Intent unbound backup bytes bind to original evidence without Intent
+  ---
+  duration_ms: 771.854974
+  type: 'test'
+  ...
+# Subtest: R83-M03 pre-Intent ABORTED retains Journal refs for cleanup, rejects unexpected restore, then permits readers
+ok 658 - R83-M03 pre-Intent ABORTED retains Journal refs for cleanup, rejects unexpected restore, then permits readers
+  ---
+  duration_ms: 6625.680047
+  type: 'test'
+  ...
+# Subtest: R83-M04 conflicting same-path Journal/Intent refs reject present artifacts
+ok 659 - R83-M04 conflicting same-path Journal/Intent refs reject present artifacts
+  ---
+  duration_ms: 29.340453
+  type: 'test'
+  ...
+# Subtest: R83-M04 conflicting same-path Journal/Intent refs reject missing artifacts
+ok 660 - R83-M04 conflicting same-path Journal/Intent refs reject missing artifacts
+  ---
+  duration_ms: 28.795051
+  type: 'test'
+  ...
+# Subtest: 6E state temp before consumption is exact unpublished evidence, never proof of consumed IDs
+ok 661 - 6E state temp before consumption is exact unpublished evidence, never proof of consumed IDs
+  ---
+  duration_ms: 224.679194
+  type: 'test'
+  ...
+# Subtest: 6E success state temp before rename binds exact decision outcome, without pretending state advanced
+ok 662 - 6E success state temp before rename binds exact decision outcome, without pretending state advanced
+  ---
+  duration_ms: 80.958637
+  type: 'test'
+  ...
+# Subtest: 6E rollback state temp before rename retains consumed high-water and requires actual restore
+ok 663 - 6E rollback state temp before rename retains consumed high-water and requires actual restore
+  ---
+  duration_ms: 65.409423
+  type: 'test'
+  ...
+# Subtest: successful History retry preserves exact record bytes and inode; conflicting display metadata cannot replace it
+ok 664 - successful History retry preserves exact record bytes and inode; conflicting display metadata cannot replace it
+  ---
+  duration_ms: 92.735729
+  type: 'test'
+  ...
+# Subtest: History chain: independently valid rehashed record cannot publish over an invalid prefix
+ok 665 - History chain: independently valid rehashed record cannot publish over an invalid prefix
+  ---
+  duration_ms: 13.887679
+  type: 'test'
+  ...
+# Subtest: History Plan-prefix: independently valid rehashed record cannot publish over an invalid prefix
+ok 666 - History Plan-prefix: independently valid rehashed record cannot publish over an invalid prefix
+  ---
+  duration_ms: 12.491813
+  type: 'test'
+  ...
+# Subtest: History partial_write: typed failure and exact restart policy
+ok 667 - History partial_write: typed failure and exact restart policy
+  ---
+  duration_ms: 15.203905
+  type: 'test'
+  ...
+# Subtest: History file_sync: typed failure and exact restart policy
+ok 668 - History file_sync: typed failure and exact restart policy
+  ---
+  duration_ms: 28.907281
+  type: 'test'
+  ...
+# Subtest: History link_before: typed failure and exact restart policy
+ok 669 - History link_before: typed failure and exact restart policy
+  ---
+  duration_ms: 36.128771
+  type: 'test'
+  ...
+# Subtest: History link_after: typed failure and exact restart policy
+ok 670 - History link_after: typed failure and exact restart policy
+  ---
+  duration_ms: 31.589047
+  type: 'test'
+  ...
+# Subtest: History directory_sync: typed failure and exact restart policy
+ok 671 - History directory_sync: typed failure and exact restart policy
+  ---
+  duration_ms: 26.140567
+  type: 'test'
+  ...
+# Subtest: History temp_cleanup: typed failure and exact restart policy
+ok 672 - History temp_cleanup: typed failure and exact restart policy
+  ---
+  duration_ms: 26.37597
+  type: 'test'
+  ...
+# Subtest: History readback: typed failure and exact restart policy
+ok 673 - History readback: typed failure and exact restart policy
+  ---
+  duration_ms: 24.629412
+  type: 'test'
+  ...
+# Subtest: atomic success state rename before preserves publication observation
+ok 674 - atomic success state rename before preserves publication observation
+  ---
+  duration_ms: 11.109612
+  type: 'test'
+  ...
+# Subtest: atomic success state rename after preserves publication observation
+ok 675 - atomic success state rename after preserves publication observation
+  ---
+  duration_ms: 6.367735
+  type: 'test'
+  ...
+# Subtest: atomic success state rename unknown preserves publication observation
+ok 676 - atomic success state rename unknown preserves publication observation
+  ---
+  duration_ms: 6.880145
+  type: 'test'
+  ...
+# Subtest: R82-M03 link EEXIST after side effect still reports published
+ok 677 - R82-M03 link EEXIST after side effect still reports published
+  ---
+  duration_ms: 6.697401
+  type: 'test'
+  ...
+# Subtest: R82-M03 rename EEXIST after side effect still reports published
+ok 678 - R82-M03 rename EEXIST after side effect still reports published
+  ---
+  duration_ms: 5.937046
+  type: 'test'
+  ...
+# Subtest: R82-M03 real no-clobber EEXIST remains unpublished and retains existing bytes
+ok 679 - R82-M03 real no-clobber EEXIST remains unpublished and retains existing bytes
+  ---
+  duration_ms: 7.956637
+  type: 'test'
+  ...
+# Subtest: R82-M03 no-clobber identity comparison retains full-width inode precision
+ok 680 - R82-M03 no-clobber identity comparison retains full-width inode precision
+  ---
+  duration_ms: 7.103171
+  type: 'test'
+  ...
+# Subtest: 6D success runtime
+    # Subtest: 6D decided: exact original success record, state and terminalization
+    ok 1 - 6D decided: exact original success record, state and terminalization
+      ---
+      duration_ms: 93490.781381
+      type: 'test'
+      ...
+    # Subtest: 6D history: exact original success record, state and terminalization
+    ok 2 - 6D history: exact original success record, state and terminalization
+      ---
+      duration_ms: 91817.218802
+      type: 'test'
+      ...
+    # Subtest: 6D alltarget: exact original success record, state and terminalization
+    ok 3 - 6D alltarget: exact original success record, state and terminalization
+      ---
+      duration_ms: 85200.96672
+      type: 'test'
+      ...
+    # Subtest: 6D success-noop: exact original success record, state and terminalization
+    ok 4 - 6D success-noop: exact original success record, state and terminalization
+      ---
+      duration_ms: 79313.576477
+      type: 'test'
+      ...
+    # Subtest: 6D success-noop-exception: exact original success record, state and terminalization
+    ok 5 - 6D success-noop-exception: exact original success record, state and terminalization
+      ---
+      duration_ms: 81790.460698
+      type: 'test'
+      ...
+    # Subtest: 6D success-lag: exact original success record, state and terminalization
+    ok 6 - 6D success-lag: exact original success record, state and terminalization
+      ---
+      duration_ms: 84719.065288
+      type: 'test'
+      ...
+    # Subtest: 6D success-candidate: exact original success record, state and terminalization
+    ok 7 - 6D success-candidate: exact original success record, state and terminalization
+      ---
+      duration_ms: 110810.426191
+      type: 'test'
+      ...
+    # Subtest: 6D success-state: exact original success record, state and terminalization
+    ok 8 - 6D success-state: exact original success record, state and terminalization
+      ---
+      duration_ms: 97702.908003
+      type: 'test'
+      ...
+    # Subtest: 6D success-completed: exact original success record, state and terminalization
+    ok 9 - 6D success-completed: exact original success record, state and terminalization
+      ---
+      duration_ms: 64861.036906
+      type: 'test'
+      ...
+    # Subtest: original live owner finalizes after decision without Recovery takeover or ID/canonical writes
+    ok 10 - original live owner finalizes after decision without Recovery takeover or ID/canonical writes
+      ---
+      duration_ms: 56904.872158
+      type: 'test'
+      ...
+    # Subtest: 6D SIGKILL decided:after: restart reuses decision/History/proof and seals ownership
+    ok 11 - 6D SIGKILL decided:after: restart reuses decision/History/proof and seals ownership
+      ---
+      duration_ms: 93585.246024
+      type: 'test'
+      ...
+    # Subtest: 6D SIGKILL history:after: restart reuses decision/History/proof and seals ownership
+    ok 12 - 6D SIGKILL history:after: restart reuses decision/History/proof and seals ownership
+      ---
+      duration_ms: 98343.677079
+      type: 'test'
+      ...
+    # Subtest: 6D SIGKILL success_state:after: restart reuses decision/History/proof and seals ownership
+    ok 13 - 6D SIGKILL success_state:after: restart reuses decision/History/proof and seals ownership
+      ---
+      duration_ms: 88196.490197
+      type: 'test'
+      ...
+    # Subtest: 6D SIGKILL completed:after: restart reuses decision/History/proof and seals ownership
+    ok 14 - 6D SIGKILL completed:after: restart reuses decision/History/proof and seals ownership
+      ---
+      duration_ms: 90256.775957
+      type: 'test'
+      ...
+    # Subtest: 6D SIGKILL proof:after: restart reuses decision/History/proof and seals ownership
+    ok 15 - 6D SIGKILL proof:after: restart reuses decision/History/proof and seals ownership
+      ---
+      duration_ms: 88587.634055
+      type: 'test'
+      ...
+    # Subtest: 6D SIGKILL completion:after: restart reuses decision/History/proof and seals ownership
+    ok 16 - 6D SIGKILL completion:after: restart reuses decision/History/proof and seals ownership
+      ---
+      duration_ms: 92561.951676
+      type: 'test'
+      ...
+    # Subtest: 6D SIGKILL retiring:after: restart reuses decision/History/proof and seals ownership
+    ok 17 - 6D SIGKILL retiring:after: restart reuses decision/History/proof and seals ownership
+      ---
+      duration_ms: 81385.367747
+      type: 'test'
+      ...
+    # Subtest: 6D I/O target-sync: retained typed evidence, process exit and forward-only restart
+    ok 18 - 6D I/O target-sync: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 76966.647175
+      type: 'test'
+      ...
+    # Subtest: 6D I/O target-source-sync: retained typed evidence, process exit and forward-only restart
+    ok 19 - 6D I/O target-source-sync: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 88017.379556
+      type: 'test'
+      ...
+    # Subtest: 6D I/O consumption-sync: retained typed evidence, process exit and forward-only restart
+    ok 20 - 6D I/O consumption-sync: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 90842.22873
+      type: 'test'
+      ...
+    # Subtest: 6D I/O decision-sync: retained typed evidence, process exit and forward-only restart
+    ok 21 - 6D I/O decision-sync: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 114869.14566
+      type: 'test'
+      ...
+    # Subtest: 6D I/O terminal-sync: retained typed evidence, process exit and forward-only restart
+    ok 22 - 6D I/O terminal-sync: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 97132.255696
+      type: 'test'
+      ...
+    # Subtest: 6D I/O history-link-before: retained typed evidence, process exit and forward-only restart
+    ok 23 - 6D I/O history-link-before: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 122161.905164
+      type: 'test'
+      ...
+    # Subtest: 6D I/O history-link-after: retained typed evidence, process exit and forward-only restart
+    ok 24 - 6D I/O history-link-after: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 137457.007401
+      type: 'test'
+      ...
+    # Subtest: 6D I/O history-readback: retained typed evidence, process exit and forward-only restart
+    ok 25 - 6D I/O history-readback: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 119317.024694
+      type: 'test'
+      ...
+    # Subtest: 6D I/O history-guard-readback: retained typed evidence, process exit and forward-only restart
+    ok 26 - 6D I/O history-guard-readback: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 129557.594735
+      type: 'test'
+      ...
+    # Subtest: 6D I/O retired-readback: retained typed evidence, process exit and forward-only restart
+    ok 27 - 6D I/O retired-readback: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 85676.035448
+      type: 'test'
+      ...
+    # Subtest: 6D I/O state-rename-after: retained typed evidence, process exit and forward-only restart
+    ok 28 - 6D I/O state-rename-after: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 93971.39325
+      type: 'test'
+      ...
+    # Subtest: 6D I/O state-confirm-sync: retained typed evidence, process exit and forward-only restart
+    ok 29 - 6D I/O state-confirm-sync: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 129266.20552
+      type: 'test'
+      ...
+    # Subtest: 6D I/O completion-readback: retained typed evidence, process exit and forward-only restart
+    ok 30 - 6D I/O completion-readback: retained typed evidence, process exit and forward-only restart
+      ---
+      duration_ms: 101542.041407
+      type: 'test'
+      ...
+    # Subtest: R82-M02 original owner cleanup returns cleaned without new semantic finalization
+    ok 31 - R82-M02 original owner cleanup returns cleaned without new semantic finalization
+      ---
+      duration_ms: 41737.188332
+      type: 'test'
+      ...
+    # Subtest: normal owner SIGKILL after COMPLETED resumes only finish_terminal under successor authority
+    ok 32 - normal owner SIGKILL after COMPLETED resumes only finish_terminal under successor authority
+      ---
+      duration_ms: 56408.312253
+      type: 'test'
+      ...
+    # Subtest: 6D SIGKILL during partial History temp: typed STOP preserves partial evidence and consumed state
+    ok 33 - 6D SIGKILL during partial History temp: typed STOP preserves partial evidence and consumed state
+      ---
+      duration_ms: 4232.073834
+      type: 'test'
+      ...
+    # Subtest: 6D unknown: stale success command cannot mutate or manufacture terminal evidence
+    ok 34 - 6D unknown: stale success command cannot mutate or manufacture terminal evidence
+      ---
+      duration_ms: 4457.062258
+      type: 'test'
+      ...
+    # Subtest: 6D mixed: stale success command cannot mutate or manufacture terminal evidence
+    ok 35 - 6D mixed: stale success command cannot mutate or manufacture terminal evidence
+      ---
+      duration_ms: 4039.162384
+      type: 'test'
+      ...
+    # Subtest: 6D state-contradiction: stale success command cannot mutate or manufacture terminal evidence
+    ok 36 - 6D state-contradiction: stale success command cannot mutate or manufacture terminal evidence
+      ---
+      duration_ms: 3931.13446
+      type: 'test'
+      ...
+    # Subtest: 6D History-corrupt: stale success command cannot mutate or manufacture terminal evidence
+    ok 37 - 6D History-corrupt: stale success command cannot mutate or manufacture terminal evidence
+      ---
+      duration_ms: 2234.196161
+      type: 'test'
+      ...
+    # Subtest: 6D History-conflict: stale success command cannot mutate or manufacture terminal evidence
+    ok 38 - 6D History-conflict: stale success command cannot mutate or manufacture terminal evidence
+      ---
+      duration_ms: 4057.087685
+      type: 'test'
+      ...
+    # Subtest: 6D Intent-corrupt: stale success command cannot mutate or manufacture terminal evidence
+    ok 39 - 6D Intent-corrupt: stale success command cannot mutate or manufacture terminal evidence
+      ---
+      duration_ms: 2582.279563
+      type: 'test'
+      ...
+    # Subtest: 6D Completion-only: stale success command cannot mutate or manufacture terminal evidence
+    ok 40 - 6D Completion-only: stale success command cannot mutate or manufacture terminal evidence
+      ---
+      duration_ms: 2537.421588
+      type: 'test'
+      ...
+    1..40
+ok 681 - 6D success runtime
+  ---
+  duration_ms: 1496642.009362
+  type: 'suite'
+  ...
+# Subtest: 6E published Proof temp is cleanup evidence, never a second terminal record; unknown temp stays STOP
+ok 682 - 6E published Proof temp is cleanup evidence, never a second terminal record; unknown temp stays STOP
+  ---
+  duration_ms: 754.097608
+  type: 'test'
+  ...
+# Subtest: 6E typed terminal proof read failure is not converted into a normal Request response
+ok 683 - 6E typed terminal proof read failure is not converted into a normal Request response
+  ---
+  duration_ms: 130.282206
+  type: 'test'
+  ...
+# Subtest: S6E-H01: a failure Proof in a clone prohibits reissuing its missing Receipt even with unchanged Plan/state
+ok 684 - S6E-H01: a failure Proof in a clone prohibits reissuing its missing Receipt even with unchanged Plan/state
+  ---
+  duration_ms: 320.642133
+  type: 'test'
+  ...
+# Subtest: 6E unrelated Plan corruption stays a typed integrity error rather than a blocked normal response
+ok 685 - 6E unrelated Plan corruption stays a typed integrity error rather than a blocked normal response
+  ---
+  duration_ms: 144.124993
+  type: 'test'
+  ...
+# Subtest: S6E-M06: the original gate remains cleanup work; a fresh reader lease is not that old gate
+ok 686 - S6E-M06: the original gate remains cleanup work; a fresh reader lease is not that old gate
+  ---
+  duration_ms: 609.637756
+  type: 'test'
+  ...
+# Subtest: S6E-M08: immutable Request conflict/corruption precedes unresolved publisher work
+ok 687 - S6E-M08: immutable Request conflict/corruption precedes unresolved publisher work
+  ---
+  duration_ms: 87.928639
+  type: 'test'
+  ...
+# Subtest: A/B/C: release date and letter editions determine stable processing order
+ok 688 - A/B/C: release date and letter editions determine stable processing order
+  ---
+  duration_ms: 2.279791
+  type: 'test'
+  ...
+# Subtest: C: SP and non-letter editions use only source tie-break
+ok 689 - C: SP and non-letter editions use only source tie-break
+  ---
+  duration_ms: 0.254884
+  type: 'test'
+  ...
+# Subtest: D-H: canonical priority, provisional reuse, release context, and exact resolution
+ok 690 - D-H: canonical priority, provisional reuse, release context, and exact resolution
+  ---
+  duration_ms: 1.592337
+  type: 'test'
+  ...
+# Subtest: I/J/L: ambiguity remains reviewable, bad source is blocked, hold survives
+ok 691 - I/J/L: ambiguity remains reviewable, bad source is blocked, hold survives
+  ---
+  duration_ms: 7.035249
+  type: 'test'
+  ...
+# Subtest: P: both input schema versions and duplicate IDs are validated
+ok 692 - P: both input schema versions and duplicate IDs are validated
+  ---
+  duration_ms: 0.511139
+  type: 'test'
+  ...
+# Subtest: K/M/N: STOP preserves output; rerun regenerates; all inputs stay byte-identical
+ok 693 - K/M/N: STOP preserves output; rerun regenerates; all inputs stay byte-identical
+  ---
+  duration_ms: 65.270568
+  type: 'test'
+  ...
+# Subtest: first run accepts absent review-results; malformed review-results and missing canonical STOP
+ok 694 - first run accepts absent review-results; malformed review-results and missing canonical STOP
+  ---
+  duration_ms: 40.938863
+  type: 'test'
+  ...
+# Subtest: candidate schema damage and canonical CSV parse failure STOP before output
+ok 695 - candidate schema damage and canonical CSV parse failure STOP before output
+  ---
+  duration_ms: 16.986518
+  type: 'test'
+  ...
+# Subtest: O: failed atomic save preserves output and removes its temporary file
+ok 696 - O: failed atomic save preserves output and removes its temporary file
+  ---
+  duration_ms: 3.93962
+  type: 'test'
+  ...
+# Subtest: current repository canonical and candidate inputs can produce reviews without writing
+ok 697 - current repository canonical and candidate inputs can produce reviews without writing
+  ---
+  duration_ms: 1030.231715
+  type: 'test'
+  ...
+# Subtest: pairs use same-song Cartesian product, work deduplication and scoped roles
+ok 698 - pairs use same-song Cartesian product, work deduplication and scoped roles
+  ---
+  duration_ms: 9.694322
+  type: 'test'
+  ...
+# Subtest: creator views work in both directions and self count comes from the same pair
+ok 699 - creator views work in both directions and self count comes from the same pair
+  ---
+  duration_ms: 0.808287
+  type: 'test'
+  ...
+# Subtest: artistId is a parameter, including multiple primary but excluding other artists' songs
+ok 700 - artistId is a parameter, including multiple primary but excluding other artists' songs
+  ---
+  duration_ms: 0.216255
+  type: 'test'
+  ...
+# Subtest: creator view uses competition ranks 1, 2, 2, 4
+ok 701 - creator view uses competition ranks 1, 2, 2, 4
+  ---
+  duration_ms: 0.233652
+  type: 'test'
+  ...
+# Subtest: CSV parser supports quoted commas, newlines, and doubled quotes
+ok 702 - CSV parser supports quoted commas, newlines, and doubled quotes
+  ---
+  duration_ms: 1.57423
+  type: 'test'
+  ...
+# Subtest: work aggregation covers primary filters, joint credits, roles, and version differences
+ok 703 - work aggregation covers primary filters, joint credits, roles, and version differences
+  ---
+  duration_ms: 10.410721
+  type: 'test'
+  ...
+# Subtest: lyrics+composition never combines roles found only on different songs
+ok 704 - lyrics+composition never combines roles found only on different songs
+  ---
+  duration_ms: 0.965764
+  type: 'test'
+  ...
+# Subtest: competition ranking and creator-id tie order are stable
+ok 705 - competition ranking and creator-id tie order are stable
+  ---
+  duration_ms: 0.737881
+  type: 'test'
+  ...
+# Subtest: core produces competition ranks 1, 2, 2, 4 for counts 5, 3, 3, 2
+ok 706 - core produces competition ranks 1, 2, 2, 4 for counts 5, 3, 3, 2
+  ---
+  duration_ms: 0.813084
+  type: 'test'
+  ...
+1..706
+# tests 796
+# suites 4
+# pass 795
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 5828712.359868

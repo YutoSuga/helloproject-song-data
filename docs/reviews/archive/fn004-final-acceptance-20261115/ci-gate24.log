@@ -1,0 +1,266 @@
+﻿2026-11-15T13:34:58.9547218Z Current runner version: '2.338.2'
+2026-11-15T13:34:58.9570566Z ##[group]Runner Image Provisioner
+2026-11-15T13:34:58.9571437Z Hosted Compute Agent
+2026-11-15T13:34:58.9572075Z Version: 20261103.629
+2026-11-15T13:34:58.9572896Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-15T13:34:58.9573624Z Build Date: 2026-11-03T17:26:59Z
+2026-11-15T13:34:58.9574363Z Worker ID: {7f463cc0-35d0-46ae-bcde-42a788def75d}
+2026-11-15T13:34:58.9575088Z Region: westus
+2026-11-15T13:34:58.9575707Z Cloud: Azure
+2026-11-15T13:34:58.9576312Z ##[endgroup]
+2026-11-15T13:34:58.9577728Z ##[group]Operating System
+2026-11-15T13:34:58.9578396Z Ubuntu
+2026-11-15T13:34:58.9579050Z 26.04.1
+2026-11-15T13:34:58.9579765Z LTS
+2026-11-15T13:34:58.9580408Z ##[endgroup]
+2026-11-15T13:34:58.9580963Z ##[group]Runner Image
+2026-11-15T13:34:58.9581542Z Image: ubuntu-26.04
+2026-11-15T13:34:58.9582183Z Version: 20261111.196.1
+2026-11-15T13:34:58.9583448Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261111.196/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-15T13:34:58.9585097Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261111.196
+2026-11-15T13:34:58.9586031Z ##[endgroup]
+2026-11-15T13:34:58.9587624Z ##[group]GITHUB_TOKEN Permissions
+2026-11-15T13:34:58.9589731Z Contents: read
+2026-11-15T13:34:58.9590498Z Metadata: read
+2026-11-15T13:34:58.9591064Z ##[endgroup]
+2026-11-15T13:34:58.9593509Z Secret source: Actions
+2026-11-15T13:34:58.9594708Z Cache mode: write
+2026-11-15T13:34:58.9595648Z Prepare workflow directory
+2026-11-15T13:34:58.9948349Z Prepare all required actions
+2026-11-15T13:34:59.0020391Z Getting action download info
+2026-11-15T13:34:59.3131344Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-11-15T13:34:59.4188661Z Download action repository 'actions/setup-node@v7' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+2026-11-15T13:34:59.5867033Z Complete job name: Gate publication (Node 24)
+2026-11-15T13:34:59.6820408Z ##[group]Run actions/checkout@v6
+2026-11-15T13:34:59.6821342Z with:
+2026-11-15T13:34:59.6821782Z   fetch-depth: 0
+2026-11-15T13:34:59.6822299Z   repository: YutoSuga/helloproject-song-data
+2026-11-15T13:34:59.6826249Z   token: ***
+2026-11-15T13:34:59.6826705Z   ssh-strict: true
+2026-11-15T13:34:59.6827153Z   ssh-user: git
+2026-11-15T13:34:59.6827608Z   persist-credentials: true
+2026-11-15T13:34:59.6828100Z   clean: true
+2026-11-15T13:34:59.6828557Z   sparse-checkout-cone-mode: true
+2026-11-15T13:34:59.6829114Z   fetch-tags: false
+2026-11-15T13:34:59.6829686Z   show-progress: true
+2026-11-15T13:34:59.6830143Z   lfs: false
+2026-11-15T13:34:59.6830559Z   submodules: false
+2026-11-15T13:34:59.6831014Z   set-safe-directory: true
+2026-11-15T13:34:59.6831517Z   allow-unsafe-pr-checkout: false
+2026-11-15T13:34:59.6832290Z ##[endgroup]
+2026-11-15T13:34:59.9381732Z Syncing repository: YutoSuga/helloproject-song-data
+2026-11-15T13:34:59.9384811Z ##[group]Getting Git version info
+2026-11-15T13:34:59.9386630Z Working directory is '/home/runner/work/helloproject-song-data/helloproject-song-data'
+2026-11-15T13:34:59.9389092Z [command]/usr/bin/git version
+2026-11-15T13:34:59.9399077Z git version 2.56.1
+2026-11-15T13:34:59.9431213Z ##[endgroup]
+2026-11-15T13:34:59.9446567Z Temporarily overriding HOME='/home/runner/work/_temp/dcb15b4f-201d-43da-8fef-c0a55431017f' before making global git config changes
+2026-11-15T13:34:59.9449357Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T13:34:59.9452197Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/helloproject-song-data/helloproject-song-data
+2026-11-15T13:34:59.9527114Z Deleting the contents of '/home/runner/work/helloproject-song-data/helloproject-song-data'
+2026-11-15T13:34:59.9531023Z ##[group]Determining repository object format
+2026-11-15T13:34:59.9533153Z ##[endgroup]
+2026-11-15T13:34:59.9534828Z ##[group]Initializing the repository
+2026-11-15T13:34:59.9537132Z [command]/usr/bin/git init /home/runner/work/helloproject-song-data/helloproject-song-data
+2026-11-15T13:34:59.9664570Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-15T13:34:59.9666605Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-15T13:34:59.9668098Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-15T13:34:59.9669273Z hint: call:
+2026-11-15T13:34:59.9670468Z hint:
+2026-11-15T13:34:59.9671395Z hint: 	git config --global init.defaultBranch <name>
+2026-11-15T13:34:59.9672411Z hint:
+2026-11-15T13:34:59.9673379Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-15T13:34:59.9675534Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-15T13:34:59.9677187Z hint:
+2026-11-15T13:34:59.9678657Z hint: 	git branch -m <name>
+2026-11-15T13:34:59.9680431Z hint:
+2026-11-15T13:34:59.9682500Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-15T13:34:59.9685551Z Initialized empty Git repository in /home/runner/work/helloproject-song-data/helloproject-song-data/.git/
+2026-11-15T13:34:59.9691273Z [command]/usr/bin/git remote add origin https://github.com/YutoSuga/helloproject-song-data
+2026-11-15T13:34:59.9751505Z ##[endgroup]
+2026-11-15T13:34:59.9753633Z ##[group]Disabling automatic garbage collection
+2026-11-15T13:34:59.9761732Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-15T13:34:59.9817347Z ##[endgroup]
+2026-11-15T13:34:59.9818792Z ##[group]Setting up auth
+2026-11-15T13:34:59.9820048Z Removing SSH command configuration
+2026-11-15T13:34:59.9825382Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T13:34:59.9864368Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T13:35:00.0365942Z Removing HTTP extra header
+2026-11-15T13:35:00.0375419Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T13:35:00.0422790Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T13:35:00.0710458Z Removing includeIf entries pointing to credentials config files
+2026-11-15T13:35:00.0717563Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T13:35:00.0763720Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T13:35:00.1051842Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-15T13:35:00.1091694Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git.path /home/runner/work/_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:35:00.1124708Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:35:00.1160558Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:35:00.1195010Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:35:00.1224234Z ##[endgroup]
+2026-11-15T13:35:00.1225127Z ##[group]Fetching the repository
+2026-11-15T13:35:00.1232624Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-15T13:35:00.7475967Z From https://github.com/YutoSuga/helloproject-song-data
+2026-11-15T13:35:00.7478005Z  * [new branch]      codex/2013911      -> origin/codex/2013911
+2026-11-15T13:35:00.7479943Z  * [new branch]      codex/csv          -> origin/codex/csv
+2026-11-15T13:35:00.7481987Z  * [new branch]      codex/csv-reuoag   -> origin/codex/csv-reuoag
+2026-11-15T13:35:00.7484084Z  * [new branch]      codex/github-pages -> origin/codex/github-pages
+2026-11-15T13:35:00.7485540Z  * [new branch]      codex/pr           -> origin/codex/pr
+2026-11-15T13:35:00.7487835Z  * [new branch]      design/fn004-fa-m01-gate-publication -> origin/design/fn004-fa-m01-gate-publication
+2026-11-15T13:35:00.7490377Z  * [new branch]      feature/song-candidate-collector -> origin/feature/song-candidate-collector
+2026-11-15T13:35:00.7492617Z  * [new branch]      fix/fn004-fa-m01-gate-publication -> origin/fix/fn004-fa-m01-gate-publication
+2026-11-15T13:35:00.7494616Z  * [new branch]      main               -> origin/main
+2026-11-15T13:35:00.7497318Z [command]/usr/bin/git branch --list --remote origin/main
+2026-11-15T13:35:00.7515575Z   origin/main
+2026-11-15T13:35:00.7526782Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-11-15T13:35:00.7550334Z a265e8a165e13f2fdd525a79cb7bd86ede00217b
+2026-11-15T13:35:00.7556212Z ##[endgroup]
+2026-11-15T13:35:00.7557657Z ##[group]Determining the checkout info
+2026-11-15T13:35:00.7559624Z ##[endgroup]
+2026-11-15T13:35:00.7561374Z [command]/usr/bin/git sparse-checkout disable
+2026-11-15T13:35:00.7624491Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-15T13:35:00.7656688Z ##[group]Checking out the ref
+2026-11-15T13:35:00.7658904Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-15T13:35:00.7985215Z Switched to a new branch 'main'
+2026-11-15T13:35:00.7991234Z branch 'main' set up to track 'origin/main'.
+2026-11-15T13:35:00.8002020Z ##[endgroup]
+2026-11-15T13:35:00.8045361Z [command]/usr/bin/git log -1 --format=%H
+2026-11-15T13:35:00.8072780Z a265e8a165e13f2fdd525a79cb7bd86ede00217b
+2026-11-15T13:35:00.8465690Z ##[group]Run actions/setup-node@v7
+2026-11-15T13:35:00.8466939Z with:
+2026-11-15T13:35:00.8467833Z   node-version: 24
+2026-11-15T13:35:00.8468864Z   package-manager-cache: false
+2026-11-15T13:35:00.8470182Z   check-latest: false
+2026-11-15T13:35:00.8481059Z   token: ***
+2026-11-15T13:35:00.8482021Z ##[endgroup]
+2026-11-15T13:35:00.9855504Z Found in cache @ /opt/hostedtoolcache/node/24.22.2/x64
+2026-11-15T13:35:01.0533701Z ##[group]Environment details
+2026-11-15T13:35:01.4060658Z node: v24.22.2
+2026-11-15T13:35:01.4062010Z npm: 11.19.1
+2026-11-15T13:35:01.4062932Z yarn: 1.22.22
+2026-11-15T13:35:01.4064720Z ##[endgroup]
+2026-11-15T13:35:01.4331108Z ##[group]Run node --test --test-concurrency=1 test/fn004-gate-publication.test.js test/fn004-gate-publication-crash.test.js test/fn004-gate-candidate-integration.test.js
+2026-11-15T13:35:01.4336376Z [36;1mnode --test --test-concurrency=1 test/fn004-gate-publication.test.js test/fn004-gate-publication-crash.test.js test/fn004-gate-candidate-integration.test.js[0m
+2026-11-15T13:35:01.4400556Z shell: /usr/bin/bash -e {0}
+2026-11-15T13:35:01.4401666Z ##[endgroup]
+2026-11-15T13:35:01.8238365Z ✔ GP10 genesis ignores only nonauthoritative candidate content (0 bytes) (215.563808ms)
+2026-11-15T13:35:01.9740834Z ✔ GP10 genesis ignores only nonauthoritative candidate content (8 bytes) (151.513516ms)
+2026-11-15T13:35:02.1259925Z ✔ GP10 genesis ignores only nonauthoritative candidate content (1 bytes) (151.688975ms)
+2026-11-15T13:35:02.1976292Z ✔ GP10 symlink candidate is unsafe even on the genesis fast path (71.628058ms)
+2026-11-15T13:35:02.2628358Z ✔ GP10 directory candidate is unsafe even on the genesis fast path (65.255452ms)
+2026-11-15T13:35:02.3254237Z ✔ GP10 candidate listing IO failure is not an empty/READY inventory (62.53182ms)
+2026-11-15T13:35:02.4771260Z ✔ GP10 a final-linked orphan candidate is neither a lease nor cleanup work (151.339354ms)
+2026-11-15T13:35:58.3381508Z ✔ GP13 paused candidate permits normal Apply and readonly retry without duplicate dispatch/ID/History (55610.763619ms)
+2026-11-15T13:35:58.3392424Z ✔ GP11 raw candidate addition/change/removal affects Observation v2 and stale commands (183.902702ms)
+2026-11-15T13:35:58.3393831Z ✔ GP10 candidate cannot become inputs authority even with matching hashes (25.378068ms)
+2026-11-15T13:35:58.3395160Z ✔ GP10 candidate cannot become backup_refs authority even with matching hashes (20.433198ms)
+2026-11-15T13:36:05.6533888Z ✔ GP10 candidate cannot become temp_refs authority even with matching hashes (19.790921ms)
+2026-11-15T13:36:05.6535948Z ✔ GP11/14 candidate stale token blocks mutation; fresh abort/retirement excludes orphan from cleanup (7315.657274ms)
+2026-11-15T13:36:05.8597271Z ✔ GP08 real SIGKILL/restart at before_temp_create (98.94393ms)
+2026-11-15T13:36:05.9426801Z ✔ GP08 real SIGKILL/restart at after_temp_create (82.844475ms)
+2026-11-15T13:36:06.0331552Z ✔ GP08 real SIGKILL/restart at during_temp_write (90.538177ms)
+2026-11-15T13:36:06.1149321Z ✔ GP08 real SIGKILL/restart at metadata_complete_before_sync (81.341555ms)
+2026-11-15T13:36:06.1996864Z ✔ GP08 real SIGKILL/restart at after_file_sync (84.698794ms)
+2026-11-15T13:36:06.2836925Z ✔ GP08 real SIGKILL/restart at before_link (84.02199ms)
+2026-11-15T13:36:06.3614943Z ✔ GP08 real SIGKILL/restart at after_link (77.735149ms)
+2026-11-15T13:36:06.4436196Z ✔ GP08 real SIGKILL/restart at after_directory_sync (81.969956ms)
+2026-11-15T13:36:06.5274740Z ✔ GP08 real SIGKILL/restart at after_candidate_unlink (83.781162ms)
+2026-11-15T13:36:06.6054492Z ✔ GP08 real SIGKILL/restart at before_response (77.782317ms)
+2026-11-15T13:36:06.6865524Z ✔ GP08 real SIGKILL/restart at owned_no_domain (81.154163ms)
+2026-11-15T13:36:06.7724828Z ✔ GP08 real SIGKILL/restart at release_before_unlink (85.764328ms)
+2026-11-15T13:36:06.8569181Z ✔ GP08 real SIGKILL/restart at release_after_unlink (84.482125ms)
+2026-11-15T13:36:06.9406750Z ✔ GP08 real SIGKILL/restart at release_after_directory_sync (83.451212ms)
+2026-11-15T13:36:07.0290345Z ✔ GP03 two independent completed publishers race one exclusive hard link (88.531232ms)
+2026-11-15T13:36:07.1369751Z ✔ GP01 complete immutable inode is linked and synced before lease/callback (30.891512ms)
+2026-11-15T13:36:07.1523692Z ✔ GP02 a paused incomplete candidate never publishes a partial final or reserves first place (15.450264ms)
+2026-11-15T13:36:07.1574338Z ✔ GP07 link before effect preserves publication evidence (5.067818ms)
+2026-11-15T13:36:07.1671712Z ✔ GP07 link after effect preserves publication evidence (9.390022ms)
+2026-11-15T13:36:07.1709766Z ✔ GP07 temp_create before effect has no lease (3.921559ms)
+2026-11-15T13:36:07.1747909Z ✔ GP07 temp_create after effect has no lease (3.428508ms)
+2026-11-15T13:36:07.1776806Z ✔ GP07 temp_write before effect has no lease (3.256389ms)
+2026-11-15T13:36:07.1810862Z ✔ GP07 temp_write after effect has no lease (3.124333ms)
+2026-11-15T13:36:07.1844016Z ✔ GP07 file_sync before effect has no lease (3.211665ms)
+2026-11-15T13:36:07.1885689Z ✔ GP07 file_sync after effect has no lease (4.14213ms)
+2026-11-15T13:36:07.1924399Z ✔ GP07 temp_verify before effect has no lease (3.757112ms)
+2026-11-15T13:36:07.1971121Z ✔ GP07 temp_verify after effect has no lease (4.670705ms)
+2026-11-15T13:36:07.2022870Z ✔ GP07 directory_sync before effect has no lease (4.907442ms)
+2026-11-15T13:36:07.2070776Z ✔ GP07 directory_sync after effect has no lease (4.759731ms)
+2026-11-15T13:36:07.2125688Z ✔ GP07 temp_cleanup before effect has no lease (5.642691ms)
+2026-11-15T13:36:07.2196529Z ✔ GP07 temp_cleanup after effect has no lease (7.055507ms)
+2026-11-15T13:36:07.2250539Z ✔ GP07 cleanup_directory_sync before effect has no lease (5.106797ms)
+2026-11-15T13:36:07.2307877Z ✔ GP07 cleanup_directory_sync after effect has no lease (5.926302ms)
+2026-11-15T13:36:07.2460580Z ✔ GP04 EEXIST then normal release/ENOENT reacquires exclusively, without fabricated BUSY (15.155979ms)
+2026-11-15T13:36:07.2648187Z ✔ GP04 ABA validates the new owner, never removes its final (18.784214ms)
+2026-11-15T13:36:07.2754538Z ✔ GP05 namespace races are bounded (eight retries) (10.675105ms)
+2026-11-15T13:36:07.2796209Z ✔ GP05 namespace races are bounded (shared expired budget) (4.027285ms)
+2026-11-15T13:36:07.2834292Z ✔ GP03/05 EIO never falls back to rename (3.773462ms)
+2026-11-15T13:36:07.2871476Z ✔ GP03/05 EACCES never falls back to rename (3.666647ms)
+2026-11-15T13:36:07.2914669Z ✔ GP03/05 EPERM never falls back to rename (4.185661ms)
+2026-11-15T13:36:07.2955638Z ✔ GP03/05 EXDEV never falls back to rename (4.050756ms)
+2026-11-15T13:36:07.3005954Z ✔ GP03/05 ENOTSUP never falls back to rename (5.074477ms)
+2026-11-15T13:36:07.3049969Z ✔ GP06 corrupt final retained:  (4.391474ms)
+2026-11-15T13:36:07.3092099Z ✔ GP06 corrupt final retained: { (4.15294ms)
+2026-11-15T13:36:07.3171439Z ✔ GP06 corrupt final retained: [] (7.794176ms)
+2026-11-15T13:36:07.3263156Z ✔ GP06 corrupt final retained: � (9.231785ms)
+2026-11-15T13:36:07.3306198Z ✔ GP06 corrupt final retained: {"schema_version":99} (4.155358ms)
+2026-11-15T13:36:07.3409812Z ✔ GP06 full metadata type/root validation, not merely JSON or hash (10.442007ms)
+2026-11-15T13:36:07.3510877Z ✔ GP06 full metadata type/root validation, not merely JSON or hash (9.828172ms)
+2026-11-15T13:36:07.3612124Z ✔ GP06 full metadata type/root validation, not merely JSON or hash (10.081667ms)
+2026-11-15T13:36:07.3769371Z ✔ GP09 release unlink_after cannot delete a later owner (15.8023ms)
+2026-11-15T13:36:07.3901935Z ✔ GP09 release dir_sync cannot delete a later owner (13.008233ms)
+2026-11-15T13:36:07.3963256Z ✔ GP10 exact candidate classification precedes publisherTarget, but is not an ArtifactRef allowlist (6.263494ms)
+2026-11-15T13:36:07.4017781Z ✔ GP03 identical metadata/lock_id on a different inode never creates ownership (5.351463ms)
+2026-11-15T13:36:07.4045303Z ✔ GP03 candidate name collision is never reused or removed without creation capability (2.769622ms)
+2026-11-15T13:36:07.4085061Z ✔ GP03 BigInt inode comparisons do not collapse adjacent values above 2^53 (3.968035ms)
+2026-11-15T13:36:07.4128046Z ✔ GP05 invalid final observation is not erased by its later ENOENT (4.281158ms)
+2026-11-15T13:36:07.4301849Z ✔ GP05 descriptor/path inode change validates the replacement (valid) (17.303798ms)
+2026-11-15T13:36:07.4402341Z ✔ GP05 descriptor/path inode change validates the replacement (invalid) (9.910881ms)
+2026-11-15T13:36:07.4503001Z ✔ GP07 BUSY candidate cleanup failure preserves original contention and other owner (10.01707ms)
+2026-11-15T13:36:07.4732740Z ✔ GP16 new Gate failures keep CLI codes and a single JSON error document (22.893695ms)
+2026-11-15T13:36:09.5798983Z ✔ GP05 first EEXIST starts one monotonic second, never a fresh deadline per race (2106.523553ms)
+2026-11-15T13:36:09.5942561Z ✔ GP05 wall-clock changes cannot reset or prematurely expire the monotonic retry bound (14.345376ms)
+2026-11-15T13:36:09.6052702Z ✔ GP09 descriptor close before effect retains final without unlink (11.147958ms)
+2026-11-15T13:36:09.6188805Z ✔ GP09 descriptor close after effect retains final without unlink (13.406584ms)
+2026-11-15T13:36:09.6288710Z ✔ GP07 read and close failures preserve the first native cause, permission code and descriptor (10.015287ms)
+2026-11-15T13:36:09.6406898Z ℹ tests 79
+2026-11-15T13:36:09.6407281Z ℹ suites 0
+2026-11-15T13:36:09.6407817Z ℹ pass 79
+2026-11-15T13:36:09.6408187Z ℹ fail 0
+2026-11-15T13:36:09.6408682Z ℹ cancelled 0
+2026-11-15T13:36:09.6409052Z ℹ skipped 0
+2026-11-15T13:36:09.6410750Z ℹ todo 0
+2026-11-15T13:36:09.6411943Z ℹ duration_ms 68157.512536
+2026-11-15T13:36:09.6594751Z Post job cleanup.
+2026-11-15T13:36:09.7946952Z Post job cleanup.
+2026-11-15T13:36:09.8951213Z [command]/usr/bin/git version
+2026-11-15T13:36:09.9001489Z git version 2.56.1
+2026-11-15T13:36:09.9049791Z Temporarily overriding HOME='/home/runner/work/_temp/5149f735-69b9-48d4-a1f8-c73bdf9b60dd' before making global git config changes
+2026-11-15T13:36:09.9051517Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T13:36:09.9055908Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/helloproject-song-data/helloproject-song-data
+2026-11-15T13:36:09.9098222Z Removing SSH command configuration
+2026-11-15T13:36:09.9109955Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T13:36:09.9154834Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T13:36:09.9506390Z Removing HTTP extra header
+2026-11-15T13:36:09.9514010Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T13:36:09.9582646Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T13:36:09.9960022Z Removing includeIf entries pointing to credentials config files
+2026-11-15T13:36:09.9978156Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T13:36:10.0023049Z includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git.path
+2026-11-15T13:36:10.0031575Z includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git/worktrees/*.path
+2026-11-15T13:36:10.0032957Z includeif.gitdir:/github/workspace/.git.path
+2026-11-15T13:36:10.0033947Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-15T13:36:10.0037638Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git.path
+2026-11-15T13:36:10.0072574Z /home/runner/work/_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:36:10.0085970Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git.path /home/runner/work/_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:36:10.0132813Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git/worktrees/*.path
+2026-11-15T13:36:10.0157796Z /home/runner/work/_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:36:10.0172955Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/helloproject-song-data/helloproject-song-data/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:36:10.0208592Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-11-15T13:36:10.0233203Z /github/runner_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:36:10.0244005Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:36:10.0281202Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-15T13:36:10.0305876Z /github/runner_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:36:10.0316097Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config
+2026-11-15T13:36:10.0355389Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T13:36:10.0650138Z Removing credentials config '/home/runner/work/_temp/git-credentials-fc1a2deb-2c17-4bb5-81d3-3c6cf7fadd0f.config'
+2026-11-15T13:36:10.0825158Z Cleaning up orphan processes
+

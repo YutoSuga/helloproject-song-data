@@ -1,0 +1,1 @@
+{"commands":["status","init","decision template","decision import","decision show","decision validate","decision confirm","plan create","plan show","plan check","apply","result","history show","recovery inspect","recovery run"],"usage":"npm run canonical:manage -- <command> [--json]","documentation":"docs/canonical-cli.md"}
