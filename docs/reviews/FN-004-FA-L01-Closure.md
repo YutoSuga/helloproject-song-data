@@ -1,7 +1,7 @@
 # FN-004 FA-L01 merge後の解消確認
 
-正式判定：**OPEN / LOW / non-blocking（CI最終結果の確認待ち）**。
-原本の文書指摘は解消している。実装不一致や契約変更は発見しなかったが、PR #90とmerge後mainのTest and buildが未完了であり、今回の必要証拠が揃っていないため正式CLOSEDとは判定しない。CI未完了を失敗と扱っているわけではない。
+正式判定：**CLOSED（FA-L01 / LOW）**。
+原本の3正本の指摘修正・実装一致・契約不変性に加え、PR #90とmerge後mainの既存CIの最終成功を確認した。以下の初回確認記録を保持し、最終CI証拠と正式判定を追記する。
 
 ## 検証対象・環境
 
@@ -41,9 +41,9 @@ first-parent対mergeの全diffを確認。変更はstatus proseだけで、schem
 
 Production Bootstrap / Apply / Recovery、強制unlock、SCR-002 writeは実行していない。Productionデータ操作なし。PR90にProductionデータ差分なし。本記録も報告書と検証証拠のみを追加する。
 
-## CI証拠と判定への影響
+## 初回CI証拠（10:09時点・履歴）
 
-最終取得2026-11-16T10:09:59Z。[GitHub API証拠](archive/fn004-fa-l01-closure/github.json)。connectorのcommit workflow検索ではmainのrunが空だったため、GitHub RESTのcheck-runsとrun jobsで実在runを確認した。空の検索結果をCI不存在とは判断しない。
+初回取得2026-11-16T10:09:59Z。[GitHub API証拠](archive/fn004-fa-l01-closure/github.json)。connectorのcommit workflow検索ではmainのrunが空だったため、GitHub RESTのcheck-runsとrun jobsで実在runを確認した。空の検索結果をCI不存在とは判断しない。
 
 | 対象 | Gate Node20 / Node24 | Test and build |
 | --- | --- | --- |
@@ -68,6 +68,19 @@ workflow `.github/workflows/deploy-pages.yml`のTest and buildはnpm test・rank
 
 ## 正式判定・次の作業
 
-**OPENを維持する理由はCI最終証拠の不足**。3正本の原本指摘、現行実装との一致、契約不変性、文書検証は充足した。CLOSED前提の監査とはせず、必要CI未完了を残す。次は上記2runのTest and buildの最終結果を取得し、失敗なら内容と影響を評価する。mainが進めば固定SHAとの差分も再確認したうえで、新しい追記記録で正式CLOSED可否を判断する。設計書の再修正を求める判定ではない。
+最終確認日時：**2026-11-16T12:09:55.294104+00:00**。初回のOPENは当時の未完了CIに基づく履歴であり、今回の最終判定は**CLOSED**。
+
+[GitHub API証拠](archive/fn004-fa-l01-closure/github.json)の`final_verification`に、対象SHAで検索した全run（各1件、total_count照合）と全job（各4件）を保存した。いずれもattempt 1、status completed、run conclusion success。
+
+| 対象・SHA | workflow run ID / event | Test and build | Gate Node20 / Node24 | Deploy |
+| --- | --- | --- | --- | --- |
+| PR #90 head `bc98dd9ba711223c38b44f0f58afce40be836039` | [43841873238](https://github.com/YutoSuga/helloproject-song-data/actions/runs/43841873238) / pull_request | SUCCESS、job133212265189、10:30:04Z完了 | SUCCESS / SUCCESS、job133212265728 / 133212265461 | SKIPPED（PR eventの既存条件どおり） |
+| merge後main `4fa7907fb54deec77ebfe6618a73fb2f720dab88` | [43845391327](https://github.com/YutoSuga/helloproject-song-data/actions/runs/43845391327) / push | SUCCESS、job133224156947、10:49:39Z完了 | SUCCESS / SUCCESS、job133224157378 / 133224157539 | SUCCESS、job133247646378、10:49:57Z完了 |
+
+完了日はすべて2026-11-16 UTC。失敗・キャンセル・未完了jobは0。PR Deployのskipは失敗でも未完了でもない。固定SHAの`.github/workflows/deploy-pages.yml`を照合し、npm test・ranking validation・site build・生成差分検査とGate Node20/24を実施する当時の既存CI結果を使用した。開発中の軽量／フルCI切替仕様は前提にしていない。workflow変更・CI再実行なし。
+
+旧Final Acceptance §9/14、正式再受入、PR #90の3文書のみの全差分と本記録を再照合した。未実装断定が現行APIへの案内へ修正され、schema・安全手順・承認条件の意図しない変更はない。固定merge worktreeで既存check.pyを再実行し、相対リンク50件・fragment3件、表/fenced block一致、誤ったruntime未実装断定0を再確認。merge差分と本更新のgit diff --check成功。取得時origin/mainも固定merge SHAと同一。全suiteのローカル再実行はしていない。
+
+以上により、文書修正・契約不変性・PR CI・merge後main CI・証拠整合性の全条件が成立し、FA-L01を正式CLOSEDとする。FA-L01に残る未解決事項・クローズ阻害リスクはない。対象外5文書のFOLLOW-UP、既存運用制約、過去初回原因未確定は従来どおり残り、今回解消したとは扱わない。
 
 本記録PRは未mergeであり、この判定記録がmainに保存済みとは扱わない。ユーザーがmergeを判断する。過去Final Acceptanceの判定は不変。本確認はProduction運用開始・特定Plan・初回Applyの承認とは別であり、単一tree / FS / OS等の既存制約、過去監査の初回失敗原因未確定、上記FOLLOW-UPを解消したとは主張しない。
