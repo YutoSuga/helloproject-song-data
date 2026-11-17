@@ -1,38 +1,70 @@
-# PR label CI
+# PR・CI運用ルール
 
-`ci:light` selects light CI. No label selects full CI. Actions does not inspect changed files, titles, or change size. Manual dispatch is always full CI and only main is accepted.
+正は[workflow](workflows/deploy-pages.yml)と[CI選択処理](scripts/ci-policy.cjs)。開発・レビュー・手動マージの流れは[開発フロー](../docs/development-workflow.md)を参照する。
 
-## Events and commit identity
+## 軽量／フルの選択
 
-The existing `Deploy ranking site to GitHub Pages` workflow runs on main-targeted PR opened/synchronize/reopened/labeled/unlabeled events. All label events reevaluate the current label list; unrelated label changes also rerun CI to keep event handling simple. PR runs share a concurrency group with cancellation enabled. PRs never upload a Pages artifact or deploy. Closed events are not subscribed, including unmerged closes.
+`ci:light`ありは軽量、なしはフル。ファイル内容・タイトル・変更量の自動分類はしない。Codexが変更内容から判断する。文書・README・開発ルール・契約に影響しない表記整理は軽量の候補。ただし安全契約・運用手順の実質変更は個別判断する。
 
-Post-merge CI runs once on `push` to main. `.github/scripts/ci-policy.cjs` paginates PRs associated with the push SHA and requires exactly one merged PR whose `merge_commit_sha`, main base, and base repository match. It rechecks the PR detail before reading labels. Missing/ambiguous matches, API errors, or malformed data log a warning and select full CI. Labels are read at lookup time, not snapshotted at close. Manual dispatch does not query labels.
+実装、canonical CSV、ランキング処理、FN-004 runtime、workflow、テスト、公開HTML/CSS/JavaScript、安全性・整合性に影響する変更は原則フル。迷う場合もフルとし、`ci:full`は導入しない。
 
-The selection job outputs the event's `github.sha`. Gate Node 20/24 and build check out that same immutable SHA, with full history for the existing FN-004 audits. Deployment consumes only the Pages artifact from that workflow run, after build and both Gate jobs succeed. This intentionally replaces independent checkouts of moving main with the commit that triggered the run.
+軽量PRは`gh pr create --label ci:light`を推奨する。ただしCLI内部ではPR作成とラベル更新が別APIのため、初回フルCIが起動する可能性がある。ラベル追加時の再実行で置き換わるので、ラベルと最新runを必ず確認する。付与できなければ成功と報告しない。
 
-A pull_request.closed run retains its event execution ref even if checkout uses main; PR #92's run #116 was rejected by the Environment for `refs/pull/92/merge`. Using main push/manual runs fixes this without widening the Environment's main-only branch policy.
+## イベントと検証SHA
 
-## Publication ordering and permissions
+| イベント | 選択・実行 | 公開 |
+| --- | --- | --- |
+| main宛PRのopened / synchronize / reopened | PRイベントの現在ラベルで選択 | artifact upload・Deployなし |
+| PRのlabeled / unlabeled | 全ラベル変更で再判定。他ラベルの変更でも起動 | 同上 |
+| mainへのpush（マージ後を含む） | 対象SHAと一致するマージ済みPRを照会して選択 | 検証成功後にPages公開 |
+| workflow_dispatch | mainのみ実行、常にフル。ラベル照会なし | 検証成功後にPages公開 |
+| PR closed（マージ有無を問わず） | 購読しない | closed自体による公開なし |
 
-The existing `github-pages` deployment concurrency group now has `cancel-in-progress: false`. Its lock covers the freshness check and the Pages deployment. Immediately before deployment, the job reads main and compares it to the verified SHA. A stale SHA skips publication; lookup failure fails the job. An older run cannot publish after a newer run because all deployments share the lock and check freshness after acquiring it. GitHub does not guarantee FIFO ordering and may replace pending jobs; the newest successful main run is the publication target. A main update during an active deployment can leave the earlier site temporarily visible until the newer run succeeds, but cannot allow that earlier deployment to finish after a newer one in this workflow. External/manual cancellation of an active Pages deployment should be avoided because server-side work may continue.
+PRは同じPR番号・イベント名のconcurrency groupで進行中runをキャンセルし、最新ラベルで再実行する。main pushはSHAごとのgroupで検証を独立させる。
 
-Only the selection job adds `pull-requests: read` for PR lookup. Build/Gate retain `contents: read`. Deploy retains `pages: write` and `id-token: write`, and adds `contents: read` for main freshness lookup. Checkout does not persist credentials. No `actions: write`, `pull_request_target`, cross-run artifact downloads, or deployment inputs are introduced. Non-main manual runs skip selection and all dependent jobs. The github-pages Environment protection is unchanged.
+`Select CI mode`（ci_mode）はmain pushのSHAに関連するPRをページング取得し、merged_at、merge_commit_sha、base=main、同一repositoryが一致するPRを**ちょうど1件**要求する。さらにPR詳細を再取得し番号・merged・日時・SHA・base・repositoryを再照合して、その時点のラベルを読む。close時のラベルsnapshotではない。不在・不一致・曖昧・API失敗・不正データはwarningを出してフルへfallbackする。
 
-## Validation scope
+出力shaはイベントの`github.sha`。buildとGateは同じ固定SHAをfull-history checkoutする。非main手動実行は選択jobと依存jobをスキップする。
 
-Both modes preserve `Test and build` and `Gate publication (Node 20)` / `(Node 24)` names. Gate jobs initialize their Node environments in light mode and succeed with only the test step skipped.
+## job・コマンド
 
-Light CI skips only:
+軽量でもjob名を維持する。Gate job全体を省略せず、Node環境の初期化後にテストstepだけをスキップする。
 
-- `npm test` on Node 20 (including FN-004 tests).
-- The serial Gate publication/crash/candidate integration tests on Node 20 and 24.
+| job表示名 | 両モードで実行 | 軽量で省略 |
+| --- | --- | --- |
+| Select CI mode | mode / shaの選択 | なし |
+| Test and build | `git diff --check "$BASE_SHA" HEAD`、`npm run rankings:validate`、`npm run site:build`、`git diff --exit-code -- site/data/rankings` | Node 20の`npm test`（FN-004含む全テスト） |
+| Gate publication (Node 20) / Gate publication (Node 24) | checkout・Node設定 | 下記のGateテストstep |
+| Deploy | main push / main手動実行で、選択・build・両Gate成功後のみ | PRではjobをスキップ |
 
-Both modes run whitespace checking, `npm run rankings:validate`, `npm run site:build` (canonical CSV to ranking JSON), and `git diff --exit-code -- site/data/rankings`. Full CI preserves all existing test commands. Main push and main manual dispatch retain the existing Pages artifact and deployment actions.
+GateのフルCIコマンド：
 
-## Rollout checks
+```bash
+node --test --test-concurrency=1 test/fn004-gate-publication.test.js test/fn004-gate-publication-crash.test.js test/fn004-gate-candidate-integration.test.js
+```
 
-Classic main branch protection could not be read during PR #92 investigation (integration HTTP 403); check names remain unchanged. Pages Environment has a custom branch policy allowing main only.
+空白検査のBASE_SHAはPRではbase SHA、それ以外はHEAD^。site buildはcanonical CSVからランキングJSONを生成する。生成物差分があれば失敗し、自動commit / pushはしない。Pages artifact uploadはmain push / main手動実行だけで行う。
 
-Before merge, verify policy fallback cases, workflow event/permission conditions, fixed checkout SHA, stale-publication gating, light data/build commands, and full PR CI. Actual main-push label selection, non-main manual rejection, and Pages deployment are rollout checks, not proven by a PR run. After user-approved merge, verify light/full main pushes, current main's artifact/deployment, stale run skip, published content, and no publication on PR/close. Do not merge the implementation PR automatically to perform these checks.
+## Pages公開と順序
 
-GitHub CLI accepts `gh pr create --label ci:light` but applies labels after creation in a second API call (`cli/cli`, `api/queries_pr.go`, `CreatePullRequest`). An initial full run can start; label-event concurrency replaces it. The GitHub connector's create-PR operation has no labels parameter.
+Deployは同じrunの検証済みartifactだけを使用する。`github-pages`のconcurrency lockを取得後、公開直前にmainの最新SHAと検証SHAを比較し、古ければ公開stepをスキップする。照会失敗はjob失敗。lockは公開まで保持し、cancel-in-progressはfalse。古いrunが新しい公開の後に上書きしないようにする。FIFO保証はなく、pending jobは置き換わり得る。
+
+公開中にmainが進めば新run成功まで古いサイトが一時的に見えることはある。外部から進行中Deployをキャンセルするとサーバー処理が継続し得るため避ける。Environmentはmainのみ許可。checkoutで認証情報を保持せず、選択jobはcontents/read・pull-requests/read、Deployはcontents/read・pages/write・id-token/writeを使用する。
+
+## 結果の確認・失敗時
+
+1. PRラベル、対象head SHA、最新run・イベントを確認する。旧キャンセルrunと区別する。
+2. `Select CI mode`の出力と、`Run tests`・Gateテストstepのsuccess / skippedを照合し、実際のモードを確認する。
+3. buildの空白・ランキング検証・build・生成物整合性、両Gate jobが成功したことを確認する。PRのDeployはskippedが正常。
+4. PRのChecksとrequired checksの完了を確認する。保護設定APIを読めない場合、チェック成功とrequired指定の確認を混同せず制約を報告する。
+5. ユーザーのマージ後、main push runが対象SHAで起動したか、PR照会の選択結果、全job、artifact、freshness、Pagesデプロイ結果・environment URLの公開内容を確認する。job成功だけで公開step成功を推定しない。
+
+失敗時は最初に失敗したstepとログ・SHA・ラベル・選択結果を調べ、修正と再検証を行う。原因不明のまま軽量化して失敗を隠さない。未完了・未実施・API閲覧不可を成功扱いしない。
+
+## 導入履歴と未検証範囲
+
+PR #92は軽量CIを導入したが、[マージ後run 44003187811](https://github.com/YutoSuga/helloproject-song-data/actions/runs/44003187811)はbuild / Gate成功、Deploy失敗。closedイベントはcheckoutをmainにしても実行refが`refs/pull/92/merge`で、Environmentに拒否された。
+
+PR #93でmain push方式・厳密なラベル照会・固定SHA・公開直前確認へ変更。[マージ後run 44038002025](https://github.com/YutoSuga/helloproject-song-data/actions/runs/44038002025)は全job・Deploy成功。#92の失敗履歴は維持する。
+
+PR #92調査時、classic main branch protection APIはintegration権限不足（403）。チェック名維持とrequired設定の完全照合は別。軽量main push、fallback、非main手動拒否、古い成果物の実スキップ等は、それぞれ実測した範囲で報告する。PR-Aの軽量PR成功だけでマージ後の軽量公開まで検証済みとはしない。検証目的の自動マージは禁止。

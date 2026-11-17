@@ -1,21 +1,50 @@
 # Hello! Project Song Data Roadmap
 
-Last updated: 2026-10-29
+Last updated: 2026-11-17（UTC）
 
-Current phase: Milestone 3-B2 / FN-004 canonical反映機能 — Slice 5（Approval / Apply Request）の実装・修正・最終レビュー中。
+Current phase: FN-004 runtime実装・Final Acceptance完了。次はSCR-001 公開サイト改善。
 
-本書は、2026-10-29時点の進捗と直近の開発ペースを前提にした、人間判断によるplanning estimateです。期日までの完成を約束するcommitmentやdeadlineではありません。標準完成目標は**2027年3月のMilestone 3完成（日常運用可能な管理基盤の完成）**です。設計変更、独立レビューでのSTOP、追加Follow-up、外部サービス選定などで時期は変動します。
+設計のSource of Truthは[機能ID体系](feature-ids.md)と各正式設計書。本書は計画と実績を記録し、正式なschema・安全契約・Production操作手順を変更しない。
 
-設計のSource of Truthは[機能ID体系](feature-ids.md)と各正式設計書です。本書は計画・見積もりを確認するliving documentであり、formal design contractを変更しません。
+## 現在地
 
-## 基準日時点の現在地と根拠
+確認したmainは `88217ed37d2145400cca99f821c7455f945bbedc`（PR #93）。FN-001〜FN-003、SCR-001は実装済み。FN-004はSlice 1〜6Fと公開CLIが実装済みで、2026-11-15の[Final Acceptance](reviews/FN-004-Final-Acceptance-20261115.md)はPASS、FA-M01はCLOSED。[FA-L01](reviews/FN-004-FA-L01-Closure.md)も2026-11-16にCLOSEDとなった。
 
-- 確認したmain: `c200c1c95e6daf0dba060a26c7d29aa2368bceb8`。FN-002 楽曲候補収集機能、FN-003 レビュー準備機能、FN-001 公開サイトデータ生成機能、SCR-001 公開サイト画面は実装済み。
-- FN-004はSlice 1〜3（schema / repository / bootstrap）、Slice 4（Decision / Apply Plan）とHistory readonlyがmainへ反映済み。Slice 5は終盤で、Approval / Apply Requestの実装・修正・最終レビュー中。Transaction / Recovery・実Apply入口は未完成。
-- 基準日時点の参考情報：[PR #68](https://github.com/YutoSuga/helloproject-song-data/pull/68)はOPEN。mainには[Request response契約](design/FN-004-承認・反映リクエスト.md#apply-request-application-response-contract-v1)のfollow-upもmerge済みで、未mergeの実装は正式契約への追従・レビューを経て完了とする。OPENは完了を意味しない。
-- 確認資料：[README](../README.md)、[機能ID体系](feature-ids.md)、[候補収集](design/FN-002-楽曲候補収集.md)、[公開サイト](design/公開サイトのデータ生成・表示.md)、[canonical registration](design/レビュー準備・canonical反映の全体フロー.md)、[Decision](design/FN-004-判断モデル.md)、[Apply Plan](design/FN-004-反映計画.md)、[Approval / Request](design/FN-004-承認・反映リクエスト.md)、[Transaction / Recovery](design/FN-004-反映処理・復旧.md)、[History readonly](design/FN-004-成功履歴・読取検証.md)、[Bootstrap](design/FN-004-初期化・ID状態.md)、[CLI / SCR-002](design/楽曲管理のCLI・画面連携.md)。正式設計書やREADMEに残る「runtime未実装」は初期設計時の記載であり、上記の部分実装とFN-004全体の完成を区別する。
+Production BootstrapはPR #61で保存済み。受入記録のProductionはREADY / initialized、History 0、last_apply_id null。これはBootstrap済みという意味で、**本番初回Apply完了・日常運用開始を意味しない**。本番初回Applyの実施記録は今回の調査では確認していない。Final AcceptanceもProduction操作の承認ではない。日常運用開始は別途の運用判断が必要で、SCR-002・JOB-001は未実装。今回Production操作は行わない。
 
-## メインロードマップ（計画値）
+## 開発実績
+
+日付はUTC。以下の「マージ」はmainのfirst-parent merge commit日、「実装」は実装commit日、「判定」は正式レビュー記録の日付であり、相互に代用しない。当初計画は後掲の2026-10-29記録を維持する。それ以前の項目には、その表に計画値がないため「記録なし」とした。
+
+| マイルストーン | 当初計画 | 実績 | 状態 | 根拠 |
+| --- | --- | --- | --- | --- |
+| 初期公開サイト / SCR-001・FN-001 | 記録なし | 実装2026-10-05、マージ10-05。Pages workflowマージ10-07 | 実装済み（初回公開成功日時は未特定） | [実装e21e93d](https://github.com/YutoSuga/helloproject-song-data/commit/e21e93d)、[PR #42](https://github.com/YutoSuga/helloproject-song-data/pull/42)、[PR #43](https://github.com/YutoSuga/helloproject-song-data/pull/43) |
+| Milestone 1：ランキングカテゴリ拡張 | 記録なし | マージ2026-10-10 | 完了 | [PR #47](https://github.com/YutoSuga/helloproject-song-data/pull/47) / ef2d20d |
+| Milestone 2：作詞×作曲分析 | 記録なし | マージ2026-10-10 | 完了 | [PR #48](https://github.com/YutoSuga/helloproject-song-data/pull/48) / d7ab80c |
+| FN-002：楽曲候補収集 | 記録なし | マージ2026-10-10 | 完了 | [PR #49](https://github.com/YutoSuga/helloproject-song-data/pull/49) / 2d2d645 |
+| FN-002：複数artist収集 | 記録なし | マージ2026-10-11 | 完了 | [PR #50](https://github.com/YutoSuga/helloproject-song-data/pull/50) / 9d32ff7 |
+| Milestone 3-B0：文書・構成整理 | 記録なし | マージ2026-10-11 | 完了 | [PR #51](https://github.com/YutoSuga/helloproject-song-data/pull/51) / b5c3a25 |
+| FN-003：レビュー準備 | 記録なし | マージ2026-10-12 | 完了 | [PR #52](https://github.com/YutoSuga/helloproject-song-data/pull/52) / e3fc82c |
+| FN-004：Bootstrap / Slice 1〜3 | 計画表作成前 | 実装マージ10-16〜10-19、本番Bootstrap保存10-24 | 完了 | [PR #56](https://github.com/YutoSuga/helloproject-song-data/pull/56)、[PR #57](https://github.com/YutoSuga/helloproject-song-data/pull/57)、[PR #59](https://github.com/YutoSuga/helloproject-song-data/pull/59)、[PR #61](https://github.com/YutoSuga/helloproject-song-data/pull/61) |
+| FN-004：Slice 4 / History readonly | 計画表作成前 | マージ2026-10-25〜10-27 | 完了 | [PR #63](https://github.com/YutoSuga/helloproject-song-data/pull/63)〜[PR #66](https://github.com/YutoSuga/helloproject-song-data/pull/66) |
+| FN-004：Slice 5 | 10月末〜11月上旬 | マージ2026-10-31 | 完了 | [PR #68](https://github.com/YutoSuga/helloproject-song-data/pull/68) / 44cf80b |
+| FN-004：Transaction / Recovery / 公開CLI | 11月前半〜下旬（全体完成11月末〜12月上旬） | Slice 6A〜6Fマージ11-02〜11-10 | runtime実装完了 | [PR #77](https://github.com/YutoSuga/helloproject-song-data/pull/77)〜[PR #84](https://github.com/YutoSuga/helloproject-song-data/pull/84)（途中の設計・文書PRを含む） |
+| FA-M01修正・クローズ | 記録なし | 修正マージ11-15、CLOSED判定11-15 | 完了 | [PR #86](https://github.com/YutoSuga/helloproject-song-data/pull/86) / bc16c36、[検証](reviews/FN-004-FA-M01-Validation-20261115.md)、[正式判定](reviews/FN-004-Final-Acceptance-20261115.md) |
+| FN-004 Final Acceptance | 記録なし | PASS判定2026-11-15、記録マージ11-16 | PASS（本番運用承認とは別） | [受入記録](reviews/FN-004-Final-Acceptance-20261115.md)、[PR #89](https://github.com/YutoSuga/helloproject-song-data/pull/89) / cfb6728 |
+| FA-L01クローズ | 記録なし | 修正文書・CLOSED判定11-16、記録マージ11-16 | 完了 | [PR #90](https://github.com/YutoSuga/helloproject-song-data/pull/90)、[PR #91](https://github.com/YutoSuga/helloproject-song-data/pull/91) / 7e09088、[判定記録](reviews/FN-004-FA-L01-Closure.md) |
+| PR #92：軽量CI導入 | 記録なし | マージ2026-11-17 | マージ後Deploy失敗 | [PR #92](https://github.com/YutoSuga/helloproject-song-data/pull/92) / 6e05003、[失敗run](https://github.com/YutoSuga/helloproject-song-data/actions/runs/44003187811)（build・Gate成功） |
+| PR #93：CI / Pages修正 | 記録なし | マージ2026-11-17 | マージ後CI・Deploy成功 | [PR #93](https://github.com/YutoSuga/helloproject-song-data/pull/93) / 88217ed、[成功run](https://github.com/YutoSuga/helloproject-song-data/actions/runs/44038002025) |
+
+## 今後の開発順序
+
+1. SCR-001改善 PR 1：共通ナビゲーション・ページ分離。PC固定サイドバー、スマホ下部タブ、5ページ構成、既存ランキングの移設を予定。
+2. SCR-001改善 PR 2：データ説明・透明性改善。
+3. SCR-002：楽曲管理画面のArchitecture設計・実装。
+4. JOB-001：候補収集の定期実行。
+
+SCR-002より先にSCR-001改善を進める。2027年3月完成目標と以下の3ケースは**2026-10-29時点の過去見積もり**。FN-004の実績とSCR-001改善の追加を踏まえ再見積もりが必要であり、新しい完了日は未設定。Milestone 3-Bの日常運用開始や3-C / 3-Dの完了をruntime受入だけで宣言しない。
+
+## 当初計画（2026-10-29記録・変更せず保存）
 
 Milestone 3の正式名称は「他Hello! Projectグループへの展開」。3-Bは3-B0 / 3-B1 / 3-B2からなり、残るFN-004完成でレビューからcanonical反映までの人間確認フローを揃える。
 
@@ -44,25 +73,11 @@ Milestone 3の正式名称は「他Hello! Projectグループへの展開」。3
 | 標準予想 | 2026年12月上旬 | 2027年1月末 | 2027年3月 |
 | STOP・設計変更多め | 2026年12月末 | 2027年2〜3月 | 2027年4〜5月 |
 
-中心的な見積もりは**2027年3月**。各ケースはplanning estimateでありdeadlineではない。メイン表は標準予想を軸にし、安定化は先行して進められる範囲から行う。
-
-## フェーズの流れ
-
-```text
-現在：FN-004 Slice 5（実装・修正・最終レビュー）
-  ↓ Transaction / Recovery（History・CLI統合・障害試験を含む）
-FN-004 完成 → Milestone 3-B 完了
-  ↓ SCR-002 Architecture / Design → SCR-002 実装
-Milestone 3-C 完了
-  ↓ JOB-001 → Milestone 3-D 完了
-Milestone 3 安定化
-  ↓
-日常運用可能な管理基盤の完成
-```
+当時の中心的な見積もりは**2027年3月**。各ケースはplanning estimateでありdeadlineではない。メイン表は標準予想を軸にし、安定化は先行して進められる範囲から行う。
 
 ## SCR-002：Web管理画面へのArchitecture milestone
 
-現在はCLI / file中心で、以下の責務を順に構築している（FN-004全体は未完成）。
+現在はCLI / file中心で、FN-004までのruntimeは実装済み。以下は責務の流れ。
 
 ```text
 official source → FN-002 → song-candidates → FN-003
@@ -78,7 +93,7 @@ SCR-002 admin UI → authenticated Backend / API
   → canonical CSV
 ```
 
-既存の6内部view・共通service境界を基礎に、Web管理画面中心へ移行する大きなArchitecture milestoneとなる。Backend技術、API方式、認証provider / session、hosting / deployment方式は未決定で、2026年12月の設計で選定する。browserがGitHub tokenやCSV・lock・journalを直接操作する構成にはしない。SCR-001は静的公開を維持し、bootstrap / recovery実行はv1ではCLIのみとするため、通常運用の管理画面化と障害復旧のCLI運用は両立する。
+既存の6内部view・共通service境界を基礎に、Web管理画面中心へ移行する大きなArchitecture milestoneとなる。Backend技術、API方式、認証provider / session、hosting / deployment方式は未決定で、今後のArchitecture設計で選定する（旧計画は2026年12月）。browserがGitHub tokenやCSV・lock・journalを直接操作する構成にはしない。SCR-001は静的公開を維持し、bootstrap / recovery実行はv1ではCLIのみとするため、通常運用の管理画面化と障害復旧のCLI運用は両立する。
 
 ## JOB-001後の運用イメージ
 
@@ -95,7 +110,7 @@ JOB-001はFN-002を起動し、判断・canonical反映を自動確定しない�
 
 ## 「完成」の定義
 
-2027年3月の目標はMilestone 3完成、すなわち日常運用可能な管理基盤の完成を意味する。
+旧見積もりの2027年3月の目標はMilestone 3完成、すなわち日常運用可能な管理基盤の完成を意味する。
 
 - 候補収集を自動化できる。
 - 人間が管理画面で候補を確認し、Decisionを安全に作成できる。
@@ -125,7 +140,7 @@ Milestoneは開発順序・開発計画、SCR / FN / JOBはシステム上の機
 | 3-A / 3-A Follow-up | FN-002 楽曲候補収集機能 | 完了 / 実装済み |
 | 3-B0 | 文書・構成の整理（独立した機能IDなし） | 完了 |
 | 3-B1 | FN-003 レビュー準備機能 | 完了 / 実装済み |
-| 3-B2 | FN-004 canonical反映機能 | 正式v1設計あり / Slice 4までmain反映済み、Slice 5レビュー中 |
+| 3-B2 | FN-004 canonical反映機能 | runtime実装済み / Final Acceptance PASS。本番初回Applyとは別 |
 | 3-C | SCR-002 楽曲管理画面 | interface・6内部view設計済み / runtime未実装 |
 | 3-D | JOB-001 楽曲候補定期収集ジョブ | 予定 / 未実装。FN-002を定期起動 |
 
@@ -184,17 +199,17 @@ Milestoneは開発順序・開発計画、SCR / FN / JOBはシステム上の機
 
 ## Milestone 3：他Hello! Projectグループへの展開
 
-3-A と 3-A Follow-up は完了。FN-002 楽曲候補収集機能はモーニング娘。、アンジュルム、Juice=Juice、つばきファクトリー、BEYOOOOONDS、OCHA NORMA、ロージークロニクルの主要7グループに対応し、実サイトで全対象 artist の収集に成功した。FN-001のランキング処理は特定の `artist_id` をハードコードせず、指定して集計できる構成を維持する。3-B1 / FN-003は完了しており、次フェーズは3-B2 / FN-004 canonical反映機能とする。
+3-A と 3-A Follow-up は完了。FN-002 楽曲候補収集機能はモーニング娘。、アンジュルム、Juice=Juice、つばきファクトリー、BEYOOOOONDS、OCHA NORMA、ロージークロニクルの主要7グループに対応し、実サイトで全対象 artist の収集に成功した。FN-001のランキング処理は特定の `artist_id` をハードコードせず、指定して集計できる構成を維持する。3-B1 / FN-003は完了しており、FN-004はruntime実装・受入済み。次はSCR-001改善とする。
 
 - **3-A / FN-002 楽曲候補収集機能（完了）**：公式 release 一覧・詳細から音声トラックを収集し、正本 CSV と参考照合して `staging/song-candidates.json` に保存する。人間の status と notes を再実行時も保持する。詳細は[収集仕様](collection-spec.md)。手動CLIはFN-002の入口であり、定期起動のJOB-001は未実装。
 - **3-A Follow-up / FN-002 複数artist収集（完了）**：通常運用は設定済み7グループ全体、個別確認は `--artist <slug>` を使用する。全選択 artist の成功後だけ共通 staging を一度保存し、途中失敗時は更新しない。旧名義・関連ユニットは source と実名義を区別して保持し、artist identity を自動統合しない。
 - **3-B0 structure / docs refresh（完了）**：現行構造、実装機能、データフローを README と基本設計に反映し、3-B1 / 3-B2 の入口を整理した。
 - **3-B1 / FN-003 レビュー準備機能（完了）**：候補と正本 CSV、過去レビューを照合し、自動で分かる情報と人間判断が必要な項目を `staging/song-reviews.json` に整理する。正本 CSV は書き換えない。
-- **3-B2 / FN-004 canonical反映機能（正式v1設計統合済み / 部分実装済み、Slice 5レビュー中）**：有効confirmed Decisionから不変Planを作り、Approval・request_id付きdurable受付を通して既存参照/新規追加をall-or-nothingに反映する。COMMIT_DECIDED前は原則rollback、後はHistory等をfinalizeする。bootstrap・ID上限・再送/復旧契約を含む。
+- **3-B2 / FN-004 canonical反映機能（runtime実装済み / Final Acceptance PASS）**：有効confirmed Decisionから不変Planを作り、Approval・request_id付きdurable受付を通して既存参照/新規追加をall-or-nothingに反映する。COMMIT_DECIDED前は原則rollback、後はHistory等をfinalizeする。bootstrap・ID上限・再送/復旧契約を含む。
 - **3-C / SCR-002 楽曲管理画面（interface設計済み / runtime未実装）**：管理一覧・レビュー編集・Decision確認・Apply Preflight・Apply結果・System Statusの6内部view。CLIと同じserviceを使い、bootstrap/recovery実行はv1ではCLIのみ。認証/hosting等は別途選定する。
 - **3-D / JOB-001 楽曲候補定期収集ジョブ（予定 / 未実装）**：FN-002を定期的に起動する。実装着手時に専用の詳細設計書を追加する。通知は別ジョブとして必要時に定義する。
 
-FN-003の現行schemaとFN-004正式v1設計の入口は[canonical registration](design/レビュー準備・canonical反映の全体フロー.md)。詳細は[Decision](design/FN-004-判断モデル.md)、[Plan](design/FN-004-反映計画.md)、[Transaction](design/FN-004-反映処理・復旧.md)、[CLI / SCR-002](design/楽曲管理のCLI・画面連携.md)を参照する。Slice 1/2はPR #56/#57、Slice 3はPR #59、full-history CIはPR #60、本番bootstrap genesisはPR #61で完了。Slice 4（Decision + Apply Plan）とHistory readonlyはmain反映済み。現在はSlice 5（Approval + Apply Request / idempotency）の実装・修正・最終レビュー中で、その後Transaction / History publication / Recovery・CLI統合へ進む。PR数は固定せず、recovery障害試験前に実Apply入口を公開しない。
+FN-003の現行schemaとFN-004正式v1設計の入口は[canonical registration](design/レビュー準備・canonical反映の全体フロー.md)。詳細は[Decision](design/FN-004-判断モデル.md)、[Plan](design/FN-004-反映計画.md)、[Transaction](design/FN-004-反映処理・復旧.md)、[CLI / SCR-002](design/楽曲管理のCLI・画面連携.md)を参照する。Slice 1〜6F・CLI実装、Final Acceptance、findingクローズの実績は上表を参照。本番初回Apply・日常運用開始とは区別する。
 
 公開サイトはGitHub Pagesを継続する。独自ドメインは将来の公開設定として検討する。
 

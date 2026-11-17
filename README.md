@@ -4,7 +4,7 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 ## プロジェクト概要
 
-このリポジトリは、`data/*.csv` を唯一の正本（canonical CSV）として管理します。Hello! Project 公式サイトから楽曲候補を収集する FN-002 楽曲候補収集機能、確認待ちの候補と収集履歴を置く `staging/song-candidates.json`、レビュー準備用の `staging/song-reviews.json`、正本から集計・生成する作家ランキングと公開静的サイトを含みます。Milestone 3-B1 / FN-003 レビュー準備機能まで実装済みです。FN-004 canonical反映機能はDesign 1〜4を統合した正式v1設計を持ち、runtime実装は次フェーズです。
+このリポジトリは、`data/*.csv` を唯一の正本（canonical CSV）として管理します。Hello! Project 公式サイトから楽曲候補を収集する FN-002 楽曲候補収集機能、確認待ちの候補と収集履歴を置く `staging/song-candidates.json`、レビュー準備用の `staging/song-reviews.json`、正本から集計・生成する作家ランキングと公開静的サイトを含みます。Milestone 3-B1 / FN-003 レビュー準備機能まで実装済みです。FN-004 canonical反映機能はruntime実装済みでFinal Acceptance PASS、FA-M01 / FA-L01はCLOSEDです。本番初回Apply・運用開始とは区別します。実績と次のSCR-001改善方針は[Roadmap](docs/roadmap.md)を参照してください。
 
 現在の公開サイトは Juice=Juice のランキングを表示します。collector は設定済みの主要7グループに対応していますが、収集した候補がそのまま公開サイトや正本 CSV に反映されるわけではありません。
 
@@ -17,7 +17,7 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 | FN-001 | 公開サイトデータ生成機能 | Function | canonical CSVからランキング等の公開用JSONを生成する | 実装済み |
 | FN-002 | 楽曲候補収集機能 | Function | 公式release / track情報から `staging/song-candidates.json` を生成・更新する | 実装済み |
 | FN-003 | レビュー準備機能 | Function | candidate・canonical CSV・過去レビューから `staging/song-reviews.json` を生成する | 実装済み |
-| FN-004 | canonical反映機能 | Function | 人間が確定したdecisionを検証し、canonical CSVへ安全に反映する | 次フェーズ / 未実装 |
+| FN-004 | canonical反映機能 | Function | 人間が確定したdecisionを検証し、canonical CSVへ安全に反映する | runtime実装済み / Final Acceptance PASS |
 | JOB-001 | 楽曲候補定期収集ジョブ | Job | FN-002を定期的に起動する | 未実装 |
 
 `SCR` = Screen（画面・UI）、`FN` = Function（画面やジョブから呼ばれるロジック）、`JOB` = Job（定期または手動で起動されFunctionを呼ぶジョブ・バッチ）。IDは種別ごとに `SCR-001`、`FN-003`、`JOB-001` のように3桁ゼロ埋めで付けます。現在の手動collector CLIはFN-002の実行入口であり、JOB-001の実装済みを意味しません。
@@ -77,7 +77,7 @@ staging/song-reviews.json（再生成可能なレビュー用派生データ）
   ↓
 SCR-002 楽曲管理画面（Milestone 3-C、未実装）
   ↓ 人間が確認・判断 → Decision draft → confirmed revision
-FN-004 canonical反映機能（Milestone 3-B2、未実装）
+FN-004 canonical反映機能（Milestone 3-B2、runtime実装済み）
   ↓ Apply Plan → Approval → durable Apply Request（request_id）
 Transaction / Recovery
   ↓
@@ -94,7 +94,7 @@ JOB-001 楽曲候補定期収集ジョブ（Milestone 3-D、未実装）
   └──→ FN-002 楽曲候補収集機能
 ```
 
-この図はデータと責務の関係を示します。正式v1設計は[canonical registration](docs/design/レビュー準備・canonical反映の全体フロー.md)を入口とします。Decision・Plan・Approval・要求受付だけではCSVを変更しません。FN-004 v1は既存entityを参照し新規行だけ追加する設計で、field update/deleteは対象外です。CLIとSCR-002は同じapplication serviceを使い、bootstrap/recovery実行はv1ではCLIのみです。ここに示すFN-004 CLIや保存先は未実装です。JOB-001に通知は含めません。
+この図はデータと責務の関係を示します。正式v1設計は[canonical registration](docs/design/レビュー準備・canonical反映の全体フロー.md)を入口とします。Decision・Plan・Approval・要求受付だけではCSVを変更しません。FN-004 v1は既存entityを参照し新規行だけ追加する設計で、field update/deleteは対象外です。CLIとSCR-002は同じapplication serviceを使い、bootstrap/recovery実行はv1ではCLIのみです。FN-004 CLIは実装済みです。本番操作は[CLIガイド](docs/canonical-cli.md)と個別の人間承認に従います。JOB-001に通知は含めません。
 
 collector は正本 CSV を参考照合のために読みますが、直接更新しません。`staging/` は確認待ち候補と収集履歴の保存先であり、正本ではありません。`site/data/` などの生成物は正本 CSV から再生成する表示用データです。3-B では人間が確認した判断だけを正本へ反映する経路を設計・実装します。
 
@@ -132,50 +132,9 @@ Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` �
 
 ## 開発フロー
 
-基本方針は **1作業 = 1ブランチ → PR → merge → 作業ブランチ削除** です。
+1作業＝1ブランチ＝原則1PR。最新のorigin/mainから専用ブランチを作成し、mainへの直接commit / pushは禁止します。commit・push・PR作成後にCIとレビューを確認し、**ユーザーが手動でマージします。Codexは自動マージしません。** マージ後はCI・Pages公開を確認し、必要に応じてブランチを削除します。
 
-### Development environment
-
-このリポジトリはローカル環境またはクラウド開発環境から開発できます。変更は作業ブランチで行い、Pull Request を通して `main` へ反映します。
-
-### 作業開始
-
-`main` を最新化し、作業用ブランチを作成します。
-
-```bash
-git switch main
-git pull
-git switch -c feature/xxx
-```
-
-### 実装
-
-作業用ブランチ上で Codex 等を利用してソースやドキュメントを修正し、必要に応じてテスト・build・生成物確認を行います。
-
-### commit / push
-
-```bash
-git status
-git add .
-git commit -m "変更内容を表すメッセージ"
-git push -u origin feature/xxx
-```
-
-初回に upstream を設定した後、2回目以降の push は通常 `git push` で行えます。
-
-### PR / merge
-
-GitHub 上で作業ブランチから `main` への Pull Request を作成します。GitHub Actions 等の確認後、`main` へ merge し、GitHub 上の作業ブランチを削除します。
-
-### ローカルブランチ整理
-
-merge 後はローカルの `main` を最新化し、作業ブランチを削除します。
-
-```bash
-git switch main
-git pull
-git branch -d feature/xxx
-```
+詳細は[開発・PR運用ルール](docs/development-workflow.md)と[CI運用ルール](.github/CI.md)を参照してください。
 
 ## FN-002 楽曲候補収集機能（Milestone 3-A / 3-A Follow-up）
 
@@ -246,6 +205,6 @@ GitHub Actionsでもtest / validate / site buildを実行し、再生成したJS
 
 `npm run site:build`は、正本である`data/*.csv`からランキングJSONを`site/data/rankings/`へ再生成します。生成後は`npm run site:preview`を実行し、`http://localhost:4173/`で確認できます。HTML、CSS、JavaScript、ランキングJSONの参照にはrelative pathを使用しているため、localhost直下とGitHub Pagesのproject site subpathの両方で動作します。
 
-GitHub Actionsの「Deploy ranking site to GitHub Pages」workflowは、`main`へのpushでtest、ランキング検証、site build、生成物の差分検査を順に実行し、成功した`site/`だけをGitHub Pagesへdeployします。Actions画面の「Run workflow」から手動実行も可能です。Pull Requestでも同じbuild前検証を行いますが、artifact uploadと本番deployは行いません。workflowがrepositoryへ生成物をcommitまたはpushすることはありません。
+GitHub Actionsの「Deploy ranking site to GitHub Pages」は、PR時・ラベル変更時に`ci:light`で軽量／フルを選択し、PRでは公開しません。mainへのpushでは対象SHAに一致するマージ済みPRのラベルを照会し、取得失敗・不一致・曖昧ならフルCIとします。mainの手動実行は常にフルです。検証成功後、公開直前にmainの最新SHAを確認し、古い成果物は公開しません。軽量でもランキング検証・build・生成物整合性を確認します。詳細・コマンド・失敗時の対応は[CI運用ルール](.github/CI.md)を参照してください。
 
 初回公開時はrepositoryの **Settings → Pages → Build and deployment → Source** で **GitHub Actions** を選択してください。公開URLはhardcodeせず、SettingsのPages画面、またはworkflowのdeploy jobに表示されるenvironment URLから確認します。独自PATやrepository secretは不要です。
