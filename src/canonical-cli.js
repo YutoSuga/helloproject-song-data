@@ -48,7 +48,7 @@ export async function runCanonicalCli(argv,{root=process.cwd(),input=process.std
   const {command,options:o}=parsed;
   for(const key of ['request','transaction','plan','decision'])if(o[key])selection[key+'_id']=o[key];
   if(o.id)selection[(command.startsWith('decision ')?'decision':command.startsWith('plan ')?'plan':'apply')+'_id']=o.id;
-  if(command==='help'){emit({commands:COMMANDS,usage:'npm run canonical:manage -- <command> [--json]',documentation:'docs/canonical-cli.md'});return 0;}
+  if(command==='help'){emit({commands:COMMANDS,usage:'npm run canonical:manage -- <command> [--json]',documentation:'docs/management/FN-004-canonical操作ガイド.md'});return 0;}
   root=realpathSync(root);const actor=localOperator();
   const {bootstrap,decisions,plans,management}=servicesFactory(root,actor,{onBoundary:async e=>{
     if(e.phase==='receipt:after'){
