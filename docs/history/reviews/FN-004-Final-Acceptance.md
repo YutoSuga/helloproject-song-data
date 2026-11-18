@@ -22,7 +22,7 @@ FN-004 v1のSlice 1〜6Fについて、正式contractの不変条件を実装・
 | 実装保証範囲 | 既存プロジェクトのNode.js 20以降方針（今回の実測は24.19.0、version matrix試験ではない）、単一authoritative working tree、協調するreader/writer、sync/no-clobber/同filesystem renameが成立するlocal filesystem |
 | 監査成果物 | 本報告書のみ。専用local docs branchへcommit。公開要求中断のためremote branch/PRは未作成。mainへ直接commitしない |
 
-正本：[初期化・ID状態](../../design/functions/FN-004-初期化・ID状態.md)、[判断モデル](../../design/functions/FN-004-判断モデル.md)、[反映計画](../../design/functions/FN-004-反映計画.md)、[承認・Request](../../design/functions/FN-004-承認・反映リクエスト.md)、[反映処理・復旧](../../design/functions/FN-004-反映処理・復旧.md)、[成功履歴](../../design/functions/FN-004-成功履歴・読取検証.md)、[CLI・画面連携](../../design/system/楽曲管理のCLI・画面連携.md)、[CLI操作ガイド](../../management/FN-004-canonical操作ガイド.md)、[データ仕様](../../design/data/データ仕様.md)。[データ一覧](../research/data-inventory.md)・[CRUD](../research/crud-matrix.md)・[ライフサイクル](../research/data-lifecycle.md)は固定SHA時点の補助資料として区別した。
+正本：[初期化・ID状態](../../design/functions/FN-004-初期化・ID状態.md)、[判断モデル](../../design/functions/FN-004-判断モデル.md)、[反映計画](../../design/functions/FN-004-反映計画.md)、[承認・Request](../../design/functions/FN-004-承認・反映リクエスト.md)、[反映処理・復旧](../../design/functions/FN-004-反映処理・復旧.md)、[成功履歴](../../design/functions/FN-004-成功履歴・読取検証.md)、[CLI・画面連携](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)、[CLI操作ガイド](../../management/FN-004-canonical操作ガイド.md)、[データ仕様](../../design/data/データ仕様.md)。[データ一覧](../research/data-inventory.md)・[CRUD](../research/crud-matrix.md)・[ライフサイクル](../research/data-lifecycle.md)は固定SHA時点の補助資料として区別した。
 
 ## 3. Slice 1〜6F実装対応表
 

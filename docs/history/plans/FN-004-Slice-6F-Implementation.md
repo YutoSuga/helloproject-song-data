@@ -1,7 +1,7 @@
 # FN-004 Slice 6F — Public CLI Integration / End-to-End Verification
 
 開始mainはPR #83 merge `a4a0fd0df2fdaa82ed8c0c1e740add8146bcd0d4`。
-正式[interface](../../design/system/楽曲管理のCLI・画面連携.md)、[Transaction / Recovery](../../design/functions/FN-004-反映処理・復旧.md)、
+正式[interface](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)、[Transaction / Recovery](../../design/functions/FN-004-反映処理・復旧.md)、
 [Approval / Request](../../design/functions/FN-004-承認・反映リクエスト.md)、[Slice 6 Planning](FN-004-Slice-6-Planning.md)を維持する。
 利用方法と全command／optionは[CLI guide](../../management/FN-004-canonical操作ガイド.md)に記載する。
 

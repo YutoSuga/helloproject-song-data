@@ -8,7 +8,7 @@
 
 ## 2. Scope・確認した現在地
 
-[Decision](../../design/functions/FN-004-判断モデル.md)、[Plan](../../design/functions/FN-004-反映計画.md)、[Approval / Request](../../design/functions/FN-004-承認・反映リクエスト.md)、[History](../../design/functions/FN-004-成功履歴・読取検証.md)、[Bootstrap / state](../../design/functions/FN-004-初期化・ID状態.md)、[全体フロー](../../design/system/レビュー準備・canonical反映の全体フロー.md)、[CLI / SCR-002](../../design/system/楽曲管理のCLI・画面連携.md)と[architecture](../../design/system/システム構成.md)、[Feature ID](../../design/system/機能ID体系.md)、[Roadmap](../../management/ロードマップ.md)、[data spec](../../design/data/データ仕様.md)を照合した。
+[Decision](../../design/functions/FN-004-判断モデル.md)、[Plan](../../design/functions/FN-004-反映計画.md)、[Approval / Request](../../design/functions/FN-004-承認・反映リクエスト.md)、[History](../../design/functions/FN-004-成功履歴・読取検証.md)、[Bootstrap / state](../../design/functions/FN-004-初期化・ID状態.md)、[全体フロー](../../design/system/レビュー準備・canonical反映の全体フロー.md)、[CLI / SCR-002](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)と[architecture](../../design/system/システム構成.md)、[Feature ID](../../design/system/機能ID体系.md)、[Roadmap](../../management/ロードマップ.md)、[data spec](../../design/data/データ仕様.md)を照合した。
 
 | Slice | 実コードの確認・限界 |
 | --- | --- |
@@ -398,7 +398,7 @@ valid original/target、正しいconsumed state、15 backup、valid Intent/Journ
 | 6A/6C影響 | Snapshot/ID audit/classifierを本契約へ対応し、既存rollback kernelへ接続 | 自動rollbackできるcaseが著しく縮小 | 6Cの範囲を越える |
 | 6D/6E影響 | post-decision全target要件と既存file順は不変 | 正常新曲transactionのcrash matrixを手動対応へ変更 | canonical contract/architectureを再設計 |
 
-**Aを採用**。error名allowlistやsemantic近似ではなく、全14 raw bytesのprovenanceとphase/stateの正当性で判定する。Bは安全に戻せる途中状態も停止してしまうため不採用、Cは不成立またはv1境界を越えるため不採用。正式contractの唯一の正本は[Canonical byte provenance・known-mixed Recovery](../../design/functions/FN-004-反映処理・復旧.md#known-mixed-recovery-contract)に置く。
+**Aを採用**。error名allowlistやsemantic近似ではなく、全14 raw bytesのprovenanceとphase/stateの正当性で判定する。Bは安全に戻せる途中状態も停止してしまうため不採用、Cは不成立またはv1境界を越えるため不採用。正式contractの唯一の正本は[Canonical byte provenance・known-mixed Recovery](../../design/functions/FN-004-反映処理・復旧.md#canonical-byte-provenanceknown-mixed-recovery6c-dg05-01訂正)に置く。
 
 ### Formal correction・closure
 

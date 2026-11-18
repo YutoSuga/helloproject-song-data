@@ -204,7 +204,7 @@ high-waterはnamespaceごとにmonotonic。genesis値、current canonical max、
 
 ## initialize / publication / TOCTOU
 
-将来libraryの`initializeBootstrap({root, external_declaration, expected_audit_hash, actor})`は明示操作のみ。Plan/Apply/readからの自動bootstrapは禁止。本番CLIは後続sliceで[Design 4](../system/楽曲管理のCLI・画面連携.md)の`init --check`→人間確認→`init --expect-audit-hash`へ接続し、UIはbootstrap requiredを表示するだけ。
+将来libraryの`initializeBootstrap({root, external_declaration, expected_audit_hash, actor})`は明示操作のみ。Plan/Apply/readからの自動bootstrapは禁止。本番CLIは後続sliceで[Design 4](../system/楽曲管理のアプリケーションサービス・CLI契約.md)の`init --check`→人間確認→`init --expect-audit-hash`へ接続し、UIはbootstrap requiredを表示するだけ。
 
 成功結果は`{status:"READY", code, repository_instance_id, bootstrap_hash, state_hash, high_water_marks, readiness, diagnostics}`。初回code=null、validな二回目はcode=BOOTSTRAP_ALREADY_INITIALIZED。readinessは正常完了時`initialized`、公開後cleanup未完了は`cleanup_required`で、完全成功と同一視しない。失敗はRepositoryErrorと上記code/diagnosticsを保持し、process.exitだけで表現しない。
 
@@ -275,6 +275,4 @@ Gitは空directoryを保存しないため、通常cloneではapply-history dire
 
 ### FA-M01専用Gate candidateの分類
 
-[承認済みGate契約](../../history/plans/FN-004-FA-M01-Gate公開契約案.md)の正確なroot-relative専用candidateだけは、未初期化/正常genesisの両経路でbootstrap intent/temp・cleanup判定から分離する。regular候補の存在をBOOTSTRAP_INCOMPLETEの理由にもREADYの証明にも使わず、他者候補を削除・再利用しない。symlink/nonregular/未知名/読取り失敗は停止する。marker/state片側、不明bootstrap temp、external declaration/audit hash、HWM、全domain guardは従来どおり全検証する。
-
-当該[Gate変更の根拠・承認記録](../../history/plans/FN-004-FA-M01-Gate公開契約案.md)は採用済み変更の履歴資料である。B1では契約を抽出・再定義せず、実際の契約は既存の正式設計・実装・テストに従う。配置変更により、既存の参照が指定する採用済み条項・適用範囲・安全条件は変更しない。採用済み条項の正式仕様への抽出はB2で行う。
+[承認済みGate契約](FN-004-Gate公開契約.md)の正確なroot-relative専用candidateだけは、未初期化/正常genesisの両経路でbootstrap intent/temp・cleanup判定から分離する。regular候補の存在をBOOTSTRAP_INCOMPLETEの理由にもREADYの証明にも使わず、他者候補を削除・再利用しない。symlink/nonregular/未知名/読取り失敗は停止する。marker/state片側、不明bootstrap temp、external declaration/audit hash、HWM、全domain guardは従来どおり全検証する。

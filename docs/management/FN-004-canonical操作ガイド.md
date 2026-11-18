@@ -5,7 +5,7 @@
 操作前に別作業者のApply、収集、直接CSV編集、Git checkout等を止めてください。
 productionでのテストApply・initialize・Recovery runは禁止です。以下の更新例は隔離fixtureで検証します。
 
-正式契約は[interface](../design/system/楽曲管理のCLI・画面連携.md)、[Transaction / Recovery](../design/functions/FN-004-反映処理・復旧.md)、
+正式契約は[interface](../design/system/楽曲管理のアプリケーションサービス・CLI契約.md)、[Transaction / Recovery](../design/functions/FN-004-反映処理・復旧.md)、
 [Approval / Request](../design/functions/FN-004-承認・反映リクエスト.md)、[bootstrap](../design/functions/FN-004-初期化・ID状態.md)です。
 保存原本は手編集せず、外部入力documentだけを編集してserviceへ取り込みます。
 
@@ -151,4 +151,4 @@ FA-M01では完成済み専用candidateを同directoryからhard linkでno-clobb
 
 ### FA-M01 Gate公開異常の扱い
 
-[Gate公開契約](../history/plans/FN-004-FA-M01-Gate公開契約案.md)を適用する。安定valid BUSYはexit 5、不正finalは8、取得/公開不明は1、permissionは既存優先規則で9、release失敗は6。freshな正式証拠で成功効果を証明できるfinalization待ちだけ既存exit 7となる。candidateの存在から結果を推測しない。専用candidateは容量・inode/bytesをreadonly監視し、孤立物を無断削除/再利用しない。公開不明・容量枯渇・非regular・読取り失敗は証拠保管とmanual STOP。force unlock/GCは提供しない。
+[Gate公開契約](../design/functions/FN-004-Gate公開契約.md)を適用する。安定valid BUSYはexit 5、不正finalは8、取得/公開不明は1、permissionは既存優先規則で9、release失敗は6。freshな正式証拠で成功効果を証明できるfinalization待ちだけ既存exit 7となる。candidateの存在から結果を推測しない。専用candidateは容量・inode/bytesをreadonly監視し、孤立物を無断削除/再利用しない。公開不明・容量枯渇・非regular・読取り失敗は証拠保管とmanual STOP。force unlock/GCは提供しない。

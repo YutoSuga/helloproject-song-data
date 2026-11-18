@@ -17,7 +17,7 @@
 | SCR-001 | 公開サイト画面。生成済みランキング表示 | I。CSVへ直接アクセスしない |
 | SCR-002 | 楽曲管理画面。6内部viewから共通serviceを利用 | S。backend/frontend未実装。単純な候補status更新画面ではない |
 
-根拠：[機能ID](../../design/system/機能ID体系.md)、[公開](../../design/functions/公開サイトのデータ生成・表示.md)、[収集](../../design/functions/FN-002-楽曲候補収集.md)、[全体](../../design/system/レビュー準備・canonical反映の全体フロー.md)、[CLI・画面](../../design/system/楽曲管理のCLI・画面連携.md)。
+根拠：[機能ID](../../design/system/機能ID体系.md)、[公開](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/functions/公開サイトのデータ生成・表示.md)、[収集](../../design/functions/FN-002-楽曲候補収集.md)、[全体](../../design/system/レビュー準備・canonical反映の全体フロー.md)、[CLI・画面](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)。
 
 **設計書の状況表現に注意**：全体設計・機能ID等の「FN-004 runtime未実装」は機能全体の記述として残っているが、mainにはDecision/Plan/Approval/Request、History検証、durable prepare、failure recoveryの部品がある。[承認service](../../../src/fn004-approval-application.js)はdispatcher/canonical writerを持たず、[prepare](../../../src/fn004-durable-prepare.js)もRequest submit/retry・CLI・commit executorへ未接続と明記する。[失敗復旧](../../../src/fn004-failure-recovery.js)も内部service。これらを「実Applyが完成」と解釈しない。
 
