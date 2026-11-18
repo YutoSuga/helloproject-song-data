@@ -1,6 +1,6 @@
-# CLI / SCR-002 Interface・Approval / Apply Request
+# 楽曲管理のアプリケーションサービス・CLI契約
 
-FN-004 canonical反映機能とSCR-002 楽曲管理画面の正式v1設計。runtimeはSlice 6A〜6E、公開CLI adapterはSlice 6Fで実装する。backend・frontendは未実装。[CLI操作ガイド](../../management/FN-004-canonical操作ガイド.md)を参照。[全体設計](レビュー準備・canonical反映の全体フロー.md)、[Decision](../functions/FN-004-判断モデル.md)、[Plan](../functions/FN-004-反映計画.md)、[Transaction](../functions/FN-004-反映処理・復旧.md)、[History readonly契約](../functions/FN-004-成功履歴・読取検証.md)を参照する。
+FN-004 の共通サービスと公開 CLI の v1 契約。FN-004 runtime と Slice 6F の公開 CLI は実装済み。[操作ガイド](../../management/FN-004-canonical操作ガイド.md)に実際のコマンドとオプションを示す。SCR-002 と認証済み Web backend は設計済み・未実装であり、以下の Web 境界は将来の接続条件とする。[画面設計](../screens/SCR-002-楽曲管理画面.md)・[全体フロー](レビュー準備・canonical反映の全体フロー.md)を参照する。
 
 ## application boundary
 
@@ -81,57 +81,13 @@ Decision保存schema・content hash・mutation key・source revisionのexact con
 
 初回submit成功・same-payload retry・checkの完全response契約は[Apply Request application response contract v1](../functions/FN-004-承認・反映リクエスト.md#apply-request-application-response-contract-v1)を正とする。全field requiredの`{artifact,readiness,diagnostics,result}`を返す。artifactは保存原本、readinessは現在のrepository利用可否、diagnosticsは現在の検証code、resultはnullまたは検証済みsuccessful Historyへの`{apply_id,record_hash}`参照。HistoryRecord全体を含めず、詳細は既存History readonly APIから取得する。
 
-保存artifactのprocessingはadvisory cacheのままで、responseへ合わせて書き換えない。result非nullとrecovery_requiredは共存し、成功Historyだけでjournal完了・pending解消・cleanup完了を断定しない。accepted/completed/already_appliedをreadiness enumに追加しない。現Slice 5ではRequest存在が通常runtimeをblockするため、初回受付直後でもrecovery_required / RECOVERY_REQUIREDを返し得る。受付成功と通常利用可能は別である。
+保存artifactのprocessingはadvisory cacheのままで、responseへ合わせて書き換えない。result非nullとrecovery_requiredは共存し、成功Historyだけでjournal完了・pending解消・cleanup完了を断定しない。accepted/completed/already_appliedをreadiness enumに追加しない。Slice 5 時点ではRequest存在が通常runtimeをblockするため、初回受付直後でもrecovery_required / RECOVERY_REQUIREDを返し得る。受付成功と通常利用可能は別である。
 
-既存Request照会では元Receiptを維持し、新規受付preconditionを再適用しない。受付後失効は現在診断として返し、Plan staleは既存guardを迂回せず検証できた場合だけ診断する。同ID異payload・原本破損・参照不整合は引き続きtyped error。code別のthrow/diagnostic境界、評価順、null resultの意味はリンク先matrixに従う。初回submitだけartifactを直接返す旧実装説明は採用しない。未mergeのSlice 5実装/testsは別PRで本契約へ追従する。Transaction dispatch/execution、Recovery、History publicationをこのresponse評価に含めない。
+既存Request照会では元Receiptを維持し、新規受付preconditionを再適用しない。受付後失効は現在診断として返し、Plan staleは既存guardを迂回せず検証できた場合だけ診断する。同ID異payload・原本破損・参照不整合は引き続きtyped error。code別のthrow/diagnostic境界、評価順、null resultの意味はリンク先matrixに従う。初回submitだけartifactを直接返す旧実装説明は採用しない。Transaction dispatch/execution、Recovery、History publicationをこのresponse評価に含めない。
 
-## SCR-002 views・workflow
+### Web の確認 token
 
-正式Feature IDはSCR-002だけ。内部viewへ新しい正式Feature IDを追加しない。viewは管理一覧、レビュー編集、Decision確認、Apply Preflight、Apply結果、System Statusの6つ。
-
-```text
-管理一覧 → レビュー編集 → Decision確認 → Apply Preflight → Apply → Apply結果
-              ↑                 |               |
-              +--- 判断修正 -----+               +→ stale → 必要な再レビュー/Plan再生成 → 再確認
-任意view → system blocked → System Status → CLIの状態確認/復旧 → 通常操作再開
-```
-
-一覧はcandidate / draft / 有効confirmed / Plan / Historyから状態を導出する。共通workflow statusを新設しない。reviewはaggregate編集＋candidateごとのsource確認。共有entityを一度定義し、suggestionと人間判断を分離。draftは明示保存し未保存離脱警告を出す。古いtabのOCC conflictではbufferを保持して差分確認し、自動mergeしない。
-
-Decision確認でcandidate全件、work/song/音源/version、creator/artist/performer、release/track、song初出日、prefix、evidence、未決を表示。「判断を確定する」はCSVを変更しないと説明する。新draftと既存confirmedを区別し、適用済み訂正を再Applyへ誘導しない。
-
-confirmedから「反映内容を確認」でPlanを生成。entity/relation単位の新規追加・既存参照・追加不要を主表示し、raw CSV diffは詳細へ置く。予定IDは「反映成功時に確定」、timestamp bindingは「反映時刻」と表示する。sourceは判断ごとに紐付け、official_sourceとhuman_observationを区別する。
-
-確認checkを入れて「反映する」を押す一連操作でApproval → Requestへ進む。名前/64文字hash再入力や多重dialogは通常不要。backendの確認tokenをrepository/actor/Decision/Plan hash/session/request/期限へbindingする。Planが変わればcheckとtokenを失効させる。clientが送るのはidentity/tokenでありrowではない。期限内でもDesign 3の再検証を省略しない。
-
-### user state / errors
-
-| 内部状態/code | 表示・主action | Apply / Decision保存 / recovery |
-| --- | --- | --- |
-| draft | 下書き。入力・判断確認 | 不可 / 可 / 不要 |
-| confirmed | 判断確定済み。反映内容を確認 | Plan経由 / 新revision / 不要 |
-| applicable | 反映予定を確認 | 再検証後可 / 新revision / 不要 |
-| blocked / UNSUPPORTED_OPERATION | 要対応/対象外。判断へ戻る | 不可 / 新revision / 原則不要 |
-| STALE_PLAN | 確認後にデータが変わった。再生成・再確認 | 不可 / 新revision / 原則不要 |
-| APPROVAL_INVALIDATED | 承認は永久失効。現在のPlan/Historyを確認して新承認 | 新規受付不可 / 可否は既存条件 / 既存受付の取消しではない |
-| CANDIDATE_FINGERPRINT_MISMATCH | 公式factsが変わった。Decisionから再確認 | 不可 / 新revision / 原則不要 |
-| ALREADY_APPLIED | すでに反映済み。既存Historyへ | 不可 / 履歴修正のみ / 不要 |
-| BUSY | 別処理進行中。状態再取得 | 不可 / 保存待ち・buffer保持 / 必要なら診断 |
-| committed | 反映完了。確定ID・Git diff確認 | 同判断不可 / 新revision / 不要 |
-| COMMITTED_PENDING_FINALIZATION | 反映済み、履歴等の後処理が必要 | 不可 / 保存停止 / 元tx finalize |
-| cleanup_required | 反映完了、利用再開の後片付けが必要 | 不可 / gate依存 / cleanup |
-| RECOVERY_REQUIRED | 前回処理の確認・復旧が必要 | 不可 / 保存停止 / CLI |
-| rolled_back | 今回は元へ復元済み。原因確認・新Plan | 新確認後 / 可 / terminal整合済なら不要 |
-| DECISION_HEAD_CONFLICT | 別画面で保存された。最新判断確認 | 不可 / 自動merge不可 / 不要 |
-| APPROVAL_PLAN_MISMATCH / INTEGRITY_CONFLICT | 確認対象と要求が不一致 | 不可 / 原因確認 / 必要なら診断 |
-| unknown_result | 結果確認中。再反映せずrequest照会 | 不可 / 状態確認 / 判定待ち |
-| BOOTSTRAP_REQUIRED | 初期設定が必要。CLIへ | 不可 / 初期化待ち / bootstrap |
-
-UIはmessage文字列で分岐せずcodeとallowed_actionsを使う。warningだけなら他の条件を満たす場合にApply可能だが、identity未決や必須evidence不足はerror。future releaseやoptional notes欠如でwarningを増やさない。
-
-結果は追加entity/relation、確定ID、reuse/no_op、変更CSV、日時、Historyを主表示し、request/approval/transaction/apply/Decision/Plan identityは詳細へ。no-opのみは「既存と一致し、確認結果を記録した」と表示する。COMMITTED_PENDING_FINALIZATIONを単純な失敗へ変換したり再Applybuttonを出したりしない。
-
-double clickは同request、refresh/backはGET相当の結果取得、timeoutは失敗と断定しない。UI button disableだけで二重実行を防いだと扱わない。busy中は安全なimmutable履歴・状態照会のみ可能。未完了時はblocking bannerとし、System StatusでCLIへ案内する。lock削除・force操作・recovery自由選択は提供しない。
+将来の backend は確認 token を repository、trusted actor、Decision、Plan hash、session、request、期限に結び付ける。Plan 変更時は確認と token を失効させる。client が渡すのは identity と token であり、実行用 row ではない。期限内でも Transaction の再検証を行う。この確認は Decision confirmation や CLI の TTY 確認とは別の画面接続条件である。
 
 ## CLI（設計例とSlice 6F接続）
 
@@ -193,7 +149,7 @@ Slice 4をDecision + Plan、Slice 5をApproval + Requestとして統合し、後
 
 interface testsはCLI success/stale/already_applied/busy/blocked/確認取消し/非TTY/wrong hash/exit・JSON、UI複数tab/refresh/back/double submit/timeout、approval actor/repository/hash不一致、同request異payload、承認後receipt前・receipt後journal前のcrash、結果不明時の照会を含む。transactionの全rename/sync/journal/History/state前後でfault injectionを行い、UIがpending finalizationを失敗へ潰さないことも検証する。
 
-### Slice 5 runtime API
+### Slice 5 導入時点の runtime API
 
 `src/fn004-approval-schema.js` defines the closed v1 Approval, Invalidation,
 Request/Receipt validators, ID generators and the three projections from
@@ -225,11 +181,9 @@ Tests publish artifacts exclusively inside temporary fixture repositories.
 
 ## Slice 6 ownershipとRecovery actionの正本
 
-[TransactionのSlice 6 evidence contract v1](../functions/FN-004-反映処理・復旧.md)で初回submitの同live lease継続、immutable completion/terminal proof、readonly inspectと明示runのclosed action/観測hashを定義する。retry/checkは引き続き非dispatch、Request response DTOとCLI既存exit tableは不変。初回接続は6E/F、公開CLIは6Fで実装する。bootstrap/Recovery実行のCLI-onlyを維持し、Browser/API用実行入口は追加しない。ProcessingCacheの将来更新許容を、この接続での保存原本更新要件にしない。
+[TransactionのSlice 6 evidence contract v1](../functions/FN-004-反映処理・復旧.md)で初回submitの同live lease継続、immutable completion/terminal proof、readonly inspectと明示runのclosed action/観測hashを定義する。retry/checkは引き続き非dispatch、Request response DTOとCLI既存exit tableは不変。初回接続は6E/F、公開CLIは6Fで実装済み。bootstrap/Recovery実行のCLI-onlyを維持し、Browser/API用実行入口は追加しない。ProcessingCacheの将来更新許容を、この接続での保存原本更新要件にしない。
 
 
 ### FA-M01 Gate公開異常の扱い
 
-[Gate公開契約](../../history/plans/FN-004-FA-M01-Gate公開契約案.md)を適用する。安定valid BUSYはexit 5、不正finalは8、取得/公開不明は1、permissionは既存優先規則で9、release失敗は6。freshな正式証拠で成功効果を証明できるfinalization待ちだけ既存exit 7となる。candidateの存在から結果を推測しない。専用candidateは容量・inode/bytesをreadonly監視し、孤立物を無断削除/再利用しない。公開不明・容量枯渇・非regular・読取り失敗は証拠保管とmanual STOP。force unlock/GCは提供しない。
-
-当該[Gate変更の根拠・承認記録](../../history/plans/FN-004-FA-M01-Gate公開契約案.md)は採用済み変更の履歴資料である。B1では契約を抽出・再定義せず、実際の契約は既存の正式設計・実装・テストに従う。配置変更により、既存の参照が指定する採用済み条項・適用範囲・安全条件は変更しない。採用済み条項の正式仕様への抽出はB2で行う。
+[Gate公開契約](../functions/FN-004-Gate公開契約.md)を適用する。安定valid BUSYはexit 5、不正finalは8、取得/公開不明は1、permissionは既存優先規則で9、release失敗は6。freshな正式証拠で成功効果を証明できるfinalization待ちだけ既存exit 7となる。candidateの存在から結果を推測しない。内部の観測値と公開 JSON の項目は異なる。CLI の公開項目と優先順は [CLI 出力実装](../../../src/canonical-cli-output.js)、容量監視と手動停止は[操作ガイド](../../management/FN-004-canonical操作ガイド.md#fa-m01-gate公開異常の扱い)を参照する。

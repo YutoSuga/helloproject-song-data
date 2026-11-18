@@ -95,7 +95,7 @@ flowchart TD
 
 正式SCR-002は管理一覧、レビュー編集、Decision確認、Apply Preflight、Apply結果、System Statusの6内部view。認証済み管理者backendを介し、browserからfilesystem/Gitへ直接書かない。provider/hostingは未選定。bootstrap/recovery実行はCLIのみ。これらの既存境界に従って表示材料と不足部分を整理したもので、新UI/APIを本タスクで設計・実装していない。
 
-根拠：[SCR-002 views・workflow / traceability・Git](../../design/system/楽曲管理のCLI・画面連携.md)、[Decision scope](../../design/functions/FN-004-判断モデル.md)、[Git audit](../../../src/fn004-git-audit.js)、[History証明](../../design/functions/FN-004-成功履歴・読取検証.md)。
+根拠：[SCR-002 views・workflow / traceability・Git](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)、[Decision scope](../../design/functions/FN-004-判断モデル.md)、[Git audit](../../../src/fn004-git-audit.js)、[History証明](../../design/functions/FN-004-成功履歴・読取検証.md)。
 
 ## 未確定事項・次回確認
 

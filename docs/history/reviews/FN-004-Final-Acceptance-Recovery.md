@@ -5,8 +5,8 @@
 ## 保存した原本
 
 - [報告書原本](FN-004-Final-Acceptance.md)：元pathと同じ場所へraw bytesをそのままコピー。本文・リンク・判定を一切編集していない。
-- [元Git bundle](../../reviews/archive/fn004-final-acceptance-report-48cac96.bundle)：指定されたbundleそのもの。元branchの2コミットと履歴を保全する。
-- [取得元・hash・逐語抜粋](../../reviews/archive/fn004-final-acceptance-report-48cac96.provenance.json)：機械可読の取得記録。
+- [元Git bundle](archive/fn004-final-acceptance-report-48cac96.bundle)：指定されたbundleそのもの。元branchの2コミットと履歴を保全する。
+- [取得元・hash・逐語抜粋](archive/fn004-final-acceptance-report-48cac96.provenance.json)：機械可読の取得記録。
 
 | 項目 | 原本の識別情報 |
 | --- | --- |

@@ -12,7 +12,7 @@ Source of Truthは[README](../../../README.md)、[機能ID](../../design/system/
 - [Decision](../../design/functions/FN-004-判断モデル.md)、[Apply Plan](../../design/functions/FN-004-反映計画.md)
 - [Approval / Invalidation / Request / response](../../design/functions/FN-004-承認・反映リクエスト.md)
 - [History readonly](../../design/functions/FN-004-成功履歴・読取検証.md)、[Bootstrap / state](../../design/functions/FN-004-初期化・ID状態.md)
-- [Transaction / Recovery](../../design/functions/FN-004-反映処理・復旧.md)、[CLI / SCR-002 interface](../../design/system/楽曲管理のCLI・画面連携.md)
+- [Transaction / Recovery](../../design/functions/FN-004-反映処理・復旧.md)、[CLI / SCR-002 interface](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)
 
 以下のpathはrepository root基準。将来component名は責務の候補であり、新APIやdirectoryの正式schemaではない。
 

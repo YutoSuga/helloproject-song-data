@@ -94,7 +94,7 @@ F18全14CSV backup、F19state backup、F20target temp、F21restore temp、F22His
 
 F24〜F26は永久保持のownership archive、F27common gate、F28Recovery barrier、F29publisher temp、F30bootstrap intent、F31collector/review temp。F27はshared基盤をFN-001/002/003も呼ぶためC/Dを持つ。F29は書込完了後rename/publicationで元pathが消えるが、起動時の一括Dは許されない。F30のDはbootstrap完了確認後の限定cleanup。F31のC/Dは各々の自分のtempだけ。
 
-SCR-002からbootstrap/recovery実行はv1対象外（CLIのみ）。未実装の画面にD権限を推定しない。根拠：[gate](../../../src/fn004-gate.js)、[persistence](../../../src/persistence.js)、[ownership](../../../src/fn004-evidence-ownership.js)、[bootstrap](../../../src/fn004-bootstrap.js)、[画面契約](../../design/system/楽曲管理のCLI・画面連携.md)。
+SCR-002からbootstrap/recovery実行はv1対象外（CLIのみ）。未実装の画面にD権限を推定しない。根拠：[gate](../../../src/fn004-gate.js)、[persistence](../../../src/persistence.js)、[ownership](../../../src/fn004-evidence-ownership.js)、[bootstrap](../../../src/fn004-bootstrap.js)、[画面契約](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)。
 
 ## マトリクス外の監査入力
 

@@ -37,13 +37,13 @@ PR #90の変更は以下3文書のみ（20追加 / 6削除）。冒頭の未実�
 
 first-parent対mergeの全diffを確認。変更はstatus proseだけで、schema / invariant / hash projection / Decision・Plan・Transactionの正式契約 / Approval・Request承認条件 / Gate・Recovery安全手順 / Acceptance基準に意味的変更なし。全Markdown表とfenced blockは3文書とも親commitと一致することを機械確認し、表外の変更も目視照合した。Approval/Request文書・src・test・scripts・data・staging・過去監査の変更なし。
 
-[検証スクリプト](../../reviews/archive/fn004-fa-l01-closure/check.py)と[実測結果](../../reviews/archive/fn004-fa-l01-closure/document-check.json)を保存。固定mainのrootで`python docs/reviews/archive/fn004-fa-l01-closure/check.py`により再現可能（HEADは固定mergeを想定）。対象3文書の相対リンク50件、fragment 3件は存在・見出し一致。runtime未実装の誤った現在形の断定は0。残る後続slice等の表現は冒頭でSlice単体と全体の範囲を区別しており、全体未実装の断定ではない。`git diff --check HEAD^1 HEAD`はexit 0。
+[検証スクリプト](archive/fn004-fa-l01-closure/check.py)と[実測結果](archive/fn004-fa-l01-closure/document-check.json)を保存。固定mainのrootで`python docs/reviews/archive/fn004-fa-l01-closure/check.py`により再現可能（HEADは固定mergeを想定）。対象3文書の相対リンク50件、fragment 3件は存在・見出し一致。runtime未実装の誤った現在形の断定は0。残る後続slice等の表現は冒頭でSlice単体と全体の範囲を区別しており、全体未実装の断定ではない。`git diff --check HEAD^1 HEAD`はexit 0。
 
 Production Bootstrap / Apply / Recovery、強制unlock、SCR-002 writeは実行していない。Productionデータ操作なし。PR90にProductionデータ差分なし。本記録も報告書と検証証拠のみを追加する。
 
 ## 初回CI証拠（10:09時点・履歴）
 
-初回取得2026-11-16T10:09:59Z。[GitHub API証拠](../../reviews/archive/fn004-fa-l01-closure/github.json)。connectorのcommit workflow検索ではmainのrunが空だったため、GitHub RESTのcheck-runsとrun jobsで実在runを確認した。空の検索結果をCI不存在とは判断しない。
+初回取得2026-11-16T10:09:59Z。[GitHub API証拠](archive/fn004-fa-l01-closure/github.json)。connectorのcommit workflow検索ではmainのrunが空だったため、GitHub RESTのcheck-runsとrun jobsで実在runを確認した。空の検索結果をCI不存在とは判断しない。
 
 | 対象 | Gate Node20 / Node24 | Test and build |
 | --- | --- | --- |
@@ -70,7 +70,7 @@ workflow `.github/workflows/deploy-pages.yml`のTest and buildはnpm test・rank
 
 最終確認日時：**2026-11-16T12:09:55.294104+00:00**。初回のOPENは当時の未完了CIに基づく履歴であり、今回の最終判定は**CLOSED**。
 
-[GitHub API証拠](../../reviews/archive/fn004-fa-l01-closure/github.json)の`final_verification`に、対象SHAで検索した全run（各1件、total_count照合）と全job（各4件）を保存した。いずれもattempt 1、status completed、run conclusion success。
+[GitHub API証拠](archive/fn004-fa-l01-closure/github.json)の`final_verification`に、対象SHAで検索した全run（各1件、total_count照合）と全job（各4件）を保存した。いずれもattempt 1、status completed、run conclusion success。
 
 | 対象・SHA | workflow run ID / event | Test and build | Gate Node20 / Node24 | Deploy |
 | --- | --- | --- | --- | --- |

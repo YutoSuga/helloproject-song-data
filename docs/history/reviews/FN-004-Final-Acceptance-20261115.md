@@ -6,7 +6,7 @@
 
 対象はPR #88 merge後、開始時にfetchして固定したmain `a265e8a165e13f2fdd525a79cb7bd86ede00217b`。検証開始は2026-11-15T13:37:20Z。検証root `/workspace/helloproject-song-data` はdetached HEAD、開始working tree clean。保存用は別worktree `/workspace/fa-final-report`、branch `docs/fn004-final-acceptance-20261115`。保存commitは受入対象SHAに含めない。
 
-今回の一次証拠は [archive](../../reviews/archive/fn004-final-acceptance-20261115) の全suite TAP/actual exit、環境・source/Production前後hash、Production status/whole validation/Git監査、build・CLI help、固定SHAのCI取得記録。個別実行のPASSを全suiteへ加算しない。CIはGitHub runnerの実行を今回取得した外部証拠で、今回ローカルで独立実行した結果とは区別する。
+今回の一次証拠は [archive](archive/fn004-final-acceptance-20261115) の全suite TAP/actual exit、環境・source/Production前後hash、Production status/whole validation/Git監査、build・CLI help、固定SHAのCI取得記録。個別実行のPASSを全suiteへ加算しない。CIはGitHub runnerの実行を今回取得した外部証拠で、今回ローカルで独立実行した結果とは区別する。
 
 過去証拠は [旧監査](FN-004-Final-Acceptance.md) §4–10/13–14、[原本回収記録](FN-004-Final-Acceptance-Recovery.md)、[PR88検証報告](FN-004-FA-M01-Validation-20261115.md) とそのarchive。PR88 archiveのSHA256SUMSは今回全件照合成功。旧監査本文・過去FAILを上書きしない。
 

@@ -2,13 +2,13 @@
 
 ## Status and basis
 
-FA-M01 remains **OPEN** until independent review, merge/post-merge verification and separate Final Acceptance. This implementation does not declare FN-004 accepted. Its basis is the approved D1–D4 [Gate publication contract](FN-004-FA-M01-Gate公開契約案.md), merged at `3f3c67b4de89a0b009976d01dc141aab1b686ee4`.
+FA-M01 remains **OPEN** until independent review, merge/post-merge verification and separate Final Acceptance. This implementation does not declare FN-004 accepted. Its basis is the approved D1–D4 [Gate publication contract](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/history/plans/FN-004-FA-M01-Gate公開契約案.md), merged at `3f3c67b4de89a0b009976d01dc141aab1b686ee4`.
 
 Preflight confirmed main/origin/main at that commit, a clean tree, main Actions run `43416211319` completed successfully, and 17 production entries with SHA256 `f7062983872a7e79f8fa99bf396429124437b62aa0d724df761b7ab687da1cf0`. Implementation waited for that run to finish. Production Bootstrap/Apply/Recovery was not executed.
 
 ## GP-A: contract and publication
 
-The normative [recovery contract](../../design/functions/FN-004-反映処理・復旧.md), [bootstrap/state contract](../../design/functions/FN-004-初期化・ID状態.md), [Decision contract](../../design/functions/FN-004-判断モデル.md), [CLI contract](../../design/system/楽曲管理のCLI・画面連携.md) and [operator guide](../../management/FN-004-canonical操作ガイド.md) contain the section 10.1 deltas before the new runtime connection.
+The normative [recovery contract](../../design/functions/FN-004-反映処理・復旧.md), [bootstrap/state contract](../../design/functions/FN-004-初期化・ID状態.md), [Decision contract](../../design/functions/FN-004-判断モデル.md), [CLI contract](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md) and [operator guide](../../management/FN-004-canonical操作ガイド.md) contain the section 10.1 deltas before the new runtime connection.
 
 - [Gate publication](../../../src/fn004-gate-publication.js) completes metadata in its own same-directory wx/0600 candidate, syncs and verifies the creation inode and exact bytes, then links exclusively to the final name. It syncs the directory, verifies final identity/bytes, removes only its verified candidate, and syncs again. No rename fallback exists.
 - [Gate leases](../../../src/fn004-gate.js) retain the original creation descriptor in their private WeakMap. Only after publication, post-acquisition guards and fresh ownership verification does the caller receive a lease. Copied tokens do not confer authority.
