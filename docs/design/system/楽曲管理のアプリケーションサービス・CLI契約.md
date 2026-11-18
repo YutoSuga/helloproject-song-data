@@ -1,6 +1,6 @@
 # 楽曲管理のアプリケーションサービス・CLI契約
 
-FN-004 の共通サービスと公開 CLI の v1 契約。FN-004 runtime と Slice 6F の公開 CLI は実装済み。[操作ガイド](../../management/FN-004-canonical操作ガイド.md)に実際のコマンドとオプションを示す。SCR-002 と認証済み Web backend は設計済み・未実装であり、以下の Web 境界は将来の接続条件とする。[画面設計](../screens/SCR-002-楽曲管理画面.md)・[全体フロー](レビュー準備・canonical反映の全体フロー.md)を参照する。
+本書はFN-004の共通アプリケーションサービスと公開CLIの正式v1契約を示す。FN-004 runtime と Slice 6F の公開 CLI は実装済み。コマンド構文・オプションと操作手順は[操作ガイド](../../management/FN-004-canonical操作ガイド.md)を参照する。SCR-101 と認証済み Web backend は設計済み・未実装であり、以下の Web 境界は将来の接続条件とする。[画面設計](../screens/SCR-101-楽曲管理画面.md)・[全体フロー](レビュー準備・canonical反映の全体フロー.md)を参照する。
 
 ## application boundary
 
@@ -9,14 +9,14 @@ CLI ---------------------+
                          v
                  Application Service → FN-004 domain → repository/filesystem
                          ^
-SCR-002 browser → authenticated backend
+SCR-101 browser → authenticated backend
 ```
 
 CLIとbackendが同じserviceを使う。revision/OCC、Plan hash、Approval、request idempotency、transaction/recoveryをadapterで重複実装しない。browserはCSV・JSON・lock・journal・Git・GitHub tokenを直接操作しない。任意pathやrowを実行用payloadとして受け取らない。
 
-SCR-001は`site/`の静的公開を維持する。SCR-002 frontendは将来`admin/`等へ分離できるが、Pagesのstatic frontendだけでwriteは完結しない。管理機能を公開site artifactへ混ぜない。backend platform / hosting / DB / 認証provider / session / deployment / CSSは本設計の選定対象外。
+公開サイトは`site/`の静的公開を維持する。SCR-101 frontendは将来`admin/`等へ分離できるが、Pagesのstatic frontendだけでwriteは完結しない。管理機能を公開site artifactへ混ぜない。backend platform / hosting / DB / 認証provider / session / deployment / CSSは本設計の選定対象外。
 
-SCR-002は閲覧から認証済み管理者専用。backendがtrusted actorを渡し、client申告actorを信用しない。CLIはfilesystemへアクセスできるlocal operatorを前提に、`local:<stable-id>, assurance: local_process`を記録する。将来のWeb actorは`admin:<stable-id>`等とし、個人情報は必要最小限。local実行をWeb認証済みと偽らない。未設定認証の公開backendはwriteを拒否する。
+SCR-101は閲覧から認証済み管理者専用。backendがtrusted actorを渡し、client申告actorを信用しない。CLIはfilesystemへアクセスできるlocal operatorを前提に、`local:<stable-id>, assurance: local_process`を記録する。将来のWeb actorは`admin:<stable-id>`等とし、個人情報は必要最小限。local実行をWeb認証済みと偽らない。未設定認証の公開backendはwriteを拒否する。
 
 ## Approval（人間の承認）
 
@@ -91,7 +91,7 @@ Decision保存schema・content hash・mutation key・source revisionのexact con
 
 ## CLI（設計例とSlice 6F接続）
 
-新npm scriptを`canonical:manage`にまとめる。既存の`collect:candidates` / `prepare:reviews` / `rankings:generate`は維持する。以下は設計例。Slice 6Fの実装command・厳密なoption・外部入力・exit・安全上の制約は[操作ガイド](../../management/FN-004-canonical操作ガイド.md)を参照する。
+公開CLIの入口は `npm run canonical:manage -- <command>`。既存の`collect:candidates` / `prepare:reviews` / `rankings:generate`は維持する。以下はSlice 6F接続前の設計例。現行の実行構文、オプション、外部入力の例は[操作ガイド](../../management/FN-004-canonical操作ガイド.md)を参照する。
 
 ```text
 npm run canonical:manage -- status
@@ -116,7 +116,7 @@ CLI workflowはbootstrap監査/確認 → 外部template入力/import → draft�
 
 ApplyはTTYにrepository、Decision、追加内容、予定ID、reuse/no_op、warning、変更CSVを表示し`[y/N]`で一度確認。その後独立approval保存→request受付を行う。`--yes`だけの迂回、非TTY承認、CIからのcanonical Applyはv1対象外。Plan生成とApplyを暗黙連結しない。確認取消しは承認/受付前で終える。receipt後のSIGINT/通信切断では勝手にlock削除せず元要求を照会する。
 
-bootstrapは[正式bootstrap契約](../functions/FN-004-初期化・ID状態.md)の必須external declaration・origin/main全reachable監査・expected audit hashを使う。check結果を表示し、人間確認後のinitializeで再監査する。CLIの外部declaration入力option名は実装sliceで決めるが、宣言の省略・自動補完は不可。片側state/markerや不一致を初期設定buttonへ誘導せず、BOOTSTRAP_INCOMPLETE / RECOVERY_REQUIREDとして案内する。
+bootstrapは[正式bootstrap契約](../functions/FN-004-初期化・ID状態.md)の必須external declaration・origin/main全reachable監査・expected audit hashを使う。check結果を表示し、人間確認後のinitializeで再監査する。外部declarationの入力オプションは操作ガイドを参照する。宣言の省略・自動補完は不可。片側state/markerや不一致を初期設定buttonへ誘導せず、BOOTSTRAP_INCOMPLETE / RECOVERY_REQUIREDとして案内する。
 
 bootstrap・全recovery実行はCLIのみ。inspectで観測state hashと一意な推奨actionを示し、runで同hash/actionを再検証する。action不一致・状態不明ならSTOP。stale強制Apply、validation/lock bypass、arbitrary patch、force delete lockは提供しない。
 
@@ -129,6 +129,8 @@ Candidate → Decision revision → Plan → Approval → Request → Transactio
 Apply成功後はcanonical/Decision/Approval/History/stateのGit diff確認 → test/validation → 必要なsite buildと生成物diff → 通常commit/push/PR。自動Git操作はv1対象外。Git失敗・site build失敗で成功Applyをrollbackしない。未commitを未反映と表示しない。
 
 ## 実装順・検証
+
+以下は導入時に定めた順序と検証条件。Transaction・History・Recovery・公開CLIはSlice 6Fまでに接続済み。管理Web BackendとSCR-101は未実装。
 
 domain / validator → repository / gate → bootstrap/state → Decision → Plan → Approval/Request → transaction/History/recovery → CLI検証 → backend → frontend。CLIは各serviceの薄いadapterを段階追加するが、正常系commitだけで実Applyを公開しない。
 
@@ -143,7 +145,7 @@ domain / validator → repository / gate → bootstrap/state → Decision → Pl
 | 後続 | History・forward finalize・recovery（transaction） | 全crash matrix、receipt-only復旧を含む |
 | 後続 | CLI Apply/recovery統合（recovery検証後） | end-to-end/障害試験合格後に実Apply公開 |
 | 後続 | backend adapter・管理者境界（CLI統合後） | 同service利用、認証未設定write拒否 |
-| 後続 | SCR-002の6 view（backend後） | OCC・承認・再送・異常UXを検証 |
+| 後続 | SCR-101の6 view（backend後） | OCC・承認・再送・異常UXを検証 |
 
 Slice 4をDecision + Plan、Slice 5をApproval + Requestとして統合し、後続slice/PR数は固定しない。大きければさらに分割し、単独review・復元・test可能性を優先する。frontend mockは先行可能だが実write接続はCLI実Apply統合完了後。認証providerの選定は別途でも、無認証writeを暫定公開しない。
 

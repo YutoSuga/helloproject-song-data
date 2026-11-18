@@ -1,11 +1,11 @@
 # FN-004 canonical management CLI
 
 `npm run canonical:manage -- <command>` は既存FN-004 application serviceのlocal adapterです。
-作業対象repositoryのrootで実行します。公開HTTP API・SCR-002・DBは含みません。
+作業対象repositoryのrootで実行します。公開HTTP API・SCR-101・DBは含みません。
 操作前に別作業者のApply、収集、直接CSV編集、Git checkout等を止めてください。
 productionでのテストApply・initialize・Recovery runは禁止です。以下の更新例は隔離fixtureで検証します。
 
-正式契約は[interface](../design/system/楽曲管理のアプリケーションサービス・CLI契約.md)、[Transaction / Recovery](../design/functions/FN-004-反映処理・復旧.md)、
+本ガイドは実行コマンドと運用手順を扱います。正式契約は[共通サービス・CLI契約](../design/system/楽曲管理のアプリケーションサービス・CLI契約.md)、[Transaction / Recovery](../design/functions/FN-004-反映処理・復旧.md)、
 [Approval / Request](../design/functions/FN-004-承認・反映リクエスト.md)、[bootstrap](../design/functions/FN-004-初期化・ID状態.md)です。
 保存原本は手編集せず、外部入力documentだけを編集してserviceへ取り込みます。
 
@@ -146,7 +146,7 @@ FA-M01では完成済み専用candidateを同directoryからhard linkでno-clobb
 旧方式が残した空/partial final、実際の不正metadata・証明不能なgateは引き続き`GATE_CORRUPT`等でSTOPします。CLIのintegrity exit 8をbusyへ読み替えず、自動unlockしません。再実行成功を不正証拠の解消とは扱わず、lockの経過時間・PID不存在だけでも削除しません。孤立candidateも無断削除・再利用せず、容量監視と証拠保管を行ってください。
 自動継承に必要な実OS probeは現在Linuxのboot/start/namespace evidenceを使用します。別host・PID再利用・証明不能なplatformはmanual STOPであり、TTYやlocal actorだけでは継承しません。
 
-本CLIは既存row update/delete、Candidate削除/status変更、自動Recovery、SCR-002、HTTP API、DBを実装しません。
+本CLIは既存row update/delete、Candidate削除/status変更、自動Recovery、SCR-101、HTTP API、DBを実装しません。
 
 
 ### FA-M01 Gate公開異常の扱い
