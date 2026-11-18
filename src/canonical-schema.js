@@ -1,4 +1,4 @@
-// Runtime contract for docs/data-spec.md and the FN-004 whole validator.
+// Runtime contract for docs/design/data/データ仕様.md and the FN-004 whole validator.
 export const CANONICAL_SCHEMA_VERSION = 1;
 export const ID_PATTERNS = {
   works: /^W[0-9]{5}$/, songs: /^[MAJTBORH][0-9]{5}$/,

@@ -1,6 +1,6 @@
 # PR・CI運用ルール
 
-正は[workflow](workflows/deploy-pages.yml)と[CI選択処理](scripts/ci-policy.cjs)。開発・レビュー・手動マージの流れは[開発フロー](../docs/development-workflow.md)を参照する。
+正は[workflow](workflows/deploy-pages.yml)と[CI選択処理](scripts/ci-policy.cjs)。開発・レビュー・手動マージの流れは[開発フロー](../docs/management/開発・PR運用ルール.md)を参照する。
 
 ## 軽量／フルの選択
 

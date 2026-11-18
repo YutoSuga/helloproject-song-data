@@ -4,7 +4,7 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 ## プロジェクト概要
 
-このリポジトリは、`data/*.csv` を唯一の正本（canonical CSV）として管理します。Hello! Project 公式サイトから楽曲候補を収集する FN-002 楽曲候補収集機能、確認待ちの候補と収集履歴を置く `staging/song-candidates.json`、レビュー準備用の `staging/song-reviews.json`、正本から集計・生成する作家ランキングと公開静的サイトを含みます。Milestone 3-B1 / FN-003 レビュー準備機能まで実装済みです。FN-004 canonical反映機能はruntime実装済みでFinal Acceptance PASS、FA-M01 / FA-L01はCLOSEDです。本番初回Apply・運用開始とは区別します。実績と次のSCR-001改善方針は[Roadmap](docs/roadmap.md)を参照してください。
+このリポジトリは、`data/*.csv` を唯一の正本（canonical CSV）として管理します。Hello! Project 公式サイトから楽曲候補を収集する FN-002 楽曲候補収集機能、確認待ちの候補と収集履歴を置く `staging/song-candidates.json`、レビュー準備用の `staging/song-reviews.json`、正本から集計・生成する作家ランキングと公開静的サイトを含みます。Milestone 3-B1 / FN-003 レビュー準備機能まで実装済みです。FN-004 canonical反映機能はruntime実装済みでFinal Acceptance PASS、FA-M01 / FA-L01はCLOSEDです。本番初回Apply・運用開始とは区別します。実績と次のSCR-001改善方針は[Roadmap](docs/management/ロードマップ.md)を参照してください。
 
 現在の公開サイトは Juice=Juice のランキングを表示します。collector は設定済みの主要7グループに対応していますが、収集した候補がそのまま公開サイトや正本 CSV に反映されるわけではありません。
 
@@ -22,7 +22,7 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 `SCR` = Screen（画面・UI）、`FN` = Function（画面やジョブから呼ばれるロジック）、`JOB` = Job（定期または手動で起動されFunctionを呼ぶジョブ・バッチ）。IDは種別ごとに `SCR-001`、`FN-003`、`JOB-001` のように3桁ゼロ埋めで付けます。現在の手動collector CLIはFN-002の実行入口であり、JOB-001の実装済みを意味しません。
 
-Milestone番号は開発順序・開発計画、SCR / FN / JOBはシステム上の機能識別子です。今後の設計・実装・PR・会話では、機能名に正式IDを併記します。命名・設計書構成の方針は[機能ID体系](docs/feature-ids.md)、Milestoneとの対応は[Roadmap](docs/roadmap.md)を参照してください。
+Milestone番号は開発順序・開発計画、SCR / FN / JOBはシステム上の機能識別子です。今後の設計・実装・PR・会話では、機能名に正式IDを併記します。命名・設計書構成の方針は[機能ID体系](docs/design/system/機能ID体系.md)、Milestoneとの対応は[Roadmap](docs/management/ロードマップ.md)を参照してください。
 
 ## 管理対象
 
@@ -34,7 +34,7 @@ Milestone番号は開発順序・開発計画、SCR / FN / JOBはシステム上
 - release ごとの収録 song とトラック表記
 - 各情報を確認した公式一次情報の URL
 
-卒業後に発表された OG のソロ作品、非公式動画、Instrumental や映像違いだけの MV は、現時点の収集対象外です。`songs.version_type=original` は公式情報上でその work の最初の通常の公式リリースとなる song を表し、CSV への登録順では決まりません。`song_id` も永続的な識別子であって発売順を表しません。同一音源の再収録では song を増やさず、別 release への収録関係を `releases.csv` と `release_tracks.csv` で表します。同一音源か確証がない場合は、推測で統合・新規採番せずユーザー確認事項として保留します。詳細な判定・更新ルールは [データ仕様](docs/data-spec.md) を正とします。
+卒業後に発表された OG のソロ作品、非公式動画、Instrumental や映像違いだけの MV は、現時点の収集対象外です。`songs.version_type=original` は公式情報上でその work の最初の通常の公式リリースとなる song を表し、CSV への登録順では決まりません。`song_id` も永続的な識別子であって発売順を表しません。同一音源の再収録では song を増やさず、別 release への収録関係を `releases.csv` と `release_tracks.csv` で表します。同一音源か確証がない場合は、推測で統合・新規採番せずユーザー確認事項として保留します。詳細な判定・更新ルールは [データ仕様](docs/design/data/データ仕様.md) を正とします。
 
 データ収集の一次情報は原則として Hello! Project 公式サイトの、対象楽曲・release を直接説明する情報です。公式情報で確認できない内容を第三者サイトから推測補完しません。
 
@@ -94,39 +94,41 @@ JOB-001 楽曲候補定期収集ジョブ（Milestone 3-D、未実装）
   └──→ FN-002 楽曲候補収集機能
 ```
 
-この図はデータと責務の関係を示します。正式v1設計は[canonical registration](docs/design/レビュー準備・canonical反映の全体フロー.md)を入口とします。Decision・Plan・Approval・要求受付だけではCSVを変更しません。FN-004 v1は既存entityを参照し新規行だけ追加する設計で、field update/deleteは対象外です。CLIとSCR-002は同じapplication serviceを使い、bootstrap/recovery実行はv1ではCLIのみです。FN-004 CLIは実装済みです。本番操作は[CLIガイド](docs/canonical-cli.md)と個別の人間承認に従います。JOB-001に通知は含めません。
+この図はデータと責務の関係を示します。正式v1設計は[canonical registration](docs/design/system/レビュー準備・canonical反映の全体フロー.md)を入口とします。Decision・Plan・Approval・要求受付だけではCSVを変更しません。FN-004 v1は既存entityを参照し新規行だけ追加する設計で、field update/deleteは対象外です。CLIとSCR-002は同じapplication serviceを使い、bootstrap/recovery実行はv1ではCLIのみです。FN-004 CLIは実装済みです。本番操作は[CLIガイド](docs/management/FN-004-canonical操作ガイド.md)と個別の人間承認に従います。JOB-001に通知は含めません。
 
 collector は正本 CSV を参考照合のために読みますが、直接更新しません。`staging/` は確認待ち候補と収集履歴の保存先であり、正本ではありません。`site/data/` などの生成物は正本 CSV から再生成する表示用データです。3-B では人間が確認した判断だけを正本へ反映する経路を設計・実装します。
 
-Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` で全candidateを照合します。`staging/review-results.json` が存在すれば過去の人間判断を読み取り、存在しなければ空として扱います。FN-003はcandidate、review結果、canonical CSVを更新しません。詳細は[canonical registration 基本設計](docs/design/レビュー準備・canonical反映の全体フロー.md)を参照してください。
+Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` で全candidateを照合します。`staging/review-results.json` が存在すれば過去の人間判断を読み取り、存在しなければ空として扱います。FN-003はcandidate、review結果、canonical CSVを更新しません。詳細は[canonical registration 基本設計](docs/design/system/レビュー準備・canonical反映の全体フロー.md)を参照してください。
 
 ## 設計書・仕様書
 
-- [システム構成](docs/システム構成.md)：全体構成、責務・データフロー、技術候補とセキュリティ境界
-- [機能ID体系](docs/feature-ids.md)：正式ID、命名運用、設計書の責務と整理方針
-- [公開サイト基本設計](docs/design/公開サイトのデータ生成・表示.md)：FN-001 公開サイトデータ生成機能 / SCR-001 公開サイト画面
-- [候補収集基本設計](docs/design/FN-002-楽曲候補収集.md)：FN-002 楽曲候補収集機能（将来のJOB-001との関係を含む）
-- [canonical registration 基本設計](docs/design/レビュー準備・canonical反映の全体フロー.md)：FN-003 レビュー準備機能 / FN-004 canonical反映機能
-- [Decision Model](docs/design/FN-004-判断モデル.md)：aggregate、revision、OCC、candidate binding、song_id_prefix
-- [Apply Plan](docs/design/FN-004-反映計画.md)：不変の反映計画、予定ID、preconditions
-- [Transaction / Recovery](docs/design/FN-004-反映処理・復旧.md)：全体検証、journal、ID state、commit・復旧
-- [History readonly contract](docs/design/FN-004-成功履歴・読取検証.md)：成功record/hash/chain/set、非初期state proof、適用済みlookup
-- [canonical CLI利用ガイド](docs/canonical-cli.md)：TTY確認、bootstrap、Decision/Plan/Apply、result、明示Recovery、JSON/exit
-- [CLI / SCR-002](docs/design/楽曲管理のCLI・画面連携.md)：Approval、durable Apply Request、共通service、内部view、実装slice
-- [データ仕様](docs/data-spec.md)：canonical CSV の列・制約・運用ルール
-- [収集仕様](docs/collection-spec.md)：collector の詳細仕様
-- [ランキング集計仕様](docs/ranking-spec.md)：集計・生成物の詳細仕様
-- [Roadmap](docs/roadmap.md)：milestone と実装計画
+[文書体系・正本の参照ルール・目次](docs/README.md)を入口としてください。
+
+- [システム構成](docs/design/system/システム構成.md)：全体構成、責務・データフロー、技術候補とセキュリティ境界
+- [機能ID体系](docs/design/system/機能ID体系.md)：正式ID、命名運用、設計書の責務と整理方針
+- [公開サイト基本設計](docs/design/functions/公開サイトのデータ生成・表示.md)：FN-001 公開サイトデータ生成機能 / SCR-001 公開サイト画面
+- [候補収集基本設計](docs/design/functions/FN-002-楽曲候補収集.md)：FN-002 楽曲候補収集機能（将来のJOB-001との関係を含む）
+- [canonical registration 基本設計](docs/design/system/レビュー準備・canonical反映の全体フロー.md)：FN-003 レビュー準備機能 / FN-004 canonical反映機能
+- [Decision Model](docs/design/functions/FN-004-判断モデル.md)：aggregate、revision、OCC、candidate binding、song_id_prefix
+- [Apply Plan](docs/design/functions/FN-004-反映計画.md)：不変の反映計画、予定ID、preconditions
+- [Transaction / Recovery](docs/design/functions/FN-004-反映処理・復旧.md)：全体検証、journal、ID state、commit・復旧
+- [History readonly contract](docs/design/functions/FN-004-成功履歴・読取検証.md)：成功record/hash/chain/set、非初期state proof、適用済みlookup
+- [canonical CLI利用ガイド](docs/management/FN-004-canonical操作ガイド.md)：TTY確認、bootstrap、Decision/Plan/Apply、result、明示Recovery、JSON/exit
+- [CLI / SCR-002](docs/design/system/楽曲管理のCLI・画面連携.md)：Approval、durable Apply Request、共通service、内部view、実装slice
+- [データ仕様](docs/design/data/データ仕様.md)：canonical CSV の列・制約・運用ルール
+- [収集仕様](docs/design/functions/FN-002-楽曲候補収集仕様.md)：collector の詳細仕様
+- [ランキング集計仕様](docs/design/functions/FN-001-ランキング集計仕様.md)：集計・生成物の詳細仕様
+- [Roadmap](docs/management/ロードマップ.md)：milestone と実装計画
 
 ## 現在の段階
 
-`data/` 以下の CSV を唯一の正本（Single Source of Truth）とし、入力・変更時は [データ仕様 v0.3](docs/data-spec.md) に従います。Juice=Juiceの作家ランキングを検証できる最小静的サイトと、CSVからその派生データを生成する処理も収録しています。ランキングのapplication-level規則は[作家ランキング集計仕様](docs/ranking-spec.md)を参照してください。生成物からCSVを逆更新しません。
+`data/` 以下の CSV を唯一の正本（Single Source of Truth）とし、入力・変更時は [データ仕様 v0.3](docs/design/data/データ仕様.md) に従います。Juice=Juiceの作家ランキングを検証できる最小静的サイトと、CSVからその派生データを生成する処理も収録しています。ランキングのapplication-level規則は[作家ランキング集計仕様](docs/design/functions/FN-001-ランキング集計仕様.md)を参照してください。生成物からCSVを逆更新しません。
 
 `created_at` / `updated_at` はデータとして登録・更新時期を簡単に参照するために使い、Git 履歴は誰がどのコミットで何を変更したかを追跡する完全な履歴として使います。
 
 ## 将来構想
 
-現在の実装状況と機能単位の実装予定は [Roadmap](docs/roadmap.md) を参照してください。
+現在の実装状況と機能単位の実装予定は [Roadmap](docs/management/ロードマップ.md) を参照してください。
 
 現在のSCR-001 公開サイト画面は GitHub Pages 上の静的サイトです。作家・メンバー別の楽曲一覧、関連Version／カバー、所属履歴、限定ユニット、公式ライブ映像、および開始時刻付きYouTubeリンクなどは将来の拡張候補です。Milestone 3-C / SCR-002 楽曲管理画面では認証付き管理画面を予定していますが、その実現方式や server-side 処理、DB、API、外部 backend の採否は未決定です。
 
@@ -134,7 +136,7 @@ Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` �
 
 1作業＝1ブランチ＝原則1PR。最新のorigin/mainから専用ブランチを作成し、mainへの直接commit / pushは禁止します。commit・push・PR作成後にCIとレビューを確認し、**ユーザーが手動でマージします。Codexは自動マージしません。** マージ後はCI・Pages公開を確認し、必要に応じてブランチを削除します。
 
-詳細は[開発・PR運用ルール](docs/development-workflow.md)と[CI運用ルール](.github/CI.md)を参照してください。
+詳細は[開発・PR運用ルール](docs/management/開発・PR運用ルール.md)と[CI運用ルール](.github/CI.md)を参照してください。
 
 ## FN-002 楽曲候補収集機能（Milestone 3-A / 3-A Follow-up）
 
@@ -148,7 +150,7 @@ node --test
 
 対象はモーニング娘。、アンジュルム、Juice=Juice、つばきファクトリー、BEYOOOOONDS、OCHA NORMA、ロージークロニクル。全選択artistの収集・解析が成功した場合だけ、共通の `staging/song-candidates.json` を一度更新する。1件でも失敗すればstagingは変更しない。既存candidate ID、status、notes、detected_at、管理者追加フィールドは維持する。
 
-位置引数、未知オプション、未知slug、値なしは非0終了する。期間指定は実装しない。旧名義・関連ユニットを現在のartist IDへ自動統合せず、正本CSVへの反映やwork/songの採番も行わない。設定根拠・公式feedの範囲・summary仕様は[収集仕様](docs/collection-spec.md)を参照。
+位置引数、未知オプション、未知slug、値なしは非0終了する。期間指定は実装しない。旧名義・関連ユニットを現在のartist IDへ自動統合せず、正本CSVへの反映やwork/songの採番も行わない。設定根拠・公式feedの範囲・summary仕様は[収集仕様](docs/design/functions/FN-002-楽曲候補収集仕様.md)を参照。
 
 ## FN-001 公開サイトデータ生成機能 / SCR-001 公開サイト画面の実行
 
