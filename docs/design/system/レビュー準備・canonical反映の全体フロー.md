@@ -2,7 +2,7 @@
 
 ## 目的・境界
 
-楽曲データの正本は `data/*.csv`。FN-002 が候補を収集し、[FN-003](../functions/FN-003-レビュー準備.md) がレビュー用派生 JSON を生成する。FN-004 は正式な人間の判断から canonical を安全に反映する。FN-004 の runtime・公開 CLI は実装済みで、SCR-002 と管理者向け Web backend は設計段階にある。既存 canonical 登録済み candidate の初期移行は対象外。
+楽曲データの正本は `data/*.csv`。FN-002 が候補を収集し、[FN-003](../functions/FN-003-レビュー準備.md) がレビュー用派生 JSON を生成する。FN-004 は正式な人間の判断から canonical を安全に反映する。FN-004 の runtime・公開 CLI は実装済みで、SCR-101 と管理者向け Web backend は設計段階にある。既存 canonical 登録済み candidate の初期移行は対象外。
 
 本書は全体フローと責務の境界を示す。Design 1〜4を横断統合した詳細は、[Decision Model](../functions/FN-004-判断モデル.md)、[Apply Plan](../functions/FN-004-反映計画.md)、[Transaction / Recovery](../functions/FN-004-反映処理・復旧.md)、[Bootstrap / ID state](../functions/FN-004-初期化・ID状態.md)、[History readonly contract](../functions/FN-004-成功履歴・読取検証.md)、[共通サービス・CLI](楽曲管理のアプリケーションサービス・CLI契約.md)へ分割する。Decision / Plan / Historyのschema・hash projection・orderingは各文書の完全なversioned契約を正とする。Approval / Request / Receiptの完全schemaとhashは[Approval / Request Hash Contract](../functions/FN-004-承認・反映リクエスト.md)を正とする。
 
@@ -17,7 +17,7 @@ FN-003 レビュー準備機能（実装済み）
   ↓
 staging/song-reviews.json
   ↓
-人間レビュー（将来のSCR-002 楽曲管理画面）
+人間レビュー（将来のSCR-101 楽曲管理画面）
   ↓
 Decision draft → confirmed revision（人間のidentity判断）
   ↓
@@ -30,7 +30,7 @@ data/*.csv（canonical）
 successful Apply History
 ```
 
-図のTransactionがcanonicalを変更し、成功Historyが結果を記録する。Decision確定・Plan生成・Approval・Request受付だけではCSVを変更しない。SCR-002はreview表示、判断確認、明示的Plan生成、反映確認、結果確認を共通application service経由で行う。現行FN-003の派生JSONを取得・再生成するadapterの技術方式は実装段階で決める。
+図のTransactionがcanonicalを変更し、成功Historyが結果を記録する。Decision確定・Plan生成・Approval・Request受付だけではCSVを変更しない。SCR-101はreview表示、判断確認、明示的Plan生成、反映確認、結果確認を共通application service経由で行う。現行FN-003の派生JSONを取得・再生成するadapterの技術方式は実装段階で決める。
 
 ## staging の責務
 
@@ -88,9 +88,9 @@ existing master/relationのfield update/patch/delete、work/song統合・分割�
 
 Slice 4前のSTOP項目（Decision完全schema/content hash、Plan operation/registry、History readonly proof）は各専用文書で確定する。JSON Schema実装やbackend/認証provider等の技術選定は実装sliceで行うが、本書群の不変条件に従う。実装PR数は固定せず、review/test可能な分割を行う。
 
-## SCR-002 楽曲管理画面との接点（Milestone 3-C、未実装）
+## SCR-101 楽曲管理画面との接点（Milestone 3-C、未実装）
 
-SCR-002は一つの正式Feature IDのまま、管理一覧・レビュー編集・Decision確認・Apply Preflight・Apply結果・System Statusを内部viewとする。[画面設計](../screens/SCR-002-楽曲管理画面.md)と[共通サービス・CLI契約](楽曲管理のアプリケーションサービス・CLI契約.md)を参照する。v1のbootstrap/recovery実行はCLIのみ。browserからfilesystem/Gitへ直接書かず、認証済み管理者backendを必要とする。providerやhosting方式は別途選定する。JOB-001や通知は今回実装しない。
+SCR-101は一つの正式Feature IDのまま、管理一覧・レビュー編集・Decision確認・Apply Preflight・Apply結果・System Statusを内部viewとする。[画面設計](../screens/SCR-101-楽曲管理画面.md)と[共通サービス・CLI契約](楽曲管理のアプリケーションサービス・CLI契約.md)を参照する。v1のbootstrap/recovery実行はCLIのみ。browserからfilesystem/Gitへ直接書かず、認証済み管理者backendを必要とする。providerやhosting方式は別途選定する。JOB-001や通知は今回実装しない。
 
 ## 関連仕様
 

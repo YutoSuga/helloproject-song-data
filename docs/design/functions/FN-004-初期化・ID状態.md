@@ -1,6 +1,6 @@
 # FN-004 Bootstrap / ID state contract
 
-本書は[Transaction設計](FN-004-反映処理・復旧.md)のbootstrap・state部分の正式v1契約である。Slice 3で停止したGit監査scope、external declaration、genesis/state schemaを人間判断済み方針に基づき確定する。**本書のschemaは実装契約であり、単なる概念例ではない**。Slice 3のlibrary実装は後述する。正式CLI・production bootstrapは別タスクであり、本実装PRでは実行しない。
+本書は[Transaction設計](FN-004-反映処理・復旧.md)のbootstrap・state部分の正式v1契約である。Slice 3で検討を保留したGit監査scope、external declaration、genesis/state schemaを人間判断済み方針に基づき確定する。**本書のschemaは実装契約であり、単なる概念例ではない**。Slice 3のlibraryとSlice 6Fの公開CLIは実装済み。Production BootstrapはPR #61で保存済み。経緯と本番運用の状況は[ロードマップ](../../management/ロードマップ.md#現在地)を参照する。
 
 ## 共通型・version・正本
 
@@ -135,7 +135,7 @@ audit payloadは次のfieldだけを持つ。全mapはNamespaceMap、gitとrule_
 
 `audit_hash = hashCanonicalJson(audit_payload)`、すなわちSHA-256(UTF-8(JCS(payload)))。Slice 1の`canonicalJson` / `hashCanonicalJson`を再利用し、object挿入順やlocale sortへ依存しない。generated_at、実行path、host、PID、actor、initialize時刻、ランダムrepository IDをaudit payloadへ入れない。同一manifest/Git identity/declaration/rulesなら同一hash。declarationの値・statement・evidence・note変更もhashへbindingされる。
 
-将来libraryの`checkBootstrap({root, external_declaration})`は `{status, readiness, audit_payload, audit_hash, canonical_manifest, exhausted_namespaces, diagnostics, metadata:{generated_at}}`を返す契約とする。statusは下表による。未初期化かつ全監査成功ならstatus=BOOTSTRAP_REQUIRED、readiness=`initializable`。これは初期化済みREADYとは別である。
+libraryの`checkBootstrap({root, external_declaration})`は `{status, readiness, audit_payload, audit_hash, canonical_manifest, exhausted_namespaces, diagnostics, metadata:{generated_at}}`を返す契約とする。statusは下表による。未初期化かつ全監査成功ならstatus=BOOTSTRAP_REQUIRED、readiness=`initializable`。これは初期化済みREADYとは別である。
 
 失敗時はreadiness=`blocked`、audit_hash=null。実行できた監査の部分情報をdiagnosticsで示してよいが、completeな適用可能payloadとして扱わない。既存valid stateならstatus=READY、通常readiness=`initialized`とし、再bootstrap可能としない。完了artifactの後片付けが必要な場合は下記cleanup_requiredを区別する。状態照会だけでdeclarationを捏造/省略してaudit成功にしない。
 
@@ -198,13 +198,13 @@ operator_confirmationはbootstrap監査への明示確認であり、canonical A
 
 state_hashはinitialized_at等の保存済み値も含む。時刻はinitialize中に一度決め、再試行やcheckの現在時刻で更新しない。state_hashとbootstrap_hashの循環はない。History recordが最終state_hashを参照しない既存Transaction契約も維持する。
 
-将来のallocation_events要素は既存Design 3どおり`{transaction_id, namespace, first, last}`で、namespaceは本書のprefix key、first/lastは1〜99999のinteger、first<=last。transaction_idは実在する`tx_<UUID v4>`。historyは非負integer count、Hash head_hash、nullまたは`apply_<UUID v4>`のlast_apply_idを持つ。pending_transactionはnullまたは`tx_<UUID v4>`。**Slice 3はこれらの進行recordを作らず、非初期stateのchain/pending整合を証明できなければREADYにしない**。非初期stateのsuccess-only readonly proofは[History契約](FN-004-成功履歴・読取検証.md)で定義する。実行・recoveryは後続sliceの責務。
+将来のallocation_events要素は既存Design 3どおり`{transaction_id, namespace, first, last}`で、namespaceは本書のprefix key、first/lastは1〜99999のinteger、first<=last。transaction_idは実在する`tx_<UUID v4>`。historyは非負integer count、Hash head_hash、nullまたは`apply_<UUID v4>`のlast_apply_idを持つ。pending_transactionはnullまたは`tx_<UUID v4>`。**Slice 3はこれらの進行recordを作らず、非初期stateのchain/pending整合を証明できなければREADYにしない**。非初期stateのsuccess-only readonly proofは[History契約](FN-004-成功履歴・読取検証.md)で定義する。現行runtimeでの実行・Recoveryは[Transaction設計](FN-004-反映処理・復旧.md)を参照する。
 
 high-waterはnamespaceごとにmonotonic。genesis値、current canonical max、完全Git historical maxのいずれよりも低いstateはREADYではない。将来の更新は直前valid stateと全namespace比較し、減少を拒否する。rollbackで消費済み上限やallocation_eventsを戻さない。自己整合した古いstateのcheckoutまでhashだけで検出できるとは主張せず、既存の単一lineage・巻戻し/分岐再照合方針を維持する。
 
 ## initialize / publication / TOCTOU
 
-将来libraryの`initializeBootstrap({root, external_declaration, expected_audit_hash, actor})`は明示操作のみ。Plan/Apply/readからの自動bootstrapは禁止。本番CLIは後続sliceで[Design 4](../system/楽曲管理のアプリケーションサービス・CLI契約.md)の`init --check`→人間確認→`init --expect-audit-hash`へ接続し、UIはbootstrap requiredを表示するだけ。
+libraryの`initializeBootstrap({root, external_declaration, expected_audit_hash, actor})`は明示操作のみ。Plan/Apply/readからの自動bootstrapは禁止。公開CLIでは監査→人間確認→初期化の順に実行する。接続境界は[共通サービス・CLI契約](../system/楽曲管理のアプリケーションサービス・CLI契約.md)、コマンド構文は[操作ガイド](../../management/FN-004-canonical操作ガイド.md)を参照する。UIはbootstrap requiredを表示するだけ。
 
 成功結果は`{status:"READY", code, repository_instance_id, bootstrap_hash, state_hash, high_water_marks, readiness, diagnostics}`。初回code=null、validな二回目はcode=BOOTSTRAP_ALREADY_INITIALIZED。readinessは正常完了時`initialized`、公開後cleanup未完了は`cleanup_required`で、完全成功と同一視しない。失敗はRepositoryErrorと上記code/diagnosticsを保持し、process.exitだけで表現しない。
 
@@ -251,9 +251,11 @@ Gitは空directoryを保存しないため、通常cloneではapply-history dire
 | BOOTSTRAP_AUDIT_MISMATCH | initializeのexpected audit hash不一致、公開禁止 |
 | RECOVERY_REQUIRED | 上記不完全/矛盾状態または未知の未完了処理により通常利用不可というreadiness。自動修復不可 |
 
-旧記述の`INITIALIZATION_INCOMPLETE`は本契約の`BOOTSTRAP_INCOMPLETE`へ名称統一する（既存runtimeには未実装）。messageで分岐せずRepositoryError.code/structured diagnosticsを使用。gate・persistence由来の既存codeは独自名へ置換しない。初期化完了後の両file消失も既知lineage/intent/History等の証跡があれば未初期化扱いせず停止する。Git全体を過去へ戻して証跡まで消した場合を自動検出できるという保証はしない。
+旧記述の`INITIALIZATION_INCOMPLETE`は本契約の`BOOTSTRAP_INCOMPLETE`へ名称統一する。messageで分岐せずRepositoryError.code/structured diagnosticsを使用。gate・persistence由来の既存codeは独自名へ置換しない。初期化完了後の両file消失も既知lineage/intent/History等の証跡があれば未初期化扱いせず停止する。Git全体を過去へ戻して証跡まで消した場合を自動検出できるという保証はしない。
 
 ## Slice 3への引き継ぎ
+
+この節はSlice 3導入時の実装範囲とレビュー項目を記録する。
 
 ### Slice 3 runtime API
 
@@ -266,7 +268,7 @@ Gitは空directoryを保存しないため、通常cloneではapply-history dire
 
 実装するのはcheck/audit/initialize/status、ID上限監査、初期record/state、validatorとgate/persistence接続まで。actual ID allocation/reservation、Decision、Plan、Approval/Request、実Apply journal、canonical write/transaction、backup/rollback/recovery execution、successful History、正式CLI/UIを実装しない。本番bootstrap/stateは実装PRで生成せず、merge後の別明示タスクで実行する。
 
-次回のreviewでは、temp Git repositoryでmerge parentを含むorigin/main reachable監査、docs/未merge/削除refの除外、削除済みcanonical ID保持、historical schema、shallow/欠損停止、全namespace宣言/矛盾、99999/欠番、determinism、全TOCTOU input変更、clone lineage、state/marker片側・hash/link異常、gate競合、no-clobber・fsync・中断各段階を検証する。既存Slice 1/2 APIを再実装しない。
+Slice 3導入時のレビュー項目は、temp Git repositoryでmerge parentを含むorigin/main reachable監査、docs/未merge/削除refの除外、削除済みcanonical ID保持、historical schema、shallow/欠損停止、全namespace宣言/矛盾、99999/欠番、determinism、全TOCTOU input変更、clone lineage、state/marker片側・hash/link異常、gate競合、no-clobber・fsync・中断各段階を検証する。既存Slice 1/2 APIを再実装しない。
 
 ## Slice 6 failure terminal stateとの接続
 
