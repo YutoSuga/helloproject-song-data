@@ -4,7 +4,7 @@ const q=s=>document.querySelector(s), all=s=>[...document.querySelectorAll(s)];
 const normalize=s=>s.normalize('NFKC').toLocaleLowerCase('ja').trim();
 q('#show-numbers')?.addEventListener('change',e=>document.body.classList.toggle('numbers-off',!e.target.checked));
 // Scroll only the artist container, never the page or fixed navigation.
-function positionArtists(){if(innerWidth>=1024||document.body.classList.contains('page-index'))return;const strip=q('.body-artists .artist-strip'),selected=strip.querySelector('[aria-pressed=true]');strip.scrollLeft=selected.offsetLeft-strip.offsetLeft-12;}
+function positionArtists(){if(document.body.classList.contains('page-index'))return;const strip=q('.body-artists .artist-strip');if(!strip)return;const selected=strip.querySelector('[aria-pressed=true]');strip.scrollLeft=selected.offsetLeft-strip.offsetLeft-12;}
 requestAnimationFrame(positionArtists);window.addEventListener('resize',positionArtists);
 function tabs(selector,activate){const buttons=all(selector);buttons.forEach((b,i)=>{b.addEventListener('click',()=>{buttons.forEach(x=>{x.setAttribute('aria-selected',String(x===b));x.tabIndex=x===b?0:-1});activate(b)});b.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?buttons.length-1:(i+(e.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;buttons[n].focus();buttons[n].click()})})}
 let view='ranking',category=0;
