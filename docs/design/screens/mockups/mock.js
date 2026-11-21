@@ -11,7 +11,7 @@ let view='ranking',category=0;
 const categories=all('[data-category]').map(x=>x.textContent);
 let opener;
 function openDialog(dialog,button){opener=button;dialog.showModal();dialog.querySelector('.dialog-close').focus()}
-all('dialog').forEach(d=>{d.querySelector('.dialog-close').addEventListener('click',()=>d.close());d.addEventListener('close',()=>opener?.focus())});
+all('dialog').forEach(d=>{d.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const nodes=[...d.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),[tabindex="0"]')].filter(x=>!x.hidden);const first=nodes[0],last=nodes.at(-1);if(!first){e.preventDefault();d.focus();return}if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}});d.querySelector('.dialog-close').addEventListener('click',()=>d.close());d.addEventListener('close',()=>opener?.focus())});
 function state(){const value=q('#review-state')?.value||'normal';if(!q('#status'))return;q('#status').hidden=value==='normal';q('#status').textContent=({loading:'読み込み中…',empty:'表示できるデータがありません。',error:'データを表示できません。時間をおいて再読み込みしてください。',missing:'組み合わせデータはまだ生成されていません。'})[value]||'';q('#data-panel').hidden=!['normal','missing'].includes(value);if(q('#pair-controls')){q('#pair-controls').hidden=value==='missing';q('#pair-cards').hidden=value==='missing';q('#self-count').hidden=value==='missing'||q('#direction').value==='all';q('#pair-summary').hidden=value==='missing'}if(q('#song-summary'))q('#song-summary').hidden=value!=='normal';}
 q('#review-state')?.addEventListener('change',state);
 // Work-level search and sort, preserving a single card for every work.

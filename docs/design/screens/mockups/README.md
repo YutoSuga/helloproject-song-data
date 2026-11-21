@@ -33,7 +33,7 @@ Linux Chromium headless、同じファイルをlocalhost HTTPで配信して検�
 - node --check mock.js、git diff --check、npm run rankings:validate成功。既存rankings/ranking-pairs/canonical-rankingの3テストファイル成功。FN-004全suiteはローカル未実施。
 - 変更範囲はdocs/design/screens/だけ。本番site・canonical・FN-004・集計・workflow変更なし。artifactは既存workflowのsite/だけでモックは含まれない。
 
-前回作成時にはページ遷移・更新・戻る/進むを検証済み。今回もリンク存在を確認。CI結果はPR Checksの当該head SHAを参照し、軽量CIで省略されたテストは実行済みと解釈しない。
+補足検証では320pxの全5ページ×7ラベル（35個）の四辺がスクロール領域内に収まること、両モーダルのTab/Shift+Tab内部循環、×/Escape・起点復帰、ページ遷移・更新・戻る/進むも成功。閉じるボタンのみのdialogでTabが外へ出る問題を検出し、明示的循環処理を追加して再検証した。CI結果はPR Checksの当該head SHAを参照し、軽量CIで省略されたテストは実行済みと解釈しない。
 
 ## 未実施・推奨案
 
