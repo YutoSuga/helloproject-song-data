@@ -14,60 +14,6 @@
 <aside class="sidebar">
 <a data-item-no="C-01" data-item-id="site-title" href="index.html" class="brand">Hello! Project Song Database<small>ハロプロ楽曲データベース</small>
 </a>
-<section class="artists artist-desktop" aria-label="対象アーティスト">
-<h2>アーティスト</h2>
-<div class="artist-strip" tabindex="0" aria-label="アーティスト一覧">
-<button type="button" class="artist" data-item-no="C-08" data-item-id="artist-morningmusume" style="--group:#D92C1B" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>モーニング娘。’26</span>
-</button>
-<button type="button" class="artist" data-item-no="C-09" data-item-id="artist-angerme" style="--group:#1D91CD" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>アンジュルム</span>
-</button>
-<button type="button" class="artist" data-item-no="C-10" data-item-id="artist-juicejuice" style="--group:#7263AA" aria-pressed="true" aria-label="Juice=Juice 選択中">
-<span class="dot" aria-hidden="true">
-</span>
-<span>Juice=Juice</span>
-<small>選択中</small>
-</button>
-<button type="button" class="artist" data-item-no="C-11" data-item-id="artist-tsubakifactory" style="--group:#EF93BB" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>つばきファクトリー</span>
-</button>
-<button type="button" class="artist" data-item-no="C-12" data-item-id="artist-beyooooonds" style="--group:#20A239" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>BEYOOOOONDS</span>
-</button>
-<button type="button" class="artist" data-item-no="C-13" data-item-id="artist-ochanorma" style="--group:#F1881A" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>OCHA NORMA</span>
-</button>
-<button type="button" class="artist" data-item-no="C-14" data-item-id="artist-rosychronicle" style="--group:#F5D11F" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>ロージークロニクル</span>
-</button>
-<button type="button" class="artist" data-item-no="C-15" data-item-id="artist-helloprokenshusei" style="--group:#92C75B" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>ハロプロ研修生</span>
-</button>
-</div>
-<p class="scroll-hint">左右にスクロールできます</p>
-</section>
 <nav class="desktop" aria-label="メインナビゲーション">
 <a data-item-no="C-02" data-item-id="nav-home" id="nav-index-desktop" href="index.html" >
 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -102,7 +48,12 @@
 <p class="review">設計レビュー用・全データは仮値です。本番の確定値ではありません。 SCR-007</p>
 <a class="sp-brand" data-item-no="C-01" data-item-id="site-title" href="index.html">Hello! Project Song Database<small>ハロプロ楽曲データベース</small>
 </a>
-<section class="artists artist-mobile" aria-label="対象アーティスト">
+
+<label class="review number-switch">
+<input type="checkbox" id="show-numbers" checked> 項目番号を表示</label>
+<main id="main">
+<h1 data-item-no="01" data-item-id="videos-title" >動画</h1>
+<section class="artists body-artists" aria-label="対象アーティスト">
 <h2>アーティスト</h2>
 <div class="artist-strip" tabindex="0" aria-label="アーティスト一覧">
 <button type="button" class="artist" data-item-no="C-08" data-item-id="artist-morningmusume" style="--group:#D92C1B" disabled>
@@ -156,10 +107,6 @@
 </div>
 <p class="scroll-hint">左右にスクロールできます</p>
 </section>
-<label class="review number-switch">
-<input type="checkbox" id="show-numbers" checked> 項目番号を表示</label>
-<main id="main">
-<h1 data-item-no="01" data-item-id="videos-title" >動画</h1>
 <h2 data-item-no="02" data-item-id="videos-soon" >Coming Soon…</h2>
 <p data-item-no="03" data-item-id="videos-message" >ハロプロ関連動画の検索・閲覧機能を準備中です。</p>
 </main>
