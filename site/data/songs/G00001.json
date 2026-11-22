@@ -1,0 +1,5055 @@
+{
+  "schema_version": 1,
+  "artist": {
+    "artist_id": "G00001",
+    "name": "Juice=Juice"
+  },
+  "works": [
+    {
+      "work_id": "W00001",
+      "title": "微炭酸",
+      "title_kana": null,
+      "first_release_date": "2019-02-13",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "KOUGA",
+        "山崎あおい"
+      ],
+      "songs": [
+        {
+          "song_id": "J00001",
+          "title": "微炭酸",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2019-02-13",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00103",
+          "title": "微炭酸(2023)",
+          "version_name": "2023",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00002",
+      "title": "ポツリと",
+      "title_kana": null,
+      "first_release_date": "2019-02-13",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "中島卓偉",
+        "浜田ピエール裕介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00002",
+          "title": "ポツリと",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2019-02-13",
+          "credits": [
+            {
+              "creator_id": "C00032",
+              "creator_name": "浜田ピエール裕介",
+              "credit_name": "浜田ピエール裕介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00003",
+      "title": "Good bye & Good luck！",
+      "title_kana": null,
+      "first_release_date": "2019-02-13",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "KOUGA",
+        "三浦徳子",
+        "炭竃智弘"
+      ],
+      "songs": [
+        {
+          "song_id": "J00003",
+          "title": "Good bye & Good luck！",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2019-02-13",
+          "credits": [
+            {
+              "creator_id": "C00005",
+              "creator_name": "炭竃智弘",
+              "credit_name": "炭竃智弘",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00004",
+              "creator_name": "三浦徳子",
+              "credit_name": "三浦徳子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00004",
+      "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+      "title_kana": null,
+      "first_release_date": "2019-06-05",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "山崎あおい",
+        "鈴木俊介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00004",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2019-06-05",
+          "credits": [
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00006",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？(New Vocal Ver.)",
+          "version_name": "New Vocal Ver.",
+          "version_type": "new_vocal",
+          "release_date": "2019-10-10",
+          "credits": [
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00104",
+          "title": "「ひとりで生きられそう」って それってねえ、褒めているの？(2023)",
+          "version_name": "2023",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00005",
+      "title": "25歳永遠説",
+      "title_kana": null,
+      "first_release_date": "2019-06-05",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "KOUGA",
+        "児玉雨子"
+      ],
+      "songs": [
+        {
+          "song_id": "J00005",
+          "title": "25歳永遠説",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2019-06-05",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00006",
+      "title": "ポップミュージック",
+      "title_kana": null,
+      "first_release_date": "2020-04-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "KAN",
+        "炭竃智弘"
+      ],
+      "songs": [
+        {
+          "song_id": "J00007",
+          "title": "ポップミュージック",
+          "version_name": null,
+          "version_type": "cover",
+          "release_date": "2020-04-01",
+          "credits": [
+            {
+              "creator_id": "C00005",
+              "creator_name": "炭竃智弘",
+              "credit_name": "炭竃智弘",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00007",
+              "creator_name": "KAN",
+              "credit_name": "KAN",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00007",
+              "creator_name": "KAN",
+              "credit_name": "KAN",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00105",
+          "title": "ポップミュージック(2023)",
+          "version_name": "2023",
+          "version_type": "cover",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00005",
+              "creator_name": "炭竃智弘",
+              "credit_name": "炭竃智弘",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00007",
+              "creator_name": "KAN",
+              "credit_name": "KAN",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00007",
+              "creator_name": "KAN",
+              "credit_name": "KAN",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00007",
+      "title": "好きって言ってよ",
+      "title_kana": null,
+      "first_release_date": "2020-04-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "山崎あおい"
+      ],
+      "songs": [
+        {
+          "song_id": "J00008",
+          "title": "好きって言ってよ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2020-04-01",
+          "credits": [
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00008",
+      "title": "Borderline",
+      "title_kana": null,
+      "first_release_date": "2020-04-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "平田祥一郎",
+        "星部ショウ"
+      ],
+      "songs": [
+        {
+          "song_id": "J00009",
+          "title": "Borderline",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2020-04-01",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00009",
+      "title": "Va-Va-Voom",
+      "title_kana": null,
+      "first_release_date": "2020-04-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Josef Melin",
+        "Shusui",
+        "児玉雨子"
+      ],
+      "songs": [
+        {
+          "song_id": "J00010",
+          "title": "Va-Va-Voom",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2020-04-01",
+          "credits": [
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00010",
+              "creator_name": "Shusui",
+              "credit_name": "Shusui",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00010",
+      "title": "続いていくSTORY",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "HASSE",
+        "上杉洋史",
+        "近藤薫"
+      ],
+      "songs": [
+        {
+          "song_id": "J00060",
+          "title": "続いていくSTORY",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00012",
+              "creator_name": "近藤薫",
+              "credit_name": "近藤薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00049",
+              "creator_name": "HASSE",
+              "credit_name": "HASSE",
+              "role": "arrangement",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00012",
+              "creator_name": "近藤薫",
+              "credit_name": "近藤薫",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00012",
+              "creator_name": "近藤薫",
+              "credit_name": "近藤薫",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00011",
+          "title": "続いていくSTORY (Symphonic Version feat. Karin)",
+          "version_name": "Symphonic Version feat. Karin",
+          "version_type": "re_recording",
+          "release_date": "2020-04-01",
+          "credits": [
+            {
+              "creator_id": "C00013",
+              "creator_name": "上杉洋史",
+              "credit_name": "上杉洋史",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00012",
+              "creator_name": "近藤薫",
+              "credit_name": "近藤薫",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00012",
+              "creator_name": "近藤薫",
+              "credit_name": "近藤薫",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00011",
+      "title": "DOWN TOWN",
+      "title_kana": null,
+      "first_release_date": "2021-04-28",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Anders Dannvik",
+        "伊藤銀次",
+        "山下達郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00012",
+          "title": "DOWN TOWN",
+          "version_name": null,
+          "version_type": "cover",
+          "release_date": "2021-04-28",
+          "credits": [
+            {
+              "creator_id": "C00016",
+              "creator_name": "Anders Dannvik",
+              "credit_name": "Anders Dannvik",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00015",
+              "creator_name": "山下達郎",
+              "credit_name": "山下達郎",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00014",
+              "creator_name": "伊藤銀次",
+              "credit_name": "伊藤銀次",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00012",
+      "title": "がんばれないよ",
+      "title_kana": null,
+      "first_release_date": "2021-04-28",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "KOUGA",
+        "山崎あおい"
+      ],
+      "songs": [
+        {
+          "song_id": "J00013",
+          "title": "がんばれないよ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2021-04-28",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00029",
+          "title": "がんばれないよ(金澤朋子 ソロVer.)",
+          "version_name": "金澤朋子 ソロVer.",
+          "version_type": "other",
+          "release_date": "2021-04-28",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00030",
+          "title": "がんばれないよ(植村あかり ソロVer.)",
+          "version_name": "植村あかり ソロVer.",
+          "version_type": "other",
+          "release_date": "2021-04-28",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00031",
+          "title": "がんばれないよ(稲場愛香 ソロVer.)",
+          "version_name": "稲場愛香 ソロVer.",
+          "version_type": "other",
+          "release_date": "2021-04-28",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00032",
+          "title": "がんばれないよ(井上玲音 ソロVer.)",
+          "version_name": "井上玲音 ソロVer.",
+          "version_type": "other",
+          "release_date": "2021-04-28",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00033",
+          "title": "がんばれないよ(段原瑠々 ソロVer.)",
+          "version_name": "段原瑠々 ソロVer.",
+          "version_type": "other",
+          "release_date": "2021-04-28",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00034",
+          "title": "がんばれないよ(工藤由愛 ソロVer.)",
+          "version_name": "工藤由愛 ソロVer.",
+          "version_type": "other",
+          "release_date": "2021-04-28",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00035",
+          "title": "がんばれないよ(松永里愛 ソロVer.)",
+          "version_name": "松永里愛 ソロVer.",
+          "version_type": "other",
+          "release_date": "2021-04-28",
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00013",
+      "title": "プラスティック・ラブ",
+      "title_kana": null,
+      "first_release_date": "2021-12-22",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Anders Dannvik",
+        "竹内まりや"
+      ],
+      "songs": [
+        {
+          "song_id": "J00014",
+          "title": "プラスティック・ラブ",
+          "version_name": null,
+          "version_type": "cover",
+          "release_date": "2021-12-22",
+          "credits": [
+            {
+              "creator_id": "C00016",
+              "creator_name": "Anders Dannvik",
+              "credit_name": "Anders Dannvik",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00017",
+              "creator_name": "竹内まりや",
+              "credit_name": "竹内まりや",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00017",
+              "creator_name": "竹内まりや",
+              "credit_name": "竹内まりや",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00014",
+      "title": "Familia",
+      "title_kana": null,
+      "first_release_date": "2021-12-22",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Shim Zeyun",
+        "Shusui",
+        "tsubomi",
+        "イイジマケン",
+        "鈴木俊介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00015",
+          "title": "Familia",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2021-12-22",
+          "credits": [
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00010",
+              "creator_name": "Shusui",
+              "credit_name": "Shusui",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00033",
+              "creator_name": "Shim Zeyun",
+              "credit_name": "Shim Zeyun",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00034",
+              "creator_name": "tsubomi",
+              "credit_name": "tsubomi",
+              "role": "composition",
+              "credit_order": 3
+            },
+            {
+              "creator_id": "C00031",
+              "creator_name": "イイジマケン",
+              "credit_name": "イイジマケン",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00015",
+      "title": "Future Smile",
+      "title_kana": null,
+      "first_release_date": "2021-12-22",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Josef Melin",
+        "Shusui",
+        "大森祥子"
+      ],
+      "songs": [
+        {
+          "song_id": "J00016",
+          "title": "Future Smile",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2021-12-22",
+          "credits": [
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00010",
+              "creator_name": "Shusui",
+              "credit_name": "Shusui",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00019",
+              "creator_name": "大森祥子",
+              "credit_name": "大森祥子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00016",
+      "title": "GIRLS BE AMBITIOUS!",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": true,
+      "search_creator_names": [
+        "NOBE",
+        "中島卓偉",
+        "宮永治郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00056",
+          "title": "GIRLS BE AMBITIOUS",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00045",
+              "creator_name": "宮永治郎",
+              "credit_name": "宮永治郎",
+              "role": "arrangement",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00120",
+          "title": "GIRLS BE AMBITIOUS! 2026(Live at Zepp DiverCity(TOKYO)2026.05.06)",
+          "version_name": "2026(Live at Zepp DiverCity(TOKYO)2026.05.06)",
+          "version_type": "other",
+          "release_date": "2026-06-24",
+          "credits": [
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00045",
+              "creator_name": "宮永治郎",
+              "credit_name": "宮永治郎",
+              "role": "arrangement",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00017",
+          "title": "GIRLS BE AMBITIOUS! 2022",
+          "version_name": "2022",
+          "version_type": "other",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00020",
+              "creator_name": "NOBE",
+              "credit_name": "NOBE",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00017",
+      "title": "POPPIN' LOVE",
+      "title_kana": null,
+      "first_release_date": null,
+      "date_incomplete": true,
+      "search_creator_names": [
+        "Andreas Öhrn",
+        "Henrik Smith",
+        "Olof Lindskog",
+        "山崎あおい"
+      ],
+      "songs": [
+        {
+          "song_id": "J00018",
+          "title": "POPPIN' LOVE",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00023",
+              "creator_name": "Olof Lindskog",
+              "credit_name": "Olof Lindskog",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00021",
+              "creator_name": "Andreas Öhrn",
+              "credit_name": "Andreas Öhrn",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00022",
+              "creator_name": "Henrik Smith",
+              "credit_name": "Henrik Smith",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00023",
+              "creator_name": "Olof Lindskog",
+              "credit_name": "Olof Lindskog",
+              "role": "composition",
+              "credit_order": 3
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00018",
+      "title": "STAGE～アガッてみな～",
+      "title_kana": null,
+      "first_release_date": null,
+      "date_incomplete": true,
+      "search_creator_names": [
+        "KOUGA",
+        "児玉雨子"
+      ],
+      "songs": [
+        {
+          "song_id": "J00019",
+          "title": "STAGE～アガッてみな～",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00019",
+      "title": "Mon Amour",
+      "title_kana": null,
+      "first_release_date": null,
+      "date_incomplete": true,
+      "search_creator_names": [
+        "Josef Melin",
+        "オオヤギヒロオ"
+      ],
+      "songs": [
+        {
+          "song_id": "J00020",
+          "title": "Mon Amour",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00024",
+              "creator_name": "オオヤギヒロオ",
+              "credit_name": "オオヤギヒロオ",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00020",
+      "title": "ノクチルカ",
+      "title_kana": null,
+      "first_release_date": null,
+      "date_incomplete": true,
+      "search_creator_names": [
+        "唐沢美帆",
+        "松井寛"
+      ],
+      "songs": [
+        {
+          "song_id": "J00021",
+          "title": "ノクチルカ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00025",
+              "creator_name": "松井寛",
+              "credit_name": "松井寛",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00025",
+              "creator_name": "松井寛",
+              "credit_name": "松井寛",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00026",
+              "creator_name": "唐沢美帆",
+              "credit_name": "唐沢美帆",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00021",
+      "title": "G.O.A.T.",
+      "title_kana": null,
+      "first_release_date": null,
+      "date_incomplete": true,
+      "search_creator_names": [
+        "Josef Melin",
+        "Shusui",
+        "井筒日美"
+      ],
+      "songs": [
+        {
+          "song_id": "J00022",
+          "title": "G.O.A.T.",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00010",
+              "creator_name": "Shusui",
+              "credit_name": "Shusui",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00027",
+              "creator_name": "井筒日美",
+              "credit_name": "井筒日美",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00022",
+      "title": "雨の中の口笛",
+      "title_kana": null,
+      "first_release_date": null,
+      "date_incomplete": true,
+      "search_creator_names": [
+        "Josef Melin",
+        "Shusui"
+      ],
+      "songs": [
+        {
+          "song_id": "J00023",
+          "title": "雨の中の口笛",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00010",
+              "creator_name": "Shusui",
+              "credit_name": "Shusui",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00010",
+              "creator_name": "Shusui",
+              "credit_name": "Shusui",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00023",
+      "title": "プラトニック・プラネット",
+      "title_kana": null,
+      "first_release_date": null,
+      "date_incomplete": true,
+      "search_creator_names": [
+        "児玉雨子",
+        "炭竃智弘"
+      ],
+      "songs": [
+        {
+          "song_id": "J00024",
+          "title": "プラトニック・プラネット(Ultimate Juice Ver.)",
+          "version_name": "Ultimate Juice Ver.",
+          "version_type": "other",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00005",
+              "creator_name": "炭竃智弘",
+              "credit_name": "炭竃智弘",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00005",
+              "creator_name": "炭竃智弘",
+              "credit_name": "炭竃智弘",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00024",
+      "title": "生まれたてのBaby Love",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": true,
+      "search_creator_names": [
+        "masaaki asada",
+        "つんく",
+        "三浦徳子",
+        "星部ショウ",
+        "松井寛",
+        "高橋諭一"
+      ],
+      "songs": [
+        {
+          "song_id": "J00054",
+          "title": "生まれたてのBaby Love",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00025",
+              "creator_name": "松井寛",
+              "credit_name": "松井寛",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00043",
+              "creator_name": "masaaki asada",
+              "credit_name": "masaaki asada",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00025",
+          "title": "生まれたてのBaby Love(2022 ver.)",
+          "version_name": "2022 ver.",
+          "version_type": "other",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00029",
+              "creator_name": "高橋諭一",
+              "credit_name": "高橋諭一",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00004",
+              "creator_name": "三浦徳子",
+              "credit_name": "三浦徳子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00025",
+      "title": "CHOICE & CHANCE",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": true,
+      "search_creator_names": [
+        "平田祥一郎",
+        "星部ショウ"
+      ],
+      "songs": [
+        {
+          "song_id": "J00052",
+          "title": "CHOICE & CHANCE",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00099",
+          "title": "CHOICE & CHANCE(2023)",
+          "version_name": "2023",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00026",
+          "title": "CHOICE & CHANCE(2022 ver.)",
+          "version_name": "2022 ver.",
+          "version_type": "other",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00026",
+      "title": "Never Never Surrender",
+      "title_kana": null,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": true,
+      "search_creator_names": [
+        "児玉雨子",
+        "大久保薫",
+        "星部ショウ"
+      ],
+      "songs": [
+        {
+          "song_id": "J00078",
+          "title": "Never Never Surrender",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00030",
+              "creator_name": "大久保薫",
+              "credit_name": "大久保薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00102",
+          "title": "Never Never Surrender(2023)",
+          "version_name": "2023",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00030",
+              "creator_name": "大久保薫",
+              "credit_name": "大久保薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00027",
+          "title": "Never Never Surrender(2022 ver.)",
+          "version_name": "2022 ver.",
+          "version_type": "other",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00030",
+              "creator_name": "大久保薫",
+              "credit_name": "大久保薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00027",
+      "title": "Goal～明日はあっちだよ～",
+      "title_kana": null,
+      "first_release_date": null,
+      "date_incomplete": true,
+      "search_creator_names": [
+        "沢頭たかし",
+        "近藤薫"
+      ],
+      "songs": [
+        {
+          "song_id": "J00028",
+          "title": "Goal～明日はあっちだよ～(Album Version)",
+          "version_name": "Album Version",
+          "version_type": "other",
+          "release_date": null,
+          "credits": [
+            {
+              "creator_id": "C00012",
+              "creator_name": "近藤薫",
+              "credit_name": "近藤薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00067",
+              "creator_name": "沢頭たかし",
+              "credit_name": "沢頭たかし",
+              "role": "arrangement",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00012",
+              "creator_name": "近藤薫",
+              "credit_name": "近藤薫",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00012",
+              "creator_name": "近藤薫",
+              "credit_name": "近藤薫",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00028",
+      "title": "私が言う前に抱きしめなきゃね",
+      "title_kana": null,
+      "first_release_date": "2013-04-03",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00036",
+          "title": "私が言う前に抱きしめなきゃね",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2013-04-03",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00040",
+          "title": "私が言う前に抱きしめなきゃね",
+          "version_name": "MEMORIAL EDIT",
+          "version_type": "other",
+          "release_date": "2013-09-11",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00094",
+          "title": "私が言う前に抱きしめなきゃね(2023)",
+          "version_name": "2023",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00029",
+      "title": "五月雨美女がさ乱れる",
+      "title_kana": null,
+      "first_release_date": "2013-05-05",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "板垣祐介",
+        "鈴木俊介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00037",
+          "title": "五月雨美女がさ乱れる",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2013-05-05",
+          "credits": [
+            {
+              "creator_id": "C00036",
+              "creator_name": "板垣祐介",
+              "credit_name": "板垣祐介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "brass_arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00041",
+          "title": "五月雨美女がさ乱れる",
+          "version_name": "MEMORIAL EDIT",
+          "version_type": "other",
+          "release_date": "2013-09-11",
+          "credits": [
+            {
+              "creator_id": "C00036",
+              "creator_name": "板垣祐介",
+              "credit_name": "板垣祐介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "brass_arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00030",
+      "title": "天まで登れ！",
+      "title_kana": null,
+      "first_release_date": "2013-06-12",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎",
+        "鈴木俊介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00038",
+          "title": "天まで登れ！",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2013-06-12",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "brass_arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00031",
+      "title": "ロマンスの途中",
+      "title_kana": null,
+      "first_release_date": "2013-09-11",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "鈴木俊介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00039",
+          "title": "ロマンスの途中",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2013-09-11",
+          "credits": [
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00093",
+          "title": "ロマンスの途中(2023 10th Juice Ver.)",
+          "version_name": "2023 10th Juice Ver.",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00032",
+      "title": "イジワルしないで 抱きしめてよ",
+      "title_kana": null,
+      "first_release_date": "2013-11-27",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "大久保薫"
+      ],
+      "songs": [
+        {
+          "song_id": "J00042",
+          "title": "イジワルしないで 抱きしめてよ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2013-11-27",
+          "credits": [
+            {
+              "creator_id": "C00030",
+              "creator_name": "大久保薫",
+              "credit_name": "大久保薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00095",
+          "title": "イジワルしないで 抱きしめてよ(2023)",
+          "version_name": "2023",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00030",
+              "creator_name": "大久保薫",
+              "credit_name": "大久保薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00033",
+      "title": "初めてを経験中",
+      "title_kana": null,
+      "first_release_date": "2013-11-27",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "AKIRA",
+        "つんく",
+        "鈴木俊介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00043",
+          "title": "初めてを経験中",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2013-11-27",
+          "credits": [
+            {
+              "creator_id": "C00037",
+              "creator_name": "AKIRA",
+              "credit_name": "AKIRA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "brass_arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00096",
+          "title": "初めてを経験中(2023)",
+          "version_name": "2023",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00037",
+              "creator_name": "AKIRA",
+              "credit_name": "AKIRA",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "brass_arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00034",
+      "title": "裸の裸の裸のKISS",
+      "title_kana": null,
+      "first_release_date": "2014-03-19",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00044",
+          "title": "裸の裸の裸のKISS",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2014-03-19",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00035",
+      "title": "アレコレしたい！",
+      "title_kana": null,
+      "first_release_date": "2014-03-19",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "近藤圭一"
+      ],
+      "songs": [
+        {
+          "song_id": "J00045",
+          "title": "アレコレしたい！",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2014-03-19",
+          "credits": [
+            {
+              "creator_id": "C00038",
+              "creator_name": "近藤圭一",
+              "credit_name": "近藤圭一",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00036",
+      "title": "ブラックバタフライ",
+      "title_kana": null,
+      "first_release_date": "2014-07-30",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00046",
+          "title": "ブラックバタフライ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2014-07-30",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00097",
+          "title": "ブラックバタフライ(2023)",
+          "version_name": "2023",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00037",
+      "title": "風に吹かれて",
+      "title_kana": null,
+      "first_release_date": "2014-07-30",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00047",
+          "title": "風に吹かれて",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2014-07-30",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00038",
+      "title": "背伸び",
+      "title_kana": null,
+      "first_release_date": "2014-10-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00048",
+          "title": "背伸び",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2014-10-01",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00039",
+      "title": "伊達じゃないよ うちの人生は",
+      "title_kana": null,
+      "first_release_date": "2014-10-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00049",
+          "title": "伊達じゃないよ うちの人生は",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2014-10-01",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00040",
+      "title": "Wonderful World",
+      "title_kana": null,
+      "first_release_date": "2015-04-08",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "gaokalab",
+        "イイジマケン",
+        "炭竃智弘",
+        "鈴木桃子"
+      ],
+      "songs": [
+        {
+          "song_id": "J00050",
+          "title": "Wonderful World",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-04-08",
+          "credits": [
+            {
+              "creator_id": "C00039",
+              "creator_name": "gaokalab",
+              "credit_name": "gaokalab",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00031",
+              "creator_name": "イイジマケン",
+              "credit_name": "イイジマケン",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00031",
+              "creator_name": "イイジマケン",
+              "credit_name": "イイジマケン",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00088",
+          "title": "Wonderful World(2018 English Ver.)",
+          "version_name": "2018 English Ver.",
+          "version_type": "other",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00039",
+              "creator_name": "gaokalab",
+              "credit_name": "gaokalab",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00031",
+              "creator_name": "イイジマケン",
+              "credit_name": "イイジマケン",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00069",
+              "creator_name": "鈴木桃子",
+              "credit_name": "鈴木桃子",
+              "role": "english_lyrics",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00031",
+              "creator_name": "イイジマケン",
+              "credit_name": "イイジマケン",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00098",
+          "title": "Wonderful World(2023 10th Juice Ver.)",
+          "version_name": "2023 10th Juice Ver.",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00005",
+              "creator_name": "炭竃智弘",
+              "credit_name": "炭竃智弘",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00031",
+              "creator_name": "イイジマケン",
+              "credit_name": "イイジマケン",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00031",
+              "creator_name": "イイジマケン",
+              "credit_name": "イイジマケン",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00041",
+      "title": "Ça va ? Ça va ?(サヴァサヴァ)",
+      "title_kana": null,
+      "first_release_date": "2015-04-08",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "CMJK",
+        "三浦徳子",
+        "上田禎",
+        "川辺ヒロシ"
+      ],
+      "songs": [
+        {
+          "song_id": "J00051",
+          "title": "Ça va ? Ça va ?(サヴァサヴァ)",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-04-08",
+          "credits": [
+            {
+              "creator_id": "C00042",
+              "creator_name": "CMJK",
+              "credit_name": "CMJK",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00040",
+              "creator_name": "川辺ヒロシ",
+              "credit_name": "川辺ヒロシ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00041",
+              "creator_name": "上田禎",
+              "credit_name": "上田禎",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00004",
+              "creator_name": "三浦徳子",
+              "credit_name": "三浦徳子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00042",
+      "title": "愛・愛・傘",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "中島卓偉",
+        "大久保薫"
+      ],
+      "songs": [
+        {
+          "song_id": "J00053",
+          "title": "愛・愛・傘",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00030",
+              "creator_name": "大久保薫",
+              "credit_name": "大久保薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00043",
+      "title": "選ばれし私達",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "山崎淳"
+      ],
+      "songs": [
+        {
+          "song_id": "J00055",
+          "title": "選ばれし私達",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00044",
+              "creator_name": "山崎淳",
+              "credit_name": "山崎淳",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00044",
+      "title": "愛のダイビング",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "土肥真生",
+        "星部ショウ"
+      ],
+      "songs": [
+        {
+          "song_id": "J00057",
+          "title": "愛のダイビング",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00046",
+              "creator_name": "土肥真生",
+              "credit_name": "土肥真生",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00045",
+      "title": "チクタク 私の旬",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "CMJK",
+        "児玉雨子",
+        "星部ショウ"
+      ],
+      "songs": [
+        {
+          "song_id": "J00058",
+          "title": "チクタク 私の旬",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00042",
+              "creator_name": "CMJK",
+              "credit_name": "CMJK",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00046",
+      "title": "未来へ、さあ走り出せ！",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "KOJI oba",
+        "角田崇徳"
+      ],
+      "songs": [
+        {
+          "song_id": "J00059",
+          "title": "未来へ、さあ走り出せ！",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00048",
+              "creator_name": "KOJI oba",
+              "credit_name": "KOJI oba",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00048",
+              "creator_name": "KOJI oba",
+              "credit_name": "KOJI oba",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00047",
+              "creator_name": "角田崇徳",
+              "credit_name": "角田崇徳",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00047",
+      "title": "Magic of Love",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "村山晋一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00061",
+          "title": "Magic of Love(J=J 2015Ver.)",
+          "version_name": "J=J 2015Ver.",
+          "version_type": "cover",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00050",
+              "creator_name": "村山晋一郎",
+              "credit_name": "村山晋一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00100",
+          "title": "Magic of Love(2023)",
+          "version_name": "2023",
+          "version_type": "cover",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00050",
+              "creator_name": "村山晋一郎",
+              "credit_name": "村山晋一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00048",
+      "title": "香水",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00062",
+          "title": "香水(J=J 2015Ver.)",
+          "version_name": "J=J 2015Ver.",
+          "version_type": "cover",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00049",
+      "title": "鳴り始めた恋のBELL",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "松井寛"
+      ],
+      "songs": [
+        {
+          "song_id": "J00063",
+          "title": "鳴り始めた恋のBELL",
+          "version_name": null,
+          "version_type": "cover",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00025",
+              "creator_name": "松井寛",
+              "credit_name": "松井寛",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00050",
+      "title": "スクランブル",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "鈴木Daichi秀行"
+      ],
+      "songs": [
+        {
+          "song_id": "J00064",
+          "title": "スクランブル",
+          "version_name": null,
+          "version_type": "cover",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00051",
+              "creator_name": "鈴木Daichi秀行",
+              "credit_name": "鈴木Daichi秀行",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00051",
+      "title": "BABY! 恋に KNOCK OUT!",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "小西貴雄"
+      ],
+      "songs": [
+        {
+          "song_id": "J00065",
+          "title": "BABY! 恋に KNOCK OUT!",
+          "version_name": null,
+          "version_type": "cover",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00052",
+              "creator_name": "小西貴雄",
+              "credit_name": "小西貴雄",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00052",
+      "title": "ラストキッス",
+      "title_kana": null,
+      "first_release_date": "2015-07-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "小西貴雄"
+      ],
+      "songs": [
+        {
+          "song_id": "J00066",
+          "title": "ラストキッス",
+          "version_name": null,
+          "version_type": "cover",
+          "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00052",
+              "creator_name": "小西貴雄",
+              "credit_name": "小西貴雄",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00053",
+      "title": "Next is you!",
+      "title_kana": null,
+      "first_release_date": "2016-02-03",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "大久保薫"
+      ],
+      "songs": [
+        {
+          "song_id": "J00067",
+          "title": "Next is you!",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2016-02-03",
+          "credits": [
+            {
+              "creator_id": "C00030",
+              "creator_name": "大久保薫",
+              "credit_name": "大久保薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00054",
+      "title": "カラダだけが大人になったんじゃない",
+      "title_kana": null,
+      "first_release_date": "2016-02-03",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00068",
+          "title": "カラダだけが大人になったんじゃない",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2016-02-03",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00101",
+          "title": "カラダだけが大人になったんじゃない(2023)",
+          "version_name": "2023",
+          "version_type": "re_recording",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00055",
+      "title": "Dream Road〜心が躍り出してる〜",
+      "title_kana": null,
+      "first_release_date": "2016-10-26",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "江上浩太郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00069",
+          "title": "Dream Road〜心が躍り出してる〜",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2016-10-26",
+          "credits": [
+            {
+              "creator_id": "C00053",
+              "creator_name": "江上浩太郎",
+              "credit_name": "江上浩太郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00056",
+      "title": "KEEP ON 上昇志向！！",
+      "title_kana": null,
+      "first_release_date": "2016-10-26",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "ダンス☆マン",
+        "前山田健一",
+        "川松久芳"
+      ],
+      "songs": [
+        {
+          "song_id": "J00070",
+          "title": "KEEP ON 上昇志向！！",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2016-10-26",
+          "credits": [
+            {
+              "creator_id": "C00055",
+              "creator_name": "ダンス☆マン",
+              "credit_name": "ダンス☆マン",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00056",
+              "creator_name": "川松久芳",
+              "credit_name": "川松久芳",
+              "role": "brass_arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00054",
+              "creator_name": "前山田健一",
+              "credit_name": "前山田健一",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00054",
+              "creator_name": "前山田健一",
+              "credit_name": "前山田健一",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00057",
+      "title": "明日やろうはバカやろう",
+      "title_kana": null,
+      "first_release_date": "2016-10-26",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "板垣祐介",
+        "福田花音"
+      ],
+      "songs": [
+        {
+          "song_id": "J00071",
+          "title": "明日やろうはバカやろう",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2016-10-26",
+          "credits": [
+            {
+              "creator_id": "C00036",
+              "creator_name": "板垣祐介",
+              "credit_name": "板垣祐介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00036",
+              "creator_name": "板垣祐介",
+              "credit_name": "板垣祐介",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00057",
+              "creator_name": "福田花音",
+              "credit_name": "福田花音",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00058",
+      "title": "地団駄ダンス",
+      "title_kana": null,
+      "first_release_date": "2017-04-26",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "BLACC HOLE",
+        "NOBB-D",
+        "T",
+        "児玉雨子"
+      ],
+      "songs": [
+        {
+          "song_id": "J00072",
+          "title": "地団駄ダンス",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2017-04-26",
+          "credits": [
+            {
+              "creator_id": "C00058",
+              "creator_name": "BLACC HOLE",
+              "credit_name": "BLACC HOLE",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00059",
+              "creator_name": "NOBB-D",
+              "credit_name": "NOBB-D",
+              "role": "arrangement",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00060",
+              "creator_name": "T",
+              "credit_name": "T",
+              "role": "arrangement",
+              "credit_order": 3
+            },
+            {
+              "creator_id": "C00058",
+              "creator_name": "BLACC HOLE",
+              "credit_name": "BLACC HOLE",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00059",
+              "creator_name": "NOBB-D",
+              "credit_name": "NOBB-D",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00059",
+      "title": "Feel！感じるよ",
+      "title_kana": null,
+      "first_release_date": "2017-04-26",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "三浦徳子",
+        "中村瑛彦"
+      ],
+      "songs": [
+        {
+          "song_id": "J00073",
+          "title": "Feel！感じるよ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2017-04-26",
+          "credits": [
+            {
+              "creator_id": "C00061",
+              "creator_name": "中村瑛彦",
+              "credit_name": "中村瑛彦",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00061",
+              "creator_name": "中村瑛彦",
+              "credit_name": "中村瑛彦",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00004",
+              "creator_name": "三浦徳子",
+              "credit_name": "三浦徳子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00060",
+      "title": "SEXY SEXY",
+      "title_kana": null,
+      "first_release_date": "2018-04-18",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00074",
+          "title": "SEXY SEXY",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-04-18",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00061",
+      "title": "泣いていいよ",
+      "title_kana": null,
+      "first_release_date": "2018-04-18",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "中村瑛彦",
+        "大森祥子"
+      ],
+      "songs": [
+        {
+          "song_id": "J00075",
+          "title": "泣いていいよ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-04-18",
+          "credits": [
+            {
+              "creator_id": "C00061",
+              "creator_name": "中村瑛彦",
+              "credit_name": "中村瑛彦",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00061",
+              "creator_name": "中村瑛彦",
+              "credit_name": "中村瑛彦",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00019",
+              "creator_name": "大森祥子",
+              "credit_name": "大森祥子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00062",
+      "title": "Vivid Midnight",
+      "title_kana": null,
+      "first_release_date": "2018-04-18",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "SEION",
+        "Tasco",
+        "Tenzo",
+        "児玉雨子"
+      ],
+      "songs": [
+        {
+          "song_id": "J00076",
+          "title": "Vivid Midnight",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-04-18",
+          "credits": [
+            {
+              "creator_id": "C00063",
+              "creator_name": "Tasco",
+              "credit_name": "Tasco",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00064",
+              "creator_name": "Tenzo",
+              "credit_name": "Tenzo",
+              "role": "arrangement",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00062",
+              "creator_name": "SEION",
+              "credit_name": "SEION",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00063",
+              "creator_name": "Tasco",
+              "credit_name": "Tasco",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00064",
+              "creator_name": "Tenzo",
+              "credit_name": "Tenzo",
+              "role": "composition",
+              "credit_order": 3
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00063",
+      "title": "Fiesta! Fiesta!",
+      "title_kana": null,
+      "first_release_date": "2017-08-23",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "エリック・フクサキ",
+        "井筒日美",
+        "大久保薫"
+      ],
+      "songs": [
+        {
+          "song_id": "J00077",
+          "title": "Fiesta! Fiesta!",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2017-08-23",
+          "credits": [
+            {
+              "creator_id": "C00030",
+              "creator_name": "大久保薫",
+              "credit_name": "大久保薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00065",
+              "creator_name": "エリック・フクサキ",
+              "credit_name": "エリック・フクサキ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00027",
+              "creator_name": "井筒日美",
+              "credit_name": "井筒日美",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00064",
+      "title": "如雨露",
+      "title_kana": null,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "YUKO",
+        "児玉雨子",
+        "大久保薫"
+      ],
+      "songs": [
+        {
+          "song_id": "J00079",
+          "title": "如雨露(Album Version)",
+          "version_name": "Album Version",
+          "version_type": "other",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00030",
+              "creator_name": "大久保薫",
+              "credit_name": "大久保薫",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00066",
+              "creator_name": "YUKO",
+              "credit_name": "YUKO",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00065",
+      "title": "TOKYOグライダー",
+      "title_kana": null,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "唐沢美帆",
+        "星部ショウ",
+        "松井寛"
+      ],
+      "songs": [
+        {
+          "song_id": "J00080",
+          "title": "TOKYOグライダー",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00025",
+              "creator_name": "松井寛",
+              "credit_name": "松井寛",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00026",
+              "creator_name": "唐沢美帆",
+              "credit_name": "唐沢美帆",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00066",
+      "title": "シンクロ。",
+      "title_kana": null,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "井筒日美",
+        "星部ショウ",
+        "浜田ピエール裕介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00081",
+          "title": "シンクロ。",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00032",
+              "creator_name": "浜田ピエール裕介",
+              "credit_name": "浜田ピエール裕介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00027",
+              "creator_name": "井筒日美",
+              "credit_name": "井筒日美",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00067",
+      "title": "あばれてっか?! ハヴアグッタイ",
+      "title_kana": null,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "ダンス☆マン",
+        "児玉雨子"
+      ],
+      "songs": [
+        {
+          "song_id": "J00082",
+          "title": "あばれてっか?! ハヴアグッタイ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00055",
+              "creator_name": "ダンス☆マン",
+              "credit_name": "ダンス☆マン",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00055",
+              "creator_name": "ダンス☆マン",
+              "credit_name": "ダンス☆マン",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00068",
+      "title": "素直に甘えて",
+      "title_kana": null,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "NOBE",
+        "星部ショウ",
+        "鈴木俊介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00083",
+          "title": "素直に甘えて",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00020",
+              "creator_name": "NOBE",
+              "credit_name": "NOBE",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00069",
+      "title": "銀色のテレパシー",
+      "title_kana": null,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "児玉雨子",
+        "星部ショウ",
+        "高橋諭一"
+      ],
+      "songs": [
+        {
+          "song_id": "J00084",
+          "title": "銀色のテレパシー",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00029",
+              "creator_name": "高橋諭一",
+              "credit_name": "高橋諭一",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00006",
+              "creator_name": "児玉雨子",
+              "credit_name": "児玉雨子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00070",
+      "title": "この世界は捨てたもんじゃない",
+      "title_kana": null,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "中村瑛彦",
+        "井筒日美"
+      ],
+      "songs": [
+        {
+          "song_id": "J00085",
+          "title": "この世界は捨てたもんじゃない",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00061",
+              "creator_name": "中村瑛彦",
+              "credit_name": "中村瑛彦",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00061",
+              "creator_name": "中村瑛彦",
+              "credit_name": "中村瑛彦",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00027",
+              "creator_name": "井筒日美",
+              "credit_name": "井筒日美",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00071",
+      "title": "禁断少女",
+      "title_kana": null,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "大橋莉子",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00086",
+          "title": "禁断少女",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2018-08-01",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00068",
+              "creator_name": "大橋莉子",
+              "credit_name": "大橋莉子",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00068",
+              "creator_name": "大橋莉子",
+              "credit_name": "大橋莉子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00072",
+      "title": "大人の事情",
+      "title_kana": null,
+      "first_release_date": "2016-03-02",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00087",
+          "title": "大人の事情",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2016-03-02",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00073",
+      "title": "全部賭けてGO!!",
+      "title_kana": null,
+      "first_release_date": "2022-11-23",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "大森祥子",
+        "徳田光希"
+      ],
+      "songs": [
+        {
+          "song_id": "J00089",
+          "title": "全部賭けてGO!!",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2022-11-23",
+          "credits": [
+            {
+              "creator_id": "C00070",
+              "creator_name": "徳田光希",
+              "credit_name": "徳田光希",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00070",
+              "creator_name": "徳田光希",
+              "credit_name": "徳田光希",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00019",
+              "creator_name": "大森祥子",
+              "credit_name": "大森祥子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00074",
+      "title": "イニミニマニモ～恋のライバル宣言～",
+      "title_kana": null,
+      "first_release_date": "2022-11-23",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Joacim Persson",
+        "Johan Alkenas",
+        "Lisa Desmond",
+        "山崎あおい"
+      ],
+      "songs": [
+        {
+          "song_id": "J00090",
+          "title": "イニミニマニモ～恋のライバル宣言～",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2022-11-23",
+          "credits": [
+            {
+              "creator_id": "C00072",
+              "creator_name": "Joacim Persson",
+              "credit_name": "Joacim Persson",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00071",
+              "creator_name": "Johan Alkenas",
+              "credit_name": "Johan Alkenas",
+              "role": "arrangement",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00071",
+              "creator_name": "Johan Alkenas",
+              "credit_name": "Johan Alkenas",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00072",
+              "creator_name": "Joacim Persson",
+              "credit_name": "Joacim Persson",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00073",
+              "creator_name": "Lisa Desmond",
+              "credit_name": "Lisa Desmond",
+              "role": "composition",
+              "credit_order": 3
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00075",
+      "title": "プライド・ブライト",
+      "title_kana": null,
+      "first_release_date": "2023-06-29",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "山崎あおい",
+        "鈴木俊介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00091",
+          "title": "プライド・ブライト",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2023-06-29",
+          "credits": [
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00076",
+      "title": "FUNKY FLUSHIN'",
+      "title_kana": null,
+      "first_release_date": "2023-07-12",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Aksel Odenbalk",
+        "吉田美奈子",
+        "山下達郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00092",
+          "title": "FUNKY FLUSHIN'",
+          "version_name": null,
+          "version_type": "cover",
+          "release_date": "2023-07-12",
+          "credits": [
+            {
+              "creator_id": "C00075",
+              "creator_name": "Aksel Odenbalk",
+              "credit_name": "Aksel Odenbalk",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00015",
+              "creator_name": "山下達郎",
+              "credit_name": "山下達郎",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00074",
+              "creator_name": "吉田美奈子",
+              "credit_name": "吉田美奈子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00077",
+      "title": "ボン・ヴォヤージュ～想いの軌跡～",
+      "title_kana": null,
+      "first_release_date": "2023-10-11",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Josef Melin",
+        "Shusui",
+        "井筒日美"
+      ],
+      "songs": [
+        {
+          "song_id": "J00106",
+          "title": "ボン・ヴォヤージュ～想いの軌跡～",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2023-10-11",
+          "credits": [
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00010",
+              "creator_name": "Shusui",
+              "credit_name": "Shusui",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00011",
+              "creator_name": "Josef Melin",
+              "credit_name": "Josef Melin",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00027",
+              "creator_name": "井筒日美",
+              "credit_name": "井筒日美",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00078",
+      "title": "トウキョウ・ブラー",
+      "title_kana": null,
+      "first_release_date": "2024-05-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Erik Lidbom",
+        "山崎あおい"
+      ],
+      "songs": [
+        {
+          "song_id": "J00107",
+          "title": "トウキョウ・ブラー",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2024-05-15",
+          "credits": [
+            {
+              "creator_id": "C00076",
+              "creator_name": "Erik Lidbom",
+              "credit_name": "Erik Lidbom",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00076",
+              "creator_name": "Erik Lidbom",
+              "credit_name": "Erik Lidbom",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00079",
+      "title": "ナイモノラブ",
+      "title_kana": null,
+      "first_release_date": "2024-05-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "SUIMI",
+        "渡辺泰司"
+      ],
+      "songs": [
+        {
+          "song_id": "J00108",
+          "title": "ナイモノラブ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2024-05-15",
+          "credits": [
+            {
+              "creator_id": "C00078",
+              "creator_name": "渡辺泰司",
+              "credit_name": "渡辺泰司",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00078",
+              "creator_name": "渡辺泰司",
+              "credit_name": "渡辺泰司",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00077",
+              "creator_name": "SUIMI",
+              "credit_name": "SUIMI",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00080",
+      "title": "おあいこ",
+      "title_kana": null,
+      "first_release_date": "2024-05-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "つんく",
+        "平田祥一郎"
+      ],
+      "songs": [
+        {
+          "song_id": "J00109",
+          "title": "おあいこ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2024-05-15",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00028",
+              "creator_name": "つんく",
+              "credit_name": "つんく",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00081",
+      "title": "Brilliance of memories",
+      "title_kana": null,
+      "first_release_date": "2024-05-15",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "山崎あおい",
+        "浜田ピエール裕介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00110",
+          "title": "Brilliance of memories",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2024-05-15",
+          "credits": [
+            {
+              "creator_id": "C00032",
+              "creator_name": "浜田ピエール裕介",
+              "credit_name": "浜田ピエール裕介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00082",
+      "title": "初恋の亡霊",
+      "title_kana": null,
+      "first_release_date": "2025-02-26",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "KOUGA",
+        "平田祥一郎",
+        "西野蒟蒻"
+      ],
+      "songs": [
+        {
+          "song_id": "J00111",
+          "title": "初恋の亡霊",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2025-02-26",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00079",
+              "creator_name": "西野蒟蒻",
+              "credit_name": "西野蒟蒻",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00083",
+      "title": "今夜はHearty Party",
+      "title_kana": null,
+      "first_release_date": "2025-02-26",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Aksel Odenbalk",
+        "Albin Hillborg",
+        "竹内まりや"
+      ],
+      "songs": [
+        {
+          "song_id": "J00112",
+          "title": "今夜はHearty Party",
+          "version_name": null,
+          "version_type": "cover",
+          "release_date": "2025-02-26",
+          "credits": [
+            {
+              "creator_id": "C00075",
+              "creator_name": "Aksel Odenbalk",
+              "credit_name": "Aksel Odenbalk",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00080",
+              "creator_name": "Albin Hillborg",
+              "credit_name": "Albin Hillborg",
+              "role": "arrangement",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00017",
+              "creator_name": "竹内まりや",
+              "credit_name": "竹内まりや",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00017",
+              "creator_name": "竹内まりや",
+              "credit_name": "竹内まりや",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00084",
+      "title": "四の五の言わず颯と別れてあげた",
+      "title_kana": null,
+      "first_release_date": "2025-10-08",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "KOUGA",
+        "大森祥子",
+        "荒幡亮平"
+      ],
+      "songs": [
+        {
+          "song_id": "J00113",
+          "title": "四の五の言わず颯と別れてあげた",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2025-10-08",
+          "credits": [
+            {
+              "creator_id": "C00081",
+              "creator_name": "荒幡亮平",
+              "credit_name": "荒幡亮平",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00002",
+              "creator_name": "KOUGA",
+              "credit_name": "KOUGA",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00019",
+              "creator_name": "大森祥子",
+              "credit_name": "大森祥子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00085",
+      "title": "盛れ！ミ・アモーレ",
+      "title_kana": null,
+      "first_release_date": "2025-10-08",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "山崎あおい",
+        "炭竃智弘"
+      ],
+      "songs": [
+        {
+          "song_id": "J00114",
+          "title": "盛れ！ミ・アモーレ",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2025-10-08",
+          "credits": [
+            {
+              "creator_id": "C00005",
+              "creator_name": "炭竃智弘",
+              "credit_name": "炭竃智弘",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00086",
+      "title": "クラクラ☆クライマックス",
+      "title_kana": null,
+      "first_release_date": "2026-05-28",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Maria Okada",
+        "h-wonder",
+        "広瀬香美"
+      ],
+      "songs": [
+        {
+          "song_id": "J00115",
+          "title": "クラクラ☆クライマックス",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2026-05-28",
+          "credits": [
+            {
+              "creator_id": "C00084",
+              "creator_name": "h-wonder",
+              "credit_name": "h-wonder",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00082",
+              "creator_name": "広瀬香美",
+              "credit_name": "広瀬香美",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00082",
+              "creator_name": "広瀬香美",
+              "credit_name": "広瀬香美",
+              "role": "lyrics",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00083",
+              "creator_name": "Maria Okada",
+              "credit_name": "Maria Okada",
+              "role": "lyrics",
+              "credit_order": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00087",
+      "title": "結論から言ってちょうだい",
+      "title_kana": null,
+      "first_release_date": "2026-06-24",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "中島卓偉",
+        "鈴木俊介"
+      ],
+      "songs": [
+        {
+          "song_id": "J00116",
+          "title": "結論から言ってちょうだい",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2026-06-24",
+          "credits": [
+            {
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00088",
+      "title": "甘えんな",
+      "title_kana": null,
+      "first_release_date": "2026-05-28",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "大森祥子",
+        "炭竃智弘"
+      ],
+      "songs": [
+        {
+          "song_id": "J00117",
+          "title": "甘えんな",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2026-05-28",
+          "credits": [
+            {
+              "creator_id": "C00005",
+              "creator_name": "炭竃智弘",
+              "credit_name": "炭竃智弘",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00005",
+              "creator_name": "炭竃智弘",
+              "credit_name": "炭竃智弘",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00019",
+              "creator_name": "大森祥子",
+              "credit_name": "大森祥子",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00089",
+      "title": "BLOODY BULLET",
+      "title_kana": null,
+      "first_release_date": "2026-06-24",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "平田祥一郎",
+        "星部ショウ",
+        "西野蒟蒻"
+      ],
+      "songs": [
+        {
+          "song_id": "J00118",
+          "title": "BLOODY BULLET",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2026-06-24",
+          "credits": [
+            {
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00008",
+              "creator_name": "星部ショウ",
+              "credit_name": "星部ショウ",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00079",
+              "creator_name": "西野蒟蒻",
+              "credit_name": "西野蒟蒻",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "work_id": "W00090",
+      "title": "ギラめきな！",
+      "title_kana": null,
+      "first_release_date": "2026-06-24",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Simon Janlov",
+        "miwaflower",
+        "西野蒟蒻"
+      ],
+      "songs": [
+        {
+          "song_id": "J00119",
+          "title": "ギラめきな！",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2026-06-24",
+          "credits": [
+            {
+              "creator_id": "C00085",
+              "creator_name": "Simon Janlov",
+              "credit_name": "Simon Janlov",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00085",
+              "creator_name": "Simon Janlov",
+              "credit_name": "Simon Janlov",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00086",
+              "creator_name": "miwaflower",
+              "credit_name": "miwaflower",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00079",
+              "creator_name": "西野蒟蒻",
+              "credit_name": "西野蒟蒻",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

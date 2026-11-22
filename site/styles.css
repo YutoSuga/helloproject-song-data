@@ -573,3 +573,12 @@ dialog:not([open]) {
 #pair-panel:has(#pair-direction option[value="all"]:checked) #pair-ranking:not(:empty) {
   margin-top: 20px;
 }
+
+/* SCR-003 uses the approved work-card and native dialog layout. */
+.work-open {
+  font-weight:700;
+  text-align:left;
+  overflow-wrap:anywhere;
+  white-space:normal;
+}
+.song-detail-card h3 { overflow-wrap:anywhere; }

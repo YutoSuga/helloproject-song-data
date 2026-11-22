@@ -33,7 +33,7 @@ PRは同じPR番号・イベント名のconcurrency groupで進行中runをキ�
 | job表示名 | 両モードで実行 | 軽量で省略 |
 | --- | --- | --- |
 | Select CI mode | mode / shaの選択 | なし |
-| Test and build | `git diff --check "$BASE_SHA" HEAD`、`npm run rankings:validate`、`npm run site:build`、`git diff --exit-code -- site/data/rankings` | Node 20の`npm test`（FN-004含む全テスト） |
+| Test and build | `git diff --check "$BASE_SHA" HEAD`、`npm run rankings:validate`、`npm run songs:validate`、`npm run site:build`、`npm run site:check-generated` | Node 20の`npm test`（FN-004含む全テスト） |
 | Gate publication (Node 20) / Gate publication (Node 24) | checkout・Node設定 | 下記のGateテストstep |
 | Deploy | main push / main手動実行で、選択・build・両Gate成功後のみ | PRではjobをスキップ |
 
@@ -43,7 +43,7 @@ GateのフルCIコマンド：
 node --test --test-concurrency=1 test/fn004-gate-publication.test.js test/fn004-gate-publication-crash.test.js test/fn004-gate-candidate-integration.test.js
 ```
 
-空白検査のBASE_SHAはPRではbase SHA、それ以外はHEAD^。site buildはcanonical CSVからランキングJSONを生成する。生成物差分があれば失敗し、自動commit / pushはしない。Pages artifact uploadはmain push / main手動実行だけで行う。
+空白検査のBASE_SHAはPRではbase SHA、それ以外はHEAD^。site buildはcanonical CSVからランキングJSONと楽曲JSONを生成する。songs:validateは公開JSON契約・画面消費形式・canonical再生成一致を検証する。site:check-generatedは両出力ディレクトリのHEAD差分と未追跡ファイル（ignore一致を含む）を検出する。生成物差分があれば失敗し、自動commit / pushはしない。Pages artifact uploadはmain push / main手動実行だけで行う。
 
 ## Pages公開と順序
 

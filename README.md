@@ -12,13 +12,13 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 | ID | 機能名 | 種別 | 概要 | 実装状況 |
 | --- | --- | --- | --- | --- |
-| [SCR-001〜008](docs/design/system/機能ID体系.md#公開サイトの画面番号) | 公開サイトの個別画面 | Screen | 公開ページ構成 | PR #101で5ページ実装済み。楽曲は準備中、動画はComing Soon。楽曲機能は後続 |
+| [SCR-001〜008](docs/design/system/機能ID体系.md#公開サイトの画面番号) | 公開サイトの個別画面 | Screen | 公開ページ構成 | PR #101で5ページ実装済み。楽曲一覧・検索・音源詳細も実装済み。動画はComing Soon |
 | SCR-101 | 楽曲管理画面 | Screen | candidate / review情報を確認し、人間が確定・保留・却下等を判断する | 未実装 |
 | FN-001 | 作家ランキング集計・ランキングJSON生成機能 | Function | canonical CSVから作家ランキングJSONを生成する | 実装済み |
 | FN-002 | 楽曲候補収集機能 | Function | 公式release / track情報から `staging/song-candidates.json` を生成・更新する | 実装済み |
 | FN-003 | レビュー準備機能 | Function | candidate・canonical CSV・過去レビューから `staging/song-reviews.json` を生成する | 実装済み |
 | FN-004 | canonical反映機能 | Function | 人間が確定したdecisionを検証し、canonical CSVへ安全に反映する | runtime実装済み / Final Acceptance PASS |
-| FN-005 | 楽曲一覧データ生成機能 | Function | canonical CSVからSCR-003用JSONを生成・検証する | 設計のみ / 未実装 |
+| FN-005 | 楽曲一覧データ生成機能 | Function | canonical CSVからSCR-003用JSONを生成・検証する | 実装済み |
 | JOB-001 | 楽曲候補定期収集ジョブ | Job | FN-002を定期的に起動する | 未実装 |
 
 `SCR` = Screen（画面・UI）、`FN` = Function（画面やジョブから呼ばれるロジック）、`JOB` = Job（定期または手動で起動されFunctionを呼ぶジョブ・バッチ）。IDは種別ごとに `SCR-001`、`FN-003`、`JOB-001` のように3桁ゼロ埋めで付けます。現在の手動collector CLIはFN-002の実行入口であり、JOB-001の実装済みを意味しません。
@@ -95,7 +95,7 @@ JOB-001 楽曲候補定期収集ジョブ（Milestone 3-D、未実装）
   └──→ FN-002 楽曲候補収集機能
 ```
 
-今後はcanonical CSV → FN-005（未実装）→ site/data/songs/<artist_id>.json → SCR-003の経路も加わります。呼出・整合性確認・公開は共通ビルドが担当します。
+canonical CSV → FN-005 → site/data/songs/<artist_id>.json → SCR-003の経路も実装済みです。呼出・整合性確認・公開は共通ビルドが担当します。
 
 この図はデータと責務の関係を示します。正式v1設計は[canonical registration](docs/design/system/レビュー準備・canonical反映の全体フロー.md)を入口とします。Decision・Plan・Approval・要求受付だけではCSVを変更しません。FN-004 v1は既存entityを参照し新規行だけ追加する設計で、field update/deleteは対象外です。CLIとSCR-101は同じapplication serviceを使い、bootstrap/recovery実行はv1ではCLIのみです。FN-004 CLIは実装済みです。本番操作は[CLIガイド](docs/management/FN-004-canonical操作ガイド.md)と個別の人間承認に従います。JOB-001に通知は含めません。
 
@@ -110,7 +110,7 @@ Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` �
 - [システム構成](docs/design/system/システム構成.md)：全体構成、責務・データフロー、技術候補とセキュリティ境界
 - [機能ID体系](docs/design/system/機能ID体系.md)：正式ID、命名運用、設計書の責務と整理方針
 - [公開サイトデータ生成・ビルド仕様](docs/design/system/公開サイトデータ生成・ビルド仕様.md)・[公開サイト共通設計](docs/design/screens/公開サイト共通設計.md)：共通ビルド運用と表示
-- [FN-005 楽曲一覧データ生成](docs/design/functions/FN-005-楽曲一覧データ生成.md)：承認済みJSON契約に従う生成・検証（未実装）
+- [FN-005 楽曲一覧データ生成](docs/design/functions/FN-005-楽曲一覧データ生成.md)：承認済みJSON契約に従う生成・検証
 - [候補収集基本設計](docs/design/functions/FN-002-楽曲候補収集.md)：FN-002 楽曲候補収集機能（将来のJOB-001との関係を含む）
 - [canonical registration 基本設計](docs/design/system/レビュー準備・canonical反映の全体フロー.md)：FN-003 レビュー準備機能 / FN-004 canonical反映機能
 - [Decision Model](docs/design/functions/FN-004-判断モデル.md)：aggregate、revision、OCC、candidate binding、song_id_prefix
@@ -164,7 +164,9 @@ Node.js 20以降だけを使用し、外部dependencyはありません。
 npm test                    # unit test
 npm run rankings:validate   # canonical Juice=Juice integration validation
 npm run rankings:generate   # site/data/rankings/G00001.json を再生成
-npm run site:build          # 現在はranking生成と同じ静的site build
+npm run songs:generate      # 楽曲JSONを単独生成
+npm run songs:validate      # 契約・画面形式・canonical再生成一致を検証
+npm run site:build          # ランキングと楽曲JSONを生成
 npm run site:preview        # http://localhost:4173 でsite/をpreview
 ```
 
@@ -190,4 +192,4 @@ GitHub Pagesで表示
 
 ## 静的サイトのbuildと公開
 
-[公開サイトデータ生成・ビルド仕様](docs/design/system/公開サイトデータ生成・ビルド仕様.md)を正本とします。現行site:buildはランキング生成のみ。FN-005の接続と楽曲JSONの整合性検査は後続実装です。CIの実行条件・失敗時対応は[CI運用ルール](.github/CI.md)を参照してください。
+[公開サイトデータ生成・ビルド仕様](docs/design/system/公開サイトデータ生成・ビルド仕様.md)を正本とします。site:buildはランキングと楽曲JSONを生成します。楽曲一覧は`npm run site:build`後に`npm run site:preview`を実行し、`http://localhost:4173/songs/`で確認できます。検索対象は作品名・掲載名義・作家正規名で、音源タイトルは詳細内に表示します。CIの実行条件・失敗時対応は[CI運用ルール](.github/CI.md)を参照してください。

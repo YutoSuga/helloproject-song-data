@@ -5,11 +5,14 @@
   "scripts": {
     "rankings:generate": "node scripts/generate-rankings.js",
     "rankings:validate": "node scripts/validate-rankings.js",
-    "site:build": "npm run rankings:generate",
+    "site:build": "npm run rankings:generate && npm run songs:generate",
     "site:preview": "node scripts/preview-site.js",
     "test": "node --test",
     "collect:candidates": "node scripts/collect-candidates.js",
     "prepare:reviews": "node scripts/prepare-reviews.js",
-    "canonical:manage": "node scripts/canonical-manage.js"
+    "canonical:manage": "node scripts/canonical-manage.js",
+    "songs:generate": "node scripts/generate-songs.js",
+    "songs:validate": "node scripts/validate-songs.js",
+    "site:check-generated": "node scripts/check-generated-data.js"
   }
 }
