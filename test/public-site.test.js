@@ -36,7 +36,8 @@ test('public pages have consistent static navigation, canonical URLs and assets'
 
 test('PR 1 keeps songs provisional and ranking data at its existing location', async () => {
   const songs = await read('site/songs/index.html');
-  assert.match(songs, /楽曲一覧機能は準備中/);
+  assert.match(songs, /<h2>Coming Soon\.\.\.<\/h2>\s*<p>楽曲一覧・検索機能を準備中です。<\/p>/);
+  assert.doesNotMatch(songs, /<section class="card">/);
   assert.doesNotMatch(songs, /type="search"|song-search|song-sort|<dialog/);
   const creators = await read('site/creators/index.html');
   assert.match(creators, /同じ曲に複数のバージョンがある場合も、1曲として数えています。/);

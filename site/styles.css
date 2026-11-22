@@ -568,3 +568,8 @@ dialog:not([open]) {
     max-width:none
   }
 }
+
+/* Only the unfiltered pair list needs spacing; empty results add no margin. */
+#pair-panel:has(#pair-direction option[value="all"]:checked) #pair-ranking:not(:empty) {
+  margin-top: 20px;
+}

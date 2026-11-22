@@ -59,3 +59,16 @@ canonical CSV、src/FN-002〜004、Production state/Apply/Recovery、ranking生�
 
 ## 記録作成時点の確定結果
 ランキング関連3ファイル＋新規公開ページテスト：12 PASS / FAIL 0 / SKIP 0。rankings:validate・site:build・生成JSON差分なし・git diff --checkは成功。Node全スイートのnpm testは長時間の既存FN-004プロセス終了/復旧試験を継続中で、全体の成功はまだ未確定。失敗未検出を全体PASSとは扱わない。フルCIの最新head結果はPR Checksを参照する。
+
+## UIレビュー2件の追記（2026-11-22 JST）
+
+対象は組み合わせ分析の全件表示時の余白と、暫定楽曲ページの案内形式だけ。
+
+- `#pair-panel:has(#pair-direction option[value="all"]:checked) #pair-ranking:not(:empty)` にmargin-top:20pxを指定。既存selectの選択状態と生成済みカードの有無をCSSで参照し、JavaScript・集計・creator HTMLは変更しない。0件は:emptyにより対象外。
+- 375px/1440pxとも修正前の全件gap=0px→修正後20px。全件カード数68を維持。作詞者/作曲者の選択後gap=57.59375px、自己数の上端はcontrols下端から16pxで修正前後一致（確認時のカード数9/1も一致）。全件0件をJSONレスポンス差替えで再現しmargin=0px/空一覧高さ=0pxを確認。
+- 楽曲の枠線付きカードを削除し、動画と同じmain直下のh2＋pで「Coming Soon...」「楽曲一覧・検索機能を準備中です。」を表示。375px/1440pxで動画と見出しの階層・文字サイズ・ウェイト・上下余白が一致。動画自体、楽曲タイトル・artist欄は変更しない。PR 2の機能は未実装のまま。
+- Chromium headless + local HTTPで上記実測を行い、既存check-public-site.cjsの30幅/ページ組合せ・絞込/コンボ/根拠モーダル/状態の回帰も成功。新旧比較のため修正前の座標も同じブラウザで取得した。
+- 公開ページ＋ランキング関連テスト12件PASS、FAIL/SKIP 0。rankings:validate、site:build、生成JSON差分なし、git diff --check成功。テスト期待値の変更は楽曲の案内とカード廃止のみ。
+- 今回ローカルnpm test全スイートは再実行しない。親コミットccaba9fのCI run44927367615は成功を確認。更新コミットのCIはPR Checksで別途確認し、実行中を成功と扱わない。
+
+未確認：物理PC/SP端末、実機safe-area、スクリーンリーダー、Chromium以外のブラウザ。CSS :hasの挙動は今回のChromiumで確認済み。新機能・データ生成・canonical・FN-002〜004・workflow/domain設定の変更なし。
