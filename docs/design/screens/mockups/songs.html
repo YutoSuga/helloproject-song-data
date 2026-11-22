@@ -116,8 +116,8 @@
 <option value="title">曲名順</option>
 </select>
 </label>
-<p>発売日は、対象アーティストの登録音源から確認できる作品の最も早い音源初出日です。</p>
-<p data-item-no="04" data-item-id="songs-summary" id="song-summary" role="status">3作品</p>
+<p>一覧の音源初出日は、対象アーティストの登録音源から確認できる作品の最も早い音源初出日です。</p>
+<p data-item-no="04" data-item-id="songs-summary" id="song-summary" role="status" aria-live="polite">3作品</p>
 <label class="review">R-01 状態 <select id="review-state">
 <option value="normal">正常</option>
 <option value="loading">読込中</option>
@@ -125,43 +125,61 @@
 <option value="error">取得失敗</option>
 </select>
 </label>
-<p data-item-no="05" data-item-id="songs-status" id="status" role="status" hidden>
+<p data-item-no="05" data-item-id="songs-status" id="status" role="status" aria-live="polite" hidden>
 </p>
 <div id="data-panel">
 <div id="works">
-<article data-item-no="06" data-item-id="songs-card" class="card work-card" data-title="サンプル作品A" data-date="2025-01-15" data-work="W99991" data-search="サンプル作品A サンプル作家A 共同作家">
-<button data-item-no="07" data-item-id="songs-title" class="work-open" type="button">サンプル作品A</button>
-<p data-item-no="08" data-item-id="songs-date" >発売日：2025-01-15</p>
+<article data-item-no="06" data-item-id="songs-card" class="work-card" data-title="サンプル作品A" data-date="2024-12-01" data-work="W99991" data-search="サンプル作品A サンプル作家A サンプル正規名A 共同作家">
+<button data-item-no="07" data-item-id="songs-title" class="work-open" type="button" aria-haspopup="dialog">サンプル作品A</button>
+<p data-item-no="08" data-item-id="songs-date" >音源初出日：2024-12-01</p>
 <template class="work-detail">
 <p data-item-no="10" data-item-id="songs-work-id" >work ID：W99991</p>
 <h2 data-item-no="11" data-item-id="songs-work-title" >サンプル作品A</h2>
-<section data-item-no="12" data-item-id="songs-song" class="card">
+<section data-item-no="12" data-item-id="songs-song" class="song-detail-card" data-song="J99900" data-date="2024-12-01">
 <p data-item-no="13" data-item-id="songs-song-id" >song ID：J99900</p>
 <h3 data-item-no="14" data-item-id="songs-song-title" >サンプル作品A</h3>
 <p data-item-no="15" data-item-id="songs-version" >Version名：表記なし／種別：オリジナル</p>
+<p data-item-no="16" data-item-id="songs-song-date" >音源初出日：2024-12-01</p>
+<p data-item-no="17" data-item-id="songs-lyrics" >作詞：サンプル作家A／共同作家</p>
+<p data-item-no="18" data-item-id="songs-composition" >作曲：サンプル作家A</p>
+<p data-item-no="19" data-item-id="songs-arrangement" >編曲：未登録</p>
+</section>
+<section data-item-no="12" data-item-id="songs-song" class="song-detail-card" data-song="J99902" data-date="2025-01-15">
+<p data-item-no="13" data-item-id="songs-song-id" >song ID：J99902</p>
+<h3 data-item-no="14" data-item-id="songs-song-title" >サンプル作品A Re-recording Ver.</h3>
+<p data-item-no="15" data-item-id="songs-version" >Version名：Re-recording Ver.／種別：再録</p>
 <p data-item-no="16" data-item-id="songs-song-date" >音源初出日：2025-01-15</p>
 <p data-item-no="17" data-item-id="songs-lyrics" >作詞：サンプル作家A／共同作家</p>
 <p data-item-no="18" data-item-id="songs-composition" >作曲：サンプル作家A</p>
 <p data-item-no="19" data-item-id="songs-arrangement" >編曲：未登録</p>
 </section>
-<section data-item-no="12" data-item-id="songs-song" class="card">
+<section data-item-no="12" data-item-id="songs-song" class="song-detail-card" data-song="J99903" data-date="2025-01-15">
+<p data-item-no="13" data-item-id="songs-song-id" >song ID：J99903</p>
+<h3 data-item-no="14" data-item-id="songs-song-title" >サンプル作品A Other Ver.</h3>
+<p data-item-no="15" data-item-id="songs-version" >Version名：Other Ver.／種別：その他</p>
+<p data-item-no="16" data-item-id="songs-song-date" >音源初出日：2025-01-15</p>
+<p data-item-no="17" data-item-id="songs-lyrics" >作詞：サンプル作家A／共同作家</p>
+<p data-item-no="18" data-item-id="songs-composition" >作曲：サンプル作家A</p>
+<p data-item-no="19" data-item-id="songs-arrangement" >編曲：未登録</p>
+</section>
+<section data-item-no="12" data-item-id="songs-song" class="song-detail-card" data-song="J99901" data-date="">
 <p data-item-no="13" data-item-id="songs-song-id" >song ID：J99901</p>
 <h3 data-item-no="14" data-item-id="songs-song-title" >サンプル作品A New Vocal Ver.</h3>
 <p data-item-no="15" data-item-id="songs-version" >Version名：New Vocal Ver.／種別：新歌唱</p>
-
+<p data-item-no="16" data-item-id="songs-song-date" >音源初出日：確認中</p>
 <p data-item-no="17" data-item-id="songs-lyrics" >作詞：サンプル作家A／共同作家</p>
 <p data-item-no="18" data-item-id="songs-composition" >作曲：サンプル作家A</p>
 <p data-item-no="19" data-item-id="songs-arrangement" >編曲：未登録</p>
 </section>
 </template>
 </article>
-<article class="card work-card" data-title="サンプル作品B" data-date="2024-03-01" data-work="W99992" data-search="サンプル作品B サンプル作家B 共同作家">
-<button class="work-open" type="button">サンプル作品B</button>
-<p>発売日：2024-03-01</p>
+<article class="work-card" data-title="サンプル作品B" data-date="2024-03-01" data-work="W99992" data-search="サンプル作品B サンプル作家B 共同作家">
+<button class="work-open" type="button" aria-haspopup="dialog">サンプル作品B</button>
+<p>音源初出日：2024-03-01</p>
 <template class="work-detail">
 <p data-item-no="10" data-item-id="songs-work-id" >work ID：W99992</p>
 <h2 data-item-no="11" data-item-id="songs-work-title" >サンプル作品B</h2>
-<section data-item-no="12" data-item-id="songs-song" class="card">
+<section data-item-no="12" data-item-id="songs-song" class="song-detail-card" data-song="J99910" data-date="2024-03-01">
 <p data-item-no="13" data-item-id="songs-song-id" >song ID：J99910</p>
 <h3 data-item-no="14" data-item-id="songs-song-title" >サンプル作品B</h3>
 <p data-item-no="15" data-item-id="songs-version" >Version名：表記なし／種別：オリジナル</p>
@@ -172,17 +190,17 @@
 </section>
 </template>
 </article>
-<article class="card work-card" data-title="サンプル作品C" data-date="" data-work="W99993" data-search="サンプル作品C サンプル作家C 共同作家">
-<button class="work-open" type="button">サンプル作品C</button>
-
+<article class="work-card" data-title="サンプル作品C" data-date="" data-work="W99993" data-search="サンプル作品C サンプル作家C 共同作家">
+<button class="work-open" type="button" aria-haspopup="dialog">サンプル作品C</button>
+<p>音源初出日：確認中</p>
 <template class="work-detail">
 <p data-item-no="10" data-item-id="songs-work-id" >work ID：W99993</p>
 <h2 data-item-no="11" data-item-id="songs-work-title" >サンプル作品C</h2>
-<section data-item-no="12" data-item-id="songs-song" class="card">
+<section data-item-no="12" data-item-id="songs-song" class="song-detail-card" data-song="J99920" data-date="">
 <p data-item-no="13" data-item-id="songs-song-id" >song ID：J99920</p>
 <h3 data-item-no="14" data-item-id="songs-song-title" >サンプル作品C</h3>
 <p data-item-no="15" data-item-id="songs-version" >Version名：表記なし／種別：オリジナル</p>
-
+<p data-item-no="16" data-item-id="songs-song-date" >音源初出日：確認中</p>
 <p data-item-no="17" data-item-id="songs-lyrics" >作詞：サンプル作家C／共同作家</p>
 <p data-item-no="18" data-item-id="songs-composition" >作曲：サンプル作家C</p>
 <p data-item-no="19" data-item-id="songs-arrangement" >編曲：未登録</p>

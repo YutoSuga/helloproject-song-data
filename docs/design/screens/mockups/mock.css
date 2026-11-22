@@ -11,3 +11,14 @@
 @media(min-width:1024px){@container(min-width:960px){.page-index .body-artists .artist-strip{grid-template-columns:repeat(4,minmax(0,1fr))}}}
 @media(max-width:1023px){.sp-brand{display:block;text-decoration:none;font-weight:700}.sp-brand small{display:block;font-size:12px}.content{min-width:0}}
 @media(max-width:389px){.page-index .artist{font-size:12px;padding:8px 5px;gap:4px}}
+
+/* SCR-003 follows PR #103; keep other review pages' card styling unchanged. */
+.page-songs .work-open{font-weight:700;text-align:left;overflow-wrap:anywhere;white-space:normal;border:0;border-radius:0;background:transparent;padding:4px 0}
+.page-songs .work-card{padding:12px 0;border-bottom:1px solid var(--line);min-width:0}
+.page-songs .work-card:last-child{border-bottom:none}
+.page-songs .work-card p{margin:4px 0 0}
+.page-songs #song-detail>p{margin:4px 0}
+.page-songs #song-detail>h2{margin:8px 0 12px}
+.page-songs .song-detail-card{border-top:1px solid var(--line);padding:12px 0;min-width:0}
+.page-songs .song-detail-card p{margin:4px 0}
+.page-songs .song-detail-card h3{margin:6px 0;overflow-wrap:anywhere}

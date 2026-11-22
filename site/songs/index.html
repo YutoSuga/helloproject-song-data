@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>楽曲一覧・検索 | Hello! Project Song Database</title>
-  <meta name="description" content="ハロプロ楽曲データベースの楽曲一覧機能は準備中です。">
+  <meta name="description" content="Juice=Juiceの楽曲作品を曲名・作家名で検索し、発売日順・曲名順の一覧と音源別クレジットを確認できます。">
   <link rel="canonical" href="https://hellosongdb.com/songs/">
   <link rel="icon" type="image/png" href="../apple-touch-icon.png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../styles.css">
   <script defer src="../common.js"></script>
 
+<script type="module" src="../songs.js"></script>
 </head>
 <body class="page-songs">
 <a class="skip" href="#main">本文へ</a>
@@ -105,8 +106,24 @@
 </div>
 <p class="scroll-hint">左右にスクロールできます</p>
 </section>
-<h2>Coming Soon...</h2>
-<p>楽曲一覧・検索機能を準備中です。</p>
+<p id="songs-scope">Juice=Juiceの登録作品（work単位）</p>
+<label for="song-search">曲名・作家名で検索</label>
+<input id="song-search" type="search" disabled autocomplete="off">
+<label for="song-sort">並び替え</label>
+<select id="song-sort" disabled>
+<option value="new">発売日が新しい順</option>
+<option value="old">発売日が古い順</option>
+<option value="title">曲名順</option>
+</select>
+<p>一覧の音源初出日は、対象アーティストの登録音源から確認できる作品の最も早い音源初出日です。</p>
+<p id="song-summary" role="status" aria-live="polite"></p>
+<p id="songs-status" role="status" aria-live="polite">データを読み込んでいます。</p>
+<div id="works"></div>
+<dialog id="song-dialog" aria-labelledby="song-dialog-title">
+<button id="song-close" type="button" class="dialog-close" aria-label="楽曲詳細を閉じる">×</button>
+<div id="song-detail"></div>
+</dialog>
+<noscript><p>楽曲一覧を表示するにはJavaScriptを有効にしてください。</p></noscript>
 </main>
 <footer>非公式ファンサイト</footer>
 </div>

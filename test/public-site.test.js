@@ -34,11 +34,13 @@ test('public pages have consistent static navigation, canonical URLs and assets'
   }
 });
 
-test('PR 1 keeps songs provisional and ranking data at its existing location', async () => {
+test('songs catalog and existing ranking data remain independently connected', async () => {
   const songs = await read('site/songs/index.html');
-  assert.match(songs, /<h2>Coming Soon\.\.\.<\/h2>\s*<p>楽曲一覧・検索機能を準備中です。<\/p>/);
-  assert.doesNotMatch(songs, /<section class="card">/);
-  assert.doesNotMatch(songs, /type="search"|song-search|song-sort|<dialog/);
+  assert.match(songs, /id="song-search"/);
+  assert.match(songs, /id="song-sort"/);
+  assert.match(songs, /<dialog id="song-dialog"/);
+  assert.match(songs, /src="..\/songs.js"/);
+  assert.doesNotMatch(songs, /楽曲一覧・検索機能を準備中/);
   const creators = await read('site/creators/index.html');
   assert.match(creators, /同じ曲に複数のバージョンがある場合も、1曲として数えています。/);
   assert.match(creators, /role="combobox"/);

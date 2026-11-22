@@ -573,3 +573,33 @@ dialog:not([open]) {
 #pair-panel:has(#pair-direction option[value="all"]:checked) #pair-ranking:not(:empty) {
   margin-top: 20px;
 }
+
+/* SCR-003: compact rows share the site palette and preserve the native dialog. */
+.work-open {
+  font-weight:700;
+  text-align:left;
+  overflow-wrap:anywhere;
+  white-space:normal;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  padding:4px 0;
+}
+.song-detail-card h3 { overflow-wrap:anywhere; }
+
+.page-songs .work-card {
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  min-width:0;
+}
+.page-songs .work-card:last-child { border-bottom:none; }
+.page-songs .work-card p { margin:4px 0 0; }
+#song-detail > p { margin:4px 0; }
+#song-detail > h2 { margin:8px 0 12px; }
+#song-detail .song-detail-card {
+  border-top:1px solid var(--line);
+  padding:12px 0;
+  min-width:0;
+}
+#song-detail .song-detail-card p { margin:4px 0; }
+#song-detail .song-detail-card h3 { margin:6px 0; }
