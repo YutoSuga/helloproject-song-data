@@ -1,0 +1,19 @@
+{
+  "updates": [
+    { "date": "2025-01-10", "description": "古い更新" },
+    { "date": "2025-03-07", "description": "最新の更新" },
+    { "date": "2025-02-20", "description": "同日の先の更新" },
+    { "date": "2025-02-20", "description": "同日の後の更新" }
+  ],
+  "artists": [
+    { "artist_id": "G99901", "name": "アーティストA" },
+    { "artist_id": "G99902", "name": "アーティストB" }
+  ],
+  "coverage": {
+    "artists": [
+      { "artist_id": "G99901", "status": "listed", "covered_through": "2024-02-29", "reflected_at": "2025-03-01" },
+      { "artist_id": "G99902", "status": "listed", "covered_through": null, "reflected_at": null }
+    ],
+    "pending_artists": ["アーティストC"]
+  }
+}

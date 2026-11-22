@@ -7,12 +7,13 @@ const pages = ['','songs/','videos/','creators/','more/'];
 const read = path => readFile(resolve(root, path), 'utf8');
 
 test('public pages have consistent static navigation, canonical URLs and assets', async () => {
-  for (const page of pages) {
+  for (const page of [...pages, 'more/data/']) {
     const html = await read(`site/${page}index.html`);
     assert.match(html, new RegExp(`rel="canonical" href="https://hellosongdb.com/${page}"`));
     assert.match(html, /meta name="description"/);
     assert.equal((html.match(/<h1[ >]/g) ?? []).length, 1);
-    assert.equal((html.match(/aria-current="page"/g) ?? []).length, 2);
+    const current = page === 'more/data/' ? 'location' : 'page';
+    assert.equal((html.match(new RegExp(`aria-current="${current}"`, 'g')) ?? []).length, 2);
     for (const nav of html.matchAll(/<nav class="(?:desktop|mobile)"[^>]*>([\s\S]*?)<\/nav>/g)) {
       const links = [...nav[1].matchAll(/href="([^"]+)"/g)].map(m => m[1]);
       assert.equal(links.length, 5);
@@ -22,7 +23,7 @@ test('public pages have consistent static navigation, canonical URLs and assets'
     for (const [, path] of assets) await readFile(resolve(root, `site/${page}`, path));
     assert.doesNotMatch(html, /data-item-|review-state|show-numbers|サンプル|仮データ|mock\.js|mock\.css/);
     const artists = html.match(/<section class="artists body-artists"[\s\S]*?<\/section>/)?.[0];
-    if (page === 'more/') assert.equal(artists, undefined);
+    if (page.startsWith('more/')) assert.equal(artists, undefined);
     else {
       assert.equal((artists.match(/class="artist"/g) ?? []).length, 8);
       assert.equal((artists.match(/ disabled/g) ?? []).length, 7);
@@ -47,4 +48,18 @@ test('songs catalog and existing ranking data remain independently connected', a
   assert.doesNotMatch(creators, /creators-combo-status|pair-detail-role/);
   assert.match(await read('site/app.js'), /new URL\("\.\/data\/rankings\/G00001.json", import.meta.url\)/);
   assert.match(await read('.github/workflows/deploy-pages.yml'), /path: site\//);
+});
+
+test('home and More connect to the data page and keep contact navigation available', async () => {
+  const home = await read('site/index.html');
+  const more = await read('site/more/index.html');
+  const data = await read('site/more/data/index.html');
+  assert.match(home, /id="site-updates" data-recent="true"/);
+  assert.match(home, /href="\.\/more\/data\/#site-updates"/);
+  assert.match(more, /href="\.\/data\/">データについて/);
+  assert.match(more, /id="contact"/);
+  assert.match(data, /href="\.\.\/#contact"/);
+  assert.match(data, /id="site-updates"/);
+  assert.doesNotMatch(data, /data-recent/);
+  for (const html of [home, data]) assert.match(html, /type="module" src="[^"]*about-data\.js"/);
 });

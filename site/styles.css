@@ -603,3 +603,48 @@ dialog:not([open]) {
 }
 #song-detail .song-detail-card p { margin:4px 0; }
 #song-detail .song-detail-card h3 { margin:6px 0; }
+
+.about-section h2,
+.about-coverage h3 {
+  margin-top: 0;
+}
+
+.about-updates,
+.about-coverage {
+  list-style: none;
+  padding: 0;
+  overflow-wrap: anywhere;
+}
+
+.about-updates li,
+.about-coverage li {
+  padding-block: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.about-updates time {
+  display: block;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.about-coverage {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  column-gap: 20px;
+}
+
+.about-coverage h3 {
+  margin-bottom: 8px;
+}
+
+.about-coverage dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 0;
+}
+
+.about-coverage dd {
+  margin: 0;
+}

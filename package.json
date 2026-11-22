@@ -5,7 +5,7 @@
   "scripts": {
     "rankings:generate": "node scripts/generate-rankings.js",
     "rankings:validate": "node scripts/validate-rankings.js",
-    "site:build": "npm run rankings:generate && npm run songs:generate",
+    "site:build": "npm run rankings:generate && npm run songs:generate && node scripts/build-about-data.js",
     "site:preview": "node scripts/preview-site.js",
     "test": "node --test",
     "collect:candidates": "node scripts/collect-candidates.js",

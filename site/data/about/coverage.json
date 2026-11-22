@@ -1,0 +1,15 @@
+{
+  "artists": [
+    { "artist_id": "G00001", "status": "listed", "covered_through": null, "reflected_at": null },
+    { "artist_id": "G00002", "status": "unlisted", "covered_through": null, "reflected_at": null },
+    { "artist_id": "G00003", "status": "unlisted", "covered_through": null, "reflected_at": null }
+  ],
+  "pending_artists": [
+    "モーニング娘。’26",
+    "アンジュルム",
+    "つばきファクトリー",
+    "BEYOOOOONDS",
+    "OCHA NORMA",
+    "ロージークロニクル"
+  ]
+}
