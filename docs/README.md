@@ -28,13 +28,14 @@
 - [楽曲管理のアプリケーションサービス・CLI契約](design/system/楽曲管理のアプリケーションサービス・CLI契約.md)
 - [機能ID体系](design/system/機能ID体系.md)
 
+- [公開サイトデータ生成・ビルド仕様](design/system/公開サイトデータ生成・ビルド仕様.md)（FN番号なしの共通運用）
+
 ### データ仕様
 
 - [データ仕様](design/data/データ仕様.md)
 
 ### 機能設計
 
-- [FN-001-公開サイトデータ生成](design/functions/FN-001-公開サイトデータ生成.md)
 - [FN-001-ランキング集計仕様](design/functions/FN-001-ランキング集計仕様.md)
 - [FN-002-楽曲候補収集](design/functions/FN-002-楽曲候補収集.md)
 - [FN-002-楽曲候補収集仕様](design/functions/FN-002-楽曲候補収集仕様.md)
@@ -46,6 +47,8 @@
 - [FN-004-反映計画](design/functions/FN-004-反映計画.md)
 - [FN-004-成功履歴・読取検証](design/functions/FN-004-成功履歴・読取検証.md)
 - [FN-004-承認・反映リクエスト](design/functions/FN-004-承認・反映リクエスト.md)
+- [FN-005-楽曲一覧データ生成](design/functions/FN-005-楽曲一覧データ生成.md)（設計のみ）
+
 ### 画面設計
 
 - [公開サイト画面一覧・遷移](design/screens/画面一覧.md)
