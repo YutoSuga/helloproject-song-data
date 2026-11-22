@@ -67,3 +67,13 @@ check-song-catalog.cjsは320/375/390/768/1024/1440pxの各幅で実90作品・12
 check-public-site.cjsも5ページ×6幅の30ケースと既存ランキング・分析・根拠・操作の回帰に成功。390px/1440pxの一覧と詳細はスクリーンショットを目視確認した。実機・物理タッチ・スクリーンリーダー・他ブラウザは未確認。
 
 ローカル全npm testは既存FN-004の長時間試験を継続中で、全体PASSとは扱わない。追加コミットに対するフルCIの状態はPR本文にrun/対象HEADとともに記録する。新規PR・Ready化・マージ・本番Deployは行わない。
+
+## PR #103 末尾work区切り線の調整（2026-11-22 JST）
+
+対象HEAD 39f1ef1から、`.page-songs .work-card:last-child { border-bottom:none; }`だけを表示CSSへ追加した。作品間の線とフッター上部の線を維持し、末尾work（検索1件を含む）の下線を省略する。検索・並び替えロジック、詳細songの線、他画面、CSV/schema、生成処理/JSON契約/生成JSONは変更していない。
+
+既存check-song-catalog.cjsに全行のcomputed border検査を追加。320/375/390/768/1024/1440pxの各幅で、実90作品の初期表示、3順序、複数件の作家検索、1件の作品名検索、0件、条件変更・全件復帰の各状態を検証し、最後だけ0px/none、途中は1px/solid、フッター上部は1pxを確認した。横はみ出しなし、0件の件数/案内も維持。既存の全120音源詳細、キーボード/モーダル、異常系検証も成功した。
+
+関連14テストはPASS / FAIL 0 / SKIP 0。check-public-site.cjsの既存5ページ×6幅・ランキング/分析/根拠/操作回帰も成功。songs:validate、site:check-generated、node --check、git diff --checkが成功し、生成JSONの差分なし。検索1件の390px画面をスクリーンショットで目視し、フッター線との重複がないことを確認した。
+
+フルCIは追加コミットのrun/対象HEADと実際の状態をPR本文へ記録する。完了前に全体PASSとは扱わない。実機・物理タッチ・スクリーンリーダー・Chromium以外は未確認。Draftを維持し、新規PR・Ready化・マージ・本番Deployは行わない。

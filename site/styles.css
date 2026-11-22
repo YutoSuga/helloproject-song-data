@@ -592,6 +592,7 @@ dialog:not([open]) {
   border-bottom:1px solid var(--line);
   min-width:0;
 }
+.page-songs .work-card:last-child { border-bottom:none; }
 .page-songs .work-card p { margin:4px 0 0; }
 #song-detail > p { margin:4px 0; }
 #song-detail > h2 { margin:8px 0 12px; }

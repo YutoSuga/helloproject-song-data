@@ -4,6 +4,19 @@ const assert = require('node:assert/strict');
 const { readFile } = require('node:fs/promises');
 const { resolve } = require('node:path');
 const base = process.env.PUBLIC_SITE_URL || 'http://localhost:4173';
+async function checkWorkSeparators(page) {
+  const borders=await page.locator('.work-card').evaluateAll(rows=>rows.map(row=>{
+    const style=getComputedStyle(row);return {width:style.borderBottomWidth,style:style.borderBottomStyle};
+  }));
+  borders.forEach((border,index)=>{
+    const last=index===borders.length-1;
+    assert.equal(border.width,last?'0px':'1px',`work ${index}: separator width`);
+    assert.equal(border.style,last?'none':'solid',`work ${index}: separator style`);
+  });
+  assert.equal(await page.locator('footer').evaluate(e=>getComputedStyle(e).borderTopWidth),'1px');
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+}
+
 (async()=>{
   const real=JSON.parse(await readFile(resolve(__dirname,'../site/data/songs/G00001.json'),'utf8'));
   const {selectWorks}=await import('../site/song-catalog-model.js');
@@ -16,6 +29,7 @@ const base = process.env.PUBLIC_SITE_URL || 'http://localhost:4173';
       await page.locator('.work-open').first().waitFor();
       assert.equal(await page.locator('.work-card').count(),real.works.length);
       assert.equal(await page.locator('#song-summary').innerText(),`${real.works.length}作品`);
+      await checkWorkSeparators(page);
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
       assert.deepEqual(await page.locator('#song-sort option').allTextContents(),['発売日が新しい順','発売日が古い順','曲名順']);
       assert(await page.locator('.work-card').first().evaluate(e=>{
@@ -31,13 +45,36 @@ const base = process.env.PUBLIC_SITE_URL || 'http://localhost:4173';
       for(const sort of ['new','old','title']) {
         await page.locator('#song-sort').selectOption(sort);
         assert.deepEqual(await page.locator('.work-open').allTextContents(),selectWorks(real.works,'',sort).map(w=>w.title));
+        await checkWorkSeparators(page);
       }
       for(const query of [real.works[0].title,real.works[0].search_creator_names[0],`${real.works[0].title} ${real.works[0].search_creator_names[0]}`,'見つからない検索語']) {
         await page.locator('#song-search').fill(query);
         assert.deepEqual(await page.locator('.work-open').allTextContents(),selectWorks(real.works,query,'title').map(w=>w.title));
+        await checkWorkSeparators(page);
       }
       assert.equal(await page.locator('#songs-status').innerText(),'検索結果は0件です。');
+      assert.equal(await page.locator('#song-summary').innerText(),'0作品');
+      assert.equal(await page.locator('.work-card').count(),0);
+      assert(await page.locator('#songs-status').isVisible());
+      const single=real.works.find(w=>selectWorks(real.works,w.title).length===1);
+      assert(single,'real data must have a unique title for the one-result check');
+      await page.locator('#song-search').fill(single.title);
+      assert.equal(await page.locator('.work-card').count(),1);
+      for(const sort of ['new','old','title']) {
+        await page.locator('#song-sort').selectOption(sort);
+        await checkWorkSeparators(page);
+      }
+      const multiple=real.works.flatMap(w=>w.search_creator_names).find(name=>selectWorks(real.works,name).length>1);
+      assert(multiple,'real data must have a creator shared by multiple works');
+      await page.locator('#song-search').fill(multiple);
+      assert(await page.locator('.work-card').count()>1);
+      for(const sort of ['new','old','title']) {
+        await page.locator('#song-sort').selectOption(sort);
+        assert.deepEqual(await page.locator('.work-open').allTextContents(),selectWorks(real.works,multiple,sort).map(w=>w.title));
+        await checkWorkSeparators(page);
+      }
       await page.locator('#song-search').fill('');
+      await checkWorkSeparators(page);
       // Every real work and every version/credit is checked against generated JSON.
       let songs=0;
       for(const work of real.works) {
@@ -119,6 +156,6 @@ const base = process.env.PUBLIC_SITE_URL || 'http://localhost:4173';
     assert.match(await loading.locator('#songs-status').innerText(),/読み込んでいます/);assert(await loading.locator('#song-search').isDisabled());
     release();await loading.locator('.work-open').first().waitFor();await loading.close();
     assert.deepEqual(errors,[]);
-    console.log(`PASS: 6 widths; ${real.works.length} real works / ${real.works.reduce((n,w)=>n+w.songs.length,0)} songs at each width; search, 3 sorts, every version and credit, unknown-date labels including J00021, shuffled detail date/ID/null order, separators/spacing/tap targets, modal keyboard/focus, failure/malformed/version/fields/empty/loading`);
+    console.log(`PASS: 6 widths; ${real.works.length} real works / ${real.works.reduce((n,w)=>n+w.songs.length,0)} songs at each width; search, 3 sorts, every version and credit, unknown-date labels including J00021, shuffled detail date/ID/null order, separators/spacing/tap targets, last-work no border for all/single/multiple/zero results after search/sort, footer border intact, modal keyboard/focus, failure/malformed/version/fields/empty/loading`);
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
