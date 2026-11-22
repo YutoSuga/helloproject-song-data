@@ -3,6 +3,7 @@ import { readCoverage, readPolicy, readUpdates } from './about-data-model.js';
 const loadingError = 'データを表示できません。時間をおいて再読み込みしてください。';
 const empty = '表示できるデータがありません。';
 const formatDate = date => date.replaceAll('-', '/');
+const audioCount = new Intl.NumberFormat('ja-JP');
 
 async function fetchData(file) {
   const response = await fetch(new URL(`./data/about/${file}.json`, import.meta.url));
@@ -16,8 +17,8 @@ function element(tag, text) {
   return node;
 }
 
-function dateLabel(date, prefix = '') {
-  const time = element('time', prefix + formatDate(date));
+function dateLabel(date) {
+  const time = element('time', formatDate(date));
   time.dateTime = date;
   return time;
 }
@@ -61,12 +62,19 @@ function renderCoverage(rows) {
     const item = element('li');
     const details = element('dl');
     const range = element('dd');
-    range.append(row.status === 'unlisted' ? '未収録'
-      : row.covered_through ? dateLabel(row.covered_through, 'デビュー ～ ') : '確認中');
+    if (row.covered_from && row.covered_through) {
+      range.append(dateLabel(row.covered_from), ' ～ ', dateLabel(row.covered_through));
+    } else {
+      range.textContent = row.status === 'unlisted' ? '未収録' : '確認中';
+    }
     const reflected = element('dd');
     reflected.append(row.status === 'unlisted' ? '—'
       : row.reflected_at ? dateLabel(row.reflected_at) : '確認中');
-    details.append(element('dt', '収録範囲'), range, element('dt', 'データ反映日'), reflected);
+    details.append(element('dt', '収録範囲'), range);
+    if (row.status === 'listed') {
+      details.append(element('dt', '登録音源数'), element('dd', `${audioCount.format(row.registered_audio_count)}件`));
+    }
+    details.append(element('dt', 'データ反映日'), reflected);
     item.append(element('h3', row.name), details);
     if (row.note) item.append(element('p', row.note));
     list.append(item);

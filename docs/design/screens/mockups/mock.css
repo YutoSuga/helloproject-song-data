@@ -72,6 +72,10 @@
   margin: 0;
 }
 
+.about-coverage time {
+  white-space: nowrap;
+}
+
 .page-index .artist-link {
   background: var(--accent);
   color: white;

@@ -1,14 +1,17 @@
 [
   {
     "artist_id": "G00001",
-    "name": "Juice=Juice"
+    "name": "Juice=Juice",
+    "registered_audio_count": 120
   },
   {
     "artist_id": "G00002",
-    "name": "ハロプロ研修生"
+    "name": "ハロプロ研修生",
+    "registered_audio_count": 1
   },
   {
     "artist_id": "G00003",
-    "name": "NEXT YOU"
+    "name": "NEXT YOU",
+    "registered_audio_count": 2
   }
 ]

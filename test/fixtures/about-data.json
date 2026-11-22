@@ -20,11 +20,13 @@
   "artists": [
     {
       "artist_id": "G99901",
-      "name": "アーティストA"
+      "name": "アーティストA",
+      "registered_audio_count": 123
     },
     {
       "artist_id": "G99902",
-      "name": "アーティストB"
+      "name": "アーティストB",
+      "registered_audio_count": 0
     }
   ],
   "coverage": {
@@ -34,7 +36,8 @@
         "status": "listed",
         "covered_through": "2024-02-29",
         "reflected_at": "2025-03-01",
-        "note": "別名義の収録曲も掲載。"
+        "note": "別名義の収録曲も掲載。",
+        "covered_from": "2013-04-03"
       },
       {
         "name": "アーティストC"
@@ -43,7 +46,8 @@
         "artist_id": "G99902",
         "status": "listed",
         "covered_through": null,
-        "reflected_at": null
+        "reflected_at": null,
+        "covered_from": null
       }
     ]
   }
