@@ -89,7 +89,7 @@
   margin-left: auto;
 }
 
-.page-more details > summary {
-  cursor: pointer;
-  font-weight: 700;
+.site-information > section + section {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
 }

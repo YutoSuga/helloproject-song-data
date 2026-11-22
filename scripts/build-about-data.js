@@ -11,12 +11,12 @@ try {
     loadSongTables(root), read('coverage.json'), read('policy.json'), read('updates.json')
   ]);
   const songIds = new Set(tables.songs.map(song => song.song_id));
-  const primarySongs = new Map(tables.artists.map(artist => [artist.artist_id, new Set()]));
+  const registeredSongs = new Map(tables.artists.map(artist => [artist.artist_id, new Set()]));
   for (const { artist_id, song_id, role } of tables.song_artists) {
-    if (role === 'primary' && songIds.has(song_id)) primarySongs.get(artist_id)?.add(song_id);
+    if ((role === 'primary' || role === 'featured') && songIds.has(song_id)) registeredSongs.get(artist_id)?.add(song_id);
   }
   const artists = tables.artists.map(({ artist_id, name }) => ({
-    artist_id, name, registered_audio_count: primarySongs.get(artist_id).size
+    artist_id, name, registered_audio_count: registeredSongs.get(artist_id).size
   }));
   readCoverage(coverage, artists);
   readPolicy(policy);

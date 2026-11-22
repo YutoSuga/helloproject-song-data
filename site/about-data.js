@@ -65,7 +65,7 @@ function renderCoverage(rows) {
     if (row.covered_from && row.covered_through) {
       range.append(dateLabel(row.covered_from), ' ～ ', dateLabel(row.covered_through));
     } else {
-      range.textContent = row.status === 'unlisted' ? '未収録' : '確認中';
+      range.textContent = row.status === 'unlisted' ? '楽曲一覧未公開' : '確認中';
     }
     const reflected = element('dd');
     reflected.append(row.status === 'unlisted' ? '—'
@@ -111,9 +111,7 @@ if (document.getElementById('data-policy')) {
     for (const event of ['wheel', 'pointerdown', 'keydown']) {
       window.addEventListener(event, () => navigation.abort(), { passive: true, signal: navigation.signal });
     }
-    const ready = [coverageReady, noteReady, updatesReady];
-    if (fragment === '#contact') ready.push(policyReady);
-    Promise.all(ready).then(() => {
+    Promise.all([policyReady, coverageReady, noteReady, updatesReady]).then(() => {
       if (!navigation.signal.aborted && location.hash === fragment) fragmentTarget.scrollIntoView();
       navigation.abort();
     });
