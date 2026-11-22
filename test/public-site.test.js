@@ -56,7 +56,9 @@ test('home uses its artist link and More orders the combined information', async
   assert.doesNotMatch(home, /class="cards"/);
   assert.match(home, /id="site-updates" data-recent="true"/);
   assert.match(home, /href="\.\/more\/#site-updates"/);
-  assert.match(more, /href="#contact"/);
+  assert.doesNotMatch(more, /href="#contact"|データの誤りを連絡する/);
+  assert.match(more, /<section class="card about-section">\s*<h2 id="contact">ご意見・ご要望<\/h2>/);
+  assert.match(more, /href="https:\/\/x\.com\/MELON6SODA4"/);
   assert.match(more, /<details class="card">\s*<summary>免責事項<\/summary>/);
   assert.doesNotMatch(more, /data-recent/);
   const ids = ['artist-coverage', 'site-updates', 'data-policy', 'contact'];
