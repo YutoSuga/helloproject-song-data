@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { readSongCatalog, selectWorks } from '../site/song-catalog-model.js';
+import { readSongCatalog, selectWorks, selectSongs } from '../site/song-catalog-model.js';
 const data=JSON.parse(await readFile(new URL('../site/data/songs/G00001.json',import.meta.url),'utf8'));
 test('real public JSON meets screen consumption contract; bad required fields fail',()=>{
   assert.equal(readSongCatalog(data),data);
@@ -27,4 +27,18 @@ test('three sorts: dates null last in both directions, ID ties, Japanese Collato
   const sorted=selectWorks(works,'','title');
   assert(sorted.every((w,i)=>i===0||compare.compare(sorted[i-1].title,w.title)<=0));
   assert.equal(works[0].work_id,'W00003');
+});
+
+test('detail songs sort by date ascending, ID ties, null last, without mutating JSON',()=>{
+  const songs=[
+    {song_id:'J00005',release_date:null},
+    {song_id:'J00003',release_date:'2025-01-01'},
+    {song_id:'J00002',release_date:'2020-01-01'},
+    {song_id:'J00004',release_date:null},
+    {song_id:'J00001',release_date:'2020-01-01'}
+  ];
+  const before=structuredClone(songs);
+  assert.deepEqual(selectSongs(songs).map(s=>s.song_id),['J00001','J00002','J00003','J00004','J00005']);
+  assert.deepEqual(songs,before);
+  assert.deepEqual(selectSongs([songs[0]]),[songs[0]]);
 });

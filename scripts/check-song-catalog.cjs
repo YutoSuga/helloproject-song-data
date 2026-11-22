@@ -17,6 +17,17 @@ const base = process.env.PUBLIC_SITE_URL || 'http://localhost:4173';
       assert.equal(await page.locator('.work-card').count(),real.works.length);
       assert.equal(await page.locator('#song-summary').innerText(),`${real.works.length}作品`);
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+      assert.deepEqual(await page.locator('#song-sort option').allTextContents(),['発売日が新しい順','発売日が古い順','曲名順']);
+      assert(await page.locator('.work-card').first().evaluate(e=>{
+        const s=getComputedStyle(e);return s.borderTopWidth==='0px'&&s.borderLeftWidth==='0px'&&s.borderRightWidth==='0px'&&s.borderBottomWidth==='1px'&&s.borderRadius==='0px'&&s.paddingTop==='12px';
+      }));
+      assert(await page.locator('.work-open').first().evaluate(e=>e.getBoundingClientRect().height>=44));
+      const noct=page.locator('.work-card').filter({has:page.getByRole('button',{name:'ノクチルカ',exact:true})});
+      assert.equal(await noct.locator('p').innerText(),'音源初出日：確認中');
+      await noct.locator('button').click();
+      const noctSong=page.locator('.song-detail-card').filter({hasText:'song ID：J00021'});
+      assert.equal(await noctSong.getByText('音源初出日：確認中',{exact:true}).count(),1);
+      await page.locator('#song-close').click();
       for(const sort of ['new','old','title']) {
         await page.locator('#song-sort').selectOption(sort);
         assert.deepEqual(await page.locator('.work-open').allTextContents(),selectWorks(real.works,'',sort).map(w=>w.title));
@@ -37,10 +48,12 @@ const base = process.env.PUBLIC_SITE_URL || 'http://localhost:4173';
         for(const [index,song] of work.songs.entries()) {
           const card=page.locator('.song-detail-card').nth(index);
           assert.equal(await card.locator('h3').innerText(),song.title);
+          assert(await card.evaluate(e=>{
+            const s=getComputedStyle(e);return s.borderTopWidth==='1px'&&s.borderLeftWidth==='0px'&&s.borderRightWidth==='0px'&&s.borderBottomWidth==='0px'&&s.borderRadius==='0px'&&s.paddingTop==='12px';
+          }));
           const text=await card.innerText();
           for(const credit of song.credits)assert(text.includes(credit.credit_name));
-          assert.equal(text.includes('音源初出日：'),song.release_date!==null);
-          if(song.release_date!==null)assert(text.includes(song.release_date));
+          assert(text.includes(`音源初出日：${song.release_date ?? '確認中'}`));
           songs++;
         }
         assert.equal(await page.locator('#song-close').evaluate(e=>e===document.activeElement),true);
@@ -68,10 +81,17 @@ const base = process.env.PUBLIC_SITE_URL || 'http://localhost:4173';
       assert.equal(await page.locator('.work-open').last().innerText(),fixture.works[1].title);
     }
     const missingDateCard=page.locator('.work-card').filter({has:page.getByRole('button',{name:fixture.works[1].title,exact:true})});
-    assert.equal(await missingDateCard.locator('p').count(),0);
-    await missingDateCard.locator('button').click();assert.equal(await page.locator('#song-detail').getByText(/音源初出日/).count(),0);
+    assert.equal(await missingDateCard.locator('p').innerText(),'音源初出日：確認中');
+    await missingDateCard.locator('button').click();assert.equal(await page.locator('#song-detail').getByText('音源初出日：確認中',{exact:true}).count(),fixture.works[1].songs.length);
     await page.locator('#song-close').click();assert(!await page.locator('#song-dialog').isVisible());
     await page.unroute('**/data/songs/G00001.json');
+    const ordering=structuredClone(real);ordering.works=ordering.works.slice(0,1);
+    const template=ordering.works[0].songs[0];
+    ordering.works[0].songs=[['J99905',null],['J99903','2025-01-01'],['J99902','2020-01-01'],['J99904',null],['J99901','2020-01-01']].map(([song_id,release_date])=>({...template,song_id,release_date}));
+    await page.route('**/data/songs/G00001.json',r=>r.fulfill({contentType:'application/json',body:JSON.stringify(ordering)}));
+    await page.goto(base+'/songs/');await page.locator('.work-open').click();
+    assert.deepEqual(await page.locator('.song-detail-card > p:first-child').allTextContents(),['J99901','J99902','J99903','J99904','J99905'].map(id=>`song ID：${id}`));
+    await page.keyboard.press('Escape');await page.unroute('**/data/songs/G00001.json');
     const badVersion=structuredClone(real);badVersion.schema_version=2;
     const missing=structuredClone(real);delete missing.works[0].songs;
     const type=structuredClone(real);type.works[0].songs[0].credits[0].credit_name=42;
@@ -99,6 +119,6 @@ const base = process.env.PUBLIC_SITE_URL || 'http://localhost:4173';
     assert.match(await loading.locator('#songs-status').innerText(),/読み込んでいます/);assert(await loading.locator('#song-search').isDisabled());
     release();await loading.locator('.work-open').first().waitFor();await loading.close();
     assert.deepEqual(errors,[]);
-    console.log(`PASS: 6 widths; ${real.works.length} real works / ${real.works.reduce((n,w)=>n+w.songs.length,0)} songs at each width; search, 3 sorts, every version and credit, null dates, modal keyboard/focus, failure/malformed/version/fields/empty/loading`);
+    console.log(`PASS: 6 widths; ${real.works.length} real works / ${real.works.reduce((n,w)=>n+w.songs.length,0)} songs at each width; search, 3 sorts, every version and credit, unknown-date labels including J00021, shuffled detail date/ID/null order, separators/spacing/tap targets, modal keyboard/focus, failure/malformed/version/fields/empty/loading`);
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

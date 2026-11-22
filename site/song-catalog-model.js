@@ -30,3 +30,9 @@ export function selectWorks(works, query = '', sort = 'new') {
     return (sort === 'old' ? 1 : -1) * ascii(a.first_release_date,b.first_release_date) || ascii(a.work_id,b.work_id);
   });
 }
+
+// Keep the published array intact; details always use chronological song order.
+export function selectSongs(songs) {
+  return [...songs].sort((a,b) =>
+    ascii(a.release_date ?? '9999-99-99', b.release_date ?? '9999-99-99') || ascii(a.song_id,b.song_id));
+}

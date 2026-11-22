@@ -1,4 +1,4 @@
-import { readSongCatalog, selectWorks } from './song-catalog-model.js';
+import { readSongCatalog, selectWorks, selectSongs } from './song-catalog-model.js';
 
 const versions = { original:'オリジナル', new_vocal:'新歌唱', re_recording:'再録', cover:'カバー', other:'その他' };
 export async function mountSongCatalog(document, fetchData = fetch) {
@@ -20,10 +20,10 @@ export async function mountSongCatalog(document, fetchData = fetch) {
     detail.replaceChildren();
     detail.append(element('p',`work ID：${work.work_id}`));
     const heading=element('h2',work.title);heading.id='song-dialog-title';detail.append(heading);
-    for (const song of work.songs) {
-      const section=element('section',undefined,'card song-detail-card');
+    for (const song of selectSongs(work.songs)) {
+      const section=element('section',undefined,'song-detail-card');
       section.append(element('p',`song ID：${song.song_id}`),element('h3',song.title),element('p',`Version名：${song.version_name || '表記なし'}／種別：${versions[song.version_type]}`));
-      if (song.release_date !== null) section.append(element('p',`音源初出日：${song.release_date}`));
+      section.append(element('p',`音源初出日：${song.release_date ?? '確認中'}`));
       const names = role => song.credits.filter(c=>c.role===role).map(c=>c.credit_name).join('／');
       for (const [role,label,special,specialLabel] of [['lyrics','作詞','english_lyrics','英語詞'],['composition','作曲'],['arrangement','編曲','brass_arrangement','ブラス編曲']]) {
         section.append(element('p',`${label}：${names(role)||'未登録'}`));
@@ -40,10 +40,10 @@ export async function mountSongCatalog(document, fetchData = fetch) {
     message(data.works.length===0 ? '表示できるデータがありません。' : selected.length===0 ? '検索結果は0件です。' : '');
     const fragment=document.createDocumentFragment();
     for(const work of selected) {
-      const card=element('article',undefined,'card work-card');
+      const card=element('article',undefined,'work-card');
       const button=element('button',work.title,'work-open');button.type='button';button.setAttribute('aria-haspopup','dialog');button.addEventListener('click',()=>showDetail(work.work_id,button));
       card.append(button);
-      if(work.first_release_date!==null) card.append(element('p',`発売日：${work.first_release_date}`));
+      card.append(element('p',`音源初出日：${work.first_release_date ?? '確認中'}`));
       fragment.append(card);
     }
     works.append(fragment);
