@@ -1,15 +1,18 @@
 {
   "artists": [
-    { "artist_id": "G00001", "status": "listed", "covered_through": null, "reflected_at": null },
-    { "artist_id": "G00002", "status": "unlisted", "covered_through": null, "reflected_at": null },
-    { "artist_id": "G00003", "status": "unlisted", "covered_through": null, "reflected_at": null }
-  ],
-  "pending_artists": [
-    "モーニング娘。’26",
-    "アンジュルム",
-    "つばきファクトリー",
-    "BEYOOOOONDS",
-    "OCHA NORMA",
-    "ロージークロニクル"
+    { "name": "モーニング娘。’26" },
+    { "name": "アンジュルム" },
+    {
+      "artist_id": "G00001",
+      "status": "listed",
+      "covered_through": null,
+      "reflected_at": null,
+      "note": "NEXT YOU名義の「Next is you!」「大人の事情」も収録。"
+    },
+    { "name": "つばきファクトリー" },
+    { "name": "BEYOOOOONDS" },
+    { "name": "OCHA NORMA" },
+    { "name": "ロージークロニクル" },
+    { "artist_id": "G00002", "status": "unlisted", "covered_through": null, "reflected_at": null }
   ]
 }

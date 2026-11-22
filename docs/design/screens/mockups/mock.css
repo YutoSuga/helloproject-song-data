@@ -67,3 +67,21 @@
 .about-coverage dd {
   margin: 0;
 }
+
+.page-index .artist-link {
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  flex-wrap: nowrap;
+  overflow-wrap: anywhere;
+}
+
+.artist-link-arrow {
+  margin-left: auto;
+}
+
+.page-more details > summary {
+  cursor: pointer;
+  font-weight: 700;
+}

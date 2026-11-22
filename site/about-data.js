@@ -68,6 +68,7 @@ function renderCoverage(rows) {
       : row.reflected_at ? dateLabel(row.reflected_at) : '確認中');
     details.append(element('dt', '収録範囲'), range, element('dt', 'データ反映日'), reflected);
     item.append(element('h3', row.name), details);
+    if (row.note) item.append(element('p', row.note));
     list.append(item);
   }
   return [list];
@@ -89,17 +90,23 @@ if (document.getElementById('data-policy')) {
     return readCoverage(coverage, master);
   }, renderCoverage);
   const noteReady = policy.then(({ coverage_note }) => {
-    document.getElementById('coverage-note').textContent = coverage_note;
+    const note = document.getElementById('coverage-note');
+    note.textContent = coverage_note;
+    note.hidden = false;
   }).catch(() => {});
 
-  if (location.hash === '#site-updates') {
-    // Above the target, the policy and coverage can grow after native fragment scrolling.
+  const fragment = location.hash;
+  const fragmentTarget = { '#site-updates': updates, '#contact': document.getElementById('contact') }[fragment];
+  if (fragmentTarget) {
+    // JSON above the target can expand the page after native fragment scrolling.
     const navigation = new AbortController();
     for (const event of ['wheel', 'pointerdown', 'keydown']) {
       window.addEventListener(event, () => navigation.abort(), { passive: true, signal: navigation.signal });
     }
-    Promise.all([policyReady, coverageReady, noteReady, updatesReady]).then(() => {
-      if (!navigation.signal.aborted && location.hash === '#site-updates') updates.scrollIntoView();
+    const ready = [coverageReady, noteReady, updatesReady];
+    if (fragment === '#contact') ready.push(policyReady);
+    Promise.all(ready).then(() => {
+      if (!navigation.signal.aborted && location.hash === fragment) fragmentTarget.scrollIntoView();
       navigation.abort();
     });
   }

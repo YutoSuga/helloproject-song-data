@@ -29,8 +29,7 @@ export function readUpdates(updates, today = todayInJapan()) {
 }
 
 export function readCoverage(coverage, master, today = todayInJapan()) {
-  if (!hasKeys(coverage, ['artists', 'pending_artists']) || !Array.isArray(coverage.artists)
-    || !Array.isArray(coverage.pending_artists)) throw new Error('coverage.json: invalid structure');
+  if (!hasKeys(coverage, ['artists']) || !Array.isArray(coverage.artists)) throw new Error('coverage.json: invalid structure');
   if (!Array.isArray(master)) throw new Error('artists.json: expected an array');
   const namesById = new Map();
   for (const row of master) {
@@ -40,8 +39,18 @@ export function readCoverage(coverage, master, today = todayInJapan()) {
   }
 
   const seen = new Set();
-  const rows = coverage.artists.map(entry => {
-    if (!hasKeys(entry, ['artist_id', 'status', 'covered_through', 'reflected_at'])
+  const names = new Set(namesById.values());
+  return coverage.artists.map(entry => {
+    if (hasKeys(entry, ['name'])) {
+      const { name } = entry;
+      if (!isText(name) || names.has(name)) throw new Error('coverage.json: invalid or duplicate pending artist name');
+      names.add(name);
+      return { name, status: 'unlisted', covered_through: null, reflected_at: null };
+    }
+
+    const keys = ['artist_id', 'status', 'covered_through', 'reflected_at'];
+    if (entry && Object.hasOwn(entry, 'note')) keys.push('note');
+    if (!hasKeys(entry, keys)
       || !namesById.has(entry.artist_id) || seen.has(entry.artist_id)) {
       throw new Error(`coverage.json: invalid or duplicate artist ID ${entry?.artist_id}`);
     }
@@ -49,6 +58,7 @@ export function readCoverage(coverage, master, today = todayInJapan()) {
     if (!['listed', 'unlisted'].includes(status)
       || (covered_through !== null && (!isDate(covered_through) || covered_through > today))
       || (reflected_at !== null && (!isDate(reflected_at) || reflected_at > today))
+      || (keys.includes('note') && (status !== 'listed' || !isText(entry.note)))
       || (status === 'unlisted' && (covered_through !== null || reflected_at !== null))) {
       throw new Error(`coverage.json: invalid status or dates for ${artist_id}`);
     }
@@ -56,13 +66,6 @@ export function readCoverage(coverage, master, today = todayInJapan()) {
     return { ...entry, name: namesById.get(artist_id) };
   });
 
-  const names = new Set(namesById.values());
-  for (const name of coverage.pending_artists) {
-    if (!isText(name) || names.has(name)) throw new Error('coverage.json: invalid or duplicate pending artist name');
-    names.add(name);
-    rows.push({ name, status: 'unlisted', covered_through: null, reflected_at: null });
-  }
-  return rows;
 }
 
 export function readPolicy(policy) {
