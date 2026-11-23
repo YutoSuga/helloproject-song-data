@@ -22,11 +22,11 @@ test('public pages have consistent static navigation, canonical URLs and assets'
     for (const [, path] of assets) await readFile(resolve(root, `site/${page}`, path));
     assert.doesNotMatch(html, /data-item-|review-state|show-numbers|サンプル|仮データ|mock\.js|mock\.css/);
     const artists = html.match(/<section class="artists body-artists"[\s\S]*?<\/section>/)?.[0];
-    if (page === 'more/') assert.equal(artists, undefined);
+    if (page.startsWith('more/')) assert.equal(artists, undefined);
     else {
-      assert.equal((artists.match(/class="artist"/g) ?? []).length, 8);
+      assert.equal((artists.match(/class="artist(?: artist-link)?"/g) ?? []).length, 8);
       assert.equal((artists.match(/ disabled/g) ?? []).length, 7);
-      assert.equal((artists.match(/aria-pressed="true"/g) ?? []).length, 1);
+      assert.equal((artists.match(/aria-pressed="true"/g) ?? []).length, page ? 1 : 0);
       const colors = [...artists.matchAll(/--group:(#[0-9A-F]+)/g)].map(m => m[1]);
       assert.deepEqual(colors, ['#D92C1B','#1D91CD','#7263AA','#EF93BB','#20A239','#F1881A','#F5D11F','#92C75B']);
       assert(html.indexOf('</h1>') < html.indexOf(artists));
@@ -47,4 +47,35 @@ test('songs catalog and existing ranking data remain independently connected', a
   assert.doesNotMatch(creators, /creators-combo-status|pair-detail-role/);
   assert.match(await read('site/app.js'), /new URL\("\.\/data\/rankings\/G00001.json", import.meta.url\)/);
   assert.match(await read('.github/workflows/deploy-pages.yml'), /path: site\//);
+});
+
+test('home uses its artist link and More orders the combined information', async () => {
+  const home = await read('site/index.html');
+  const more = await read('site/more/index.html');
+  assert.match(home, /<a class="artist artist-link"[^>]+href="\.\/songs\/"/);
+  assert.doesNotMatch(home, /class="cards"/);
+  assert.match(home, /id="site-updates" data-recent="true"/);
+  assert.match(home, /href="\.\/more\/#site-updates"/);
+  const mock = await read('docs/design/screens/mockups/more.html');
+  for (const html of [more, mock]) {
+    assert.doesNotMatch(html, /<details\b|href="#contact"|データの誤りを連絡する|data-recent/);
+    assert.match(html, /href="https:\/\/x\.com\/MELON6SODA4" target="_blank" rel="noopener noreferrer"/);
+    const ids = ['data-policy', 'artist-coverage', 'site-updates', 'disclaimer', 'contact'];
+    const content = [...html.matchAll(/id="([^"]+)"/g)].map(match => match[1]);
+    assert.deepEqual(content.filter(id => ids.includes(id)), ids);
+    assert.match(html, /class="card about-section site-information">\s*<section aria-labelledby="disclaimer">[\s\S]*?免責事項<\/h2>[\s\S]*?掲載されている名称・商標等[\s\S]*?<\/section>\s*<section aria-labelledby="contact">[\s\S]*?ご意見・ご要望<\/h2>[\s\S]*?<\/section>\s*<\/div>\s*<\/main>/);
+  }
+  for (const html of [home, more]) assert.match(html, /type="module" src="[^"]*about-data\.js"/);
+});
+
+test('More mock mirrors the data-driven policy without repeating the recording exclusions', async () => {
+  const policy = JSON.parse(await read('site/data/about/policy.json'));
+  const mock = await read('docs/design/screens/mockups/more.html');
+  const section = mock.slice(mock.indexOf('id="data-policy"'), mock.indexOf('id="artist-coverage"'));
+  const paragraphs = [...section.matchAll(/<p>([^<]+)<\/p>/g)].map(match => match[1]);
+  assert.deepEqual(paragraphs, policy.sections.flatMap(item => item.paragraphs));
+  const worksAndAudio = policy.sections.find(item => item.title === '作品と音源');
+  assert.equal(worksAndAudio.paragraphs.length, 4);
+  assert.equal(paragraphs.filter(paragraph => paragraph.includes('Instrumental')).length, 1);
+  assert.doesNotMatch(section, /<h3>収録対象<\/h3>|商品（release）/);
 });

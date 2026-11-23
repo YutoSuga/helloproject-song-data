@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>その他・サイト情報 | Hello! Project Song Database</title>
-  <meta name="description" content="ハロプロ楽曲データベースのサイト情報、免責事項、ご意見・ご要望の窓口。">
+  <meta name="description" content="ハロプロ楽曲データベースの収録状況、サイト更新履歴、収録方針とお問い合わせ。">
   <link rel="canonical" href="https://hellosongdb.com/more/">
   <link rel="icon" type="image/png" href="../apple-touch-icon.png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../styles.css">
   <script defer src="../common.js"></script>
 
+  <script type="module" src="../about-data.js"></script>
 </head>
 <body class="page-more">
 <a class="skip" href="#main">本文へ</a>
@@ -52,20 +53,36 @@
 </a>
 <main id="main">
 <h1>その他・サイト情報</h1>
-<p >個人が制作・運営する非公式ファンサイトです。</p>
-<section class="card">
-<h2>免責事項</h2>
-<div >
+<p>個人が制作・運営する非公式ファンサイトです。</p>
+<section class="card about-section" id="data-policy" aria-labelledby="policy-title">
+<h2 id="policy-title">データの収録方針</h2>
+<p role="status">データを読み込んでいます。</p>
+<div class="about-content"></div>
+</section>
+<section class="card about-section" id="artist-coverage" aria-labelledby="coverage-title">
+<h2 id="coverage-title">アーティスト別データ収録状況</h2>
+<p role="status">データを読み込んでいます。</p>
+<div class="about-content"></div>
+<p id="coverage-note" hidden></p>
+</section>
+<section class="card about-section" id="site-updates" aria-labelledby="updates-title" tabindex="-1">
+<h2 id="updates-title">サイト更新履歴</h2>
+<p role="status">データを読み込んでいます。</p>
+<div class="about-content"></div>
+</section>
+<div class="card about-section site-information">
+<section aria-labelledby="disclaimer">
+<h2 id="disclaimer">免責事項</h2>
 <p>本サイト「Hello! Project Song Database（ハロプロ楽曲データベース）」は、個人が制作・運営する非公式ファンサイトです。Hello! Projectおよび各アーティストの公式サイトではありません。</p>
 <p>掲載データの正確性・完全性を保証するものではなく、未収録の情報、誤記、集計方法等による差異が含まれる場合があります。掲載内容は、予告なく変更することがあります。</p>
 <p>掲載されている名称・商標等の権利は、それぞれの権利者に帰属します。</p>
-</div>
 </section>
-<section class="card">
-<h2>ご意見・ご要望</h2>
+<section aria-labelledby="contact">
+<h2 id="contact">ご意見・ご要望</h2>
 <p >サイトに関するご意見、ご要望、データの誤りのご指摘などがありましたら、X（旧Twitter）までお気軽にお寄せください。</p>
 <a href="https://x.com/MELON6SODA4" target="_blank" rel="noopener noreferrer">@MELON6SODA4（別タブで開きます）</a>
 </section>
+</div>
 </main>
 <footer>非公式ファンサイト</footer>
 </div>
