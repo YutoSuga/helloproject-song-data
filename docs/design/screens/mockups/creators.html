@@ -107,7 +107,7 @@
 </div>
 <p class="scroll-hint">左右にスクロールできます</p>
 </section>
-<p>同じ曲に複数のバージョンがある場合も、1曲として数えています。</p>
+
 <label class="review">R-01 レビュー用状態 <select id="review-state">
 <option value="normal">正常</option>
 <option value="loading">読込中</option>
@@ -245,8 +245,8 @@
 <h2>作詞 × 作曲</h2>
 <div id="pair-controls">
 <div data-item-no="09" data-item-id="creators-combo" class="combobox">
-<label data-item-no="25" data-item-id="creators-query-label" for="creator-query">作家名またはID</label>
-<input id="creator-query" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="creator-options" aria-expanded="false" autocomplete="off" placeholder="作家名またはIDで検索">
+
+<input data-item-no="25" data-item-id="creators-query-label" id="creator-query" aria-label="作家名またはIDで検索" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="creator-options" aria-expanded="false" autocomplete="off" placeholder="作家名またはIDで検索">
 <ul data-item-no="26" data-item-id="creators-options" id="creator-options" role="listbox" hidden>
 </ul>
 <span id="combo-live" class="visually-hidden" role="status" aria-live="polite"></span>
@@ -255,13 +255,15 @@
 <span data-id="C99992">サンプル作家B</span>
 </template>
 </div>
-<fieldset class="pair-roles" data-item-no="10" data-item-id="creators-roles"><legend>担当役割</legend>
+<div class="pair-actions">
+<fieldset class="pair-roles" data-item-no="10" data-item-id="creators-roles"><legend class="visually-hidden">担当役割</legend>
 <label><input id="filter-lyrics" type="checkbox" disabled> 作詞</label>
 <label><input id="filter-composition" type="checkbox" disabled> 作曲</label>
 </fieldset>
 <button id="filter-clear" type="button" data-item-no="27" data-item-id="creators-clear">クリア</button>
 </div>
-<p data-item-no="11" data-item-id="creators-self" id="self-count" hidden>自作詞・自作曲：1作品</p>
+</div>
+<p data-item-no="11" data-item-id="pair-condition" id="pair-condition" class="summary" aria-live="polite"></p>
 <p id="pair-summary" aria-live="polite">3組 / 7 pair-work pairs</p>
 <div class="ranking" id="pair-cards">
 <article class="card ranking-card" data-lyricist="C99991" data-composer="C99992" data-works="3">

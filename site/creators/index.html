@@ -105,7 +105,6 @@
 </div>
 <p class="scroll-hint">左右にスクロールできます</p>
 </section>
-<p>同じ曲に複数のバージョンがある場合も、1曲として数えています。</p>
 <p id="data-status" role="status">読み込み中…</p>
 <div id="ranking-content" hidden>
 <nav class="view-tabs" aria-label="表示する分析" role="tablist">
@@ -116,7 +115,7 @@
     <nav class="category-tabs" aria-label="ランキングカテゴリ" id="category-tabs" role="tablist"></nav>
     <section id="category-panel" role="tabpanel" aria-labelledby="category-lyrics">
       <div class="section-heading">
-        <div><p class="eyebrow">全順位</p><h2 id="ranking-heading">作詞ランキング</h2></div>
+        <div><h2 id="ranking-heading">作詞ランキング</h2></div>
         <p id="summary" class="summary" aria-live="polite"></p>
       </div>
       <div id="ranking" class="ranking" aria-live="polite"></div>
@@ -124,24 +123,25 @@
     </div>
     <section id="pair-panel" class="pair-analysis" role="tabpanel" aria-labelledby="view-pairs-tab" hidden>
       <div class="section-heading">
-        <div><p class="eyebrow">組み合わせ分析</p><h2 id="pair-heading">作詞 × 作曲</h2></div>
-        <p id="pair-summary" class="summary" aria-live="polite"></p>
+        <div><h2 id="pair-heading">作詞 × 作曲</h2></div>
       </div>
       <div class="pair-controls">
-        <label for="pair-creator">作家</label>
         <div class="creator-combobox">
-          <input id="pair-creator" type="text" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="pair-creator-options" autocomplete="off" placeholder="作家名またはIDで検索">
+          <input id="pair-creator" aria-label="作家名またはIDで検索" type="text" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="pair-creator-options" autocomplete="off" placeholder="作家名またはIDで検索">
           <span id="combo-live" class="visually-hidden" role="status" aria-live="polite"></span>
           <ul id="pair-creator-options" class="creator-options" role="listbox" aria-label="作家候補" hidden></ul>
         </div>
+        <div class="pair-actions">
         <fieldset class="pair-roles">
-          <legend>担当役割</legend>
+          <legend class="visually-hidden">担当役割</legend>
           <label><input id="pair-lyrics" type="checkbox" disabled> 作詞</label>
           <label><input id="pair-composition" type="checkbox" disabled> 作曲</label>
         </fieldset>
         <button id="pair-clear" type="button">クリア</button>
+        </div>
       </div>
-      <p id="pair-self-count" class="summary" aria-live="polite" hidden></p>
+      <p id="pair-condition" class="summary" aria-live="polite"></p>
+      <p id="pair-summary" class="summary" aria-live="polite"></p>
       <div id="pair-ranking" class="ranking" aria-live="polite"></div>
     </section>
 </div>

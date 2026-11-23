@@ -172,7 +172,7 @@ function initialize(data, pairError, roleIndex) {
   const pairCreator = document.querySelector("#pair-creator");
   const creatorList = document.querySelector("#pair-creator-options");
   const pairRanking = document.querySelector("#pair-ranking");
-  const pairSelfCount = document.querySelector("#pair-self-count");
+
   let creatorOptions = [];
   let visibleCreatorOptions = [];
   let selectedCreatorId = "";
@@ -264,16 +264,18 @@ function initialize(data, pairError, roleIndex) {
 
   function showPairs() {
     const creatorId = selectedCreatorId;
-    const { entries, self_work_count: selfCount } = analyzeCreatorPairs(pairEntries, creatorId, lyricsCheck.checked, compositionCheck.checked);
+    const { entries } = analyzeCreatorPairs(pairEntries, creatorId, lyricsCheck.checked, compositionCheck.checked);
     document.querySelector("#pair-summary").textContent = pairError || !data.lyrics_composition_pairs
       ? pairError || "組み合わせデータはまだ生成されていません。"
       : entries.length === 0 ? "条件に一致する組み合わせがありません"
       : `${entries.length}組 / 延べ${entries.reduce((total, entry) => total + entry.work_count, 0)}曲（組み合わせごとの曲数の合計）`;
     lyricsCheck.disabled = compositionCheck.disabled = !creatorId;
-    pairSelfCount.hidden = !creatorId;
-    if (!pairSelfCount.hidden) {
-      pairSelfCount.textContent = `自作詞・自作曲：${selfCount}作品`;
-    }
+    document.querySelector("#pair-condition").hidden = Boolean(pairError || !data.lyrics_composition_pairs);
+    const name = creators.get(creatorId);
+    const role = lyricsCheck.checked && compositionCheck.checked ? "作詞・作曲の両方"
+      : lyricsCheck.checked ? "作詞" : compositionCheck.checked ? "作曲" : "作詞、または作曲";
+    document.querySelector("#pair-condition").textContent = creatorId
+      ? `${name}が${role}を担当した組み合わせ` : "すべての作詞・作曲ペアを表示しています。";
     pairRanking.replaceChildren(...entries.map((entry) => createCard(entry, button => showPairDetail(entry, button), true)));
   }
 

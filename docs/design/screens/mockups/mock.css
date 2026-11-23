@@ -108,3 +108,15 @@
 .page-creators #pair-controls > .combobox { flex:1; min-width:0; }
 .page-creators #pair-controls label { flex:initial; min-width:0; }
 @container(max-width:680px) { .page-creators #pair-controls { flex-direction:column; align-items:stretch; } .page-creators .combobox { max-width:none; } }
+
+/* Compact creator filters: input, actions, condition, count, results. */
+.page-creators .pair-controls, .page-creators #pair-controls { display:flex; flex-direction:column; align-items:stretch; gap:8px; }
+.page-creators .creator-combobox, .page-creators #pair-controls > .combobox { width:100%; max-width:480px; flex:initial; }
+.page-creators .pair-actions { display:flex; align-items:center; gap:12px; }
+.page-creators .pair-roles { border:0; padding:0; flex-wrap:nowrap; gap:12px; min-width:0; }
+.page-creators .pair-actions > button { flex:0 0 auto; width:auto; }
+.page-creators #pair-condition { overflow-wrap:anywhere; color:var(--muted); font-size:14px; margin:12px 0 4px; }
+.page-creators #pair-summary { margin:4px 0 12px; }
+.page-creators #pair-heading { margin-bottom:12px; }
+
+.page-creators .creator-options, .page-creators .combobox ul { position:absolute; top:auto; bottom:100%; margin:0 0 4px; max-height:240px; overflow:auto; }

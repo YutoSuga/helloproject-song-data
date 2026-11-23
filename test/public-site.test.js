@@ -42,7 +42,7 @@ test('songs catalog and existing ranking data remain independently connected', a
   assert.match(songs, /src="..\/songs.js"/);
   assert.doesNotMatch(songs, /楽曲一覧・検索機能を準備中/);
   const creators = await read('site/creators/index.html');
-  assert.match(creators, /同じ曲に複数のバージョンがある場合も、1曲として数えています。/);
+  assert.doesNotMatch(creators, /同じ曲に複数のバージョンがある場合も、1曲として数えています。/);
   assert.match(creators, /role="combobox"/);
   assert.doesNotMatch(creators, /creators-combo-status|pair-detail-role/);
   assert.match(await read('site/app.js'), /new URL\("\.\/data\/rankings\/G00001.json", import.meta.url\)/);
@@ -92,4 +92,15 @@ test('creator filter controls preserve accessible combobox and explicit checkbox
   const app = await read('site/app.js');
   assert.match(app, /event.isComposing/);
   assert.match(app, /kind: "creator", creatorId: entry.creator_id/);
+});
+
+
+test('creator UI keeps only useful headings and orders condition before result count', async () => {
+  for (const file of ['site/creators/index.html', 'docs/design/screens/mockups/creators.html']) {
+    const html = await read(file);
+    assert.doesNotMatch(html, /自作詞・自作曲：|id="(?:pair-self-count|self-count)"|全順位|class="eyebrow"/);
+    assert.match(html, /aria-label="作家名またはIDで検索"/);
+    assert(html.indexOf('id="pair-condition"') < html.indexOf('id="pair-summary"'));
+    assert(html.indexOf('クリア</button>') < html.indexOf('id="pair-condition"'));
+  }
 });

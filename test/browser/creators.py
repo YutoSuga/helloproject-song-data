@@ -1,6 +1,6 @@
 """Optional Chromium checks: python test/browser/creators.py [repository HTTP URL].
 Requires Python Playwright and Chromium; no application dependency is added.
-Serve the repository root (not only site/) to include the HTML mock.
+Serve a preview containing site/ and docs/design/screens/mockups/; exclude repository internals.
 """
 import json
 import os
@@ -79,7 +79,7 @@ with sync_playwright() as p:
         options.first.click()
         check(page.locator(query).evaluate('(el) => el === document.activeElement'), 'pointer selection keeps focus')
         page.locator(query).click()
-        page.locator('#pair-panel h2').click()
+        page.locator('#pair-summary').click()
         check(page.locator(query).get_attribute('aria-expanded') == 'false', 'outside closes options')
         page.reload()
         if not mock: page.wait_for_selector('#ranking-content:visible')
