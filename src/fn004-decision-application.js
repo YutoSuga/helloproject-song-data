@@ -4,6 +4,7 @@ import {randomUUID} from 'node:crypto';
 import {candidateSourceProjection,candidateFingerprint,createDecisionScope,validateCandidateSource} from './fn004-decision-core.js';
 import { setTimeout as delay } from 'node:timers/promises';
 import { canonicalJson } from './canonical-hash.js';
+import { equivalentCanonicalRows, plannedRowTemplate } from './fn004-plan-primitives.js';
 import { CANONICAL_SCHEMA, ID_PATTERNS } from './canonical-schema.js';
 import { createPersistence, RepositoryError } from './persistence.js';
 import { createFn004Repository } from './fn004-repository.js';
@@ -16,7 +17,7 @@ const same = (a,b) => canonicalJson(a) === canonicalJson(b);
 const singular = { works:'work',songs:'song',creators:'creator',artists:'artist',releases:'release',members:'member' };
 
 // Readonly identity assertions and constraints against one gate-protected
-// canonical snapshot. No ID allocation, hypothetical rows or canonical writes.
+// canonical snapshot. No ID allocation or canonical writes.
 export function validateDecisionCanonicalContext(revision, tables) {
   function walk(v) {
     if (!v || typeof v !== 'object') return;
@@ -45,7 +46,9 @@ export function validateDecisionCanonicalContext(revision, tables) {
     }
   }
   for (const [table,judgments] of Object.entries(revision.relations)) {
-    const schema = CANONICAL_SCHEMA[table], pk = new Set(), orders = new Set();
+    const schema = CANONICAL_SCHEMA[table];
+    const idColumns = schema.columns.filter(column => column.type === 'id');
+    const existingByKey = new Map(), decisionKeys = new Set(), orders = new Set();
     const value = (row,col,canonical) => {
       const spec = schema.columns.find(c => c.name === col);
       if (!canonical) return spec.type === 'id' ? key(row[singular[spec.target]]) : row[col];
@@ -55,7 +58,25 @@ export function validateDecisionCanonicalContext(revision, tables) {
     };
     for (const [rows,canonical] of [[tables[table],true],[judgments,false]]) for (const row of rows) {
       const tuple = schema.primaryKey.map(col => value(row,col,canonical));
-      const id = canonicalJson(tuple); if (pk.has(id)) fail('DECISION_INCOMPLETE','Relation already exists'); pk.add(id);
+      const id = canonicalJson(tuple);
+      if (canonical) {
+        if (existingByKey.has(id)) fail('DECISION_INCOMPLETE','Duplicate canonical relation PK');
+        existingByKey.set(id, row);
+      } else {
+        if (decisionKeys.has(id)) fail('DECISION_INCOMPLETE','Duplicate relation PK in Decision');
+        decisionKeys.add(id);
+        const existing = existingByKey.get(id);
+        if (existing) {
+          // A track can match by position while referring to a new song.
+          if (idColumns.some(column => !row[singular[column.target]]?.existing_id)) {
+            fail('DECISION_INCOMPLETE','Existing relation content differs');
+          }
+          const requested = plannedRowTemplate(table, row, []);
+          if (!equivalentCanonicalRows(table, requested, existing)) fail('DECISION_INCOMPLETE','Existing relation content differs');
+          // The canonical row already occupies this order.
+          continue;
+        }
+      }
       for (const order of schema.orders ?? []) {
         const tuple = [...order.scope.map(col => value(row,col,canonical)), value(row,order.column,canonical)];
         if (tuple.includes(null)) continue;
