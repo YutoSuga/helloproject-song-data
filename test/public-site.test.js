@@ -79,3 +79,17 @@ test('More mock mirrors the data-driven policy without repeating the recording e
   assert.equal(paragraphs.filter(paragraph => paragraph.includes('Instrumental')).length, 1);
   assert.doesNotMatch(section, /<h3>収録対象<\/h3>|商品（release）/);
 });
+
+
+test('creator filter controls preserve accessible combobox and explicit checkbox state', async () => {
+  const html = await read('site/creators/index.html');
+  assert.doesNotMatch(html, /pair-direction/);
+  for (const id of ['pair-lyrics', 'pair-composition']) {
+    assert.match(html, new RegExp(`id="${id}" type="checkbox" disabled`));
+  }
+  assert.match(html, /id="pair-clear" type="button">クリア/);
+  assert.match(html, /role="combobox"[^>]+aria-controls="pair-creator-options"/);
+  const app = await read('site/app.js');
+  assert.match(app, /event.isComposing/);
+  assert.match(app, /kind: "creator", creatorId: entry.creator_id/);
+});

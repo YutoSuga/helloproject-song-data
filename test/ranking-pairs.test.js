@@ -65,14 +65,14 @@ test("pairs use same-song Cartesian product, work deduplication and scoped roles
 
 test("creator views work in both directions and self count comes from the same pair", () => {
   const entries = aggregateCreatorRankings(fixture(), "G1").lyrics_composition_pairs.entries;
-  assert.deepEqual(analyzeCreatorPairs(entries, "B", "lyricist").entries.map(({ composer_creator_id, work_count, rank }) =>
+  assert.deepEqual(analyzeCreatorPairs(entries, "B", true, false).entries.map(({ composer_creator_id, work_count, rank }) =>
     [composer_creator_id, work_count, rank]), [["C", 2, 1], ["D", 2, 1]]);
-  assert.deepEqual(analyzeCreatorPairs(entries, "C", "composer").entries.map(({ lyricist_creator_id, work_count, rank }) =>
+  assert.deepEqual(analyzeCreatorPairs(entries, "C", false, true).entries.map(({ lyricist_creator_id, work_count, rank }) =>
     [lyricist_creator_id, work_count, rank]), [["A", 2, 1], ["B", 2, 1]]);
-  assert.deepEqual(analyzeCreatorPairs(entries, "A", "lyricist").entries.filter(({ composer_creator_id }) => composer_creator_id === "A")
+  assert.deepEqual(analyzeCreatorPairs(entries, "A", true, false).entries.filter(({ composer_creator_id }) => composer_creator_id === "A")
     .map(({ composer_creator_id, work_count, rank }) => [composer_creator_id, work_count, rank]), [["A", 1, 2]]);
-  assert.equal(analyzeCreatorPairs(entries, "A", "composer").self_work_count, pair(entries, "A", "A").work_count);
-  assert.equal(analyzeCreatorPairs(entries, "B", "lyricist").self_work_count, 0);
+  assert.equal(analyzeCreatorPairs(entries, "A", false, true).self_work_count, pair(entries, "A", "A").work_count);
+  assert.equal(analyzeCreatorPairs(entries, "B", true, false).self_work_count, 0);
 });
 
 test("artistId is a parameter, including multiple primary but excluding other artists' songs", () => {
@@ -87,5 +87,30 @@ test("creator view uses competition ranks 1, 2, 2, 4", () => {
   const entries = [5, 3, 3, 2].map((work_count, index) => ({
     lyricist_creator_id: "A", composer_creator_id: `P${index}`, work_count
   }));
-  assert.deepEqual(analyzeCreatorPairs(entries, "A", "lyricist").entries.map(({ rank }) => rank), [1, 2, 2, 4]);
+  assert.deepEqual(analyzeCreatorPairs(entries, "A", true, false).entries.map(({ rank }) => rank), [1, 2, 2, 4]);
+});
+
+
+test("checkbox filters use pair IDs, preserve evidence and never join recordings", () => {
+  const data = fixture();
+  // B gains composition on S2, but has lyrics only on S1 of the same W1.
+  data.songCreators.push({ song_id: "S2", creator_id: "B", role: "composition" });
+  const entries = aggregateCreatorRankings(data, "G1").lyrics_composition_pairs.entries;
+  const snapshot = structuredClone(entries);
+  for (const lyrics of [false, true]) for (const composition of [false, true]) {
+    assert.deepEqual(analyzeCreatorPairs(entries, "", lyrics, composition).entries, entries);
+  }
+  const or = analyzeCreatorPairs(entries, "B").entries;
+  assert(or.some(e => e.lyricist_creator_id === "B"));
+  assert(or.some(e => e.composer_creator_id === "B"));
+  assert.equal(analyzeCreatorPairs(entries, "B", true, true).entries.length, 0);
+  assert.equal(analyzeCreatorPairs(entries, "A", true, true).entries.length, 1);
+  assert.deepEqual(analyzeCreatorPairs(entries, "A", true, true).entries[0].works.map(w => w.work_id), ["W2"]);
+  assert.equal(analyzeCreatorPairs(entries, "missing").entries.length, 0);
+  assert.deepEqual(entries, snapshot);
+  for (const entry of or) {
+    const original = entries.find(e => e.lyricist_creator_id === entry.lyricist_creator_id && e.composer_creator_id === entry.composer_creator_id);
+    assert.equal(entry.work_count, original.work_count);
+    assert.equal(entry.works, original.works);
+  }
 });

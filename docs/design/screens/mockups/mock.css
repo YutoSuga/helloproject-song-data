@@ -93,3 +93,18 @@
   border-top: 1px solid var(--line);
   padding-top: 16px;
 }
+
+
+.page-creators .pair-roles { display:flex; flex-wrap:wrap; gap:12px; margin:0; padding:4px 12px; border:1px solid var(--line); border-radius:8px; }
+.page-creators .pair-roles legend { font-size:14px; }
+.page-creators .pair-roles label { display:flex; align-items:center; gap:6px; min-height:44px; margin:0; }
+.page-creators .pair-roles input { width:auto; min-height:0; margin:0; padding:0; }
+.page-creators #evidence-works li { overflow-wrap:anywhere; }
+.page-creators #evidence-works li > span { min-width:0; max-width:100%; }
+.page-creators .role-badges { display:inline-flex; flex-wrap:wrap; gap:4px; margin-inline-start:8px; vertical-align:baseline; }
+.page-creators .role-badge { display:inline-block; font-size:13px; padding:1px 7px; border:1px solid var(--line); border-radius:6px; background:var(--soft); color:var(--accent); }
+
+.page-creators #pair-controls { align-items:center; }
+.page-creators #pair-controls > .combobox { flex:1; min-width:0; }
+.page-creators #pair-controls label { flex:initial; min-width:0; }
+@container(max-width:680px) { .page-creators #pair-controls { flex-direction:column; align-items:stretch; } .page-creators .combobox { max-width:none; } }

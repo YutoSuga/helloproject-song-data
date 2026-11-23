@@ -128,18 +128,18 @@
         <p id="pair-summary" class="summary" aria-live="polite"></p>
       </div>
       <div class="pair-controls">
-        <label for="pair-direction">作家の担当</label>
-        <select id="pair-direction">
-          <option value="all">全組み合わせ</option>
-          <option value="lyricist">作詞者として選ぶ</option>
-          <option value="composer">作曲者として選ぶ</option>
-        </select>
         <label for="pair-creator">作家</label>
         <div class="creator-combobox">
-          <input id="pair-creator" type="text" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="pair-creator-options" autocomplete="off" placeholder="担当を選択してください" disabled>
+          <input id="pair-creator" type="text" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="pair-creator-options" autocomplete="off" placeholder="作家名またはIDで検索">
           <span id="combo-live" class="visually-hidden" role="status" aria-live="polite"></span>
           <ul id="pair-creator-options" class="creator-options" role="listbox" aria-label="作家候補" hidden></ul>
         </div>
+        <fieldset class="pair-roles">
+          <legend>担当役割</legend>
+          <label><input id="pair-lyrics" type="checkbox" disabled> 作詞</label>
+          <label><input id="pair-composition" type="checkbox" disabled> 作曲</label>
+        </fieldset>
+        <button id="pair-clear" type="button">クリア</button>
       </div>
       <p id="pair-self-count" class="summary" aria-live="polite" hidden></p>
       <div id="pair-ranking" class="ranking" aria-live="polite"></div>

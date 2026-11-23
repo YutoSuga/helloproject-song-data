@@ -1,4 +1,5 @@
 import { analyzeCreatorPairs } from "./pair-analysis.js";
+import { buildCreatorRoleIndex, ROLE_LABELS } from "./creator-roles.js";
 
 const status = document.querySelector("#data-status");
 try {
@@ -10,25 +11,34 @@ try {
     const category = data.categories?.[id];
     if (typeof category?.label !== "string" || !Array.isArray(category.entries)) throw new Error("Invalid ranking category");
     for (const entry of category.entries) {
-      if (typeof entry.creator_name !== "string" || typeof entry.creator_id !== "string" ||
+      if (typeof entry.creator_name !== "string" || typeof entry.creator_id !== "string" || !entry.creator_id.trim() ||
           !Number.isInteger(entry.rank) || !Number.isInteger(entry.work_count) || !Array.isArray(entry.works) ||
-          entry.works.some(work => !work || typeof work.title !== "string")) throw new Error("Invalid ranking entry");
+          entry.works.some(work => !work || typeof work.title !== "string" || typeof work.work_id !== "string" || !work.work_id.trim())) throw new Error("Invalid ranking entry");
     }
   }
   let pairError = "";
   if (data.lyrics_composition_pairs && (!Array.isArray(data.lyrics_composition_pairs.entries) ||
       data.lyrics_composition_pairs.entries.some(entry => !entry || !Number.isInteger(entry.work_count) || !Number.isInteger(entry.rank) ||
-      typeof entry.lyricist_creator_id !== "string" || typeof entry.composer_creator_id !== "string" ||
+      typeof entry.lyricist_creator_id !== "string" || !entry.lyricist_creator_id.trim() ||
+      typeof entry.composer_creator_id !== "string" || !entry.composer_creator_id.trim() ||
       typeof entry.lyricist_name !== "string" || typeof entry.composer_name !== "string" ||
       !Array.isArray(entry.works) || entry.works.some(work => !work || typeof work.title !== "string")))) pairError = "組み合わせデータを表示できません。";
-  initialize(data, pairError);
+  const roleIndex = buildCreatorRoleIndex(data.categories);
+  for (const category of Object.values(data.categories)) {
+    for (const entry of category.entries) {
+      if (entry.works.some(work => !roleIndex.get(entry.creator_id)?.has(work.work_id))) {
+        throw new Error("Missing creator role evidence");
+      }
+    }
+  }
+  initialize(data, pairError, roleIndex);
   status.hidden = true;
   document.querySelector("#ranking-content").hidden = false;
 } catch {
   status.textContent = "データを表示できません。時間をおいて再読み込みしてください。";
 }
 
-function initialize(data, pairError) {
+function initialize(data, pairError, roleIndex) {
   const tabs = document.querySelector("#category-tabs");
   const ranking = document.querySelector("#ranking");
   const heading = document.querySelector("#ranking-heading");
@@ -62,23 +72,39 @@ function initialize(data, pairError) {
   viewTabs.forEach((tab, index) => tab.addEventListener("click", () => selectView(index === 0 ? "ranking" : "pairs")));
   wireTabs(viewTabs);
   selectView("ranking");
-  function showWorks(name, text, works, button) {
+  function showWorks(name, text, works, button, context) {
     opener = button;
     document.querySelector("#detail-heading").textContent = name;
     document.querySelector("#detail-summary").textContent = text;
     document.querySelector("#work-list").replaceChildren(...works.map(work => {
       const li = document.createElement("li");
-      li.textContent = work.title;
+      const title = document.createElement("span");
+      title.textContent = work.title;
+      li.append(title);
+      if (context.kind === "creator") {
+        const roles = roleIndex.get(context.creatorId)?.get(work.work_id);
+        if (!roles?.size) throw new Error("Missing creator role evidence");
+        const badges = document.createElement("span");
+        badges.className = "role-badges";
+        for (const [role, label] of Object.entries(ROLE_LABELS)) {
+          if (!roles.has(role)) continue;
+          const badge = document.createElement("span");
+          badge.className = "role-badge";
+          badge.textContent = label;
+          badges.append(badge);
+        }
+        li.append(badges);
+      }
       return li;
     }));
     detail.showModal();
     document.querySelector("#close-detail").focus();
   }
   function showDetail(entry, category, button) {
-    showWorks(entry.creator_name, `${category.label}・${entry.work_count}曲`, entry.works, button);
+    showWorks(entry.creator_name, `${category.label}・${entry.work_count}曲`, entry.works, button, { kind: "creator", creatorId: entry.creator_id });
   }
   function showPairDetail(entry, button) {
-    showWorks(`${entry.lyricist_name} × ${entry.composer_name}`, `作詞 × 作曲・${entry.work_count}曲`, entry.works, button);
+    showWorks(`${entry.lyricist_name} × ${entry.composer_name}`, `作詞 × 作曲・${entry.work_count}曲`, entry.works, button, { kind: "pair" });
   }
   function createCard(entry, action, pair = false) {
     const card = document.createElement("article");
@@ -141,7 +167,8 @@ function initialize(data, pairError) {
     }
   });
   const pairEntries = pairError ? [] : data.lyrics_composition_pairs?.entries ?? [];
-  const pairDirection = document.querySelector("#pair-direction");
+  const lyricsCheck = document.querySelector("#pair-lyrics");
+  const compositionCheck = document.querySelector("#pair-composition");
   const pairCreator = document.querySelector("#pair-creator");
   const creatorList = document.querySelector("#pair-creator-options");
   const pairRanking = document.querySelector("#pair-ranking");
@@ -187,6 +214,7 @@ function initialize(data, pairError) {
     if (visibleCreatorOptions.length === 0) {
       const empty = document.createElement("li");
       empty.className = "creator-option-empty";
+      empty.setAttribute("role", "presentation");
       empty.textContent = "該当する作家がありません";
       creatorList.append(empty);
     }
@@ -217,51 +245,60 @@ function initialize(data, pairError) {
     showPairs();
   }
 
-  function selectPairDirection() {
-    const direction = pairDirection.value;
-    const previousId = selectedCreatorId;
-    const creators = new Map();
-    if (direction !== "all") {
-      for (const entry of pairEntries) {
-        const id = direction === "lyricist" ? entry.lyricist_creator_id : entry.composer_creator_id;
-        const name = direction === "lyricist" ? entry.lyricist_name : entry.composer_name;
-        creators.set(id, name);
-      }
-    }
-    creatorOptions = [...creators].sort(([left], [right]) => left.localeCompare(right, "en"));
-    selectedCreatorId = direction === "all" ? previousId : creators.has(previousId) ? previousId : "";
-    pairCreator.disabled = direction === "all";
-    pairCreator.placeholder = direction === "all" ? "担当を選択してください" : "作家名またはIDで検索";
-    const selected = creatorOptions.find(([id]) => id === selectedCreatorId);
-    pairCreator.value = selected ? creatorLabel(selected) : "";
+  const creators = new Map();
+  for (const entry of pairEntries) {
+    creators.set(entry.lyricist_creator_id, entry.lyricist_name);
+    creators.set(entry.composer_creator_id, entry.composer_name);
+  }
+  creatorOptions = [...creators].sort(([left], [right]) => left.localeCompare(right, "en"));
+
+  function resetSelection() {
+    selectedCreatorId = "";
+    pairCreator.value = "";
+    lyricsCheck.checked = false;
+    compositionCheck.checked = false;
     closeCreatorOptions(false);
+    document.querySelector("#combo-live").textContent = "作家選択を解除しました。";
     showPairs();
   }
 
   function showPairs() {
-    const direction = pairDirection.value;
     const creatorId = selectedCreatorId;
-    const { entries, self_work_count: selfCount } = analyzeCreatorPairs(pairEntries, creatorId, direction);
+    const { entries, self_work_count: selfCount } = analyzeCreatorPairs(pairEntries, creatorId, lyricsCheck.checked, compositionCheck.checked);
     document.querySelector("#pair-summary").textContent = pairError || !data.lyrics_composition_pairs
       ? pairError || "組み合わせデータはまだ生成されていません。"
-      : direction !== "all" && !creatorId ? "作家を検索・選択してください。"
+      : entries.length === 0 ? "条件に一致する組み合わせがありません"
       : `${entries.length}組 / 延べ${entries.reduce((total, entry) => total + entry.work_count, 0)}曲（組み合わせごとの曲数の合計）`;
-    pairSelfCount.hidden = direction === "all" || !creatorId;
+    lyricsCheck.disabled = compositionCheck.disabled = !creatorId;
+    pairSelfCount.hidden = !creatorId;
     if (!pairSelfCount.hidden) {
       pairSelfCount.textContent = `自作詞・自作曲：${selfCount}作品`;
     }
     pairRanking.replaceChildren(...entries.map((entry) => createCard(entry, button => showPairDetail(entry, button), true)));
   }
 
-  pairDirection.addEventListener("change", selectPairDirection);
+  lyricsCheck.addEventListener("change", showPairs);
+  compositionCheck.addEventListener("change", showPairs);
+  document.querySelector("#pair-clear").addEventListener("click", resetSelection);
   pairCreator.addEventListener("focus", () => {
     if (!pairCreator.disabled) renderCreatorOptions();
   });
   pairCreator.addEventListener("click", () => {
     if (!pairCreator.disabled && creatorList.hidden) renderCreatorOptions();
   });
-  pairCreator.addEventListener("input", () => renderCreatorOptions(pairCreator.value));
+  pairCreator.addEventListener("input", () => {
+    if (pairCreator.value === "") resetSelection();
+    else renderCreatorOptions(pairCreator.value);
+  });
+  let composing = false;
+  pairCreator.addEventListener("compositionstart", () => { composing = true; });
+  pairCreator.addEventListener("compositionend", () => { composing = false; });
   pairCreator.addEventListener("keydown", (event) => {
+    if (composing || event.isComposing || event.keyCode === 229) return;
+    if (event.key === "Tab") {
+      closeCreatorOptions();
+      return;
+    }
     if (event.key === "Escape") {
       if (!creatorList.hidden) {
         event.preventDefault();
@@ -292,7 +329,7 @@ function initialize(data, pairError) {
   if (pairError || !data.lyrics_composition_pairs) {
     document.querySelector(".pair-controls").hidden = true;
   }
-  selectPairDirection();
+  resetSelection();
 
   document.addEventListener("pointerdown", (event) => {
     if (!document.querySelector(".creator-combobox").contains(event.target)) closeCreatorOptions();

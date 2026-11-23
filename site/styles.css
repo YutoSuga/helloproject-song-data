@@ -504,7 +504,7 @@ use main content width. */
 .pair-controls label {
   margin:0
 }
-.pair-controls input {
+.pair-controls input[type="text"] {
   width:100%
 }
 .pair-controls select {
@@ -569,8 +569,8 @@ dialog:not([open]) {
   }
 }
 
-/* Only the unfiltered pair list needs spacing; empty results add no margin. */
-#pair-panel:has(#pair-direction option[value="all"]:checked) #pair-ranking:not(:empty) {
+/* Empty results add no list margin. */
+#pair-ranking:not(:empty) {
   margin-top: 20px;
 }
 
@@ -674,3 +674,13 @@ dialog:not([open]) {
   border-top: 1px solid var(--line);
   padding-top: 16px;
 }
+
+/* Creator filters and evidence badges stay within their own screen. */
+.page-creators .pair-roles { display:flex; flex-wrap:wrap; gap:12px; margin:0; padding:4px 12px; border:1px solid var(--line); border-radius:8px; }
+.page-creators .pair-roles legend { font-size:14px; }
+.page-creators .pair-roles label { display:flex; align-items:center; gap:6px; min-height:44px; margin:0; }
+.page-creators .pair-roles input { width:auto; min-height:0; margin:0; padding:0; }
+.page-creators #work-list li { overflow-wrap:anywhere; }
+.page-creators #work-list li > span { min-width:0; max-width:100%; }
+.page-creators .role-badges { display:inline-flex; flex-wrap:wrap; gap:4px; margin-inline-start:8px; vertical-align:baseline; }
+.page-creators .role-badge { display:inline-block; font-size:13px; padding:1px 7px; border:1px solid var(--line); border-radius:6px; background:var(--soft); color:var(--accent); }
