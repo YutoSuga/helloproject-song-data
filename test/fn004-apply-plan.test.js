@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { planFixture,withNewEntities } from './fixtures/plan-input.js';
+import { planFixture,withNewEntities,csvRow } from './fixtures/plan-input.js';
 import { generatePlanFromInput,diagnoseUnsupportedRequests } from '../src/fn004-plan-generate.js';
 import { validateApplyPlan } from '../src/fn004-plan-validator.js';
 import { canonicalJson,hashCanonicalJson } from '../src/canonical-hash.js';
@@ -26,18 +26,24 @@ import { CANONICAL_TABLES } from '../src/canonical-schema.js';
 import { currentIdMaxima } from '../src/fn004-id-audit.js';
 import { createAuditPayload,createBootstrapRecords,DECLARATION_STATEMENT,hashState } from '../src/fn004-state.js';
 import { readCanonicalSnapshot } from '../src/canonical-snapshot.js';
+import { randomUUID } from 'node:crypto';
 import { auditGitIds } from '../src/fn004-git-audit.js';
+import { createDecisionService, validateDecisionCanonicalContext } from '../src/fn004-decision-application.js';
+import { plannedRowTemplate } from '../src/fn004-plan-primitives.js';
 import { createApplyPlanService } from '../src/fn004-plan-application.js';
 import { createFn004Repository } from '../src/fn004-repository.js';
 import { withCanonicalGate } from '../src/fn004-gate.js';
 import { buildDecisionRegistry } from '../src/fn004-decision-lifecycle.js';
 const execute=promisify(execFile);
-async function runtimeFixture(t){const root=await fs.mkdtemp(join(tmpdir(),'fn004-plan-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.mkdir(join(root,'data'));await fs.mkdir(join(root,'staging'));const f=planFixture();
+async function runtimeFixture(t, { existingTrack = false } = {}){const root=await fs.mkdtemp(join(tmpdir(),'fn004-plan-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.mkdir(join(root,'data'));await fs.mkdir(join(root,'staging'));const f=planFixture();
+  if (existingTrack) {
+    f.snapshot.tables.release_tracks.push(plannedRowTemplate('release_tracks', f.decision.relations.release_tracks[0], []));
+  }
   for(const table of CANONICAL_TABLES)await fs.writeFile(join(root,table.path),[table.columns.map(c=>c.name).join(','),...f.snapshot.tables[table.name].map(row=>table.columns.map(c=>row[c.name]).join(','))].join('\n')+'\n');
   for(const args of [['init','-q','-b','main'],['add','data'],['-c','user.name=Test','-c','user.email=test@example.invalid','commit','-qm','canonical'],['update-ref','refs/remotes/origin/main','HEAD']])await execute('git',['-C',root,...args]);
   const snapshot=await readCanonicalSnapshot(root),git=await auditGitIds(root),max=currentIdMaxima(snapshot),audit_payload=createAuditPayload({...snapshot,current_maxima:max},git,{schema_version:1,namespaces:max,statement:DECLARATION_STATEMENT,evidence:[]});
   const {record:bootstrap,state}=createBootstrapRecords({audit_payload,canonical_manifest:snapshot.manifest,repository_instance_id:f.state.repository_instance_id,initialized_at:'2026-10-25T00:00:00Z',actor:{id:'local:test',assurance:'local_process'},expected_audit_hash:hashCanonicalJson(audit_payload)});
-  for(const [name,value]of [['fn004-bootstrap',bootstrap],['fn004-state',state],['song-candidates',f.candidates],['decisions',f.store]])await fs.writeFile(join(root,`staging/${name}.json`),JSON.stringify(value));
+  for(const [name,value]of [['fn004-bootstrap',bootstrap],['fn004-state',state],['song-candidates',f.candidates],['decisions',existingTrack ? {schema_version:1,revisions:[f.store.revisions[0]]} : f.store]])await fs.writeFile(join(root,`staging/${name}.json`),JSON.stringify(value));
   return {...f,root,bootstrap,state,snapshot,service:createApplyPlanService({root})};
 }
 test('runtime generate/save/load/check is immutable, no-clobber and leaves protected inputs unchanged',async t=>{const f=await runtimeFixture(t),names=['fn004-bootstrap','fn004-state','song-candidates','decisions'],before=await Promise.all(names.map(n=>fs.readFile(join(f.root,`staging/${n}.json`))));
@@ -97,4 +103,74 @@ test('unsupported diagnostic operations cannot be persisted as formal Plan artif
   const error={...diagnostic.diagnostics[0],target:op.operation_id};p.payload.validation.diagnostics.push(error);p.payload.validation.diagnostics.sort((a,b)=>canonicalJson(a)<canonicalJson(b)?-1:canonicalJson(a)>canonicalJson(b)?1:0);
   const {planApplicability}=await import('../src/fn004-plan-target.js');p.payload.applicability=planApplicability(p.payload.operations,p.payload.validation);rehash(p);
   assert.throws(()=>validateApplyPlan(p),{code:'PLAN_INTEGRITY_CONFLICT'});await assert.rejects(f.service.saveApplyPlan(p),{code:'PLAN_INTEGRITY_CONFLICT'});
+});
+
+test('formal Decision confirmation reuses an exact canonical track and Plan classifies it as no_op', async t => {
+  const f = await runtimeFixture(t, { existingTrack: true });
+  const draft = f.store.revisions[0];
+  const decisions = createDecisionService({ root: f.root });
+  const { revision } = await decisions.confirmDecisionHead({
+    decision_id: draft.decision_id,
+    revision: draft.revision,
+    expected_head: draft.content_hash,
+    actor: draft.actor,
+    mutation_key: randomUUID(),
+  });
+  assert.equal(revision.status, 'confirmed');
+  const plan = await f.service.generateApplyPlan({ decision_id: revision.decision_id });
+  assert.equal(plan.payload.applicability.applicable, true);
+  assert.equal(plan.payload.operations.find(op => op.table === 'release_tracks').classification, 'no_op');
+});
+
+test('Decision compares all v1 relation columns with the same integer handling as Plan', () => {
+  const f = planFixture();
+  const evidence_refs = ['ev_source'];
+  const song = f.decision.candidate_bindings[0].song;
+  const ref = existing_id => ({ existing_id, assertions: {}, evidence_refs });
+  const source_url = 'https://example.org/song';
+  f.snapshot.tables.creators.push(csvRow('creators', { creator_id: 'C00001', name: 'Author' }));
+  const cases = [
+    ['release_tracks', f.decision.relations.release_tracks[0], 'disc_number', 'track_title'],
+    ['song_artists', { song, artist: ref('G00001'), role: 'primary', credit_order: 1, source_url }, 'credit_order', 'source_url'],
+    ['song_creators', { song, creator: ref('C00001'), role: 'composition', credit_name: 'Author', credit_order: 1, source_url }, 'credit_order', 'credit_name'],
+    ['song_performers', { song, member: ref('P00001'), performer_order: 1, notes: null, source_url }, 'performer_order', 'notes'],
+  ];
+  for (const [table, requested, order, textField] of cases) {
+    const existing = plannedRowTemplate(table, requested, []);
+    const tables = { ...f.snapshot.tables, [table]: [{ ...existing, [order]: '01' }] };
+    const decision = { ...f.decision, relations: { [table]: [requested] } };
+    assert.doesNotThrow(() => validateDecisionCanonicalContext(decision, tables), table);
+    if (table === 'release_tracks') {
+      const newSong = { ...requested, song: { local_ref: 'song:s1' } };
+      assert.throws(() => validateDecisionCanonicalContext({ ...decision, relations: { release_tracks: [newSong] } }, tables),
+        { code: 'DECISION_INCOMPLETE', message: 'Existing relation content differs' });
+    }
+    tables[table][0][textField] = textField === 'source_url' ? 'https://example.org/other' : 'different';
+    assert.throws(() => validateDecisionCanonicalContext(decision, tables),
+      { code: 'DECISION_INCOMPLETE', message: 'Existing relation content differs' }, table);
+  }
+});
+
+test('Decision rejects duplicate keys and orders even when one relation exactly matches canonical', () => {
+  const f = planFixture();
+  const requested = {
+    song: f.decision.candidate_bindings[0].song,
+    creator: { existing_id: 'C00001', assertions: {}, evidence_refs: ['ev_source'] },
+    role: 'composition', credit_name: 'Author', credit_order: 1, source_url: 'https://example.org/song',
+  };
+  const other = { ...requested, creator: { local_ref: 'creator:c1' } };
+  f.snapshot.tables.creators.push(csvRow('creators', { creator_id: 'C00001', name: 'Author' }));
+  const row = plannedRowTemplate('song_creators', requested, []);
+  const decision = (...relations) => ({ ...f.decision, relations: { song_creators: relations } });
+  const tables = f.snapshot.tables;
+  tables.song_creators = [row];
+  for (const rows of [[requested, other], [other, requested]]) {
+    assert.throws(() => validateDecisionCanonicalContext(decision(...rows), tables),
+      { code: 'DECISION_INCOMPLETE', message: 'Relation order conflicts with canonical' });
+  }
+  assert.throws(() => validateDecisionCanonicalContext(decision(requested, requested), tables),
+    { code: 'DECISION_INCOMPLETE', message: 'Duplicate relation PK in Decision' });
+  tables.song_creators = [];
+  assert.throws(() => validateDecisionCanonicalContext(decision(requested, other), tables),
+    { code: 'DECISION_INCOMPLETE', message: 'Relation order conflicts with canonical' });
 });
