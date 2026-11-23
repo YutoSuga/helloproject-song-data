@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Decision 確認
 
-基準は main `cd46677e62c89814b99c751aedaf05515f9a73cd`。本書は確認要求を受けてから保存するまでの判定とデータ操作を規定する。型・正規化・ハッシュの完全定義は [判断モデル](FN-004-判断モデル.md)、操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`。本書は確認要求を受けてから保存するまでの判定とデータ操作を規定する。型・正規化・ハッシュの完全定義は [判断モデル](FN-004-判断モデル.md)、操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -75,7 +75,7 @@
 2. **対象と再送を判定**。全 revision のスキーマ・hash・順序・遷移を検証して registry を構築。head ラッパーは指定 ID の最新 revision と `revision/expected_head` を比較し、存在しなければ `PERSISTENCE_NOT_FOUND`、違えば `DECISION_HEAD_CONFLICT`。一致した draft の content と identity で正式コマンドを組む。直接コマンドは意味上の配列を整列し、`schema_version=1, action=confirm` とキーを除く正規化済み入力の JCS/SHA-256 を求める。同じ mutation key・同じ request hash が既にあれば、保存済み revision を `replayed:true` で返す。キーが同じで hash が違えば `INTEGRITY_CONFLICT`。新規要求は base と現在 head、source と head identity、scope と保存 scope、content と保存内容を照合し、現在 draft なら3へ。OCC 不一致は `DECISION_HEAD_CONFLICT`、改変した確認 content は `INTEGRITY_CONFLICT`、型・状態・置換失効は `DECISION_INVALID`。初回確認で置換先 identity が現在の有効版と違えば `DECISION_HEAD_CONFLICT`。
 3. **Candidate の元観測を固定**。schema v1 の現 Candidate から該当 ID を一意に選び、14項目を投影。欠落項目を既定値に補い、credit の names 順と値は維持する。保存された source facts と現在の投影の双方を JCS/SHA-256 で再計算し、保存 fingerprint と比較。identity 7項目も一致が必要。未存在・複数件・変化は `CANDIDATE_FINGERPRINT_MISMATCH`。一致なら4へ。厳格 JSON の読取・解析自体に失敗した場合は persistence のエラーを返す。
 4. **確認候補を組み立て、業務ルールを照合**。対象 draft と同じ content で revision を +1、status を confirmed とする。未対応要求は `UNSUPPORTED_OPERATION`。各 binding で作品・音源・version_type・audio_identity が決まり、収録参照が同じ音源を指すことを確認。全新規実体が判断から到達可能で、関係が対象音源・収録に結び付くこと、新規音源には primary が1件以上あることを確認。既存参照と新規定義の型、根拠参照、公式 URL と根拠の一致、Decision 内の主キー・順序重複、同名新規同士の区別をチェックする。候補 revision の完全性違反は `DECISION_INCOMPLETE`。追記候補で registry を再構築し他の有効 Decision と Candidate が競合すれば `COMPETING_CONFIRMED_DECISION`。正常なら5へ。
-5. **canonical と照合**。既存 ID は対象 CSV の主キーから検索し、assertions を列値と比較。空欄は null、primary ID は `role=primary` の全 ID をソートした配列と照合。不存在または不一致は `EXISTING_IDENTITY_CONFLICT`。新規実体は name/title 完全一致（音源なら同一作品内）を走査し、一致した各既存 ID について根拠付き `distinct_from` がなければ `DECISION_INCOMPLETE`。関係ごとに canonical の主キー・順序組を登録してから判断側を照合。判断側の ID 項目は existing ID または型付き local_ref、CSV 整数は safe integer として比較、空欄は null。順序組に null がある場合は順序重複を数えない。main は既存関係と同じ主キーを全列の値に関わらず拒否し、異なる主キーの順序衝突も拒否する。いずれも `DECISION_INCOMPLETE`。正常なら6へ。
+5. **canonical と照合**。既存 ID は対象 CSV の主キーから検索し、assertions を列値と比較。空欄は null、primary ID は `role=primary` の全 ID をソートした配列と照合。不存在または不一致は `EXISTING_IDENTITY_CONFLICT`。新規実体は name/title 完全一致（音源なら同一作品内）を走査し、一致した各既存 ID について根拠付き `distinct_from` がなければ `DECISION_INCOMPLETE`。関係ごとに canonical の主キー・順序組を登録してから判断側を照合。判断側の ID 項目は existing ID または型付き local_ref、CSV 整数は safe integer として比較、空欄は null。順序組に null がある場合は順序重複を数えない。既存の主キーに一致した場合は、判断行の全 ID 列が既存 ID で解決できることを要求し、Plan と共通の行テンプレートで全列比較する。null は空文字に変換し、整数列を数値比較、他列を完全一致で比較。全列一致なら既存順序の枠を再利用し、同じ判断内の主キー重複や他の主キーとの順序衝突は引き続き拒否する。ID 未解決、列値差、重複・衝突は `DECISION_INCOMPLETE`。正常なら6へ。
 6. **確認済み revision の公開**。Gate 所有を再確認し、保存済み revision の内容を保持したまま新 revision を加え、ID・revision 順に並べて store 全体を原子的に置換する。正常時は `{revision, replayed:false}`。I/O 失敗はエラーと公開段階を返す。保存エラーでも rename 後の同期失敗なら新 revision が既に見える可能性がある。
 
 ## 5. 登録・更新仕様
@@ -107,7 +107,7 @@
 | `INTEGRITY_CONFLICT` | 同じ mutation key の内容差、直接確認コマンドと保存 draft の内容差 | 保存なし | 元要求の identity・内容を照合 |
 | `CANDIDATE_FINGERPRINT_MISMATCH` | 対象の不在・重複・元観測変更 | 保存なし | 現観測を人間が再確認して明示的に draft に採用 |
 | `EXISTING_IDENTITY_CONFLICT` | 既存 ID が不在、または assertions 不一致 | 保存なし | 正しい既存実体を判断し直す |
-| `DECISION_INCOMPLETE` | 必須判断不足、同名区別不足、関係 PK/順序衝突等 | 保存なし | 欠けた根拠や判断を修正。既存収録行の同一キー制約は8節 |
+| `DECISION_INCOMPLETE` | 必須判断不足、同名区別不足、関係 PK/順序衝突等 | 保存なし | 欠けた根拠や判断を修正。既存収録行の全列一致条件は8節 |
 | `COMPETING_CONFIRMED_DECISION` / `UNSUPPORTED_OPERATION` | Candidate の競合 / v1対象外要求 | 保存なし | 他 Decision の有効性・対象範囲を見直す |
 | `GATE_BUSY` / `GATE_CORRUPT` / `RECOVERY_REQUIRED` 等 | 排他・runtime guard | 保存を開始しない | 所有者・元 Request・診断を確認 |
 | `PERSISTENCE_WRITE_FAILED` 等 | 一時ファイル・置換・同期の失敗 | 成功を返さない。公開済みの可能性あり | 保存結果を show で確認。直接 API の同キー・同内容再送は runtime が正常なら保存済み結果を返せる |
@@ -124,9 +124,7 @@ main の `songs` には `J00018,W00017,POPPIN' LOVE`（version_name 空欄、`or
 | `release_track_refs=[track:t1]`。track:t1 は L00001、disc=2、track=2、J00018、`POPPIN' LOVE`、notes=null、公式 URL は既存行と同じ | `release_tracks` に同一主キー `(L00001,2,2)` が存在 |
 | 新規 creator 2件と、J00018 に対する composition 関係2件 | 作家の名前・出典・根拠を明示。既存 composition は順序1〜3。新規の順序4・5を指定する例ならその組と競合しない |
 
-**main の結果**。元観測・根拠など他の項目が正常でも、5で収録行の主キーが重複し `DECISION_INCOMPLETE`。新 confirmed revision は保存されず、この draft から正式 Plan には進まない。必須の収録参照を省略しても4の条件に違反する。 [音源](../../../data/songs.csv)・[既存収録](../../../data/release_tracks.csv)・[既存作家関係](../../../data/song_creators.csv)
-
-**PR #109 の提案**。4関係の同一主キーについて、行の ID 列をすべて既存 ID に解決でき、Plan と同じ `plannedRowTemplate` と `equivalentCanonicalRows` で全列一致する場合は、既存の順序枠をそのまま使って次へ進む。空欄はテンプレートで空文字に変換し、整数表記は数値比較、その他の文字列は完全一致。収録位置が一致しても音源が新規 local_ref の場合、URL や曲名などが異なる場合、Decision 内重複や別主キーの順序衝突が残る場合は拒否する。差分が採用された後に、確認から Plan の `no_op` までの回帰、4関係の比較・拒否条件、J00018 実例を再照合する。 [PR #109 差分](https://github.com/YutoSuga/helloproject-song-data/pull/109/files)・[提案 head の回帰](https://github.com/YutoSuga/helloproject-song-data/blob/a4dc4337992c0951db1a766403005e2d0fc9eb03/test/fn004-apply-plan.test.js)
+**現行 main の結果**。他の確認条件を満たし、同じ収録位置の ID と全列が一致すれば、既存の収録と順序を維持して confirmed を追記できる。URL・曲名・注記が異なる場合や同じ位置に新規音源を指定した場合は `DECISION_INCOMPLETE`。#109 前は列値にかかわらず同一主キーを拒否していた。現在は4関係に共通の比較規則を適用する。 [音源](../../../data/songs.csv)・[既存収録](../../../data/release_tracks.csv)・[既存作家関係](../../../data/song_creators.csv)・[PR #109](https://github.com/YutoSuga/helloproject-song-data/pull/109)
 
 ## 9. 実装・テスト対応
 
@@ -136,7 +134,7 @@ main の `songs` には `J00018,W00017,POPPIN' LOVE`（version_name 空欄、`or
 | 2 | `confirmation`、`inspectDecisionMutation`、`normalizeDecisionCommand` | lifecycle の OCC・再送・置換先 CAS |
 | 3 | `proposeDecisionRevision`、`validateCandidateSource`、`candidateSourceProjection` | core の14項目投影、lifecycle の現在 Candidate 変化 |
 | 4 | `validateDecisionRevision`、`buildDecisionRegistry` | core の reachability/primary/関係重複、lifecycle の competing claims |
-| 5 | `validateDecisionCanonicalContext` | lifecycle の既存 assertions と同名区別根拠。既存関係の全列一致許可は #109 側の回帰 |
+| 5 | `validateDecisionCanonicalContext` | lifecycle の既存 assertions と同名区別根拠。既存関係の全列一致・拒否は apply-plan の回帰 |
 | 6 | `writeDecisionStore`、`assertImmutableDecisionStore` | core の immutable store、lifecycle の atomic publication・rename 後の再送 |
 
 [Decision application](../../../src/fn004-decision-application.js)・[lifecycle](../../../src/fn004-decision-lifecycle.js)・[core](../../../src/fn004-decision-core.js)・[repository](../../../src/fn004-repository.js)・[lifecycle テスト](../../../test/fn004-decision-lifecycle.test.js)・[core テスト](../../../test/fn004-decision-core.test.js)

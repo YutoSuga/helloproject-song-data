@@ -1,6 +1,6 @@
 # FN-004 全体処理設計・APIリファレンス
 
-調査基準は main の `cd46677e62c89814b99c751aedaf05515f9a73cd`。本文の実行契約はこの時点の実装に基づく。PR #109 の観測結果は第8章に記載する。
+調査基準は main の `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`。本文の実行契約はこの時点の実装に基づく。PR #109 はこの基準に含まれる。
 
 業務項目の入力、比較・計算、保存と応答は、[Decision 確認の内部処理設計](11-Decision確認処理.md) と [Plan 生成の内部処理設計](21-Plan生成処理.md) を参照。
 
@@ -211,13 +211,9 @@ CLI は `npm run canonical:manage -- <command> [--json]`。以下の実装欄は
 
 ### 8.3 J00018 に新規作家を追加する場合
 
-| 観点 | main | PR #109 head（未マージ） |
-| --- | --- | --- |
-| Decision の既存収録行 | `validateDecisionCanonicalContext` は同一主キーを一律拒否。必須の既存収録参照を含む判断は `DECISION_INCOMPLETE` となり正式 Plan に進めない | 参照をすべて既存 ID に解決でき、Plan 共通の行テンプレートと全列比較で一致する場合は許可 |
-| 対象・拒否条件 | Decision の関係検証と Plan の `no_op` 分類に到達条件の差がある | `release_tracks`、`song_artists`、`song_creators`、`song_performers` が対象。内容差、同じ収録位置への新規 song、Decision 内の主キー重複・順序衝突、別主キー間の順序衝突は拒否 |
-| 期待結果 | この入力で `validate/confirm` まで。正式フローとしての Apply は不可 | 確認を通過し、同一関係は Plan で `no_op`。実際の追加は新規作家と新規作曲関係 |
+現行 main は PR #109 の Decision 確認修正を含む。既存収録 `(L00001,2,2)` に J00018 を対応させる判断は、全 ID が既存に解決され全列が一致し、他の確認条件も満たせば confirmed となる。Plan は W00017・J00018・L00001 を `reuse`、その収録行を `no_op` とする。新規の作家と作曲関係だけを `insert` として計画する。内容差、同じ位置への新規音源、重複主キー・順序競合は引き続き拒否する。旧 main は同一主キーを一律拒否し、確認で止まった。
 
-PR #109 が確認した隔離ケースの入力は J00018・W00017・L00001 の reuse、Disc 2 / Track 2 の既存収録行と全列一致する判断、新規作曲者2名および関係2行。想定手順は `template → import → validate → confirm → plan create → plan check → apply → result → history show`。PR 本文の検証報告では existing track 1件は `no_op`、C00087・C00088 と作曲関係2行の計4件が insert。これらの ID は当該 checkout での結果で、実行時点の ID state に依存する。根拠は PR head `a4dc4337992c0951db1a766403005e2d0fc9eb03` の Decision 差分、正式 Decision 確認から Plan までの回帰、4関係の全列比較・重複・競合回帰、隔離検証の報告。マージ後は実際に採用された差分を再照合する。 [main の Decision](../../../src/fn004-decision-application.js)・[PR #109](https://github.com/YutoSuga/helloproject-song-data/pull/109)・[変更差分](https://github.com/YutoSuga/helloproject-song-data/pull/109/files)・[PR head の回帰](https://github.com/YutoSuga/helloproject-song-data/blob/a4dc4337992c0951db1a766403005e2d0fc9eb03/test/fn004-apply-plan.test.js)
+`template → import → validate → confirm → plan create → plan check → apply → result → history show`。#109 の隔離結果は、C00087・C00088 と関係2行の計4件の追加。実 ID はその checkout の state に依存する。#109 自体に canonical データ変更は含まれない。 [Decision確認](11-Decision確認処理.md)・[Plan生成](21-Plan生成処理.md)・[PR #109](https://github.com/YutoSuga/helloproject-song-data/pull/109)
 
 ### 8.4 Decision・Plan の確認で終了
 
@@ -255,7 +251,7 @@ PR #109 が確認した隔離ケースの入力は J00018・W00017・L00001 の 
 - 共通サービス契約表の `listReviews/getReview` に対応する FN-004 公開操作は存在しない。候補収集とレビュー準備は別 CLI。契約の `generateApplyPlan` は保存を含む説明だが、実装では生成と保存が独立し、CLI の `plan create` が両方を呼ぶ。 `executeTransaction`、`recoverTransaction`、`initializeState` 等の設計名はそのままの公開名ではない。現行の呼出名は第4章を参照。
 - 共通サービス契約の CLI 設計例には初期化の必須 `--external-declaration` がない。現行 parser と操作ガイドでは check/初期化の両方で必須。
 - 共通契約の Slice 5 部分には受付のみの説明が残る。通常 CLI は Slice 6E の実行を合成する。History も standalone の success-only 読取と CLI の composite proof 対応で条件が異なる。
-- 全体フローの Git 方針と ignore の範囲の差は第5章、Decision 関係確認と Plan の分類の差は第8章を参照。
+- 全体フローの Git 方針と ignore の範囲の差は第5章、Decision 関係確認に対する #109 の変更は第8章を参照。
 
 ### 10.2 検証根拠
 
@@ -267,3 +263,20 @@ PR #109 が確認した隔離ケースの入力は J00018・W00017・L00001 の 
 | Bootstrap、Gate、Recovery と History | [Bootstrap](../../../test/fn004-bootstrap.test.js)・[Gate 公開](../../../test/fn004-gate-publication.test.js)・[Recovery 判定](../../../test/fn004-recovery-decision.test.js)・[History readonly](../../../test/fn004-history-readonly.test.js) |
 
 Slice 6A–6F、FA-M01、FA-L01 の計画・受入記録は、それぞれの時点の根拠として参照する。現行実行契約の判定は main のコードを優先する。 [履歴計画](../../history/plans/)・[受入・レビュー索引](../../history/reviews/README.md)
+
+### 10.3 内部処理と公開操作の対応
+
+| 処理ID | 処理名 | CLI / サービスAPI | 内部処理設計書 | 関連する既存詳細仕様 |
+| --- | --- | --- | --- | --- |
+| FN-004-11 | 判断確認・確認可否 | decision confirm/validate、confirmDecisionHead、confirmDecision、validateDecision | [11](11-Decision確認処理.md) | [判断モデル](FN-004-判断モデル.md) |
+| FN-004-12 | 判断登録・編集・取消・検索 | decision template/import/show、createDecisionTemplate、importDecisionDraft、getDecision、saveDecisionDraft、cancelDecision、buildDecisionRegistry | [12](12-Decision登録処理.md) | [判断モデル](FN-004-判断モデル.md) |
+| FN-004-21 | 計画生成 | plan create の生成、generateApplyPlan | [21](21-Plan生成処理.md) | [反映計画](FN-004-反映計画.md) |
+| FN-004-22 | 計画永続化・照合 | plan create/show/check、createPlan、save/get/checkApplyPlan、preflight | [22](22-Plan保存・照合処理.md) | [反映計画](FN-004-反映計画.md) |
+| FN-004-31 | 承認・照会・失効 | apply の承認、approveApplyPlan、getApproval、checkApproval、invalidateApproval、getApprovalInvalidation、getApprovalInvalidations | [31](31-Approval作成処理.md) | [承認・反映リクエスト](FN-004-承認・反映リクエスト.md) |
+| FN-004-32 | 受付・再送・結果 | apply の受付、result、submit/check/getApplyRequest、management.result | [32](32-ApplyRequest受付処理.md) | [承認・反映リクエスト](FN-004-承認・反映リクエスト.md) |
+| FN-004-41 | 反映実行 | apply、management.applyPlan、createCanonicalApplyService の初回 executor | [41](41-Apply実行処理.md) | [反映処理・復旧](FN-004-反映処理・復旧.md) |
+| FN-004-42 | 復旧観測・実行 | recovery inspect/run、inspectRecovery、runRecovery | [42](42-Recovery処理.md) | [反映処理・復旧](FN-004-反映処理・復旧.md) |
+| FN-004-51 | 初期化・runtime 診断 | status/init、inspectBootstrapStatus、checkBootstrap、initializeBootstrap | [51](51-Bootstrap初期化処理.md) | [初期化・ID状態](FN-004-初期化・ID状態.md) |
+| FN-004-61 | 排他・所有 | 共通基盤の acquireGate、withCanonicalGate、releaseGate | [61](61-Gate取得・解放処理.md) | [Gate公開契約](FN-004-Gate公開契約.md) |
+| FN-004-71 | 履歴・終端証明 | history show、management.history、readApplyHistory、lookupAppliedDecision | [71](71-History登録・検証処理.md) | [成功履歴・読取検証](FN-004-成功履歴・読取検証.md) |
+| 共通 | CLI ヘルプ・安定した canonical 読取 | help、--help、readValidatedCanonicalSnapshot | 本書第4章。読取の Gate は61、全表検証は41 | [反映処理・復旧](FN-004-反映処理・復旧.md)・[データ仕様](../data/データ仕様.md) |

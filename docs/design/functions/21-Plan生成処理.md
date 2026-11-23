@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Plan 生成
 
-基準は main `cd46677e62c89814b99c751aedaf05515f9a73cd`。判断から「既存の何を使い、どの列値の新規行をどこへ追加するか」を算出する仕様。完全な型・hash projection は [反映計画](FN-004-反映計画.md)、業務上の入口は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`。判断から「既存の何を使い、どの列値の新規行をどこへ追加するか」を算出する仕様。完全な型・hash projection は [反映計画](FN-004-反映計画.md)、業務上の入口は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -132,9 +132,9 @@
 
 ### J00018 の既存収録参照と新規作家
 
-main では [Decision 確認の例](11-Decision確認処理.md#8-処理例) の新しい draft が同一収録 PK で止まる。対象に以前の有効確認版が存在しない場合、この ID の Plan 生成は `DECISION_NOT_EFFECTIVE` となる。main にも Plan 内部の `no_op` 判定自体はあり、単体回帰では既存行を含む snapshot と合成済み confirmed を用いて比較を検証している。
+現行 main では [Decision 確認の例](11-Decision確認処理.md#8-処理例) の同一収録行が全列一致なら確認できる。Plan はその既存収録を `no_op` とする。#109 マージ前は Plan 内部に同じ分類があっても、同一収録の新 draft は Decision 確認で止まった。
 
-PR #109 相当の変更により確認が成立し、同じ前提が維持された場合の計画例を示す。J00018 の作曲順序1〜3は既存。新規用の例示順序は4、5。下記は判断から列への変換例であり、実行コマンドや完全な公式クレジット入力ではない。
+J00018 の作曲順序1〜3は既存。新規用の例示順序は4、5。下記は判断から列への変換例であり、実行コマンドや完全な公式クレジット入力ではない。
 
 | 判断 | 検索・算出 | 計画結果 |
 | --- | --- | --- |
@@ -143,7 +143,7 @@ PR #109 相当の変更により確認が成立し、同じ前提が維持され
 | `creator:c1`、`creator:c2` | C の最大・高水位の大きい方が86で、他に新規 C を要求しない場合、順に C00087、C00088 | `creators` へ insert 2件。 `creator_id` と入力した氏名等、apply_time binding を保持 |
 | 新規作曲関係2件 | 1件目の例は `song_id=J00018, creator_id=C00087, role=composition, credit_name=<クレジット表記>, credit_order=4, source_url=<判断の出典>`。2件目は C00088、順序5 | PK・順序が空いていれば `song_creators` へ insert 2件。J00018 の reuse と各作家 insert に依存 |
 
-#109 本文の隔離検証では、同一収録が `no_op`、新規作家2件＋関係2件が insert。確定後の C 上限が88となったのはその実行結果。#109 マージ後に、実際に採用された比較関数・規則、正式確認から同一収録 `no_op` までの回帰、実例の現時点の canonical・高水位を再確認する。 [PR #109](https://github.com/YutoSuga/helloproject-song-data/pull/109)・[対象差分](https://github.com/YutoSuga/helloproject-song-data/pull/109/files)
+#109 本文の隔離検証では、同一収録が `no_op`、新規作家2件＋関係2件が insert。確定後の C 上限が88となったのはその実行結果。現行 main の回帰には正式確認から同一収録 `no_op` までの経路が含まれる。 [PR #109](https://github.com/YutoSuga/helloproject-song-data/pull/109)・[対象差分](https://github.com/YutoSuga/helloproject-song-data/pull/109/files)
 
 ## 9. 実装・テスト対応
 
