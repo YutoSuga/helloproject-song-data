@@ -271,9 +271,9 @@ Slice 6A–6F、FA-M01、FA-L01 の計画・受入記録は、それぞれの時
 | FN-004-11 | 判断確認・確認可否 | decision confirm/validate、confirmDecisionHead、confirmDecision、validateDecision | [11](11-Decision確認処理.md) | [判断モデル](FN-004-判断モデル.md) |
 | FN-004-12 | 判断登録・編集・取消・検索 | decision template/import/show、createDecisionTemplate、importDecisionDraft、getDecision、saveDecisionDraft、cancelDecision、buildDecisionRegistry | [12](12-Decision登録処理.md) | [判断モデル](FN-004-判断モデル.md) |
 | FN-004-21 | 計画生成 | plan create の生成、generateApplyPlan | [21](21-Plan生成処理.md) | [反映計画](FN-004-反映計画.md) |
-| FN-004-22 | 計画永続化・照合 | plan create/show/check、createPlan、save/get/checkApplyPlan、preflight | [22](22-Plan保存・照合処理.md) | [反映計画](FN-004-反映計画.md) |
+| FN-004-22 | 計画永続化・照合 | plan create/show/check、createPlan、saveApplyPlan、getApplyPlan、checkApplyPlan、preflight | [22](22-Plan保存・照合処理.md) | [反映計画](FN-004-反映計画.md) |
 | FN-004-31 | 承認・照会・失効 | apply の承認、approveApplyPlan、getApproval、checkApproval、invalidateApproval、getApprovalInvalidation、getApprovalInvalidations | [31](31-Approval作成処理.md) | [承認・反映リクエスト](FN-004-承認・反映リクエスト.md) |
-| FN-004-32 | 受付・再送・結果 | apply の受付、result、submit/check/getApplyRequest、management.result | [32](32-ApplyRequest受付処理.md) | [承認・反映リクエスト](FN-004-承認・反映リクエスト.md) |
+| FN-004-32 | 受付・再送・結果 | apply の受付、result、submitApplyRequest、checkApplyRequest、getApplyRequest、management.result | [32](32-ApplyRequest受付処理.md) | [承認・反映リクエスト](FN-004-承認・反映リクエスト.md) |
 | FN-004-41 | 反映実行 | apply、management.applyPlan、createCanonicalApplyService の初回 executor | [41](41-Apply実行処理.md) | [反映処理・復旧](FN-004-反映処理・復旧.md) |
 | FN-004-42 | 復旧観測・実行 | recovery inspect/run、inspectRecovery、runRecovery | [42](42-Recovery処理.md) | [反映処理・復旧](FN-004-反映処理・復旧.md) |
 | FN-004-51 | 初期化・runtime 診断 | status/init、inspectBootstrapStatus、checkBootstrap、initializeBootstrap | [51](51-Bootstrap初期化処理.md) | [初期化・ID状態](FN-004-初期化・ID状態.md) |

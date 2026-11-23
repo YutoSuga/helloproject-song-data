@@ -33,7 +33,7 @@ FN-004-71。実際に追加・再利用した行と ID 消費を成功履歴と�
 1. archived inputs と intent を検証し、過去の成功・終端証拠を適用した結果が before state に一致し、Plan の history precondition が実 prefix の count/head/last/semantic hash と一致することを確認。元 snapshot から target を再構築して intent の manifest と比較。食い違いは `INTEGRITY_CONFLICT` 等。
 2. 新 record の sequence=before.history.count+1、previous_history_hash=before.history.head_hash。repository/Bootstrap と Decision、Plan、Approval、Request、actor、apply/tx ID を確定。candidate_coverage は Candidate の identity/fingerprint と解決した作品ID・音源ID・収録キー。id_mappings は予定 ID を canonical_id とする。results は操作分類、表と主キー、実行時刻を組み込んだ実行行（reuse/no_op は保存既存行）と row_hash。before/after manifest、state_transition の before/consumed/ranges、両時刻と rules を payload に入れる。
 3. `record_hash=SHA-256(JCS(payload))`。外側に Decision/Plan snapshot と metadata.published_at。構成後に schema と追加後の chain・一意性を検証する。候補 record を束縛した COMMIT_DECIDED が durable となった後だけ、成功側が History を no-clobber 公開する。後続に HISTORY_COMMITTED、成功 state、COMPLETED。
-4. 終端 proof は成功／失敗とも exact binding と前後 state、終端 phase、元証拠・journal、最終 manifest に基づき生成。終端 journal を同期してから proof → completion を確認し、その後で cleanup。ABORTED は元 state、ROLLED_BACK は消費を保持して pending を解消した state、COMPLETED は成功 head/count を反映。失敗を成功履歴の連鎖に追加しない。
+4. 終端 proof は成功／失敗とも exact binding と前後 state、終端 phase、元証拠・journal、最終 manifest に基づき生成。proof の envelope hash は schema_version・kind・payload の JCS/SHA-256。終端 journal を同期してから proof → completion を確認し、その後で cleanup。ABORTED は元 state、ROLLED_BACK は消費を保持して pending を解消した state、COMPLETED は成功 head/count を反映。失敗を成功履歴の連鎖に追加しない。
 5. 読取時は filename と record identity、schema/hash、埋込み Plan/Decision の対応、行・参照・割当を検証。sequence を1から連続させ、最初の前 hash=bootstrap hash、それ以降=直前 record hash。repository/Bootstrap identity の一致と、apply/tx/Decision/Request/Plan/Candidate の重複を禁止。semantic hash は version/repository/bootstrap と sequence・apply_id・record_hash の順序付き集合を JCS hash 化。各古い Plan の履歴 prefix を照合。
 6. genesis から state 遷移を再現。成功 record の before と Plan の id_state_precondition がその時点の state に一致し、ID は namespace ごとに before high-water+1 から連続。範囲に従う consumed state（generation+1、pending=tx）を再計算。成功でさらに generation+1、history={count:sequence,head_hash:record_hash,last_apply_id:apply_id}、pending=null。失敗消費を含む場合は composite proof を使用。再現 state と現在 state の完全一致および genesis・現在CSV・Git使用上限以上を確認する。
 7. CLI history show は READY / initialized と成功履歴の証明を要求し、composite proof も扱う。standalone の readApplyHistory と lookupAppliedDecision は success-only proof を要求。履歴索引は Decision ID/revision/hash、他版、置換対象、Candidate 範囲を比較し、適用済み・矛盾・対象外の再適用を判定する。
@@ -52,7 +52,7 @@ FN-004-71。実際に追加・再利用した行と ID 消費を成功履歴と�
 | 項目 | 型 | 条件 |
 | --- | --- | --- |
 | 保存 record | History envelope v1 | 元取引の成功確定時 |
-| 保存 proof / completion | immutable artifacts | 終端確定時。双方の保存先は別 |
+| 保存 proof / completion | immutable artifacts | 終端確定時。completion は binding、phase、proof_hash、terminal_journal、ended_at、diagnostics、result を持つ。成功時のみ result に apply_id/record_hash |
 | readApplyHistory | 検証結果、records、diagnostics、state_proof、索引等 | 通常利用と success-only proof を通過 |
 | lookupAppliedDecision | {code,apply_id} | 照合結果。未適用なら両方 null |
 | CLI history show | record を含む表示 envelope | 指定 apply ID が検証済み |

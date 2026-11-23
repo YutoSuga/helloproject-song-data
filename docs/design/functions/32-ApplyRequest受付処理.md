@@ -28,10 +28,10 @@ FN-004-32。承認対象と実行要求を一対一で紐づけ、初回受付�
 
 ## 4. 処理詳細
 
-1. 受付は厳格 v1 payload と trusted actor を検証。request ID で既存原本を先に探す。元 Receipt から schema/purpose を補って投影した semantic payload と入力を完全比較。同一なら結果照会だけ、差は `INTEGRITY_CONFLICT`。この分岐は新規の有効期限・stale 判定に先行する。
+1. 受付は厳格 v1 payload と trusted actor を検証。request ID で既存原本を先に探す。元 Receipt から schema/purpose を補って投影した semantic payload と入力を完全比較。同一なら結果照会だけ、差は `INTEGRITY_CONFLICT`。この分岐は新規受付時の失効・stale 判定に先行する。
 2. 新規では受付 namespace、Approval の原本と hash を確認。原本の repository、意図した request ID、Decision、Plan、actor、purpose から期待 payload を組み、入力と比較。差は `APPROVAL_PLAN_MISMATCH`。現在 APPLICABLE、失効なし、READY / initialized、元要求が未受付と矛盾しないことを確認。
 3. canonical manifest と state hash が Plan の前提と一致する snapshot を同じ Gate で得る。差は `STALE_PLAN`。request_payload_hash=JCS/SHA-256(semantic payload)。時刻 requested_at と同じ新 UUID の tx_ / apply_ ID を一度だけ割当。
-4. Receipt は payload から schema_version/purpose を除いた項目に request_payload_hash・時刻・両 ID を加える。receipt_hash は {schema_version:1,receipt} の hash。processing は初期 accepted の補助 cache。受付原本を同期、排他的公開、親同期した後だけ初回 executor へ渡す。同じ live lease を継続する。
+4. Receipt は payload から schema_version/purpose を除いた項目に request_payload_hash・時刻・両 ID を加える。receipt_hash は {schema_version:1,receipt} の hash。processing は初期 accepted の補助 cache。保存原本の processing 値から完了を推定せず、同一原本を保持する。受付原本を同期、排他的公開、親同期した後だけ初回 executor へ渡す。同じ live lease を継続する。
 5. get は静的検証済み原本を返す。check/result/同一再送は runtime と失効を照合し、History を request/tx/apply ID で検索。複数一致、または1件でも Decision、Plan、Approval、actor、request hash 等の exact binding が違えば `INTEGRITY_CONFLICT`。一致なら result={apply_id,record_hash}。他は null。成功と recovery_required は共存し得る。通常利用可能な場合に現在 Plan を照合し、診断コードを一意化・整列。
 6. CLI result は終端証拠も参照し、成功・中断・abort/rollback 等を表示。読み取り・同一再送は dispatch や cleanup を起こさない。受付後、journal 前の中断も元要求を [Recovery](42-Recovery処理.md) で扱う。
 

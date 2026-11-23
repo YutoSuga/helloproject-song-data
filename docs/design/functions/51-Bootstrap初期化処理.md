@@ -31,8 +31,8 @@ FN-004-51。過去も含めた使用済みIDの境界を確定し、repository �
 1. status は Gate で runtime を観測。双方不在かつ残留証拠なしなら BOOTSTRAP_REQUIRED。片側不在、初期化途中の痕跡、整合破損を未初期化として上書きしない。既存状態は hash・repository・高水位・成功／終端 state 証明と活動中の証跡を確認する。
 2. check では初期化が必要な場合、宣言を厳格検証し、origin/main の完全到達範囲を監査して Git identity と maxima を得る。不完全履歴・ref 不明や既知 ID 列の不足／解析失敗は `BOOTSTRAP_AUDIT_INCOMPLETE`。対象 root の現在 CSV と manifest を Gate 下で取得し、監査 identity の変化を確認する。
 3. namespace ごとに ID の先頭文字を区分とし、後続数値の最大（未使用は0）を取る。`known=max(current,historical)`。宣言が known 未満なら `EXTERNAL_DECLARATION_CONTRADICTION`。通過時 `high_water=max(current,historical,declared)`。監査 payload に rule version、manifest hash、Git identity、両 maxima、宣言、結果を格納し、JCS/SHA-256 を audit_hash とする。
-4. initialize は宣言・local actor を検証し、Gate 下で現在状態を判定。既に READY なら既存 identity を返す。新規は監査を再実施して期待 hash と照合し、公開直前にも Git HEAD/object format と manifest の一致を確認。不一致は `BOOTSTRAP_AUDIT_MISMATCH`。
-5. repo_UUID と initialized_at を固定。Bootstrap に監査 hash・宣言投影・manifest・高水位・operator 証跡を固定。genesis state は generation=0、allocation_events=[]、history.count=0、head_hash=bootstrap_hash、last_apply_id=null、pending=null。state_hash は自身を除く state の JCS/SHA-256。
+4. initialize は宣言・local actor を検証し、Gate 下で現在状態を判定。既に READY なら既存 identity を返す。新規は監査を再実施して期待 hash と照合し、公開直前にも 監査対象の origin/main SHA / object format と manifest の一致を確認。不一致は `BOOTSTRAP_AUDIT_MISMATCH`。
+5. repo_UUID と initialized_at を固定。Bootstrap に監査 hash・宣言投影・manifest・高水位・operator 証跡を固定。operator_confirmation は actor、purpose=bootstrap_initialize、expected_audit_hash。bootstrap_hash は payload の JCS/SHA-256。genesis state は generation=0、allocation_events=[]、history.count=0、head_hash=bootstrap_hash、last_apply_id=null、pending=null。state_hash は自身を除く state の JCS/SHA-256。
 6. 初期化 intent → state → 空 History ディレクトリ確保・同期 → Bootstrap marker の順で確定。marker 公開後に再検証し、自分の intent だけを削除・同期。cleanup が失敗した場合は完了 identity と cleanup_required を返す。
 7. runtime は通常操作を READY / initialized のときに許可。ready でも残存 cleanup は cleanup_required、未完了や遷移証明不足は recovery_required、破損は blocked。実取引の復旧は [FN-004-42](42-Recovery処理.md)。初期化コマンドに一般の復旧機能はない。
 
