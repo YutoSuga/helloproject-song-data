@@ -2,6 +2,8 @@
 
 調査基準は main の `cd46677e62c89814b99c751aedaf05515f9a73cd`。本文の実行契約はこの時点の実装に基づく。PR #109 の観測結果は第8章に記載する。
 
+業務項目の入力、比較・計算、保存と応答は、[Decision 確認の内部処理設計](11-Decision確認処理.md) と [Plan 生成の内部処理設計](21-Plan生成処理.md) を参照。
+
 ## 第1章 機能概要・責務
 
 FN-004 は、公式情報から収集した Candidate と管理者の根拠付き判断を受け取り、canonical CSV への追加計画、反映承認、実行、成功証跡、障害復旧を扱う。既存実体の再利用、新規実体・関係の追加、同一関係の `no_op` 分類を行う。入力は Candidate、Decision、現行 canonical・ID state・履歴、および実行者の明示承認。出力は Decision revision、Plan、Approval、Receipt、更新された CSV・state、成功 History・終端証明。初期化には別途、外部宣言と Git 監査が必要となる。
