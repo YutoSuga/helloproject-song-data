@@ -4,11 +4,11 @@
 
 [Slice 6 Planning](FN-004-Slice-6-Planning.md)のDG-01〜DG-05を、6Aで新たなschema・phase・Recovery判断を作らず実装できる契約へ具体化する。基準mainは2026-11-01のef237b2c7e37a2348f00e558a3d9db776515df2a。PR #73はPlanningの統合でありTransaction実装ではない。
 
-本書は選択理由・互換性・handoffの記録。**保存schema・phase・hash・actionの正本は[Transaction設計のSlice 6 evidence contract v1](../../design/functions/FN-004-反映処理・復旧.md)**。同じschemaを本書へ複製しない。独立Review & Mergeの完了までは6Aを開始しない。
+本書は選択理由・互換性・handoffの記録。**保存schema・phase・hash・actionの正本は[Transaction設計のSlice 6 evidence contract v1](../../design/functions/FN-004/40-反映処理・復旧.md)**。同じschemaを本書へ複製しない。独立Review & Mergeの完了までは6Aを開始しない。
 
 ## 2. Scope・確認した現在地
 
-[Decision](../../design/functions/FN-004-判断モデル.md)、[Plan](../../design/functions/FN-004-反映計画.md)、[Approval / Request](../../design/functions/FN-004-承認・反映リクエスト.md)、[History](../../design/functions/FN-004-成功履歴・読取検証.md)、[Bootstrap / state](../../design/functions/FN-004-初期化・ID状態.md)、[全体フロー](../../design/system/レビュー準備・canonical反映の全体フロー.md)、[CLI / SCR-002](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)と[architecture](../../design/system/システム構成.md)、[Feature ID](../../design/system/機能ID体系.md)、[Roadmap](../../management/ロードマップ.md)、[data spec](../../design/data/データ仕様.md)を照合した。
+[Decision](../../design/functions/FN-004/10-判断モデル.md)、[Plan](../../design/functions/FN-004/20-反映計画.md)、[Approval / Request](../../design/functions/FN-004/30-承認・反映リクエスト.md)、[History](../../design/functions/FN-004/70-成功履歴・読取検証.md)、[Bootstrap / state](../../design/functions/FN-004/50-初期化・ID状態.md)、[全体フロー](../../design/system/レビュー準備・canonical反映の全体フロー.md)、[CLI / SCR-002](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)と[architecture](../../design/system/システム構成.md)、[Feature ID](../../design/system/機能ID体系.md)、[Roadmap](../../management/ロードマップ.md)、[data spec](../../design/data/データ仕様.md)を照合した。
 
 | Slice | 実コードの確認・限界 |
 | --- | --- |
@@ -171,7 +171,7 @@ serialized tokenからの採用、保持条件、Recovery自身のcrash、inspec
 | complexity | record数は増えるが削除証明不要 | 削除・圧縮と二重証明が複雑 | CAS/epoch crash証明が複雑 |
 | 6A / later slices | pure chain/retirement分類、runtimeは6C | 削除proof validatorが追加で必要 | head整合性validatorとruntimeが必要 |
 
-Aを選択する。anchor/claim/retiring/retiredをruntime-local immutable archiveへ永久保持し、ephemeral barrierを別artifactとする。旧anchor/claim payload/hashは維持し、新kind MutexBarrier / MutexRetiring / MutexRetiredを追加する。正確なclosed schema・path・hashは[Transaction正本](../../design/functions/FN-004-反映処理・復旧.md)のDG-03に置く。
+Aを選択する。anchor/claim/retiring/retiredをruntime-local immutable archiveへ永久保持し、ephemeral barrierを別artifactとする。旧anchor/claim payload/hashは維持し、新kind MutexBarrier / MutexRetiring / MutexRetiredを追加する。正確なclosed schema・path・hashは[Transaction正本](../../design/functions/FN-004/40-反映処理・復旧.md)のDG-03に置く。
 
 最大連続sequenceがlatest historical owner。retirement未公開はACTIVE、retiringのみはRETIRING、対応retiredまで完成はRETIRED。retiredとbarrier不在とterminal検証が揃って初めてSEALEDとなりcurrent ownerなし。古いownerへ戻さない。同txの再anchor/sequence再利用は禁止。全recordを検証し、fork/gap/unknown/partialはSTOP。
 
@@ -247,7 +247,7 @@ state巻戻しはID再利用を招く。失敗Historyはsuccess-onlyを破壊す
 | 2. abortをidempotent万能terminalizerにする | 完了後もabortを選ぶ意味が残り、re-abortと元proof再利用を混同。今回のsemantic単調性に不適合 |
 | 3. terminal evidenceによる段階分割＋排他的predicate | 元schemaを維持して、公開済み/未完publication/初回abortを区別できる。pure分類とcrash検証が可能 |
 
-**Selected correction**：3。正本は[Transaction正式設計](../../design/functions/FN-004-反映処理・復旧.md)の「Terminal evidence優先・排他的なaction契約」。全証跡validation→Completion済み→公開proof/完成proof intent/terminal journal→不可逆成功→pre-terminal commit/abortという段階で分割する。owner live/終了証明/gate/raceは実行許可を制限し、terminal stageを初期状態へ戻さない。
+**Selected correction**：3。正本は[Transaction正式設計](../../design/functions/FN-004/40-反映処理・復旧.md)の「Terminal evidence優先・排他的なaction契約」。全証跡validation→Completion済み→公開proof/完成proof intent/terminal journal→不可逆成功→pre-terminal commit/abortという段階で分割する。owner live/終了証明/gate/raceは実行許可を制限し、terminal stageを初期状態へ戻さない。
 
 receipt-only B（Ownerあり、terminal証拠なし）はabort、C（proofありCompletionなし）はfinish_terminal、D（proof＋Completion）はcleanupまたは不要。A（Ownerなし）はmanual STOP。E/FはDから進んだretirementであり、semantic再実行不可。Completion-only、不正partial、失敗proofと成功History/decisionの共存はintegrity STOP。全valid行はmutation候補1つ以下、不要またはmanual STOPも明示し、第6actionを追加しない。
 
@@ -398,7 +398,7 @@ valid original/target、正しいconsumed state、15 backup、valid Intent/Journ
 | 6A/6C影響 | Snapshot/ID audit/classifierを本契約へ対応し、既存rollback kernelへ接続 | 自動rollbackできるcaseが著しく縮小 | 6Cの範囲を越える |
 | 6D/6E影響 | post-decision全target要件と既存file順は不変 | 正常新曲transactionのcrash matrixを手動対応へ変更 | canonical contract/architectureを再設計 |
 
-**Aを採用**。error名allowlistやsemantic近似ではなく、全14 raw bytesのprovenanceとphase/stateの正当性で判定する。Bは安全に戻せる途中状態も停止してしまうため不採用、Cは不成立またはv1境界を越えるため不採用。正式contractの唯一の正本は[Canonical byte provenance・known-mixed Recovery](../../design/functions/FN-004-反映処理・復旧.md#canonical-byte-provenanceknown-mixed-recovery6c-dg05-01訂正)に置く。
+**Aを採用**。error名allowlistやsemantic近似ではなく、全14 raw bytesのprovenanceとphase/stateの正当性で判定する。Bは安全に戻せる途中状態も停止してしまうため不採用、Cは不成立またはv1境界を越えるため不採用。正式contractの唯一の正本は[Canonical byte provenance・known-mixed Recovery](../../design/functions/FN-004/40-反映処理・復旧.md#canonical-byte-provenanceknown-mixed-recovery6c-dg05-01訂正)に置く。
 
 ### Formal correction・closure
 

@@ -1,6 +1,6 @@
 # FN-004 Slice 6C 実装対応
 
-正式契約は[Transaction / Recovery](../../design/functions/FN-004-反映処理・復旧.md)、特に[Known-mixed訂正](../../design/functions/FN-004-反映処理・復旧.md#canonical-byte-provenanceknown-mixed-recovery6c-dg05-01訂正)、分割は[Slice 6 Planning](FN-004-Slice-6-Planning.md)を正とする。本書は実装対応であり、正式schema・hash projection・action/readiness・設計判断を変更しない。
+正式契約は[Transaction / Recovery](../../design/functions/FN-004/40-反映処理・復旧.md)、特に[Known-mixed訂正](../../design/functions/FN-004/40-反映処理・復旧.md#canonical-byte-provenanceknown-mixed-recovery6c-dg05-01訂正)、分割は[Slice 6 Planning](FN-004-Slice-6-Planning.md)を正とする。本書は実装対応であり、正式schema・hash projection・action/readiness・設計判断を変更しない。
 
 ## Moduleと境界
 

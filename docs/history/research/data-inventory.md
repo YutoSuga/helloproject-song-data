@@ -95,8 +95,8 @@
 | F30 Bootstrap intent | `transactions/bootstrap_{UUID}/intent.json` JSON | FN-004→FN-004／初期化中断証跡 | I。完了marker/stateと照合したcleanupのみ。Git非管理 |
 | F31 単一JSON保存temp | `song-candidates.json.{pid}.tmp`、`song-reviews.json.{pid}.{UUID}.tmp` JSON | FN-002/003→各保存処理 | I一時。rename成功で消滅、保存例外時に自分のtempを除去。kill時残存の自動回収仕様は未確認 |
 
-F01〜F09の根拠：[repository](../../../src/fn004-repository.js)、[Decision service](../../../src/fn004-decision-application.js)、[Plan service](../../../src/fn004-plan-application.js)、[Approval repository](../../../src/fn004-approval-repository.js)、[runtime state](../../../src/fn004-runtime-state.js)、[History](../../design/functions/FN-004-成功履歴・読取検証.md)、[Bootstrap](../../design/functions/FN-004-初期化・ID状態.md)。
-F10〜F30のpath/保存根拠：[namespace](../../../src/fn004-evidence-namespace.js)、[prepare artifacts](../../../src/fn004-prepare-artifacts.js)、[failure recovery](../../../src/fn004-failure-recovery.js)、[archive](../../../src/fn004-recovery-archive.js)、[Transaction正式契約](../../design/functions/FN-004-反映処理・復旧.md)。F31：[collector](../../../src/collector/collect.js)、[review保存](../../../src/prepare-reviews.js)。
+F01〜F09の根拠：[repository](../../../src/fn004-repository.js)、[Decision service](../../../src/fn004-decision-application.js)、[Plan service](../../../src/fn004-plan-application.js)、[Approval repository](../../../src/fn004-approval-repository.js)、[runtime state](../../../src/fn004-runtime-state.js)、[History](../../design/functions/FN-004/70-成功履歴・読取検証.md)、[Bootstrap](../../design/functions/FN-004/50-初期化・ID状態.md)。
+F10〜F30のpath/保存根拠：[namespace](../../../src/fn004-evidence-namespace.js)、[prepare artifacts](../../../src/fn004-prepare-artifacts.js)、[failure recovery](../../../src/fn004-failure-recovery.js)、[archive](../../../src/fn004-recovery-archive.js)、[Transaction正式契約](../../design/functions/FN-004/40-反映処理・復旧.md)。F31：[collector](../../../src/collector/collect.js)、[review保存](../../../src/prepare-reviews.js)。
 
 F10〜F22のruntime-local証跡について一律の保存期限は定義されていない。未完了は保持し、終端proof/completion・所有権・bytes/durabilityを検証したcleanupだけを認める。永久保持のarchiveやterminal proofとtemp/backupを混同しない。現行ignoreは[.gitignore](../../../.gitignore)を参照し、設計上の非管理方針が全てignoreへ反映済みとは扱わない。
 
@@ -108,4 +108,4 @@ F10〜F22のruntime-local証跡について一律の保存期限は定義され�
 
 6機能、**51データ種別**（C01〜C14＝14、D01〜D06＝6、F01〜F31＝31）。動的な個々のtx/sequence/CSV copyを数えた物理ファイル総数ではない。F18は14パターン、F20/F21は最大9表、F26は2種のfilenameへ分解している。
 
-独立した検索済み台帳、candidateのApply後status自動更新、保持期限/一般GC、legacy判断writer、SCR-002 adapter/backend/認証、Git差分取得API、一括承認の原子性・部分失敗は未確認または未確定。[ライフサイクル](data-lifecycle.md)で判断可能な範囲と追加調査を区別する。設定ファイル・ソース・テストfixtureは実行データの別正本として数えない。Git履歴/origin/main監査と外部bootstrap declarationは初期化/ID監査の重要入力であり、外部declarationのファイル名は正式に固定されていない（[Bootstrap契約](../../design/functions/FN-004-初期化・ID状態.md)）。
+独立した検索済み台帳、candidateのApply後status自動更新、保持期限/一般GC、legacy判断writer、SCR-002 adapter/backend/認証、Git差分取得API、一括承認の原子性・部分失敗は未確認または未確定。[ライフサイクル](data-lifecycle.md)で判断可能な範囲と追加調査を区別する。設定ファイル・ソース・テストfixtureは実行データの別正本として数えない。Git履歴/origin/main監査と外部bootstrap declarationは初期化/ID監査の重要入力であり、外部declarationのファイル名は正式に固定されていない（[Bootstrap契約](../../design/functions/FN-004/50-初期化・ID状態.md)）。

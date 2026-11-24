@@ -4,7 +4,7 @@
 
 楽曲データの正本は `data/*.csv`。FN-002 が候補を収集し、[FN-003](../functions/FN-003-レビュー準備.md) がレビュー用派生 JSON を生成する。FN-004 は正式な人間の判断から canonical を安全に反映する。FN-004 の runtime・公開 CLI は実装済みで、SCR-101 と管理者向け Web backend は設計段階にある。既存 canonical 登録済み candidate の初期移行は対象外。
 
-本書は全体フローと責務の境界を示す。Design 1〜4を横断統合した詳細は、[Decision Model](../functions/FN-004-判断モデル.md)、[Apply Plan](../functions/FN-004-反映計画.md)、[Transaction / Recovery](../functions/FN-004-反映処理・復旧.md)、[Bootstrap / ID state](../functions/FN-004-初期化・ID状態.md)、[History readonly contract](../functions/FN-004-成功履歴・読取検証.md)、[共通サービス・CLI](楽曲管理のアプリケーションサービス・CLI契約.md)へ分割する。Decision / Plan / Historyのschema・hash projection・orderingは各文書の完全なversioned契約を正とする。Approval / Request / Receiptの完全schemaとhashは[Approval / Request Hash Contract](../functions/FN-004-承認・反映リクエスト.md)を正とする。
+本書は全体フローと責務の境界を示す。Design 1〜4を横断統合した詳細は、[Decision Model](../functions/FN-004/10-判断モデル.md)、[Apply Plan](../functions/FN-004/20-反映計画.md)、[Transaction / Recovery](../functions/FN-004/40-反映処理・復旧.md)、[Bootstrap / ID state](../functions/FN-004/50-初期化・ID状態.md)、[History readonly contract](../functions/FN-004/70-成功履歴・読取検証.md)、[共通サービス・CLI](楽曲管理のアプリケーションサービス・CLI契約.md)へ分割する。Decision / Plan / Historyのschema・hash projection・orderingは各文書の完全なversioned契約を正とする。Approval / Request / Receiptの完全schemaとhashは[Approval / Request Hash Contract](../functions/FN-004/30-承認・反映リクエスト.md)を正とする。
 
 ## FN-003 / FN-004の関係
 
@@ -45,7 +45,7 @@ legacy 入力の読取・検査は [FN-003](../functions/FN-003-レビュー準�
 
 ## FN-004 canonical反映機能（CLI実装済み）
 
-FN-004 は [Decision Model](../functions/FN-004-判断モデル.md) の有効 confirmed revision を検証し、ID 採番と canonical CSV への安全な反映を行う。状態遷移と失敗時の許容状態は [Transaction / Recovery](../functions/FN-004-反映処理・復旧.md) に従う。将来の正式 Decision/History 表示でも legacy 入力との区別を維持する。
+FN-004 は [Decision Model](../functions/FN-004/10-判断モデル.md) の有効 confirmed revision を検証し、ID 採番と canonical CSV への安全な反映を行う。状態遷移と失敗時の許容状態は [Transaction / Recovery](../functions/FN-004/40-反映処理・復旧.md) に従う。将来の正式 Decision/History 表示でも legacy 入力との区別を維持する。
 
 ### 責務とGit管理
 
@@ -59,9 +59,9 @@ FN-004 は [Decision Model](../functions/FN-004-判断モデル.md) の有効 co
 | Apply Request | 同じ実行要求のdurable受付。apply-requests/ | 非管理。local実行/再送情報、未完了は保持 |
 | Transaction Journal | 実行途中・失敗・復旧。transactions/ | 非管理。未完了は保持 |
 | Apply History | 正常適用結果。apply-history/ | 管理。失敗は含めない |
-| Terminal state proof | 失敗消費を含む検証可能な終端証跡。transaction-proofs/。完全schemaは[Transaction](../functions/FN-004-反映処理・復旧.md) | 管理。成功Historyとは別、v1 GCなし |
+| Terminal state proof | 失敗消費を含む検証可能な終端証跡。transaction-proofs/。完全schemaは[Transaction](../functions/FN-004/40-反映処理・復旧.md) | 管理。成功Historyとは別、v1 GCなし |
 | ID / repository state | high-water mark、成功head。fn004-state.json | 管理。採番・履歴整合に必須 |
-| Bootstrap | [監査・genesis・completion marker](../functions/FN-004-初期化・ID状態.md)。fn004-bootstrap.json | 管理。未初期化と消失を区別 |
+| Bootstrap | [監査・genesis・completion marker](../functions/FN-004/50-初期化・ID状態.md)。fn004-bootstrap.json | 管理。未初期化と消失を区別 |
 | lock / temp / backup | 排他・一時生成・復元根拠 | 非管理。recovery前に削除しない |
 
 canonical以外は楽曲正本ではない。Git非管理とdurability不要を混同しない。requestが失われてもHistoryのrequest/Decision coverageから適用済みを検出し、不明ならSTOPする。上記の保存先は staging/ 配下。
@@ -76,11 +76,11 @@ existing master/relationのfield update/patch/delete、work/song統合・分割�
 
 | 論点 | 統合した契約 / 詳細の正本 |
 | --- | --- |
-| revision / OCC / prefix | Decisionへ明示保存。draftと有効confirmedを分離。[Decision](../functions/FN-004-判断モデル.md) |
-| Plan hash / ID | 全preconditionとrowをhashし、予定IDは未予約。[Plan](../functions/FN-004-反映計画.md) |
-| Approvalとreceipt | 承認全体hash → exact Plan/Approvalを参照するcommand hash → version/receipt hashでbinding。承認後、journal前にdurable受付。[Hash Contract](../functions/FN-004-承認・反映リクエスト.md) / [Interface](楽曲管理のアプリケーションサービス・CLI契約.md) |
+| revision / OCC / prefix | Decisionへ明示保存。draftと有効confirmedを分離。[Decision](../functions/FN-004/10-判断モデル.md) |
+| Plan hash / ID | 全preconditionとrowをhashし、予定IDは未予約。[Plan](../functions/FN-004/20-反映計画.md) |
+| Approvalとreceipt | 承認全体hash → exact Plan/Approvalを参照するcommand hash → version/receipt hashでbinding。承認後、journal前にdurable受付。[Hash Contract](../functions/FN-004/30-承認・反映リクエスト.md) / [Interface](楽曲管理のアプリケーションサービス・CLI契約.md) |
 | 二重送信・受付中断 | 同ID同payloadは照会のみ。未完了receiptは新規受付を止める。未開始を証明できる場合だけABORTED |
-| 成功境界 | COMMIT_DECIDED前は原則rollback、後はforward finalize。[Transaction](../functions/FN-004-反映処理・復旧.md) |
+| 成功境界 | COMMIT_DECIDED前は原則rollback、後はforward finalize。[Transaction](../functions/FN-004/40-反映処理・復旧.md) |
 | 採番・rollback | Planで予約せず、commit開始で消費、復元後も上限不減 |
 | trace | Decision → Plan → Approval → Request → Transaction → History → actual IDs |
 | UI結果 | committedとreadinessを分け、pending finalizationを再Applyへ誘導しない |
