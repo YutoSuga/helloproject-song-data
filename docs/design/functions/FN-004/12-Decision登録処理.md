@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Decision 登録・編集・取消・置換
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -77,4 +77,4 @@ rev2 が confirmed の ID に、base=2/hash2 で rev3 draft を保存しても�
 | 3–6 | inspectDecisionMutation、proposeDecisionRevision、buildDecisionRegistry | lifecycle の再送、scope、取消、置換、並行競合 |
 | 7 | writeDecisionStore、getDecision、validateDecision | core の atomic/no-clobber、CLI の show/validate |
 
-[application](../../../src/fn004-decision-application.js)・[lifecycle](../../../src/fn004-decision-lifecycle.js)・[テスト](../../../test/fn004-decision-lifecycle.test.js)・[判断モデル](FN-004-判断モデル.md)
+[application](../../../../src/fn004-decision-application.js)・[lifecycle](../../../../src/fn004-decision-lifecycle.js)・[テスト](../../../../test/fn004-decision-lifecycle.test.js)・[判断モデル](10-判断モデル.md)

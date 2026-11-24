@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Gate 取得・解放
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -74,4 +74,4 @@ FN-004-61。reader/writer が共通して一つの安定した checkout を排�
 | 2–4 | publishGate、observeFinal、verifyPublishedGate | candidate/publication/crash |
 | 6 | closeRetainedGate、adoptRecoveryGate | 復旧所有者・candidate integration |
 
-[Gate](../../../src/fn004-gate.js)・[公開](../../../src/fn004-gate-publication.js)・[回帰](../../../test/fn004-gate-publication.test.js)・[crash](../../../test/fn004-gate-publication-crash.test.js)・[詳細契約](FN-004-Gate公開契約.md)
+[Gate](../../../../src/fn004-gate.js)・[公開](../../../../src/fn004-gate-publication.js)・[回帰](../../../../test/fn004-gate-publication.test.js)・[crash](../../../../test/fn004-gate-publication-crash.test.js)・[詳細契約](60-Gate公開契約.md)

@@ -1,6 +1,6 @@
 # FN-004 Slice 6B 実装対応
 
-正式契約は[Transaction / Recovery設計](../../design/functions/FN-004-反映処理・復旧.md)、[Slice 6 Planning](FN-004-Slice-6-Planning.md)、[Design Follow-up判断記録](FN-004-Slice-6-Design-Follow-up.md)に従う。この文書は実装対応であり、契約・6A〜6F分割を変更しない。
+正式契約は[Transaction / Recovery設計](../../design/functions/FN-004/40-反映処理・復旧.md)、[Slice 6 Planning](FN-004-Slice-6-Planning.md)、[Design Follow-up判断記録](FN-004-Slice-6-Design-Follow-up.md)に従う。この文書は実装対応であり、契約・6A〜6F分割を変更しない。
 
 ## Moduleと責務
 

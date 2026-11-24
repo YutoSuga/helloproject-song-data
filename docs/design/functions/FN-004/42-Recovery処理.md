@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Recovery 観測・復旧
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -88,4 +88,4 @@ creators.csv だけ target、song_creators.csv は original、state は消費済
 | 4 | runRecovery、createRecoveryExecutor | CLI crash、所有権と stale hash |
 | 5–6 | createFailureRecoveryService、createSuccessRecoveryService | failure/success-recovery、recovery-durability |
 
-[判定](../../../src/fn004-recovery-classifier.js)・[実行](../../../src/fn004-recovery-executor.js)・[判定回帰](../../../test/fn004-recovery-decision.test.js)・[混在回帰](../../../test/fn004-known-mixed.test.js)・[詳細契約](FN-004-反映処理・復旧.md)
+[判定](../../../../src/fn004-recovery-classifier.js)・[実行](../../../../src/fn004-recovery-executor.js)・[判定回帰](../../../../test/fn004-recovery-decision.test.js)・[混在回帰](../../../../test/fn004-known-mixed.test.js)・[詳細契約](40-反映処理・復旧.md)

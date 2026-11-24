@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Bootstrap 初期化・runtime 診断
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -77,4 +77,4 @@ FN-004-51。過去も含めた使用済みIDの境界を確定し、repository �
 | 2–3 | auditGitIds、currentIdMaxima、resultingHighWater | 過去使用、宣言、shallow 履歴 |
 | 4–6 | initializeBootstrap、createBootstrapRecords | hash、no-clobber、marker 最終公開 |
 
-[サービス](../../../src/fn004-bootstrap.js)・[Git監査](../../../src/fn004-git-audit.js)・[state](../../../src/fn004-state.js)・[回帰](../../../test/fn004-bootstrap.test.js)・[詳細仕様](FN-004-初期化・ID状態.md)
+[サービス](../../../../src/fn004-bootstrap.js)・[Git監査](../../../../src/fn004-git-audit.js)・[state](../../../../src/fn004-state.js)・[回帰](../../../../test/fn004-bootstrap.test.js)・[詳細仕様](50-初期化・ID状態.md)

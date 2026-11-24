@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Apply 実行
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -34,7 +34,7 @@ FN-004-41。固定された Plan の追加行を canonical に反映し、消費
 4. PREPARING を追記して対象 manifest と変更パスを束縛。元 CSV 全表と元 state の backup、Decision/Plan/Approval/Request の作業原本の順に永続化し、backup 完了を記録。変更 CSV の temp とその参照を順に確定し、Intent を公開して hash を journal に束縛した後、PREPARED を追記。Intent は元／消費予定 state と消費範囲を含む。各 journal は sequence+1、前 entry hash（初回 owner.hash）と binding を持つ。キャッシュだけで進行を断定しない。
 5. COMMITTING を追記し、`staging/fn004-state.json` を消費済み state に原子的置換。同期後に id_consumed を記録。各更新前後に、自分が予定した path/bytes の変化だけか検査する。未予定の変化や古い前提は停止。
 6. 変更パスのみ works → creators → artists → releases → songs → song_artists → song_creators → song_performers → release_tracks の順。元 byte と temp の期待値を確認して置換し、同期と置換進捗を記録。対象外表・insert がない表は元 byte を保持。全表が対象 manifest と一致し意味検証も正常であることを確認。
-7. 成功確定は対象 bytes と消費 state の同期を再確認し、履歴候補を含む `COMMIT_DECIDED` を durable に公開。この境界以後は rollback 不可。成功 History の公開 → HISTORY_COMMITTED → state の generation+1、history head/count 更新・pending=null → COMPLETED。終端証明と completion を固定し、所有している残存物を片付けて解放する。 [成功確定](../../../src/fn004-success-finalization.js)・[終端実行](../../../src/fn004-recovery-executor.js)
+7. 成功確定は対象 bytes と消費 state の同期を再確認し、履歴候補を含む `COMMIT_DECIDED` を durable に公開。この境界以後は rollback 不可。成功 History の公開 → HISTORY_COMMITTED → state の generation+1、history head/count 更新・pending=null → COMPLETED。終端証明と completion を固定し、所有している残存物を片付けて解放する。 [成功確定](../../../../src/fn004-success-finalization.js)・[終端実行](../../../../src/fn004-recovery-executor.js)
 8. 実行失敗時に正常処理は新 ID を割り当てない。既知エラーで現在の所有証拠が明確なら同一元 lease で許可された終端経路を通る。証拠不足なら Gate 等を保持して明示 Recovery。再送は照会であり実行再開ではない。正常終了と後処理未完了は Request readiness と canonical effect で見分ける。
 
 ## 5. 登録・更新仕様
@@ -79,4 +79,4 @@ C の上限が86で C00087/C00088 の作家と各1作曲行を追加する場合
 | 5–6 | commitPrepared、replaceCanonicalBytes | normal-apply-crash、normal-apply-io |
 | 7–8 | finalizeSuccessfulTransaction、createRecoveryExecutor | terminal-crash、normal-apply-lifecycle |
 
-[実行](../../../src/fn004-normal-apply.js)・[prepare](../../../src/fn004-durable-prepare.js)・[実行回帰](../../../test/fn004-normal-apply-io.test.js)・[クラッシュ回帰](../../../test/fn004-normal-apply-terminal-crash.test.js)・[詳細契約](FN-004-反映処理・復旧.md)
+[実行](../../../../src/fn004-normal-apply.js)・[prepare](../../../../src/fn004-durable-prepare.js)・[実行回帰](../../../../test/fn004-normal-apply-io.test.js)・[クラッシュ回帰](../../../../test/fn004-normal-apply-terminal-crash.test.js)・[詳細契約](40-反映処理・復旧.md)

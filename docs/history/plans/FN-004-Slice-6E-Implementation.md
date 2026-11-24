@@ -1,6 +1,6 @@
 # FN-004 Slice 6E 実装対応
 
-正式契約は[Transaction / Recovery](../../design/functions/FN-004-反映処理・復旧.md)、[History](../../design/functions/FN-004-成功履歴・読取検証.md)、[ID state](../../design/functions/FN-004-初期化・ID状態.md)、[Approval / Request](../../design/functions/FN-004-承認・反映リクエスト.md)、[Slice 6 Planning](FN-004-Slice-6-Planning.md)を正とする。本書は内部runtimeの実装対応を記録する。schema・hash・Request response DTO・readiness/action vocabularyを変更しない。
+正式契約は[Transaction / Recovery](../../design/functions/FN-004/40-反映処理・復旧.md)、[History](../../design/functions/FN-004/70-成功履歴・読取検証.md)、[ID state](../../design/functions/FN-004/50-初期化・ID状態.md)、[Approval / Request](../../design/functions/FN-004/30-承認・反映リクエスト.md)、[Slice 6 Planning](FN-004-Slice-6-Planning.md)を正とする。本書は内部runtimeの実装対応を記録する。schema・hash・Request response DTO・readiness/action vocabularyを変更しない。
 
 ## 通常ApplyとRequest
 

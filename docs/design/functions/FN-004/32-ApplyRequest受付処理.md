@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Apply Request 受付・結果照会
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -75,4 +75,4 @@ R の Receipt に tx_X/apply_X を保存した直後にプロセスが止まっ�
 | 4 | receiptHash、saveApplyRequest、createCanonicalApplyService | 受付同期、中断、初回実行 |
 | 5–6 | requestResponse、check/getApplyRequest、management.result | 原本・現在状態・成功証跡の独立、CLI crash |
 
-[受付実装](../../../src/fn004-approval-application.js)・[応答回帰](../../../test/fn004-request-response.test.js)・[CLI中断回帰](../../../test/fn004-cli-crash.test.js)・[詳細仕様](FN-004-承認・反映リクエスト.md)
+[受付実装](../../../../src/fn004-approval-application.js)・[応答回帰](../../../../test/fn004-request-response.test.js)・[CLI中断回帰](../../../../test/fn004-cli-crash.test.js)・[詳細仕様](30-承認・反映リクエスト.md)

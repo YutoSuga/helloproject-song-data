@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Plan 生成
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`。判断から「既存の何を使い、どの列値の新規行をどこへ追加するか」を算出する仕様。完全な型・hash projection は [反映計画](FN-004-反映計画.md)、業務上の入口は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`。判断から「既存の何を使い、どの列値の新規行をどこへ追加するか」を算出する仕様。完全な型・hash projection は [反映計画](20-反映計画.md)、業務上の入口は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -128,7 +128,7 @@
 
 ### 新規音源・作品・作家の追加
 
-検証 fixture の有効 confirmed で新規作品 `work:w1`、新規作家 `creator:c1`、新規音源 `song:s1`（prefix H）を明示し、primary と収録・作家関係を持つとする。既存最大または高水位の大きい方が W=1、C=0、H=0 なら、対応 ID は W00002、C00001、H00001。 `songs.work_id=W00002`、`song_creators.song_id=H00001 / creator_id=C00001` となり、該当マスター操作に依存する。全表検証を通過すれば `applicable:true`。メモリ上で ID が見えても実 CSV・state には反映されていない。 [新規実体・関係の回帰](../../../test/fn004-apply-plan.test.js)
+検証 fixture の有効 confirmed で新規作品 `work:w1`、新規作家 `creator:c1`、新規音源 `song:s1`（prefix H）を明示し、primary と収録・作家関係を持つとする。既存最大または高水位の大きい方が W=1、C=0、H=0 なら、対応 ID は W00002、C00001、H00001。 `songs.work_id=W00002`、`song_creators.song_id=H00001 / creator_id=C00001` となり、該当マスター操作に依存する。全表検証を通過すれば `applicable:true`。メモリ上で ID が見えても実 CSV・state には反映されていない。 [新規実体・関係の回帰](../../../../test/fn004-apply-plan.test.js)
 
 ### J00018 の既存収録参照と新規作家
 
@@ -158,6 +158,6 @@ J00018 の作曲順序1〜3は既存。新規用の例示順序は4、5。下記
 | 7 | `buildPlan`、`applyPlanHash`、`validateApplyPlan` | apply-plan の決定性・artifact 破損、plan-primitives の payload hash |
 | 8 | `createPlan`、`saveApplyPlan`（サービス／リポジトリ）、`check` | apply-plan の生成・保存・取得・check、I/O 失敗、stale、原本保護 |
 
-[Plan application](../../../src/fn004-plan-application.js)・[生成](../../../src/fn004-plan-generate.js)・[行分類](../../../src/fn004-plan-classification.js)・[採番と列変換](../../../src/fn004-plan-primitives.js)・[仮想 target](../../../src/fn004-plan-target.js)・[apply-plan テスト](../../../test/fn004-apply-plan.test.js)・[plan-primitives テスト](../../../test/fn004-plan-primitives.test.js)・[History proof テスト](../../../test/fn004-history-proof.test.js)
+[Plan application](../../../../src/fn004-plan-application.js)・[生成](../../../../src/fn004-plan-generate.js)・[行分類](../../../../src/fn004-plan-classification.js)・[採番と列変換](../../../../src/fn004-plan-primitives.js)・[仮想 target](../../../../src/fn004-plan-target.js)・[apply-plan テスト](../../../../test/fn004-apply-plan.test.js)・[plan-primitives テスト](../../../../test/fn004-plan-primitives.test.js)・[History proof テスト](../../../../test/fn004-history-proof.test.js)
 
 共通サービス契約では `generateApplyPlan / getApplyPlan` の行に保存も記載されている。実装は `generateApplyPlan` がメモリ上の生成、`saveApplyPlan` が再照合と保存を担当し、CLI の `plan create` が両者を合成する。

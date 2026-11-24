@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Plan 保存・照合
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -74,4 +74,4 @@ FN-004-22。生成済み Plan の同一性と現在の適用可否を判定し�
 | 3–5 | check、checkApplyPlan、preflight | later draft、canonical/Candidate 変化、履歴進行 |
 | 6 | saveApplyPlan、repository savePlan | immutable、no-clobber、同期失敗 |
 
-[サービス](../../../src/fn004-plan-application.js)・[リポジトリ](../../../src/fn004-repository.js)・[回帰](../../../test/fn004-apply-plan.test.js)・[反映計画](FN-004-反映計画.md)
+[サービス](../../../../src/fn004-plan-application.js)・[リポジトリ](../../../../src/fn004-repository.js)・[回帰](../../../../test/fn004-apply-plan.test.js)・[反映計画](20-反映計画.md)

@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Decision 確認
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`。本書は確認要求を受けてから保存するまでの判定とデータ操作を規定する。型・正規化・ハッシュの完全定義は [判断モデル](FN-004-判断モデル.md)、操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`。本書は確認要求を受けてから保存するまでの判定とデータ操作を規定する。型・正規化・ハッシュの完全定義は [判断モデル](10-判断モデル.md)、操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -124,7 +124,7 @@ main の `songs` には `J00018,W00017,POPPIN' LOVE`（version_name 空欄、`or
 | `release_track_refs=[track:t1]`。track:t1 は L00001、disc=2、track=2、J00018、`POPPIN' LOVE`、notes=null、公式 URL は既存行と同じ | `release_tracks` に同一主キー `(L00001,2,2)` が存在 |
 | 新規 creator 2件と、J00018 に対する composition 関係2件 | 作家の名前・出典・根拠を明示。既存 composition は順序1〜3。新規の順序4・5を指定する例ならその組と競合しない |
 
-**現行 main の結果**。他の確認条件を満たし、同じ収録位置の ID と全列が一致すれば、既存の収録と順序を維持して confirmed を追記できる。URL・曲名・注記が異なる場合や同じ位置に新規音源を指定した場合は `DECISION_INCOMPLETE`。#109 前は列値にかかわらず同一主キーを拒否していた。現在は4関係に共通の比較規則を適用する。 [音源](../../../data/songs.csv)・[既存収録](../../../data/release_tracks.csv)・[既存作家関係](../../../data/song_creators.csv)・[PR #109](https://github.com/YutoSuga/helloproject-song-data/pull/109)
+**現行 main の結果**。他の確認条件を満たし、同じ収録位置の ID と全列が一致すれば、既存の収録と順序を維持して confirmed を追記できる。URL・曲名・注記が異なる場合や同じ位置に新規音源を指定した場合は `DECISION_INCOMPLETE`。#109 前は列値にかかわらず同一主キーを拒否していた。現在は4関係に共通の比較規則を適用する。 [音源](../../../../data/songs.csv)・[既存収録](../../../../data/release_tracks.csv)・[既存作家関係](../../../../data/song_creators.csv)・[PR #109](https://github.com/YutoSuga/helloproject-song-data/pull/109)
 
 ## 9. 実装・テスト対応
 
@@ -137,6 +137,6 @@ main の `songs` には `J00018,W00017,POPPIN' LOVE`（version_name 空欄、`or
 | 5 | `validateDecisionCanonicalContext` | lifecycle の既存 assertions と同名区別根拠。既存関係の全列一致・拒否は apply-plan の回帰 |
 | 6 | `writeDecisionStore`、`assertImmutableDecisionStore` | core の immutable store、lifecycle の atomic publication・rename 後の再送 |
 
-[Decision application](../../../src/fn004-decision-application.js)・[lifecycle](../../../src/fn004-decision-lifecycle.js)・[core](../../../src/fn004-decision-core.js)・[repository](../../../src/fn004-repository.js)・[lifecycle テスト](../../../test/fn004-decision-lifecycle.test.js)・[core テスト](../../../test/fn004-decision-core.test.js)
+[Decision application](../../../../src/fn004-decision-application.js)・[lifecycle](../../../../src/fn004-decision-lifecycle.js)・[core](../../../../src/fn004-decision-core.js)・[repository](../../../../src/fn004-repository.js)・[lifecycle テスト](../../../../test/fn004-decision-lifecycle.test.js)・[core テスト](../../../../test/fn004-decision-core.test.js)
 
 機能設計の「再送照合は head OCC より先」は直接 `confirmDecision(command)` の mutation 処理で成立する。CLI の `confirmDecisionHead` は元 draft から完全なコマンドを作る前に head を確認し、CLI を再起動すると mutation key も新しくなる。直前の確認が保存されたか不明な場合は、まず show で head を確認する。

@@ -4,9 +4,9 @@
 
 **D1〜D4方針承認済み / 実装前の設計基準**。作成・承認記録日：2026-11-13 JST。承認対象head：`2142c7aae33af4d85ab946bc827b968a8e4d85e4`。承認者：本タスクの依頼者（PR #85に対する明示指示）。調査基準main：`e119556c1703e7ea963a327832cacf5a3affb647`。本PRは文書だけで、実装・Production操作・merge・FA-M01 CLOSED・FN-004受入PASSを意味しない。
 
-正本は[反映処理・復旧](../../design/functions/FN-004-反映処理・復旧.md)の「Slice 2 runtime API」「GateMetadataV1 / GateWitness」「初回取得・successor・common gate」「cleanupとretirement」。本案の採用時に変更する段落を§10に明示する。**D1〜D4は承認済みだが、現行runtimeのwx挙動はまだ変更されていない。** 次の実装PRは、§10.1の正本差分を初めに明示し、承認済みの将来契約と現行挙動を混同せずに実装する。本タスクで正本本文やruntimeへ未実装の挙動を適用したことにはしない。
+正本は[反映処理・復旧](../../design/functions/FN-004/40-反映処理・復旧.md)の「Slice 2 runtime API」「GateMetadataV1 / GateWitness」「初回取得・successor・common gate」「cleanupとretirement」。本案の採用時に変更する段落を§10に明示する。**D1〜D4は承認済みだが、現行runtimeのwx挙動はまだ変更されていない。** 次の実装PRは、§10.1の正本差分を初めに明示し、承認済みの将来契約と現行挙動を混同せずに実装する。本タスクで正本本文やruntimeへ未実装の挙動を適用したことにはしない。
 
-[判断モデル](../../design/functions/FN-004-判断モデル.md)、[初期化・ID状態](../../design/functions/FN-004-初期化・ID状態.md)、[承認・Request](../../design/functions/FN-004-承認・反映リクエスト.md)、[成功履歴](../../design/functions/FN-004-成功履歴・読取検証.md)、[CLI契約](../../design/system/楽曲管理のCLI・画面連携.md)、[CLIガイド](../../management/FN-004-canonical操作ガイド.md)の安全条件は維持する。既存metadata/Receipt/Owner/Intent/Journal/Proof/Completion/History/stateの保存schema・hash projection・ID規則は変更しない。
+[判断モデル](../../design/functions/FN-004/10-判断モデル.md)、[初期化・ID状態](../../design/functions/FN-004/50-初期化・ID状態.md)、[承認・Request](../../design/functions/FN-004/30-承認・反映リクエスト.md)、[成功履歴](../../design/functions/FN-004/70-成功履歴・読取検証.md)、[CLI契約](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)、[CLIガイド](../../management/FN-004-canonical操作ガイド.md)の安全条件は維持する。既存metadata/Receipt/Owner/Intent/Journal/Proof/Completion/History/stateの保存schema・hash projection・ID規則は変更しない。
 
 旧監査報告は別local branch `docs/fn004-final-acceptance` の `docs/reviews/FN-004-Final-Acceptance.md` に存在し参照したが、main未反映のため本PRに混入しない。FA-L01の一般文書整理も対象外。
 
@@ -221,14 +221,14 @@ Gateだけのorphanを自動救済する新Recovery APIは追加しない。公�
 
 | 正本・節 | 差分の具体内容 | 変更しない境界 |
 | --- | --- | --- |
-| [反映処理・復旧](../../design/functions/FN-004-反映処理・復旧.md) / Slice2最初のbullet | 「final pathのopen(wx)」を「専用candidateをwxで完成・file sync/readbackし、同directoryからfinalへexclusive link、dir sync、自己candidate cleanup/sync、取得後guardを経てlease返却」へ置換 | 既存finalの空/破損/未知/読込不能STOP、schema_version=1、nominal lease、dev/ino/全bytes |
+| [反映処理・復旧](../../design/functions/FN-004/40-反映処理・復旧.md) / Slice2最初のbullet | 「final pathのopen(wx)」を「専用candidateをwxで完成・file sync/readbackし、同directoryからfinalへexclusive link、dir sync、自己candidate cleanup/sync、取得後guardを経てlease返却」へ置換 | 既存finalの空/破損/未知/読込不能STOP、schema_version=1、nominal lease、dev/ino/全bytes |
 | 同 / ObservedPath・artifact path表とpublisher temp規則 | 正確なGate candidate pathをDiscovery用の非authoritativeな派生classとして別記。ArtifactRefを許すKnownPath集合へは追加しない。汎用publisher判定より先に除外し、§5.3の全経路でcleanup/refへの自動昇格禁止 | その他のunknown/temp拒否、全refの独立検証、入力・証跡の永続schema |
 | 同 / DG03「初回取得・successor・common gate」 | terminal cleanupの「wx primitive」だけを本Gate公開手順へ置換。候補準備は権限でなく、barrier/head/private capability下で取得 | 未完了txのgate消失STOP、元witness adoption、OS終了証明、sequence/永久archive |
 | 同 / cleanup・retirement | generic publisher cleanupから候補を除外し、公開unknown時の保持と異owner発見時のSTOPを明示 | Retiring→本人gate release/sync/不在確認→Retired→barrier解放、semantic再実行禁止 |
 | 同 / Observation v2・namespace | raw candidateのpath/kind/bytes/hashを観測へ保持。stale hashを使わず、domain判定だけの限定除外と明記 | projectionのshape/hash算法、保存済みobservation/Proof/Completion、他の未知証拠のSTOP |
-| [初期化・ID状態](../../design/functions/FN-004-初期化・ID状態.md) / readonly・runtime temp・BOOTSTRAP_REQUIRED/INCOMPLETE表 | 正確な非authoritative候補をbootstrap intent/tempの有無・cleanup判定から分離。未初期化/正常genesisの両経路で同じ分類 | marker/state片側・不明bootstrap/tempでのSTOP、外部宣言、audit hash、再initialize禁止 |
-| [判断モデル](../../design/functions/FN-004-判断モデル.md) / gate下OCC | 取得前BUSYだけの再試行にnested race budgetが含まれ、取得後の元head CASでHEAD_CONFLICTを決定すると明記 | stale/同identity異payload拒否、callback更新後の再dispatch禁止 |
-| [CLI契約](../../design/system/楽曲管理のCLI・画面連携.md)・[ガイド](../../management/FN-004-canonical操作ガイド.md) / 異常時案内 | candidateの容量・証拠保管・manual STOP、取得失敗1/BUSY5/破損8等を混同しない案内を必要最小限追加 | exit表・response四軸・確認/承認/Request・明示Recovery・force禁止 |
+| [初期化・ID状態](../../design/functions/FN-004/50-初期化・ID状態.md) / readonly・runtime temp・BOOTSTRAP_REQUIRED/INCOMPLETE表 | 正確な非authoritative候補をbootstrap intent/tempの有無・cleanup判定から分離。未初期化/正常genesisの両経路で同じ分類 | marker/state片側・不明bootstrap/tempでのSTOP、外部宣言、audit hash、再initialize禁止 |
+| [判断モデル](../../design/functions/FN-004/10-判断モデル.md) / gate下OCC | 取得前BUSYだけの再試行にnested race budgetが含まれ、取得後の元head CASでHEAD_CONFLICTを決定すると明記 | stale/同identity異payload拒否、callback更新後の再dispatch禁止 |
+| [CLI契約](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)・[ガイド](../../management/FN-004-canonical操作ガイド.md) / 異常時案内 | candidateの容量・証拠保管・manual STOP、取得失敗1/BUSY5/破損8等を混同しない案内を必要最小限追加 | exit表・response四軸・確認/承認/Request・明示Recovery・force禁止 |
 
 [Slice6E計画](FN-004-Slice-6E-Implementation.md)と[Slice6F計画](FN-004-Slice-6F-Implementation.md)の旧wx窓は過去の実装結果として残し、採用済み新実装への参照を追記する。FA-L01の一般的な進捗記述整理を混ぜない。
 

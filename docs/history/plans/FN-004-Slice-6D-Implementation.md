@@ -1,6 +1,6 @@
 # FN-004 Slice 6D 実装対応
 
-正式契約は[Transaction / Recovery](../../design/functions/FN-004-反映処理・復旧.md)、[History](../../design/functions/FN-004-成功履歴・読取検証.md)、[ID state](../../design/functions/FN-004-初期化・ID状態.md)、分割は[Slice 6 Planning](FN-004-Slice-6-Planning.md)を正とする。本書は実装対応であり、schema、hash、readiness/action vocabularyを変更しない。[データ一覧](../research/data-inventory.md)・[CRUD](../research/crud-matrix.md)・[ライフサイクル](../research/data-lifecycle.md)はPR #81の調査時点を記録した補助資料として参照する。
+正式契約は[Transaction / Recovery](../../design/functions/FN-004/40-反映処理・復旧.md)、[History](../../design/functions/FN-004/70-成功履歴・読取検証.md)、[ID state](../../design/functions/FN-004/50-初期化・ID状態.md)、分割は[Slice 6 Planning](FN-004-Slice-6-Planning.md)を正とする。本書は実装対応であり、schema、hash、readiness/action vocabularyを変更しない。[データ一覧](../research/data-inventory.md)・[CRUD](../research/crud-matrix.md)・[ライフサイクル](../research/data-lifecycle.md)はPR #81の調査時点を記録した補助資料として参照する。
 
 ## Moduleと実行境界
 

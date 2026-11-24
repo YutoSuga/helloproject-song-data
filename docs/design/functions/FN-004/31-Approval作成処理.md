@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜Approval 作成・照会・失効
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -72,4 +72,4 @@ Plan P を request R に承認した直後に中断すると Approval は残る�
 | 4 | getApproval、checkApproval、current | 適用性と失効診断 |
 | 5–6 | invalidateApproval、scan、getApprovalInvalidation(s) | 永久失効、互換性、Receipt との矛盾 |
 
-[実装](../../../src/fn004-approval-application.js)・[型](../../../src/fn004-approval-schema.js)・[回帰](../../../test/fn004-approval-application.test.js)・[交差承認回帰](../../../test/fn004-cross-approval.test.js)・[詳細仕様](FN-004-承認・反映リクエスト.md)
+[実装](../../../../src/fn004-approval-application.js)・[型](../../../../src/fn004-approval-schema.js)・[回帰](../../../../test/fn004-approval-application.test.js)・[交差承認回帰](../../../../test/fn004-cross-approval.test.js)・[詳細仕様](30-承認・反映リクエスト.md)

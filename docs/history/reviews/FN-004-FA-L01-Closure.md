@@ -17,9 +17,9 @@
 
 PR #90の変更は以下3文書のみ（20追加 / 6削除）。冒頭の未実装断定を提供範囲と実装・CLIガイドへの案内へ更新し、Planの「後続runtime」の時制、Transactionの既存moduleから安全保証を推定しない説明、Slice 1単体の責務説明を整理している。
 
-- [Decision](../../design/functions/FN-004-判断モデル.md)
-- [Plan](../../design/functions/FN-004-反映計画.md)
-- [Transaction / Recovery](../../design/functions/FN-004-反映処理・復旧.md)
+- [Decision](../../design/functions/FN-004/10-判断モデル.md)
+- [Plan](../../design/functions/FN-004/20-反映計画.md)
+- [Transaction / Recovery](../../design/functions/FN-004/40-反映処理・復旧.md)
 
 ## 現行コードとの独立照合
 

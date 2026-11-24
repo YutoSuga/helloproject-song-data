@@ -1,6 +1,6 @@
 # FN-004 内部処理設計｜History 登録・終端証明・読取検証
 
-基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](FN-004-全体処理設計・APIリファレンス.md) を参照。
+基準は main `6eaeaa2a3e6f3fe5e4a96eef33aeb55bc200a3c9`（PR #109 反映済み）。操作全体は [全体処理設計](00-全体処理設計・APIリファレンス.md) を参照。
 
 ## 1. 処理概要
 
@@ -80,4 +80,4 @@ FN-004-71。実際に追加・再利用した行と ID 消費を成功履歴と�
 | 4、6 | terminalProof、proveTerminalHistory、proveHistoryState | history-proof、失敗復旧・終端中断 |
 | 5、7 | validateHistoryRecord/Chain、buildHistoryIndexes、readApplyHistory、management.history | history-readonly、CLI e2e |
 
-[構成](../../../src/fn004-history-construction.js)・[chain](../../../src/fn004-history-projections.js)・[読取検証](../../../src/fn004-history-verify.js)・[composite](../../../src/fn004-terminal-history.js)・[読取回帰](../../../test/fn004-history-readonly.test.js)・[state 証明回帰](../../../test/fn004-history-proof.test.js)・[詳細仕様](FN-004-成功履歴・読取検証.md)
+[構成](../../../../src/fn004-history-construction.js)・[chain](../../../../src/fn004-history-projections.js)・[読取検証](../../../../src/fn004-history-verify.js)・[composite](../../../../src/fn004-terminal-history.js)・[読取回帰](../../../../test/fn004-history-readonly.test.js)・[state 証明回帰](../../../../test/fn004-history-proof.test.js)・[詳細仕様](70-成功履歴・読取検証.md)

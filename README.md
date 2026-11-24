@@ -113,10 +113,11 @@ Milestone 3-B1 / FN-003 レビュー準備機能は `npm run prepare:reviews` �
 - [FN-005 楽曲一覧データ生成](docs/design/functions/FN-005-楽曲一覧データ生成.md)：承認済みJSON契約に従う生成・検証
 - [候補収集基本設計](docs/design/functions/FN-002-楽曲候補収集.md)：FN-002 楽曲候補収集機能（将来のJOB-001との関係を含む）
 - [canonical registration 基本設計](docs/design/system/レビュー準備・canonical反映の全体フロー.md)：FN-003 レビュー準備機能 / FN-004 canonical反映機能
-- [Decision Model](docs/design/functions/FN-004-判断モデル.md)：aggregate、revision、OCC、candidate binding、song_id_prefix
-- [Apply Plan](docs/design/functions/FN-004-反映計画.md)：不変の反映計画、予定ID、preconditions
-- [Transaction / Recovery](docs/design/functions/FN-004-反映処理・復旧.md)：全体検証、journal、ID state、commit・復旧
-- [History readonly contract](docs/design/functions/FN-004-成功履歴・読取検証.md)：成功record/hash/chain/set、非初期state proof、適用済みlookup
+- [FN-004 全体処理設計・APIリファレンス](docs/design/functions/FN-004/00-全体処理設計・APIリファレンス.md)
+- [Decision Model](docs/design/functions/FN-004/10-判断モデル.md)：aggregate、revision、OCC、candidate binding、song_id_prefix
+- [Apply Plan](docs/design/functions/FN-004/20-反映計画.md)：不変の反映計画、予定ID、preconditions
+- [Transaction / Recovery](docs/design/functions/FN-004/40-反映処理・復旧.md)：全体検証、journal、ID state、commit・復旧
+- [History readonly contract](docs/design/functions/FN-004/70-成功履歴・読取検証.md)：成功record/hash/chain/set、非初期state proof、適用済みlookup
 - [canonical CLI利用ガイド](docs/management/FN-004-canonical操作ガイド.md)：TTY確認、bootstrap、Decision/Plan/Apply、result、明示Recovery、JSON/exit
 - [共通サービス・CLI契約](docs/design/system/楽曲管理のアプリケーションサービス・CLI契約.md)・[楽曲管理画面](docs/design/screens/SCR-101-楽曲管理画面.md)：Approval、durable Apply Request、共通service、内部view、実装slice
 - [データ仕様](docs/design/data/データ仕様.md)：canonical CSV の列・制約・運用ルール

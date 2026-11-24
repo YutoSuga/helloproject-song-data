@@ -4,11 +4,25 @@
 
 業務項目の入力、比較・計算、保存と応答は、[Decision 確認の内部処理設計](11-Decision確認処理.md) と [Plan 生成の内部処理設計](21-Plan生成処理.md) を参照。
 
+## 設計書の構成と命名規則
+
+FN-004 の設計書は本ディレクトリに置き、`番号-処理名.md` とする。`00` は全体フロー・公開操作・文書索引を扱う。各10番刻みの文書は機能単位の詳細仕様として schema・hash・制約を定義し、後続番号の内部処理設計書は入力・照合・計算・永続化・応答の順を説明する。処理と文書の対応は第10章を参照。
+
+| 番号帯 | 担当 |
+| --- | --- |
+| 10番台 | Decision |
+| 20番台 | Plan |
+| 30番台 | Approval・Request |
+| 40番台 | Apply・Recovery |
+| 50番台 | Bootstrap・ID管理 |
+| 60番台 | Gate |
+| 70番台 | History・読取検証 |
+
 ## 第1章 機能概要・責務
 
 FN-004 は、公式情報から収集した Candidate と管理者の根拠付き判断を受け取り、canonical CSV への追加計画、反映承認、実行、成功証跡、障害復旧を扱う。既存実体の再利用、新規実体・関係の追加、同一関係の `no_op` 分類を行う。入力は Candidate、Decision、現行 canonical・ID state・履歴、および実行者の明示承認。出力は Decision revision、Plan、Approval、Receipt、更新された CSV・state、成功 History・終端証明。初期化には別途、外部宣言と Git 監査が必要となる。
 
-公式サイトの収集は FN-002 の `npm run collect:candidates`、レビュー支援の候補提示は FN-003 の `npm run prepare:reviews` が担当する。後者は `staging/song-reviews.json` を作成する。FN-004 の Decision は `song-candidates.json` の元観測と fingerprint を直接照合するため、FN-003 の実行やレビュー出力は必須でない。公開サイトの再生成や Git への公開は Apply 完了後の別工程。 [収集入口](../../../scripts/collect-candidates.js)・[レビュー準備](../../../src/prepare-reviews.js)・[Decision サービス](../../../src/fn004-decision-application.js)
+公式サイトの収集は FN-002 の `npm run collect:candidates`、レビュー支援の候補提示は FN-003 の `npm run prepare:reviews` が担当する。後者は `staging/song-reviews.json` を作成する。FN-004 の Decision は `song-candidates.json` の元観測と fingerprint を直接照合するため、FN-003 の実行やレビュー出力は必須でない。公開サイトの再生成や Git への公開は Apply 完了後の別工程。 [収集入口](../../../../scripts/collect-candidates.js)・[レビュー準備](../../../../src/prepare-reviews.js)・[Decision サービス](../../../../src/fn004-decision-application.js)
 
 ## 第2章 全体アーキテクチャ
 
@@ -38,7 +52,7 @@ flowchart LR
     Y --> P
 ```
 
-現在の操作入口はローカル CLI と信頼済み Node.js プロセス内サービス。SCR-101 と認証 backend は設計段階。共通 Gate で排他と読み取りの整合を確保する。CLI は構文解析、ローカル actor、表示、TTY 確認を担当し、サービスが OCC、ハッシュ、承認・受付、永続化を担当する。 [CLI adapter](../../../src/canonical-cli.js)・[サービス合成](../../../src/fn004-management-application.js)・[SCR-101](../screens/SCR-101-楽曲管理画面.md)
+現在の操作入口はローカル CLI と信頼済み Node.js プロセス内サービス。SCR-101 と認証 backend は設計段階。共通 Gate で排他と読み取りの整合を確保する。CLI は構文解析、ローカル actor、表示、TTY 確認を担当し、サービスが OCC、ハッシュ、承認・受付、永続化を担当する。 [CLI adapter](../../../../src/canonical-cli.js)・[サービス合成](../../../../src/fn004-management-application.js)・[SCR-101](../../screens/SCR-101-楽曲管理画面.md)
 
 ## 第3章 標準処理フロー
 
@@ -76,23 +90,23 @@ sequenceDiagram
 | 実行 | Receipt、Plan、元 snapshot、同一 lease | owner/intent/journal と復元材料を準備。ID を消費し、対象 CSV を順序付きで置換。全表検証後に COMMIT_DECIDED | durable な成功方針が成立。中断時は証跡に基づいて Recovery |
 | 確定 | 成功方針、検証済み target | 成功 History・終端証跡・state の確定、cleanup、Gate 解放 | 通常運用再開は READY / initialized。履歴と diff を確認後、必要な検証・ビルド・Git 操作へ |
 
-[Plan 実装](../../../src/fn004-plan-application.js)・[通常実行](../../../src/fn004-normal-apply.js)・[成功確定](../../../src/fn004-success-finalization.js)
+[Plan 実装](../../../../src/fn004-plan-application.js)・[通常実行](../../../../src/fn004-normal-apply.js)・[成功確定](../../../../src/fn004-success-finalization.js)
 
 ## 第4章 API・CLI 一覧
 
-CLI は `npm run canonical:manage -- <command> [--json]`。以下の実装欄はファイルと factory を示す略号を使用する。CLI の分岐は [runCanonicalCli](../../../src/canonical-cli.js)、引数定義は [parseCanonicalArguments](../../../src/canonical-cli-arguments.js) を参照。
+CLI は `npm run canonical:manage -- <command> [--json]`。以下の実装欄はファイルと factory を示す略号を使用する。CLI の分岐は [runCanonicalCli](../../../../src/canonical-cli.js)、引数定義は [parseCanonicalArguments](../../../../src/canonical-cli-arguments.js) を参照。
 
 | 略号 | 実装ファイル・factory |
 | --- | --- |
-| B | [fn004-bootstrap.js](../../../src/fn004-bootstrap.js) `createBootstrapService` |
-| D | [fn004-decision-application.js](../../../src/fn004-decision-application.js) `createDecisionService` |
-| P | [fn004-plan-application.js](../../../src/fn004-plan-application.js) `createApplyPlanService` |
-| A | [fn004-approval-application.js](../../../src/fn004-approval-application.js) `createApprovalRequestService`。通常実行の合成は [fn004-apply-application.js](../../../src/fn004-apply-application.js) `createCanonicalApplyService` |
-| M | [fn004-management-application.js](../../../src/fn004-management-application.js) `createCanonicalManagementService` |
-| H | [fn004-history-runtime.js](../../../src/fn004-history-runtime.js) モジュール公開関数 |
-| R | [fn004-repository.js](../../../src/fn004-repository.js) 読取ファサード |
+| B | [fn004-bootstrap.js](../../../../src/fn004-bootstrap.js) `createBootstrapService` |
+| D | [fn004-decision-application.js](../../../../src/fn004-decision-application.js) `createDecisionService` |
+| P | [fn004-plan-application.js](../../../../src/fn004-plan-application.js) `createApplyPlanService` |
+| A | [fn004-approval-application.js](../../../../src/fn004-approval-application.js) `createApprovalRequestService`。通常実行の合成は [fn004-apply-application.js](../../../../src/fn004-apply-application.js) `createCanonicalApplyService` |
+| M | [fn004-management-application.js](../../../../src/fn004-management-application.js) `createCanonicalManagementService` |
+| H | [fn004-history-runtime.js](../../../../src/fn004-history-runtime.js) モジュール公開関数 |
+| R | [fn004-repository.js](../../../../src/fn004-repository.js) 読取ファサード |
 
-「単独」は先行成果物や前提が揃えば別呼び出しとして利用できる意味。更新欄の「—」は業務ファイル更新なし。一時 Gate の取得・解放は含めない。エラー欄は代表例で、共通の I/O・Gate・state エラーは第7章を参照。CLI の引数誤りは `ARGUMENT_ERROR`。CLI はサービス DTO を表示用の形式へ射影する。 [CLI 出力実装](../../../src/canonical-cli-output.js)
+「単独」は先行成果物や前提が揃えば別呼び出しとして利用できる意味。更新欄の「—」は業務ファイル更新なし。一時 Gate の取得・解放は含めない。エラー欄は代表例で、共通の I/O・Gate・state エラーは第7章を参照。CLI の引数誤りは `ARGUMENT_ERROR`。CLI はサービス DTO を表示用の形式へ射影する。 [CLI 出力実装](../../../../src/canonical-cli-output.js)
 
 ### 4.1 公開 CLI 全操作
 
@@ -138,7 +152,7 @@ CLI は `npm run canonical:manage -- <command> [--json]`。以下の実装欄は
 | 履歴検証・照合 | H.readApplyHistory / lookupAppliedDecision | `{root,gate?}`、lookup は `decision,candidate_ids?,replaces?` も | 成功履歴検証結果 / 照合結果 | READY / initialized、success-only proof | — | STATE_TRANSITION_PROOF_REQUIRED、HISTORY_CORRUPT | 可 |
 | canonical 読取 | R.readValidatedCanonicalSnapshot | root、options | 検証済み canonical snapshot | Gate と runtime guard、全表整合 | — | RECOVERY_REQUIRED、GATE_BUSY | 可 |
 
-`createApprovalRequestService` のデフォルトは受付専用。通常 Apply は `createCanonicalApplyService` が executor を注入し、CLI は M を経由する。M.applyPlan は呼び出すたびに新しい承認・要求 ID を生成する。中断後に元要求を調べる入口は result / inspect である。 `executeAcceptedRequest`、`validateDecisionCanonicalContext`、`generatePlanFromInput`、Recovery classifier/executor、persistence、Gate primitive は内部処理。export は CLI 操作や外部クライアント用 API の追加を意味しない。 [Approval 実装](../../../src/fn004-approval-application.js)・[実行合成](../../../src/fn004-apply-application.js)
+`createApprovalRequestService` のデフォルトは受付専用。通常 Apply は `createCanonicalApplyService` が executor を注入し、CLI は M を経由する。M.applyPlan は呼び出すたびに新しい承認・要求 ID を生成する。中断後に元要求を調べる入口は result / inspect である。 `executeAcceptedRequest`、`validateDecisionCanonicalContext`、`generatePlanFromInput`、Recovery classifier/executor、persistence、Gate primitive は内部処理。export は CLI 操作や外部クライアント用 API の追加を意味しない。 [Approval 実装](../../../../src/fn004-approval-application.js)・[実行合成](../../../../src/fn004-apply-application.js)
 
 ## 第5章 データ・状態管理
 
@@ -158,23 +172,23 @@ CLI は `npm run canonical:manage -- <command> [--json]`。以下の実装欄は
 | journal・owner・intent・backup | `staging/transactions/<tx_id>/` | hash 連鎖、元／対象 bytes と進行証拠、復元材料。最新 cache は連鎖で検証 | ローカル。未解決の証拠を保持 |
 | Gate・復旧所有権 | `staging/.fn004.lock`、`staging/.fn004-recovery.lock`、`staging/recovery-ownership/<tx_id>/` | 所有者と移譲・退役の証跡。Gate 候補や作業用 temp もローカル | ローカル |
 
-「非管理」は運用上の方針。main の `.gitignore` は Receipt ディレクトリ、共通 lock、所定の temp、bootstrap transaction 等を対象とし、Plan、通常の transaction ディレクトリ、Recovery 所有権パスを一括除外していない。Git の差分は対象ファイルを明示して確認する。成功履歴の照合はローカル Receipt を前提としないが、元 Request の照会や Recovery の実行はその保存原本を必要とする。 [Git 方針](../system/レビュー準備・canonical反映の全体フロー.md#責務とgit管理)・[ignore](../../../.gitignore)・[実行時パス](../../../src/fn004-evidence-namespace.js)
+「非管理」は運用上の方針。main の `.gitignore` は Receipt ディレクトリ、共通 lock、所定の temp、bootstrap transaction 等を対象とし、Plan、通常の transaction ディレクトリ、Recovery 所有権パスを一括除外していない。Git の差分は対象ファイルを明示して確認する。成功履歴の照合はローカル Receipt を前提としないが、元 Request の照会や Recovery の実行はその保存原本を必要とする。 [Git 方針](../../system/レビュー準備・canonical反映の全体フロー.md#責務とgit管理)・[ignore](../../../../.gitignore)・[実行時パス](../../../../src/fn004-evidence-namespace.js)
 
 ## 第6章 状態遷移
 
 ### Decision revision
 
-`draft → confirmed`、`draft/confirmed → cancelled`、`draft/confirmed/cancelled → draft` を新 revision で表す。各変更には現在 head の revision/hash が必要。新 draft の保存だけでは旧 confirmed が引き続き有効で、明示取消しまたは有効な replacement によって失効する。適用済みは成功 History の照合結果。 [Decision lifecycle](../../../src/fn004-decision-lifecycle.js)
+`draft → confirmed`、`draft/confirmed → cancelled`、`draft/confirmed/cancelled → draft` を新 revision で表す。各変更には現在 head の revision/hash が必要。新 draft の保存だけでは旧 confirmed が引き続き有効で、明示取消しまたは有効な replacement によって失効する。適用済みは成功 History の照合結果。 [Decision lifecycle](../../../../src/fn004-decision-lifecycle.js)
 
 ### Plan・Approval・Apply
 
 - Plan は immutable。保存後の check が `APPLICABLE`、`BLOCKED`、`STALE_PLAN`、`ALREADY_APPLIED` 等を評価する。
 - Approval は immutable。使用済み・失効・stale は Request／History／失効 event と当時・現時点の binding から評価する。受付後の失効は受理済み要求を取り消さない。
-- Request は Receipt で受付を記録し、成功結果は検証済み History を参照する。正常経路は `PREPARING → PREPARED → COMMITTING → COMMIT_DECIDED → HISTORY_COMMITTED → COMPLETED`。失敗終端には `ABORTED` または `ROLLING_BACK → ROLLED_BACK` がある。受付直後に journal が存在しない場合もある。COMMIT_DECIDED 後は成功確定側だけを扱う。rollback では canonical を復元し、消費済み ID を保持する。 [phase 定義](../../../src/fn004-evidence-types.js)・[通常実行](../../../src/fn004-normal-apply.js)
+- Request は Receipt で受付を記録し、成功結果は検証済み History を参照する。正常経路は `PREPARING → PREPARED → COMMITTING → COMMIT_DECIDED → HISTORY_COMMITTED → COMPLETED`。失敗終端には `ABORTED` または `ROLLING_BACK → ROLLED_BACK` がある。受付直後に journal が存在しない場合もある。COMMIT_DECIDED 後は成功確定側だけを扱う。rollback では canonical を復元し、消費済み ID を保持する。 [phase 定義](../../../../src/fn004-evidence-types.js)・[通常実行](../../../../src/fn004-normal-apply.js)
 
 ### Runtime・Recovery
 
-通常利用の条件は `status=READY` と `readiness=initialized` の両方。初期化前は `BOOTSTRAP_REQUIRED`、片側だけの保存等は `BOOTSTRAP_INCOMPLETE`。未完了の要求や未証明の遷移は `recovery_required`、終端後の所定の片付けは `cleanup_required`、証拠破損等は `blocked`。Gate 競合は別レイヤーで検出する。Recovery 観測の classification／action はこの runtime readiness や journal phase とは別の値であり、`active`、不明、終端済みの観測では実行 action が空になり得る。 [runtime guard](../../../src/fn004-runtime-state.js)・[Recovery 判定](../../../src/fn004-recovery-classifier.js)
+通常利用の条件は `status=READY` と `readiness=initialized` の両方。初期化前は `BOOTSTRAP_REQUIRED`、片側だけの保存等は `BOOTSTRAP_INCOMPLETE`。未完了の要求や未証明の遷移は `recovery_required`、終端後の所定の片付けは `cleanup_required`、証拠破損等は `blocked`。Gate 競合は別レイヤーで検出する。Recovery 観測の classification／action はこの runtime readiness や journal phase とは別の値であり、`active`、不明、終端済みの観測では実行 action が空になり得る。 [runtime guard](../../../../src/fn004-runtime-state.js)・[Recovery 判定](../../../../src/fn004-recovery-classifier.js)
 
 ## 第7章 エラー・復旧
 
@@ -190,7 +204,7 @@ CLI は `npm run canonical:manage -- <command> [--json]`。以下の実装欄は
 | APPROVAL_INVALIDATED / INTEGRITY_CONFLICT | 失効済み承認による新規受付、または exact binding・再送 payload・保存証拠に矛盾 | 失効時は現在の Plan と承認を確認。証拠矛盾は原本を保持して調査 | 3 / 8 |
 | STATE_TRANSITION_PROOF_REQUIRED | 現在 state を正当化する証跡が揃わない | state、成功 History、終端証明と retained evidence の整合を確認 | 6 |
 
-診断は例外のほか、status、Plan check、Request response 等にも現れる。CLI の exit はコマンド別 DTO と優先順位で決まる。例えば status の正常取得は運用可否と独立し、成功効果が証明済みで確定待ちなら 7、取消しは 10、abort/rollback の結果は 11。権限エラーは優先して 9。 [exit/DTO 実装](../../../src/canonical-cli-output.js)・[state 検証](../../../src/fn004-state.js)・[Gate 詳細](FN-004-Gate公開契約.md)
+診断は例外のほか、status、Plan check、Request response 等にも現れる。CLI の exit はコマンド別 DTO と優先順位で決まる。例えば status の正常取得は運用可否と独立し、成功効果が証明済みで確定待ちなら 7、取消しは 10、abort/rollback の結果は 11。権限エラーは優先して 9。 [exit/DTO 実装](../../../../src/canonical-cli-output.js)・[state 検証](../../../../src/fn004-state.js)・[Gate 詳細](60-Gate公開契約.md)
 
 ## 第8章 具体的なユースケース
 
@@ -201,7 +215,7 @@ CLI は `npm run canonical:manage -- <command> [--json]`。以下の実装欄は
 1. FN-002 の Candidate ID で `decision template`。外部入力で作品・楽曲・作家の local_ref、既存または新規のアーティスト／リリース、収録・クレジット関係、根拠を設定する。
 2. `decision import → validate → confirm`。元観測 fingerprint と head を照合し、confirmed revision を得る。
 3. `plan create → show/check`。新規実体および関係の insert、既存参照の reuse、予定 ID を照合する。
-4. `apply` で exact Plan hash を人間が承認。Receipt／apply ID を取得し、`result → history show` で確定を確認する。期待結果は新規 CSV 行、ID state 進行、実 ID と根拠を参照できる成功 History。 [Plan 回帰](../../../test/fn004-apply-plan.test.js)・[CLI 統合回帰](../../../test/fn004-cli-e2e.test.js)
+4. `apply` で exact Plan hash を人間が承認。Receipt／apply ID を取得し、`result → history show` で確定を確認する。期待結果は新規 CSV 行、ID state 進行、実 ID と根拠を参照できる成功 History。 [Plan 回帰](../../../../test/fn004-apply-plan.test.js)・[CLI 統合回帰](../../../../test/fn004-cli-e2e.test.js)
 
 ### 8.2 既存楽曲・既存作品の再利用
 
@@ -217,34 +231,34 @@ CLI は `npm run canonical:manage -- <command> [--json]`。以下の実装欄は
 
 ### 8.4 Decision・Plan の確認で終了
 
-`decision show → decision validate` で現在 head と診断を取得。計画が必要で head が draft なら、適合する判断を `decision confirm` で保存し、得た revision/hash で `plan create → plan show → plan check`。保存不要なら信頼済みサービスで `generateApplyPlan → checkApplyPlan` を使う。期待結果は固定 Plan またはメモリ上の計画と適用可否の診断。承認・受付・canonical 反映は別操作なので、この流れで終了できる。 [Plan 実装](../../../src/fn004-plan-application.js)
+`decision show → decision validate` で現在 head と診断を取得。計画が必要で head が draft なら、適合する判断を `decision confirm` で保存し、得た revision/hash で `plan create → plan show → plan check`。保存不要なら信頼済みサービスで `generateApplyPlan → checkApplyPlan` を使う。期待結果は固定 Plan またはメモリ上の計画と適用可否の診断。承認・受付・canonical 反映は別操作なので、この流れで終了できる。 [Plan 実装](../../../../src/fn004-plan-application.js)
 
 ### 8.5 Apply 中断後の Recovery
 
 1. 受付時の request ID で `result` を照会し、`recovery inspect --request <id>` から transaction、観測 hash、許可 action を得る。証拠と owner の終了を確認できる場合のみ実行候補が返る。
 2. 唯一の action と同じ観測 hash を `recovery run` に渡す。Receipt のみ等で未変更を証明できる場合は `abort`、成功方針確定前の復元可能ケースは `rollback`。検証済み target からの成功確定は `finalize_success`。終端証明・completion の確定や残留物処理は `finish_terminal` / `cleanup`。個別の可否は classifier が判定する。
-3. `result` と `status` を再確認する。成功時は `history show` で検証済み成功 record を確認。abort/rollback 時は未反映または復元と、その段階までに消費された ID の保持を確認。証拠が不明な場合は停止し原本を保全する。 [復旧判定](../../../src/fn004-recovery-classifier.js)・[CLI 中断回帰](../../../test/fn004-cli-crash.test.js)・[成功復旧回帰](../../../test/fn004-success-recovery.test.js)
+3. `result` と `status` を再確認する。成功時は `history show` で検証済み成功 record を確認。abort/rollback 時は未反映または復元と、その段階までに消費された ID の保持を確認。証拠が不明な場合は停止し原本を保全する。 [復旧判定](../../../../src/fn004-recovery-classifier.js)・[CLI 中断回帰](../../../../test/fn004-cli-crash.test.js)・[成功復旧回帰](../../../../test/fn004-success-recovery.test.js)
 
 ## 第9章 制約・未対応機能
 
 - 既存 canonical 行の内容更新・削除、メンバー新規登録・所属変更、動画、広範な訂正は v1 の正式 Apply 対象外。判断で unsupported request を表せるが confirmed では拒否する。既存関係と同一キーで内容が異なる場合は上書き不可。同一の Decision／適用済み範囲の再適用や、取り消しによる canonical の巻戻しも対象外。
-- 管理 UI・認証 Web API、バッチ Apply、非TTY 承認、強制解除、任意 CSV patch、自動 commit/push/PR は未提供。SCR-102 は既存データ訂正等を検討する将来構想で、現行の API や復旧手段には含めない。 [操作ガイド](../../management/FN-004-canonical操作ガイド.md)・[ロードマップ](../../management/ロードマップ.md)
+- 管理 UI・認証 Web API、バッチ Apply、非TTY 承認、強制解除、任意 CSV patch、自動 commit/push/PR は未提供。SCR-102 は既存データ訂正等を検討する将来構想で、現行の API や復旧手段には含めない。 [操作ガイド](../../../management/FN-004-canonical操作ガイド.md)・[ロードマップ](../../../management/ロードマップ.md)
 
 ## 第10章 既存設計書との対応
 
 | 既存設計書 | 担当範囲・本書の参照章 | 主な実装 |
 | --- | --- | --- |
-| [FN-004 Gate 公開契約](FN-004-Gate公開契約.md) | Gate 候補、公開・競合・解放、OS 境界（2、7） | `fn004-gate.js`、`fn004-gate-candidate.js`、`fn004-gate-publication.js` |
-| [FN-004 初期化・ID状態](FN-004-初期化・ID状態.md) | 監査、genesis、高水位、state（3–7） | `fn004-bootstrap.js`、`fn004-state.js`、`fn004-git-audit.js` |
-| [FN-004 判断モデル](FN-004-判断モデル.md) | fingerprint、判断 schema、OCC と registry（3–8） | `fn004-decision-core.js`、`fn004-decision-lifecycle.js`、`fn004-decision-application.js` |
-| [FN-004 反映計画](FN-004-反映計画.md) | Plan schema、操作分類、予定 ID、check（3–8） | `fn004-plan-application.js`、`fn004-plan-generate.js`、`fn004-plan-validator.js` |
-| [FN-004 承認・反映リクエスト](FN-004-承認・反映リクエスト.md) | binding、ハッシュ、失効、永続受付、応答（3–7） | `fn004-approval-schema.js`、`fn004-approval-application.js`、`fn004-approval-repository.js` |
-| [FN-004 反映処理・復旧](FN-004-反映処理・復旧.md) | 全表検証、transaction、provenance、Recovery（3、5–9） | `fn004-normal-apply.js`、`fn004-durable-prepare.js`、`fn004-recovery-collection.js`、`fn004-recovery-classifier.js` |
-| [FN-004 成功履歴・読取検証](FN-004-成功履歴・読取検証.md) | 成功 record、連鎖、適用済み検索、state 証明（3–8） | `fn004-history-runtime.js`、`fn004-history-verify.js`、`fn004-terminal-runtime.js` |
-| [レビュー準備・canonical反映の全体フロー](../system/レビュー準備・canonical反映の全体フロー.md) | FN-002/FN-003、Git 管理方針（1–5） | `scripts/collect-candidates.js`、`src/prepare-reviews.js`、`.gitignore` |
-| [共通サービス・CLI契約](../system/楽曲管理のアプリケーションサービス・CLI契約.md)／[操作ガイド](../../management/FN-004-canonical操作ガイド.md) | adapter、呼出構文、運用（2–9） | `canonical-cli.js`、`canonical-cli-arguments.js`、`canonical-cli-output.js`、`fn004-management-application.js` |
-| [FN-002 楽曲候補収集](FN-002-楽曲候補収集.md)／[収集仕様](FN-002-楽曲候補収集仕様.md)／[FN-003 レビュー準備](FN-003-レビュー準備.md) | 元観測、派生レビュー（1–3） | `scripts/collect-candidates.js`、`scripts/prepare-reviews.js`、`src/prepare-reviews.js` |
-| [SCR-101 楽曲管理画面](../screens/SCR-101-楽曲管理画面.md)／[データ仕様](../data/データ仕様.md) | 管理画面の構想と入力データ制約（1、2、5、9） | 現行 CLI とサービス、`canonical-schema.js`、`canonical-validator.js` |
+| [FN-004 Gate 公開契約](60-Gate公開契約.md) | Gate 候補、公開・競合・解放、OS 境界（2、7） | `fn004-gate.js`、`fn004-gate-candidate.js`、`fn004-gate-publication.js` |
+| [FN-004 初期化・ID状態](50-初期化・ID状態.md) | 監査、genesis、高水位、state（3–7） | `fn004-bootstrap.js`、`fn004-state.js`、`fn004-git-audit.js` |
+| [FN-004 判断モデル](10-判断モデル.md) | fingerprint、判断 schema、OCC と registry（3–8） | `fn004-decision-core.js`、`fn004-decision-lifecycle.js`、`fn004-decision-application.js` |
+| [FN-004 反映計画](20-反映計画.md) | Plan schema、操作分類、予定 ID、check（3–8） | `fn004-plan-application.js`、`fn004-plan-generate.js`、`fn004-plan-validator.js` |
+| [FN-004 承認・反映リクエスト](30-承認・反映リクエスト.md) | binding、ハッシュ、失効、永続受付、応答（3–7） | `fn004-approval-schema.js`、`fn004-approval-application.js`、`fn004-approval-repository.js` |
+| [FN-004 反映処理・復旧](40-反映処理・復旧.md) | 全表検証、transaction、provenance、Recovery（3、5–9） | `fn004-normal-apply.js`、`fn004-durable-prepare.js`、`fn004-recovery-collection.js`、`fn004-recovery-classifier.js` |
+| [FN-004 成功履歴・読取検証](70-成功履歴・読取検証.md) | 成功 record、連鎖、適用済み検索、state 証明（3–8） | `fn004-history-runtime.js`、`fn004-history-verify.js`、`fn004-terminal-runtime.js` |
+| [レビュー準備・canonical反映の全体フロー](../../system/レビュー準備・canonical反映の全体フロー.md) | FN-002/FN-003、Git 管理方針（1–5） | `scripts/collect-candidates.js`、`src/prepare-reviews.js`、`.gitignore` |
+| [共通サービス・CLI契約](../../system/楽曲管理のアプリケーションサービス・CLI契約.md)／[操作ガイド](../../../management/FN-004-canonical操作ガイド.md) | adapter、呼出構文、運用（2–9） | `canonical-cli.js`、`canonical-cli-arguments.js`、`canonical-cli-output.js`、`fn004-management-application.js` |
+| [FN-002 楽曲候補収集](../FN-002-楽曲候補収集.md)／[収集仕様](../FN-002-楽曲候補収集仕様.md)／[FN-003 レビュー準備](../FN-003-レビュー準備.md) | 元観測、派生レビュー（1–3） | `scripts/collect-candidates.js`、`scripts/prepare-reviews.js`、`src/prepare-reviews.js` |
+| [SCR-101 楽曲管理画面](../../screens/SCR-101-楽曲管理画面.md)／[データ仕様](../../data/データ仕様.md) | 管理画面の構想と入力データ制約（1、2、5、9） | 現行 CLI とサービス、`canonical-schema.js`、`canonical-validator.js` |
 
 ### 10.1 実装との差異と読み替え
 
@@ -257,26 +271,26 @@ CLI は `npm run canonical:manage -- <command> [--json]`。以下の実装欄は
 
 | 観点 | 既存回帰の参照 |
 | --- | --- |
-| 判断・Candidate/OCC・Plan の不変性 | [判断 lifecycle](../../../test/fn004-decision-lifecycle.test.js)・[Plan](../../../test/fn004-apply-plan.test.js) |
-| 承認／失効・受付冪等性・応答 | [Approval](../../../test/fn004-approval-application.test.js)・[Request response](../../../test/fn004-request-response.test.js) |
-| 公開 CLI・安全境界 | [CLI 契約](../../../test/fn004-cli-contract.test.js)・[E2E](../../../test/fn004-cli-e2e.test.js)・[CLI crash](../../../test/fn004-cli-crash.test.js) |
-| Bootstrap、Gate、Recovery と History | [Bootstrap](../../../test/fn004-bootstrap.test.js)・[Gate 公開](../../../test/fn004-gate-publication.test.js)・[Recovery 判定](../../../test/fn004-recovery-decision.test.js)・[History readonly](../../../test/fn004-history-readonly.test.js) |
+| 判断・Candidate/OCC・Plan の不変性 | [判断 lifecycle](../../../../test/fn004-decision-lifecycle.test.js)・[Plan](../../../../test/fn004-apply-plan.test.js) |
+| 承認／失効・受付冪等性・応答 | [Approval](../../../../test/fn004-approval-application.test.js)・[Request response](../../../../test/fn004-request-response.test.js) |
+| 公開 CLI・安全境界 | [CLI 契約](../../../../test/fn004-cli-contract.test.js)・[E2E](../../../../test/fn004-cli-e2e.test.js)・[CLI crash](../../../../test/fn004-cli-crash.test.js) |
+| Bootstrap、Gate、Recovery と History | [Bootstrap](../../../../test/fn004-bootstrap.test.js)・[Gate 公開](../../../../test/fn004-gate-publication.test.js)・[Recovery 判定](../../../../test/fn004-recovery-decision.test.js)・[History readonly](../../../../test/fn004-history-readonly.test.js) |
 
-Slice 6A–6F、FA-M01、FA-L01 の計画・受入記録は、それぞれの時点の根拠として参照する。現行実行契約の判定は main のコードを優先する。 [履歴計画](../../history/plans/)・[受入・レビュー索引](../../history/reviews/README.md)
+Slice 6A–6F、FA-M01、FA-L01 の計画・受入記録は、それぞれの時点の根拠として参照する。現行実行契約の判定は main のコードを優先する。 [履歴計画](../../../history/plans/)・[受入・レビュー索引](../../../history/reviews/README.md)
 
 ### 10.3 内部処理と公開操作の対応
 
 | 処理ID | 処理名 | CLI / サービスAPI | 内部処理設計書 | 関連する既存詳細仕様 |
 | --- | --- | --- | --- | --- |
-| FN-004-11 | 判断確認・確認可否 | decision confirm/validate、confirmDecisionHead、confirmDecision、validateDecision | [11](11-Decision確認処理.md) | [判断モデル](FN-004-判断モデル.md) |
-| FN-004-12 | 判断登録・編集・取消・検索 | decision template/import/show、createDecisionTemplate、importDecisionDraft、getDecision、saveDecisionDraft、cancelDecision、buildDecisionRegistry | [12](12-Decision登録処理.md) | [判断モデル](FN-004-判断モデル.md) |
-| FN-004-21 | 計画生成 | plan create の生成、generateApplyPlan | [21](21-Plan生成処理.md) | [反映計画](FN-004-反映計画.md) |
-| FN-004-22 | 計画永続化・照合 | plan create/show/check、createPlan、saveApplyPlan、getApplyPlan、checkApplyPlan、preflight | [22](22-Plan保存・照合処理.md) | [反映計画](FN-004-反映計画.md) |
-| FN-004-31 | 承認・照会・失効 | apply の承認、approveApplyPlan、getApproval、checkApproval、invalidateApproval、getApprovalInvalidation、getApprovalInvalidations | [31](31-Approval作成処理.md) | [承認・反映リクエスト](FN-004-承認・反映リクエスト.md) |
-| FN-004-32 | 受付・再送・結果 | apply の受付、result、submitApplyRequest、checkApplyRequest、getApplyRequest、management.result | [32](32-ApplyRequest受付処理.md) | [承認・反映リクエスト](FN-004-承認・反映リクエスト.md) |
-| FN-004-41 | 反映実行 | apply、management.applyPlan、createCanonicalApplyService の初回 executor | [41](41-Apply実行処理.md) | [反映処理・復旧](FN-004-反映処理・復旧.md) |
-| FN-004-42 | 復旧観測・実行 | recovery inspect/run、inspectRecovery、runRecovery | [42](42-Recovery処理.md) | [反映処理・復旧](FN-004-反映処理・復旧.md) |
-| FN-004-51 | 初期化・runtime 診断 | status/init、inspectBootstrapStatus、checkBootstrap、initializeBootstrap | [51](51-Bootstrap初期化処理.md) | [初期化・ID状態](FN-004-初期化・ID状態.md) |
-| FN-004-61 | 排他・所有 | 共通基盤の acquireGate、withCanonicalGate、releaseGate | [61](61-Gate取得・解放処理.md) | [Gate公開契約](FN-004-Gate公開契約.md) |
-| FN-004-71 | 履歴・終端証明 | history show、management.history、readApplyHistory、lookupAppliedDecision | [71](71-History登録・検証処理.md) | [成功履歴・読取検証](FN-004-成功履歴・読取検証.md) |
-| 共通 | CLI ヘルプ・安定した canonical 読取 | help、--help、readValidatedCanonicalSnapshot | 本書第4章。読取の Gate は61、全表検証は41 | [反映処理・復旧](FN-004-反映処理・復旧.md)・[データ仕様](../data/データ仕様.md) |
+| FN-004-11 | 判断確認・確認可否 | decision confirm/validate、confirmDecisionHead、confirmDecision、validateDecision | [11](11-Decision確認処理.md) | [判断モデル](10-判断モデル.md) |
+| FN-004-12 | 判断登録・編集・取消・検索 | decision template/import/show、createDecisionTemplate、importDecisionDraft、getDecision、saveDecisionDraft、cancelDecision、buildDecisionRegistry | [12](12-Decision登録処理.md) | [判断モデル](10-判断モデル.md) |
+| FN-004-21 | 計画生成 | plan create の生成、generateApplyPlan | [21](21-Plan生成処理.md) | [反映計画](20-反映計画.md) |
+| FN-004-22 | 計画永続化・照合 | plan create/show/check、createPlan、saveApplyPlan、getApplyPlan、checkApplyPlan、preflight | [22](22-Plan保存・照合処理.md) | [反映計画](20-反映計画.md) |
+| FN-004-31 | 承認・照会・失効 | apply の承認、approveApplyPlan、getApproval、checkApproval、invalidateApproval、getApprovalInvalidation、getApprovalInvalidations | [31](31-Approval作成処理.md) | [承認・反映リクエスト](30-承認・反映リクエスト.md) |
+| FN-004-32 | 受付・再送・結果 | apply の受付、result、submitApplyRequest、checkApplyRequest、getApplyRequest、management.result | [32](32-ApplyRequest受付処理.md) | [承認・反映リクエスト](30-承認・反映リクエスト.md) |
+| FN-004-41 | 反映実行 | apply、management.applyPlan、createCanonicalApplyService の初回 executor | [41](41-Apply実行処理.md) | [反映処理・復旧](40-反映処理・復旧.md) |
+| FN-004-42 | 復旧観測・実行 | recovery inspect/run、inspectRecovery、runRecovery | [42](42-Recovery処理.md) | [反映処理・復旧](40-反映処理・復旧.md) |
+| FN-004-51 | 初期化・runtime 診断 | status/init、inspectBootstrapStatus、checkBootstrap、initializeBootstrap | [51](51-Bootstrap初期化処理.md) | [初期化・ID状態](50-初期化・ID状態.md) |
+| FN-004-61 | 排他・所有 | 共通基盤の acquireGate、withCanonicalGate、releaseGate | [61](61-Gate取得・解放処理.md) | [Gate公開契約](60-Gate公開契約.md) |
+| FN-004-71 | 履歴・終端証明 | history show、management.history、readApplyHistory、lookupAppliedDecision | [71](71-History登録・検証処理.md) | [成功履歴・読取検証](70-成功履歴・読取検証.md) |
+| 共通 | CLI ヘルプ・安定した canonical 読取 | help、--help、readValidatedCanonicalSnapshot | 本書第4章。読取の Gate は61、全表検証は41 | [反映処理・復旧](40-反映処理・復旧.md)・[データ仕様](../../data/データ仕様.md) |
