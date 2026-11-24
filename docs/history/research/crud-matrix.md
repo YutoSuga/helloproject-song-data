@@ -79,7 +79,7 @@ F10 owner、F11 intent、F12 journal、F13 cache、F14〜F17固定入力copy。I
 
 F18全14CSV backup、F19state backup、F20target temp、F21restore temp、F22History temp、F23terminal proof。Dは検証済みtemp/backupのcleanup（F20は成功時renameによる元path消滅も含む）に限定。永続History/proof削除ではない。F18〜F20の一般cleanupは正常/終端経路接続を含めSとし、未完了時に削除可能とは読まない。
 
-根拠：[prepare publisher](../../../src/fn004-prepare-artifacts.js)、[durable prepare](../../../src/fn004-durable-prepare.js)、[failure recovery](../../../src/fn004-failure-recovery.js)、[terminal proof](../../../src/fn004-terminal-evidence.js)、[Transaction契約](../../design/functions/FN-004-反映処理・復旧.md)。
+根拠：[prepare publisher](../../../src/fn004-prepare-artifacts.js)、[durable prepare](../../../src/fn004-durable-prepare.js)、[failure recovery](../../../src/fn004-failure-recovery.js)、[terminal proof](../../../src/fn004-terminal-evidence.js)、[Transaction契約](../../design/functions/FN-004/40-反映処理・復旧.md)。
 
 ## Recovery・排他・temp
 

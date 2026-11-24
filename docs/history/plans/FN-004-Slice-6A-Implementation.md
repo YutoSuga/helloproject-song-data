@@ -1,6 +1,6 @@
 # FN-004 Slice 6A 実装メモ
 
-正式契約は[Transaction / Recovery設計](../../design/functions/FN-004-反映処理・復旧.md)、分割は[Slice 6 Planning](FN-004-Slice-6-Planning.md)、H-01・M-01・6A-DG01-01の判断履歴は[Design Follow-up](FN-004-Slice-6-Design-Follow-up.md)を参照する。本メモは保存schemaやsafety規則の別正本ではない。
+正式契約は[Transaction / Recovery設計](../../design/functions/FN-004/40-反映処理・復旧.md)、分割は[Slice 6 Planning](FN-004-Slice-6-Planning.md)、H-01・M-01・6A-DG01-01の判断履歴は[Design Follow-up](FN-004-Slice-6-Design-Follow-up.md)を参照する。本メモは保存schemaやsafety規則の別正本ではない。
 
 ## 実装境界
 

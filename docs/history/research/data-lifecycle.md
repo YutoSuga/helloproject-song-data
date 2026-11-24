@@ -56,7 +56,7 @@ flowchart TD
 | FN-001 I | 集計6表（gate検証は全表も参照）→D05 | artist_id別JSONを再生成。同じcanonicalから再集計。生成物を正本へ逆反映しない | 読込/gate/集計失敗はthrow。generatorは最終fileへ直接writeFileし、FN-003と同じatomic保存保証はない |
 | SCR-001 I | D05→ブラウザ表示 | fetchした生成JSONから表示。永続canonical/レビュー状態は変更しない | 公開前のtest/検証/build/生成物差分検査はPages workflow。管理データを公開JSONへ含める仕様はない |
 
-根拠：[collector](../../../src/collector/collect.js)、[merge](../../../src/collector/merge-candidates.js)、[prepare](../../../src/prepare-reviews.js)、[Decision](../../design/functions/FN-004-判断モデル.md)、[Plan](../../design/functions/FN-004-反映計画.md)、[Approval/Request](../../design/functions/FN-004-承認・反映リクエスト.md)、[Transaction/Recovery](../../design/functions/FN-004-反映処理・復旧.md)、[History](../../design/functions/FN-004-成功履歴・読取検証.md)、[generator](../../../scripts/generate-rankings.js)、[workflow](../../../.github/workflows/deploy-pages.yml)。
+根拠：[collector](../../../src/collector/collect.js)、[merge](../../../src/collector/merge-candidates.js)、[prepare](../../../src/prepare-reviews.js)、[Decision](../../design/functions/FN-004/10-判断モデル.md)、[Plan](../../design/functions/FN-004/20-反映計画.md)、[Approval/Request](../../design/functions/FN-004/30-承認・反映リクエスト.md)、[Transaction/Recovery](../../design/functions/FN-004/40-反映処理・復旧.md)、[History](../../design/functions/FN-004/70-成功履歴・読取検証.md)、[generator](../../../scripts/generate-rankings.js)、[workflow](../../../.github/workflows/deploy-pages.yml)。
 
 ## FN-002の再収集防止
 
@@ -95,7 +95,7 @@ flowchart TD
 
 正式SCR-002は管理一覧、レビュー編集、Decision確認、Apply Preflight、Apply結果、System Statusの6内部view。認証済み管理者backendを介し、browserからfilesystem/Gitへ直接書かない。provider/hostingは未選定。bootstrap/recovery実行はCLIのみ。これらの既存境界に従って表示材料と不足部分を整理したもので、新UI/APIを本タスクで設計・実装していない。
 
-根拠：[SCR-002 views・workflow / traceability・Git](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)、[Decision scope](../../design/functions/FN-004-判断モデル.md)、[Git audit](../../../src/fn004-git-audit.js)、[History証明](../../design/functions/FN-004-成功履歴・読取検証.md)。
+根拠：[SCR-002 views・workflow / traceability・Git](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/design/system/楽曲管理のCLI・画面連携.md)、[Decision scope](../../design/functions/FN-004/10-判断モデル.md)、[Git audit](../../../src/fn004-git-audit.js)、[History証明](../../design/functions/FN-004/70-成功履歴・読取検証.md)。
 
 ## 未確定事項・次回確認
 

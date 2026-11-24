@@ -40,13 +40,14 @@
 - [FN-002-楽曲候補収集](design/functions/FN-002-楽曲候補収集.md)
 - [FN-002-楽曲候補収集仕様](design/functions/FN-002-楽曲候補収集仕様.md)
 - [FN-003-レビュー準備](design/functions/FN-003-レビュー準備.md)
-- [FN-004-Gate公開契約](design/functions/FN-004-Gate公開契約.md)
-- [FN-004-初期化・ID状態](design/functions/FN-004-初期化・ID状態.md)
-- [FN-004-判断モデル](design/functions/FN-004-判断モデル.md)
-- [FN-004-反映処理・復旧](design/functions/FN-004-反映処理・復旧.md)
-- [FN-004-反映計画](design/functions/FN-004-反映計画.md)
-- [FN-004-成功履歴・読取検証](design/functions/FN-004-成功履歴・読取検証.md)
-- [FN-004-承認・反映リクエスト](design/functions/FN-004-承認・反映リクエスト.md)
+- [FN-004 全体処理設計・APIリファレンス](design/functions/FN-004/00-全体処理設計・APIリファレンス.md)
+- [FN-004-Gate公開契約](design/functions/FN-004/60-Gate公開契約.md)
+- [FN-004-初期化・ID状態](design/functions/FN-004/50-初期化・ID状態.md)
+- [FN-004-判断モデル](design/functions/FN-004/10-判断モデル.md)
+- [FN-004-反映処理・復旧](design/functions/FN-004/40-反映処理・復旧.md)
+- [FN-004-反映計画](design/functions/FN-004/20-反映計画.md)
+- [FN-004-成功履歴・読取検証](design/functions/FN-004/70-成功履歴・読取検証.md)
+- [FN-004-承認・反映リクエスト](design/functions/FN-004/30-承認・反映リクエスト.md)
 - [FN-005-楽曲一覧データ生成](design/functions/FN-005-楽曲一覧データ生成.md)（設計のみ）
 
 ### 画面設計
@@ -68,5 +69,5 @@
 ## 履歴
 
 - [調査記録](history/research/)：横断データ3文書は2026-11-04時点の調査。
-- [計画・実装記録](history/plans/)：承認時の参照先を含む [FA-M01 Gate 契約案の固定版](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/history/plans/FN-004-FA-M01-Gate公開契約案.md)。現行の契約は [FN-004 Gate公開契約](design/functions/FN-004-Gate公開契約.md)を参照。
+- [計画・実装記録](history/plans/)：承認時の参照先を含む [FA-M01 Gate 契約案の固定版](https://github.com/YutoSuga/helloproject-song-data/blob/dc93832d1ac1ce291fd33337b7de9c64e21b57cb/docs/history/plans/FN-004-FA-M01-Gate公開契約案.md)。現行の契約は [FN-004 Gate公開契約](design/functions/FN-004/60-Gate公開契約.md)を参照。
 - [受入・レビュー記録と証拠の索引](history/reviews/README.md)：報告書と [証拠 archive](history/reviews/archive/) を `history/reviews/` にまとめて保管する。固定 SHA と当時のパスで行う再現手順は索引を参照。
