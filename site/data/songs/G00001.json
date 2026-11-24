@@ -184,9 +184,9 @@
           "release_date": "2019-06-05",
           "credits": [
             {
-              "creator_id": "C00001",
-              "creator_name": "山崎あおい",
-              "credit_name": "山崎あおい",
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
               "role": "arrangement",
               "credit_order": 1
             },
@@ -214,9 +214,9 @@
           "release_date": "2019-10-10",
           "credits": [
             {
-              "creator_id": "C00001",
-              "creator_name": "山崎あおい",
-              "credit_name": "山崎あおい",
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
               "role": "arrangement",
               "credit_order": 1
             },
@@ -391,7 +391,8 @@
       "first_release_date": "2020-04-01",
       "date_incomplete": false,
       "search_creator_names": [
-        "山崎あおい"
+        "山崎あおい",
+        "鈴木俊介"
       ],
       "songs": [
         {
@@ -402,9 +403,9 @@
           "release_date": "2020-04-01",
           "credits": [
             {
-              "creator_id": "C00001",
-              "creator_name": "山崎あおい",
-              "credit_name": "山崎あおい",
+              "creator_id": "C00035",
+              "creator_name": "鈴木俊介",
+              "credit_name": "鈴木俊介",
               "role": "arrangement",
               "credit_order": 1
             },
@@ -1057,9 +1058,8 @@
       "title": "GIRLS BE AMBITIOUS!",
       "title_kana": null,
       "first_release_date": "2015-07-15",
-      "date_incomplete": true,
+      "date_incomplete": false,
       "search_creator_names": [
-        "NOBE",
         "中島卓偉",
         "宮永治郎"
       ],
@@ -1070,6 +1070,43 @@
           "version_name": null,
           "version_type": "original",
           "release_date": "2015-07-15",
+          "credits": [
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00045",
+              "creator_name": "宮永治郎",
+              "credit_name": "宮永治郎",
+              "role": "arrangement",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00003",
+              "creator_name": "中島卓偉",
+              "credit_name": "中島卓偉",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        },
+        {
+          "song_id": "J00017",
+          "title": "GIRLS BE AMBITIOUS! 2022",
+          "version_name": "2022",
+          "version_type": "other",
+          "release_date": "2022-04-20",
           "credits": [
             {
               "creator_id": "C00003",
@@ -1137,36 +1174,6 @@
               "credit_order": 1
             }
           ]
-        },
-        {
-          "song_id": "J00017",
-          "title": "GIRLS BE AMBITIOUS! 2022",
-          "version_name": "2022",
-          "version_type": "other",
-          "release_date": null,
-          "credits": [
-            {
-              "creator_id": "C00003",
-              "creator_name": "中島卓偉",
-              "credit_name": "中島卓偉",
-              "role": "arrangement",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00003",
-              "creator_name": "中島卓偉",
-              "credit_name": "中島卓偉",
-              "role": "composition",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00020",
-              "creator_name": "NOBE",
-              "credit_name": "NOBE",
-              "role": "lyrics",
-              "credit_order": 1
-            }
-          ]
         }
       ]
     },
@@ -1174,12 +1181,10 @@
       "work_id": "W00017",
       "title": "POPPIN' LOVE",
       "title_kana": null,
-      "first_release_date": null,
-      "date_incomplete": true,
+      "first_release_date": "2022-04-20",
+      "date_incomplete": false,
       "search_creator_names": [
-        "Andreas Öhrn",
-        "Henrik Smith",
-        "Olof Lindskog",
+        "Erik Lidbom",
         "山崎あおい"
       ],
       "songs": [
@@ -1188,33 +1193,19 @@
           "title": "POPPIN' LOVE",
           "version_name": null,
           "version_type": "original",
-          "release_date": null,
+          "release_date": "2022-04-20",
           "credits": [
             {
-              "creator_id": "C00023",
-              "creator_name": "Olof Lindskog",
-              "credit_name": "Olof Lindskog",
+              "creator_id": "C00076",
+              "creator_name": "Erik Lidbom",
+              "credit_name": "Erik Lidbom",
               "role": "arrangement",
               "credit_order": 1
             },
             {
-              "creator_id": "C00021",
-              "creator_name": "Andreas Öhrn",
-              "credit_name": "Andreas Öhrn",
-              "role": "composition",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00022",
-              "creator_name": "Henrik Smith",
-              "credit_name": "Henrik Smith",
-              "role": "composition",
-              "credit_order": 2
-            },
-            {
-              "creator_id": "C00023",
-              "creator_name": "Olof Lindskog",
-              "credit_name": "Olof Lindskog",
+              "creator_id": "C00076",
+              "creator_name": "Erik Lidbom",
+              "credit_name": "Erik Lidbom",
               "role": "composition",
               "credit_order": 3
             },
@@ -1233,11 +1224,11 @@
       "work_id": "W00018",
       "title": "STAGE～アガッてみな～",
       "title_kana": null,
-      "first_release_date": null,
-      "date_incomplete": true,
+      "first_release_date": "2022-04-20",
+      "date_incomplete": false,
       "search_creator_names": [
-        "KOUGA",
-        "児玉雨子"
+        "平田祥一郎",
+        "徳田光希"
       ],
       "songs": [
         {
@@ -1245,26 +1236,26 @@
           "title": "STAGE～アガッてみな～",
           "version_name": null,
           "version_type": "original",
-          "release_date": null,
+          "release_date": "2022-04-20",
           "credits": [
             {
-              "creator_id": "C00002",
-              "creator_name": "KOUGA",
-              "credit_name": "KOUGA",
+              "creator_id": "C00009",
+              "creator_name": "平田祥一郎",
+              "credit_name": "平田祥一郎",
               "role": "arrangement",
               "credit_order": 1
             },
             {
-              "creator_id": "C00002",
-              "creator_name": "KOUGA",
-              "credit_name": "KOUGA",
+              "creator_id": "C00070",
+              "creator_name": "徳田光希",
+              "credit_name": "徳田光希",
               "role": "composition",
               "credit_order": 1
             },
             {
-              "creator_id": "C00006",
-              "creator_name": "児玉雨子",
-              "credit_name": "児玉雨子",
+              "creator_id": "C00070",
+              "creator_name": "徳田光希",
+              "credit_name": "徳田光希",
               "role": "lyrics",
               "credit_order": 1
             }
@@ -1276,11 +1267,12 @@
       "work_id": "W00019",
       "title": "Mon Amour",
       "title_kana": null,
-      "first_release_date": null,
-      "date_incomplete": true,
+      "first_release_date": "2022-04-20",
+      "date_incomplete": false,
       "search_creator_names": [
-        "Josef Melin",
-        "オオヤギヒロオ"
+        "オオヤギヒロオ",
+        "井筒日美",
+        "浜田ピエール裕介"
       ],
       "songs": [
         {
@@ -1288,19 +1280,19 @@
           "title": "Mon Amour",
           "version_name": null,
           "version_type": "original",
-          "release_date": null,
+          "release_date": "2022-04-20",
           "credits": [
             {
-              "creator_id": "C00011",
-              "creator_name": "Josef Melin",
-              "credit_name": "Josef Melin",
+              "creator_id": "C00032",
+              "creator_name": "浜田ピエール裕介",
+              "credit_name": "浜田ピエール裕介",
               "role": "arrangement",
               "credit_order": 1
             },
             {
-              "creator_id": "C00011",
-              "creator_name": "Josef Melin",
-              "credit_name": "Josef Melin",
+              "creator_id": "C00024",
+              "creator_name": "オオヤギヒロオ",
+              "credit_name": "オオヤギヒロオ",
               "role": "composition",
               "credit_order": 1
             },
@@ -1310,6 +1302,13 @@
               "credit_name": "オオヤギヒロオ",
               "role": "lyrics",
               "credit_order": 1
+            },
+            {
+              "creator_id": "C00027",
+              "creator_name": "井筒日美",
+              "credit_name": "井筒日美",
+              "role": "lyrics",
+              "credit_order": 2
             }
           ]
         }
@@ -1319,8 +1318,8 @@
       "work_id": "W00020",
       "title": "ノクチルカ",
       "title_kana": null,
-      "first_release_date": null,
-      "date_incomplete": true,
+      "first_release_date": "2022-04-20",
+      "date_incomplete": false,
       "search_creator_names": [
         "唐沢美帆",
         "松井寛"
@@ -1331,7 +1330,7 @@
           "title": "ノクチルカ",
           "version_name": null,
           "version_type": "original",
-          "release_date": null,
+          "release_date": "2022-04-20",
           "credits": [
             {
               "creator_id": "C00025",
@@ -1362,10 +1361,12 @@
       "work_id": "W00021",
       "title": "G.O.A.T.",
       "title_kana": null,
-      "first_release_date": null,
-      "date_incomplete": true,
+      "first_release_date": "2022-04-20",
+      "date_incomplete": false,
       "search_creator_names": [
-        "Josef Melin",
+        "Andreas Ohrn",
+        "Andreas Öhrn",
+        "Henrik Smith",
         "Shusui",
         "井筒日美"
       ],
@@ -1375,12 +1376,12 @@
           "title": "G.O.A.T.",
           "version_name": null,
           "version_type": "original",
-          "release_date": null,
+          "release_date": "2022-04-20",
           "credits": [
             {
-              "creator_id": "C00011",
-              "creator_name": "Josef Melin",
-              "credit_name": "Josef Melin",
+              "creator_id": "C00022",
+              "creator_name": "Henrik Smith",
+              "credit_name": "Henrik Smith",
               "role": "arrangement",
               "credit_order": 1
             },
@@ -1392,11 +1393,18 @@
               "credit_order": 1
             },
             {
-              "creator_id": "C00011",
-              "creator_name": "Josef Melin",
-              "credit_name": "Josef Melin",
+              "creator_id": "C00021",
+              "creator_name": "Andreas Öhrn",
+              "credit_name": "Andreas Ohrn",
               "role": "composition",
               "credit_order": 2
+            },
+            {
+              "creator_id": "C00022",
+              "creator_name": "Henrik Smith",
+              "credit_name": "Henrik Smith",
+              "role": "composition",
+              "credit_order": 3
             },
             {
               "creator_id": "C00027",
@@ -1413,11 +1421,13 @@
       "work_id": "W00022",
       "title": "雨の中の口笛",
       "title_kana": null,
-      "first_release_date": null,
-      "date_incomplete": true,
+      "first_release_date": "2022-04-20",
+      "date_incomplete": false,
       "search_creator_names": [
-        "Josef Melin",
-        "Shusui"
+        "Shim Zeyun",
+        "Shusui",
+        "Zeyun",
+        "tsubomi"
       ],
       "songs": [
         {
@@ -1425,12 +1435,12 @@
           "title": "雨の中の口笛",
           "version_name": null,
           "version_type": "original",
-          "release_date": null,
+          "release_date": "2022-04-20",
           "credits": [
             {
-              "creator_id": "C00011",
-              "creator_name": "Josef Melin",
-              "credit_name": "Josef Melin",
+              "creator_id": "C00033",
+              "creator_name": "Shim Zeyun",
+              "credit_name": "Zeyun",
               "role": "arrangement",
               "credit_order": 1
             },
@@ -1442,11 +1452,18 @@
               "credit_order": 1
             },
             {
-              "creator_id": "C00011",
-              "creator_name": "Josef Melin",
-              "credit_name": "Josef Melin",
+              "creator_id": "C00033",
+              "creator_name": "Shim Zeyun",
+              "credit_name": "Zeyun",
               "role": "composition",
               "credit_order": 2
+            },
+            {
+              "creator_id": "C00034",
+              "creator_name": "tsubomi",
+              "credit_name": "tsubomi",
+              "role": "composition",
+              "credit_order": 3
             },
             {
               "creator_id": "C00010",
@@ -1454,6 +1471,20 @@
               "credit_name": "Shusui",
               "role": "lyrics",
               "credit_order": 1
+            },
+            {
+              "creator_id": "C00033",
+              "creator_name": "Shim Zeyun",
+              "credit_name": "Zeyun",
+              "role": "lyrics",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00034",
+              "creator_name": "tsubomi",
+              "credit_name": "tsubomi",
+              "role": "lyrics",
+              "credit_order": 3
             }
           ]
         }
@@ -1463,8 +1494,8 @@
       "work_id": "W00023",
       "title": "プラトニック・プラネット",
       "title_kana": null,
-      "first_release_date": null,
-      "date_incomplete": true,
+      "first_release_date": "2022-04-20",
+      "date_incomplete": false,
       "search_creator_names": [
         "児玉雨子",
         "炭竃智弘"
@@ -1475,7 +1506,7 @@
           "title": "プラトニック・プラネット(Ultimate Juice Ver.)",
           "version_name": "Ultimate Juice Ver.",
           "version_type": "other",
-          "release_date": null,
+          "release_date": "2022-04-20",
           "credits": [
             {
               "creator_id": "C00005",
@@ -1507,14 +1538,11 @@
       "title": "生まれたてのBaby Love",
       "title_kana": null,
       "first_release_date": "2015-07-15",
-      "date_incomplete": true,
+      "date_incomplete": false,
       "search_creator_names": [
         "masaaki asada",
-        "つんく",
-        "三浦徳子",
         "星部ショウ",
-        "松井寛",
-        "高橋諭一"
+        "松井寛"
       ],
       "songs": [
         {
@@ -1546,36 +1574,6 @@
               "credit_order": 1
             }
           ]
-        },
-        {
-          "song_id": "J00025",
-          "title": "生まれたてのBaby Love(2022 ver.)",
-          "version_name": "2022 ver.",
-          "version_type": "other",
-          "release_date": null,
-          "credits": [
-            {
-              "creator_id": "C00029",
-              "creator_name": "高橋諭一",
-              "credit_name": "高橋諭一",
-              "role": "arrangement",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00028",
-              "creator_name": "つんく",
-              "credit_name": "つんく",
-              "role": "composition",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00004",
-              "creator_name": "三浦徳子",
-              "credit_name": "三浦徳子",
-              "role": "lyrics",
-              "credit_order": 1
-            }
-          ]
         }
       ]
     },
@@ -1584,7 +1582,7 @@
       "title": "CHOICE & CHANCE",
       "title_kana": null,
       "first_release_date": "2015-07-15",
-      "date_incomplete": true,
+      "date_incomplete": false,
       "search_creator_names": [
         "平田祥一郎",
         "星部ショウ"
@@ -1649,36 +1647,6 @@
               "credit_order": 1
             }
           ]
-        },
-        {
-          "song_id": "J00026",
-          "title": "CHOICE & CHANCE(2022 ver.)",
-          "version_name": "2022 ver.",
-          "version_type": "other",
-          "release_date": null,
-          "credits": [
-            {
-              "creator_id": "C00009",
-              "creator_name": "平田祥一郎",
-              "credit_name": "平田祥一郎",
-              "role": "arrangement",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00008",
-              "creator_name": "星部ショウ",
-              "credit_name": "星部ショウ",
-              "role": "composition",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00008",
-              "creator_name": "星部ショウ",
-              "credit_name": "星部ショウ",
-              "role": "lyrics",
-              "credit_order": 1
-            }
-          ]
         }
       ]
     },
@@ -1687,7 +1655,7 @@
       "title": "Never Never Surrender",
       "title_kana": null,
       "first_release_date": "2018-08-01",
-      "date_incomplete": true,
+      "date_incomplete": false,
       "search_creator_names": [
         "児玉雨子",
         "大久保薫",
@@ -1753,36 +1721,6 @@
               "credit_order": 1
             }
           ]
-        },
-        {
-          "song_id": "J00027",
-          "title": "Never Never Surrender(2022 ver.)",
-          "version_name": "2022 ver.",
-          "version_type": "other",
-          "release_date": null,
-          "credits": [
-            {
-              "creator_id": "C00030",
-              "creator_name": "大久保薫",
-              "credit_name": "大久保薫",
-              "role": "arrangement",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00008",
-              "creator_name": "星部ショウ",
-              "credit_name": "星部ショウ",
-              "role": "composition",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00006",
-              "creator_name": "児玉雨子",
-              "credit_name": "児玉雨子",
-              "role": "lyrics",
-              "credit_order": 1
-            }
-          ]
         }
       ]
     },
@@ -1790,8 +1728,8 @@
       "work_id": "W00027",
       "title": "Goal～明日はあっちだよ～",
       "title_kana": null,
-      "first_release_date": null,
-      "date_incomplete": true,
+      "first_release_date": "2018-08-01",
+      "date_incomplete": false,
       "search_creator_names": [
         "沢頭たかし",
         "近藤薫"
@@ -1802,7 +1740,7 @@
           "title": "Goal～明日はあっちだよ～(Album Version)",
           "version_name": "Album Version",
           "version_type": "other",
-          "release_date": null,
+          "release_date": "2018-08-01",
           "credits": [
             {
               "creator_id": "C00012",

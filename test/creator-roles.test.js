@@ -50,6 +50,6 @@ test("canonical examples retain same-song self pairs and repeated-recording role
   assert(self.some(e => e.works.some(w => w.work_id === "W00002" && w.song_ids.includes("J00002"))));
   const a = analyzeCreatorPairs(data.lyrics_composition_pairs.entries, "C00001", true, true).entries;
   assert(!a.some(e => e.works.some(w => w.work_id === "W00001")));
-  assert.equal(data.summary.primary_song_count, 120);
+  assert.equal(data.summary.primary_song_count, 117);
   assert.equal(data.summary.target_work_count, 90);
 });

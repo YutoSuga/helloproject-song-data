@@ -1,5 +1,17 @@
 # Juice=Juice「terzo」事前調査（data-spec v0.2 検証）
 
+## Issue #106による訂正（2026-11-23）
+
+J00018「POPPIN' LOVE」は、誤っていた作曲関係を削除し、既存作家 Erik Lidbom の作曲順3と編曲を反映した。作曲順1の Andreas Carlsson と順2の Julie Yu は正式な承認経路が整うまで登録を保留するため、作曲者情報は一時的に不完全となる。[残課題 #111](https://github.com/YutoSuga/helloproject-song-data/issues/111)
+
+以下の事前調査は当時の判断を追跡するために残す。品番、Disc 2の9～12曲目、それらを根拠とする音源・作家記述は、この訂正を参照する。
+
+- 公式CDは初回限定Aが HKCN-50712、初回限定Bが HKCN-50715、通常盤が HKCN-50718。各盤ともDisc 1が16曲、Disc 2が8曲。Disc 2の9～12曲目として登録した計12件の収録関係を削除した。[公式CD](https://helloproject.com/juicejuice/release/6692/)
+- J00025～J00027は独立した2022年版を公式商品・配信から確認できなかったため、音源行と参照行を削除した。作品 W00024～W00026と確認済みの別録音は保持した。削除IDは欠番とし、再利用しない。既存のFN-004 bootstrap・stateを維持し、J系列のhigh-waterは120、次の採番候補はJ00121。[公式配信告知](https://helloproject.com/juicejuice/news/14407/)
+- J00028は2018年8月1日のAlbum Version。L00103・L00104のDisc 2/7を維持し、歌唱名義と共同編曲を含む音源の出典を2018年版へ訂正した。作品 W00027 の出典は無印版の2017年公式配信とした。[2018年版](https://helloproject.com/release/5684/) ／ [2017年配信](https://up-front-works.jp/release/5363/)
+- CDの公式クレジットで、J00004・J00006・J00008の編曲は鈴木俊介。J00017、J00018、J00019、J00020、J00022、J00023も作家関係の訂正対象。共同作家は役割ごとに掲載順を使用し、Andreas Ohrn と Zeyun の名義は関係行に保持する。[公式CD](https://helloproject.com/juicejuice/release/6692/) ／ [2019年シングル](https://helloproject.com/release/5997/?pc=1) ／ [2020年シングル](https://helloproject.com/juicejuice/release/6261/)
+- CDの個人歌唱欄に基づき、J00020に4名、J00023に5名、J00024に12名を公式順で追加した。J00017～J00024の初出日は、確認できたCD発売・公式配信の2022年4月20日とした。[公式CD](https://helloproject.com/juicejuice/release/6692/) ／ [同日配信](https://helloproject.com/juicejuice/news/14407/)
+
 ## 0. 調査範囲と前提
 
 - 対象は Juice=Juice の 3rd アルバム「terzo」の **CD 音源**である。映像特典は盤差の確認にだけ用い、`videos.csv` の候補にはしない。
