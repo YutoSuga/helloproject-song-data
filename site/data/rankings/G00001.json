@@ -2799,46 +2799,6 @@
               ]
             }
           ]
-        },
-        {
-          "artist_id": "G00001",
-          "category": "composition",
-          "rank": 17,
-          "creator_id": "C00087",
-          "creator_name": "Andreas Carlsson",
-          "work_count": 1,
-          "works": [
-            {
-              "work_id": "W00017",
-              "title": "POPPIN' LOVE",
-              "song_ids": [
-                "J00018"
-              ],
-              "roles": [
-                "composition"
-              ]
-            }
-          ]
-        },
-        {
-          "artist_id": "G00001",
-          "category": "composition",
-          "rank": 17,
-          "creator_id": "C00088",
-          "creator_name": "Julie Yu",
-          "work_count": 1,
-          "works": [
-            {
-              "work_id": "W00017",
-              "title": "POPPIN' LOVE",
-              "song_ids": [
-                "J00018"
-              ],
-              "roles": [
-                "composition"
-              ]
-            }
-          ]
         }
       ]
     },
@@ -5735,46 +5695,6 @@
               ]
             }
           ]
-        },
-        {
-          "artist_id": "G00001",
-          "category": "lyrics_or_composition",
-          "rank": 24,
-          "creator_id": "C00087",
-          "creator_name": "Andreas Carlsson",
-          "work_count": 1,
-          "works": [
-            {
-              "work_id": "W00017",
-              "title": "POPPIN' LOVE",
-              "song_ids": [
-                "J00018"
-              ],
-              "roles": [
-                "composition"
-              ]
-            }
-          ]
-        },
-        {
-          "artist_id": "G00001",
-          "category": "lyrics_or_composition",
-          "rank": 24,
-          "creator_id": "C00088",
-          "creator_name": "Julie Yu",
-          "work_count": 1,
-          "works": [
-            {
-              "work_id": "W00017",
-              "title": "POPPIN' LOVE",
-              "song_ids": [
-                "J00018"
-              ],
-              "roles": [
-                "composition"
-              ]
-            }
-          ]
         }
       ]
     },
@@ -7805,40 +7725,6 @@
             "title": "イニミニマニモ～恋のライバル宣言～",
             "song_ids": [
               "J00090"
-            ]
-          }
-        ]
-      },
-      {
-        "rank": 11,
-        "lyricist_creator_id": "C00001",
-        "lyricist_name": "山崎あおい",
-        "composer_creator_id": "C00087",
-        "composer_name": "Andreas Carlsson",
-        "work_count": 1,
-        "works": [
-          {
-            "work_id": "W00017",
-            "title": "POPPIN' LOVE",
-            "song_ids": [
-              "J00018"
-            ]
-          }
-        ]
-      },
-      {
-        "rank": 11,
-        "lyricist_creator_id": "C00001",
-        "lyricist_name": "山崎あおい",
-        "composer_creator_id": "C00088",
-        "composer_name": "Julie Yu",
-        "work_count": 1,
-        "works": [
-          {
-            "work_id": "W00017",
-            "title": "POPPIN' LOVE",
-            "song_ids": [
-              "J00018"
             ]
           }
         ]

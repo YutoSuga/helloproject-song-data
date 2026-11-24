@@ -2,6 +2,8 @@
 
 ## Issue #106による訂正（2026-11-23）
 
+J00018「POPPIN' LOVE」は、誤っていた作曲関係を削除し、既存作家 Erik Lidbom の作曲順3と編曲を反映した。作曲順1の Andreas Carlsson と順2の Julie Yu は正式な承認経路が整うまで登録を保留するため、作曲者情報は一時的に不完全となる。[残課題 #111](https://github.com/YutoSuga/helloproject-song-data/issues/111)
+
 以下の事前調査は当時の判断を追跡するために残す。品番、Disc 2の9～12曲目、それらを根拠とする音源・作家記述は、この訂正を参照する。
 
 - 公式CDは初回限定Aが HKCN-50712、初回限定Bが HKCN-50715、通常盤が HKCN-50718。各盤ともDisc 1が16曲、Disc 2が8曲。Disc 2の9～12曲目として登録した計12件の収録関係を削除した。[公式CD](https://helloproject.com/juicejuice/release/6692/)

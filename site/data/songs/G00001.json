@@ -1184,9 +1184,7 @@
       "first_release_date": "2022-04-20",
       "date_incomplete": false,
       "search_creator_names": [
-        "Andreas Carlsson",
         "Erik Lidbom",
-        "Julie Yu",
         "山崎あおい"
       ],
       "songs": [
@@ -1203,20 +1201,6 @@
               "credit_name": "Erik Lidbom",
               "role": "arrangement",
               "credit_order": 1
-            },
-            {
-              "creator_id": "C00087",
-              "creator_name": "Andreas Carlsson",
-              "credit_name": "Andreas Carlsson",
-              "role": "composition",
-              "credit_order": 1
-            },
-            {
-              "creator_id": "C00088",
-              "creator_name": "Julie Yu",
-              "credit_name": "Julie Yu",
-              "role": "composition",
-              "credit_order": 2
             },
             {
               "creator_id": "C00076",
