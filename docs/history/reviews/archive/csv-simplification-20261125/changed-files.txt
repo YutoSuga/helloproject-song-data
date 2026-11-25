@@ -19,11 +19,14 @@ docs/design/system/公開サイトデータ生成・ビルド仕様.md
 docs/design/system/楽曲管理のアプリケーションサービス・CLI契約.md
 docs/history/reviews/CSV簡素化受入.md
 docs/history/reviews/README.md
+docs/history/reviews/archive/csv-simplification-20261125/SHA256SUMS
 docs/history/reviews/archive/csv-simplification-20261125/browser-creators.txt
 docs/history/reviews/archive/csv-simplification-20261125/browser-songs.txt
 docs/history/reviews/archive/csv-simplification-20261125/browser-ui.txt
 docs/history/reviews/archive/csv-simplification-20261125/changed-files.txt
+docs/history/reviews/archive/csv-simplification-20261125/ci-jobs.json
 docs/history/reviews/archive/csv-simplification-20261125/equivalence.json
+docs/history/reviews/archive/csv-simplification-20261125/id-validation.json
 docs/history/reviews/archive/csv-simplification-20261125/initial-id-audit.json
 docs/history/reviews/archive/csv-simplification-20261125/normal-tests.txt
 docs/management/CSV直接編集ガイド.md

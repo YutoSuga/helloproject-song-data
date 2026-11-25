@@ -41,7 +41,7 @@ main [run 45547151205](https://github.com/YutoSuga/helloproject-song-data/action
 
 変更前の成功PR run45414980331：Test and build 2026-11-24T14:31:22Z〜15:20:36Z、49分14秒。main失敗run45547151205：04:30:01Z〜05:52:44Z、82分43秒。後者は成功baselineではなく失敗実測。runner負荷・環境差があり厳密な性能benchmarkとはしない。
 
-変更後実装PRの通常CI結果・実行時間は提出後に追記する。PRのDeploy skipは正常であり、マージ後main公開は人間による手動マージ後に確認する。保存版の長時間全suiteは今回は再実行していない。
+変更後[PR #113 run45564121000](https://github.com/YutoSuga/helloproject-song-data/actions/runs/45564121000)はsuccess。Test and buildは06:54:52Z〜06:55:09Z、17秒。全14表・ID差分・通常回帰・ランキング・楽曲契約・生成/一致がsuccess、upload/DeployはPRのためskip。コードHEADはb19e2bf5a739dd5e9ff6a8910d604d51ce6a65ec、Node20通常suiteは210 pass/0 fail/skip0。ci-jobs.jsonに生metadataを保存。PRのDeploy skipは正常であり、マージ後main公開は人間による手動マージ後に確認する。保存版の長時間全suiteは今回は再実行していない。
 
 ## 保存所在・残課題
 
@@ -52,3 +52,7 @@ main [run 45547151205](https://github.com/YutoSuga/helloproject-song-data/action
 保護設定確認は解消済み。2026-11-25所有者確認：Rulesets・Classic branch protection・required checksなし。移行不要、新設は範囲外、従来どおり最新main/CI確認後に順次手動マージする。
 
 Issue #111のデータ修正・close、Java実装、main push、auto mergeは未実施。初回CSV更新は本PR受入後の別データPR。
+
+## 変更ファイル一覧
+
+[changed-files.txt](archive/csv-simplification-20261125/changed-files.txt)に全パスを保存。既存CSV・siteコード/JSON・stagingは変更対象に含まない。追加は共通reader/採番/CLI/通常suiteとfixture、CI構成、運用文書・受入証拠。既存FN-004ファイルの差分は旧経路停止guardのみ。
