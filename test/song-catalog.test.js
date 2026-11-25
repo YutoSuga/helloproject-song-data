@@ -56,7 +56,7 @@ test('strict CSV reader rejects missing files, empty/malformed header and corrup
   const dir=await mkdtemp(join(tmpdir(),'songs-reader-'));
   try {
     await mkdir(join(dir,'data'));
-    for(const name of SONG_TABLES) await writeFile(join(dir,'data',`${name}.csv`),CANONICAL_SCHEMA[name].columns.map(c=>c.name).join(',')+'\n');
+    for(const name of Object.keys(CANONICAL_SCHEMA)) await writeFile(join(dir,'data',`${name}.csv`),CANONICAL_SCHEMA[name].columns.map(c=>c.name).join(',')+'\n');
     assert.deepEqual((await loadSongTables(dir)).songs,[]);
     for (const text of ['', 'song_id,title\n',CANONICAL_SCHEMA.songs.columns.map(c=>c.name).join(',')+'\n"unclosed']) {
       await writeFile(join(dir,'data/songs.csv'),text);await assert.rejects(loadSongTables(dir),/songs.csv/);
@@ -83,7 +83,7 @@ test('CLI generates atomically, validates drift, rejects arguments and preserves
     await mkdir(join(dir,'scripts'),{recursive:true});await mkdir(join(dir,'data'));
     await writeFile(join(dir,'package.json'),'{"type":"module"}');
     for(const file of ['generate-songs.js','validate-songs.js'])await cp(join(root,'scripts',file),join(dir,'scripts',file));
-    for(const name of SONG_TABLES)await cp(join(root,'data',`${name}.csv`),join(dir,'data',`${name}.csv`));
+    for(const name of Object.keys(CANONICAL_SCHEMA))await cp(join(root,'data',`${name}.csv`),join(dir,'data',`${name}.csv`));
     const run=script=>exec(process.execPath,[join(dir,'scripts',script)]);
     await run('generate-songs.js');const output=join(dir,'site/data/songs/G00001.json'),before=await readFile(output,'utf8');
     await run('validate-songs.js');await run('generate-songs.js');assert.equal(await readFile(output,'utf8'),before);

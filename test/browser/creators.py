@@ -36,7 +36,7 @@ with sync_playwright() as p:
             page.wait_for_selector('#ranking-content:visible')
         page.locator('[data-view="pair"]' if mock else '#view-pairs-tab').click()
         total = page.locator(cards).count()
-        check(total == (3 if mock else 68), 'initial all pairs')
+        check(total == (3 if mock else len(DATA['lyrics_composition_pairs']['entries'])), 'initial all pairs')
         check(page.locator(lyrics).is_disabled() and page.locator(composition).is_disabled(), 'initial disabled')
         def select(id):
             page.locator(query).fill(id)

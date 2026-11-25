@@ -1,3 +1,4 @@
+import { assertLegacyOperationAllowed } from './legacy-operation-guard.js';
 import { gateNow, gateDeadline, withGateAcquisitionBudget } from './fn004-gate-budget.js';
 import {validateCandidates} from './prepare-reviews.js';
 import {randomUUID} from 'node:crypto';
@@ -102,6 +103,7 @@ async function gated(root, operation, fn) {
 }
 export function createDecisionService({ root = process.cwd(), io, clock = () => new Date().toISOString() } = {}) {
   async function mutate(action, command, build = null) {
+    await assertLegacyOperationAllowed(root);
     // Freeze caller input before any await; no buffer mutation during gate wait.
     const captured = JSON.parse(canonicalJson(command));
     const repository = await createFn004Repository(root, io ? {io} : {});

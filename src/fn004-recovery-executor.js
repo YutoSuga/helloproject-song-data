@@ -1,3 +1,4 @@
+import { assertLegacyOperationAllowed } from './legacy-operation-guard.js';
 import { replaceCanonicalBytes } from './fn004-recovery-durability.js';
 import * as fs from 'node:fs/promises';
 import { createPersistence, RepositoryError } from './persistence.js';
@@ -46,6 +47,7 @@ async function durableUnlink(store, io, path) {
 // caller options cannot skip validation or provide an owned snapshot.
 export async function createRecoveryExecutor(root, { io = fs, audit = auditGitIds,
   operator = { id: 'local:recovery', assurance: 'local_process' }, probeOwner = probeRecoveryOwner, clock = () => new Date().toISOString(), onBoundary = async () => {}, beforeOriginalRelease = async () => {} } = {}, successSide = false) {
+  await assertLegacyOperationAllowed(root);
   // Capture trusted context before any await; mutable caller objects are not authority.
   operator = JSON.parse(canonicalJson(operator));
   validateActor(operator); check(operator.assurance === 'local_process', 'Recovery requires a local operator');

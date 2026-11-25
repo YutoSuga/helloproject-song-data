@@ -1,0 +1,42 @@
+name: FN-004 archived acceptance (manual)
+on:
+  workflow_dispatch:
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: 9363c69cc0c119ad4ac251e029061e43d9016d76
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Freeze authoritative origin/main to archived code and data
+        run: git update-ref refs/remotes/origin/main 9363c69cc0c119ad4ac251e029061e43d9016d76
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          package-manager-cache: false
+      - run: npm test
+      - run: npm run site:build && npm run songs:validate && npm run site:check-generated
+  gate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        node: [20, 24]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: 9363c69cc0c119ad4ac251e029061e43d9016d76
+          fetch-depth: 0
+          persist-credentials: false
+      - run: git update-ref refs/remotes/origin/main 9363c69cc0c119ad4ac251e029061e43d9016d76
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      - run: node --test --test-concurrency=1 test/fn004-gate-publication.test.js test/fn004-gate-publication-crash.test.js test/fn004-gate-candidate-integration.test.js

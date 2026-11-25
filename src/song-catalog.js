@@ -1,7 +1,4 @@
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
-import { parseCsv } from './csv.js';
-import { withCanonicalRead } from './fn004-repository.js';
+import { readValidatedCanonical } from './canonical-reader.js';
 import { CANONICAL_SCHEMA } from './canonical-schema.js';
 import { canonicalValueError } from './canonical-validator.js';
 import { validateSongCatalog } from './song-catalog-contract.js';
@@ -10,28 +7,10 @@ export const SONG_TABLES = ['artists', 'works', 'songs', 'song_artists', 'creato
 const ascii = (a, b) => a < b ? -1 : a > b ? 1 : 0;
 const nullable = value => value === '' ? null : value;
 
-// Read one consistent canonical snapshot using the existing FN-004 read gate.
-export async function loadSongTables(root, { gate } = {}) {
-  return withCanonicalRead({ root, gate, fn: async base => {
-    const results = await Promise.allSettled(SONG_TABLES.map(async name => {
-      const file = `data/${name}.csv`;
-      try {
-        const rows = parseCsv(await readFile(join(base, file), 'utf8'), { strict: true });
-        const header = rows.shift();
-        const expected = CANONICAL_SCHEMA[name].columns.map(c => c.name);
-        if (!header || header.length !== expected.length || new Set(header).size !== header.length || expected.some(c => !header.includes(c))) {
-          throw new Error(`invalid header; expected ${expected.join(',')}`);
-        }
-        return [name, rows.map((row, index) => {
-          if (row.length !== header.length) throw new Error(`record ${index + 2}: wrong field count`);
-          return Object.fromEntries(header.map((key, i) => [key, row[i]]));
-        })];
-      } catch (error) { throw new Error(`${file}: ${error.message}`, { cause: error }); }
-    }));
-    const failure = results.find(r => r.status === 'rejected');
-    if (failure) throw failure.reason;
-    return Object.fromEntries(results.map(r => r.value));
-  } });
+// Whole-canonical validation precedes this legacy six-table projection.
+export async function loadSongTables(root) {
+  const { tables } = await readValidatedCanonical(root);
+  return Object.fromEntries(SONG_TABLES.map(name => [name, tables[name]]));
 }
 
 export function validateSongTables(tables) {

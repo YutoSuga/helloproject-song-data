@@ -1,3 +1,4 @@
+import { assertLegacyOperationAllowed } from './legacy-operation-guard.js';
 import * as fs from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { hostname } from "node:os";
@@ -21,6 +22,7 @@ async function processIdentity() {
 // A crash leaves the file in place. There is deliberately no force/stale unlock.
 export async function acquireGate(options = {}) { return acquireGateInternal(options); }
 async function acquireGateInternal({ root = process.cwd(), operation = "canonical_read", actor = null, io = fs } = {}, recovery = null) {
+  await assertLegacyOperationAllowed(root);
   const store = await createPersistence(root, { io });
   const scopedToken = scope.getStore()?.get(store.root);
   if (scopedToken && leases.get(scopedToken)?.active) throw new RepositoryError("GATE_NESTED", "Pass the current gate lease instead of nested acquisition");
@@ -142,6 +144,7 @@ export async function closeRetainedGate(token) {
 }
 
 export async function withCanonicalGate({ root = process.cwd(), operation = "canonical_read", actor = null, gate, fn, io = fs }) {
+  await assertLegacyOperationAllowed(root);
   if (gate) { await assertGateOwnership(gate, root); return fn(gate); }
   const token = await acquireGate({ root, operation, actor, io });
   let result, operationError, failed = false;

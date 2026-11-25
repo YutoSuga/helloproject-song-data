@@ -1,3 +1,4 @@
+import { writeTitleFixture } from "./fixtures/csv-edit.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile, writeFile, mkdir, mkdtemp, rm, readdir } from "node:fs/promises";
@@ -72,8 +73,7 @@ async function sandbox(t) {
   t.after(() => rm(root, { recursive: true, force: true }));
   await mkdir(join(root, "data"));
   await mkdir(join(root, "staging"));
-  await writeFile(join(root, "data", "songs.csv"), "song_id,work_id,title\n");
-  await writeFile(join(root, "data", "works.csv"), "work_id,title\n");
+  await writeTitleFixture(root);
   const outputPath = join(root, "staging", "song-candidates.json");
   const original = '{"schema_version":1,"administrator_note":"keep","candidates":[]}\n';
   await writeFile(outputPath, original);

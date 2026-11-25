@@ -1,3 +1,4 @@
+import { assertLegacyOperationAllowed } from './legacy-operation-guard.js';
 import * as fs from 'node:fs/promises';
 import { createPersistence, RepositoryError } from './persistence.js';
 import { assertGateOwnership, closeRetainedGate } from './fn004-gate.js';
@@ -24,6 +25,7 @@ const rejected = new Set(['STALE_PLAN','DECISION_NOT_EFFECTIVE','CANDIDATE_FINGE
 // No retry/resume/public dispatch entry point is provided.
 export async function executeAcceptedRequest({ root, gate, artifact, original, before_state, evaluateTerminal },
   { io = fs, clock = () => new Date().toISOString(), onBoundary = async () => {}, audit } = {}) {
+  await assertLegacyOperationAllowed(root);
   const store = await createPersistence(root, { io }), publisher = await createEvidencePublisher(root, { io });
   const r = structuredClone(artifact.receipt), binding = { ...r, bootstrap_hash: before_state.bootstrap_hash,
     receipt_hash: artifact.receipt_hash };

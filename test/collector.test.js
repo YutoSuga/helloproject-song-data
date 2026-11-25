@@ -1,3 +1,4 @@
+import { writeTitleFixture } from "./fixtures/csv-edit.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
@@ -140,8 +141,7 @@ test("detail failure never overwrites existing staging", async () => {
     await mkdir(join(root, "staging"));
     await mkdir(join(root, "data"));
     await writeFile(outputPath, original);
-    await writeFile(join(root, "data", "songs.csv"), "song_id,work_id,title\n");
-    await writeFile(join(root, "data", "works.csv"), "work_id,title\n");
+  await writeTitleFixture(root);
     const list = await fixture("release-list.html");
     const fetchImpl = async (url) => ({
       ok: !String(url).includes("/7645/"), status: 500,

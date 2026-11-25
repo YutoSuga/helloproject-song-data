@@ -1,0 +1,32 @@
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { readFile, lstat } from 'node:fs/promises';
+import { join } from 'node:path';
+import { readCanonicalSnapshotFromAdapter } from './canonical-snapshot.js';
+import { readValidatedCanonical } from './canonical-reader.js';
+import { parseHighWater, validateIdChanges, MIGRATION_BASE, INITIAL_HIGH_WATER } from './id-high-water.js';
+const exec = promisify(execFile);
+export async function validateIdDiff({ root = process.cwd(), base, candidate } = {}) {
+  const valid = sha => typeof sha === 'string' && /^[0-9a-f]{40}$/.test(sha) && !/^0+$/.test(sha);
+  if (!valid(base) || !valid(candidate) || base === candidate) throw new Error('ID_BASE_INVALID: distinct full base/candidate SHAs required');
+  const env = { ...process.env, GIT_NO_REPLACE_OBJECTS:'1', GIT_NO_LAZY_FETCH:'1', GIT_OPTIONAL_LOCKS:'0' };
+  for (const k of ['GIT_DIR','GIT_WORK_TREE','GIT_COMMON_DIR','GIT_INDEX_FILE','GIT_NAMESPACE','GIT_OBJECT_DIRECTORY','GIT_ALTERNATE_OBJECT_DIRECTORIES','GIT_SHALLOW_FILE','GIT_GRAFT_FILE']) delete env[k];
+  const git = async args => (await exec('git',['--no-replace-objects','-C',root,...args],{env,encoding:'buffer',maxBuffer:64*1024*1024})).stdout;
+  await git(['merge-base','--is-ancestor',base,candidate]);
+  const head = (await git(['rev-parse','HEAD'])).toString().trim();
+  if (head !== candidate) throw new Error('ID_CANDIDATE_INVALID: checkout must equal candidate SHA');
+  await git(['diff','--exit-code',candidate,'--','data']);
+  if ((await git(['ls-files','--others','--','data'])).length) throw new Error('ID_CANDIDATE_INVALID: commit all data changes before ID verification');
+  const names = (await git(['ls-tree','--name-only',`${base}:data`])).toString().trim().split('\n');
+  const before = await readCanonicalSnapshotFromAdapter({ list:async()=>names, read:path=>git(['cat-file','blob',`${base}:${path}`]) });
+  if (!before.validation.ok) throw new Error(`ID_BASE_INVALID: ${JSON.stringify(before.validation.diagnostics)}`);
+  let baseWater;
+  if (names.includes('id-high-water.json')) baseWater = parseHighWater(await git(['cat-file','blob',`${base}:data/id-high-water.json`]));
+  else if (base === MIGRATION_BASE) baseWater = INITIAL_HIGH_WATER;
+  else throw new Error('ID_BASE_INVALID: missing ledger outside fixed migration baseline');
+  const snapshot = await readValidatedCanonical(root), path = join(root,'data/id-high-water.json');
+  const stat = await lstat(path);
+  if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('ID_HIGH_WATER_INVALID: expected regular ledger file');
+  const water = parseHighWater(await readFile(path));
+  return { base, candidate, migration:!names.includes('id-high-water.json'), ...validateIdChanges(before.tables,snapshot.tables,baseWater,water) };
+}

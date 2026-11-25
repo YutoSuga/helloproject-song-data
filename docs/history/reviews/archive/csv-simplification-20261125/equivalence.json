@@ -1,0 +1,126 @@
+{
+  "baseline": "14fc448bfb17c4a9de53437f3f3819593da3356b",
+  "csv_baseline": "01eff4582f5f8758145cfa3504cdd4e85dc9bf3f",
+  "files": [
+    {
+      "path": "data/artists.csv",
+      "bytes": 546,
+      "sha256": "e725fdb4c08f8807615b5d2e4a3cc3077b07660728cd32a913ad0f35445d5cbb",
+      "byte_equal": true
+    },
+    {
+      "path": "data/creators.csv",
+      "bytes": 10234,
+      "sha256": "d3cf042419262d8660288dae47c845f5c4d51b913f59cbbdf8c75c383fdb1451",
+      "byte_equal": true
+    },
+    {
+      "path": "data/member_affiliations.csv",
+      "bytes": 57,
+      "sha256": "664a19c17e7bfc35d64e23afdab33a22cf88f717c1d30b15f5f78a417ec42729",
+      "byte_equal": true
+    },
+    {
+      "path": "data/members.csv",
+      "bytes": 3418,
+      "sha256": "24f33feabd06b85a1dc82216e3e86c9b87fe84f556fb62c1b39da579e53dba74",
+      "byte_equal": true
+    },
+    {
+      "path": "data/release_tracks.csv",
+      "bytes": 52157,
+      "sha256": "ca458d6408d8619505ae126094ec2d4361bebede165fd5872332bccb3226ee70",
+      "byte_equal": true
+    },
+    {
+      "path": "data/releases.csv",
+      "bytes": 33772,
+      "sha256": "54d3b3b67b36b735592f7e12781ba59534793457629aea1869a762aafa104135",
+      "byte_equal": true
+    },
+    {
+      "path": "data/song_artists.csv",
+      "bytes": 8424,
+      "sha256": "0e7cf4f60dcb5452d9d20008ab544db051cedc495aaab84b46a6ba876adfa44e",
+      "byte_equal": true
+    },
+    {
+      "path": "data/song_creators.csv",
+      "bytes": 33156,
+      "sha256": "a63cd54616244dc4f41bbe84d3cb640bc8401553c01dba75b4ff072c2737cd8c",
+      "byte_equal": true
+    },
+    {
+      "path": "data/song_performers.csv",
+      "bytes": 20357,
+      "sha256": "38f342492f22ebf20485dec1ea1afb9deff24a8ddccfa24dde1009f8e8fd32f3",
+      "byte_equal": true
+    },
+    {
+      "path": "data/songs.csv",
+      "bytes": 25209,
+      "sha256": "410db50a2b01b62d45bcf890ffb8f9c9efef17ab4b5f4632b45fe3e5aeee2ecf",
+      "byte_equal": true
+    },
+    {
+      "path": "data/video_song_performers.csv",
+      "bytes": 74,
+      "sha256": "2216390b9c5311e3a3690d29fb701452b16acd261added88f26b1850e00d3251",
+      "byte_equal": true
+    },
+    {
+      "path": "data/video_songs.csv",
+      "bytes": 107,
+      "sha256": "6f1863dbb3bf967762923a2ab346b8815f52aa8bbcdd082879e5919fff7b6a12",
+      "byte_equal": true
+    },
+    {
+      "path": "data/videos.csv",
+      "bytes": 114,
+      "sha256": "5a4d7d55360327d4ab85d119e3aa443d5162f16c2a4adfc920546fd53f72c349",
+      "byte_equal": true
+    },
+    {
+      "path": "data/works.csv",
+      "bytes": 12146,
+      "sha256": "2bf8ed5cde99f0c4dcbf3b190edda57d00e2a95877af88aaed6bfc8b439c8122",
+      "byte_equal": true
+    },
+    {
+      "path": "site/data/about/artists.json",
+      "bytes": 297,
+      "sha256": "8c28a7a6ad416efcbc0e2e0d6cd8e19392b29a2b421962a05adb80205ee9e758",
+      "byte_equal": true
+    },
+    {
+      "path": "site/data/about/coverage.json",
+      "bytes": 647,
+      "sha256": "42bebb6fa777dd12e73b9cc1d7adba679e7c0a33aff720d2a7a2e07e098bbf5a",
+      "byte_equal": true
+    },
+    {
+      "path": "site/data/about/policy.json",
+      "bytes": 2086,
+      "sha256": "b06c713188dc3d9771a82aac096dc3283666474a66043c3314bcf00ee2388cb4",
+      "byte_equal": true
+    },
+    {
+      "path": "site/data/about/updates.json",
+      "bytes": 721,
+      "sha256": "b4fc9ac1bc1f0cdb1fe53b1b223973fc17b0a5ef1371ae5793f455a373a457cc",
+      "byte_equal": true
+    },
+    {
+      "path": "site/data/rankings/G00001.json",
+      "bytes": 220232,
+      "sha256": "90e81246de5893d66758291926c1a066613581c6291d1593f43ee9478ed7f337",
+      "byte_equal": true
+    },
+    {
+      "path": "site/data/songs/G00001.json",
+      "bytes": 143784,
+      "sha256": "fd149eac48f0214db2e846c8113d4c8c53d728b36c68ba070d81ff215741d0d4",
+      "byte_equal": true
+    }
+  ]
+}

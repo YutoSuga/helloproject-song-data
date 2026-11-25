@@ -1,6 +1,6 @@
 # CSV直接編集・現行システム簡素化
 
-状態：基本方針承認済み／Draft・比較基準の修正レビュー待ち。2026-11-25。
+状態：PR #112承認・マージ済み。実装と受入記録は後続の実装PRで確認する。2026-11-25。
 
 本書は実装目標を定義する。2026-11-25にCSV直接編集、全14表検証、独立reader、単純台帳、C=88、Issue #111の次候補C00089/90、通常CI一本化、FN-004テスト分離、FN-002/003任意利用、旧操作誤実行防止の基本方針が承認された。今回は比較基準の設計修正までとし、実装開始は別途指示を待つ。設計PRのマージだけで現行の操作契約を切り替えない。実装・受入完了まで現行CLIを新しい手順として使用しない。FN-004を追加修正して今回のCIを通すことは対象外。
 
@@ -136,7 +136,7 @@ FN-004専用・Gate互換性テストは手動の保存版専用workflowへ分�
 
 Deployはmainのみ、同一runの検証済みsite artifactのみ使用。contents:read/pages:write/id-token:write、Environment、github-pages lock、cancel-in-progress:false、lock中の最新main SHA照合と古いartifact skip・API失敗時停止を維持する。ci_modeとGate needsは通常build依存へ置換。現行ci-policyとlight運用文書は実装時に整理する。
 
-branch protection APIは403、`rules/branches/main`応答は[]。required checks未確認のままジョブを削除しない。所有者が設定を確認し、既存Test and buildをrequiredに維持、Gate/Select CI mode要求を移行先へ変更、可能ならup-to-date要求を設定する。設定不可でも順次マージ・直前main再照合を必須にする。設定変更は今回未実施。
+初回API調査は403だったが、2026-11-25に所有者が設定画面でRulesets・Classic branch protection・required checksすべてなしと確認した。残課題は解消済み。既存設定移行不要、新規保護設定は実装範囲外。CI確認後の順次マージ・直前main再照合を継続し、設定変更は行わない。
 
 比較指標は同一runner/Nodeで通常build、test step、全workflowの経過時間とテスト件数。現失敗runのtest約48分は参考値で成功baselineとはしない。移行前成功runの実時間も取得し、差を受入記録に残す。短縮のため品質試験をskipしない。
 
@@ -192,7 +192,7 @@ Issue #111は実装・受入後の別データPRで対応し、その後Juice=Ju
 ## 15. 残課題・判断事項
 
 - 保存タグ対象は#108前の正常main `9363c69cc0c119ad4ac251e029061e43d9016d76`として承認済み。Final Acceptance対象・CSV比較基準との区別を維持する。未実施なのはタグ実作成。
-- required checks/保護設定の所有者確認。安全な順次マージはCIだけでは強制できない。
+- 保護設定の所有者確認は解消済み（2026-11-25）。Rulesets・Classic branch protection・required checksはいずれもなし。既存設定移行・新設は不要/対象外。CI確認後の順次手動マージを継続する。
 - 隔離checkoutの過去原本所在・外部確定IDが他にないかの確認。移行時の最新履歴監査で初期値を再確定する。
 - 既存IDの別対象への付替えは意味的判断を要し、完全自動保証を主張しない。
 - 保存資産の移動・新予約サービス・新管理画面・新DBを追加しない。実装承認までは本書を実施済み扱いしない。
@@ -200,3 +200,7 @@ Issue #111は実装・受入後の別データPRで対応し、その後Juice=Ju
 ## 16. 設計レビューとCI例外
 
 2026-11-25、人間がPR #112初版のCI（844 pass / 2 fail）を#108マージ後mainと同じ既知STATE_HIGH_WATER_INVALIDによる失敗と確認し、設計専用PRに限って例外的に許容した。これはCI成功の判定、実装後の通常CIでの失敗許容、チェック無効化、FN-004修正の許可ではない。今回修正後のCIも実測状態を報告し、新規の失敗があれば既知例外へ含めず確認する。
+
+## 実装時の確定情報
+
+共通readerはsrc/canonical-reader.js、ID検証はsrc/id-high-water.js・src/id-diff.js、CI境界は.github/scripts/id-ci-base.cjs。旧経路停止guardのみFN-004公開境界に追加し、旧CIを正常化する修正はしない。初期監査はmain 14fc448…の263到達commitで承認値と一致。保存タグは指定SHAで作成済み。通常CIは毎回全通常suiteを実行する。手動保存版CIのみ固定保存SHAを使用する。既存詳細文書には現行/保存版の責務境界を追記する。

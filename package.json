@@ -7,12 +7,14 @@
     "rankings:validate": "node scripts/validate-rankings.js",
     "site:build": "npm run rankings:generate && npm run songs:generate && node scripts/build-about-data.js",
     "site:preview": "node scripts/preview-site.js",
-    "test": "node --test",
+    "test": "node scripts/run-tests.js",
     "collect:candidates": "node scripts/collect-candidates.js",
     "prepare:reviews": "node scripts/prepare-reviews.js",
     "canonical:manage": "node scripts/canonical-manage.js",
     "songs:generate": "node scripts/generate-songs.js",
     "songs:validate": "node scripts/validate-songs.js",
-    "site:check-generated": "node scripts/check-generated-data.js"
+    "site:check-generated": "node scripts/check-generated-data.js",
+    "canonical:validate": "node scripts/validate-canonical.js",
+    "ids:validate": "node scripts/validate-ids.js"
   }
 }

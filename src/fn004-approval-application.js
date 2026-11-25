@@ -1,3 +1,4 @@
+import { assertLegacyOperationAllowed } from './legacy-operation-guard.js';
 import { closeRetainedGate } from './fn004-gate.js';
 import { lookupAppliedDecision } from './fn004-history-projections.js';
 import { randomUUID } from 'node:crypto';
@@ -31,6 +32,7 @@ export function createApprovalRequestService({root=process.cwd(),io,clock=()=>ne
     }
   }
   async function run(operation,command,context,fn) {
+    await assertLegacyOperationAllowed(root);
     const input=freeze(command), trusted=freeze(context.actor);
     validateActor(trusted);
     return withCanonicalGate({root,gate:context.gate,operation,fn:async gate=>{
