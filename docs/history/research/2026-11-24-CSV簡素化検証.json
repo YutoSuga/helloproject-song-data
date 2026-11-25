@@ -1,0 +1,176 @@
+{
+  "head": "01eff4582f5f8758145cfa3504cdd4e85dc9bf3f",
+  "method": "readonly snapshot + pure generators; no gate/runtime mutation",
+  "validation": {
+    "ok": true,
+    "diagnostics": []
+  },
+  "manifest": {
+    "schema_version": 1,
+    "files": [
+      {
+        "path": "data/artists.csv",
+        "byte_length": 546,
+        "sha256": "e725fdb4c08f8807615b5d2e4a3cc3077b07660728cd32a913ad0f35445d5cbb"
+      },
+      {
+        "path": "data/creators.csv",
+        "byte_length": 10234,
+        "sha256": "d3cf042419262d8660288dae47c845f5c4d51b913f59cbbdf8c75c383fdb1451"
+      },
+      {
+        "path": "data/member_affiliations.csv",
+        "byte_length": 57,
+        "sha256": "664a19c17e7bfc35d64e23afdab33a22cf88f717c1d30b15f5f78a417ec42729"
+      },
+      {
+        "path": "data/members.csv",
+        "byte_length": 3418,
+        "sha256": "24f33feabd06b85a1dc82216e3e86c9b87fe84f556fb62c1b39da579e53dba74"
+      },
+      {
+        "path": "data/release_tracks.csv",
+        "byte_length": 52157,
+        "sha256": "ca458d6408d8619505ae126094ec2d4361bebede165fd5872332bccb3226ee70"
+      },
+      {
+        "path": "data/releases.csv",
+        "byte_length": 33772,
+        "sha256": "54d3b3b67b36b735592f7e12781ba59534793457629aea1869a762aafa104135"
+      },
+      {
+        "path": "data/song_artists.csv",
+        "byte_length": 8424,
+        "sha256": "0e7cf4f60dcb5452d9d20008ab544db051cedc495aaab84b46a6ba876adfa44e"
+      },
+      {
+        "path": "data/song_creators.csv",
+        "byte_length": 33156,
+        "sha256": "a63cd54616244dc4f41bbe84d3cb640bc8401553c01dba75b4ff072c2737cd8c"
+      },
+      {
+        "path": "data/song_performers.csv",
+        "byte_length": 20357,
+        "sha256": "38f342492f22ebf20485dec1ea1afb9deff24a8ddccfa24dde1009f8e8fd32f3"
+      },
+      {
+        "path": "data/songs.csv",
+        "byte_length": 25209,
+        "sha256": "410db50a2b01b62d45bcf890ffb8f9c9efef17ab4b5f4632b45fe3e5aeee2ecf"
+      },
+      {
+        "path": "data/video_song_performers.csv",
+        "byte_length": 74,
+        "sha256": "2216390b9c5311e3a3690d29fb701452b16acd261added88f26b1850e00d3251"
+      },
+      {
+        "path": "data/video_songs.csv",
+        "byte_length": 107,
+        "sha256": "6f1863dbb3bf967762923a2ab346b8815f52aa8bbcdd082879e5919fff7b6a12"
+      },
+      {
+        "path": "data/videos.csv",
+        "byte_length": 114,
+        "sha256": "5a4d7d55360327d4ab85d119e3aa443d5162f16c2a4adfc920546fd53f72c349"
+      },
+      {
+        "path": "data/works.csv",
+        "byte_length": 12146,
+        "sha256": "2bf8ed5cde99f0c4dcbf3b190edda57d00e2a95877af88aaed6bfc8b439c8122"
+      }
+    ],
+    "manifest_hash": "7485388dac2f7c9b39892c27df34c129306a8a74043e3fc94cce6ba98e485e85"
+  },
+  "counts": {
+    "artists": 3,
+    "creators": 86,
+    "member_affiliations": 0,
+    "members": 17,
+    "release_tracks": 550,
+    "releases": 136,
+    "song_artists": 121,
+    "song_creators": 392,
+    "song_performers": 194,
+    "songs": 118,
+    "video_song_performers": 0,
+    "video_songs": 0,
+    "videos": 0,
+    "works": 90
+  },
+  "current_maxima": {
+    "A": 0,
+    "B": 0,
+    "C": 86,
+    "G": 3,
+    "H": 1,
+    "J": 120,
+    "L": 136,
+    "M": 0,
+    "O": 0,
+    "P": 17,
+    "R": 0,
+    "T": 0,
+    "V": 0,
+    "W": 90
+  },
+  "git_audit": {
+    "maxima": {
+      "A": 0,
+      "B": 0,
+      "C": 88,
+      "G": 3,
+      "H": 1,
+      "J": 120,
+      "L": 136,
+      "M": 0,
+      "O": 0,
+      "P": 17,
+      "R": 0,
+      "T": 0,
+      "V": 0,
+      "W": 90
+    },
+    "git": {
+      "authoritative_ref": "origin/main",
+      "audited_head": "01eff4582f5f8758145cfa3504cdd4e85dc9bf3f",
+      "object_format": "sha1",
+      "history_scope": "all_reachable_parents",
+      "history_rule_version": 1,
+      "shallow": false,
+      "complete": true,
+      "reachable_commit_count": 260,
+      "root_commits": [
+        "1a2671442057743bf38d4821c587c28b324c125f"
+      ]
+    }
+  },
+  "state_high_water": {
+    "A": 0,
+    "B": 0,
+    "C": 86,
+    "G": 3,
+    "H": 1,
+    "J": 120,
+    "L": 136,
+    "M": 0,
+    "O": 0,
+    "P": 17,
+    "R": 0,
+    "T": 0,
+    "V": 0,
+    "W": 90
+  },
+  "history_creator_rows": [
+    "C00087,Andreas Carlsson,,,https://helloproject.com/juicejuice/release/6692/,2026-11-23T11:57:07+00:00,2026-11-23T11:57:07+00:00",
+    "C00088,Julie Yu,,,https://helloproject.com/juicejuice/release/6692/,2026-11-23T11:57:07+00:00,2026-11-23T11:57:07+00:00"
+  ],
+  "public_json_byte_equal": {
+    "rankings": true,
+    "songs": true,
+    "artists": true
+  },
+  "ranking_summary": {
+    "primary_song_count": 117,
+    "target_work_count": 90
+  }
+}
