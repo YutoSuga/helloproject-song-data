@@ -1,8 +1,8 @@
 # CSV直接編集・現行システム簡素化
 
-状態：正式設計案／Draft・人間レビュー待ち。2026-11-24。
+状態：基本方針承認済み／Draft・比較基準の修正レビュー待ち。2026-11-25。
 
-本書は承認後の実装目標を定義する。設計PRのマージだけで現行の操作契約を切り替えない。実装・受入完了まで現行CLIを新しい手順として使用しない。FN-004を追加修正して今回のCIを通すことは対象外。
+本書は実装目標を定義する。2026-11-25にCSV直接編集、全14表検証、独立reader、単純台帳、C=88、Issue #111の次候補C00089/90、通常CI一本化、FN-004テスト分離、FN-002/003任意利用、旧操作誤実行防止の基本方針が承認された。今回は比較基準の設計修正までとし、実装開始は別途指示を待つ。設計PRのマージだけで現行の操作契約を切り替えない。実装・受入完了まで現行CLIを新しい手順として使用しない。FN-004を追加修正して今回のCIを通すことは対象外。
 
 ## 1. 目的・背景・範囲
 
@@ -88,13 +88,31 @@ namespace nごとに基準台帳B、候補台帳H、基準に存在しない候�
 
 PR CIはイベントbase.shaと固定検証SHAを使用する。マージ直前は人間が最新main SHAを取得し、branchへ取り込み（またはrebase）、そのmainを含む最終headでCIを成功させる。他PRをその間にマージしない。並行PRのID競合は後続PRで再採番し参照も更新する。mainの取り込みがない古いCIだけでマージしない。
 
-main pushはfirst parentとpush SHAの差分を検証する。複数commit pushでも同じ比較境界。手動main実行も対象SHAのfirst parentを使う。移行導入PRのみ台帳不存在の基準を許し、固定移行SHA・初回監査値との一致を検査する。通常の台帳欠落はエラー。無期限のfallbackモードにしない。
+### イベント別の比較基準
+
+検証器には基準SHAと候補SHAを明示して渡し、両端のCSV・台帳を比較する。最終commitだけの差分やmerge-baseによる暗黙の置換は使わない。これは採番差分の境界であり、候補全14表の検証は常に別途行う。
+
+| 実行条件 | 基準SHA | 候補SHA | 検証範囲 |
+| --- | --- | --- | --- |
+| 通常PR（main宛） | `github.event.pull_request.base.sha` | `github.sha`（PRの検証用merge commit） | 固定baseにPRを取り込んだ結果全体。head SHAも記録する |
+| PRをmerge commitでmainへ取り込み | pushイベントの`github.event.before` | 同イベントの`github.event.after`（`github.sha`と一致を確認） | push直前mainからマージ後mainまで。first parentに決め打ちしない |
+| mainへ複数commitを一度にpush | 同イベントの`github.event.before` | 同イベントの`github.event.after` | push前後の累積差分。最後のcommitで変更していないID・台帳変更も含む |
+| mainへの単一commit push（squash/rebaseを含む） | 同イベントの`github.event.before` | 同イベントの`github.event.after` | 同じpush規則を適用する |
+| 手動workflow（main限定） | 必須input `base_sha` | 起動時に固定された`github.sha` | 操作者が指定した既知の比較基準から対象mainまで |
+
+main pushは取得時点の動くorigin/mainや最後のcommitのfirst parentを基準にしない。イベントのbefore/afterをログへ記録し、checkout候補もafterに固定する。必要なbase objectを明示的に取得する。beforeがall-zero、未取得・不正SHA、beforeがafterの先祖でないforce push等では停止し、成功やfirst-parent fallbackにしない。mainの通常運用ではbranch新規作成・削除・履歴書換えを想定せず、例外を別途人間確認とする。保存済みイベントの再実行も元のbefore/afterで検証する。
+
+例えば `B → C1（新ID・台帳更新）→ C2（文書のみ）`を一度にpushした場合、`B`と`C2`を比較する。`C1`と`C2`だけを比較して新ID変更を見落とさない。比較は両端の確定候補状態を対象とし、各中間commitの個別検証を追加する仕組みにはしない。
+
+手動workflowには`base_sha`を必須入力として設け、完全SHA・取得可能・対象SHAの厳密な先祖であることを確認する。同一SHA指定による空差分検証や、省略時のfirst-parent自動選択は許さない。操作ガイドで、再検証したい元main pushのbefore SHAをActionsイベントから確認して指定する手順を案内する。複数pushをまとめて再検証する場合は、それ以前の確認済みmain SHAを明示する。継続的な自動基準管理や新たな履歴台帳は導入しない。手動実行でも固定候補の全表・公開品質検証と公開直前の最新main確認は省略しない。
+
+これらは移行後CIの設計であり、今回workflow inputや設定は変更しない。移行導入PRのみ台帳不存在の基準を許し、固定移行SHA・初回監査値との一致を検査する。通常の台帳欠落はエラー。無期限のfallbackモードにしない。
 
 ## 7. FN-004保存・旧経路停止
 
-タグ名 `archive/fn004-v1.0` は確定、今回は作成しない。提案対象は `9363c69cc0c119ad4ac251e029061e43d9016d76`（#108直前、[CI/Pages成功 run 45295342133](https://github.com/YutoSuga/helloproject-song-data/actions/runs/45295342133)）。このrunは軽量で全suite/Gate stepはskip。全件受入済みという説明はしない。保存版のorigin/mainもこのSHAへ固定した独立cloneで再現する。現mainのrefを参照すると今回の履歴上限が混入する。
+タグ名 `archive/fn004-v1.0` と対象SHAは2026-11-25に承認済み。今回は作成しない。対象は `9363c69cc0c119ad4ac251e029061e43d9016d76`（#108直前、[CI/Pages成功 run 45295342133](https://github.com/YutoSuga/helloproject-song-data/actions/runs/45295342133)）。このrunは軽量で全suite/Gate stepはskip。全件受入済みという説明はしない。保存版のorigin/mainもこのSHAへ固定した独立cloneで再現する。現mainのrefを参照すると今回の履歴上限が混入する。
 
-Final Acceptance対象は `a265e8a165e13f2fdd525a79cb7bd86ede00217b`。`docs/history/reviews/FN-004-Final-Acceptance-20261115.md`のPASSと原証拠を保存する。完成版・受入対象・移行CSV基準は異なるSHAであり、混同しない。今回の失敗mainはタグの正常版候補にしないが、Git履歴と本調査に保存する。タグ候補変更は人間レビュー事項。
+Final Acceptance対象は `a265e8a165e13f2fdd525a79cb7bd86ede00217b`。`docs/history/reviews/FN-004-Final-Acceptance-20261115.md`のPASSと原証拠を保存する。完成版・受入対象・移行CSV基準は異なるSHAであり、混同しない。今回の失敗mainはタグの正常版候補にしないが、Git履歴と本調査に保存する。この対象の保存は承認済みだが、タグの実作成は後続の明示指示を待つ。
 
 コード・設計・テスト・CLIガイド・監査archiveを大規模移動せず保存。通常entrypointを切り離し、保存版テストはタグ時点のコード/データ、またはruntimeを持たない独立fixtureのみを対象にする。現行CSVを旧FN-004テストの本番入力にしない。
 
@@ -110,7 +128,7 @@ Final Acceptance対象は `a265e8a165e13f2fdd525a79cb7bd86ede00217b`。`docs/his
 
 通常CIは一本化し、ci:lightによる省略を廃止する目標。1通常workflowに `Test and build` とmain限定 `Deploy` を置く。全PR・main push・main手動起動で全14表・ID・公開サイト回帰を毎回実行する。非main手動公開は拒否。既存固定SHA・persist-credentials:false・最小権限を維持する。
 
-通常build順序：checkout固定SHA＋基準main object取得 → Node設定 → whitespace → canonical:validate → ids:validate → 通常回帰suite → rankings:validate → songs:validate → site:build → site:check-generated → mainのみartifact upload。
+通常build順序：第6節のイベント別base/candidate SHA確定・記録 → checkout固定候補SHA＋基準object取得 → Node設定 → whitespace → canonical:validate → ids:validate → 通常回帰suite → rankings:validate → songs:validate → site:build → site:check-generated → mainのみartifact upload。
 
 通常suiteはcanonical-validation、canonical-ranking、rankings、ranking-pairs、song-catalog、song-catalog-model、creator-roles、public-site、about-data、generated-data、collector各種、prepare-reviewsと新ID/reader/停止guard試験。混在テストを内容で整理し、単純なfn004文字列除外で有用な検証を落とさない。browser smokeは実装受入で既存browser資産を実行し、既存Nodeの公開サイト回帰は毎回必須。
 
@@ -142,7 +160,7 @@ CSV構造・整合性エラー：対象file/record/keyを確認し出典に基�
 
 1. 本設計を人間レビュー。保護設定、タグ候補、過去成果物所在を確認。
 2. 最新mainを固定しCSV14表/生成JSON/ID集合/hash・状態原本・公開状態を保存。進行データPRを一時直列化。
-3. 保存タグは別途承認された作業で作成。移行基準は#108後CSV、保存タグは正常な旧版と区別。
+3. 承認済み保存タグは実作成の指示を受けた後続作業で作成。移行基準は#108後CSV、保存タグは正常な旧版と区別。
 4. 共通reader・台帳・ID検証・旧停止guard・通常CIを一つの切替単位で導入。途中PRをmainへ入れる場合は非有効部品だけとし、旧経路と新採番を混在運用しない。
 5. 同等性受入、main CI・Pages確認後にCSV運用を開始。
 6. Issue #111は別データPRで最新出典・既存登録確認後に対応。今回は修正・closeしない。
@@ -156,24 +174,29 @@ CSV構造・整合性エラー：対象file/record/keyを確認し出典に基�
 - ランキング順位・同順位・work単位重複除外・同一音源ペア規則と画面の検索/詳細/作家/ナビが維持される。
 - canonical-validation.test.jsの全負例（UTF-8/CSV/列/型/PK/FK/複合FK/業務ルール）を維持する。
 - 台帳減少、削除ID・欠番再利用、台帳更新漏れ、空予約、競合PR、古いmain基準を検出する。既存identity変更はレビュー差分に出す。
+- PR固定baseとmerge候補、merge commit push、単一/複数commit push、手動base指定の境界をfixtureで確認する。複数commitの先頭だけに不正なID/台帳変更があり末尾が文書変更のケースも拒否する。before all-zero、取得不能、非先祖、手動base未指定/同一SHAも停止する。
 - 独立fixtureで新規楽曲・作家・関連行をCSV追加し生成まで成功。Issue #111の手順を適用できるが実データ変更は別PR。
 - state/Bootstrap/History/Gateがない環境、または保存用runtimeが不整合な環境でも通常read/build/CIがそれらを参照しない。import境界も確認。
 - 新台帳が正常/壊れている双方で旧CLIと直接mutating serviceが副作用前に拒否され、対象CSV/state/Historyがbyte不変。
 - 保存版テストは保存SHAか独立fixtureで実行、証拠checksumを確認。未回収資産は未回収と記録。
 - 通常CI毎回実行・最新main公開保護とrequired checks整合を確認し、実行時間を前後比較する。
 
-## 14. 実装PR分割
+## 14. 実装PRの範囲
 
-A：移行証拠・保存所在の棚卸しと非有効な共通reader/ID検証部品・fixture試験。CSV更新再開はまだしない。
+2026-11-25の方針に従い、従来案A（棚卸し・共通reader/ID検証部品）＋B（台帳・接続・旧経路停止・CI・運用文書）を原則一つの実装PRにまとめる。既存資産を活用した最小の一括切替で、現行サイト運用の再開を優先する。今回は実装を開始しない。
 
-B：最小の一括切替（台帳導入、公開/FN-002/003 reader接続、旧経路停止、通常CI一本化、保存版CI分離、運用文書）。A+Bを一PRにまとめてもよい。分割自体を目的にしない。
+実装PRは移行証拠の確定、共通reader、台帳/ID差分、公開/FN-002/003接続、旧誤操作停止、通常CI一本化・保存版suite分離、運用文書と受入を含む。規模・移行リスクが判明して分割が必要なら、理由と安全な切替単位を報告して判断を受ける。旧経路と新採番の混在運用を生む中途切替をしない。
 
-C：別データPRでIssue #111、その後Juice=Juice新曲追加。Javaは別計画。
+Issue #111は実装・受入後の別データPRで対応し、その後Juice=Juice新曲追加を進める。Javaは別計画。保存タグの実作成も今回の設計修正には含めない。
 
 ## 15. 残課題・判断事項
 
-- 保存タグ対象を#108前の正常main `9363c69…`とする提案への承認。元の「#108後の正常commit」条件は今回存在を確認できず、変更理由を明示した。
+- 保存タグ対象は#108前の正常main `9363c69cc0c119ad4ac251e029061e43d9016d76`として承認済み。Final Acceptance対象・CSV比較基準との区別を維持する。未実施なのはタグ実作成。
 - required checks/保護設定の所有者確認。安全な順次マージはCIだけでは強制できない。
 - 隔離checkoutの過去原本所在・外部確定IDが他にないかの確認。移行時の最新履歴監査で初期値を再確定する。
 - 既存IDの別対象への付替えは意味的判断を要し、完全自動保証を主張しない。
 - 保存資産の移動・新予約サービス・新管理画面・新DBを追加しない。実装承認までは本書を実施済み扱いしない。
+
+## 16. 設計レビューとCI例外
+
+2026-11-25、人間がPR #112初版のCI（844 pass / 2 fail）を#108マージ後mainと同じ既知STATE_HIGH_WATER_INVALIDによる失敗と確認し、設計専用PRに限って例外的に許容した。これはCI成功の判定、実装後の通常CIでの失敗許容、チェック無効化、FN-004修正の許可ではない。今回修正後のCIも実測状態を報告し、新規の失敗があれば既知例外へ含めず確認する。
