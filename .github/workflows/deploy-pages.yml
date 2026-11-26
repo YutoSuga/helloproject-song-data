@@ -5,66 +5,23 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened, labeled, unlabeled]
   workflow_dispatch:
+    inputs:
+      base_sha:
+        description: 'Full ancestor SHA (normally before from the main push being revalidated)'
+        required: true
+        type: string
 
-# Replace PR runs after label changes; keep main validations independent by SHA.
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}-${{ github.event_name }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  ci_mode:
-    name: Select CI mode
-    if: >-
-      (github.event_name == 'pull_request' && github.event.action != 'closed') ||
-      ((github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
-    outputs:
-      mode: ${{ steps.select.outputs.mode }}
-      sha: ${{ steps.select.outputs.sha }}
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.sha }}
-          persist-credentials: false
-      - name: Resolve PR label with full CI fallback
-        id: select
-        uses: actions/github-script@v8
-        with:
-          script: |
-            const selectMode = require('./.github/scripts/ci-policy.cjs');
-            await selectMode({ github, context, core });
-
-  gate_compatibility:
-    needs: ci_mode
-    name: Gate publication (Node ${{ matrix.node }})
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [20, 24]
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          ref: ${{ needs.ci_mode.outputs.sha }}
-          persist-credentials: false
-      - uses: actions/setup-node@v7
-        with:
-          node-version: ${{ matrix.node }}
-          package-manager-cache: false
-      - name: Gate publication, candidate integration and crash compatibility
-        if: needs.ci_mode.outputs.mode != 'light'
-        run: node --test --test-concurrency=1 test/fn004-gate-publication.test.js test/fn004-gate-publication-crash.test.js test/fn004-gate-candidate-integration.test.js
   build:
-    needs: ci_mode
     name: Test and build
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+    outputs:
+      sha: ${{ github.sha }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -72,21 +29,35 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
         with:
-          # Initialized FN-004 readers audit complete origin/main history.
+          # Fetch base objects for explicit PR/push/manual ID boundaries.
           fetch-depth: 0
-          ref: ${{ needs.ci_mode.outputs.sha }}
+          ref: ${{ github.sha }}
           persist-credentials: false
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 20
           package-manager-cache: false
+      - name: Resolve ID comparison boundary
+        id: boundary
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const select = require('./.github/scripts/id-ci-base.cjs');
+            const result = select({eventName: context.eventName, payload: context.payload, sha: context.sha, ref: context.ref});
+            core.info(JSON.stringify(result));
+            core.setOutput('base', result.base);
       - name: Check whitespace
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha || 'HEAD^' }}
+          BASE_SHA: ${{ steps.boundary.outputs.base }}
         run: git diff --check "$BASE_SHA" HEAD
+      - name: Validate all 14 canonical tables
+        run: npm run canonical:validate
+      - name: Validate ID ledger and all changes since base
+        env:
+          BASE_SHA: ${{ steps.boundary.outputs.base }}
+        run: npm run ids:validate -- --base "$BASE_SHA"
       - name: Run tests
-        if: needs.ci_mode.outputs.mode != 'light'
         run: npm test
       - name: Validate rankings
         run: npm run rankings:validate
@@ -105,7 +76,7 @@ jobs:
   deploy:
     name: Deploy
     if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
-    needs: [ci_mode, build, gate_compatibility]
+    needs: build
     runs-on: ubuntu-latest
     concurrency:
       group: github-pages
@@ -126,7 +97,7 @@ jobs:
         id: freshness
         uses: actions/github-script@v8
         env:
-          VERIFIED_SHA: ${{ needs.ci_mode.outputs.sha }}
+          VERIFIED_SHA: ${{ needs.build.outputs.sha }}
         with:
           script: |
             const { data } = await github.rest.git.getRef({ ...context.repo, ref: 'heads/main' });

@@ -1,5 +1,10 @@
 # helloproject-song-data
 
+## 現行のデータ更新
+
+[CSV直接編集ガイド](docs/management/CSV直接編集ガイド.md)に従い、AI支援の調査・CSV編集→全14表/ID検証→公開JSON再生成→CI確認→人間の順次マージで更新します。`data/id-high-water.json`は採番メタデータです。FN-002/003は任意、FN-004は完成した保存資産で通常登録に使用しません。Java＋RDB管理版は別開発です。通常CIは一本化し、旧light/full区分は使用しません。
+
+
 Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を、検索・集計しやすい形で管理するためのデータリポジトリです。
 
 ## プロジェクト概要

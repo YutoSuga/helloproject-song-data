@@ -1,3 +1,4 @@
+import { assertLegacyOperationAllowed } from './legacy-operation-guard.js';
 import * as fs from 'node:fs/promises';
 import {realpathSync} from 'node:fs';
 import {createHash,randomUUID} from 'node:crypto';
@@ -44,6 +45,7 @@ export async function runCanonicalCli(argv,{root=process.cwd(),input=process.std
  let json=argv.includes('--json'),selection={};
  const emit=doc=>output.write(json?serializeCliDocument(doc)+'\n':formatHuman(doc));
  try {
+  await assertLegacyOperationAllowed(root);
   const parsed=parseCanonicalArguments(argv);json=parsed.json;
   const {command,options:o}=parsed;
   for(const key of ['request','transaction','plan','decision'])if(o[key])selection[key+'_id']=o[key];

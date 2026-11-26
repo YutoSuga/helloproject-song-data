@@ -1,3 +1,4 @@
+import { assertLegacyOperationAllowed } from './legacy-operation-guard.js';
 import * as fs from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { createPersistence, RepositoryError } from "./persistence.js";
@@ -58,6 +59,7 @@ export function createBootstrapService({ io = fs, gitOptions = {} } = {}) {
     } catch (error) { return failure(error); }
   }
   async function initializeBootstrap({ root = process.cwd(), external_declaration, expected_audit_hash, actor } = {}) {
+    await assertLegacyOperationAllowed(root);
     // Never synthesize an operator confirmation or external declaration.
     const declaration = structuredClone(validateExternalDeclaration(external_declaration));
     const confirmedActor = structuredClone(validateActor(actor));

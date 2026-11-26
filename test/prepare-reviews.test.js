@@ -1,3 +1,5 @@
+import { writeCanonicalTables, completeRow } from "./fixtures/csv-edit.js";
+import { parseCsv } from "../src/csv.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
@@ -24,7 +26,13 @@ async function fixture() {
     releases: csv("release_id"), release_tracks: csv("release_id,disc_number,track_number"),
     videos: csv("video_id"), video_songs: csv("video_id,song_id,start_seconds"), video_song_performers: csv("video_id,song_id,start_seconds,member_id")
   };
-  for (const [name, content] of Object.entries(data)) await writeFile(join(root, "data", name + ".csv"), content);
+  const tables = Object.fromEntries(Object.entries(data).map(([name, content]) => {
+    const [header,...rows]=parseCsv(content);
+    return [name, rows.map(row=>completeRow(name,Object.fromEntries(header.map((key,i)=>[key,row[i]]))))];
+  }));
+  tables.song_artists=[completeRow('song_artists',{song_id:'J00001',artist_id:'G00001',role:'primary'})];
+  await writeCanonicalTables(root,tables);
+  for (const name of Object.keys(data)) data[name] = await readFile(join(root,"data",name+".csv"),"utf8");
   return { root, data };
 }
 
@@ -103,9 +111,9 @@ test("K/M/N: STOP preserves output; rerun regenerates; all inputs stay byte-iden
     assert.deepEqual(await readFile(candidatePath), beforeCandidates);
     assert.deepEqual(await readFile(resultPath), beforeResults);
     for (const [name, original] of Object.entries(data)) assert.equal(await readFile(join(root, "data", name + ".csv"), "utf8"), original);
-    await writeFile(join(root, "data", "works.csv"), csv("work_id,title", [["W00001", "Old Song"], ["W00001", "Again"]]));
+    await writeFile(join(root, "data", "works.csv"), data.works + data.works.split("\n")[1] + "\n");
     const stable = await readFile(outputPath);
-    await assert.rejects(prepareReviews({ root }), /duplicate key/);
+    await assert.rejects(prepareReviews({ root }), /DUPLICATE_PRIMARY_KEY/);
     assert.deepEqual(await readFile(outputPath), stable);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
@@ -120,7 +128,7 @@ test("first run accepts absent review-results; malformed review-results and miss
     await assert.rejects(prepareReviews({ root }), /review-results schema/);
     assert.deepEqual(await readFile(join(root, "staging", "song-reviews.json")), output);
     await rm(join(root, "data", "works.csv"));
-    await assert.rejects(prepareReviews({ root }), /Missing canonical CSV/);
+    await assert.rejects(prepareReviews({ root }), /CANONICAL_FILE_MISSING/);
     assert.deepEqual(await readFile(join(root, "staging", "song-reviews.json")), output);
   } finally { await rm(root, { recursive: true, force: true }); }
 });

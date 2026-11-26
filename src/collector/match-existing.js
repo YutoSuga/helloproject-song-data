@@ -1,20 +1,8 @@
-import { join } from "node:path";
-import { readCsv } from "../csv.js";
-import { withCanonicalRead } from "../fn004-repository.js";
+import { readValidatedCanonical } from "../canonical-reader.js";
 
 const normalize = (title) => title.normalize("NFKC").replace(/\s+/g, "").toLocaleLowerCase();
-export async function loadTitleIndex(root, { gate } = {}) {
-  return withCanonicalRead({ root, gate, fn: (resolvedRoot) => readTitleIndex(resolvedRoot) });
-}
-
-async function readTitleIndex(root) {
-  const reads = await Promise.allSettled([
-    readCsv(join(root, "data", "songs.csv")),
-    readCsv(join(root, "data", "works.csv"))
-  ]);
-  const failure = reads.find((result) => result.status === "rejected");
-  if (failure) throw failure.reason;
-  const [songs, works] = reads.map((result) => result.value);
+export async function loadTitleIndex(root) {
+  const { tables: { songs, works } } = await readValidatedCanonical(root);
   const index = new Map();
   for (const song of songs) {
     const key = normalize(song.title);

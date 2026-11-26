@@ -1,0 +1,31 @@
+{
+  "maxima": {
+    "A": 0,
+    "B": 0,
+    "C": 88,
+    "G": 3,
+    "H": 1,
+    "J": 120,
+    "L": 136,
+    "M": 0,
+    "O": 0,
+    "P": 17,
+    "R": 0,
+    "T": 0,
+    "V": 0,
+    "W": 90
+  },
+  "git": {
+    "authoritative_ref": "origin/main",
+    "audited_head": "14fc448bfb17c4a9de53437f3f3819593da3356b",
+    "object_format": "sha1",
+    "history_scope": "all_reachable_parents",
+    "history_rule_version": 1,
+    "shallow": false,
+    "complete": true,
+    "reachable_commit_count": 263,
+    "root_commits": [
+      "1a2671442057743bf38d4821c587c28b324c125f"
+    ]
+  }
+}

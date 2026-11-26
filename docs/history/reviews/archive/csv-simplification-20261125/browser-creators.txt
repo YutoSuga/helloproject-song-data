@@ -1,0 +1,5 @@
+production: interactions and 6 widths passed
+mock: interactions and 6 widths passed
+all five categories: work lists, counts, order and exact badge unions passed
+invalid role evidence: load error passed; no JavaScript errors
+other four mock pages: no JavaScript errors; songs search/dialog passed

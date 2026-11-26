@@ -1,5 +1,7 @@
 # Canonical registration 基本設計（FN-003 / FN-004、Milestone 3-B）
 
+> 2026-11-25 運用切替：現行はCSV直接編集を基本とし、FN-002/003は任意です。以下のDecision/Plan/Approval/Apply経路は保存版の説明です。
+
 ## 目的・境界
 
 楽曲データの正本は `data/*.csv`。FN-002 が候補を収集し、[FN-003](../functions/FN-003-レビュー準備.md) がレビュー用派生 JSON を生成する。FN-004 は正式な人間の判断から canonical を安全に反映する。FN-004 の runtime・公開 CLI は実装済みで、SCR-101 と管理者向け Web backend は設計段階にある。既存 canonical 登録済み candidate の初期移行は対象外。

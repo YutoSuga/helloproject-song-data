@@ -1,3 +1,4 @@
+import { writeTitleFixture } from "./fixtures/csv-edit.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile, writeFile, mkdir, mkdtemp, rm, readdir } from "node:fs/promises";
@@ -60,8 +61,7 @@ async function sandbox(t, candidates = []) {
   t.after(() => rm(root, { recursive: true, force: true }));
   await mkdir(join(root, "data"));
   await mkdir(join(root, "staging"));
-  await writeFile(join(root, "data", "songs.csv"), "song_id,work_id,title\nS00001,W00001,Misery ～愛の天秤～\n");
-  await writeFile(join(root, "data", "works.csv"), "work_id,title\nW00001,Misery ～愛の天秤～\n");
+  await writeTitleFixture(root);
   const outputPath = join(root, "staging", "song-candidates.json");
   const original = JSON.stringify({ schema_version: 1, updated_at: now, administrator_note: "keep", candidates }) + "\n";
   await writeFile(outputPath, original);
@@ -156,7 +156,7 @@ test("F/G: single-artist runs keep other artists and preserve review fields on r
   first.candidates[0].status = "confirmed";
   first.candidates[0].notes = "確定済み";
   first.candidates[0].reviewed_by = "admin";
-  first.candidates[0].match.confirmed_song_id = "S00001";
+  first.candidates[0].match.confirmed_song_id = "H00001";
   first.candidates[0].match.confirmed_work_id = "W00001";
   first.candidates[0].match.review_note = "keep nested field";
   await writeFile(context.outputPath, JSON.stringify(first));
@@ -173,7 +173,7 @@ test("F/G: single-artist runs keep other artists and preserve review fields on r
   const review = third.candidates.find((c) => c.candidate_id === first.candidates[0].candidate_id);
   for (const key of ["status", "notes", "detected_at", "reviewed_by"]) assert.equal(review[key], first.candidates[0][key]);
   assert.equal(review.last_seen_at, nextTime);
-  assert.equal(review.match.confirmed_song_id, "S00001");
+  assert.equal(review.match.confirmed_song_id, "H00001");
   assert.equal(review.match.confirmed_work_id, "W00001");
   assert.equal(review.match.review_note, "keep nested field");
   const fourth = await collectCandidates({ ...context, ...await mockSources(), now: nextTime });

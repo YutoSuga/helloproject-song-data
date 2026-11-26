@@ -1,7 +1,8 @@
 # Codex PR / CI operation
 
-- Create a dedicated branch from current main; do not push directly to main or merge PRs automatically.
-- For documentation-only changes, minor changes, and future SCR-101 generated PRs, normally use `ci:light`. For ordinary implementation changes or uncertainty, leave this label off (full CI).
-- Prefer `gh pr create --label ci:light` when light CI is appropriate. GitHub CLI creates the PR and then applies metadata in a second API call; an initial full run can start. The label event replaces that run through PR concurrency. Verify the label and latest checks after creation.
-- Do not classify changes automatically in Actions or introduce a `ci:full` label.
-- See [.github/CI.md](.github/CI.md) for CI behavior and verification limitations.
+- Start a dedicated branch from latest main. Never push directly to main or merge automatically.
+- CSV direct editing is the normal operation. See [CSV guide](docs/management/CSV直接編集ガイド.md). Preserve whole-canonical validation and update new IDs and data/id-high-water.json together.
+- Run npm test (ordinary suite), canonical:validate, ids:validate against latest main, site:build, songs:validate, rankings:validate and site:check-generated. Review existing identity changes and cite sources.
+- Normal CI is unified; do not use ci:light to skip tests. See [.github/CI.md](.github/CI.md).
+- FN-004 is a completed archived asset. Do not apply it to new-operation canonical. Its manual workflow pins saved code/data and origin/main.
+- Owner confirmed 2026-11-25: no rulesets, classic branch protection or required checks. Do not add protection settings without authorization. Human verifies final CI and merges sequentially after checking latest main.

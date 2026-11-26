@@ -1,5 +1,7 @@
 # 開発・PR運用ルール
 
+> 2026-11-25 運用切替：現行CIは一本化しci:lightによる省略はありません。CSV直接編集ガイドと.github/CI.mdが現行運用を定義します。以下のlight/full・FN-004運用の記述は移行前の参照です。
+
 ## 基本フロー
 
 1作業＝1ブランチ＝原則1PR。開始前にworking treeと進行中PRを確認し、`git fetch origin`でmainを最新化する。ローカルmainがない場合も、最新の`origin/main`から専用feature branchを作れる。

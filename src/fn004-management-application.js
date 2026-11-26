@@ -1,3 +1,4 @@
+import { assertLegacyOperationAllowed } from './legacy-operation-guard.js';
 import {CANONICAL_TABLES} from './canonical-schema.js';
 import {COMMIT_PATHS} from './fn004-evidence-types.js';
 import {requestPath} from './fn004-approval-repository.js';
@@ -40,6 +41,7 @@ export function createCanonicalManagementService({root=process.cwd(),actor,...op
     }});
   }
   async function resolveRecovery(selector) {
+    await assertLegacyOperationAllowed(root);
     const d=await discoverEvidence(root,options);
     const bootstrapPath='staging/fn004-bootstrap.json';
     if(!Object.hasOwn(d.documents,bootstrapPath))throw new RepositoryError('PERSISTENCE_NOT_FOUND','Required Recovery original is missing',{path:bootstrapPath});

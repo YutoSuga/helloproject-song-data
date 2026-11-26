@@ -16,3 +16,7 @@
 - 各 `SHA256SUMS` は、その manifest の親ディレクトリで `sha256sum -c SHA256SUMS` を実行する。
 - bundle は prerequisite `e119556c1703e7ea963a327832cacf5a3affb647` を持つ独立した repository で検証する。原本は bundle の `48cac96f36d913402c1be4c5b7e6ecc9d51eee58:docs/reviews/FN-004-Final-Acceptance.md` から取得し、provenance の SHA-256 と照合する。
 - FA-L01 の `check.py` は [対象 merge](https://github.com/YutoSuga/helloproject-song-data/tree/4fa7907fb54deec77ebfe6618a73fb2f720dab88) とその第1親の当時の設計パスを比較する。再現する場合は対象 SHA の独立 checkout を作業ディレクトリとし、現在の保存先にある checker を絶対パスで実行する。現行 CI の検査には使わない。
+
+## CSV直接編集への移行
+
+[CSV簡素化受入記録](CSV簡素化受入.md)に保存タグと比較基準の区別、同等性・通常CI検証を記録する。FN-004の過去受入原本は変更しない。

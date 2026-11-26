@@ -1,18 +1,8 @@
 import { createHash, randomUUID } from "node:crypto";
-import { readFile, readdir, mkdir, rename, rm, writeFile } from "node:fs/promises";
+import { readFile, mkdir, rename, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import { parseCsv, readCsv } from "./csv.js";
-import { withCanonicalRead } from "./fn004-repository.js";
-import { CANONICAL_TABLES, ID_PATTERNS as idPatterns } from "./canonical-schema.js";
+import { readValidatedCanonical } from "./canonical-reader.js";
 
-// Preserve FN-003's legacy subset validation while sharing canonical metadata.
-const tables = CANONICAL_TABLES.map((table) => table.name);
-const keys = Object.fromEntries(CANONICAL_TABLES.map((table) => [table.name, table.primaryKey]));
-const foreignKeys = Object.fromEntries(CANONICAL_TABLES.map((table) => [table.name,
-  Object.fromEntries(table.columns.filter((column) => column.target && column.target !== table.name)
-    .map((column) => [column.name, column.target]))]));
-const enums = Object.fromEntries(CANONICAL_TABLES.map((table) => [table.name,
-  Object.fromEntries(table.columns.filter((column) => column.type === "enum").map((column) => [column.name, column.values]))]));
 const object = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 const normalized = (value) => value.normalize("NFKC").replace(/\s+/g, "").toLocaleLowerCase();
 const dateValid = (value) => typeof value === "string" && /^\d{4}-\d\d-\d\d$/.test(value) && !Number.isNaN(Date.parse(value + "T00:00:00Z")) && new Date(value + "T00:00:00Z").toISOString().slice(0, 10) === value;
@@ -20,44 +10,8 @@ const append = (map, key, value) => { if (!map.has(key)) map.set(key, []); map.g
 const find = (map, key) => map.get(key) ?? [];
 const distinct = (rows, id) => [...new Map(rows.map((row) => [row[id], row])).values()].sort((a, b) => a[id].localeCompare(b[id]));
 
-export async function loadReviewCanonical(root, { gate } = {}) {
-  return withCanonicalRead({ root, gate, fn: (resolvedRoot) => readReviewCanonical(resolvedRoot) });
-}
-
-async function readReviewCanonical(root) {
-  const dir = join(root, "data"), names = await readdir(dir);
-  for (const name of tables) if (!names.includes(name + ".csv")) throw new Error("Missing canonical CSV: " + name);
-  for (const name of tables) {
-    const header = parseCsv(await readFile(join(dir, name + ".csv"), "utf8"))[0] ?? [];
-    const required = [...keys[name], ...(name === "works" || name === "songs" ? ["title"] : []), ...(name === "artists" || name === "creators" ? ["name"] : [])];
-    if (required.some((field) => !header.includes(field)) || new Set(header).size !== header.length) throw new Error("Canonical invalid header: " + name);
-  }
-  const reads = await Promise.allSettled(tables.map(async (name) => [name, await readCsv(join(dir, name + ".csv"))]));
-  const failure = reads.find((result) => result.status === "rejected");
-  if (failure) throw failure.reason;
-  const data = Object.fromEntries(reads.map((result) => result.value));
-  const ids = {};
-  for (const name of tables) {
-    const seen = new Set();
-    for (const row of data[name]) {
-      if (keys[name].some((key) => !row[key])) throw new Error("Canonical empty key: " + name);
-      const key = JSON.stringify(keys[name].map((field) => row[field]));
-      if (seen.has(key)) throw new Error("Canonical duplicate key: " + name + " " + key);
-      seen.add(key);
-    }
-    if (keys[name].length === 1) ids[name] = new Set(data[name].map((row) => row[keys[name][0]]));
-  }
-  for (const [name, fields] of Object.entries(foreignKeys)) for (const row of data[name]) {
-    for (const [field, target] of Object.entries(fields)) if (row[field] && !ids[target].has(row[field])) throw new Error("Canonical invalid FK: " + name + "." + field);
-  }
-  for (const name of tables) for (const row of data[name]) {
-    if (idPatterns[name] && !idPatterns[name].test(row[keys[name][0]])) throw new Error("Canonical invalid ID: " + name);
-    for (const [field, allowed] of Object.entries(enums[name] ?? {})) if (row[field] !== undefined && !allowed.includes(row[field])) throw new Error("Canonical invalid enum: " + name + "." + field);
-    for (const [field, value] of Object.entries(row)) if (field.endsWith("_date") && value && !dateValid(value)) throw new Error("Canonical invalid date: " + name + "." + field);
-  }
-  const videoIntervals = new Set(data.video_songs.map((row) => JSON.stringify([row.video_id, row.song_id, row.start_seconds])));
-  for (const row of data.video_song_performers) if (!videoIntervals.has(JSON.stringify([row.video_id, row.song_id, row.start_seconds]))) throw new Error("Canonical invalid video_song_performers interval FK");
-  return data;
+export async function loadReviewCanonical(root) {
+  return (await readValidatedCanonical(root)).tables;
 }
 
 export function validateCandidates(data) {

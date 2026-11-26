@@ -1,5 +1,7 @@
 # FN-004 canonical management CLI
 
+> 2026-11-25 運用切替：保存版操作ガイドです。新運用のcanonicalへApply/Recovery等を実行しないでください。現行手順はCSV直接編集ガイドです。
+
 `npm run canonical:manage -- <command>` は既存FN-004 application serviceのlocal adapterです。
 作業対象repositoryのrootで実行します。公開HTTP API・SCR-101・DBは含みません。
 操作前に別作業者のApply、収集、直接CSV編集、Git checkout等を止めてください。
