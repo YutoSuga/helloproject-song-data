@@ -17,7 +17,7 @@ Rulesets、Classic branch protection、required checksはいずれも設定な�
 
 ## 採番と失敗時
 
-全namespace A/B/C/G/H/J/L/M/O/P/R/T/V/Wを管理。0〜99999整数、High Waterは下げない。削除済み確定IDと上限以下の欠番は使わない。未マージ・外部未公開IDは仮番号だが、mainに取り込まれた履歴のC87/88は消費済みとして初期C=88に含めた。Issue #111の次候補はC00089/90、実行時に最新mainで再照合する。今回は#111未修正。
+全namespace A/B/C/G/H/J/L/M/O/P/R/T/V/Wを管理。0〜99999整数、High Waterは下げない。削除済み確定IDと上限以下の欠番は使わない。未マージ・外部未公開IDは仮番号だが、mainに取り込まれた履歴のC87/88は消費済みとして初期C=88に含めた。Issue #111はPR #114でC00089/90を登録して解消済み。今後の仮採番は必ず最新mainの台帳から求める。
 
 台帳はschema_versionや予約・transactionを持たない単純JSON。新規ID最大に一致する値へ更新する。既存の名前等の訂正は機械的identity差分を人間が確認する。意味上の別対象への付替えは台帳だけでは自動判定できない。
 

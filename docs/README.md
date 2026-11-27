@@ -14,7 +14,7 @@
 | 機能別schema・hash・安全契約 | 担当する正式設計書の契約節 |
 | 現在の実装状況・開発順序 | [ロードマップ](management/ロードマップ.md) |
 | 操作手順 | [CSV直接編集ガイド](management/CSV直接編集ガイド.md)。旧FN-004ガイドは保存版 |
-| CI挙動 | [workflow](../.github/workflows/deploy-pages.yml)・[CI選択処理](../.github/scripts/ci-policy.cjs)。説明は[CI運用ルール](../.github/CI.md) |
+| CI挙動 | [workflow](../.github/workflows/deploy-pages.yml)・[ID比較境界](../.github/scripts/id-ci-base.cjs)。説明は[CI運用ルール](../.github/CI.md) |
 | 過去の判断・受入結果 | 固定SHA・日時付き履歴。判定はその対象・時点で読む |
 
 設計契約と実装の不一致は、履歴やロードマップで暗黙に上書きせず、個別に確認する。
@@ -23,7 +23,7 @@
 
 ### システム・共通設計
 
-- [CSV直接編集・現行システム簡素化](design/system/CSV直接編集・現行システム簡素化.md)（承認済み・実装接続を本PRで切替）
+- [CSV直接編集・現行システム簡素化](design/system/CSV直接編集・現行システム簡素化.md)（PR #113で実装済み）
 
 - [システム構成](design/system/システム構成.md)
 - [レビュー準備・canonical反映の全体フロー](design/system/レビュー準備・canonical反映の全体フロー.md)

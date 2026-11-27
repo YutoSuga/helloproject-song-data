@@ -1,6 +1,18 @@
 # CSV直接編集・現行システム簡素化
 
-状態：PR #112承認・マージ済み。実装と受入記録は後続の実装PRで確認する。2026-11-25。
+状態：PR #112で設計承認、PR #113で実装・切替済み。2026-11-27更新。
+
+## 現在の実装・運用状況（CSV-L02）
+
+以下の第1〜16節は2026-11-25の設計判断・実施計画の記録であり、「今回」「未実施」「予定」は設計時点を指す。現在の操作は[CSV直接編集ガイド](../../management/CSV直接編集ガイド.md)、実装証拠は[受入記録](../../history/reviews/CSV簡素化受入.md)を参照する。
+
+- [PR #113](https://github.com/YutoSuga/helloproject-song-data/pull/113)で共通reader・単純ID台帳・ID差分検証・旧操作停止・通常CI一本化・保存版試験分離・運用文書の切替を実装済み。
+- 保存タグ [archive/fn004-v1.0](https://github.com/YutoSuga/helloproject-song-data/tree/archive/fn004-v1.0)は作成済み。今回取得したタグの参照先は `9363c69cc0c119ad4ac251e029061e43d9016d76`。第7・12・15節のタグ未作成は解消済み。Final Acceptance対象や移行CSV基準とは引き続き区別する。
+- [PR #114](https://github.com/YutoSuga/helloproject-song-data/pull/114)でPOPPIN’ LOVEの未登録作家追加とIssue #111を解消。[PR #115](https://github.com/YutoSuga/helloproject-song-data/pull/115)で華麗なるリベンジャーを登録し、CSV-L03のテスト仮ID動的採番を実装済み。
+- 所有者の今回の確認報告によれば、#114・#115はいずれもmain CI・Pagesデプロイ・公開サイト実機確認まで完了。既存修正と新規登録の両運用を確認済み（本作業で再デプロイ・実機再確認したという意味ではない）。
+- 当時の117 primary／90 worksは移行同等性の固定比較基準。現在は118 primary／91 works／featured込み119音源であり、今後の運用件数を固定する契約ではない。
+- 隔離checkoutの過去Candidate/Decision/Plan原本は受入記録で未回収。今回も回収を確認しておらず、完了扱いにしない。保存版長時間suiteの再実行、Java実装や新DBも今回の完了事項には含めない。
+
 
 本書は実装目標を定義する。2026-11-25にCSV直接編集、全14表検証、独立reader、単純台帳、C=88、Issue #111の次候補C00089/90、通常CI一本化、FN-004テスト分離、FN-002/003任意利用、旧操作誤実行防止の基本方針が承認された。今回は比較基準の設計修正までとし、実装開始は別途指示を待つ。設計PRのマージだけで現行の操作契約を切り替えない。実装・受入完了まで現行CLIを新しい手順として使用しない。FN-004を追加修正して今回のCIを通すことは対象外。
 
