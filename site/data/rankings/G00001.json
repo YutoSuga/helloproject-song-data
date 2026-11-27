@@ -4,8 +4,8 @@
     "name": "Juice=Juice"
   },
   "summary": {
-    "primary_song_count": 117,
-    "target_work_count": 90
+    "primary_song_count": 118,
+    "target_work_count": 91
   },
   "categories": {
     "lyrics": {
@@ -286,7 +286,7 @@
           "rank": 2,
           "creator_id": "C00001",
           "creator_name": "山崎あおい",
-          "work_count": 10,
+          "work_count": 11,
           "works": [
             {
               "work_id": "W00001",
@@ -397,13 +397,23 @@
               "roles": [
                 "lyrics"
               ]
+            },
+            {
+              "work_id": "W00091",
+              "title": "華麗なるリベンジャー",
+              "song_ids": [
+                "J00121"
+              ],
+              "roles": [
+                "lyrics"
+              ]
             }
           ]
         },
         {
           "artist_id": "G00001",
           "category": "lyrics",
-          "rank": 2,
+          "rank": 3,
           "creator_id": "C00006",
           "creator_name": "児玉雨子",
           "work_count": 10,
@@ -2839,6 +2849,46 @@
               ]
             }
           ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "composition",
+          "rank": 17,
+          "creator_id": "C00091",
+          "creator_name": "RUSH EYE",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00091",
+              "title": "華麗なるリベンジャー",
+              "song_ids": [
+                "J00121"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "composition",
+          "rank": 17,
+          "creator_id": "C00092",
+          "creator_name": "Anna Kusakawa",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00091",
+              "title": "華麗なるリベンジャー",
+              "song_ids": [
+                "J00121"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -3887,6 +3937,141 @@
           "artist_id": "G00001",
           "category": "lyrics_or_composition",
           "rank": 2,
+          "creator_id": "C00001",
+          "creator_name": "山崎あおい",
+          "work_count": 11,
+          "works": [
+            {
+              "work_id": "W00001",
+              "title": "微炭酸",
+              "song_ids": [
+                "J00001",
+                "J00103"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00004",
+              "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
+              "song_ids": [
+                "J00004",
+                "J00006",
+                "J00104"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00007",
+              "title": "好きって言ってよ",
+              "song_ids": [
+                "J00008"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00012",
+              "title": "がんばれないよ",
+              "song_ids": [
+                "J00013",
+                "J00029",
+                "J00030",
+                "J00031",
+                "J00032",
+                "J00033",
+                "J00034",
+                "J00035"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00017",
+              "title": "POPPIN' LOVE",
+              "song_ids": [
+                "J00018"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00074",
+              "title": "イニミニマニモ～恋のライバル宣言～",
+              "song_ids": [
+                "J00090"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00075",
+              "title": "プライド・ブライト",
+              "song_ids": [
+                "J00091"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00078",
+              "title": "トウキョウ・ブラー",
+              "song_ids": [
+                "J00107"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00081",
+              "title": "Brilliance of memories",
+              "song_ids": [
+                "J00110"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00085",
+              "title": "盛れ！ミ・アモーレ",
+              "song_ids": [
+                "J00114"
+              ],
+              "roles": [
+                "composition",
+                "lyrics"
+              ]
+            },
+            {
+              "work_id": "W00091",
+              "title": "華麗なるリベンジャー",
+              "song_ids": [
+                "J00121"
+              ],
+              "roles": [
+                "lyrics"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 2,
           "creator_id": "C00008",
           "creator_name": "星部ショウ",
           "work_count": 11,
@@ -4011,132 +4196,7 @@
         {
           "artist_id": "G00001",
           "category": "lyrics_or_composition",
-          "rank": 3,
-          "creator_id": "C00001",
-          "creator_name": "山崎あおい",
-          "work_count": 10,
-          "works": [
-            {
-              "work_id": "W00001",
-              "title": "微炭酸",
-              "song_ids": [
-                "J00001",
-                "J00103"
-              ],
-              "roles": [
-                "lyrics"
-              ]
-            },
-            {
-              "work_id": "W00004",
-              "title": "「ひとりで生きられそう」って それってねえ、褒めているの？",
-              "song_ids": [
-                "J00004",
-                "J00006",
-                "J00104"
-              ],
-              "roles": [
-                "composition",
-                "lyrics"
-              ]
-            },
-            {
-              "work_id": "W00007",
-              "title": "好きって言ってよ",
-              "song_ids": [
-                "J00008"
-              ],
-              "roles": [
-                "composition",
-                "lyrics"
-              ]
-            },
-            {
-              "work_id": "W00012",
-              "title": "がんばれないよ",
-              "song_ids": [
-                "J00013",
-                "J00029",
-                "J00030",
-                "J00031",
-                "J00032",
-                "J00033",
-                "J00034",
-                "J00035"
-              ],
-              "roles": [
-                "lyrics"
-              ]
-            },
-            {
-              "work_id": "W00017",
-              "title": "POPPIN' LOVE",
-              "song_ids": [
-                "J00018"
-              ],
-              "roles": [
-                "lyrics"
-              ]
-            },
-            {
-              "work_id": "W00074",
-              "title": "イニミニマニモ～恋のライバル宣言～",
-              "song_ids": [
-                "J00090"
-              ],
-              "roles": [
-                "lyrics"
-              ]
-            },
-            {
-              "work_id": "W00075",
-              "title": "プライド・ブライト",
-              "song_ids": [
-                "J00091"
-              ],
-              "roles": [
-                "composition",
-                "lyrics"
-              ]
-            },
-            {
-              "work_id": "W00078",
-              "title": "トウキョウ・ブラー",
-              "song_ids": [
-                "J00107"
-              ],
-              "roles": [
-                "lyrics"
-              ]
-            },
-            {
-              "work_id": "W00081",
-              "title": "Brilliance of memories",
-              "song_ids": [
-                "J00110"
-              ],
-              "roles": [
-                "composition",
-                "lyrics"
-              ]
-            },
-            {
-              "work_id": "W00085",
-              "title": "盛れ！ミ・アモーレ",
-              "song_ids": [
-                "J00114"
-              ],
-              "roles": [
-                "composition",
-                "lyrics"
-              ]
-            }
-          ]
-        },
-        {
-          "artist_id": "G00001",
-          "category": "lyrics_or_composition",
-          "rank": 3,
+          "rank": 4,
           "creator_id": "C00006",
           "creator_name": "児玉雨子",
           "work_count": 10,
@@ -5775,6 +5835,46 @@
               ]
             }
           ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 24,
+          "creator_id": "C00091",
+          "creator_name": "RUSH EYE",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00091",
+              "title": "華麗なるリベンジャー",
+              "song_ids": [
+                "J00121"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "lyrics_or_composition",
+          "rank": 24,
+          "creator_id": "C00092",
+          "creator_name": "Anna Kusakawa",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00091",
+              "title": "華麗なるリベンジャー",
+              "song_ids": [
+                "J00121"
+              ],
+              "roles": [
+                "composition"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -7277,6 +7377,26 @@
               ]
             }
           ]
+        },
+        {
+          "artist_id": "G00001",
+          "category": "arrangement",
+          "rank": 18,
+          "creator_id": "C00091",
+          "creator_name": "RUSH EYE",
+          "work_count": 1,
+          "works": [
+            {
+              "work_id": "W00091",
+              "title": "華麗なるリベンジャー",
+              "song_ids": [
+                "J00121"
+              ],
+              "roles": [
+                "arrangement"
+              ]
+            }
+          ]
         }
       ]
     }
@@ -7839,6 +7959,40 @@
             "title": "POPPIN' LOVE",
             "song_ids": [
               "J00018"
+            ]
+          }
+        ]
+      },
+      {
+        "rank": 11,
+        "lyricist_creator_id": "C00001",
+        "lyricist_name": "山崎あおい",
+        "composer_creator_id": "C00091",
+        "composer_name": "RUSH EYE",
+        "work_count": 1,
+        "works": [
+          {
+            "work_id": "W00091",
+            "title": "華麗なるリベンジャー",
+            "song_ids": [
+              "J00121"
+            ]
+          }
+        ]
+      },
+      {
+        "rank": 11,
+        "lyricist_creator_id": "C00001",
+        "lyricist_name": "山崎あおい",
+        "composer_creator_id": "C00092",
+        "composer_name": "Anna Kusakawa",
+        "work_count": 1,
+        "works": [
+          {
+            "work_id": "W00091",
+            "title": "華麗なるリベンジャー",
+            "song_ids": [
+              "J00121"
             ]
           }
         ]

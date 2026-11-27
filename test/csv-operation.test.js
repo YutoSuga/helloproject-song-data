@@ -25,6 +25,7 @@ import { completeRow, writeCanonicalTables } from './fixtures/csv-edit.js';
 import selectBase from '../.github/scripts/id-ci-base.cjs';
 const sourceRoot = new URL('../',import.meta.url), exec = promisify(execFile);
 const currentHighWater = parseHighWater(await readFile(new URL('data/id-high-water.json', sourceRoot)));
+const testId = (namespace, offset = 1) => namespace + String(currentHighWater[namespace] + offset).padStart(5, '0');
 async function fixture(t) {
   const root=await mkdtemp(join(tmpdir(),'csv-operation-'));t.after(()=>rm(root,{recursive:true,force:true}));
   await cp(new URL('data',sourceRoot),join(root,'data'),{recursive:true});return root;
@@ -53,29 +54,29 @@ test('common reader rejects symlink and special paths before reading',async t=>{
 
 test('ledger rejects missing/unknown namespaces, duplicates, invalid numbers and reservations',async t=>{
   const root=await fixture(t),tables=(await readValidatedCanonical(root)).tables,water=currentHighWater;
-  for(const v of [{...water,C:87},{...water,C:91},{...water,C:'88'},{...water,C:-1},{...water,C:1.1},{...water,C:100000},{C:88},{...water,X:0}]) {
+  for(const v of [{...water,C:water.C-1},{...water,C:water.C+1},{...water,C:String(water.C)},{...water,C:-1},{...water,C:1.1},{...water,C:100000},{C:water.C},{...water,X:0}]) {
     assert.throws(()=>validateIdChanges(tables,tables,water,v));
   }
-  assert.throws(()=>parseHighWater(Buffer.from('{"C":88,"C":89}')));
+  assert.throws(()=>parseHighWater(Buffer.from(`{"C":${water.C},"C":${water.C+1}}`)));
   assert.throws(()=>parseHighWater(Buffer.from('\ufeff{}')));
 });
 
 test('new song and creator added directly to CSV fixture pass validation, allocation and JSON generation',async t=>{
   const root=await fixture(t),base=(await readValidatedCanonical(root)).tables,tables=structuredClone(base);
-  tables.creators.push(completeRow('creators',{creator_id:'C00091',name:'New writer'}));
-  tables.songs.push(completeRow('songs',{song_id:'J00121',work_id:tables.works[0].work_id,title:'New song',version_type:'original'}));
-  tables.song_artists.push(completeRow('song_artists',{song_id:'J00121',artist_id:'G00001',role:'primary'}));
-  tables.song_creators.push(completeRow('song_creators',{song_id:'J00121',creator_id:'C00091',role:'composition',credit_name:'New writer'}));
-  const water={...currentHighWater,C:91,J:121};
+  tables.creators.push(completeRow('creators',{creator_id:testId('C'),name:'New writer'}));
+  tables.songs.push(completeRow('songs',{song_id:testId('J'),work_id:tables.works[0].work_id,title:'New song',version_type:'original'}));
+  tables.song_artists.push(completeRow('song_artists',{song_id:testId('J'),artist_id:'G00001',role:'primary'}));
+  tables.song_creators.push(completeRow('song_creators',{song_id:testId('J'),creator_id:testId('C'),role:'composition',credit_name:'New writer'}));
+  const water={...currentHighWater,C:currentHighWater.C+1,J:currentHighWater.J+1};
   await writeCanonicalTables(root,tables);await writeFile(join(root,'data/id-high-water.json'),JSON.stringify(water));
   const after=(await readValidatedCanonical(root)).tables;
   const changes=validateIdChanges(base,after,currentHighWater,water);assert.equal(changes.additions.length,2);
-  assert.ok(generateSongCatalog(after).works.some(w=>w.songs.some(s=>s.song_id==='J00121')));
+  assert.ok(generateSongCatalog(after).works.some(w=>w.songs.some(s=>s.song_id===testId('J'))));
   const edited=structuredClone(after);edited.creators[0].name='Identity change requires review';
   assert.equal(validateIdChanges(after,edited,water,water).identity_review[0].id,edited.creators[0].creator_id);
   // Same provisional allocation from a second PR conflicts after the first merges.
-  const second=structuredClone(after);second.creators.push(completeRow('creators',{creator_id:'C00092',name:'Other writer'}));
-  assert.throws(()=>validateIdChanges(after,second,{...water,C:92},{...water,C:92}),/cannot be reused/);
+  const second=structuredClone(after);second.creators.push(completeRow('creators',{creator_id:testId('C',2),name:'Other writer'}));
+  assert.throws(()=>validateIdChanges(after,second,{...water,C:water.C+1},{...water,C:water.C+1}),/cannot be reused/);
 });
 
 test('all namespaces keep deleted confirmed IDs and consumed gaps unavailable',async t=>{
@@ -132,10 +133,10 @@ test('Git multi-commit boundary validates earlier ID edits, rejects non-ancestor
   const git=async(...args)=>(await exec('git',['-C',root,...args])).stdout.trim();
   await git('config','user.email','test@example.test');await git('config','user.name','Fixture');
   await git('add','data');await git('commit','-m','base');const base=await git('rev-parse','HEAD');
-  await writeFile(join(root,'data/id-high-water.json'),JSON.stringify({...currentHighWater,C:91}));
+  await writeFile(join(root,'data/id-high-water.json'),JSON.stringify({...currentHighWater,C:currentHighWater.C+1}));
   await git('add','data');await git('commit','-m','invalid reservation');const middle=await git('rev-parse','HEAD');
   await writeFile(join(root,'note.txt'),'documentation');await git('add','note.txt');await git('commit','-m','docs only');const candidate=await git('rev-parse','HEAD');
-  await assert.rejects(validateIdDiff({root,base,candidate}),/expected 90/);
+  await assert.rejects(validateIdDiff({root,base,candidate}),new RegExp(`expected ${currentHighWater.C}\\b`));
   assert.equal((await validateIdDiff({root,base:middle,candidate})).additions.length,0);
   await assert.rejects(validateIdDiff({root,base:candidate,candidate:base}));
   await assert.rejects(validateIdDiff({root,base:candidate,candidate}));

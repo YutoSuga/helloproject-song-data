@@ -5004,6 +5004,57 @@
           ]
         }
       ]
+    },
+    {
+      "work_id": "W00091",
+      "title": "華麗なるリベンジャー",
+      "title_kana": null,
+      "first_release_date": "2026-11-07",
+      "date_incomplete": false,
+      "search_creator_names": [
+        "Anna Kusakawa",
+        "RUSH EYE",
+        "山崎あおい"
+      ],
+      "songs": [
+        {
+          "song_id": "J00121",
+          "title": "華麗なるリベンジャー",
+          "version_name": null,
+          "version_type": "original",
+          "release_date": "2026-11-07",
+          "credits": [
+            {
+              "creator_id": "C00091",
+              "creator_name": "RUSH EYE",
+              "credit_name": "RUSH EYE",
+              "role": "arrangement",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00091",
+              "creator_name": "RUSH EYE",
+              "credit_name": "RUSH EYE",
+              "role": "composition",
+              "credit_order": 1
+            },
+            {
+              "creator_id": "C00092",
+              "creator_name": "Anna Kusakawa",
+              "credit_name": "Anna Kusakawa",
+              "role": "composition",
+              "credit_order": 2
+            },
+            {
+              "creator_id": "C00001",
+              "creator_name": "山崎あおい",
+              "credit_name": "山崎あおい",
+              "role": "lyrics",
+              "credit_order": 1
+            }
+          ]
+        }
+      ]
     }
   ]
 }
