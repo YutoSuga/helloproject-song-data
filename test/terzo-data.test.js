@@ -61,7 +61,7 @@ test('terzo credits use the official names and order within each role', () => {
     ['J00006', '山崎あおい', '山崎あおい', '鈴木俊介'],
     ['J00008', '山崎あおい', '山崎あおい', '鈴木俊介'],
     ['J00017', '中島卓偉', '中島卓偉', '中島卓偉/宮永治郎'],
-    ['J00018', '山崎あおい', 'Erik Lidbom', 'Erik Lidbom'],
+    ['J00018', '山崎あおい', 'Andreas Carlsson/Julie Yu/Erik Lidbom', 'Erik Lidbom'],
     ['J00019', '徳田光希', '徳田光希', '平田祥一郎'],
     ['J00020', 'オオヤギヒロオ/井筒日美', 'オオヤギヒロオ', '浜田ピエール裕介'],
     ['J00022', '井筒日美', 'Shusui/Andreas Ohrn/Henrik Smith', 'Henrik Smith'],
@@ -75,6 +75,7 @@ test('terzo credits use the official names and order within each role', () => {
   assert.equal(tables.song_creators.find(row => row.credit_name === 'Andreas Ohrn').creator_id, 'C00021');
   assert(tables.song_creators.filter(row => row.credit_name === 'Zeyun').every(row => row.creator_id === 'C00033'));
   assert.deepEqual(tables.song_creators.filter(row => row.song_id === 'J00018' && row.role === 'composition')
-    .map(row => [row.creator_id, row.credit_order]), [['C00076', '3']]);
-  assert(!tables.creators.some(row => ['Andreas Carlsson', 'Julie Yu'].includes(row.name)));
+    .map(row => [row.creator_id, row.credit_order]), [['C00089', '1'], ['C00090', '2'], ['C00076', '3']]);
+  assert.equal(tables.creators.find(row => row.creator_id === 'C00089').name, 'Andreas Carlsson');
+  assert.equal(tables.creators.find(row => row.creator_id === 'C00090').name, 'Julie Yu');
 });
