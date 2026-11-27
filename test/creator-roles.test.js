@@ -1,3 +1,5 @@
+import { canonicalCounts } from './helpers/canonical-counts.js';
+import { fileURLToPath as rootPath } from 'node:url';
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
@@ -50,6 +52,5 @@ test("canonical examples retain same-song self pairs and repeated-recording role
   assert(self.some(e => e.works.some(w => w.work_id === "W00002" && w.song_ids.includes("J00002"))));
   const a = analyzeCreatorPairs(data.lyrics_composition_pairs.entries, "C00001", true, true).entries;
   assert(!a.some(e => e.works.some(w => w.work_id === "W00001")));
-  assert.equal(data.summary.primary_song_count, 118);
-  assert.equal(data.summary.target_work_count, 91);
+  assert.deepEqual(data.summary, (await canonicalCounts(rootPath(new URL("..", import.meta.url)))).summary);
 });

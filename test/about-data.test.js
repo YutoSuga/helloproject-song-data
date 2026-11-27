@@ -1,3 +1,5 @@
+import { canonicalCounts } from './helpers/canonical-counts.js';
+import { fileURLToPath } from 'node:url';
 import { readCsv } from '../src/csv.js';
 import { readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
@@ -82,16 +84,20 @@ test('committed public JSON passes the rendering contracts', async () => {
   assert.match(juice.note, /NEXT YOU.*Next is you!.*大人の事情/);
   const catalog = JSON.parse(await readFile(new URL('../site/data/songs/G00001.json', import.meta.url), 'utf8'));
   const songIds = new Set(catalog.works.flatMap(work => work.songs.map(song => song.song_id)));
-  assert.equal(songIds.size, 118);
+  const expected = await canonicalCounts(fileURLToPath(new URL("..", import.meta.url)));
+  assert.deepEqual(songIds, expected.primary);
   for (const id of ['J00038', 'J00067', 'J00087']) assert(songIds.has(id));
   const canonical = await readCsv(new URL('../data/song_artists.csv', import.meta.url));
   const linked = new Set(canonical.filter(row => row.artist_id === 'G00001'
     && ['primary', 'featured'].includes(row.role)).map(row => row.song_id));
-  assert.deepEqual([...linked].filter(id => !songIds.has(id)), ['H00001']);
-  assert.equal(linked.size, 119);
+  assert.deepEqual(new Set([...linked].filter(id => !songIds.has(id))),
+    new Set([...expected.registered].filter(id => !expected.primary.has(id))));
+  assert(linked.has('H00001'));
+  assert(!songIds.has('H00001'));
+  assert.deepEqual(linked, expected.registered);
   assert.equal(juice.registered_audio_count, linked.size);
   const rankings = JSON.parse(await readFile(new URL('../site/data/rankings/G00001.json', import.meta.url), 'utf8'));
-  assert.equal(rankings.summary.primary_song_count, 118);
+  assert.deepEqual(rankings.summary, expected.summary);
   assert.doesNotMatch(JSON.stringify(rankings), /"H00001"/);
   assert.equal(coverage.find(row => row.artist_id === 'G00002').status, 'unlisted');
   assert.deepEqual([juice.covered_from, juice.covered_through, juice.reflected_at],
