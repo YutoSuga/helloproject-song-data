@@ -13,8 +13,8 @@ test("current canonical Juice=Juice data aggregates by work", async (t) => {
   await cp(fileURLToPath(new URL("../data", import.meta.url)), join(root, "data"), { recursive: true });
   const data = await loadCanonicalData(root);
   const result = aggregateCreatorRankings(data, "G00001");
-  assert.equal(result.summary.primary_song_count, 117);
-  assert.equal(result.summary.target_work_count, 90);
+  assert.equal(result.summary.primary_song_count, 118);
+  assert.equal(result.summary.target_work_count, 91);
   assert.deepEqual(Object.keys(result.categories), [
     "lyrics",
     "composition",
