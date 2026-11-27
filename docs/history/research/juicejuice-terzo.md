@@ -1,5 +1,13 @@
 # Juice=Juice「terzo」事前調査（data-spec v0.2 検証）
 
+## Issue #111による未登録作家の追加（2026-11-27）
+
+基準main `a591848cb621ad4959bac6bd3195bc07e7169afa`。公式 https://helloproject.com/juicejuice/release/6692/ を再確認し、J00018 / W00017の作曲順1にAndreas Carlsson（C00089）、順2にJulie Yu（C00090）をCSV直接編集で追加。既存のErik Lidbom（C00076）の作曲順3・編曲を維持した。既存作家に両名の登録・表記揺れは見つからず、Andreas Öhrn（C00021）は別人。消費済みC00087/88を再利用せず、ID台帳Cのみ88→90とした。下記の保留記述は当時の記録である。
+
+117音源／90作品は不変。両名は各1作品、作曲ランキング同率17位、作詞または作曲同率24位、山崎あおいとのペア同率11位に追加。楽曲詳細の公式順表示をローカルChromiumで確認（JavaScriptエラー0）。既存作家・関連行の更新/削除なし。旧FN-004操作・runtime変更なし。
+
+全14表検証、通常210テスト（失敗0・skip0）、正式生成、楽曲・ランキング検証を実施。terzoテストの未登録期待値を登録済みに更新し、CSV運用テストのfixtureは現行台帳C=90と未使用C00091/92に追従。負例・競合拒否・全namespace再利用禁止の条件は維持。ローカルsandboxの子プロセスEPERMは制限外で全suiteを再実行して解消した。commit後のID差分・生成物検査と最終HEADのCI結果はPR本文に記録する。マージ後main CI・Pages公開確認とIssue完了判断は人間レビュー・マージ後に残す。
+
 ## Issue #106による訂正（2026-11-23）
 
 J00018「POPPIN' LOVE」は、誤っていた作曲関係を削除し、既存作家 Erik Lidbom の作曲順3と編曲を反映した。作曲順1の Andreas Carlsson と順2の Julie Yu は正式な承認経路が整うまで登録を保留するため、作曲者情報は一時的に不完全となる。[残課題 #111](https://github.com/YutoSuga/helloproject-song-data/issues/111)
