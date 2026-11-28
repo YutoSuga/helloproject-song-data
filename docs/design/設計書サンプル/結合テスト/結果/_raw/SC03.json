@@ -1,0 +1,165 @@
+{
+  "scenario": "SC03",
+  "name": "書籍削除フロー",
+  "cases": [
+    {
+      "no": "SC03-001",
+      "name": "正常削除（一覧→確認→完了→一覧）",
+      "viewpoint": "正常系",
+      "precondition": "book_id=16 が存在(レビュー0件)",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "book_id=16の削除確認画面",
+          "input": "-",
+          "expected": "BK09表示・確認/警告メッセージ",
+          "actual": "body確認",
+          "judge": "OK",
+          "shot": "img/SC03-001_1_bk09.png"
+        },
+        {
+          "no": 2,
+          "op": "削除ボタン押下",
+          "input": "-",
+          "expected": "BK10へ遷移・「削除が完了」",
+          "actual": "url=http://localhost:8080/book/delete/complete",
+          "judge": "OK",
+          "shot": "img/SC03-001_2_bk10.png"
+        },
+        {
+          "no": 3,
+          "op": "book_id=16の詳細を確認",
+          "input": "-",
+          "expected": "削除済み(見つからない/一覧へ)",
+          "actual": "url=http://localhost:8080/book/detail/16",
+          "judge": "OK",
+          "shot": "img/SC03-001_3_verify_deleted.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC03-002",
+      "name": "詳細画面から削除",
+      "viewpoint": "正常系",
+      "precondition": "book_id=15 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK02→削除ボタン押下",
+          "input": "-",
+          "expected": "BK09(/book/delete/confirm/15)へ遷移",
+          "actual": "url=http://localhost:8080/book/delete/confirm/15",
+          "judge": "OK",
+          "shot": "img/SC03-002_1_bk09.png"
+        },
+        {
+          "no": 2,
+          "op": "削除ボタン押下",
+          "input": "-",
+          "expected": "BK10・「削除が完了」・book15削除",
+          "actual": "url=http://localhost:8080/book/delete/complete",
+          "judge": "OK",
+          "shot": "img/SC03-002_2_bk10.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC03-003",
+      "name": "レビュー連動削除（CASCADE）",
+      "viewpoint": "DB整合",
+      "precondition": "book_id=1 にレビュー3件",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "削除前: book1のレビュー件数確認",
+          "input": "-",
+          "expected": "レビュー3件存在",
+          "actual": "reviews=3",
+          "judge": "OK",
+          "shot": "img/SC03-003_1_before.png"
+        },
+        {
+          "no": 2,
+          "op": "book1を削除",
+          "input": "-",
+          "expected": "BK10・「削除が完了」",
+          "actual": "url=http://localhost:8080/book/delete/complete",
+          "judge": "OK",
+          "shot": "img/SC03-003_2_bk10.png"
+        },
+        {
+          "no": 3,
+          "op": "book1詳細を再確認",
+          "input": "-",
+          "expected": "book1削除・紐づくレビューもCASCADE削除",
+          "actual": "url=http://localhost:8080/book/detail/1",
+          "judge": "OK",
+          "shot": "img/SC03-003_3_cascade.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC03-004",
+      "name": "キャンセルで詳細へ戻る（削除されない）",
+      "viewpoint": "正常系",
+      "precondition": "book_id=2 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK09(/book/delete/confirm/2)表示",
+          "input": "-",
+          "expected": "BK09表示",
+          "actual": "url=http://localhost:8080/book/delete/confirm/2",
+          "judge": "OK",
+          "shot": "img/SC03-004_1_bk09.png"
+        },
+        {
+          "no": 2,
+          "op": "キャンセル押下",
+          "input": "-",
+          "expected": "BK02(detail/2)へ遷移・book2未削除",
+          "actual": "url=http://localhost:8080/book/detail/2",
+          "judge": "OK",
+          "shot": "img/SC03-004_2_bk02.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC03-005",
+      "name": "存在しない書籍IDで削除確認アクセス",
+      "viewpoint": "異常系",
+      "precondition": "book_id=999999 は存在しない",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK09(/book/delete/confirm/999999)アクセス",
+          "input": "-",
+          "expected": "「見つかりません」表示／一覧へ",
+          "actual": "url=http://localhost:8080/book/delete/confirm/999999",
+          "judge": "OK",
+          "shot": "img/SC03-005_1_notfound.png"
+        }
+      ],
+      "ng": null
+    }
+  ],
+  "env": {
+    "url": "http://localhost:8080",
+    "datetime": "2026-05-17 00:38:29",
+    "data": "data.sql 投入済み（アプリ再起動で初期化）"
+  },
+  "summary": {
+    "total": 5,
+    "ok": 5,
+    "ng": 0
+  }
+}

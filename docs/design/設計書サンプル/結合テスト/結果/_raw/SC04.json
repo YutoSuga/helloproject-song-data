@@ -1,0 +1,156 @@
+{
+  "scenario": "SC04",
+  "name": "書籍閲覧フロー",
+  "cases": [
+    {
+      "no": "SC04-001",
+      "name": "一覧→詳細→一覧 基本閲覧",
+      "viewpoint": "正常系",
+      "precondition": "book_id=1 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK01表示(リーダブルコード検索)",
+          "input": "-",
+          "expected": "一覧表示",
+          "actual": "rows=1",
+          "judge": "OK",
+          "shot": "img/SC04-001_1_bk01.png"
+        },
+        {
+          "no": 2,
+          "op": "タイトルリンク押下",
+          "input": "-",
+          "expected": "BK02へ遷移・書籍情報表示",
+          "actual": "url=http://localhost:8080/book/detail/1",
+          "judge": "OK",
+          "shot": "img/SC04-001_2_bk02.png"
+        },
+        {
+          "no": 3,
+          "op": "レビュー/平均評価確認",
+          "input": "-",
+          "expected": "レビュー3件・平均評価4.7",
+          "actual": "reviews=3 avg4.7=true",
+          "judge": "OK",
+          "shot": "img/SC04-001_3_reviews.png"
+        },
+        {
+          "no": 4,
+          "op": "一覧に戻る押下",
+          "input": "-",
+          "expected": "BK01へ遷移",
+          "actual": "url=http://localhost:8080/book/list",
+          "judge": "OK",
+          "shot": "img/SC04-001_4_back.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC04-002",
+      "name": "レビュー0件書籍の詳細表示",
+      "viewpoint": "境界値",
+      "precondition": "book_id=16(レビュー0件)",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK02(detail/16)表示",
+          "input": "-",
+          "expected": "書籍情報表示・平均0・レビュー0件・エラーなし",
+          "actual": "reviews=0 坊っちゃん=true",
+          "judge": "OK",
+          "shot": "img/SC04-002_1_bk02_norev.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC04-003",
+      "name": "検索条件を保持したまま詳細往復",
+      "viewpoint": "セッション",
+      "precondition": "夏目漱石の書籍が複数存在",
+      "judgment": "NG",
+      "steps": [
+        {
+          "no": 1,
+          "op": "著者「夏目」で検索",
+          "input": "searchAuthor=夏目",
+          "expected": "夏目漱石の書籍に絞り込み(3件)",
+          "actual": "rows=3",
+          "judge": "OK",
+          "shot": "img/SC04-003_1_search.png"
+        },
+        {
+          "no": 2,
+          "op": "タイトルリンク→BK02",
+          "input": "-",
+          "expected": "詳細表示",
+          "actual": "url=http://localhost:8080/book/detail/16",
+          "judge": "OK",
+          "shot": "img/SC04-003_2_detail.png"
+        },
+        {
+          "no": 3,
+          "op": "BK02で一覧に戻る押下",
+          "input": "-",
+          "expected": "前回検索条件(著者=夏目)復元・絞り込み再表示",
+          "actual": "searchAuthor= rows=20",
+          "judge": "NG",
+          "shot": "img/SC04-003_3_restored.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC04-004",
+      "name": "存在しない書籍IDで詳細アクセス",
+      "viewpoint": "異常系",
+      "precondition": "book_id=999999 は存在しない",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK02(detail/999999)アクセス",
+          "input": "-",
+          "expected": "「見つかりません」表示／一覧へ自動遷移",
+          "actual": "url=http://localhost:8080/book/detail/999999",
+          "judge": "OK",
+          "shot": "img/SC04-004_1_notfound.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC04-005",
+      "name": "不正な書籍IDパラメータ",
+      "viewpoint": "異常系",
+      "precondition": "共通事前準備の通り",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK02(detail/abc)アクセス(数値以外)",
+          "input": "-",
+          "expected": "バリデーション違反をハンドリング・500で異常終了しない",
+          "actual": "httpStatus=400",
+          "judge": "OK",
+          "shot": "img/SC04-005_1_badparam.png"
+        }
+      ],
+      "ng": null
+    }
+  ],
+  "env": {
+    "url": "http://localhost:8080",
+    "datetime": "2026-05-17 00:38:44",
+    "data": "data.sql 投入済み（アプリ再起動で初期化）"
+  },
+  "summary": {
+    "total": 5,
+    "ok": 4,
+    "ng": 1
+  }
+}

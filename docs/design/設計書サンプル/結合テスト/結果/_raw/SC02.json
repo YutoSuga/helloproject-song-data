@@ -1,0 +1,304 @@
+{
+  "scenario": "SC02",
+  "name": "書籍編集フロー",
+  "cases": [
+    {
+      "no": "SC02-001",
+      "name": "正常編集（一覧→入力→確認→完了→詳細）",
+      "viewpoint": "正常系",
+      "precondition": "book_id=1 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "一覧でbook_id=1の編集ボタン押下",
+          "input": "-",
+          "expected": "BK06へ遷移・既存値初期表示(title=リーダブルコード)",
+          "actual": "title=リーダブルコード",
+          "judge": "OK",
+          "shot": "img/SC02-001_1_bk06_prefilled.png"
+        },
+        {
+          "no": 2,
+          "op": "項目変更し確認画面へ",
+          "input": "title=リーダブルコード 改訂版,price=3000",
+          "expected": "BK07へ遷移・変更値・「更新します」",
+          "actual": "body確認",
+          "judge": "OK",
+          "shot": "img/SC02-001_2_bk07.png"
+        },
+        {
+          "no": 3,
+          "op": "更新ボタン押下",
+          "input": "-",
+          "expected": "BK08へ遷移・「更新が完了」",
+          "actual": "url=http://localhost:8080/book/edit/complete?bookId=1",
+          "judge": "OK",
+          "shot": "img/SC02-001_3_bk08.png"
+        },
+        {
+          "no": 4,
+          "op": "詳細を見るボタン押下",
+          "input": "-",
+          "expected": "BK02で更新後の値(title=改訂版,price=3,000)",
+          "actual": "body確認",
+          "judge": "OK",
+          "shot": "img/SC02-001_4_bk02.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC02-002",
+      "name": "詳細画面から編集",
+      "viewpoint": "正常系",
+      "precondition": "book_id=1 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK02→編集ボタン押下",
+          "input": "-",
+          "expected": "BK06へ遷移・既存値表示",
+          "actual": "url=http://localhost:8080/book/edit/1",
+          "judge": "OK",
+          "shot": "img/SC02-002_1_bk06.png"
+        },
+        {
+          "no": 2,
+          "op": "著者変更し確認→更新",
+          "input": "author=D. Boswell",
+          "expected": "BK08・「更新が完了」",
+          "actual": "body確認",
+          "judge": "OK",
+          "shot": "img/SC02-002_2_bk08.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC02-003",
+      "name": "確認画面から戻り入力値保持",
+      "viewpoint": "セッション",
+      "precondition": "book_id=1 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK06変更し確認画面へ",
+          "input": "title=保持テスト編集,price=2222",
+          "expected": "BK07へ遷移",
+          "actual": "confirm=true",
+          "judge": "OK",
+          "shot": "img/SC02-003_1_bk07.png"
+        },
+        {
+          "no": 2,
+          "op": "BK07で戻る押下",
+          "input": "-",
+          "expected": "変更後入力値が復元(title=保持テスト編集,price=2222)",
+          "actual": "title=保持テスト編集,price=2222",
+          "judge": "OK",
+          "shot": "img/SC02-003_2_bk06_restored.png"
+        },
+        {
+          "no": 3,
+          "op": "再度確認画面へ",
+          "input": "-",
+          "expected": "BK07に保持値表示",
+          "actual": "body確認",
+          "judge": "OK",
+          "shot": "img/SC02-003_3_bk07_again.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC02-004",
+      "name": "キャンセルで詳細へ戻りセッションクリア",
+      "viewpoint": "セッション",
+      "precondition": "book_id=1 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK06で値変更",
+          "input": "title=破棄編集",
+          "expected": "BK06入力状態",
+          "actual": "set",
+          "judge": "OK",
+          "shot": "img/SC02-004_1_bk06_input.png"
+        },
+        {
+          "no": 2,
+          "op": "キャンセル押下",
+          "input": "-",
+          "expected": "BK02へ遷移・book1未変更(元title表示)",
+          "actual": "url=http://localhost:8080/book/detail/1",
+          "judge": "OK",
+          "shot": "img/SC02-004_2_bk02.png"
+        },
+        {
+          "no": 3,
+          "op": "再度BK06表示",
+          "input": "-",
+          "expected": "DB既存値表示(破棄値は復元されない)",
+          "actual": "title=リーダブルコード 改訂版",
+          "judge": "OK",
+          "shot": "img/SC02-004_3_bk06_dbvalue.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC02-005",
+      "name": "必須・桁数・形式バリデーションエラー",
+      "viewpoint": "異常系",
+      "precondition": "book_id=1 が存在。BK06表示中",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "タイトルを空にして確認画面へ",
+          "input": "title=空",
+          "expected": "BK06に留まり必須エラー",
+          "actual": "stay=true",
+          "judge": "OK",
+          "shot": "img/SC02-005_1_title_empty.png"
+        },
+        {
+          "no": 2,
+          "op": "ISBN不正形式で送信",
+          "input": "isbn=ABC123",
+          "expected": "BK06に留まりISBN形式エラー",
+          "actual": "stay=true",
+          "judge": "OK",
+          "shot": "img/SC02-005_2_isbn_bad.png"
+        },
+        {
+          "no": 3,
+          "op": "出版日に未来日付",
+          "input": "publishedDate=2999-01-01",
+          "expected": "BK06に留まり未来日付エラー",
+          "actual": "stay=true",
+          "judge": "OK",
+          "shot": "img/SC02-005_3_future.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC02-006",
+      "name": "ISBN重複エラー（自書籍は除外）",
+      "viewpoint": "異常系",
+      "precondition": "book_id=1(9784873115658), book_id=2(9784422100517)",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "book2のISBNに変更し更新",
+          "input": "isbn=9784422100517",
+          "expected": "BK07に留まりISBN重複・book1未更新",
+          "actual": "url=http://localhost:8080/book/edit/1/update",
+          "judge": "OK",
+          "shot": "img/SC02-006_1_dup.png"
+        },
+        {
+          "no": 2,
+          "op": "自分の元ISBNのまま他項目変更し更新",
+          "input": "isbn=9784873115658(自書籍),title=自ISBN維持更新",
+          "expected": "重複にならず正常更新(BK08)",
+          "actual": "url=http://localhost:8080/book/edit/complete?bookId=1 初期isbn=9784873115658",
+          "judge": "OK",
+          "shot": "img/SC02-006_2_self_ok.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC02-007",
+      "name": "楽観的ロックエラー（同時更新）",
+      "viewpoint": "異常系",
+      "precondition": "book_id=1。2セッションで同時編集",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "セッションA: BK06(book1)を開く",
+          "input": "-",
+          "expected": "BK06表示(updated_at保持)",
+          "actual": "url=http://localhost:8080/book/edit/1",
+          "judge": "OK",
+          "shot": "img/SC02-007_1_A_open.png"
+        },
+        {
+          "no": 2,
+          "op": "セッションB: 先に更新し更新日時変更",
+          "input": "title=先行更新",
+          "expected": "book1がB更新で更新日時変化",
+          "actual": "url=http://localhost:8080/book/edit/complete?bookId=1",
+          "judge": "OK",
+          "shot": "img/SC02-007_2_B_updated.png"
+        },
+        {
+          "no": 3,
+          "op": "セッションA: 手順1の画面から更新",
+          "input": "title=後発更新",
+          "expected": "楽観ロック不一致・「他のユーザーによって更新」表示/BK02遷移",
+          "actual": "url=http://localhost:8080/book/edit/1/update hasMsg=true",
+          "judge": "OK",
+          "shot": "img/SC02-007_3_A_conflict.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC02-008",
+      "name": "存在しない書籍IDで編集アクセス",
+      "viewpoint": "異常系",
+      "precondition": "book_id=999999 は存在しない",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK06(/book/edit/999999)へアクセス",
+          "input": "-",
+          "expected": "「見つかりません」表示／一覧へ遷移",
+          "actual": "url=http://localhost:8080/book/edit/999999",
+          "judge": "OK",
+          "shot": "img/SC02-008_1_notfound.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC02-009",
+      "name": "確認画面 直接アクセス時のセッションガード",
+      "viewpoint": "セッション",
+      "precondition": "セッションに編集値なし",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK07(/book/edit/1/confirm)直接アクセス",
+          "input": "-",
+          "expected": "BK06(/book/edit/1)へリダイレクト",
+          "actual": "url=http://localhost:8080/book/edit/1;jsessionid=3B4F0EC4CEA5F8D421DC3BDD9A795BE5",
+          "judge": "OK",
+          "shot": "img/SC02-009_1_guard.png"
+        }
+      ],
+      "ng": null
+    }
+  ],
+  "env": {
+    "url": "http://localhost:8080",
+    "datetime": "2026-05-17 00:56:20",
+    "data": "data.sql 投入済み（アプリ再起動で初期化）"
+  },
+  "summary": {
+    "total": 9,
+    "ok": 9,
+    "ng": 0
+  }
+}

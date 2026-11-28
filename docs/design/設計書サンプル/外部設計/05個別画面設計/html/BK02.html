@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書籍詳細 - 書籍管理システム</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #1e40af !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        .breadcrumb-item a {
+            color: #2563eb;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb-item a:hover {
+            color: #1e40af;
+        }
+        .book-info-section {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .info-row {
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .info-row:last-of-type {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: 700;
+            color: #334155;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .rating-stars {
+            color: #f59e0b;
+            font-size: 1.3rem;
+        }
+        .review-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+        .review-card:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-color: #cbd5e1;
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .reviewer-name {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #1e293b;
+        }
+        .review-date {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+        .btn {
+            border-radius: 0.375rem;
+            padding: 0.625rem 1.25rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: none;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1e40af;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.25);
+        }
+        .btn-warning {
+            background-color: #f59e0b;
+            color: white;
+        }
+        .btn-warning:hover {
+            background-color: #d97706;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(245, 158, 11, 0.25);
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #64748b;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #475569;
+            transform: translateY(-1px);
+        }
+        .btn-action {
+            margin-right: 0.75rem;
+        }
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            background-color: #f8fafc;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="BK01.html">
+                <i class="bi bi-book"></i> 書籍管理システム
+            </a>
+        </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <div class="container mt-4">
+        <!-- パンくずリスト -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="BK01.html"><i class="bi bi-list-ul"></i> 書籍一覧</a></li>
+                <li class="breadcrumb-item active" aria-current="page">書籍詳細</li>
+            </ol>
+        </nav>
+
+        <h4 class="mb-4"><i class="bi bi-info-circle"></i> 書籍情報</h4>
+
+        <!-- 書籍情報エリア -->
+        <div class="book-info-section">
+            <div class="row info-row">
+                <div class="col-md-2 info-label">書籍ID:</div>
+                <div class="col-md-10">123</div>
+            </div>
+            <div class="row info-row">
+                <div class="col-md-2 info-label">タイトル:</div>
+                <div class="col-md-10">リーダブルコード</div>
+            </div>
+            <div class="row info-row">
+                <div class="col-md-2 info-label">著者:</div>
+                <div class="col-md-10">Dustin Boswell</div>
+            </div>
+            <div class="row info-row">
+                <div class="col-md-2 info-label">出版社:</div>
+                <div class="col-md-10">オライリージャパン</div>
+            </div>
+            <div class="row info-row">
+                <div class="col-md-2 info-label">出版日:</div>
+                <div class="col-md-10">2012-06-23</div>
+            </div>
+            <div class="row info-row">
+                <div class="col-md-2 info-label">ISBN:</div>
+                <div class="col-md-10">9784873115658</div>
+            </div>
+            <div class="row info-row">
+                <div class="col-md-2 info-label">カテゴリ:</div>
+                <div class="col-md-10">IT・コンピュータ</div>
+            </div>
+            <div class="row info-row">
+                <div class="col-md-2 info-label">価格:</div>
+                <div class="col-md-10">2,640円</div>
+            </div>
+            <div class="row info-row">
+                <div class="col-md-2 info-label">平均評価:</div>
+                <div class="col-md-10">
+                    <span class="rating-stars">★★★★★</span>
+                    <span class="ms-2">4.7</span>
+                </div>
+            </div>
+            <div class="row info-row">
+                <div class="col-md-2 info-label">概要:</div>
+                <div class="col-md-10">
+                    より良いコードを書くためのシンプルで実践的なテクニック。
+                    コードは理解しやすくなければならない。本書はこの原則を日々のコーディングの様々な場面に当てはめる方法を示しています。
+                </div>
+            </div>
+        </div>
+
+        <!-- ボタンエリア -->
+        <div class="mb-4">
+            <a href="BK06.html" class="btn btn-primary btn-action">
+                <i class="bi bi-pencil"></i> 編集
+            </a>
+            <a href="BK09.html" class="btn btn-warning btn-action" style="background-color: #fd7e14; border-color: #fd7e14; color: white;">
+                <i class="bi bi-trash"></i> 削除
+            </a>
+            <a href="BK11.html" class="btn btn-action" style="background-color: #10b981; color: white;">
+                <i class="bi bi-chat-left-text"></i> レビューを書く
+            </a>
+            <a href="BK01.html" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> 一覧に戻る
+            </a>
+        </div>
+
+        <!-- レビュー一覧エリア -->
+        <h4 class="mb-3"><i class="bi bi-chat-left-text"></i> レビュー一覧</h4>
+
+        <!-- レビュー1 -->
+        <div class="review-card">
+            <div class="review-header">
+                <div>
+                    <span class="reviewer-name">山田太郎</span>
+                    <span class="rating-stars ms-3">★★★★★</span>
+                    <span class="ms-2">5.0</span>
+                </div>
+                <div class="review-date">2024-11-01 10:30</div>
+            </div>
+            <div class="review-content">
+                コードの可読性を高めるための実践的なテクニックが満載。
+                すべてのエンジニア必読の一冊です。
+            </div>
+        </div>
+
+        <!-- レビュー2 -->
+        <div class="review-card">
+            <div class="review-header">
+                <div>
+                    <span class="reviewer-name">佐藤花子</span>
+                    <span class="rating-stars ms-3">★★★★☆</span>
+                    <span class="ms-2">4.0</span>
+                </div>
+                <div class="review-date">2024-10-15 14:20</div>
+            </div>
+            <div class="review-content">
+                具体例が豊富でわかりやすい。ただし、初心者には少し難しい部分もあるかも。
+            </div>
+        </div>
+
+        <!-- レビュー3 -->
+        <div class="review-card">
+            <div class="review-header">
+                <div>
+                    <span class="reviewer-name">鈴木一郎</span>
+                    <span class="rating-stars ms-3">★★★★★</span>
+                    <span class="ms-2">5.0</span>
+                </div>
+                <div class="review-date">2024-09-28 09:15</div>
+            </div>
+            <div class="review-content">
+                何度読んでも新しい発見があります。プログラミング初心者から上級者まで、全ての人に役立つ内容です。
+            </div>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">&copy; 2024 Training BookShelf</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

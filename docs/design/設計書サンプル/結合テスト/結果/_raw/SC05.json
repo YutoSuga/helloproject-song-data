@@ -1,0 +1,239 @@
+{
+  "scenario": "SC05",
+  "name": "レビュー投稿フロー",
+  "cases": [
+    {
+      "no": "SC05-001",
+      "name": "正常投稿（詳細→入力→確認→完了→詳細）",
+      "viewpoint": "正常系",
+      "precondition": "book_id=1 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK02→レビューを書く押下",
+          "input": "-",
+          "expected": "BK11へ遷移・書籍サマリ表示",
+          "actual": "url=http://localhost:8080/books/1/reviews/new",
+          "judge": "OK",
+          "shot": "img/SC05-001_1_bk11.png"
+        },
+        {
+          "no": 2,
+          "op": "レビュー入力し確認画面へ",
+          "input": "reviewerName=結合テスト評者,rating=5",
+          "expected": "BK12へ遷移・「投稿します」・入力値確認",
+          "actual": "body確認",
+          "judge": "OK",
+          "shot": "img/SC05-001_2_bk12.png"
+        },
+        {
+          "no": 3,
+          "op": "投稿ボタン押下",
+          "input": "-",
+          "expected": "BK13へ遷移・「投稿が完了」",
+          "actual": "url=http://localhost:8080/books/1/reviews/complete",
+          "judge": "OK",
+          "shot": "img/SC05-001_3_bk13.png"
+        },
+        {
+          "no": 4,
+          "op": "詳細に戻る押下",
+          "input": "-",
+          "expected": "BK02・投稿レビューが先頭表示・件数+1",
+          "actual": "before=3 after=4",
+          "judge": "OK",
+          "shot": "img/SC05-001_4_bk02_after.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC05-002",
+      "name": "コメント未入力（任意）で投稿",
+      "viewpoint": "境界値",
+      "precondition": "book_id=1 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "レビュアー名・評価のみ入力(コメント空)で確認へ",
+          "input": "comment=空",
+          "expected": "BK12へ遷移・エラーなし",
+          "actual": "confirm=true",
+          "judge": "OK",
+          "shot": "img/SC05-002_1_bk12.png"
+        },
+        {
+          "no": 2,
+          "op": "投稿ボタン押下",
+          "input": "-",
+          "expected": "BK13・「投稿が完了」・comment空で登録",
+          "actual": "url=http://localhost:8080/books/1/reviews/complete",
+          "judge": "OK",
+          "shot": "img/SC05-002_2_bk13.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC05-003",
+      "name": "確認画面から戻り入力値保持",
+      "viewpoint": "セッション",
+      "precondition": "book_id=1 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK11入力し確認画面へ",
+          "input": "reviewerName=保持評者,rating=4",
+          "expected": "BK12へ遷移",
+          "actual": "confirm=true",
+          "judge": "OK",
+          "shot": "img/SC05-003_1_bk12.png"
+        },
+        {
+          "no": 2,
+          "op": "BK12で戻る押下",
+          "input": "-",
+          "expected": "入力値復元(保持評者/4/保持コメント)",
+          "actual": "name=保持評者,rating=4,comment=保持コメント",
+          "judge": "OK",
+          "shot": "img/SC05-003_2_bk11_restored.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC05-004",
+      "name": "キャンセルで詳細へ戻りセッションクリア",
+      "viewpoint": "セッション",
+      "precondition": "book_id=1 が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK11で入力",
+          "input": "reviewerName=破棄評者,rating=1",
+          "expected": "BK11入力状態",
+          "actual": "set",
+          "judge": "OK",
+          "shot": "img/SC05-004_1_bk11.png"
+        },
+        {
+          "no": 2,
+          "op": "キャンセル押下",
+          "input": "-",
+          "expected": "BK02(detail/1)へ遷移・未投稿",
+          "actual": "url=http://localhost:8080/book/detail/1",
+          "judge": "OK",
+          "shot": "img/SC05-004_2_bk02.png"
+        },
+        {
+          "no": 3,
+          "op": "再度BK11表示",
+          "input": "-",
+          "expected": "フォームが空(セッションクリア)",
+          "actual": "name=\"\"",
+          "judge": "OK",
+          "shot": "img/SC05-004_3_bk11_empty.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC05-005",
+      "name": "必須・桁数・範囲バリデーションエラー",
+      "viewpoint": "異常系",
+      "precondition": "book_id=1 が存在。BK11表示中",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "レビュアー名・評価空で確認画面へ",
+          "input": "(空)",
+          "expected": "BK11に留まり必須エラー",
+          "actual": "stay=true",
+          "judge": "OK",
+          "shot": "img/SC05-005_1_required.png"
+        },
+        {
+          "no": 2,
+          "op": "レビュアー名51文字で送信",
+          "input": "reviewerName=51字",
+          "expected": "maxlength=50で制限 or 文字数エラー",
+          "actual": "maxlength=50,実長=50,confirm=true",
+          "judge": "OK",
+          "shot": "img/SC05-005_2_maxlen.png"
+        },
+        {
+          "no": 3,
+          "op": "レビュアー名50文字ちょうど",
+          "input": "reviewerName=50字",
+          "expected": "BK12へ遷移(許容)",
+          "actual": "confirm=true",
+          "judge": "OK",
+          "shot": "img/SC05-005_3_len50ok.png"
+        },
+        {
+          "no": 4,
+          "op": "評価の選択肢確認",
+          "input": "-",
+          "expected": "評価は1〜5のみ(範囲外はUI選択不可で担保)",
+          "actual": "rating values=1,2,3,4,5",
+          "judge": "OK",
+          "shot": "img/SC05-005_4_rating_range.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC05-006",
+      "name": "存在しない書籍IDでレビュー入力アクセス",
+      "viewpoint": "異常系",
+      "precondition": "book_id=999999 は存在しない",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK11(/books/999999/reviews/new)アクセス",
+          "input": "-",
+          "expected": "一覧へリダイレクト/システムエラー表示",
+          "actual": "url=http://localhost:8080/book/list;jsessionid=DD45E769417F396F4DCC717A8FA031ED",
+          "judge": "OK",
+          "shot": "img/SC05-006_1_notfound.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC05-007",
+      "name": "確認画面 直接アクセス時のセッションガード",
+      "viewpoint": "セッション",
+      "precondition": "セッションにレビュー入力値なし",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK12(/books/1/reviews/confirm)直接アクセス",
+          "input": "-",
+          "expected": "BK11(/books/1/reviews/new)へリダイレクト",
+          "actual": "url=http://localhost:8080/books/1/reviews/new;jsessionid=D7B16A21CCB240706CA04D94852C6327",
+          "judge": "OK",
+          "shot": "img/SC05-007_1_guard.png"
+        }
+      ],
+      "ng": null
+    }
+  ],
+  "env": {
+    "url": "http://localhost:8080",
+    "datetime": "2026-05-17 00:39:02",
+    "data": "data.sql 投入済み（アプリ再起動で初期化）"
+  },
+  "summary": {
+    "total": 7,
+    "ok": 7,
+    "ng": 0
+  }
+}

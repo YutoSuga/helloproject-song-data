@@ -1,0 +1,303 @@
+{
+  "scenario": "SC01",
+  "name": "書籍登録フロー",
+  "cases": [
+    {
+      "no": "SC01-001",
+      "name": "正常登録（一覧→入力→確認→完了→一覧）",
+      "viewpoint": "正常系",
+      "precondition": "共通事前準備の通り",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK01で新規登録ボタン押下",
+          "input": "-",
+          "expected": "BK03(/book/create)へ遷移",
+          "actual": "http://localhost:8080/book/create;jsessionid=6D39C710C01F288CE40D112C1AF047D2",
+          "judge": "OK",
+          "shot": "img/SC01-001_1_bk03.png"
+        },
+        {
+          "no": 2,
+          "op": "全必須項目入力し確認画面へ押下",
+          "input": "{\"title\":\"結合テスト書籍\",\"author\":\"テスト太郎\",\"publisher\":\"テスト社\",\"publishedDate\":\"2020-01-01\",\"isbn\":\"9990000000001\",\"categoryId\":3,\"price\":1500,\"description\":\"説明\"}",
+          "expected": "BK04へ遷移・入力値表示・確認メッセージ",
+          "actual": "url=http://localhost:8080/book/create/confirm",
+          "judge": "OK",
+          "shot": "img/SC01-001_2_bk04.png"
+        },
+        {
+          "no": 3,
+          "op": "登録ボタン押下",
+          "input": "-",
+          "expected": "BK05へ遷移・「書籍の登録が完了しました」",
+          "actual": "url=http://localhost:8080/book/create/complete?bookId=51",
+          "judge": "OK",
+          "shot": "img/SC01-001_3_bk05.png"
+        },
+        {
+          "no": 4,
+          "op": "一覧に戻る→登録書籍を検索",
+          "input": "searchTitle=結合テスト書籍",
+          "expected": "一覧に登録書籍が表示（DB反映）",
+          "actual": "検索結果に含まれる",
+          "judge": "OK",
+          "shot": "img/SC01-001_4_bk01_verify.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC01-002",
+      "name": "完了画面から詳細へ遷移",
+      "viewpoint": "正常系",
+      "precondition": "登録完了しBK05表示",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "登録完了(BK05)",
+          "input": "-",
+          "expected": "BK05表示",
+          "actual": "http://localhost:8080/book/create/complete?bookId=52",
+          "judge": "OK",
+          "shot": "img/SC01-002_1_bk05.png"
+        },
+        {
+          "no": 2,
+          "op": "詳細を見るボタン押下",
+          "input": "-",
+          "expected": "BK02へ遷移・登録書籍の詳細表示",
+          "actual": "url=http://localhost:8080/book/detail/52",
+          "judge": "OK",
+          "shot": "img/SC01-002_2_bk02.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC01-003",
+      "name": "確認画面から戻り入力値保持",
+      "viewpoint": "セッション",
+      "precondition": "共通事前準備の通り",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK03入力→確認画面へ",
+          "input": "{\"title\":\"保持確認\",\"author\":\"著者A\",\"publisher\":\"社A\",\"publishedDate\":\"2019-05-05\",\"isbn\":\"9990000000002\",\"categoryId\":5,\"price\":999,\"description\":\"メモ\"}",
+          "expected": "BK04へ遷移",
+          "actual": "http://localhost:8080/book/create/confirm",
+          "judge": "OK",
+          "shot": "img/SC01-003_1_bk04.png"
+        },
+        {
+          "no": 2,
+          "op": "BK04で戻るボタン押下",
+          "input": "-",
+          "expected": "入力値が全項目復元(title=保持確認,price=999,cat=5)",
+          "actual": "title=保持確認,price=999,cat=5",
+          "judge": "OK",
+          "shot": "img/SC01-003_2_bk03_restored.png"
+        },
+        {
+          "no": 3,
+          "op": "値変更し再度確認画面へ",
+          "input": "title=保持確認2",
+          "expected": "BK04に変更後の値で表示",
+          "actual": "body確認",
+          "judge": "OK",
+          "shot": "img/SC01-003_3_bk04_changed.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC01-004",
+      "name": "キャンセルで一覧へ戻りセッションクリア",
+      "viewpoint": "セッション",
+      "precondition": "共通事前準備の通り",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK03で項目入力",
+          "input": "title=破棄予定",
+          "expected": "BK03入力状態",
+          "actual": "input set",
+          "judge": "OK",
+          "shot": "img/SC01-004_1_bk03_input.png"
+        },
+        {
+          "no": 2,
+          "op": "キャンセルボタン押下",
+          "input": "-",
+          "expected": "BK01へ遷移",
+          "actual": "http://localhost:8080/book/list",
+          "judge": "OK",
+          "shot": "img/SC01-004_2_bk01.png"
+        },
+        {
+          "no": 3,
+          "op": "再度BK03表示",
+          "input": "-",
+          "expected": "フォームが空(セッションクリア)",
+          "actual": "title=\"\"",
+          "judge": "OK",
+          "shot": "img/SC01-004_3_bk03_empty.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC01-005",
+      "name": "必須項目未入力でバリデーションエラー",
+      "viewpoint": "異常系",
+      "precondition": "共通事前準備の通り",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "全必須項目空で確認画面へ",
+          "input": "(全項目空)",
+          "expected": "BK03に留まり必須エラー(「○○は必須です」)表示",
+          "actual": "inputForm=true err=true",
+          "judge": "OK",
+          "shot": "img/SC01-005_1_bk03_errors.png"
+        },
+        {
+          "no": 2,
+          "op": "タイトルのみ入力し再送信",
+          "input": "title=部分入力",
+          "expected": "BK03継続・タイトル値保持・他必須エラー継続",
+          "actual": "title=部分入力 stay=true",
+          "judge": "OK",
+          "shot": "img/SC01-005_2_bk03_partial.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC01-006",
+      "name": "桁数・形式・未来日付・数値の境界／異常",
+      "viewpoint": "境界値",
+      "precondition": "BK03表示中",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "タイトルに101文字入力を試行",
+          "input": "title=101字入力",
+          "expected": "maxlength=100で100文字に制限（桁数上限を入力で担保）",
+          "actual": "maxlength=100, 実入力長=100",
+          "judge": "OK",
+          "shot": "img/SC01-006_1_title_maxlen.png"
+        },
+        {
+          "no": 2,
+          "op": "タイトル100文字ちょうど",
+          "input": "title=100字",
+          "expected": "BK04へ遷移(許容)",
+          "actual": "confirm=true",
+          "judge": "OK",
+          "shot": "img/SC01-006_2_title100.png"
+        },
+        {
+          "no": 3,
+          "op": "出版日に未来日付",
+          "input": "publishedDate=2999-12-31",
+          "expected": "BK03に留まり未来日付エラー",
+          "actual": "stay=true",
+          "judge": "OK",
+          "shot": "img/SC01-006_3_future.png"
+        },
+        {
+          "no": 4,
+          "op": "ISBN9桁で送信",
+          "input": "isbn=123456789",
+          "expected": "BK03に留まりISBN形式エラー",
+          "actual": "stay=true",
+          "judge": "OK",
+          "shot": "img/SC01-006_4_isbn9.png"
+        },
+        {
+          "no": 5,
+          "op": "価格に負数で送信",
+          "input": "price=-1",
+          "expected": "BK03に留まり数値エラー",
+          "actual": "stay=true",
+          "judge": "OK",
+          "shot": "img/SC01-006_5_priceNeg.png"
+        },
+        {
+          "no": 6,
+          "op": "価格0で送信",
+          "input": "price=0",
+          "expected": "BK04へ遷移(0は許容)",
+          "actual": "confirm=true",
+          "judge": "OK",
+          "shot": "img/SC01-006_6_price0.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC01-007",
+      "name": "ISBN重複エラー",
+      "viewpoint": "異常系",
+      "precondition": "book_id=1 が ISBN 9784873115658 で登録済み",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "既存ISBNで確認画面へ",
+          "input": "isbn=9784873115658",
+          "expected": "BK04へ遷移(入力時はOK)",
+          "actual": "http://localhost:8080/book/create/confirm",
+          "judge": "OK",
+          "shot": "img/SC01-007_1_bk04.png"
+        },
+        {
+          "no": 2,
+          "op": "登録ボタン押下",
+          "input": "-",
+          "expected": "BK04に留まりISBN重複メッセージ・INSERTされない",
+          "actual": "url=http://localhost:8080/book/create/register",
+          "judge": "OK",
+          "shot": "img/SC01-007_2_dup_error.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC01-008",
+      "name": "確認画面 直接アクセス時のセッションガード",
+      "viewpoint": "セッション",
+      "precondition": "セッションに入力値なし",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK04へ直接アクセス",
+          "input": "-",
+          "expected": "BK03へリダイレクト",
+          "actual": "http://localhost:8080/book/create;jsessionid=E85A8A199ABD0905EDC1B4D175A44D45",
+          "judge": "OK",
+          "shot": "img/SC01-008_1_guard.png"
+        }
+      ],
+      "ng": null
+    }
+  ],
+  "env": {
+    "url": "http://localhost:8080",
+    "datetime": "2026-05-17 00:37:46",
+    "data": "data.sql 投入済み（アプリ再起動で初期化）"
+  },
+  "summary": {
+    "total": 8,
+    "ok": 8,
+    "ng": 0
+  }
+}

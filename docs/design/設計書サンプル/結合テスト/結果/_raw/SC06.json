@@ -1,0 +1,268 @@
+{
+  "scenario": "SC06",
+  "name": "一覧画面の検索・ソート・ページング",
+  "cases": [
+    {
+      "no": "SC06-001",
+      "name": "初期表示（デフォルトソート・ページング）",
+      "viewpoint": "正常系",
+      "precondition": "books 50件登録済み",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "BK01表示",
+          "input": "-",
+          "expected": "1ページ20件・カテゴリ10option・3ページ",
+          "actual": "rows=20 opts=10 hasPage2=true",
+          "judge": "OK",
+          "shot": "img/SC06-001_1_bk01.png"
+        },
+        {
+          "no": 2,
+          "op": "デフォルトソート確認",
+          "input": "-",
+          "expected": "書籍ID降順(先頭が最大ID付近)",
+          "actual": "firstHref=/book/detail/50;jsessionid=5C2087020C550822E6393E9F87DA8A8C",
+          "judge": "OK",
+          "shot": "img/SC06-001_2_sortdefault.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC06-002",
+      "name": "ページ遷移と最終ページ端数",
+      "viewpoint": "境界値",
+      "precondition": "books 50件(3ページ:20/20/10)",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "2ページ目へ移動",
+          "input": "page=1",
+          "expected": "20件表示",
+          "actual": "rows=20",
+          "judge": "OK",
+          "shot": "img/SC06-002_1_page2.png"
+        },
+        {
+          "no": 2,
+          "op": "最終ページ(3ページ目)",
+          "input": "page=2",
+          "expected": "残り10件(端数)",
+          "actual": "rows=10",
+          "judge": "OK",
+          "shot": "img/SC06-002_2_page3.png"
+        },
+        {
+          "no": 3,
+          "op": "1ページ目に戻る",
+          "input": "page=0",
+          "expected": "先頭20件",
+          "actual": "rows=20",
+          "judge": "OK",
+          "shot": "img/SC06-002_3_page1.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC06-003",
+      "name": "タイトル部分一致検索",
+      "viewpoint": "正常系",
+      "precondition": "タイトルにJavaを含む書籍が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "タイトル「Java」で検索",
+          "input": "searchTitle=Java",
+          "expected": "Java含む書籍のみ・件数メッセージ",
+          "actual": "rows=4",
+          "judge": "OK",
+          "shot": "img/SC06-003_1_java.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC06-004",
+      "name": "著者部分一致＋カテゴリ完全一致 複合検索",
+      "viewpoint": "正常系",
+      "precondition": "夏目漱石×小説・文学が存在",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "著者「夏目」+カテゴリ「小説・文学」",
+          "input": "searchAuthor=夏目,cat=1",
+          "expected": "該当書籍のみ(3件)",
+          "actual": "rows=3",
+          "judge": "OK",
+          "shot": "img/SC06-004_1_compound.png"
+        },
+        {
+          "no": 2,
+          "op": "カテゴリのみ「IT・コンピュータ」",
+          "input": "cat=3",
+          "expected": "カテゴリ3の書籍のみ(1ページ20件表示)",
+          "actual": "rows=20",
+          "judge": "OK",
+          "shot": "img/SC06-004_2_cat3.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC06-005",
+      "name": "検索結果0件",
+      "viewpoint": "境界値",
+      "precondition": "該当しない検索語",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "該当なし文字列で検索",
+          "input": "searchTitle=ZZZNOHIT999",
+          "expected": "0件・nodataメッセージ・エラーなし",
+          "actual": "rows=0",
+          "judge": "OK",
+          "shot": "img/SC06-005_1_nohit.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC06-006",
+      "name": "クリアボタンで検索条件リセット",
+      "viewpoint": "セッション",
+      "precondition": "直前に検索条件入力済み",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "タイトルJavaで検索",
+          "input": "searchTitle=Java",
+          "expected": "絞り込み表示",
+          "actual": "rows=4",
+          "judge": "OK",
+          "shot": "img/SC06-006_1_searched.png"
+        },
+        {
+          "no": 2,
+          "op": "クリアボタン押下",
+          "input": "-",
+          "expected": "条件空・全件再表示(20件)",
+          "actual": "searchTitle=\"\" rows=20",
+          "judge": "OK",
+          "shot": "img/SC06-006_2_cleared.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC06-007",
+      "name": "ソート切替（昇順/降順トグル）",
+      "viewpoint": "正常系",
+      "precondition": "books 複数件",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "タイトル昇順ソート",
+          "input": "sort=title&order=ASC",
+          "expected": "タイトル昇順で表示",
+          "actual": "先頭=7つの習慣",
+          "judge": "OK",
+          "shot": "img/SC06-007_1_title_asc.png"
+        },
+        {
+          "no": 2,
+          "op": "タイトル降順に切替",
+          "input": "sort=title&order=DESC",
+          "expected": "昇順と降順で先頭が変化",
+          "actual": "昇順先頭=7つの習慣 降順先頭=雪国",
+          "judge": "OK",
+          "shot": "img/SC06-007_2_title_desc.png"
+        },
+        {
+          "no": 3,
+          "op": "平均評価でソート",
+          "input": "sort=avgRating",
+          "expected": "ソート動作(20件表示)",
+          "actual": "rows=20",
+          "judge": "OK",
+          "shot": "img/SC06-007_3_avg_sort.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC06-008",
+      "name": "検索条件維持したままソート・ページング",
+      "viewpoint": "状態遷移",
+      "precondition": "category_id=3 が21件以上",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "カテゴリ「IT・コンピュータ」で検索",
+          "input": "cat=3",
+          "expected": "絞り込み結果(22件→1ページ20件)",
+          "actual": "rows=20",
+          "judge": "OK",
+          "shot": "img/SC06-008_1_cat3.png"
+        },
+        {
+          "no": 2,
+          "op": "タイトル列でソート",
+          "input": "sort=title",
+          "expected": "検索条件(cat=3)維持しソート",
+          "actual": "cat維持=3",
+          "judge": "OK",
+          "shot": "img/SC06-008_2_sorted_kept.png"
+        },
+        {
+          "no": 3,
+          "op": "2ページ目へ移動",
+          "input": "page=1",
+          "expected": "検索条件・ソート維持し2ページ目(残り2件)",
+          "actual": "rows=2 cat=3",
+          "judge": "OK",
+          "shot": "img/SC06-008_3_page2_kept.png"
+        }
+      ],
+      "ng": null
+    },
+    {
+      "no": "SC06-009",
+      "name": "書籍0件時の表示",
+      "viewpoint": "境界値",
+      "precondition": "0件状態(検索0件で代替)",
+      "judgment": "OK",
+      "steps": [
+        {
+          "no": 1,
+          "op": "0件相当の検索(代替実施)",
+          "input": "searchTitle=ZZZNOHIT000",
+          "expected": "nodataメッセージ・エラーなし・新規登録操作可",
+          "actual": "rows=0 createBtn=1",
+          "judge": "OK",
+          "shot": "img/SC06-009_1_zero.png"
+        }
+      ],
+      "ng": null
+    }
+  ],
+  "env": {
+    "url": "http://localhost:8080",
+    "datetime": "2026-05-17 00:39:22",
+    "data": "data.sql 投入済み（アプリ再起動で初期化）"
+  },
+  "summary": {
+    "total": 9,
+    "ok": 9,
+    "ng": 0
+  }
+}
