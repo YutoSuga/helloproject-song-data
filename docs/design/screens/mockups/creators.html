@@ -119,13 +119,24 @@
 <p data-item-no="17" data-item-id="creators-status" id="status" role="status" hidden>
 </p>
 <div data-item-no="01" data-item-id="creators-views" >
-<div role="tablist" aria-label="表示する分析">
-<button data-item-no="18" data-item-id="creators-view-ranking" role="tab" aria-selected="true" aria-controls="ranking-panel" id="ranking-tab" data-view="ranking">曲数ランキング</button>
-<button data-item-no="19" data-item-id="creators-view-pair" role="tab" aria-selected="false" tabindex="-1" aria-controls="pair-panel" id="pair-tab" data-view="pair">組み合わせ分析</button>
+<div role="tablist" aria-label="作家ページの表示">
+<button id="search-tab" data-item-no="28" data-item-id="creators-view-search" role="tab" aria-controls="search-panel" aria-selected="true" data-view="search">作家検索</button>
+<button data-item-no="18" data-item-id="creators-view-ranking" role="tab" aria-selected="false" tabindex="-1" aria-controls="ranking-panel" id="ranking-tab" data-view="ranking">曲数ランキング</button>
+<button data-item-no="19" data-item-id="creators-view-pair" role="tab" aria-selected="false" tabindex="-1" aria-controls="pair-panel" id="pair-tab" data-view="pair">組み合わせランキング</button>
 </div>
 </div>
 <div id="data-panel">
-<section id="ranking-panel" role="tabpanel" aria-labelledby="ranking-tab">
+<section id="search-panel" role="tabpanel" aria-labelledby="search-tab">
+<label for="mock-creator-search" class="visually-hidden">作家名で検索</label>
+<input id="mock-creator-search" data-item-no="29" data-item-id="creators-name-query" class="creator-search-input" type="search" placeholder="作家名で検索">
+<p id="mock-search-empty" role="status" hidden>該当する作家がありません。</p>
+<ul id="mock-search-results" data-item-no="30" data-item-id="creators-name-results" class="creator-results ranking">
+<li><a class="name" href="creator-detail.html?sample=1">サンプル作家A</a></li>
+<li><a class="name" href="creator-detail.html?sample=2">サンプル作家B</a></li>
+<li><a class="name" href="creator-detail.html?sample=3">サンプル作家C</a></li>
+</ul>
+</section>
+<section id="ranking-panel" role="tabpanel" aria-labelledby="ranking-tab" hidden>
 <div data-item-no="02" data-item-id="creators-categories" >
 <div role="tablist" aria-label="ランキングカテゴリ">
 <button data-item-no="23" data-item-id="creators-cat-all" role="tab" aria-controls="ranking-cards" aria-selected="true" tabindex="0" data-category="0">すべて</button>
@@ -139,108 +150,27 @@
 <div  class="ranking" id="ranking-cards">
 <article data-item-no="04" data-item-id="creators-card" class="card ranking-card" data-counts="8,4,5,2,3">
 <span data-item-no="05" data-item-id="creators-rank" class="rank">1位</span>
-<button data-item-no="06" data-item-id="creators-name" class="name creator-open" type="button">サンプル作家A</button>
+<a data-item-no="06" data-item-id="creators-name" class="name" href="creator-detail.html?sample=1&amp;view=ranking">サンプル作家A</a>
 <span data-item-no="07" data-item-id="creators-count" class="count">8作品</span>
 <small data-item-no="08" data-item-id="creators-id" class="creator-id">C99991</small>
 
 
-<template data-evidence-category="1">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品1-1</span></li>
-<li data-roles="lyrics composition"><span>サンプル作品1-2</span></li>
-<li data-roles="lyrics"><span>サンプル作品1-3</span></li>
-<li data-roles="lyrics"><span>サンプル作品1-4</span></li>
-</template>
-<template data-evidence-category="2">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品1-1</span></li>
-<li data-roles="lyrics composition"><span>サンプル作品1-2</span></li>
-<li data-roles="composition arrangement"><span>サンプル作品1-5</span></li>
-<li data-roles="composition"><span>サンプル作品1-6</span></li>
-<li data-roles="composition arrangement"><span>サンプル作品1-7</span></li>
-</template>
-<template data-evidence-category="3">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品1-1</span></li>
-<li data-roles="lyrics composition"><span>サンプル作品1-2</span></li>
-</template>
-<template data-evidence-category="0">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品1-1</span></li>
-<li data-roles="lyrics composition"><span>サンプル作品1-2</span></li>
-<li data-roles="lyrics"><span>サンプル作品1-3</span></li>
-<li data-roles="lyrics"><span>サンプル作品1-4</span></li>
-<li data-roles="composition arrangement"><span>サンプル作品1-5</span></li>
-<li data-roles="composition"><span>サンプル作品1-6</span></li>
-<li data-roles="composition arrangement"><span>サンプル作品1-7</span></li>
-<li data-roles="english_lyrics"><span>サンプル作品1-8</span></li>
-</template>
-<template data-evidence-category="4">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品1-1</span></li>
-<li data-roles="composition arrangement"><span>サンプル作品1-5</span></li>
-<li data-roles="composition arrangement"><span>サンプル作品1-7</span></li>
-</template>
 </article>
 <article class="card ranking-card" data-counts="7,3,4,1,2">
 <span class="rank">2位</span>
-<button class="name creator-open" type="button">サンプル作家B</button>
+<a class="name" href="creator-detail.html?sample=2&amp;view=ranking">サンプル作家B</a>
 <span class="count">7作品</span>
 <small class="creator-id">C99992</small>
 
 
-<template data-evidence-category="1">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品2-1</span></li>
-<li data-roles="lyrics"><span>サンプル作品2-2</span></li>
-<li data-roles="lyrics"><span>サンプル作品2-3</span></li>
-</template>
-<template data-evidence-category="2">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品2-1</span></li>
-<li data-roles="composition arrangement"><span>サンプル作品2-4</span></li>
-<li data-roles="composition"><span>サンプル作品2-5</span></li>
-<li data-roles="composition"><span>サンプル作品2-6</span></li>
-</template>
-<template data-evidence-category="3">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品2-1</span></li>
-</template>
-<template data-evidence-category="0">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品2-1</span></li>
-<li data-roles="lyrics"><span>サンプル作品2-2</span></li>
-<li data-roles="lyrics"><span>サンプル作品2-3</span></li>
-<li data-roles="composition arrangement"><span>サンプル作品2-4</span></li>
-<li data-roles="composition"><span>サンプル作品2-5</span></li>
-<li data-roles="composition"><span>サンプル作品2-6</span></li>
-<li data-roles="brass_arrangement"><span>サンプル作品2-7</span></li>
-</template>
-<template data-evidence-category="4">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品2-1</span></li>
-<li data-roles="composition arrangement"><span>サンプル作品2-4</span></li>
-</template>
 </article>
 <article class="card ranking-card" data-counts="5,3,2,1,1">
 <span class="rank">3位</span>
-<button class="name creator-open" type="button">サンプル作家C</button>
+<a class="name" href="creator-detail.html?sample=3&amp;view=ranking">サンプル作家C</a>
 <span class="count">5作品</span>
 <small class="creator-id">C99993</small>
 
 
-<template data-evidence-category="1">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品3-1</span></li>
-<li data-roles="lyrics"><span>サンプル作品3-2</span></li>
-<li data-roles="lyrics"><span>サンプル作品3-3</span></li>
-</template>
-<template data-evidence-category="2">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品3-1</span></li>
-<li data-roles="composition"><span>サンプル作品3-4</span></li>
-</template>
-<template data-evidence-category="3">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品3-1</span></li>
-</template>
-<template data-evidence-category="0">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品3-1</span></li>
-<li data-roles="lyrics"><span>サンプル作品3-2</span></li>
-<li data-roles="lyrics"><span>サンプル作品3-3</span></li>
-<li data-roles="composition"><span>サンプル作品3-4</span></li>
-<li data-roles="arrangement"><span>サンプル作品3-5</span></li>
-</template>
-<template data-evidence-category="4">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品3-1</span></li>
-</template>
 </article>
 </div>
 </section>

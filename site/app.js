@@ -1,22 +1,13 @@
 import { analyzeCreatorPairs } from "./pair-analysis.js";
-import { ALL_ROLE_LABELS, buildCreatorRoleIndex, ROLE_LABELS } from "./creator-roles.js";
+import {
+  categoryIds, findCreators, listParams, publishedArtistId, readCreatorRankings, readListState
+} from "./creator-catalog-model.js";
 
-const categoryIds = ["all", "lyrics", "composition", "lyrics_composition", "arrangement"];
 const status = document.querySelector("#data-status");
 try {
   const response = await fetch(new URL("./data/rankings/G00001.json", import.meta.url));
   if (!response.ok) throw new Error(`Ranking data: ${response.status}`);
-  const data = await response.json();
-  // Only validate the public reader contract. CSV validation stays in the build.
-  for (const id of categoryIds) {
-    const category = data.categories?.[id];
-    if (typeof category?.label !== "string" || !Array.isArray(category.entries)) throw new Error("Invalid ranking category");
-    for (const entry of category.entries) {
-      if (typeof entry.creator_name !== "string" || typeof entry.creator_id !== "string" || !entry.creator_id.trim() ||
-          !Number.isInteger(entry.rank) || !Number.isInteger(entry.work_count) || !Array.isArray(entry.works) ||
-          entry.works.some(work => !work || typeof work.title !== "string" || typeof work.work_id !== "string" || !work.work_id.trim())) throw new Error("Invalid ranking entry");
-    }
-  }
+  const data = readCreatorRankings(await response.json(), publishedArtistId);
   let pairError = "";
   if (data.lyrics_composition_pairs && (!Array.isArray(data.lyrics_composition_pairs.entries) ||
       data.lyrics_composition_pairs.entries.some(entry => !entry || !Number.isInteger(entry.work_count) || !Number.isInteger(entry.rank) ||
@@ -24,50 +15,63 @@ try {
       typeof entry.composer_creator_id !== "string" || !entry.composer_creator_id.trim() ||
       typeof entry.lyricist_name !== "string" || typeof entry.composer_name !== "string" ||
       !Array.isArray(entry.works) || entry.works.some(work => !work || typeof work.title !== "string")))) pairError = "組み合わせデータを表示できません。";
-  const roleIndex = buildCreatorRoleIndex(data.categories);
-  for (const id of categoryIds) {
-    for (const entry of data.categories[id].entries) {
-      if (id === "all") {
-        if (entry.works.some(work => !Array.isArray(work.roles) || !work.roles.length ||
-            work.roles.some(role => typeof role !== "string" || !role.trim() || role === "all") ||
-            !Array.isArray(work.song_ids) || !work.song_ids.length ||
-            work.song_ids.some(songId => typeof songId !== "string" || !songId.trim()))) {
-          throw new Error("Invalid all-role evidence");
-        }
-        continue;
-      }
-      if (entry.works.some(work => !roleIndex.get(entry.creator_id)?.has(work.work_id))) {
-        throw new Error("Missing creator role evidence");
-      }
-    }
-  }
-  initialize(data, pairError, roleIndex);
+  initialize(data, pairError);
   status.hidden = true;
   document.querySelector("#ranking-content").hidden = false;
 } catch {
   status.textContent = "データを表示できません。時間をおいて再読み込みしてください。";
 }
 
-function initialize(data, pairError, roleIndex) {
+function initialize(data, pairError) {
   const tabs = document.querySelector("#category-tabs");
   const ranking = document.querySelector("#ranking");
   const heading = document.querySelector("#ranking-heading");
   const summary = document.querySelector("#summary");
   const detail = document.querySelector("#creator-detail");
   const viewTabs = [...document.querySelectorAll(".view-tab")];
-  const rankingPanel = document.querySelector("#ranking-panel");
-  const pairPanel = document.querySelector("#pair-panel");
+  const search = document.querySelector("#creator-search");
+  const searchResults = document.querySelector("#creator-search-results");
+  const searchEmpty = document.querySelector("#creator-search-empty");
+  const state = readListState(new URLSearchParams(location.search));
   let opener;
+
+  function saveListState() {
+    const url = new URL(location.href);
+    url.search = listParams(state).toString();
+    history.replaceState(history.state, "", url);
+  }
+  function creatorUrl(creatorId) {
+    const url = new URL("./creators/detail/", import.meta.url);
+    const params = listParams(state);
+    params.set("creator_id", creatorId);
+    params.set("artist_id", data.artist.artist_id);
+    url.search = params.toString();
+    return url;
+  }
+  function renderSearch() {
+    const matches = findCreators(data.categories.all.entries, state.q);
+    searchResults.replaceChildren(...matches.map(entry => {
+      const item = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = creatorUrl(entry.creator_id);
+      link.className = "name";
+      link.textContent = entry.creator_name;
+      item.append(link);
+      return item;
+    }));
+    searchEmpty.hidden = matches.length > 0;
+  }
   function selectView(view) {
-    const showRanking = view === "ranking";
-    rankingPanel.hidden = !showRanking;
-    pairPanel.hidden = showRanking;
-    viewTabs.forEach((tab, index) => {
-      const selected = index === (showRanking ? 0 : 1);
+    state.view = view;
+    viewTabs.forEach(tab => {
+      const selected = tab.dataset.view === view;
+      document.getElementById(tab.getAttribute("aria-controls")).hidden = !selected;
       tab.setAttribute("aria-selected", String(selected));
       tab.tabIndex = selected ? 0 : -1;
     });
     if (detail.open) detail.close();
+    if (view === "search") renderSearch();
+    if (view === "ranking") selectCategory(state.category);
   }
   function wireTabs(buttons) {
     buttons.forEach((tab, index) => tab.addEventListener("keydown", event => {
@@ -79,44 +83,30 @@ function initialize(data, pairError, roleIndex) {
       buttons[next].click();
     }));
   }
-  viewTabs.forEach((tab, index) => tab.addEventListener("click", () => selectView(index === 0 ? "ranking" : "pairs")));
+  viewTabs.forEach(tab => tab.addEventListener("click", () => {
+    selectView(tab.dataset.view);
+    saveListState();
+  }));
   wireTabs(viewTabs);
-  selectView("ranking");
-  function showWorks(name, text, works, button, context) {
+  search.value = state.q;
+  search.addEventListener("input", () => {
+    state.q = search.value;
+    renderSearch();
+    saveListState();
+  });
+  function showPairDetail(entry, button) {
     opener = button;
-    document.querySelector("#detail-heading").textContent = name;
-    document.querySelector("#detail-summary").textContent = text;
-    document.querySelector("#work-list").replaceChildren(...works.map(work => {
+    document.querySelector("#detail-heading").textContent = `${entry.lyricist_name} × ${entry.composer_name}`;
+    document.querySelector("#detail-summary").textContent = `作詞 × 作曲・${entry.work_count}曲`;
+    document.querySelector("#work-list").replaceChildren(...entry.works.map(work => {
       const li = document.createElement("li");
       const title = document.createElement("span");
       title.textContent = work.title;
       li.append(title);
-      if (context.kind === "creator") {
-        const roles = context.allRoles ? new Set(work.roles) : roleIndex.get(context.creatorId)?.get(work.work_id);
-        if (!roles?.size) throw new Error("Missing creator role evidence");
-        const badges = document.createElement("span");
-        badges.className = "role-badges";
-        const labels = context.allRoles ? ALL_ROLE_LABELS : ROLE_LABELS;
-        const orderedRoles = [...Object.keys(labels).filter(role => roles.has(role)),
-          ...[...roles].filter(role => !Object.hasOwn(labels, role))];
-        for (const role of orderedRoles) {
-          const badge = document.createElement("span");
-          badge.className = "role-badge";
-          badge.textContent = Object.hasOwn(labels, role) ? labels[role] : role;
-          badges.append(badge);
-        }
-        li.append(badges);
-      }
       return li;
     }));
     detail.showModal();
     document.querySelector("#close-detail").focus();
-  }
-  function showDetail(entry, category, button) {
-    showWorks(entry.creator_name, `${category.label}・${entry.work_count}曲`, entry.works, button, { kind: "creator", creatorId: entry.creator_id, allRoles: entry.category === "all" });
-  }
-  function showPairDetail(entry, button) {
-    showWorks(`${entry.lyricist_name} × ${entry.composer_name}`, `作詞 × 作曲・${entry.work_count}曲`, entry.works, button, { kind: "pair" });
   }
   function createCard(entry, action, pair = false) {
     const card = document.createElement("article");
@@ -124,12 +114,16 @@ function initialize(data, pairError, roleIndex) {
     const rank = document.createElement("span");
     rank.className = "rank";
     rank.textContent = `${entry.rank}位`;
-    const name = document.createElement("button");
-    name.type = "button";
+    const name = document.createElement(pair ? "button" : "a");
     name.className = "name";
     name.textContent = pair ? `${entry.lyricist_name} × ${entry.composer_name}` : entry.creator_name;
-    name.setAttribute("aria-label", `${name.textContent}、${entry.work_count}曲の集計根拠を表示`);
-    name.addEventListener("click", () => action(name));
+    if (pair) {
+      name.type = "button";
+      name.setAttribute("aria-label", `${name.textContent}、${entry.work_count}曲の集計根拠を表示`);
+      name.addEventListener("click", () => action(name));
+    } else {
+      name.href = creatorUrl(entry.creator_id);
+    }
     const count = document.createElement("span");
     count.className = "count";
     const number = document.createElement("strong");
@@ -142,6 +136,7 @@ function initialize(data, pairError, roleIndex) {
     return card;
   }
   function selectCategory(categoryId) {
+    state.category = categoryId;
     const category = data.categories[categoryId];
     heading.textContent = `${category.label}ランキング`;
     summary.textContent = category.entries.length
@@ -153,7 +148,7 @@ function initialize(data, pairError, roleIndex) {
       button.tabIndex = selected ? 0 : -1;
     }
     document.querySelector("#category-panel").setAttribute("aria-labelledby", `category-${categoryId}`);
-    ranking.replaceChildren(...category.entries.map(entry => createCard(entry, button => showDetail(entry, category, button))));
+    ranking.replaceChildren(...category.entries.map(entry => createCard(entry)));
   }
   for (const categoryId of categoryIds) {
     const button = document.createElement("button");
@@ -164,11 +159,14 @@ function initialize(data, pairError, roleIndex) {
     button.setAttribute("role", "tab");
     button.setAttribute("aria-controls", "category-panel");
     button.textContent = data.categories[categoryId].label;
-    button.addEventListener("click", () => selectCategory(categoryId));
+    button.addEventListener("click", () => {
+      selectCategory(categoryId);
+      saveListState();
+    });
     tabs.append(button);
   }
   wireTabs([...tabs.children]);
-  selectCategory("all");
+  selectView(state.view);
   document.querySelector("#close-detail").addEventListener("click", () => detail.close());
   detail.addEventListener("close", () => opener?.focus());
   detail.addEventListener("keydown", event => {

@@ -16,9 +16,16 @@ export function readSongCatalog(data, artistId = 'G00001') {
   if (new Set(data.works.map(w => w.work_id)).size !== data.works.length) throw new Error('作品IDが重複しています。');
   return data;
 }
-const normalize = value => value.normalize('NFKC').toLocaleLowerCase('ja').trim();
+export const normalize = value => value.normalize('NFKC').toLocaleLowerCase('ja').trim();
 const ascii = (a,b) => a < b ? -1 : a > b ? 1 : 0;
 const collator = new Intl.Collator('ja', { sensitivity: 'variant' });
+export function compareWorkDates(a, b, direction = 1) {
+  if (a.first_release_date === null || b.first_release_date === null) {
+    return (a.first_release_date === null) - (b.first_release_date === null) || ascii(a.work_id, b.work_id);
+  }
+  return direction * ascii(a.first_release_date, b.first_release_date) || ascii(a.work_id, b.work_id);
+}
+
 export function selectWorks(works, query = '', sort = 'new') {
   const terms = normalize(query).split(/\s+/).filter(Boolean);
   return works.filter(w => {
@@ -26,8 +33,7 @@ export function selectWorks(works, query = '', sort = 'new') {
     return terms.every(term => fields.some(field => field.includes(term)));
   }).sort((a,b) => {
     if (sort === 'title') return collator.compare(a.title.normalize('NFKC'),b.title.normalize('NFKC')) || ascii(a.work_id,b.work_id);
-    if (a.first_release_date === null || b.first_release_date === null) return (a.first_release_date === null) - (b.first_release_date === null) || ascii(a.work_id,b.work_id);
-    return (sort === 'old' ? 1 : -1) * ascii(a.first_release_date,b.first_release_date) || ascii(a.work_id,b.work_id);
+    return compareWorkDates(a, b, sort === 'old' ? 1 : -1);
   });
 }
 

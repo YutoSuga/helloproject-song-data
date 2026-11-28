@@ -120,3 +120,16 @@
 .page-creators #pair-heading { margin-bottom:12px; }
 
 .page-creators .creator-options, .page-creators .combobox ul { position:absolute; top:auto; bottom:100%; margin:0 0 4px; max-height:240px; overflow:auto; }
+
+.creator-search-input { width:100%; max-width:480px; }
+.creator-results { list-style:none; padding:0; }
+.creator-results .name { display:block; padding:10px 14px; min-height:44px; border:1px solid var(--line); border-radius:12px; }
+.creator-ranks { width:100%; max-width:480px; border-collapse:collapse; margin-block:12px 24px; }
+.creator-ranks th, .creator-ranks td { text-align:left; padding:8px; border-bottom:1px solid var(--line); }
+.creator-work-filters { margin-block:12px; }
+.creator-work-list { padding-inline-start:24px; }
+.creator-work-list li { border-top:1px solid var(--line); padding-block:10px; overflow-wrap:anywhere; }
+
+.ranking-card a.name { font-weight:700; overflow-wrap:anywhere; }
+.creator-work-filters { display:flex; flex-wrap:wrap; gap:8px; }
+.creator-work-filters button[aria-pressed=true] { background:var(--accent); color:white; }
