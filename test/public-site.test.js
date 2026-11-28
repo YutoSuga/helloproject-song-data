@@ -55,10 +55,15 @@ test('home shows artist selection and More orders the combined information', asy
   const more = await read('site/more/index.html');
   assert.match(home, /<a class="artist artist-link"[^>]+href="\.\/songs\/"/);
   const homeMock = await read('docs/design/screens/mockups/index.html');
+  assert.match(home, /<\/section>\s*<\/main>/);
   for (const html of [home, homeMock]) {
-    assert.match(html, /<\/section>\s*<\/main>/);
     assert.doesNotMatch(html, /site-updates|サイト更新履歴|about-data\.js|class="cards"/);
   }
+  const dashboardItems = ['ハロプロ楽曲を、作家から知る。', '<select>', '作品数', '作家ランキング TOP3',
+    '組み合わせランキング TOP3', 'songs.html?tab=songs', 'songs.html?tab=creators'];
+  const dashboardPositions = dashboardItems.map(item => homeMock.indexOf(item));
+  assert(dashboardPositions.every((position, index) => position >= 0 &&
+    (index === 0 || position > dashboardPositions[index - 1])));
   const mock = await read('docs/design/screens/mockups/more.html');
   for (const html of [more, mock]) {
     assert.doesNotMatch(html, /<details\b|href="#contact"|データの誤りを連絡する|data-recent/);
@@ -66,8 +71,9 @@ test('home shows artist selection and More orders the combined information', asy
     const ids = ['data-policy', 'artist-coverage', 'site-updates', 'disclaimer', 'contact'];
     const content = [...html.matchAll(/id="([^"]+)"/g)].map(match => match[1]);
     assert.deepEqual(content.filter(id => ids.includes(id)), ids);
-    assert.match(html, /class="card about-section site-information">\s*<section aria-labelledby="disclaimer">[\s\S]*?免責事項<\/h2>[\s\S]*?掲載されている名称・商標等[\s\S]*?<\/section>\s*<section aria-labelledby="contact">[\s\S]*?ご意見・ご要望<\/h2>[\s\S]*?<\/section>\s*<\/div>\s*<\/main>/);
   }
+  assert.match(more, /class="card about-section site-information">\s*<section aria-labelledby="disclaimer">[\s\S]*?免責事項<\/h2>[\s\S]*?掲載されている名称・商標等[\s\S]*?<\/section>\s*<section aria-labelledby="contact">[\s\S]*?ご意見・ご要望<\/h2>[\s\S]*?<\/section>\s*<\/div>\s*<\/main>/);
+  assert.match(mock, /id="aggregation-method"/);
   assert.match(more, /type="module" src="[^"]*about-data\.js"/);
 });
 
@@ -99,11 +105,18 @@ test('creator filter controls preserve accessible combobox and explicit checkbox
 
 
 test('creator UI keeps only useful headings and orders condition before result count', async () => {
-  for (const file of ['site/creators/index.html', 'docs/design/screens/mockups/creators.html']) {
-    const html = await read(file);
-    assert.doesNotMatch(html, /自作詞・自作曲：|id="(?:pair-self-count|self-count)"|全順位|class="eyebrow"/);
-    assert.match(html, /aria-label="作家名またはIDで検索"/);
-    assert(html.indexOf('id="pair-condition"') < html.indexOf('id="pair-summary"'));
-    assert(html.indexOf('クリア</button>') < html.indexOf('id="pair-condition"'));
-  }
+  const html = await read('site/creators/index.html');
+  assert.doesNotMatch(html, /自作詞・自作曲：|id="(?:pair-self-count|self-count)"|全順位|class="eyebrow"/);
+  assert.match(html, /aria-label="作家名またはIDで検索"/);
+  assert(html.indexOf('id="pair-condition"') < html.indexOf('id="pair-summary"'));
+  assert(html.indexOf('クリア</button>') < html.indexOf('id="pair-condition"'));
+});
+
+test('design mock locates pair analysis and collaborator analysis in their own tabs', async () => {
+  const ranking = await read('docs/design/screens/mockups/creators.html');
+  const analysis = await read('docs/design/screens/mockups/analysis.html');
+  assert.doesNotMatch(ranking, /組み合わせランキング|共同制作楽曲/);
+  assert.match(analysis, /aria-controls="pairs"[^>]*>組み合わせランキング<\/button>/);
+  assert.match(analysis, /aria-controls="creator"[^>]*>作家指定分析<\/button>/);
+  assert.match(analysis, /<dialog[^>]*>[\s\S]*?href="song-detail\.html"/);
 });
