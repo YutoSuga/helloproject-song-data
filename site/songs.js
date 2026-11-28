@@ -1,3 +1,4 @@
+import { ALL_ROLE_LABELS } from "./creator-roles.js";
 import { readSongCatalog, selectWorks, selectSongs } from './song-catalog-model.js';
 
 const versions = { original:'オリジナル', new_vocal:'新歌唱', re_recording:'再録', cover:'カバー', other:'その他' };
@@ -25,7 +26,7 @@ export async function mountSongCatalog(document, fetchData = fetch) {
       section.append(element('p',`song ID：${song.song_id}`),element('h3',song.title),element('p',`Version名：${song.version_name || '表記なし'}／種別：${versions[song.version_type]}`));
       section.append(element('p',`音源初出日：${song.release_date ?? '確認中'}`));
       const names = role => song.credits.filter(c=>c.role===role).map(c=>c.credit_name).join('／');
-      for (const [role,label,special,specialLabel] of [['lyrics','作詞','english_lyrics','英語詞'],['composition','作曲'],['arrangement','編曲','brass_arrangement','ブラス編曲']]) {
+      for (const [role,label,special,specialLabel] of [['lyrics','作詞','english_lyrics',ALL_ROLE_LABELS.english_lyrics],['composition','作曲'],['arrangement','編曲','brass_arrangement',ALL_ROLE_LABELS.brass_arrangement]]) {
         section.append(element('p',`${label}：${names(role)||'未登録'}`));
         if (special && names(special)) section.append(element('p',`${specialLabel}：${names(special)}`));
       }

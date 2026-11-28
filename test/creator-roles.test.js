@@ -16,7 +16,7 @@ function fixture() {
 
 test("role union spans recordings, deduplicates and isolates creator/work IDs", () => {
   const categories = fixture();
-  categories.lyrics_or_composition = { entries: [{ creator_id: "wrong" }] };
+  categories.all = { entries: [{ creator_id: "wrong" }] };
   const before = structuredClone(categories);
   const index = buildCreatorRoleIndex(categories);
   assert.deepEqual([...index.get("A").get("W1")], ["lyrics", "composition", "arrangement"]);

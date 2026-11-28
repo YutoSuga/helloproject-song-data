@@ -1,8 +1,8 @@
 export const CATEGORY_DEFINITIONS = [
+  { id: "all", label: "すべて" },
   { id: "lyrics", label: "作詞" },
   { id: "composition", label: "作曲" },
   { id: "lyrics_composition", label: "作詞 & 作曲" },
-  { id: "lyrics_or_composition", label: "作詞 or 作曲" },
   { id: "arrangement", label: "編曲" }
 ];
 
@@ -41,11 +41,11 @@ export function aggregateCreatorRankings(data, artistId) {
     if (!targetSongIds.has(credit.song_id)) continue;
     const song = songsById.get(credit.song_id);
     if (!song) throw new Error(`Credit references missing song: ${credit.song_id}`);
+    addEvidence("all", credit, song);
     if (["lyrics", "composition", "arrangement"].includes(credit.role)) {
       addEvidence(credit.role, credit, song);
     }
     if (["lyrics", "composition"].includes(credit.role)) {
-      addEvidence("lyrics_or_composition", credit, song);
       const roles = pairCreditsBySong.get(credit.song_id) ?? { lyrics: new Set(), composition: new Set() };
       roles[credit.role].add(credit.creator_id);
       pairCreditsBySong.set(credit.song_id, roles);

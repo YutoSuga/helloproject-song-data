@@ -2,6 +2,8 @@
 // have different recording semantics and must never drive pair filtering.
 export const ROLE_LABELS = { lyrics: "作詞", composition: "作曲", arrangement: "編曲" };
 
+export const ALL_ROLE_LABELS = { ...ROLE_LABELS, english_lyrics: "英語詞", brass_arrangement: "ブラス編曲" };
+
 export function buildCreatorRoleIndex(categories) {
   const index = new Map();
   const validId = value => typeof value === "string" && value.trim().length > 0;

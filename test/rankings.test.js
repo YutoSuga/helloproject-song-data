@@ -61,9 +61,6 @@ test("work aggregation covers primary filters, joint credits, roles, and version
   assert.deepEqual(result.categories.arrangement.entries.map((item) => item.creator_id), ["C", "D"], "different version arrangers each count once; brass role is excluded");
   assert.deepEqual(result.categories.lyrics_composition.entries.map(({ creator_id, work_count }) => [creator_id, work_count]), [["A", 1], ["B", 1]]);
   assert.equal(result.categories.lyrics_composition.label, "作詞 & 作曲");
-  assert.equal(result.categories.lyrics_or_composition.label, "作詞 or 作曲");
-  assert.deepEqual(result.categories.lyrics_or_composition.entries.map(({ creator_id, work_count }) => [creator_id, work_count]), [["B", 3], ["A", 2], ["F", 1], ["G", 1]]);
-  assert.ok(!result.categories.lyrics_or_composition.entries.some((item) => ["C", "D", "E"].includes(item.creator_id)), "arrangement-only, specialized-role-only, and featured-only creators are excluded");
 });
 
 test("lyrics+composition never combines roles found only on different songs", () => {
@@ -72,7 +69,9 @@ test("lyrics+composition never combines roles found only on different songs", ()
   data.songCreators.push({ song_id: "S2", creator_id: "C", role: "composition" });
   const result = aggregateCreatorRankings(data, "G1");
   assert.ok(!result.categories.lyrics_composition.entries.some((item) => item.creator_id === "C"));
-  assert.deepEqual(result.categories.lyrics_or_composition.entries.find((item) => item.creator_id === "C").work_count, 1, "or category combines roles at work level");
+  assert.deepEqual(result.categories.all.entries.find((item) => item.creator_id === "C").works, [
+    { work_id: "W1", title: "Work 1", song_ids: ["S1", "S2"], roles: ["arrangement", "composition", "lyrics"] }
+  ]);
 });
 
 test("competition ranking and creator-id tie order are stable", () => {
@@ -103,5 +102,44 @@ test("core produces competition ranks 1, 2, 2, 4 for counts 5, 3, 3, 2", () => {
       data.songCreators.push({ song_id: `S${suffix}`, creator_id: creatorId, role: "lyrics" });
     }
   });
-  assert.deepEqual(aggregateCreatorRankings(data, "G1").categories.lyrics.entries.map(({ creator_id, rank }) => [creator_id, rank]), [["A", 1], ["B", 2], ["C", 2], ["D", 4]]);
+  const { categories } = aggregateCreatorRankings(data, "G1");
+  for (const category of [categories.lyrics, categories.all]) {
+    assert.deepEqual(category.entries.map(({ creator_id, rank }) => [creator_id, rank]), [["A", 1], ["B", 2], ["C", 2], ["D", 4]]);
+  }
+});
+
+test("all counts every credited work once and retains only the creator's eligible evidence", () => {
+  const data = fixture();
+  data.creators.push({ creator_id: "H", name: "Creator G" });
+  data.works[1].title = "Work 1";
+  data.songCreators.push({ song_id: "S3", creator_id: "H", role: "english_lyrics" });
+  const { entries } = aggregateCreatorRankings(data, "G1").categories.all;
+  assert.deepEqual(entries.map(({ creator_id, work_count, rank }) => [creator_id, work_count, rank]), [
+    ["B", 3, 1], ["A", 2, 2], ["C", 1, 3], ["D", 1, 3], ["E", 1, 3], ["F", 1, 3], ["G", 1, 3], ["H", 1, 3]
+  ]);
+  const expectedWorks = {
+    A: [["W1", ["S1", "S2"], ["composition", "lyrics"]], ["W2", ["S3"], ["lyrics"]]],
+    B: [["W1", ["S1"], ["english_lyrics", "lyrics"]], ["W2", ["S3"], ["composition"]],
+      ["W3", ["S4"], ["composition", "lyrics"]]],
+    C: [["W1", ["S1"], ["arrangement"]]],
+    D: [["W1", ["S2"], ["arrangement"]]],
+    E: [["W1", ["S1"], ["brass_arrangement"]]],
+    F: [["W2", ["S3"], ["composition"]]],
+    G: [["W3", ["S4"], ["lyrics"]]],
+    H: [["W2", ["S3"], ["english_lyrics"]]]
+  };
+  for (const entry of entries) {
+    assert.equal(entry.artist_id, "G1");
+    assert.equal(entry.category, "all");
+    assert.deepEqual(entry.works.map(({ work_id, song_ids, roles }) => [work_id, song_ids, roles]),
+      expectedWorks[entry.creator_id]);
+  }
+  assert.deepEqual(entries.find(entry => entry.creator_id === "A").works.map(work => work.title), ["Work 1", "Work 1"]);
+  assert.deepEqual(entries.slice(-2).map(entry => entry.creator_name), ["Creator G", "Creator G"]);
+});
+
+test("all returns an empty ranking for an artist without primary songs", () => {
+  const data = fixture();
+  data.artists.push({ artist_id: "G3", name: "Group 3" });
+  assert.deepEqual(aggregateCreatorRankings(data, "G3").categories.all, { label: "すべて", entries: [] });
 });
