@@ -49,13 +49,15 @@ test('songs catalog and existing ranking data remain independently connected', a
   assert.match(await read('.github/workflows/deploy-pages.yml'), /path: site\//);
 });
 
-test('home uses its artist link and More orders the combined information', async () => {
+test('home shows artist selection and More orders the combined information', async () => {
   const home = await read('site/index.html');
   const more = await read('site/more/index.html');
   assert.match(home, /<a class="artist artist-link"[^>]+href="\.\/songs\/"/);
-  assert.doesNotMatch(home, /class="cards"/);
-  assert.match(home, /id="site-updates" data-recent="true"/);
-  assert.match(home, /href="\.\/more\/#site-updates"/);
+  const homeMock = await read('docs/design/screens/mockups/index.html');
+  for (const html of [home, homeMock]) {
+    assert.match(html, /<\/section>\s*<\/main>/);
+    assert.doesNotMatch(html, /site-updates|サイト更新履歴|about-data\.js|class="cards"/);
+  }
   const mock = await read('docs/design/screens/mockups/more.html');
   for (const html of [more, mock]) {
     assert.doesNotMatch(html, /<details\b|href="#contact"|データの誤りを連絡する|data-recent/);
@@ -65,7 +67,7 @@ test('home uses its artist link and More orders the combined information', async
     assert.deepEqual(content.filter(id => ids.includes(id)), ids);
     assert.match(html, /class="card about-section site-information">\s*<section aria-labelledby="disclaimer">[\s\S]*?免責事項<\/h2>[\s\S]*?掲載されている名称・商標等[\s\S]*?<\/section>\s*<section aria-labelledby="contact">[\s\S]*?ご意見・ご要望<\/h2>[\s\S]*?<\/section>\s*<\/div>\s*<\/main>/);
   }
-  for (const html of [home, more]) assert.match(html, /type="module" src="[^"]*about-data\.js"/);
+  assert.match(more, /type="module" src="[^"]*about-data\.js"/);
 });
 
 test('More mock mirrors the data-driven policy without repeating the recording exclusions', async () => {

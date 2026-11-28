@@ -83,8 +83,7 @@ function renderCoverage(rows) {
 }
 
 const updates = document.getElementById('site-updates');
-const updatesReady = renderSection('site-updates', async () => readUpdates(await fetchData('updates'))
-  .slice(0, updates.dataset.recent === 'true' ? 3 : undefined), renderUpdates);
+const updatesReady = renderSection('site-updates', async () => readUpdates(await fetchData('updates')), renderUpdates);
 
 if (document.getElementById('data-policy')) {
   const policy = fetchData('policy').then(readPolicy);
