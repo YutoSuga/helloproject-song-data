@@ -17,6 +17,7 @@
           "rank": 1,
           "creator_id": "C00028",
           "creator_name": "つんく",
+          "name_kana": "つんく",
           "work_count": 25,
           "works": [
             {
@@ -311,6 +312,7 @@
           "rank": 2,
           "creator_id": "C00009",
           "creator_name": "平田祥一郎",
+          "name_kana": "ひらたしょういちろう",
           "work_count": 18,
           "works": [
             {
@@ -506,6 +508,7 @@
           "rank": 3,
           "creator_id": "C00001",
           "creator_name": "山崎あおい",
+          "name_kana": "やまざきあおい",
           "work_count": 11,
           "works": [
             {
@@ -641,6 +644,7 @@
           "rank": 3,
           "creator_id": "C00008",
           "creator_name": "星部ショウ",
+          "name_kana": "ほしべしょう",
           "work_count": 11,
           "works": [
             {
@@ -766,6 +770,7 @@
           "rank": 5,
           "creator_id": "C00006",
           "creator_name": "児玉雨子",
+          "name_kana": "こだまあめこ",
           "work_count": 10,
           "works": [
             {
@@ -877,6 +882,7 @@
           "rank": 5,
           "creator_id": "C00035",
           "creator_name": "鈴木俊介",
+          "name_kana": "すずきしゅんすけ",
           "work_count": 10,
           "works": [
             {
@@ -992,6 +998,7 @@
           "rank": 7,
           "creator_id": "C00002",
           "creator_name": "KOUGA",
+          "name_kana": "こうが",
           "work_count": 6,
           "works": [
             {
@@ -1073,6 +1080,7 @@
           "rank": 7,
           "creator_id": "C00005",
           "creator_name": "炭竃智弘",
+          "name_kana": "すみかまともひろ",
           "work_count": 6,
           "works": [
             {
@@ -1146,6 +1154,7 @@
           "rank": 7,
           "creator_id": "C00010",
           "creator_name": "Shusui",
+          "name_kana": "しゅうすい",
           "work_count": 6,
           "works": [
             {
@@ -1217,6 +1226,7 @@
           "rank": 7,
           "creator_id": "C00027",
           "creator_name": "井筒日美",
+          "name_kana": "いづつひみ",
           "work_count": 6,
           "works": [
             {
@@ -1287,6 +1297,7 @@
           "rank": 7,
           "creator_id": "C00030",
           "creator_name": "大久保薫",
+          "name_kana": "おおくぼかおる",
           "work_count": 6,
           "works": [
             {
@@ -1359,6 +1370,7 @@
           "rank": 12,
           "creator_id": "C00019",
           "creator_name": "大森祥子",
+          "name_kana": "おおもりしょうこ",
           "work_count": 5,
           "works": [
             {
@@ -1419,6 +1431,7 @@
           "rank": 13,
           "creator_id": "C00003",
           "creator_name": "中島卓偉",
+          "name_kana": "なかじまたくい",
           "work_count": 4,
           "works": [
             {
@@ -1476,6 +1489,7 @@
           "rank": 13,
           "creator_id": "C00025",
           "creator_name": "松井寛",
+          "name_kana": "まついひろし",
           "work_count": 4,
           "works": [
             {
@@ -1527,6 +1541,7 @@
           "rank": 13,
           "creator_id": "C00032",
           "creator_name": "浜田ピエール裕介",
+          "name_kana": "はまだぴえーるゆうすけ",
           "work_count": 4,
           "works": [
             {
@@ -1577,6 +1592,7 @@
           "rank": 16,
           "creator_id": "C00004",
           "creator_name": "三浦徳子",
+          "name_kana": "みうらよしこ",
           "work_count": 3,
           "works": [
             {
@@ -1617,6 +1633,7 @@
           "rank": 16,
           "creator_id": "C00011",
           "creator_name": "Josef Melin",
+          "name_kana": "じょせふめりん",
           "work_count": 3,
           "works": [
             {
@@ -1660,6 +1677,7 @@
           "rank": 16,
           "creator_id": "C00061",
           "creator_name": "中村瑛彦",
+          "name_kana": "なかむらあきひこ",
           "work_count": 3,
           "works": [
             {
@@ -1703,6 +1721,7 @@
           "rank": 16,
           "creator_id": "C00079",
           "creator_name": "西野蒟蒻",
+          "name_kana": "にしのこんにゃく",
           "work_count": 3,
           "works": [
             {
@@ -1743,6 +1762,7 @@
           "rank": 20,
           "creator_id": "C00012",
           "creator_name": "近藤薫",
+          "name_kana": "こんどうかおる",
           "work_count": 2,
           "works": [
             {
@@ -1778,6 +1798,7 @@
           "rank": 20,
           "creator_id": "C00015",
           "creator_name": "山下達郎",
+          "name_kana": "やましたたつろう",
           "work_count": 2,
           "works": [
             {
@@ -1808,6 +1829,7 @@
           "rank": 20,
           "creator_id": "C00016",
           "creator_name": "Anders Dannvik",
+          "name_kana": null,
           "work_count": 2,
           "works": [
             {
@@ -1838,6 +1860,7 @@
           "rank": 20,
           "creator_id": "C00017",
           "creator_name": "竹内まりや",
+          "name_kana": "たけうちまりや",
           "work_count": 2,
           "works": [
             {
@@ -1870,6 +1893,7 @@
           "rank": 20,
           "creator_id": "C00026",
           "creator_name": "唐沢美帆",
+          "name_kana": "からさわみほ",
           "work_count": 2,
           "works": [
             {
@@ -1900,6 +1924,7 @@
           "rank": 20,
           "creator_id": "C00031",
           "creator_name": "イイジマケン",
+          "name_kana": "いいじまけん",
           "work_count": 2,
           "works": [
             {
@@ -1933,6 +1958,7 @@
           "rank": 20,
           "creator_id": "C00033",
           "creator_name": "Shim Zeyun",
+          "name_kana": null,
           "work_count": 2,
           "works": [
             {
@@ -1965,6 +1991,7 @@
           "rank": 20,
           "creator_id": "C00034",
           "creator_name": "tsubomi",
+          "name_kana": null,
           "work_count": 2,
           "works": [
             {
@@ -1996,6 +2023,7 @@
           "rank": 20,
           "creator_id": "C00036",
           "creator_name": "板垣祐介",
+          "name_kana": "いたがきゆうすけ",
           "work_count": 2,
           "works": [
             {
@@ -2028,6 +2056,7 @@
           "rank": 20,
           "creator_id": "C00042",
           "creator_name": "CMJK",
+          "name_kana": "しーえむじぇいけい",
           "work_count": 2,
           "works": [
             {
@@ -2058,6 +2087,7 @@
           "rank": 20,
           "creator_id": "C00052",
           "creator_name": "小西貴雄",
+          "name_kana": "こにしたかお",
           "work_count": 2,
           "works": [
             {
@@ -2088,6 +2118,7 @@
           "rank": 20,
           "creator_id": "C00055",
           "creator_name": "ダンス☆マン",
+          "name_kana": "だんすまん",
           "work_count": 2,
           "works": [
             {
@@ -2119,6 +2150,7 @@
           "rank": 20,
           "creator_id": "C00070",
           "creator_name": "徳田光希",
+          "name_kana": "とくだみつき",
           "work_count": 2,
           "works": [
             {
@@ -2151,6 +2183,7 @@
           "rank": 20,
           "creator_id": "C00075",
           "creator_name": "Aksel Odenbalk",
+          "name_kana": null,
           "work_count": 2,
           "works": [
             {
@@ -2181,6 +2214,7 @@
           "rank": 20,
           "creator_id": "C00076",
           "creator_name": "Erik Lidbom",
+          "name_kana": "えりっくりぼむ",
           "work_count": 2,
           "works": [
             {
@@ -2213,6 +2247,7 @@
           "rank": 35,
           "creator_id": "C00007",
           "creator_name": "KAN",
+          "name_kana": "かん",
           "work_count": 1,
           "works": [
             {
@@ -2235,6 +2270,7 @@
           "rank": 35,
           "creator_id": "C00013",
           "creator_name": "上杉洋史",
+          "name_kana": "うえすぎひろし",
           "work_count": 1,
           "works": [
             {
@@ -2255,6 +2291,7 @@
           "rank": 35,
           "creator_id": "C00014",
           "creator_name": "伊藤銀次",
+          "name_kana": "いとうぎんじ",
           "work_count": 1,
           "works": [
             {
@@ -2275,6 +2312,7 @@
           "rank": 35,
           "creator_id": "C00020",
           "creator_name": "NOBE",
+          "name_kana": "のび",
           "work_count": 1,
           "works": [
             {
@@ -2295,6 +2333,7 @@
           "rank": 35,
           "creator_id": "C00021",
           "creator_name": "Andreas Öhrn",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2315,6 +2354,7 @@
           "rank": 35,
           "creator_id": "C00022",
           "creator_name": "Henrik Smith",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2336,6 +2376,7 @@
           "rank": 35,
           "creator_id": "C00024",
           "creator_name": "オオヤギヒロオ",
+          "name_kana": "おおやぎひろお",
           "work_count": 1,
           "works": [
             {
@@ -2357,6 +2398,7 @@
           "rank": 35,
           "creator_id": "C00029",
           "creator_name": "高橋諭一",
+          "name_kana": "たかはしゆいち",
           "work_count": 1,
           "works": [
             {
@@ -2377,6 +2419,7 @@
           "rank": 35,
           "creator_id": "C00037",
           "creator_name": "AKIRA",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2398,6 +2441,7 @@
           "rank": 35,
           "creator_id": "C00038",
           "creator_name": "近藤圭一",
+          "name_kana": "こんどうけいいち",
           "work_count": 1,
           "works": [
             {
@@ -2418,6 +2462,7 @@
           "rank": 35,
           "creator_id": "C00039",
           "creator_name": "gaokalab",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2439,6 +2484,7 @@
           "rank": 35,
           "creator_id": "C00040",
           "creator_name": "川辺ヒロシ",
+          "name_kana": "かわなべひろし",
           "work_count": 1,
           "works": [
             {
@@ -2459,6 +2505,7 @@
           "rank": 35,
           "creator_id": "C00041",
           "creator_name": "上田禎",
+          "name_kana": "うえだただし",
           "work_count": 1,
           "works": [
             {
@@ -2479,6 +2526,7 @@
           "rank": 35,
           "creator_id": "C00043",
           "creator_name": "masaaki asada",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2499,6 +2547,7 @@
           "rank": 35,
           "creator_id": "C00044",
           "creator_name": "山崎淳",
+          "name_kana": "やまざきじゅん",
           "work_count": 1,
           "works": [
             {
@@ -2519,6 +2568,7 @@
           "rank": 35,
           "creator_id": "C00045",
           "creator_name": "宮永治郎",
+          "name_kana": "みやながじろう",
           "work_count": 1,
           "works": [
             {
@@ -2541,6 +2591,7 @@
           "rank": 35,
           "creator_id": "C00046",
           "creator_name": "土肥真生",
+          "name_kana": "どいまなお",
           "work_count": 1,
           "works": [
             {
@@ -2561,6 +2612,7 @@
           "rank": 35,
           "creator_id": "C00047",
           "creator_name": "角田崇徳",
+          "name_kana": "つのだたかのり",
           "work_count": 1,
           "works": [
             {
@@ -2581,6 +2633,7 @@
           "rank": 35,
           "creator_id": "C00048",
           "creator_name": "KOJI oba",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2602,6 +2655,7 @@
           "rank": 35,
           "creator_id": "C00049",
           "creator_name": "HASSE",
+          "name_kana": "はっせ",
           "work_count": 1,
           "works": [
             {
@@ -2622,6 +2676,7 @@
           "rank": 35,
           "creator_id": "C00050",
           "creator_name": "村山晋一郎",
+          "name_kana": "むらやましんいちろう",
           "work_count": 1,
           "works": [
             {
@@ -2643,6 +2698,7 @@
           "rank": 35,
           "creator_id": "C00051",
           "creator_name": "鈴木Daichi秀行",
+          "name_kana": "すずきだいちひでゆき",
           "work_count": 1,
           "works": [
             {
@@ -2663,6 +2719,7 @@
           "rank": 35,
           "creator_id": "C00053",
           "creator_name": "江上浩太郎",
+          "name_kana": "えがみこうたろう",
           "work_count": 1,
           "works": [
             {
@@ -2683,6 +2740,7 @@
           "rank": 35,
           "creator_id": "C00054",
           "creator_name": "前山田健一",
+          "name_kana": "まえやだけんいち",
           "work_count": 1,
           "works": [
             {
@@ -2704,6 +2762,7 @@
           "rank": 35,
           "creator_id": "C00056",
           "creator_name": "川松久芳",
+          "name_kana": "かわまつひさよし",
           "work_count": 1,
           "works": [
             {
@@ -2724,6 +2783,7 @@
           "rank": 35,
           "creator_id": "C00057",
           "creator_name": "福田花音",
+          "name_kana": "ふくだかのん",
           "work_count": 1,
           "works": [
             {
@@ -2744,6 +2804,7 @@
           "rank": 35,
           "creator_id": "C00058",
           "creator_name": "BLACC HOLE",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2765,6 +2826,7 @@
           "rank": 35,
           "creator_id": "C00059",
           "creator_name": "NOBB-D",
+          "name_kana": "のぶでぃー",
           "work_count": 1,
           "works": [
             {
@@ -2786,6 +2848,7 @@
           "rank": 35,
           "creator_id": "C00060",
           "creator_name": "T",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2806,6 +2869,7 @@
           "rank": 35,
           "creator_id": "C00062",
           "creator_name": "SEION",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2826,6 +2890,7 @@
           "rank": 35,
           "creator_id": "C00063",
           "creator_name": "Tasco",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2847,6 +2912,7 @@
           "rank": 35,
           "creator_id": "C00064",
           "creator_name": "Tenzo",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2868,6 +2934,7 @@
           "rank": 35,
           "creator_id": "C00065",
           "creator_name": "エリック・フクサキ",
+          "name_kana": "えりっくふくさき",
           "work_count": 1,
           "works": [
             {
@@ -2888,6 +2955,7 @@
           "rank": 35,
           "creator_id": "C00066",
           "creator_name": "YUKO",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2908,6 +2976,7 @@
           "rank": 35,
           "creator_id": "C00067",
           "creator_name": "沢頭たかし",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2928,6 +2997,7 @@
           "rank": 35,
           "creator_id": "C00068",
           "creator_name": "大橋莉子",
+          "name_kana": "おおはしりこ",
           "work_count": 1,
           "works": [
             {
@@ -2949,6 +3019,7 @@
           "rank": 35,
           "creator_id": "C00069",
           "creator_name": "鈴木桃子",
+          "name_kana": "すずきももこ",
           "work_count": 1,
           "works": [
             {
@@ -2969,6 +3040,7 @@
           "rank": 35,
           "creator_id": "C00071",
           "creator_name": "Johan Alkenas",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -2990,6 +3062,7 @@
           "rank": 35,
           "creator_id": "C00072",
           "creator_name": "Joacim Persson",
+          "name_kana": "よあきむぱーそん",
           "work_count": 1,
           "works": [
             {
@@ -3011,6 +3084,7 @@
           "rank": 35,
           "creator_id": "C00073",
           "creator_name": "Lisa Desmond",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -3031,6 +3105,7 @@
           "rank": 35,
           "creator_id": "C00074",
           "creator_name": "吉田美奈子",
+          "name_kana": "よしだみなこ",
           "work_count": 1,
           "works": [
             {
@@ -3051,6 +3126,7 @@
           "rank": 35,
           "creator_id": "C00077",
           "creator_name": "SUIMI",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -3071,6 +3147,7 @@
           "rank": 35,
           "creator_id": "C00078",
           "creator_name": "渡辺泰司",
+          "name_kana": "わたなべやすし",
           "work_count": 1,
           "works": [
             {
@@ -3092,6 +3169,7 @@
           "rank": 35,
           "creator_id": "C00080",
           "creator_name": "Albin Hillborg",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -3112,6 +3190,7 @@
           "rank": 35,
           "creator_id": "C00081",
           "creator_name": "荒幡亮平",
+          "name_kana": "あらはたりょうへい",
           "work_count": 1,
           "works": [
             {
@@ -3132,6 +3211,7 @@
           "rank": 35,
           "creator_id": "C00082",
           "creator_name": "広瀬香美",
+          "name_kana": "ひろせこうみ",
           "work_count": 1,
           "works": [
             {
@@ -3153,6 +3233,7 @@
           "rank": 35,
           "creator_id": "C00083",
           "creator_name": "Maria Okada",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -3173,6 +3254,7 @@
           "rank": 35,
           "creator_id": "C00084",
           "creator_name": "h-wonder",
+          "name_kana": "えいちわんだー",
           "work_count": 1,
           "works": [
             {
@@ -3193,6 +3275,7 @@
           "rank": 35,
           "creator_id": "C00085",
           "creator_name": "Simon Janlov",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -3214,6 +3297,7 @@
           "rank": 35,
           "creator_id": "C00086",
           "creator_name": "miwaflower",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -3234,6 +3318,7 @@
           "rank": 35,
           "creator_id": "C00089",
           "creator_name": "Andreas Carlsson",
+          "name_kana": "あんどれあすかーるそん",
           "work_count": 1,
           "works": [
             {
@@ -3254,6 +3339,7 @@
           "rank": 35,
           "creator_id": "C00090",
           "creator_name": "Julie Yu",
+          "name_kana": null,
           "work_count": 1,
           "works": [
             {
@@ -3274,6 +3360,7 @@
           "rank": 35,
           "creator_id": "C00091",
           "creator_name": "RUSH EYE",
+          "name_kana": "らっしゅあい",
           "work_count": 1,
           "works": [
             {
@@ -3295,6 +3382,7 @@
           "rank": 35,
           "creator_id": "C00092",
           "creator_name": "Anna Kusakawa",
+          "name_kana": "あんなくさかわ",
           "work_count": 1,
           "works": [
             {

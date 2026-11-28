@@ -76,3 +76,16 @@ dialog::backdrop { background: #35212880; }
 .field select, .field input { min-width: 0; width: 100%; }
 
 .checkbox { display: inline-flex; align-items: center; gap: .35rem; min-height: 44px; }
+
+.mock-creator-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+@media (max-width:1023px) { .mock-creator-grid { grid-template-columns: 1fr; gap: 0; } }
+
+.mock-breakdown-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; overflow-wrap: anywhere; }
+.mock-song-count { margin-inline-start: 10px; font-size: .85em; }
+.mock-song-group { padding-inline-start: 12px; overflow-wrap: anywhere; }
+.mock-song-group + .mock-song-group { border-top: 1px solid var(--line); padding-top: 8px; }
+.mock-song-group p { margin-block: 4px; font-size: .875em; }
+
+#mock-breakdown { max-width: 680px; margin-inline: 0; }
+#mock-breakdown .mock-breakdown-row > :last-child { white-space: nowrap; }
+@media (max-width: 1023px) { #mock-breakdown { max-width: none; } }

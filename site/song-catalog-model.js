@@ -7,7 +7,7 @@ const date = value => value === null || (typeof value === 'string' && /^\d{4}-\d
 // belong to FN-005; no canonical data is loaded by the browser.
 export function readSongCatalog(data, artistId = 'G00001') {
   if (!data || data.schema_version !== 1 || data.artist?.artist_id !== artistId || !text(data.artist.name) || !Array.isArray(data.works) || !data.works.every(w =>
-    w && text(w.work_id) && text(w.title) && date(w.first_release_date) &&
+    w && text(w.work_id) && text(w.title) && date(w.first_release_date) && typeof w.date_incomplete === 'boolean' &&
     Array.isArray(w.search_creator_names) && w.search_creator_names.every(text) && Array.isArray(w.songs) && w.songs.length > 0 && w.songs.every(s =>
       s && text(s.song_id) && text(s.title) && optional(s.version_name) && versions.includes(s.version_type) && date(s.release_date) && Array.isArray(s.credits) && s.credits.every(c =>
         c && text(c.creator_id) && text(c.creator_name) && text(c.credit_name) && roles.includes(c.role) && (c.credit_order === null || (Number.isSafeInteger(c.credit_order) && c.credit_order > 0)))))) {

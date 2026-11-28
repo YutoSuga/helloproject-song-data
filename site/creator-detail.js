@@ -1,29 +1,21 @@
-import {
-  filterCreatorWorks, getCreatorDetail, listParams, publishedArtistId, readCreatorRankings, readListState
-} from "./creator-catalog-model.js";
-import { ALL_ROLE_LABELS } from "./creator-roles.js";
-import { readSongCatalog } from "./song-catalog-model.js";
+import { analyzeCollaborators } from './collaborators.js';
+import { collaboratorRow, topThree } from './ranking-view.js';
+import { filterCreatorWorks, getCreatorDetail } from './creator-catalog-model.js';
+import { ALL_ROLE_LABELS } from './creator-roles.js';
+import { $, detailLink, restorePosition, setupDetail, state, status, update } from './common.js';
+import { loadData, loadError } from './public-data.js';
+import { detailRequestError, isCreatorId, pageUrl } from './site-state.js';
 
-const find = id => document.getElementById(id);
-const params = new URLSearchParams(location.search);
-const returnUrl = new URL("./creators/", import.meta.url);
-returnUrl.search = listParams(readListState(params)).toString();
-find("creator-back").href = returnUrl;
+const find = $;
+const current = setupDetail(find('creator-back'), 'creators');
+const { creator_id: creatorId, artist_id: artistId } = current;
 
-const creatorId = params.get("creator_id");
-const artistId = params.get("artist_id");
-
-async function loadData(path) {
-  const response = await fetch(new URL(path, import.meta.url));
-  if (!response.ok) throw new Error(`Creator detail data: ${response.status}`);
-  return response.json();
-}
-
-function renderDetail(detail, artistName) {
+function renderDetail(detail, artistName, songs) {
   find("creator-heading").textContent = detail.name;
-  document.title = `${detail.name} | Hello! Project Song Database`;
+  document.title = `${detail.name} | ハロプロ作家研究所`;
   find("creator-overview").textContent = `${artistName}・総担当 ${detail.total}曲`;
 
+  find('creator-analyze').href = pageUrl('/analysis/', { artist_id: artistId, tab: 'creator', creator_id: creatorId });
   const rankTable = find("creator-ranks");
   for (const { label, rank, workCount } of detail.rows) {
     const row = rankTable.insertRow();
@@ -37,7 +29,12 @@ function renderDetail(detail, artistName) {
 
   const filters = [...document.querySelectorAll(".creator-work-filters button")];
   const workList = find("creator-work-list");
+  const { entries } = analyzeCollaborators(songs.works, creatorId);
   function showWorks(role) {
+    find('creator-collaborators').replaceChildren(...topThree(entries).map(row =>
+      collaboratorRow(row, creatorId, artistId, entries[0].work_count)));
+    find('collaborators-empty').hidden = entries.length > 0;
+
     for (const button of filters) {
       button.setAttribute("aria-pressed", String(button.dataset.role === role));
     }
@@ -46,8 +43,7 @@ function renderDetail(detail, artistName) {
       ? `${works.length}曲` : "該当する担当楽曲がありません。";
     workList.replaceChildren(...works.map(work => {
       const item = document.createElement("li");
-      const title = document.createElement("span");
-      title.textContent = work.title;
+      const title = detailLink("work", work.work_id, work.title, artistId);
       const badges = document.createElement("span");
       badges.className = "role-badges";
       const orderedRoles = [
@@ -64,29 +60,34 @@ function renderDetail(detail, artistName) {
       return item;
     }));
   }
-  filters.forEach(button => button.addEventListener("click", () => showWorks(button.dataset.role)));
-  showWorks("all");
+  filters.forEach(button => button.addEventListener('click', () => {
+    update({ role: button.dataset.role }, { keepPosition: true });
+    showWorks(state().role);
+  }));
+  window.addEventListener('popstate', () => {
+    showWorks(state().role);
+    restorePosition();
+  });
+  showWorks(current.role);
   find("creator-status").hidden = true;
   find("creator-content").hidden = false;
 }
 
-const status = find("creator-status");
-if (!/^C\d{5}$/.test(creatorId ?? "") || artistId !== publishedArtistId) {
-  status.textContent = "指定された作家またはアーティストを表示できません。";
+const message = find('creator-status');
+const requestError = detailRequestError(new URLSearchParams(location.search), 'creator_id', isCreatorId, '作家');
+if (requestError) {
+  status(message, requestError);
 } else {
   try {
-    const [rankingData, songData] = await Promise.all([
-      loadData(`./data/rankings/${artistId}.json`),
-      loadData(`./data/songs/${artistId}.json`)
-    ]);
-    const rankings = readCreatorRankings(rankingData, artistId);
-    const detail = getCreatorDetail(rankings, readSongCatalog(songData, artistId), creatorId);
+    const [rankings, songs] = await Promise.all([loadData('rankings', artistId), loadData('songs', artistId)]);
+    const detail = getCreatorDetail(rankings, songs, creatorId);
     if (detail) {
-      renderDetail(detail, rankings.artist.name);
-    } else {
-      status.textContent = "指定された作家の担当楽曲が見つかりません。";
-    }
+      const workIds = new Set(songs.works.map(work => work.work_id));
+      if (detail.works.some(work => !workIds.has(work.work_id))) throw new Error('Missing catalog evidence');
+      renderDetail(detail, rankings.artist.name, songs);
+      restorePosition();
+    } else status(message, '指定された作家の担当楽曲が見つかりません。');
   } catch {
-    status.textContent = "データを表示できません。時間をおいて再読み込みしてください。";
+    status(message, loadError);
   }
 }

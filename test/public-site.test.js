@@ -3,59 +3,71 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
-const pages = ['','songs/','videos/','creators/','more/'];
+const primary = ['/', '/ranking/', '/search/', '/analysis/', '/more/'];
+const detail = ['/creators/detail/', '/songs/detail/', '/analysis/detail/'];
+const legacy = ['/creators/', '/songs/', '/videos/'];
 const read = path => readFile(resolve(root, path), 'utf8');
 
 test('public pages have consistent static navigation, canonical URLs and assets', async () => {
-  for (const page of pages) {
-    const html = await read(`site/${page}index.html`);
-    assert.match(html, new RegExp(`rel="canonical" href="https://hellosongdb.com/${page}"`));
+  for (const page of [...primary, ...detail, ...legacy]) {
+    const html = await read(`site${page}index.html`);
+    const canonical = ['/creators/', '/songs/'].includes(page) ? '/search/' : page;
+    assert(html.includes(`rel="canonical" href="https://hellosongdb.com${canonical}"`));
     assert.match(html, /meta name="description"/);
     assert.equal((html.match(/<h1[ >]/g) ?? []).length, 1);
-    assert.equal((html.match(/aria-current="page"/g) ?? []).length, 2);
-    for (const nav of html.matchAll(/<nav class="(?:desktop|mobile)"[^>]*>([\s\S]*?)<\/nav>/g)) {
-      const links = [...nav[1].matchAll(/href="([^"]+)"/g)].map(m => m[1]);
-      assert.equal(links.length, 5);
-      assert.deepEqual(links.map(link => resolve(root, `site/${page}`, link)), pages.map(p => resolve(root, `site/${p}`)));
+    const navs = [...html.matchAll(/<nav class="(?:desktop|mobile)"[^>]*>([\s\S]*?)<\/nav>/g)];
+    assert.equal(navs.length, legacy.includes(page) ? 0 : 2);
+    for (const [, nav] of navs) {
+      assert.deepEqual([...nav.matchAll(/href="([^"]+)"/g)].map(match => match[1]), primary);
+      assert.equal((nav.match(/aria-current=/g) ?? []).length, 1);
     }
-    const assets = [...html.matchAll(/(?:src|href)="([^"#]+\.(?:js|css|png))"/g)];
-    for (const [, path] of assets) await readFile(resolve(root, `site/${page}`, path));
-    assert.doesNotMatch(html, /data-item-|review-state|show-numbers|サンプル|仮データ|mock\.js|mock\.css/);
-    const artists = html.match(/<section class="artists body-artists"[\s\S]*?<\/section>/)?.[0];
-    if (page.startsWith('more/')) assert.equal(artists, undefined);
+    assert.equal(/name="robots" content="noindex"/.test(html), [...detail, ...legacy].includes(page));
+    for (const property of ['site_name','title','description','url','type','image','image:width','image:height','image:alt']) {
+      assert(html.includes(`property="og:${property}"`));
+    }
+    assert.match(html, /content="https:\/\/hellosongdb.com\/assets\/ogp\.png"/);
+    for (const [, asset] of html.matchAll(/(?:src|href)="(\/[^"?#]+\.(?:js|css|png))(?:\?[^"]*)?"/g)) await readFile(resolve(root, `site${asset}`));
+    assert.doesNotMatch(html, /data-item-|review-state|show-numbers|サンプル|仮データ|mock\.js|mock\.css|Hello! Project Song Database/);
+    const artists = html.match(/<select id="artist-select">([\s\S]*?)<\/select>/)?.[1];
+    if (!primary.slice(0, 4).includes(page)) assert.equal(artists, undefined);
     else {
-      assert.equal((artists.match(/class="artist(?: artist-link)?"/g) ?? []).length, 8);
+      assert.equal((artists.match(/<option /g) ?? []).length, 8);
       assert.equal((artists.match(/ disabled/g) ?? []).length, 7);
-      assert.equal((artists.match(/aria-pressed="true"/g) ?? []).length, page ? 1 : 0);
-      const colors = [...artists.matchAll(/--group:(#[0-9A-F]+)/g)].map(m => m[1]);
-      assert.deepEqual(colors, ['#D92C1B','#1D91CD','#7263AA','#EF93BB','#20A239','#F1881A','#F5D11F','#92C75B']);
-      assert(html.indexOf('</h1>') < html.indexOf(artists));
+      assert.match(artists, /value="G00001" selected>Juice=Juice/);
     }
   }
 });
 
-test('songs catalog and existing ranking data remain independently connected', async () => {
-  const songs = await read('site/songs/index.html');
-  assert.match(songs, /id="song-search"/);
-  assert.match(songs, /id="song-sort"/);
-  assert.match(songs, /<dialog id="song-dialog"/);
-  assert.match(songs, /src="..\/songs.js"/);
-  assert.doesNotMatch(songs, /楽曲一覧・検索機能を準備中/);
-  const creators = await read('site/creators/index.html');
-  assert.doesNotMatch(creators, /同じ曲に複数のバージョンがある場合も、1曲として数えています。/);
-  assert.match(creators, /role="combobox"/);
-  assert.match(creators, /id="view-search-tab"[^>]+aria-selected="true"/);
-  assert.doesNotMatch(creators, /creators-combo-status|pair-detail-role/);
-  assert.match(await read('site/app.js'), /new URL\("\.\/data\/rankings\/G00001.json", import.meta.url\)/);
+test('catalog, work detail and publications remain independently connected', async () => {
+  const search = await read('site/search/index.html');
+  assert.match(search, /id="query"/);
+  assert.match(search, /id="song-sort"/);
+  assert.doesNotMatch(search, /<dialog/);
+  assert.match(await read('site/songs/detail/index.html'), /id="work-content"/);
+  for (const tab of ['songs','creators']) {
+    const html = await read(`site/${tab}/index.html`);
+    assert(html.includes(`href="/search/?tab=${tab}"`));
+    assert.match(html, /src="\/legacy.js"/);
+  }
+  assert.match(await read('site/videos/index.html'), /href="\/">ホームへ戻る/);
   assert.match(await read('.github/workflows/deploy-pages.yml'), /path: site\//);
+});
+
+test('brand PNG files declare the expected dimensions', async () => {
+  for (const [file, width, height] of [['assets/ogp.png',1200,630], ['assets/favicon.png',32,32], ['apple-touch-icon.png',180,180]]) {
+    const png = await readFile(resolve(root, 'site', file));
+    assert.equal(png.toString('hex', 0, 8), '89504e470d0a1a0a');
+    assert.equal(png.readUInt32BE(16), width);
+    assert.equal(png.readUInt32BE(20), height);
+  }
 });
 
 test('home shows artist selection and More orders the combined information', async () => {
   const home = await read('site/index.html');
   const more = await read('site/more/index.html');
-  assert.match(home, /<a class="artist artist-link"[^>]+href="\.\/songs\/"/);
+  assert.match(home, /id="artist-select"/);
   const homeMock = await read('docs/design/screens/mockups/index.html');
-  assert.match(home, /<\/section>\s*<\/main>/);
+  assert.match(home, /id="top-creators"[\s\S]*?id="top-pairs"[\s\S]*?tab=songs[\s\S]*?tab=creators/);
   for (const html of [home, homeMock]) {
     assert.doesNotMatch(html, /site-updates|サイト更新履歴|about-data\.js|class="cards"/);
   }
@@ -91,24 +103,22 @@ test('More mock mirrors the data-driven policy without repeating the recording e
 
 
 test('creator filter controls preserve accessible combobox and explicit checkbox state', async () => {
-  const html = await read('site/creators/index.html');
+  const html = await read('site/analysis/index.html');
   assert.doesNotMatch(html, /pair-direction/);
   for (const id of ['pair-lyrics', 'pair-composition']) {
     assert.match(html, new RegExp(`id="${id}" type="checkbox" disabled`));
   }
-  assert.match(html, /id="pair-clear" type="button">クリア/);
+  assert.match(html, /<button type="button" id="pair-clear">クリア/);
   assert.match(html, /role="combobox"[^>]+aria-controls="pair-creator-options"/);
-  const app = await read('site/app.js');
-  assert.match(app, /event.isComposing/);
-  assert.match(app, /name.href = creatorUrl\(entry.creator_id\)/);
+  assert.match(await read('site/creator-picker.js'), /event.isComposing/);
 });
 
 
 test('creator UI keeps only useful headings and orders condition before result count', async () => {
-  const html = await read('site/creators/index.html');
+  const html = await read('site/analysis/index.html');
   assert.doesNotMatch(html, /自作詞・自作曲：|id="(?:pair-self-count|self-count)"|全順位|class="eyebrow"/);
-  assert.match(html, /aria-label="作家名またはIDで検索"/);
-  assert(html.indexOf('id="pair-condition"') < html.indexOf('id="pair-summary"'));
+  assert.match(html, /aria-label="作家名または読み仮名で検索"/);
+  assert(html.indexOf('id="pair-condition"') < html.indexOf('id="summary"'));
   assert(html.indexOf('クリア</button>') < html.indexOf('id="pair-condition"'));
 });
 
@@ -118,7 +128,8 @@ test('design mock locates pair analysis and collaborator analysis in their own t
   assert.doesNotMatch(ranking, /組み合わせランキング|共同制作楽曲/);
   assert.match(analysis, /aria-controls="pairs"[^>]*>組み合わせランキング<\/button>/);
   assert.match(analysis, /aria-controls="creator"[^>]*>作家指定分析<\/button>/);
-  assert.match(analysis, /<dialog[^>]*>[\s\S]*?href="song-detail\.html"/);
+  assert.doesNotMatch(analysis, /<dialog/);
+  assert.match(analysis, /href="collaboration-detail\.html\?pair=/);
 });
 
 test('pair mocks share all tied top ranks and illustrate the opt-in ranking', async () => {
@@ -142,7 +153,7 @@ test('pair mocks share all tied top ranks and illustrate the opt-in ranking', as
   assert.deepEqual(pairRows(analysis, 'pairs-all').map(([, rank, count]) => [rank, count]),
     [[1, 25], [2, 5], [3, 4]]);
   assert.match(analysis, /id="include-self" type="checkbox" aria-controls="pairs-different pairs-all"> 同一作家の組み合わせを含む/);
-  assert.match(analysis, /id="pairs-all" hidden/);
+  assert.match(analysis, /id="pairs-all" data-pair-view="self" hidden/);
   assert.doesNotMatch(home, /include.self/);
 });
 

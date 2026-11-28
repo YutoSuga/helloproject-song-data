@@ -3,138 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Hello! Project Song Database</title>
-  <meta name="description" content="ハロプロの楽曲と作家情報を紹介する非公式データベース。現在の収録対象はJuice=Juiceです。">
+  <title>ハロプロ作家研究所</title>
+  <meta name="description" content="楽曲と作家の関係をランキング・検索・分析から楽しむデータベース。">
   <link rel="canonical" href="https://hellosongdb.com/">
-  <link rel="icon" type="image/png" href="./apple-touch-icon.png">
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css">
-  <script defer src="./common.js"></script>
+  <meta property="og:site_name" content="ハロプロ作家研究所">
+  <meta property="og:title" content="ハロプロ作家研究所">
+  <meta property="og:description" content="楽曲と作家の関係をランキング・検索・分析から楽しむデータベース。">
+  <meta property="og:url" content="https://hellosongdb.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://hellosongdb.com/assets/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ハロプロ作家研究所 · ハロプロ楽曲を、作家から知る。">
+  <link rel="icon" type="image/png" href="/assets/favicon.png?v=creator-lab">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=creator-lab">
+  <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="page-index">
+<body class="creator-lab">
 <a class="skip" href="#main">本文へ</a>
-<aside class="sidebar">
-<a href="./" class="brand">Hello! Project Song Database<small>ハロプロ楽曲データベース</small>
-</a>
-<nav class="desktop" aria-label="メインナビゲーション">
-<a id="nav-index-desktop" href="./" aria-current="page">
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<path d="m3 10 9-7 9 7v11h-6v-7H9v7H3Z"/>
-</svg>ホーム</a>
-<a id="nav-songs-desktop" href="./songs/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<path d="M9 18V5l11-2v13M9 8l11-2"/>
-<circle cx="6" cy="18" r="3"/>
-<circle cx="17" cy="16" r="3"/>
-</svg>楽曲</a>
-<a id="nav-videos-desktop" href="./videos/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<rect x="3" y="8" width="18" height="13" rx="2"/>
-<path d="m3 8-1-4 18-3 1 4ZM7 3l3 4m4-5 3 4"/>
-</svg>動画</a>
-<a id="nav-creators-desktop" href="./creators/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="8" cy="8" r="4"/>
-<circle cx="18" cy="9" r="3"/>
-<path d="M1 22v-4a7 7 0 0 1 14 0v4m1-8a6 6 0 0 1 7 6"/>
-</svg>作家</a>
-<a id="nav-more-desktop" href="./more/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="4" cy="12" r="1"/>
-<circle cx="12" cy="12" r="1"/>
-<circle cx="20" cy="12" r="1"/>
-</svg>その他</a>
-</nav>
-</aside>
+<aside class="sidebar"><a class="brand" data-home href="/">ハロプロ作家研究所<small>Hello! Project Creator Lab</small></a><nav class="desktop" aria-label="メインナビゲーション">
+<a data-nav href="/" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 3l9 7v11H3z M9 21v-7h6v7"/></svg><span>ホーム</span></a>
+<a data-nav href="/ranking/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V10h5v11z M10 21V3h5v18z M17 21V7h4v14z"/></svg><span>ランキング</span></a>
+<a data-nav href="/search/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-5-5 M18 11a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg><span>検索</span></a>
+<a data-nav href="/analysis/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18 M6 15l5-5 4 3 6-7"/></svg><span>分析</span></a>
+<a data-nav href="/more/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16 M4 12h16 M4 18h16"/></svg><span>その他</span></a>
+</nav></aside>
 <div class="content">
-<a class="sp-brand" href="./">Hello! Project Song Database<small>ハロプロ楽曲データベース</small>
-</a>
-<main id="main">
-<h1 >ハロプロ楽曲データベース</h1>
-<section class="artists body-artists" aria-label="対象アーティスト">
-<h2>アーティスト</h2>
-<div class="artist-strip" tabindex="0" aria-label="アーティスト一覧">
-<button type="button" class="artist" style="--group:#D92C1B" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>モーニング娘。’26</span>
-</button>
-<button type="button" class="artist" style="--group:#1D91CD" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>アンジュルム</span>
-</button>
-<a class="artist artist-link" style="--group:#7263AA" href="./songs/" aria-label="Juice=Juiceの楽曲を見る">
-<span class="dot" aria-hidden="true"></span>
-<span>Juice=Juice</span>
-<span class="artist-link-arrow" aria-hidden="true">→</span>
-</a>
-<button type="button" class="artist" style="--group:#EF93BB" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>つばきファクトリー</span>
-</button>
-<button type="button" class="artist" style="--group:#20A239" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>BEYOOOOONDS</span>
-</button>
-<button type="button" class="artist" style="--group:#F1881A" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>OCHA NORMA</span>
-</button>
-<button type="button" class="artist" style="--group:#F5D11F" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>ロージークロニクル</span>
-</button>
-<button type="button" class="artist" style="--group:#92C75B" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>ハロプロ研修生</span>
-</button>
+<a class="sp-brand" data-home href="/">ハロプロ作家研究所<small>Hello! Project Creator Lab</small></a>
+<main id="main" tabindex="-1">
+<h1>ハロプロ楽曲を、作家から知る。</h1>
+<p>楽曲と作家の関係をランキング・検索・分析から楽しむデータベース。</p>
+<label class="field">アーティスト<select id="artist-select"><option disabled>モーニング娘。’26（Coming Soon）</option><option disabled>アンジュルム（Coming Soon）</option><option value="G00001" selected>Juice=Juice</option><option disabled>つばきファクトリー（Coming Soon）</option><option disabled>BEYOOOOONDS（Coming Soon）</option><option disabled>OCHA NORMA（Coming Soon）</option><option disabled>ロージークロニクル（Coming Soon）</option><option disabled>ハロプロ研修生（Coming Soon）</option></select></label>
+<p id="artist-notice" role="status" hidden></p>
+<p id="data-status" role="status">データを読み込んでいます。</p>
+<div id="dashboard" hidden>
+  <dl class="lab-summary" id="summary"></dl>
+  <div class="lab-dashboard">
+    <section><h2>作家ランキング TOP3</h2><ol id="top-creators" class="lab-list"></ol><p><a data-artist-link href="/ranking/">ランキング全体を見る</a></p></section>
+    <section><h2>組み合わせランキング TOP3</h2><div class="lab-controls" id="pair-mode" role="group" aria-label="組み合わせの集計方式"><button data-mode="all" aria-pressed="true">すべて</button><button data-mode="lyrics_composition" aria-pressed="false">作詞 × 作曲</button></div><ol id="top-pairs" class="lab-list"></ol><p><a id="analyze-pairs" data-artist-link href="/analysis/?tab=pairs">組み合わせを分析する</a></p></section>
+  </div>
 </div>
-<p class="scroll-hint">左右にスクロールできます</p>
-</section>
+<div class="lab-shortcuts"><a data-artist-link href="/search/?tab=songs">楽曲検索</a><a data-artist-link href="/search/?tab=creators">作家検索</a></div>
 </main>
-<footer>非公式ファンサイト</footer>
+<footer>ハロプロ作家研究所 · 非公式ファンサイト</footer>
 </div>
 <nav class="mobile" aria-label="下部ナビゲーション">
-<a id="nav-index-mobile" href="./" aria-current="page">
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<path d="m3 10 9-7 9 7v11h-6v-7H9v7H3Z"/>
-</svg>ホーム</a>
-<a id="nav-songs-mobile" href="./songs/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<path d="M9 18V5l11-2v13M9 8l11-2"/>
-<circle cx="6" cy="18" r="3"/>
-<circle cx="17" cy="16" r="3"/>
-</svg>楽曲</a>
-<a id="nav-videos-mobile" href="./videos/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<rect x="3" y="8" width="18" height="13" rx="2"/>
-<path d="m3 8-1-4 18-3 1 4ZM7 3l3 4m4-5 3 4"/>
-</svg>動画</a>
-<a id="nav-creators-mobile" href="./creators/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="8" cy="8" r="4"/>
-<circle cx="18" cy="9" r="3"/>
-<path d="M1 22v-4a7 7 0 0 1 14 0v4m1-8a6 6 0 0 1 7 6"/>
-</svg>作家</a>
-<a id="nav-more-mobile" href="./more/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="4" cy="12" r="1"/>
-<circle cx="12" cy="12" r="1"/>
-<circle cx="20" cy="12" r="1"/>
-</svg>その他</a>
+<a data-nav href="/" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 3l9 7v11H3z M9 21v-7h6v7"/></svg><span>ホーム</span></a>
+<a data-nav href="/ranking/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V10h5v11z M10 21V3h5v18z M17 21V7h4v14z"/></svg><span>ランキング</span></a>
+<a data-nav href="/search/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-5-5 M18 11a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg><span>検索</span></a>
+<a data-nav href="/analysis/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18 M6 15l5-5 4 3 6-7"/></svg><span>分析</span></a>
+<a data-nav href="/more/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16 M4 12h16 M4 18h16"/></svg><span>その他</span></a>
 </nav>
+<script type="module" src="/catalog.js"></script>
 </body>
 </html>

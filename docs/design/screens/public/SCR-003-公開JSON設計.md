@@ -87,3 +87,7 @@ credit_nameは正式仕様で必須のため正規名で隠れて補完しない
 ## 作家研究所での利用
 
 schema_version 1の契約を維持する。SCR-003検索に加え、[SCR-004 楽曲詳細](SCR-004-楽曲詳細.md)と[SCR-009 作家指定分析](SCR-009-分析.md)がSong単位のcreditsを参照する。既存の楽曲モーダルの説明はPR #119時点の利用形態。今後の表示項目・出力拡張条件は[調査・実装計画](../../../history/plans/公開サイト再構成.md)を参照。
+
+## 作家名の読み仮名
+
+`rankings/{artist_id}.json` の `categories.all.entries[].name_kana` を作家IDで参照する。値は `data/creators.csv` から正式なランキング生成処理で取り込み、空欄は `null` として出力する。旧JSONでの省略も未登録として扱う。楽曲JSONの作家情報は既存の形式を使う。

@@ -1,9 +1,9 @@
 import { buildCreatorRoleIndex, ROLE_LABELS } from "./creator-roles.js";
-import { compareWorkDates, normalize } from "./song-catalog-model.js";
+import { compareWorkDates } from "./song-catalog-model.js";
 
 export const categoryIds = ["all", "lyrics", "composition", "lyrics_composition", "arrangement"];
 export const publishedArtistId = "G00001";
-const nameCollator = new Intl.Collator("ja", { sensitivity: "variant" });
+
 
 export function readCreatorRankings(data, artistId) {
   if (data?.artist?.artist_id !== artistId || typeof data.artist.name !== "string") {
@@ -16,6 +16,7 @@ export function readCreatorRankings(data, artistId) {
     const seenCreators = new Set();
     for (const entry of category.entries) {
       if (!entry || typeof entry.creator_name !== "string" || typeof entry.creator_id !== "string" || !entry.creator_id.trim() ||
+          (entry.name_kana != null && typeof entry.name_kana !== "string") ||
           !Number.isInteger(entry.rank) || !Array.isArray(entry.works) || entry.work_count !== entry.works.length ||
           seenCreators.has(entry.creator_id) || new Set(entry.works.map(work => work?.work_id)).size !== entry.works.length ||
           entry.works.some(work => !work || typeof work.title !== "string" || typeof work.work_id !== "string" || !work.work_id.trim())) throw new Error("Invalid ranking entry");
@@ -60,12 +61,7 @@ export function listParams({ view, category, q }) {
   return params;
 }
 
-export function findCreators(entries, query) {
-  const term = normalize(query);
-  return entries.filter(entry => normalize(entry.creator_name).includes(term))
-    .sort((a, b) => nameCollator.compare(a.creator_name.normalize("NFKC"), b.creator_name.normalize("NFKC"))
-      || a.creator_id.localeCompare(b.creator_id, "en"));
-}
+export { searchCreators as findCreators } from "./creator-name.js";
 
 export function getCreatorDetail(rankings, catalog, creatorId) {
   const creator = rankings.categories.all.entries.find(entry => entry.creator_id === creatorId);

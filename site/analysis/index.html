@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>分析 | ハロプロ作家研究所</title>
+  <meta name="description" content="作詞と作曲の組み合わせランキングと、指定した作家の共同制作傾向を確認できます。">
+  <link rel="canonical" href="https://hellosongdb.com/analysis/">
+  <meta property="og:site_name" content="ハロプロ作家研究所">
+  <meta property="og:title" content="分析 | ハロプロ作家研究所">
+  <meta property="og:description" content="作詞と作曲の組み合わせランキングと、指定した作家の共同制作傾向を確認できます。">
+  <meta property="og:url" content="https://hellosongdb.com/analysis/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://hellosongdb.com/assets/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ハロプロ作家研究所 · ハロプロ楽曲を、作家から知る。">
+  <link rel="icon" type="image/png" href="/assets/favicon.png?v=creator-lab">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=creator-lab">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="creator-lab">
+<a class="skip" href="#main">本文へ</a>
+<aside class="sidebar"><a class="brand" data-home href="/">ハロプロ作家研究所<small>Hello! Project Creator Lab</small></a><nav class="desktop" aria-label="メインナビゲーション">
+<a data-nav href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 3l9 7v11H3z M9 21v-7h6v7"/></svg><span>ホーム</span></a>
+<a data-nav href="/ranking/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V10h5v11z M10 21V3h5v18z M17 21V7h4v14z"/></svg><span>ランキング</span></a>
+<a data-nav href="/search/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-5-5 M18 11a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg><span>検索</span></a>
+<a data-nav href="/analysis/" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18 M6 15l5-5 4 3 6-7"/></svg><span>分析</span></a>
+<a data-nav href="/more/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16 M4 12h16 M4 18h16"/></svg><span>その他</span></a>
+</nav></aside>
+<div class="content">
+<a class="sp-brand" data-home href="/">ハロプロ作家研究所<small>Hello! Project Creator Lab</small></a>
+<main id="main" tabindex="-1">
+<h1>分析</h1>
+<label class="field">アーティスト<select id="artist-select"><option disabled>モーニング娘。’26（Coming Soon）</option><option disabled>アンジュルム（Coming Soon）</option><option value="G00001" selected>Juice=Juice</option><option disabled>つばきファクトリー（Coming Soon）</option><option disabled>BEYOOOOONDS（Coming Soon）</option><option disabled>OCHA NORMA（Coming Soon）</option><option disabled>ロージークロニクル（Coming Soon）</option><option disabled>ハロプロ研修生（Coming Soon）</option></select></label>
+<p id="artist-notice" role="status" hidden></p>
+<div class="lab-tabs" role="tablist" aria-label="分析方法"><button type="button" role="tab" data-value="pairs" id="tab-pairs" aria-controls="tab-panel" aria-selected="true" tabindex="0">組み合わせランキング</button>
+<button type="button" role="tab" data-value="creator" id="tab-creator" aria-controls="tab-panel" aria-selected="false" tabindex="-1">作家指定分析</button></div>
+<section id="tab-panel" role="tabpanel" aria-labelledby="tab-pairs">
+  <div class="lab-controls" id="pair-mode" role="group" aria-label="組み合わせの集計方式">
+    <button data-mode="all" aria-pressed="true">すべて</button>
+    <button data-mode="lyrics_composition" aria-pressed="false">作詞 × 作曲</button>
+  </div>
+  <h2 id="analysis-heading">全担当区分の組み合わせ</h2>
+  <div class="creator-combobox">
+    <label class="field"><span id="picker-label">対象作家（任意）</span>
+      <input type="text" id="pair-creator" role="combobox" aria-label="作家名または読み仮名で検索" aria-autocomplete="list" aria-controls="pair-creator-options" aria-expanded="false" autocomplete="off" disabled>
+    </label>
+    <ul role="listbox" aria-labelledby="picker-label" id="pair-creator-options" hidden></ul>
+    <span id="combo-live" class="visually-hidden" role="status"></span>
+  </div>
+  <div class="lab-controls" id="pair-filters">
+    <label><input id="pair-lyrics" type="checkbox" disabled> 作詞</label>
+    <label><input id="pair-composition" type="checkbox" disabled> 作曲</label>
+    <label><input id="include-self" type="checkbox"> 同一作家の組み合わせを含む</label>
+  </div>
+  <button type="button" id="pair-clear">クリア</button>
+  <p id="collaboration-note" hidden>同じ音源にクレジットされた別の作家を、作品単位で集計します。共通クレジットに基づく指標で、実際の制作過程を示すものではありません。</p>
+  <p id="data-status" role="status">データを読み込んでいます。</p>
+  <p id="analysis-notice" role="status" hidden></p>
+  <p id="pair-condition"></p>
+  <p id="summary" role="status"></p>
+  <ol id="results" class="lab-list"></ol>
+</section>
+
+</main>
+<footer>ハロプロ作家研究所 · 非公式ファンサイト</footer>
+</div>
+<nav class="mobile" aria-label="下部ナビゲーション">
+<a data-nav href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 3l9 7v11H3z M9 21v-7h6v7"/></svg><span>ホーム</span></a>
+<a data-nav href="/ranking/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V10h5v11z M10 21V3h5v18z M17 21V7h4v14z"/></svg><span>ランキング</span></a>
+<a data-nav href="/search/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-5-5 M18 11a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg><span>検索</span></a>
+<a data-nav href="/analysis/" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18 M6 15l5-5 4 3 6-7"/></svg><span>分析</span></a>
+<a data-nav href="/more/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16 M4 12h16 M4 18h16"/></svg><span>その他</span></a>
+</nav>
+<script type="module" src="/analysis.js"></script>
+</body>
+</html>

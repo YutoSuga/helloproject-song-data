@@ -77,9 +77,10 @@ test('committed public JSON passes the rendering contracts', async () => {
   readUpdates(await json('updates'));
   const coverage = readCoverage(await json('coverage'), await json('artists'));
   const home = await readFile(new URL('../site/index.html', import.meta.url), 'utf8');
-  const roster = [...home.matchAll(/<span class="dot" aria-hidden="true">\s*<\/span>\s*<span>([^<]+)<\/span>/g)];
+  const select = home.match(/<select id="artist-select">([\s\S]*?)<\/select>/)[1];
+  const roster = [...select.matchAll(/<option[^>]*>([^<]+)<\/option>/g)];
   assert.equal(roster.length, 8);
-  assert.deepEqual(coverage.map(row => row.name), roster.map(match => match[1]));
+  assert.deepEqual(coverage.map(row => row.name), roster.map(match => match[1].replace(/（Coming Soon）$/, '')));
   const juice = coverage.find(row => row.artist_id === 'G00001');
   assert.match(juice.note, /NEXT YOU.*Next is you!.*大人の事情/);
   const catalog = JSON.parse(await readFile(new URL('../site/data/songs/G00001.json', import.meta.url), 'utf8'));

@@ -106,6 +106,7 @@ export function aggregateCreatorRankings(data, artistId) {
       rank: 0,
       creator_id: creatorId,
       creator_name: creatorsById.get(creatorId)?.name ?? "",
+      ...(definition.id === "all" && { name_kana: creatorsById.get(creatorId)?.name_kana || null }),
       work_count: works.length,
       works: works.sort((left, right) => byId(left.work_id, right.work_id))
     })).sort((left, right) => right.work_count - left.work_count || byId(left.creator_id, right.creator_id));

@@ -741,3 +741,88 @@ dialog:not([open]) {
     padding-inline:5px;
   }
 }
+
+/* Creator Lab layout */
+.creator-lab main { max-width: 1120px; }
+.creator-lab footer { max-width: 1120px; }
+.creator-lab .brand { font-size: 17px; }
+.creator-lab .mobile a { white-space: nowrap; }
+.creator-lab .simple-page, .simple-page .content { margin-inline: auto; }
+.simple-page .content { max-width: 780px; }
+.field { display: grid; gap: 4px; width: fit-content; max-width: 100%; min-width: 0; grid-template-columns: minmax(0, 1fr); margin-block: 12px; }
+.field input, .field select { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; background: white; color: var(--ink); }
+.lab-controls, .lab-shortcuts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.lab-controls label:not(.field) { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; }
+.lab-controls input[type=checkbox] { min-height: 0; }
+.lab-shortcuts { margin-block: 24px; }
+.lab-shortcuts a { display: inline-flex; align-items: center; min-height: 44px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 8px; }
+.lab-tabs { display: flex; overflow-x: auto; gap: 4px; padding: 4px; margin: 12px -4px; }
+.lab-tabs button { flex: 0 0 auto; white-space: nowrap; }
+.lab-summary { display: flex; gap: 8px; flex-wrap: wrap; }
+.lab-summary div { flex: 1; min-width: 76px; padding: 8px 12px; background: var(--soft); border-radius: 8px; }
+.lab-summary dd { font-size: 1.5rem; font-weight: 700; margin: 0; }
+.lab-dashboard { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.lab-dashboard section { min-width: 0; padding: 12px 16px; background: white; border: 1px solid var(--line); border-radius: 10px; }
+.lab-dashboard h2 { margin-block: 0 8px; }
+.lab-list { padding: 0; list-style: none; }
+.lab-list li { padding: 8px 0; overflow-wrap: anywhere; }
+.lab-list li + li { border-top: 1px solid var(--line); }
+.lab-list li > a { display: inline-flex; align-items: center; min-height: 44px; }
+.lab-list small { display: block; }
+.lab-rank { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; min-height: 44px; }
+.lab-rank > a, .lab-rank > strong { flex: 1 1 130px; min-width: 0; overflow-wrap: anywhere; }
+.lab-rank-number, .lab-count { flex: none; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lab-bar { height: 6px; margin-block: 3px 6px; background: var(--accent); border-radius: 6px; }
+.recording { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 8px; }
+.recording h2, .recording h3 { margin-block: 4px; overflow-wrap: anywhere; }
+.recording p { margin-block: 4px; }
+.credit-list { display: grid; grid-template-columns: max-content minmax(0,1fr); gap: 8px 12px; }
+.credit-list dd { margin: 0; overflow-wrap: anywhere; }
+.credit-list dd a + a { margin-inline-start: 8px; }
+#pair-creator-options { position: absolute; z-index: 4; left: 0; width: min(100%, 480px); max-height: 240px; overflow: auto; margin: 0; padding: 4px; background: white; border: 1px solid var(--line); list-style: none; }
+#pair-creator-options [role=option] { cursor: pointer; padding: 8px; overflow-wrap: anywhere; }
+#pair-creator-options [aria-selected=true] { background: var(--soft); color: var(--accent); }
+.creator-lab .creator-combobox { position: relative; max-width: 480px; }
+.creator-lab .creator-combobox .field { width: 100%; }
+#creator-work-list { list-style: none; padding: 0; }
+#creator-work-list > li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+#creator-work-list > li > a { display: inline-flex; align-items: center; min-height: 44px; }
+.role-badges { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.role-badge { font-size: 13px; padding: 1px 7px; border-radius: 6px; background: var(--soft); color: var(--accent); }
+@media (max-width:1023px) {
+  .creator-lab:not(.simple-page) .content { padding-top: calc(72px + env(safe-area-inset-top, 0px)); }
+  .creator-lab .sp-brand { position: fixed; inset: 0 0 auto; margin: 0; }
+  .creator-lab .mobile { padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px); }
+  .lab-dashboard { grid-template-columns: 1fr; }
+  html { scroll-padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
+}
+
+.creator-lab h1 { text-wrap: balance; }
+div.lab-tabs[role=tablist] { flex-wrap: nowrap; }
+.lab-controls label:not(.field) { margin-block: 0; }
+.lab-controls input[type=checkbox] { width: auto; padding: 0; margin: 0; flex: none; accent-color: var(--accent); }
+#pair-filters label:not(:has(#include-self)) { white-space: nowrap; }
+#pair-filters label:has(#include-self) { flex: 0 1 auto; }
+.lab-rank a { display: inline-block; padding-block: 6px; }
+@media (max-width:480px) {
+  .lab-rank > strong, .lab-rank > a:not(.lab-count) { flex-basis: 95px; }
+}
+
+.lab-rank > .lab-count { flex: none; display: inline-flex; min-height: 44px; align-items: center; }
+#pair-mode button[aria-pressed=true] { background: var(--accent); color: white; }
+.creator-overview-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+@media (max-width:1023px) { .creator-overview-grid { grid-template-columns: 1fr; gap: 0; } }
+
+#collaboration-breakdown > li { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; }
+#collaboration-breakdown .lab-count { text-align: right; }
+.collaboration-song-count { margin-inline-start: 10px; font-size: .85em; }
+.collaboration-song-group + .collaboration-song-group { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; }
+.collaboration-song-names { list-style: none; padding-inline-start: 12px; margin-block: 0 3px; font-size: .9em; }
+.collaboration-song-names > li { padding-block: 2px; }
+.lab-list .collaboration-song-names > li + li { border: 0; }
+.collaboration-credits { padding-inline-start: 12px; margin-block: 0 5px; font-size: .875em; }
+
+#collaboration-breakdown { max-width: 680px; margin-inline: 0; }
+@media (max-width:1023px) { #collaboration-breakdown { max-width: none; } }
+
+.collaboration-credit-part { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }

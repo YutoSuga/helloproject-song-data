@@ -5,7 +5,7 @@ import { extname, resolve, sep } from "node:path";
 
 const root = resolve(import.meta.dirname, "../site");
 const port = Number(process.env.PORT ?? 4173);
-const types = { ".css": "text/css", ".html": "text/html", ".js": "text/javascript", ".json": "application/json" };
+const types = { ".css": "text/css", ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".png": "image/png", ".svg": "image/svg+xml" };
 createServer(async (request, response) => {
   const pathname = decodeURIComponent(new URL(request.url, "http://localhost").pathname);
   const candidate = resolve(root, `.${pathname === "/" ? "/index.html" : pathname}`);

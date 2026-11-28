@@ -103,7 +103,7 @@ if (document.getElementById('data-policy')) {
   }).catch(() => {});
 
   const fragment = location.hash;
-  const fragmentTarget = { '#site-updates': updates, '#contact': document.getElementById('contact') }[fragment];
+  const fragmentTarget = document.getElementById(fragment.slice(1));
   if (fragmentTarget) {
     // JSON above the target can expand the page after native fragment scrolling.
     const navigation = new AbortController();
