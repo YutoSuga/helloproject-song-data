@@ -9,6 +9,7 @@ const message = $('data-status');
 const summary = $('summary');
 const query = $('query');
 const sort = $('song-sort');
+const retry = $('search-retry');
 const isHome = path === '/';
 const isSearch = path === '/search/';
 const list = $('ranking') ?? $('results');
@@ -62,13 +63,14 @@ function renderSearch(data, { artist_id, tab, q, sort }) {
 }
 
 const tablist = document.querySelector('[role=tablist]');
-const cachedTabs = new Map();
 const syncTabs = tablist && tabs(tablist, state().tab ?? state().category, value => {
   const current = state();
   if (isSearch) {
     if (value === current.tab) return;
-    cachedTabs.set(current.tab, { q: current.q, sort: current.sort });
-    update({ tab: value, q: null, sort: null, ...cachedTabs.get(value) });
+    // The URL owns the active tab. Inactive values belong only to this history entry.
+    const cachedTabs = { ...history.state?.searchTabs, [current.tab]: { q: current.q, sort: current.sort } };
+    update({ tab: value, q: cachedTabs[value]?.q, sort: cachedTabs[value]?.sort });
+    history.replaceState({ ...history.state, searchTabs: cachedTabs }, '');
   } else update({ category: value });
   render();
 });
@@ -79,6 +81,7 @@ async function render(restore = false, live = false) {
   const songs = isSearch && current.tab === 'songs';
   syncTabs?.(current.tab ?? current.category);
   if (isSearch) {
+    retry.hidden = true;
     if (!live) query.value = current.q ?? '';
     $('query-label').textContent = songs ? '曲名・作家名' : '作家名';
     $('sort-field').hidden = !songs;
@@ -106,11 +109,19 @@ async function render(restore = false, live = false) {
   } catch {
     if (token !== request) return;
     status(message, loadError);
+    if (retry) retry.hidden = false;
   }
   if (restore) restorePosition();
 }
 
 setupArtist(render);
+retry?.addEventListener('click', async () => {
+  const previous = location.href;
+  await render();
+  if (location.href === previous && document.activeElement === document.body) {
+    (retry.hidden ? query : retry).focus();
+  }
+});
 query?.addEventListener('input', () => {
   update({ q: query.value }, { replace: true });
   render(false, true);

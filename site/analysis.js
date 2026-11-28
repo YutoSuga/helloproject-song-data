@@ -1,4 +1,4 @@
-import { $, detailLink, element, restorePosition, setupArtist, state, status, tabs, update } from './common.js';
+import { $, detailLink, element, restorePosition, setupArtist, state, status, tabs, trackHistoryPosition, update } from './common.js';
 import { analyzeCollaborators, catalogCreators } from './collaborators.js';
 import { mountCreatorPicker } from './creator-picker.js';
 import { rankVisiblePairs } from './pair-analysis.js';
@@ -14,10 +14,11 @@ const evidenceKeys = { lyricist_id: null, composer_id: null, partner_id: null };
 let request = 0;
 let opener;
 let activeEvidence;
+let openingEvidence = false;
 
 function change(patch, keepPosition = true) {
   update(patch, { keepPosition });
-  render();
+  render(keepPosition);
 }
 
 const syncTabs = tabs(document.querySelector('[role=tablist]'), state().tab, tab => {
@@ -36,6 +37,12 @@ for (const [key, control] of Object.entries(flags)) {
 function evidenceId(row) {
   return row.creator_id ?? `${row.lyricist_creator_id}-${row.composer_creator_id}`;
 }
+
+dialog.addEventListener('scroll', trackHistoryPosition, { passive: true });
+dialog.addEventListener('focusin', () => {
+  // Opening a restored dialog sets autofocus before its saved focus is applied.
+  if (!openingEvidence) trackHistoryPosition();
+});
 
 function closeEvidence() {
   activeEvidence = undefined;
@@ -64,7 +71,11 @@ function openEvidence(row, button, current) {
     item.append(songs);
     return item;
   }));
-  if (!dialog.open) dialog.showModal();
+  if (!dialog.open) {
+    openingEvidence = true;
+    dialog.showModal();
+    openingEvidence = false;
+  }
 }
 
 function showRows(rows, current, pairs) {
@@ -78,7 +89,7 @@ function showRows(rows, current, pairs) {
     button.addEventListener('click', () => {
       const keys = pairs ? { lyricist_id: row.lyricist_creator_id, composer_id: row.composer_creator_id }
         : { partner_id: row.creator_id };
-      update(keys, { replace: true });
+      update(keys, { keepPosition: true });
       openEvidence(row, button, state());
     });
     buttons.set(id, button);
@@ -88,8 +99,12 @@ function showRows(rows, current, pairs) {
   const id = pairs ? `${current.lyricist_id}-${current.composer_id}` : current.partner_id;
   if (buttons.has(id)) openEvidence(rows.find(row => evidenceId(row) === id), buttons.get(id), current);
   else {
-    if (activeEvidence) buttons.get(activeEvidence)?.focus({ preventScroll: true });
+    const previous = activeEvidence;
     closeEvidence();
+    if (previous) {
+      const target = buttons.get(previous) ?? document.querySelector('[role="tab"][aria-selected="true"]');
+      target?.focus({ preventScroll: true });
+    }
     if (current.lyricist_id || current.composer_id || current.partner_id) update(evidenceKeys, { replace: true });
   }
 }
@@ -163,6 +178,7 @@ async function render(restore = false, originalParams) {
     if (token !== request) return;
     status(message, loadError);
     closeEvidence();
+    update(evidenceKeys, { replace: true });
     results.replaceChildren();
     summary.textContent = $('pair-condition').textContent = '';
     syncPicker(new Map());

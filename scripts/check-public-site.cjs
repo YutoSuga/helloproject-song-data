@@ -124,6 +124,88 @@ async function check() {
     await page.goBack();
     assert.equal(await page.locator('#query').inputValue(), query);
 
+    // Branch from an older history entry after both tabs were edited again.
+    await open(search, '#results li');
+    async function verifySearch(tab, query, sort) {
+      await page.waitForURL(url => url.searchParams.get('tab') === tab &&
+        (url.searchParams.get('q') ?? '') === query && (!sort || url.searchParams.get('sort') === sort));
+      await page.waitForFunction(() => !document.getElementById('query').disabled);
+      const params = new URL(page.url()).searchParams;
+      assert.equal(params.get('tab'), tab);
+      assert.equal(params.get('q') ?? '', query);
+      assert.equal(await page.locator('#query').inputValue(), query);
+      const songs = tab === 'songs';
+      if (songs) {
+        assert.equal(params.get('sort'), sort);
+        assert.equal(await page.locator('#song-sort').inputValue(), sort);
+      } else assert.equal(params.has('sort'), false);
+      const expected = songs ? selectWorks(catalog.works, query, sort).map(work => work.title)
+        : findCreators(ranking.categories.all.entries, query).map(row => row.creator_name);
+      assert.deepEqual(await page.locator('#results a').allTextContents(), expected);
+    }
+    const oldSong = catalog.works[0].title;
+    const newSong = catalog.works[1].title;
+    const firstCreator = ranking.categories.all.entries[0].creator_name;
+    const secondCreator = ranking.categories.all.entries[1].creator_name;
+    const searchInput = page.locator('#query');
+    await searchInput.fill(oldSong);
+    await page.locator('#song-sort').selectOption('old');
+    await page.locator('#tab-creators').click();
+    await searchInput.fill(firstCreator);
+    await page.locator('#tab-songs').click();
+    await verifySearch('songs', oldSong, 'old');
+    await searchInput.fill(newSong);
+    await page.locator('#song-sort').selectOption('title');
+    await page.locator('#tab-creators').click();
+    await searchInput.fill(secondCreator);
+    await verifySearch('creators', secondCreator);
+    await page.goBack();
+    await verifySearch('songs', newSong, 'title');
+    await page.goBack();
+    await verifySearch('songs', newSong, 'old');
+    await page.goBack();
+    await verifySearch('creators', firstCreator);
+    await page.goForward();
+    await verifySearch('songs', newSong, 'old');
+    await page.goBack();
+    await page.locator('#tab-songs').click();
+    await verifySearch('songs', oldSong, 'old');
+    await page.locator('#results a').first().click();
+    await page.locator('#work-content').waitFor();
+    await page.locator('#detail-back').click();
+    await searchInput.waitFor();
+    await verifySearch('songs', oldSong, 'old');
+    await page.locator('#tab-creators').click();
+    await verifySearch('creators', firstCreator);
+    await page.locator('#results a').first().click();
+    await page.locator('#creator-content').waitFor();
+    await page.locator('#creator-back').click();
+    await searchInput.waitFor();
+    await verifySearch('creators', firstCreator);
+
+    for (const [tab, directory, term, sort] of [
+      ['songs', 'songs', oldSong, 'old'], ['creators', 'rankings', firstCreator, undefined]
+    ]) {
+      const pattern = `**/data/${directory}/*.json`;
+      let failed = true;
+      await page.route(pattern, route => failed ? route.abort() : route.continue());
+      const params = new URLSearchParams({ tab, q: term, ...(sort && { sort }) });
+      await open(search + '&' + params);
+      const retry = page.getByRole('button', { name: 'データ取得を再試行' });
+      await retry.waitFor();
+      assert.equal(await searchInput.isDisabled(), true);
+      await retry.click();
+      await retry.waitFor();
+      failed = false;
+      await retry.click();
+      await page.locator('#results a').first().waitFor();
+      await verifySearch(tab, term, sort);
+      assert.equal(await searchInput.isDisabled(), false);
+      await searchInput.fill('見つからない検索語');
+      assert.equal(await page.locator('#results a').count(), 0);
+      await page.unroute(pattern);
+    }
+
     // Verify every real Work and Song against the independent published catalog.
     for (const item of catalog.works) {
       await open(workUrl + item.work_id, '#work-content');
@@ -182,6 +264,67 @@ async function check() {
     await page.keyboard.press('Escape');
     await modal.waitFor({ state: 'hidden' });
     assert.equal(await evidence.evaluate(el => el === document.activeElement), true);
+    assert.equal(new URL(page.url()).searchParams.has('lyricist_id'), false);
+    await open(analysis + '&include_self=1', '#results li');
+    const initialAnalysisUrl = page.url();
+    const selfEvidence = page.locator('#results button').first();
+    await selfEvidence.click();
+    await modal.waitFor();
+    const selfUrl = page.url();
+    const modalLink = modal.locator('a').last();
+    await modalLink.focus();
+    const dialogY = await modal.evaluate(el => {
+      el.scrollTop = el.scrollHeight;
+      return el.scrollTop;
+    });
+    assert(dialogY > 0);
+    await page.waitForFunction(expected => document.querySelector('dialog').scrollTop === expected, dialogY);
+    await page.goBack();
+    assert.equal(page.url(), initialAnalysisUrl);
+    await modal.waitFor({ state: 'hidden' });
+    assert.equal(await selfEvidence.evaluate(el => el === document.activeElement), true);
+    await page.goForward();
+    assert.equal(page.url(), selfUrl);
+    await modal.waitFor();
+    assert.equal(await modal.evaluate(el => el.scrollTop), dialogY);
+    assert.equal(await modalLink.evaluate(el => el === document.activeElement), true);
+    // Native dialogs keep background inputs inert. Dispatch the same change
+    // to exercise reconciliation when controls change while evidence is open.
+    await page.locator('#include-self').evaluate(input => {
+      input.checked = false;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    await modal.waitFor({ state: 'hidden' });
+    assert.equal(new URL(page.url()).searchParams.has('lyricist_id'), false);
+    assert.equal(await page.locator('#include-self').isChecked(), false);
+    assert.equal(await page.locator('#tab-pairs').evaluate(el => el === document.activeElement), true);
+    await page.goBack();
+    await modal.waitFor();
+    assert.equal(page.url(), selfUrl);
+    assert.equal(await modal.evaluate(el => el.scrollTop), dialogY);
+    await page.goForward();
+    await modal.waitFor({ state: 'hidden' });
+    assert.equal(new URL(page.url()).searchParams.has('composer_id'), false);
+    await open(analysis, '#results li');
+    await page.locator('#results button').first().click();
+    await modal.waitFor();
+    const differentUrl = new URL(page.url());
+    const differentLink = modal.locator('a').first();
+    await differentLink.focus();
+    await page.locator('#include-self').evaluate(input => {
+      input.checked = true;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    await page.waitForURL(url => url.searchParams.get('include_self') === '1');
+    assert.equal(new URL(page.url()).searchParams.get('lyricist_id'), differentUrl.searchParams.get('lyricist_id'));
+    assert.equal(new URL(page.url()).searchParams.get('composer_id'), differentUrl.searchParams.get('composer_id'));
+    assert.equal(await modal.isVisible(), true);
+    assert.equal(await differentLink.evaluate(el => el === document.activeElement), true);
+    await page.keyboard.press('Escape');
+    await modal.waitFor({ state: 'hidden' });
+    await page.waitForURL(url => !url.searchParams.has('lyricist_id') && !url.searchParams.has('composer_id'));
+    assert.equal(await page.locator('#include-self').isChecked(), true);
+    assert.equal(await page.locator('#results button:focus').count(), 1);
     await open(analysis, '#results li');
     await page.locator('#pair-creator').fill(creator.creator_name);
     await page.keyboard.press('ArrowDown');

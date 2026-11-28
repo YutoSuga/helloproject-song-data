@@ -36,17 +36,29 @@ function entryId() {
   return history.state?.entryId ?? crypto.randomUUID();
 }
 
-function remember(focus = document.activeElement?.dataset.restore) {
-  const snapshot = {
+const livePositions = new Map();
+
+function snapshotPosition(focus = document.activeElement?.dataset.restore) {
+  return {
     ...history.state, entryId: entryId(), x: scrollX, y: scrollY,
     focus, dialogY: document.querySelector('dialog[open]')?.scrollTop
   };
+}
+
+export function trackHistoryPosition() {
+  const id = history.state?.entryId;
+  if (id) livePositions.set(id, snapshotPosition());
+}
+
+function remember(focus) {
+  const snapshot = snapshotPosition(focus);
+  livePositions.delete(snapshot.entryId);
   history.replaceState(snapshot, '');
   return snapshot;
 }
 
 export function restorePosition() {
-  const saved = history.state;
+  const saved = livePositions.get(history.state?.entryId) ?? history.state;
   if (saved?.focus) document.querySelector(`[data-restore="${CSS.escape(saved.focus)}"]`)?.focus({ preventScroll: true });
   if (saved?.y != null) scrollTo(saved.x, saved.y);
   else if (path !== '/songs/detail/' || location.hash.startsWith('#song-')) $(location.hash.slice(1))?.scrollIntoView();
