@@ -1,5 +1,5 @@
 import { $, element } from './common.js';
-import { normalize } from './song-catalog-model.js';
+import { searchCreators } from './creator-name.js';
 
 export function mountCreatorPicker(select) {
   const input = $('pair-creator');
@@ -10,13 +10,12 @@ export function mountCreatorPicker(select) {
   let candidates = [];
   let active = -1;
   let composing = false;
-  const label = (id, name) => `${name}（${id}）`;
 
   function close() {
     list.hidden = true;
     input.setAttribute('aria-expanded', 'false');
     input.removeAttribute('aria-activedescendant');
-    input.value = selected ? label(selected, creators.get(selected)) : '';
+    input.value = selected ? creators.get(selected).creator_name : '';
   }
 
   function highlight(index) {
@@ -34,15 +33,17 @@ export function mountCreatorPicker(select) {
   function choose(id) {
     selected = id;
     close();
-    live.textContent = `${creators.get(id)}を選択しました。`;
+    live.textContent = `${creators.get(id).creator_name}を選択しました。`;
     select(id);
   }
 
   function show(query = '') {
-    const term = normalize(query);
-    candidates = [...creators].filter(([id, name]) => normalize(name).includes(term) || normalize(id).includes(term));
-    list.replaceChildren(...candidates.map(([id, name]) => {
-      const row = element('li', label(id, name));
+    candidates = searchCreators([...creators.values()], query);
+    const counts = new Map();
+    for (const { creator_name } of creators.values()) counts.set(creator_name, (counts.get(creator_name) ?? 0) + 1);
+    list.replaceChildren(...candidates.map(({ creator_id: id, creator_name: name, name_kana }) => {
+      const label = counts.get(name) > 1 && name_kana ? `${name}（${name_kana}）` : name;
+      const row = element('li', label);
       row.id = `option-${id}`;
       row.setAttribute('role', 'option');
       row.addEventListener('pointerdown', event => event.preventDefault());
@@ -78,7 +79,7 @@ export function mountCreatorPicker(select) {
     }
     if (event.key === 'Enter' && !list.hidden && active >= 0) {
       event.preventDefault();
-      choose(candidates[active][0]);
+      choose(candidates[active].creator_id);
     }
     if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
       event.preventDefault();
@@ -95,7 +96,7 @@ export function mountCreatorPicker(select) {
     if (!input.closest('.creator-combobox').contains(event.target) && !list.hidden) close();
   });
   return (options, id) => {
-    creators = new Map([...options].sort(([a], [b]) => a.localeCompare(b, 'en')));
+    creators = options;
     selected = creators.has(id) ? id : undefined;
     input.disabled = !creators.size;
     close();

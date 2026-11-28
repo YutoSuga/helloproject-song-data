@@ -1,3 +1,4 @@
+import { compareCreatorNames, creatorName, creatorReadings } from './creator-name.js';
 import { collaborationRecordings, groupRecordings, roleBreakdown, creditName, creditsInRole } from './collaboration-credits.js';
 import { $, detailLink, element, restorePosition, setupDetail, status, update } from './common.js';
 import { collaborationIndex, pairKey, selfCollaboration } from './collaborators.js';
@@ -44,18 +45,24 @@ if (error) status(message, error);
 else {
   try {
     const self = first === second;
-    const [catalog, ranking] = await Promise.all([loadData('songs', artist), self && loadData('rankings', artist)]);
+    const rankings = loadData('rankings', artist);
+    const [catalog, ranking] = await Promise.all([
+      loadData('songs', artist), self ? rankings : rankings.catch(() => null)
+    ]);
     const { creators, pairs } = collaborationIndex(catalog.works);
     if (!creators.has(first) || !creators.has(second)) status(message, '指定された作家が見つかりません。');
     else {
       update({}, { replace: true });
-      const names = [creators.get(first), creators.get(second)];
       const works = self ? selfCollaboration(readPairs(ranking), catalog.works, first)
         : pairs.get(pairKey(first, second))?.works ?? [];
       $('collaboration-artist').textContent = catalog.artist.name;
-      const left = detailLink('creator', first, names[0], artist);
-      $('collaboration-creators').append(left);
-      if (!self) $('collaboration-creators').append(' × ', detailLink('creator', second, names[1], artist));
+      const readings = creatorReadings(ranking);
+      const authors = [...new Set([first, second])].map(id => creatorName(id, creators.get(id), readings)).sort(compareCreatorNames);
+      const heading = $('collaboration-creators');
+      for (const [index, author] of authors.entries()) {
+        if (index) heading.append(' × ');
+        heading.append(detailLink('creator', author.creator_id, author.creator_name, artist));
+      }
       $('collaboration-total').textContent = self
         ? `本人が同じ音源で作詞・作曲を両方担当した作品：${works.length}曲`
         : `共同制作曲数（全担当区分）：${works.length}曲`;
@@ -63,8 +70,12 @@ else {
       const patterns = roleBreakdown(recordings, [first, second]);
       $('collaboration-breakdown').replaceChildren(...patterns.map(({ credits, count }) => {
         const row = element('li');
-        const label = credits.map(credit => `${ALL_ROLE_LABELS[credit.role]}：${creators.get(credit.creator_id)}`).join(' × ');
-        row.append(element('span', label), element('span', `${count}曲`, 'lab-count'));
+        const label = element('span');
+        for (const [index, credit] of credits.entries()) {
+          if (index) label.append(' × ');
+          label.append(element('span', `${ALL_ROLE_LABELS[credit.role]}：${creators.get(credit.creator_id)}`, 'collaboration-credit-part'));
+        }
+        row.append(label, element('span', `${count}曲`, 'lab-count'));
         return row;
       }));
       $('breakdown-note').hidden = !works.length;

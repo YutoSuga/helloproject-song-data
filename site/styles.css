@@ -821,3 +821,8 @@ div.lab-tabs[role=tablist] { flex-wrap: nowrap; }
 .collaboration-song-names > li { padding-block: 2px; }
 .lab-list .collaboration-song-names > li + li { border: 0; }
 .collaboration-credits { padding-inline-start: 12px; margin-block: 0 5px; font-size: .875em; }
+
+#collaboration-breakdown { max-width: 680px; margin-inline: 0; }
+@media (max-width:1023px) { #collaboration-breakdown { max-width: none; } }
+
+.collaboration-credit-part { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }

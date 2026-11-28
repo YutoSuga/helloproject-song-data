@@ -44,7 +44,7 @@
   <h2 id="analysis-heading">全担当区分の組み合わせ</h2>
   <div class="creator-combobox">
     <label class="field"><span id="picker-label">対象作家（任意）</span>
-      <input type="text" id="pair-creator" role="combobox" aria-label="作家名またはIDで検索" aria-autocomplete="list" aria-controls="pair-creator-options" aria-expanded="false" autocomplete="off" disabled>
+      <input type="text" id="pair-creator" role="combobox" aria-label="作家名または読み仮名で検索" aria-autocomplete="list" aria-controls="pair-creator-options" aria-expanded="false" autocomplete="off" disabled>
     </label>
     <ul role="listbox" aria-labelledby="picker-label" id="pair-creator-options" hidden></ul>
     <span id="combo-live" class="visually-hidden" role="status"></span>
@@ -53,8 +53,8 @@
     <label><input id="pair-lyrics" type="checkbox" disabled> 作詞</label>
     <label><input id="pair-composition" type="checkbox" disabled> 作曲</label>
     <label><input id="include-self" type="checkbox"> 同一作家の組み合わせを含む</label>
-    <button type="button" id="pair-clear">クリア</button>
   </div>
+  <button type="button" id="pair-clear">クリア</button>
   <p id="collaboration-note" hidden>同じ音源にクレジットされた別の作家を、作品単位で集計します。共通クレジットに基づく指標で、実際の制作過程を示すものではありません。</p>
   <p id="data-status" role="status">データを読み込んでいます。</p>
   <p id="analysis-notice" role="status" hidden></p>

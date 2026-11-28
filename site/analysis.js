@@ -1,3 +1,4 @@
+import { creatorName, creatorReadings } from './creator-name.js';
 import { $, restorePosition, setupArtist, state, status, tabs, update } from './common.js';
 import { allCollaborations, analyzeCollaborators, collaborationIndex } from './collaborators.js';
 import { mountCreatorPicker } from './creator-picker.js';
@@ -27,7 +28,7 @@ $('pair-mode').addEventListener('click', event => {
   change({ mode });
 });
 const syncPicker = mountCreatorPicker(creator_id => change({
-  creator_id, ...(!creator_id && { lyrics: null, composition: null })
+  creator_id, ...(state().tab === 'pairs' && { mode: state().mode ?? 'all' }), ...(!creator_id && { lyrics: null, composition: null })
 }));
 $('pair-clear').addEventListener('click', () => change({ creator_id: null, lyrics: null, composition: null }));
 for (const [key, control] of Object.entries(flags)) {
@@ -45,7 +46,6 @@ async function render(restore = false, originalParams) {
   for (const button of $('pair-mode').querySelectorAll('button')) button.setAttribute('aria-pressed', button.dataset.mode === (current.mode ?? 'all'));
   $('analysis-heading').textContent = directed ? '作詞 × 作曲' : pairs ? '全担当区分の組み合わせ' : '共同制作の多い作家';
   $('picker-label').textContent = pairs ? '対象作家（任意）' : '分析対象作家';
-  $('pair-creator').closest('.creator-combobox').hidden = pairs && !directed;
   $('pair-filters').hidden = !directed;
   $('collaboration-note').hidden = directed;
   status($('analysis-notice'), '');
@@ -58,13 +58,17 @@ async function render(restore = false, originalParams) {
     syncPicker(new Map());
   }
   try {
-    const data = await loadData(kind, current.artist_id);
+    const [data, rankings] = await Promise.all([
+      loadData(kind, current.artist_id),
+      directed ? null : loadData('rankings', current.artist_id).catch(() => null)
+    ]);
+    const readings = creatorReadings(directed ? data : rankings);
     if (token !== request) return;
     const published = directed ? readPairs(data) : [];
     const creators = directed ? new Map(published.flatMap(row => [
       [row.lyricist_creator_id, row.lyricist_name], [row.composer_creator_id, row.composer_name]
     ])) : collaborationIndex(data.works).creators;
-    if ((!pairs || directed) && raw.has('creator_id') && !creators.has(current.creator_id)) {
+    if (raw.has('creator_id') && !creators.has(current.creator_id)) {
       update({ creator_id: null, lyrics: null, composition: null }, { replace: true });
       current = state();
       status($('analysis-notice'), '指定の作家が見つかりません。');
@@ -75,19 +79,21 @@ async function render(restore = false, originalParams) {
     }
     for (const [key, control] of Object.entries(flags)) control.checked = Boolean(current[key]);
     flags.lyrics.disabled = flags.composition.disabled = !current.creator_id;
-    syncPicker(pairs && !directed ? new Map() : creators, current.creator_id);
+    syncPicker(new Map([...creators].map(([id, name]) => [id, creatorName(id, name, readings)])), current.creator_id);
     if (pairs) {
-      const entries = directed ? rankVisiblePairs(published, current) : allCollaborations(data.works);
+      const all = directed ? [] : allCollaborations(data.works);
+      const entries = directed ? rankVisiblePairs(published, current)
+        : current.creator_id ? all.filter(row => [row.first, row.second].includes(current.creator_id)) : all;
       const roles = current.lyrics && current.composition ? '作詞・作曲の両方'
         : current.lyrics ? '作詞' : current.composition ? '作曲' : '作詞または作曲';
-      $('pair-condition').textContent = !directed ? '' : current.creator_id
+      $('pair-condition').textContent = !directed ? (current.creator_id ? `${creators.get(current.creator_id)}を含む組み合わせ` : '') : current.creator_id
         ? `${creators.get(current.creator_id)}が${roles}を担当した組み合わせ`
         : current.include_self ? 'すべての作詞・作曲ペアを表示しています。' : '異なる作家の組み合わせを表示しています。';
       summary.textContent = `${entries.length}組 / 延べ${entries.reduce((count, row) => count + row.work_count, 0)}曲`;
-      status(message, entries.length ? '' : directed && published.length
+      status(message, entries.length ? '' : (directed && published.length) || current.creator_id
         ? '条件に一致する組み合わせがありません。' + (current.lyrics && current.composition && !current.include_self
           ? '「同一作家の組み合わせを含む」を選択すると対象を表示できます。' : '') : emptyData);
-      results.replaceChildren(...entries.map(row => pairRow(row, current.artist_id)));
+      results.replaceChildren(...entries.map(row => pairRow(row, current.artist_id, undefined, readings)));
       if (directed && entries.some(row => row.lyricist_creator_id === current.lyricist_id && row.composer_creator_id === current.composer_id)) {
         location.replace(collaborationLink(current.lyricist_id, current.composer_id, current.artist_id, '').href);
         return;

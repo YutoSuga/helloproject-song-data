@@ -1,3 +1,4 @@
+import { creatorReadings } from './creator-name.js';
 import { allCollaborations } from './collaborators.js';
 import { pageUrl } from './site-state.js';
 import { $, detailLink, element, path, restorePosition, setupArtist, state, status, tabs, update } from './common.js';
@@ -84,7 +85,7 @@ async function render(restore = false, live = false) {
   if (isSearch) {
     retry.hidden = true;
     if (!live) query.value = current.q ?? '';
-    $('query-label').textContent = songs ? '曲名・作家名' : '作家名';
+    $('query-label').textContent = songs ? '曲名・作家名' : '作家名・読み仮名';
     $('sort-field').hidden = !songs;
     sort.value = current.sort ?? 'new';
     if (!live) query.disabled = sort.disabled = true;
@@ -109,7 +110,8 @@ async function render(restore = false, live = false) {
         const pairs = direction ? rankVisiblePairs(readPairs(data))
           : allCollaborations((await loadData('songs', current.artist_id)).works);
         if (token !== request) return;
-        populate($('top-pairs'), topThree(pairs), row => pairRow(row, current.artist_id, pairs[0].work_count));
+        const readings = creatorReadings(data);
+        populate($('top-pairs'), topThree(pairs), row => pairRow(row, current.artist_id, pairs[0].work_count, readings));
       } catch {
         if (token !== request) return;
         $('top-pairs').replaceChildren(element('li', loadError));

@@ -1,3 +1,4 @@
+import { compareCreatorNames, creatorName } from './creator-name.js';
 import { detailLink, element, navigationLink } from './common.js';
 
 export function rankRow(entry, name, maximum, countLink) {
@@ -27,18 +28,21 @@ function countLink(first, second, artist, count, label, focus) {
   return anchor;
 }
 
-export function pairRow(entry, artist, maximum) {
+export function pairRow(entry, artist, maximum, readings) {
   const first = entry.first ?? entry.lyricist_creator_id;
   const second = entry.second ?? entry.composer_creator_id;
   const leftName = entry.first_name ?? entry.lyricist_name;
   const rightName = entry.second_name ?? entry.composer_name;
   const name = element('strong');
-  const left = detailLink('creator', first, leftName, artist);
-  const right = detailLink('creator', second, rightName, artist);
-  left.dataset.restore = `pair-${first}-${second}-left`;
-  right.dataset.restore = `pair-${first}-${second}-right`;
-  name.append(left, ' × ', right);
-  return rankRow(entry, name, maximum, countLink(first, second, artist, entry.work_count, `${leftName} × ${rightName}`));
+  const authors = [creatorName(first, leftName, readings), creatorName(second, rightName, readings)];
+  if (entry.first) authors.sort(compareCreatorNames);
+  const links = authors.map(({ creator_id, creator_name }, index) => {
+    const anchor = detailLink('creator', creator_id, creator_name, artist);
+    anchor.dataset.restore = `pair-${first}-${second}-${creator_id === first && (first !== second || index === 0) ? 'left' : 'right'}`;
+    return anchor;
+  });
+  name.append(links[0], ' × ', links[1]);
+  return rankRow(entry, name, maximum, countLink(first, second, artist, entry.work_count, authors.map(author => author.creator_name).join(' × ')));
 }
 
 export function collaboratorRow(entry, target, artist, maximum) {
