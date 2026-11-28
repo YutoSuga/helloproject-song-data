@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { rankVisiblePairs } from '../site/pair-analysis.js';
 import { analyzeCollaborators } from '../site/collaborators.js';
-import { resolveArtist, legacyDestination, readState, safeFrom } from '../site/site-state.js';
+import { detailRequestError, isWorkId, resolveArtist, legacyDestination, readState, safeFrom } from '../site/site-state.js';
 
 test('published pairs are identical when enabled, and shared display rankings retain ties after exclusion', async () => {
   const data = JSON.parse(await readFile(new URL('../site/data/rankings/G00001.json', import.meta.url)));
@@ -52,9 +52,16 @@ test('artist resolution uses an explicit allowlist with URL, saved and default p
 test('legacy paths, validated return URLs and the analysis flag use canonical query rules', () => {
   const origin = 'https://hellosongdb.com';
   assert.equal(legacyDestination('/creators/', new URLSearchParams('view=ranking&category=lyrics&artist_id=G00001')), '/ranking/?artist_id=G00001&category=lyrics');
-  assert.equal(legacyDestination('/songs/', new URLSearchParams('q=juice&sort=old')), '/search/?tab=songs&q=juice&sort=old');
+  assert.equal(legacyDestination('/creators/', new URLSearchParams('view=pairs&include_self=1&creator_id=C00001')), '/analysis/?tab=pairs');
+  assert.equal(legacyDestination('/songs/',  new URLSearchParams('q=juice&sort=old')), '/search/?tab=songs&q=juice&sort=old');
   assert.equal(safeFrom('/analysis/?tab=pairs&include_self=1&unknown=1', origin), '/analysis/?tab=pairs&include_self=1');
   assert.equal(safeFrom('/search/?tab=creators&from=%2F', origin), null);
+  assert.equal(safeFrom('/songs/detail/?artist_id=G00001&work_id=W00001#song-M00001', origin),
+    '/songs/detail/?artist_id=G00001&work_id=W00001#song-M00001');
+  const error = query => detailRequestError(new URLSearchParams(query), 'work_id', isWorkId, '楽曲');
+  assert.match(error('artist_id=G00001&work_id=invalid'), /URLを確認/);
+  assert.match(error('artist_id=G00002&work_id=W00001'), /公開対象外/);
+  assert.equal(error('artist_id=G00001&work_id=W00001'), '');
   for (const invalid of ['https://evil.test/', '//evil.test/', '/\\evil.test/', '/videos/', '/private/']) assert.equal(safeFrom(invalid, origin), null);
   assert.deepEqual(readState('/analysis/', new URLSearchParams('include_self=1&include_self=1')), { tab: 'pairs' });
   assert.deepEqual(readState('/analysis/', new URLSearchParams('include_self=1&tab=creator')), { tab: 'creator' });

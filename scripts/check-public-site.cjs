@@ -205,6 +205,12 @@ async function check() {
     assert.match(await page.locator('#artist-notice').innerText(), /指定のアーティスト/);
     await open(workUrl + 'invalid');
     assert.match(await page.locator('#data-status').innerText(), /表示できません/);
+    await open('/songs/detail/?artist_id=G00002&work_id=' + work.work_id);
+    assert.match(await page.locator('#data-status').innerText(), /公開対象外/);
+    await open(workUrl + 'W99999');
+    await page.getByText('指定された楽曲が見つかりません。').waitFor();
+    await open(analysis + '&creator_id=not-an-id', '#results li');
+    await page.getByText('指定の作家が見つかりません。').waitFor();
     await open(analysis + '&include_self=1&include_self=1', '#results li');
     assert.equal(await page.locator('#include-self').isChecked(), false);
 
@@ -213,6 +219,24 @@ async function check() {
     await page.getByText('データを表示できません。時間をおいて再読み込みしてください。').waitFor();
     assert.equal(await page.locator('.lab-shortcuts a').count(), 2);
     await page.unroute('**/data/rankings/*.json');
+
+    let releaseCatalog;
+    const waitingCatalog = new Promise(resolve => { releaseCatalog = resolve; });
+    await page.route('**/data/songs/*.json', async route => {
+      await waitingCatalog;
+      await route.fulfill({ json: { ...catalog, works: [] } });
+    });
+    await page.goto(base + search, { waitUntil: 'domcontentloaded' });
+    await page.getByText('データを読み込んでいます。').waitFor();
+    assert.equal(await page.locator('#query').isDisabled(), true);
+    releaseCatalog();
+    await page.getByText('表示できるデータがありません。').waitFor();
+    assert.equal(await page.locator('#summary').innerText(), '0作品');
+    await page.unroute('**/data/songs/*.json');
+    await page.route('**/data/songs/*.json', route => route.fulfill({ json: { ...catalog, schema_version: 2 } }));
+    await page.goto(base + workUrl + work.work_id);
+    await page.getByText('データを表示できません。時間をおいて再読み込みしてください。').waitFor();
+    await page.unroute('**/data/songs/*.json');
 
     const noStorage = await browser.newPage();
     await noStorage.addInitScript(() => {
@@ -252,7 +276,9 @@ async function check() {
     await twoArtists.locator('#artist-select').selectOption(fixtureArtist);
     const fixtureTitle = twoArtists.locator('#results li a');
     await fixtureTitle.waitFor();
+    const firstResponse = twoArtists.waitForResponse(response => response.url().endsWith('/data/songs/G00001.json'));
     releaseFirst();
+    await firstResponse;
     assert.equal(await fixtureTitle.innerText(), fixture.works[0].title);
     assert.equal(await twoArtists.locator('#song-sort').inputValue(), 'old');
     await twoArtists.setViewportSize({ width: 320, height: 800 });

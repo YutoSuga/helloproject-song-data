@@ -14,11 +14,20 @@ const fieldsByPath = {
 const creatorFields = ['creator_id', 'lyricist_id', 'composer_id', 'partner_id'];
 export const pathOf = url => url.pathname.replace(/\/index\.html$/, '/').replace(/\/?$/, '/');
 export const single = (params, key) => params.getAll(key).length === 1 ? params.get(key) : null;
+const isArtistId = id => /^G\d{5}$/.test(id ?? '');
 export const isCreatorId = id => /^C\d{5}$/.test(id ?? '');
 export const isSongId = id => /^[MAJTBORH]\d{5}$/.test(id ?? '');
 export const isWorkId = id => /^W\d{5}$/.test(id ?? '');
 export const isPublished = (id, artists = publishedArtists) => Object.hasOwn(artists, id);
 export const cleanSearch = (value, allowed, fallback) => allowed.includes(value) ? value : fallback;
+
+export function detailRequestError(params, key, validate, label) {
+  const artist = single(params, 'artist_id');
+  const id = single(params, key);
+  if (!isArtistId(artist) || !validate(id)) return `指定された${label}またはアーティストを表示できません。URLを確認してください。`;
+  if (!isPublished(artist)) return '指定されたアーティストは公開対象外です。';
+  return '';
+}
 
 export function resolveArtist(params, saved, artists = publishedArtists) {
   const requested = single(params, 'artist_id');
@@ -66,7 +75,12 @@ export function legacyDestination(path, params) {
   const fromSongs = path === '/songs/';
   const view = single(params, 'view');
   const target = fromSongs || !['ranking', 'pairs'].includes(view) ? '/search/' : view === 'ranking' ? '/ranking/' : '/analysis/';
-  const values = new URLSearchParams(params);
+  const values = new URLSearchParams();
+  const fields = target === '/search/' ? (fromSongs ? ['q', 'sort'] : ['q']) : target === '/ranking/' ? ['category'] : [];
+  for (const key of ['artist_id', ...fields]) {
+    const value = single(params, key);
+    if (value != null) values.set(key, value);
+  }
   if (target === '/search/') values.set('tab', fromSongs ? 'songs' : 'creators');
   if (target === '/analysis/') values.set('tab', 'pairs');
   return pageUrl(target, readState(target, values));

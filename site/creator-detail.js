@@ -2,7 +2,7 @@ import { filterCreatorWorks, getCreatorDetail } from './creator-catalog-model.js
 import { ALL_ROLE_LABELS } from './creator-roles.js';
 import { $, detailLink, restorePosition, setupDetail, state, status, update } from './common.js';
 import { loadData, loadError } from './public-data.js';
-import { pageUrl } from './site-state.js';
+import { detailRequestError, isCreatorId, pageUrl } from './site-state.js';
 
 const find = $;
 const current = setupDetail(find('creator-back'), 'creators');
@@ -67,8 +67,9 @@ function renderDetail(detail, artistName) {
 }
 
 const message = find('creator-status');
-if (!creatorId || !artistId) {
-  status(message, '指定された作家またはアーティストを表示できません。');
+const requestError = detailRequestError(new URLSearchParams(location.search), 'creator_id', isCreatorId, '作家');
+if (requestError) {
+  status(message, requestError);
 } else {
   try {
     const [rankings, songs] = await Promise.all([loadData('rankings', artistId), loadData('songs', artistId)]);

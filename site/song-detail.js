@@ -1,3 +1,4 @@
+import { detailRequestError, isWorkId } from './site-state.js';
 import { $, detailLink, element, restorePosition, setupDetail, status } from './common.js';
 import { ALL_ROLE_LABELS } from './creator-roles.js';
 import { loadData, loadError } from './public-data.js';
@@ -50,8 +51,9 @@ function render(work, artist) {
   restorePosition();
 }
 
-if (!current.artist_id || !current.work_id) {
-  status(message, '指定された楽曲またはアーティストを表示できません。');
+const requestError = detailRequestError(new URLSearchParams(location.search), 'work_id', isWorkId, '楽曲');
+if (requestError) {
+  status(message, requestError);
 } else {
   try {
     const data = await loadData('songs', current.artist_id);
