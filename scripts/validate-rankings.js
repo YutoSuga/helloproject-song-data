@@ -84,7 +84,7 @@ const expectedAll = data.creators.flatMap(creator => {
       };
     });
   return [{ artist_id: artistId, category: "all", creator_id: creator.creator_id,
-    creator_name: creator.name, work_count: works.length, works }];
+    creator_name: creator.name, name_kana: creator.name_kana || null, work_count: works.length, works }];
 }).sort((left, right) => right.work_count - left.work_count || byId(left.creator_id, right.creator_id));
 assert.deepEqual(ranking.categories.all.entries, expectedAll.map(entry => ({
   ...entry,
