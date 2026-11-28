@@ -27,8 +27,9 @@ with sync_playwright() as p:
                 if mobile:
                     assert header.evaluate("""e => {
                       const s = getComputedStyle(e);
-                      return s.position === 'sticky' && s.backgroundColor === 'rgb(127, 22, 69)'
-                        && s.color === 'rgb(255, 255, 255)' && getComputedStyle(e.querySelector('small')).color === s.color;
+                      return s.position === 'sticky' && s.backgroundColor === 'rgb(248, 237, 242)'
+                        && s.color === 'rgb(127, 22, 69)' && getComputedStyle(e.querySelector('small')).color === s.color
+                        && s.borderBottom === '1px solid rgb(221, 204, 211)';
                     }""")
                     box = header.bounding_box()
                     assert box['y'] == 0 and box['width'] == width and box['height'] == 56, (path, mock, width, box)

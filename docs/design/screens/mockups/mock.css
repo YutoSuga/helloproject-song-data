@@ -163,8 +163,9 @@
     min-height:calc(56px + env(safe-area-inset-top,0px));
     margin:0 -16px 16px;
     padding:env(safe-area-inset-top,0px) 16px 0;
-    background:var(--accent);
-    color:white;
+    background:var(--soft);
+    color:var(--accent);
+    border-bottom:1px solid var(--line);
     text-decoration:none;
     font-weight:700;
     line-height:1.25;
