@@ -40,3 +40,29 @@ for (const button of document.querySelectorAll('[data-dialog]')) {
     dialog.addEventListener('close', () => button.focus(), { once: true });
   });
 }
+
+const includeSelf = document.getElementById('include-self');
+if (includeSelf) {
+  const different = document.getElementById('pairs-different');
+  const all = document.getElementById('pairs-all');
+  const status = document.getElementById('pair-display-status');
+
+  function restorePairDisplay() {
+    const values = new URLSearchParams(location.search).getAll('include_self');
+    const checked = values.length === 1 && values[0] === '1';
+    includeSelf.checked = checked;
+    different.hidden = checked;
+    all.hidden = !checked;
+    status.textContent = checked ? '同一作家の組み合わせも表示' : '異なる作家の組み合わせを表示';
+  }
+
+  includeSelf.addEventListener('change', () => {
+    const url = new URL(location.href);
+    if (includeSelf.checked) url.searchParams.set('include_self', '1');
+    else url.searchParams.delete('include_self');
+    history.pushState(null, '', url);
+    restorePairDisplay();
+  });
+  window.addEventListener('popstate', restorePairDisplay);
+  restorePairDisplay();
+}

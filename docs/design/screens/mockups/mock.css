@@ -74,3 +74,5 @@ dialog::backdrop { background: #35212880; }
 }
 .field { min-width: 0; grid-template-columns: minmax(0, 1fr); }
 .field select, .field input { min-width: 0; width: 100%; }
+
+.checkbox { display: inline-flex; align-items: center; gap: .35rem; min-height: 44px; }

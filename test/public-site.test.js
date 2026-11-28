@@ -120,3 +120,38 @@ test('design mock locates pair analysis and collaborator analysis in their own t
   assert.match(analysis, /aria-controls="creator"[^>]*>作家指定分析<\/button>/);
   assert.match(analysis, /<dialog[^>]*>[\s\S]*?href="song-detail\.html"/);
 });
+
+test('pair mocks share all tied top ranks and illustrate the opt-in ranking', async () => {
+  const home = await read('docs/design/screens/mockups/index.html');
+  const analysis = await read('docs/design/screens/mockups/analysis.html');
+  const pairRows = (html, id) => {
+    const list = html.match(new RegExp(`<ol[^>]* id="${id}"[^>]*>([\\s\\S]*?)</ol>`));
+    assert(list, id);
+    return [...list[1].matchAll(/data-pair="([^"]+)" data-rank="(\d+)" data-count="(\d+)"/g)]
+      .map(([, pair, rank, count]) => [pair, Number(rank), Number(count)]);
+  };
+  // The design snapshots use the public JSON at the PR #119 merge commit.
+  const expectedTop = [
+    ['C00006/C00008', 1, 3],
+    ['C00001/C00002', 2, 2],
+    ['C00001/C00076', 2, 2],
+    ['C00027/C00010', 2, 2]
+  ];
+  assert.deepEqual(pairRows(home, 'home-pairs'), expectedTop);
+  assert.deepEqual(pairRows(analysis, 'pairs-different'), expectedTop);
+  assert.deepEqual(pairRows(analysis, 'pairs-all').map(([, rank, count]) => [rank, count]),
+    [[1, 25], [2, 5], [3, 4]]);
+  assert.match(analysis, /id="include-self" type="checkbox" aria-controls="pairs-different pairs-all"> 同一作家の組み合わせを含む/);
+  assert.match(analysis, /id="pairs-all" hidden/);
+  assert.doesNotMatch(home, /include.self/);
+});
+
+test('design-only brand asset and retired video mock reflect the review', async () => {
+  const svg = await read('docs/design/screens/mockups/ogp.svg');
+  assert.match(svg, /width="1200" height="630"/);
+  for (const text of ['#f8edf2', '#7f1645', 'ハロプロ作家研究所', 'Hello! Project Creator Lab',
+    'ハロプロ楽曲を、作家から知る。', 'hellosongdb.com']) assert(svg.includes(text), text);
+  const videos = await read('docs/design/screens/mockups/videos.html');
+  assert.match(videos, /name="robots" content="noindex"/);
+  assert.match(videos, /href="index.html">ホームへ戻る/);
+});
