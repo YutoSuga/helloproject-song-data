@@ -48,6 +48,13 @@ test("ranking reader rejects the wrong artist and duplicate work rows", async ()
   assert.equal(readCreatorRankings(data, "G00001"), data);
   assert.throws(() => readCreatorRankings(data, "G99999"), /Invalid ranking artist/);
   const entry = data.categories.all.entries[0];
+  delete entry.name_kana;
+  assert.equal(readCreatorRankings(data, "G00001"), data);
+  entry.name_kana = null;
+  assert.equal(readCreatorRankings(data, "G00001"), data);
+  entry.name_kana = 123;
+  assert.throws(() => readCreatorRankings(data, "G00001"), /Invalid ranking entry/);
+  delete entry.name_kana;
   entry.works.push(entry.works[0]);
   entry.work_count++;
   assert.throws(() => readCreatorRankings(data, "G00001"), /Invalid ranking entry/);

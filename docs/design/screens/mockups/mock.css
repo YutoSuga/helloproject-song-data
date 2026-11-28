@@ -85,3 +85,7 @@ dialog::backdrop { background: #35212880; }
 .mock-song-group { padding-inline-start: 12px; overflow-wrap: anywhere; }
 .mock-song-group + .mock-song-group { border-top: 1px solid var(--line); padding-top: 8px; }
 .mock-song-group p { margin-block: 4px; font-size: .875em; }
+
+#mock-breakdown { max-width: 680px; margin-inline: 0; }
+#mock-breakdown .mock-breakdown-row > :last-child { white-space: nowrap; }
+@media (max-width: 1023px) { #mock-breakdown { max-width: none; } }

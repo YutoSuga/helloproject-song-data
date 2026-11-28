@@ -17,6 +17,7 @@ async function check() {
   const { findCreators } = await import('../site/creator-catalog-model.js');
   const { rankVisiblePairs } = await import('../site/pair-analysis.js');
   const { collaborationRecordings, roleBreakdown } = await import('../site/collaboration-credits.js');
+  const { compareCreatorNames, creatorName, creatorReadings, searchCreators } = await import('../site/creator-name.js');
   const { allCollaborations, analyzeCollaborators, collaborationIndex, pairKey } = await import('../site/collaborators.js');
   const browser = await chromium.launch({
     executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium',
@@ -94,6 +95,48 @@ async function check() {
           await page.screenshot({ path: resolve(output, `${name}-${width}.png`) });
         }
       }
+      for (const query of ['&mode=all', '&mode=lyrics_composition', '&tab=creator']) {
+        await open(analysis + query);
+        const picker = page.locator('#pair-creator');
+        await page.waitForFunction(() => !document.querySelector('#pair-creator').disabled);
+        await picker.focus();
+        const options = page.locator('#pair-creator-options [role=option]');
+        const optionIds = await options.evaluateAll(rows => rows.map(row => row.id.replace('option-', '')));
+        const names = ranking.categories.all.entries.filter(row => optionIds.includes(row.creator_id));
+        assert.deepEqual(optionIds, searchCreators(names, '').map(row => row.creator_id));
+        assert((await options.allTextContents()).every(label => !/C[0-9]{5}/.test(label)));
+        if (output && [390, 1440].includes(width) && query === '&mode=all') {
+          await options.nth(names.filter(row => /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u.test(row.creator_name)).length)
+            .evaluate(el => el.scrollIntoView({ block: 'center' }));
+          await page.screenshot({ path: resolve(output, `creator-options-${width}.png`) });
+        }
+        await picker.fill('  ｺｳｶﾞ  ');
+        assert.deepEqual(await options.allTextContents(), ['KOUGA']);
+        await picker.press('ArrowDown');
+        await picker.press('Enter');
+        await page.waitForURL(/creator_id=C00002/);
+        await page.locator('#results li').first().waitFor();
+        assert.equal(await picker.inputValue(), 'KOUGA');
+        if (query === '&mode=all') {
+          assert.equal(new URL(page.url()).searchParams.get('mode'), 'all');
+          const links = await page.locator('#results a.lab-count').evaluateAll(rows => rows.map(row => row.href));
+          assert(links.every(url => new URL(url).searchParams.get('creator_id') === 'C00002'
+            || new URL(url).searchParams.get('partner_id') === 'C00002'));
+          if (output && [390, 1440].includes(width)) {
+            await page.screenshot({ path: resolve(output, `creator-selected-${width}.png`) });
+          }
+        }
+        await page.reload();
+        await page.waitForFunction(() => document.querySelector('#pair-creator').value === 'KOUGA');
+        await page.locator('#pair-clear').click();
+        await page.waitForURL(url => !url.searchParams.has('creator_id'));
+        await page.goBack();
+        await page.waitForFunction(() => document.querySelector('#pair-creator').value === 'KOUGA');
+      }
+      await open(search + '&tab=creators&q=' + encodeURIComponent('ﾔﾏｻﾞｷ'), '#results li');
+      assert.equal(await page.locator('#results').getByText('山崎あおい', { exact: true }).count(), 1);
+      if (output && [390, 1440].includes(width)) await page.screenshot({ path: resolve(output, `kana-search-${width}.png`) });
+
       for (const [name, first, second, workId, count, songCount, label] of recordingCases) {
         await open(pairUrl(first, second), '#collaboration-content');
         const target = workId
@@ -110,6 +153,11 @@ async function check() {
           }
         } else {
           assert.equal(await target.locator('#collaboration-breakdown > li').count(), count);
+          assert(await target.locator('#collaboration-breakdown').evaluate((el, width) => {
+            const max = getComputedStyle(el).maxWidth;
+            return (width >= 1024 ? max === '680px' && el.clientWidth <= 680 : max === 'none')
+              && [...el.querySelectorAll('.lab-count')].every(node => getComputedStyle(node).whiteSpace === 'nowrap');
+          }, width));
           if (output && [390, 1440].includes(width)) await page.screenshot({ path: resolve(output, `${name}-${width}.png`) });
         }
         assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
@@ -132,7 +180,10 @@ async function check() {
     const offPairs = rankVisiblePairs(publishedPairs);
     assert.deepEqual(await rowValues('#top-creators li'), expectedCreators(ranking.categories.all.entries.filter(row => row.rank <= 3)));
     const all = allCollaborations(catalog.works);
-    const allRows = rows => rows.map(row => [row.rank, row.first_name + ' × ' + row.second_name, row.work_count]);
+    const readings = creatorReadings(ranking);
+    const allRows = rows => rows.map(row => [row.rank,
+      [creatorName(row.first, row.first_name, readings), creatorName(row.second, row.second_name, readings)]
+        .sort(compareCreatorNames).map(author => author.creator_name).join(' × '), row.work_count]);
     assert.deepEqual(await rowValues('#top-pairs li'), allRows(all.filter(row => row.rank <= 3)));
     await page.locator('#top-pairs .lab-count').first().click();
     await page.locator('#collaboration-content').waitFor();
@@ -153,6 +204,12 @@ async function check() {
     await page.locator('#results li').first().waitFor();
     assert.equal(await page.locator('#include-self').isVisible(), false);
     assert.deepEqual(await rowValues('#results li'), allRows(all));
+    const displayedPairs = (await rowValues('#results li')).map(row => row[1]);
+    for (const label of ['つんく × 平田祥一郎', '鈴木俊介 × つんく', '鈴木俊介 × 山崎あおい',
+      '平田祥一郎 × 星部ショウ', '山崎あおい × KOUGA']) assert(displayedPairs.includes(label), label);
+    const topPairLinks = await page.locator('#results li').first().locator('strong a').evaluateAll(links =>
+      links.map(link => [link.textContent, new URL(link.href).searchParams.get('creator_id')]));
+    assert.deepEqual(topPairLinks, [['つんく', 'C00028'], ['平田祥一郎', 'C00009']]);
     await page.goBack();
     await page.locator('#include-self').waitFor();
     assert.equal(await page.locator('#include-self').isChecked(), true);
@@ -559,7 +616,7 @@ async function check() {
       assert.equal(bytes.readUInt32BE(20), height);
     }
     assert.deepEqual(errors, []);
-    console.log(`PASS: 114 responsive cases, ${catalog.works.length} works and all recordings; rankings, search, detail/analysis, history, compatibility, errors and brand assets`);
+    console.log(`PASS: 138 responsive cases, ${catalog.works.length} works and all recordings; rankings, search, detail/analysis, history, compatibility, errors and brand assets`);
   } finally {
     await browser.close();
   }

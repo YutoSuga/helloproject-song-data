@@ -117,7 +117,7 @@ test('creator filter controls preserve accessible combobox and explicit checkbox
 test('creator UI keeps only useful headings and orders condition before result count', async () => {
   const html = await read('site/analysis/index.html');
   assert.doesNotMatch(html, /自作詞・自作曲：|id="(?:pair-self-count|self-count)"|全順位|class="eyebrow"/);
-  assert.match(html, /aria-label="作家名またはIDで検索"/);
+  assert.match(html, /aria-label="作家名または読み仮名で検索"/);
   assert(html.indexOf('id="pair-condition"') < html.indexOf('id="summary"'));
   assert(html.indexOf('クリア</button>') < html.indexOf('id="pair-condition"'));
 });
