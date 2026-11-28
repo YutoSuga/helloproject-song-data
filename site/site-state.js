@@ -12,9 +12,10 @@ const fieldsByPath = {
   '/songs/detail/': ['artist_id', 'work_id']
 };
 const creatorFields = ['creator_id', 'lyricist_id', 'composer_id', 'partner_id'];
-export const pathOf = url => url.pathname.replace(/index\.html$/, '').replace(/\/?$/, '/');
+export const pathOf = url => url.pathname.replace(/\/index\.html$/, '/').replace(/\/?$/, '/');
 export const single = (params, key) => params.getAll(key).length === 1 ? params.get(key) : null;
 export const isCreatorId = id => /^C\d{5}$/.test(id ?? '');
+export const isSongId = id => /^[MAJTBORH]\d{5}$/.test(id ?? '');
 export const isWorkId = id => /^W\d{5}$/.test(id ?? '');
 export const isPublished = (id, artists = publishedArtists) => Object.hasOwn(artists, id);
 export const cleanSearch = (value, allowed, fallback) => allowed.includes(value) ? value : fallback;
@@ -79,7 +80,7 @@ export function safeFrom(value, origin) {
   const state = readState(path, url.searchParams);
   if (path === '/songs/detail/' && (!state.artist_id || !state.work_id)) return null;
   if (path === '/creators/detail/' && (!state.artist_id || !state.creator_id)) return null;
-  const hash = path === '/songs/detail/' && /^#song-J\d{5}$/.test(url.hash) ? url.hash
+  const hash = path === '/songs/detail/' && url.hash.startsWith('#song-') && isSongId(url.hash.slice(6)) ? url.hash
     : path === '/more/' && /^#(about|data-policy|artist-coverage|aggregation-method|site-updates|disclaimer|contact)$/.test(url.hash) ? url.hash : '';
   return pageUrl(path, state, hash);
 }

@@ -1,5 +1,7 @@
 # helloproject-song-data
 
+[ハロプロ作家研究所 / Hello! Project Creator Lab](https://hellosongdb.com/) の公開サイトとデータを管理します。
+
 ## 現行のデータ更新
 
 [CSV直接編集ガイド](docs/management/CSV直接編集ガイド.md)に従い、AI支援の調査・CSV編集→全14表/ID検証→公開JSON再生成→CI確認→人間の順次マージで更新します。`data/id-high-water.json`は採番メタデータです。FN-002/003は任意、FN-004は完成した保存資産で通常登録に使用しません。Java＋RDB管理版は別開発です。通常CIは一本化し、旧light/full区分は使用しません。
@@ -17,7 +19,7 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 | ID | 機能名 | 種別 | 概要 | 実装状況 |
 | --- | --- | --- | --- | --- |
-| [SCR-001〜009](docs/design/system/機能ID体系.md#公開サイトの画面番号) | 公開サイトの個別画面 | Screen | 公開ページ構成 | PR #119までマージ済み。作家研究所への再構成は[設計レビュー](docs/design/screens/画面一覧.md)段階 |
+| [SCR-001〜009](docs/design/system/機能ID体系.md#公開サイトの画面番号) | 公開サイトの個別画面 | Screen | 公開ページ構成 | [ハロプロ作家研究所の画面構成](docs/design/screens/画面一覧.md)を参照 |
 | SCR-101 | 楽曲管理画面 | Screen | candidate / review情報を確認し、人間が確定・保留・却下等を判断する | 未実装 |
 | FN-001 | 作家ランキング集計・ランキングJSON生成機能 | Function | canonical CSVから作家ランキングJSONを生成する | 実装済み |
 | FN-002 | 楽曲候補収集機能 | Function | 公式release / track情報から `staging/song-candidates.json` を生成・更新する | 実装済み |
@@ -198,4 +200,4 @@ GitHub Pagesで表示
 
 ## 静的サイトのbuildと公開
 
-[公開サイトデータ生成・ビルド仕様](docs/design/system/公開サイトデータ生成・ビルド仕様.md)を正本とします。site:buildはランキングと楽曲JSONを生成します。楽曲一覧は`npm run site:build`後に`npm run site:preview`を実行し、`http://localhost:4173/songs/`で確認できます。検索対象は作品名・掲載名義・作家正規名で、音源タイトルは詳細内に表示します。CIの実行条件・失敗時対応は[CI運用ルール](.github/CI.md)を参照してください。
+[公開サイトデータ生成・ビルド仕様](docs/design/system/公開サイトデータ生成・ビルド仕様.md)を正本とします。site:buildはランキングと楽曲JSONを生成します。楽曲一覧は`npm run site:build`後に`npm run site:preview`を実行し、`http://localhost:4173/search/?tab=songs`で確認できます。検索対象は作品名・掲載名義・作家正規名で、音源タイトルは詳細内に表示します。CIの実行条件・失敗時対応は[CI運用ルール](.github/CI.md)を参照してください。

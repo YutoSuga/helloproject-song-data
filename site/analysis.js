@@ -26,7 +26,7 @@ const syncTabs = tabs(document.querySelector('[role=tablist]'), state().tab, tab
 });
 
 const syncPicker = mountCreatorPicker(creator_id => change({
-  creator_id, lyrics: null, composition: null, ...evidenceKeys
+  creator_id, ...(!creator_id && { lyrics: null, composition: null }), ...evidenceKeys
 }));
 $('pair-clear').addEventListener('click', () => change({ creator_id: null, lyrics: null, composition: null, ...evidenceKeys }));
 for (const [key, control] of Object.entries(flags)) {
@@ -94,13 +94,7 @@ function showRows(rows, current, pairs) {
   }
 }
 
-function pairRows(data, current) {
-  const entries = readPairs(data);
-  const creators = new Map();
-  for (const entry of entries) {
-    creators.set(entry.lyricist_creator_id, entry.lyricist_name);
-    creators.set(entry.composer_creator_id, entry.composer_name);
-  }
+function pairRows(entries, creators, current) {
   const selected = current.creator_id;
   const rows = rankVisiblePairs(entries, current);
   if (selected) {
@@ -113,13 +107,12 @@ function pairRows(data, current) {
   const empty = !entries.length ? emptyData : '条件に一致する組み合わせがありません。';
   status(message, rows.length ? '' : current.lyrics && current.composition && !current.include_self
     ? `${empty}「同一作家の組み合わせを含む」を選択すると対象を表示できます。` : empty);
-  return creators;
 }
 
-async function render(restore = false) {
+async function render(restore = false, originalParams) {
   const token = ++request;
   let current = state();
-  const raw = new URLSearchParams(location.search);
+  const raw = originalParams ?? new URLSearchParams(location.search);
   const pairs = current.tab === 'pairs';
   syncTabs(current.tab);
   $('analysis-heading').textContent = pairs ? '作詞 × 作曲' : '共同制作の多い作家';
@@ -156,7 +149,7 @@ async function render(restore = false) {
     flags.lyrics.checked = Boolean(current.lyrics);
     flags.composition.checked = Boolean(current.composition);
     syncPicker(creators, current.creator_id);
-    if (pairs) pairRows(data, current);
+    if (pairs) pairRows(pairEntries, creators, current);
     else {
       $('pair-condition').textContent = '';
       const { assigned, entries } = analyzeCollaborators(data.works, current.creator_id);
@@ -179,7 +172,4 @@ async function render(restore = false) {
 
 const initialQuery = new URLSearchParams(location.search);
 setupArtist(render);
-if (initialQuery.has('creator_id') && !state().creator_id) {
-  status($('analysis-notice'), '指定の作家が見つかりません。');
-}
-render(true);
+render(true, initialQuery);

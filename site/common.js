@@ -37,7 +37,10 @@ function entryId() {
 }
 
 function remember(focus = document.activeElement?.dataset.restore) {
-  const snapshot = { ...history.state, entryId: entryId(), x: scrollX, y: scrollY, focus };
+  const snapshot = {
+    ...history.state, entryId: entryId(), x: scrollX, y: scrollY,
+    focus, dialogY: document.querySelector('dialog[open]')?.scrollTop
+  };
   history.replaceState(snapshot, '');
   return snapshot;
 }
@@ -45,11 +48,9 @@ function remember(focus = document.activeElement?.dataset.restore) {
 export function restorePosition() {
   const saved = history.state;
   if (saved?.focus) document.querySelector(`[data-restore="${CSS.escape(saved.focus)}"]`)?.focus({ preventScroll: true });
-  if (location.hash) {
-    $(location.hash.slice(1))?.scrollIntoView();
-  } else if (saved?.y != null) {
-    scrollTo(saved.x, saved.y);
-  }
+  if (saved?.y != null) scrollTo(saved.x, saved.y);
+  else if (path !== '/songs/detail/' || location.hash.startsWith('#song-')) $(location.hash.slice(1))?.scrollIntoView();
+  if (saved?.dialogY != null) document.querySelector('dialog[open]')?.scrollTo(0, saved.dialogY);
 }
 
 export function update(patch, { replace = false, keepPosition = false } = {}) {
@@ -122,7 +123,10 @@ export function tabs(tablist, value, select) {
       const active = tab.dataset.value === selected;
       tab.setAttribute('aria-selected', active);
       tab.tabIndex = active ? 0 : -1;
-      if (active) $(tab.getAttribute('aria-controls')).setAttribute('aria-labelledby', tab.id);
+      if (active) {
+        $(tab.getAttribute('aria-controls')).setAttribute('aria-labelledby', tab.id);
+        if (document.activeElement === tab) tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
     }
   }
   sync(value);
@@ -153,7 +157,7 @@ export function setupDetail(back, tab) {
   const params = new URLSearchParams(location.search);
   const current = state();
   const requested = single(params, 'from');
-  const legacy = tab === 'creators' && !params.has('from') && params.has('view');
+  const legacy = tab === 'creators' && !params.has('from') && ['view', 'category', 'q'].some(key => params.has(key));
   const fallback = pageUrl('/search/', { artist_id: current.artist_id, tab });
   const from = safeFrom(requested, location.origin);
   back.href = from ?? (legacy ? legacyDestination('/creators/', params) : fallback);
@@ -161,8 +165,9 @@ export function setupDetail(back, tab) {
   let pending;
   try { pending = JSON.parse(storage.get(pendingKey)); } catch { /* Ignore invalid saved state. */ }
   storage.remove(pendingKey);
-  if (pending?.target === relative() && pending.from === from && document.referrer &&
-      safeFrom(document.referrer.startsWith(location.origin + '/') ? document.referrer.slice(location.origin.length) : '', location.origin) === from) {
+  const referrer = document.referrer.startsWith(location.origin + '/')
+    ? safeFrom(document.referrer.slice(location.origin.length), location.origin) : null;
+  if (from && pending?.target === relative() && pending.from === from && referrer === from.split('#')[0]) {
     history.replaceState({ ...history.state, previous: from }, '');
   }
   back.addEventListener('click', event => {
@@ -177,7 +182,7 @@ export function setupDetail(back, tab) {
 
 if (typeof document !== 'undefined') {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.addEventListener('pagehide', () => remember());
+  window.addEventListener('pagehide', () => remember(document.activeElement?.dataset.restore ?? history.state?.focus));
   document.addEventListener('click', event => {
     if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     const anchor = event.target.closest('a[data-detail]');

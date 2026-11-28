@@ -1,6 +1,6 @@
 import { readCreatorRankings } from './creator-catalog-model.js';
 import { readSongCatalog } from './song-catalog-model.js';
-import { isPublished } from './site-state.js';
+import { isCreatorId, isPublished, isSongId, isWorkId } from './site-state.js';
 
 export const loadError = 'データを表示できません。時間をおいて再読み込みしてください。';
 export const emptyData = '表示できるデータがありません。';
@@ -32,10 +32,10 @@ export function readPairs(data) {
   if (!Array.isArray(entries) || entries.some(row =>
     !row || !Number.isInteger(row.rank) || !Number.isInteger(row.work_count) ||
     row.work_count < 1 || !['lyricist', 'composer'].every(role =>
-      /^C\d{5}$/.test(row[`${role}_creator_id`] ?? '') && typeof row[`${role}_name`] === 'string') ||
+      isCreatorId(row[`${role}_creator_id`]) && typeof row[`${role}_name`] === 'string') ||
     !Array.isArray(row.works) || row.works.length !== row.work_count || row.works.some(work =>
-      !work || !/^W\d{5}$/.test(work.work_id ?? '') || typeof work.title !== 'string' ||
-      !Array.isArray(work.song_ids) || !work.song_ids.length || work.song_ids.some(id => !/^J\d{5}$/.test(id))
+      !work || !isWorkId(work.work_id) || typeof work.title !== 'string' ||
+      !Array.isArray(work.song_ids) || !work.song_ids.length || work.song_ids.some(id => !isSongId(id))
     ))) throw new Error('Invalid pair evidence');
   return entries;
 }
