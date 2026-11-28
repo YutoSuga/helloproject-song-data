@@ -31,6 +31,7 @@ function initialize(data, pairError) {
   const viewTabs = [...document.querySelectorAll(".view-tab")];
   const search = document.querySelector("#creator-search");
   const searchResults = document.querySelector("#creator-search-results");
+  const searchCount = document.querySelector("#creator-search-count");
   const searchEmpty = document.querySelector("#creator-search-empty");
   const state = readListState(new URLSearchParams(location.search));
   let opener;
@@ -52,13 +53,15 @@ function initialize(data, pairError) {
     const matches = findCreators(data.categories.all.entries, state.q);
     searchResults.replaceChildren(...matches.map(entry => {
       const item = document.createElement("li");
+      item.className = "catalog-row";
       const link = document.createElement("a");
       link.href = creatorUrl(entry.creator_id);
-      link.className = "name";
+      link.className = "creator-result-name";
       link.textContent = entry.creator_name;
       item.append(link);
       return item;
     }));
+    searchCount.textContent = `${matches.length}作家`;
     searchEmpty.hidden = matches.length > 0;
   }
   function selectView(view) {

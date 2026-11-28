@@ -21,7 +21,19 @@ q('#song-search')?.addEventListener('input',songs);q('#song-sort')?.addEventList
 all('.work-open').forEach(b=>b.addEventListener('click',()=>{q('#song-detail').replaceChildren(b.closest('article').querySelector('template').content.cloneNode(true));openDialog(q('#song-dialog'),b)}));if(works.length)songs();
 // Ranking category selection keeps fixtures and competition ranking rules.
 tabs('[data-view]',b=>{view=b.dataset.view;q('#search-panel').hidden=view!=='search';q('#ranking-panel').hidden=view!=='ranking';q('#pair-panel').hidden=view!=='pair';q('#evidence-dialog').close();state()});
-tabs('[data-category]',b=>{category=Number(b.dataset.category);const cards=all('#ranking-cards article'),counts=cards.map(c=>Number(c.dataset.counts.split(',')[category]));let last=-1,rank=0;cards.forEach((c,i)=>{if(counts[i]!==last)rank=i+1;last=counts[i];c.querySelector('.count').textContent=counts[i]+'作品';c.querySelector('.rank').textContent=rank+'位'});q('#summary').textContent=categories[category]+'：'+cards.length+'作家 / 延べ'+counts.reduce((a,b)=>a+b,0)+'曲（作家ごとの曲数の合計）'});
+tabs('[data-category]', button => {
+  category = Number(button.dataset.category);
+  const cards = all('#ranking-cards article');
+  const counts = cards.map(card => Number(card.dataset.counts.split(',')[category]));
+  cards.forEach((card, index) => {
+    const count = counts[index];
+    card.hidden = count === 0;
+    card.querySelector('.count').textContent = count + '作品';
+    card.querySelector('.rank').textContent = (1 + counts.filter(value => value > count).length) + '位';
+  });
+  q('#summary').textContent = categories[category] + '：' + counts.filter(Boolean).length + '作家 / 延べ'
+    + counts.reduce((total, count) => total + count, 0) + '曲（作家ごとの曲数の合計）';
+});
 // Searchable single combobox: draft input never changes the committed result.
 const input=q('#creator-query'),list=q('#creator-options');let selected='',visible=[],active=-1;
 const candidates=q('#creator-seed')?[...q('#creator-seed').content.querySelectorAll('[data-id]')].map(x=>({id:x.dataset.id,name:x.textContent})):[];
@@ -57,7 +69,9 @@ if (creatorSearch) {
       url.searchParams.set('q', creatorSearch.value);
       link.href = url;
     }
-    q('#mock-search-empty').hidden = links.some(link => !link.parentElement.hidden);
+    const count = links.filter(link => !link.parentElement.hidden).length;
+    q('#mock-search-count').textContent = count + '作家';
+    q('#mock-search-empty').hidden = count > 0;
   }
   creatorSearch.value = creatorParams.get('q') ?? '';
   creatorSearch.addEventListener('input', updateCreatorSearch);
@@ -91,7 +105,7 @@ if (q('#creator-content')) {
     th.scope = 'row';
     th.textContent = detailCategories[column];
     row.append(th);
-    row.insertCell().textContent = rank + '位';
+    row.insertCell().textContent = count ? rank + '位' : 'ー';
     row.insertCell().textContent = count + '曲';
   });
   q('#creator-work-list').replaceChildren(sample.content.cloneNode(true));

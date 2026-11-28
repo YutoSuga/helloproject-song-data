@@ -107,16 +107,17 @@
 </section>
 <p id="data-status" role="status">読み込み中…</p>
 <div id="ranking-content" hidden>
-<nav class="view-tabs" aria-label="作家ページの表示" role="tablist">
+<nav id="creator-views" class="view-tabs" aria-label="作家ページの表示" role="tablist">
       <button id="view-search-tab" class="view-tab" data-view="search" type="button" role="tab" aria-controls="creator-search-panel" aria-selected="true" tabindex="0">作家検索</button>
       <button id="view-ranking-tab" data-view="ranking" class="view-tab" type="button" role="tab" aria-controls="ranking-panel" aria-selected="false" tabindex="-1">曲数ランキング</button>
-      <button id="view-pairs-tab" data-view="pairs" class="view-tab" type="button" role="tab" aria-controls="pair-panel" aria-selected="false" tabindex="-1">組み合わせランキング</button>
+      <button id="view-pairs-tab" data-view="pairs" class="view-tab" type="button" role="tab" aria-controls="pair-panel" aria-selected="false" tabindex="-1">組み合わせ分析</button>
     </nav>
     <section id="creator-search-panel" role="tabpanel" aria-labelledby="view-search-tab">
       <label for="creator-search" class="visually-hidden">作家名で検索</label>
       <input id="creator-search" class="creator-search-input" type="search" placeholder="作家名で検索" autocomplete="off">
+      <p id="creator-search-count" role="status"></p>
       <p id="creator-search-empty" class="summary" role="status" hidden>該当する作家がありません。</p>
-      <ul id="creator-search-results" class="creator-results ranking"></ul>
+      <ul id="creator-search-results" class="creator-results"></ul>
     </section>
     <div id="ranking-panel" role="tabpanel" aria-labelledby="view-ranking-tab" hidden>
     <nav class="category-tabs" aria-label="ランキングカテゴリ" id="category-tabs" role="tablist"></nav>

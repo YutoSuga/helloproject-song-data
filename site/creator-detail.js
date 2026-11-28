@@ -31,7 +31,7 @@ function renderDetail(detail, artistName) {
     category.scope = "row";
     category.textContent = label;
     row.append(category);
-    row.insertCell().textContent = rank === null ? "順位なし" : `${rank}位`;
+    row.insertCell().textContent = rank === null ? "ー" : `${rank}位`;
     row.insertCell().textContent = `${workCount}曲`;
   }
 

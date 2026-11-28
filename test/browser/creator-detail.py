@@ -25,7 +25,7 @@ def assert_detail(page, entry):
     expected_ranks = []
     for category in CATEGORIES.values():
         other = next((e for e in category['entries'] if e['creator_id'] == entry['creator_id']), None)
-        expected_ranks.append([category['label'], f"{other['rank']}位" if other else '順位なし',
+        expected_ranks.append([category['label'], f"{other['rank']}位" if other else 'ー',
                                f"{other['work_count'] if other else 0}曲"])
     rank_rows = page.locator('#creator-ranks tr')
     assert [row.locator('th,td').all_text_contents() for row in rank_rows.all()] == expected_ranks
@@ -59,18 +59,20 @@ with sync_playwright() as p:
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.goto(LIST)
         page.wait_for_selector('#ranking-content:visible')
-        assert page.locator('.view-tab').all_text_contents() == ['作家検索', '曲数ランキング', '組み合わせランキング']
+        assert page.locator('.view-tab').all_text_contents() == ['作家検索', '曲数ランキング', '組み合わせ分析']
         assert page.locator('#view-search-tab').get_attribute('aria-selected') == 'true'
         results = page.locator('#creator-search-results a')
         names = CATEGORIES['all']['entries']
         assert results.count() == len(names)
+        count = page.locator('#creator-search-count')
+        assert count.inner_text() == f'{len(names)}作家'
         expected_ids = page.evaluate("""entries => entries.sort((a, b) =>
           new Intl.Collator('ja', {sensitivity:'variant'}).compare(a.creator_name.normalize('NFKC'), b.creator_name.normalize('NFKC'))
           || a.creator_id.localeCompare(b.creator_id, 'en')).map(e => e.creator_id)""", names)
         assert results.evaluate_all("(links) => links.map(a => new URL(a.href).searchParams.get('creator_id'))") == expected_ids
         search = page.locator('#creator-search')
         search.fill('C00028')
-        assert page.locator('#creator-search-empty').is_visible()
+        assert page.locator('#creator-search-empty').is_visible() and count.inner_text() == '0作家'
         search.fill('桃子')
         assert results.all_text_contents() == ['鈴木桃子']
         results.first.click()
@@ -78,11 +80,11 @@ with sync_playwright() as p:
         assert page.locator('h1').inner_text() == '鈴木桃子'
         page.go_back()
         page.wait_for_selector('#creator-search:visible')
-        assert search.input_value() == '桃子'
+        assert search.input_value() == '桃子' and count.inner_text() == '1作家'
         results.first.click()
         page.locator('#creator-back').click()
         page.wait_for_selector('#creator-search:visible')
-        assert search.input_value() == '桃子'
+        assert search.input_value() == '桃子' and count.inner_text() == '1作家'
         page.locator('#view-ranking-tab').click()
         page.locator('#category-composition').click()
         page.locator('#ranking a.name').first.click()
@@ -95,7 +97,7 @@ with sync_playwright() as p:
         page.wait_for_selector('#category-composition')
         assert page.locator('#category-composition').get_attribute('aria-selected') == 'true'
         page.locator('#view-search-tab').click()
-        assert search.input_value() == '桃子'
+        assert search.input_value() == '桃子' and count.inner_text() == '1作家'
         for name in CREATORS:
             entry = next(e for e in names if e['creator_name'] == name)
             page.goto(DETAIL + f"?creator_id={entry['creator_id']}&artist_id=G00001")

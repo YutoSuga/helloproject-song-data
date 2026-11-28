@@ -45,14 +45,14 @@
 </nav>
 </aside>
 <div class="content">
-<p class="review">設計レビュー用・全データは仮値です。本番の確定値ではありません。 SCR-005</p>
 <a class="sp-brand" data-item-no="C-01" data-item-id="site-title" href="index.html">Hello! Project Song Database<small>ハロプロ楽曲データベース</small>
 </a>
+<p class="review">設計レビュー用・全データは仮値です。本番の確定値ではありません。 SCR-006</p>
 
 <label class="review number-switch">
 <input type="checkbox" id="show-numbers" checked> 項目番号を表示</label>
 <main id="main">
-  <a id="creator-back" href="creators.html">作家一覧・ランキングへ戻る</a>
+  <a id="creator-back" class="creator-back" href="creators.html"><span aria-hidden="true">‹</span>作家一覧・ランキングへ戻る</a>
   <h1 id="creator-heading">作家詳細</h1>
   <p id="creator-status" role="status" hidden></p>
   <div id="creator-content" hidden>
@@ -96,12 +96,12 @@
 <li data-roles="composition"><span>サンプル作品2-6</span></li>
 <li data-roles="brass_arrangement"><span>サンプル作品2-7</span></li>
 </template>
-<template data-sample="3" data-name="サンプル作家C" data-counts="5,3,2,1,1">
-<li data-roles="lyrics composition arrangement"><span>サンプル作品3-1</span></li>
+<template data-sample="3" data-name="サンプル作家C" data-counts="5,3,2,1,0">
+<li data-roles="lyrics composition"><span>サンプル作品3-1</span></li>
 <li data-roles="lyrics"><span>サンプル作品3-2</span></li>
 <li data-roles="lyrics"><span>サンプル作品3-3</span></li>
 <li data-roles="composition"><span>サンプル作品3-4</span></li>
-<li data-roles="arrangement"><span>サンプル作品3-5</span></li>
+<li data-roles="brass_arrangement"><span>サンプル作品3-5</span></li>
 </template>
 </main>
 <footer data-item-no="C-07" data-item-id="site-footer" >非公式ファンサイト</footer>

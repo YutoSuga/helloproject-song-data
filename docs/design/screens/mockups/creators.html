@@ -45,9 +45,9 @@
 </nav>
 </aside>
 <div class="content">
-<p class="review">設計レビュー用・全データは仮値です。本番の確定値ではありません。 SCR-005</p>
 <a class="sp-brand" data-item-no="C-01" data-item-id="site-title" href="index.html">Hello! Project Song Database<small>ハロプロ楽曲データベース</small>
 </a>
+<p class="review">設計レビュー用・全データは仮値です。本番の確定値ではありません。 SCR-005</p>
 
 <label class="review number-switch">
 <input type="checkbox" id="show-numbers" checked> 項目番号を表示</label>
@@ -119,21 +119,22 @@
 <p data-item-no="17" data-item-id="creators-status" id="status" role="status" hidden>
 </p>
 <div data-item-no="01" data-item-id="creators-views" >
-<div role="tablist" aria-label="作家ページの表示">
+<div id="creator-views" role="tablist" aria-label="作家ページの表示">
 <button id="search-tab" data-item-no="28" data-item-id="creators-view-search" role="tab" aria-controls="search-panel" aria-selected="true" data-view="search">作家検索</button>
 <button data-item-no="18" data-item-id="creators-view-ranking" role="tab" aria-selected="false" tabindex="-1" aria-controls="ranking-panel" id="ranking-tab" data-view="ranking">曲数ランキング</button>
-<button data-item-no="19" data-item-id="creators-view-pair" role="tab" aria-selected="false" tabindex="-1" aria-controls="pair-panel" id="pair-tab" data-view="pair">組み合わせランキング</button>
+<button data-item-no="19" data-item-id="creators-view-pair" role="tab" aria-selected="false" tabindex="-1" aria-controls="pair-panel" id="pair-tab" data-view="pair">組み合わせ分析</button>
 </div>
 </div>
 <div id="data-panel">
 <section id="search-panel" role="tabpanel" aria-labelledby="search-tab">
 <label for="mock-creator-search" class="visually-hidden">作家名で検索</label>
 <input id="mock-creator-search" data-item-no="29" data-item-id="creators-name-query" class="creator-search-input" type="search" placeholder="作家名で検索">
+<p id="mock-search-count" data-item-no="31" data-item-id="creators-name-count" role="status">3作家</p>
 <p id="mock-search-empty" role="status" hidden>該当する作家がありません。</p>
-<ul id="mock-search-results" data-item-no="30" data-item-id="creators-name-results" class="creator-results ranking">
-<li><a class="name" href="creator-detail.html?sample=1">サンプル作家A</a></li>
-<li><a class="name" href="creator-detail.html?sample=2">サンプル作家B</a></li>
-<li><a class="name" href="creator-detail.html?sample=3">サンプル作家C</a></li>
+<ul id="mock-search-results" data-item-no="30" data-item-id="creators-name-results" class="creator-results">
+<li class="catalog-row"><a class="creator-result-name" href="creator-detail.html?sample=1">サンプル作家A</a></li>
+<li class="catalog-row"><a class="creator-result-name" href="creator-detail.html?sample=2">サンプル作家B</a></li>
+<li class="catalog-row"><a class="creator-result-name" href="creator-detail.html?sample=3">サンプル作家C</a></li>
 </ul>
 </section>
 <section id="ranking-panel" role="tabpanel" aria-labelledby="ranking-tab" hidden>
@@ -164,7 +165,7 @@
 
 
 </article>
-<article class="card ranking-card" data-counts="5,3,2,1,1">
+<article class="card ranking-card" data-counts="5,3,2,1,0">
 <span class="rank">3位</span>
 <a class="name" href="creator-detail.html?sample=3&amp;view=ranking">サンプル作家C</a>
 <span class="count">5作品</span>
