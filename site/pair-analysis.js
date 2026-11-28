@@ -13,3 +13,10 @@ export function analyzeCreatorPairs(entries, creatorId, lyrics = false, composit
   const selfPair = entries.find((entry) => entry.lyricist_creator_id === creatorId && entry.composer_creator_id === creatorId);
   return { entries: ranked, self_work_count: selfPair?.work_count ?? 0 };
 }
+
+// The public JSON is already sorted by count and the two creator IDs.
+export function rankVisiblePairs(entries, { include_self, creator_id, lyrics, composition } = {}) {
+  const visible = include_self === '1' ? entries
+    : entries.filter(row => row.lyricist_creator_id !== row.composer_creator_id);
+  return analyzeCreatorPairs(visible, creator_id, lyrics === '1', composition === '1').entries;
+}

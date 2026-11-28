@@ -3,158 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>楽曲一覧・検索 | Hello! Project Song Database</title>
-  <meta name="description" content="Juice=Juiceの楽曲作品を曲名・作家名で検索し、発売日順・曲名順の一覧と音源別クレジットを確認できます。">
-  <link rel="canonical" href="https://hellosongdb.com/songs/">
-  <link rel="icon" type="image/png" href="../apple-touch-icon.png">
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-  <link rel="stylesheet" href="../styles.css">
-  <script defer src="../common.js"></script>
-
-<script type="module" src="../songs.js"></script>
+  <title>旧楽曲検索 | ハロプロ作家研究所</title>
+  <meta name="description" content="検索画面へ移動しました。">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://hellosongdb.com/search/">
+  <meta property="og:site_name" content="ハロプロ作家研究所">
+  <meta property="og:title" content="旧楽曲検索 | ハロプロ作家研究所">
+  <meta property="og:description" content="検索画面へ移動しました。">
+  <meta property="og:url" content="https://hellosongdb.com/search/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://hellosongdb.com/assets/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ハロプロ作家研究所 · ハロプロ楽曲を、作家から知る。">
+  <link rel="icon" type="image/png" href="/assets/favicon.png?v=creator-lab">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=creator-lab">
+  <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="page-songs">
+<body class="creator-lab simple-page">
 <a class="skip" href="#main">本文へ</a>
-<aside class="sidebar">
-<a href="../" class="brand">Hello! Project Song Database<small>ハロプロ楽曲データベース</small>
-</a>
-<nav class="desktop" aria-label="メインナビゲーション">
-<a id="nav-index-desktop" href="../" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<path d="m3 10 9-7 9 7v11h-6v-7H9v7H3Z"/>
-</svg>ホーム</a>
-<a id="nav-songs-desktop" href="../songs/" aria-current="page">
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<path d="M9 18V5l11-2v13M9 8l11-2"/>
-<circle cx="6" cy="18" r="3"/>
-<circle cx="17" cy="16" r="3"/>
-</svg>楽曲</a>
-<a id="nav-videos-desktop" href="../videos/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<rect x="3" y="8" width="18" height="13" rx="2"/>
-<path d="m3 8-1-4 18-3 1 4ZM7 3l3 4m4-5 3 4"/>
-</svg>動画</a>
-<a id="nav-creators-desktop" href="../creators/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="8" cy="8" r="4"/>
-<circle cx="18" cy="9" r="3"/>
-<path d="M1 22v-4a7 7 0 0 1 14 0v4m1-8a6 6 0 0 1 7 6"/>
-</svg>作家</a>
-<a id="nav-more-desktop" href="../more/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="4" cy="12" r="1"/>
-<circle cx="12" cy="12" r="1"/>
-<circle cx="20" cy="12" r="1"/>
-</svg>その他</a>
-</nav>
-</aside>
+
 <div class="content">
-<a class="sp-brand" href="../">Hello! Project Song Database<small>ハロプロ楽曲データベース</small>
-</a>
-<main id="main"><h1>楽曲一覧・検索</h1>
-<section class="artists body-artists" aria-label="対象アーティスト">
-<h2>アーティスト</h2>
-<div class="artist-strip" tabindex="0" aria-label="アーティスト一覧">
-<button type="button" class="artist" style="--group:#D92C1B" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>モーニング娘。’26</span>
-</button>
-<button type="button" class="artist" style="--group:#1D91CD" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>アンジュルム</span>
-</button>
-<button type="button" class="artist" style="--group:#7263AA" aria-pressed="true" aria-label="Juice=Juice 選択中">
-<span class="dot" aria-hidden="true">
-</span>
-<span>Juice=Juice</span>
-<small>選択中</small>
-</button>
-<button type="button" class="artist" style="--group:#EF93BB" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>つばきファクトリー</span>
-</button>
-<button type="button" class="artist" style="--group:#20A239" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>BEYOOOOONDS</span>
-</button>
-<button type="button" class="artist" style="--group:#F1881A" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>OCHA NORMA</span>
-</button>
-<button type="button" class="artist" style="--group:#F5D11F" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>ロージークロニクル</span>
-</button>
-<button type="button" class="artist" style="--group:#92C75B" disabled>
-<span class="soon">Coming Soon</span>
-<span class="dot" aria-hidden="true">
-</span>
-<span>ハロプロ研修生</span>
-</button>
-</div>
-<p class="scroll-hint">左右にスクロールできます</p>
-</section>
-<p id="songs-scope">Juice=Juiceの登録作品（work単位）</p>
-<label for="song-search">曲名・作家名で検索</label>
-<input id="song-search" type="search" disabled autocomplete="off">
-<label for="song-sort">並び替え</label>
-<select id="song-sort" disabled>
-<option value="new">発売日が新しい順</option>
-<option value="old">発売日が古い順</option>
-<option value="title">曲名順</option>
-</select>
-<p>一覧の音源初出日は、対象アーティストの登録音源から確認できる作品の最も早い音源初出日です。</p>
-<p id="song-summary" role="status" aria-live="polite"></p>
-<p id="songs-status" role="status" aria-live="polite">データを読み込んでいます。</p>
-<div id="works"></div>
-<dialog id="song-dialog" aria-labelledby="song-dialog-title">
-<button id="song-close" type="button" class="dialog-close" aria-label="楽曲詳細を閉じる">×</button>
-<div id="song-detail"></div>
-</dialog>
-<noscript><p>楽曲一覧を表示するにはJavaScriptを有効にしてください。</p></noscript>
+
+<main id="main" tabindex="-1">
+<h1>旧楽曲検索</h1><p><a href="/search/?tab=songs">新しい検索画面へ</a></p>
 </main>
-<footer>非公式ファンサイト</footer>
+<footer>ハロプロ作家研究所 · 非公式ファンサイト</footer>
 </div>
-<nav class="mobile" aria-label="下部ナビゲーション">
-<a id="nav-index-mobile" href="../" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<path d="m3 10 9-7 9 7v11h-6v-7H9v7H3Z"/>
-</svg>ホーム</a>
-<a id="nav-songs-mobile" href="../songs/" aria-current="page">
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<path d="M9 18V5l11-2v13M9 8l11-2"/>
-<circle cx="6" cy="18" r="3"/>
-<circle cx="17" cy="16" r="3"/>
-</svg>楽曲</a>
-<a id="nav-videos-mobile" href="../videos/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<rect x="3" y="8" width="18" height="13" rx="2"/>
-<path d="m3 8-1-4 18-3 1 4ZM7 3l3 4m4-5 3 4"/>
-</svg>動画</a>
-<a id="nav-creators-mobile" href="../creators/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="8" cy="8" r="4"/>
-<circle cx="18" cy="9" r="3"/>
-<path d="M1 22v-4a7 7 0 0 1 14 0v4m1-8a6 6 0 0 1 7 6"/>
-</svg>作家</a>
-<a id="nav-more-mobile" href="../more/" >
-<svg viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="4" cy="12" r="1"/>
-<circle cx="12" cy="12" r="1"/>
-<circle cx="20" cy="12" r="1"/>
-</svg>その他</a>
-</nav>
+
+<script type="module" src="/legacy.js"></script>
 </body>
 </html>
