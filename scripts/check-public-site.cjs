@@ -79,7 +79,11 @@ async function check() {
         assert(await page.locator('a.lab-count').evaluateAll(links => links.every(link => link.offsetHeight >= 44)));
         const ids = await page.locator('[id]').evaluateAll(es => es.map(e => e.id));
         assert.equal(new Set(ids).size, ids.length, name);
-        if (output && [390, 1440].includes(width)) await page.screenshot({ path: resolve(output, `${name}-${width}.png`) });
+        if (output && [390, 1440].includes(width)) {
+          const section = name.startsWith('home') ? '#pair-mode' : name === 'creator' ? '#collaborators-heading' : null;
+          if (width === 390 && section) await page.locator(section).evaluate(element => element.scrollIntoView());
+          await page.screenshot({ path: resolve(output, `${name}-${width}.png`) });
+        }
       }
     }
 

@@ -52,7 +52,7 @@ npm run site:preview
 
 localhost:4173のホームで両方式を切り替え、曲数リンクから詳細へ進む。直接アクセス例は `/analysis/detail/?artist_id=G00001&creator_id=C00001&partner_id=C00002`。作家名→作家詳細、Work名→楽曲詳細、画面内の戻るリンクとブラウザ履歴を確認する。逆順のIDは昇順へ正規化し、旧分析の根拠指定URLは有効な行なら新詳細へ移行する。
 
-[PC](creator-lab-collaboration/desktop.jpg)・[SP](creator-lab-collaboration/mobile.jpg)の順序はホーム「すべて」、ホーム「作詞×作曲」、分析「すべて」、分析「作詞×作曲」、共同制作詳細、作家詳細、作家指定分析。
+[PC](creator-lab-collaboration/desktop.jpg)・[SP](creator-lab-collaboration/mobile.jpg)の順序はホーム「すべて」、ホーム「作詞×作曲」、分析「すべて」、分析「作詞×作曲」、共同制作詳細、作家詳細、作家指定分析。SPのホームと作家詳細は追加箇所までスクロールした状態を掲載。
 
 ## 検証
 
