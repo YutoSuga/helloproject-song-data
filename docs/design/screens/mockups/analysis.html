@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>分析 | ハロプロ作家研究所</title>
+  <link rel="stylesheet" href="mock.css">
+  <script defer src="mock.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">本文へ</a>
+<header><a class="brand" href="index.html">ハロプロ作家研究所<small>Hello! Project Creator Lab</small></a></header><nav aria-label="メインナビゲーション"><a class="brand" href="index.html">ハロプロ作家研究所<small>Hello! Project Creator Lab</small></a><a href="index.html">ホーム</a><a href="creators.html">ランキング</a><a href="songs.html">検索</a><a href="analysis.html" aria-current="page">分析</a><a href="more.html">その他</a></nav>
+<main id="main">
+
+<h1>分析</h1>
+<label class="field">アーティスト<select><option disabled>モーニング娘。’26（Coming Soon）</option><option disabled>アンジュルム（Coming Soon）</option><option selected>Juice=Juice</option><option disabled>つばきファクトリー（Coming Soon）</option><option disabled>BEYOOOOONDS（Coming Soon）</option><option disabled>OCHA NORMA（Coming Soon）</option><option disabled>ロージークロニクル（Coming Soon）</option><option disabled>ハロプロ研修生（Coming Soon）</option></select></label>
+<div class="tabs" role="tablist" aria-label="分析方法"><button id="tab-pairs" role="tab" aria-selected="true" aria-controls="pairs" tabindex="0">組み合わせランキング</button><button id="tab-creator" role="tab" aria-selected="false" aria-controls="creator" tabindex="-1">作家指定分析</button></div>
+<section id="pairs" role="tabpanel" aria-labelledby="tab-pairs">
+  <h2>作詞 × 作曲</h2>
+  <label class="field">対象作家（任意）<select><option>すべての作家</option><option>作家A</option><option>作家B</option></select></label>
+  <div class="actions"><label><input type="checkbox"> 作詞</label><label><input type="checkbox"> 作曲</label><button type="button">選択を解除</button></div>
+  <ul class="rows">
+    <li class="line"><span>1位</span><strong><a href="creator-detail.html">作家A</a> × <a href="creator-detail.html">作家A</a></strong><span>15曲</span><button data-dialog="pair-evidence">共同制作楽曲</button></li>
+    <li class="line"><span>2位</span><strong><a href="creator-detail.html">作家A</a> × <a href="creator-detail.html">作家B</a></strong><span>8曲</span><button data-dialog="second-pair-evidence">共同制作楽曲</button></li>
+  </ul>
+</section>
+<section id="creator" role="tabpanel" aria-labelledby="tab-creator" hidden>
+  <label class="field">分析対象作家<select><option>作家A（C00001）</option><option>作家B（C00002）</option></select></label>
+  <dl class="summary"><div><dt>担当作品数</dt><dd>25</dd></div><div><dt>共同制作作家数</dt><dd>2</dd></div></dl>
+  <h2>共同制作の多い作家</h2>
+  <p>同じ音源にクレジットされた別の作家を、作品単位で集計します。</p>
+  <ol class="rows">
+    <li><div class="line"><span>1位</span><strong><a href="creator-detail.html">作家B</a></strong><span>8曲</span><button data-dialog="creator-evidence">共同制作楽曲</button></div><div class="bar" style="--value:100%" aria-hidden="true"></div></li>
+    <li><div class="line"><span>2位</span><strong><a href="creator-detail.html">作家C</a></strong><span>4曲</span><button data-dialog="second-creator-evidence">共同制作楽曲</button></div><div class="bar" style="--value:50%" aria-hidden="true"></div></li>
+  </ol>
+</section>
+<dialog id="pair-evidence" aria-labelledby="pair-title">
+  <form method="dialog"><button>閉じる</button></form>
+  <h2 id="pair-title">共同制作楽曲</h2><p>作家A × 作家A</p><ul class="rows"><li><a href="song-detail.html">作品A</a> · <a href="song-detail.html#song-J00001">オリジナル</a></li></ul>
+</dialog>
+<dialog id="creator-evidence" aria-labelledby="creator-title">
+  <form method="dialog"><button>閉じる</button></form>
+  <h2 id="creator-title">共同制作楽曲</h2><p>作家Aと作家B</p><ul class="rows"><li><a href="song-detail.html">作品A</a> · <a href="song-detail.html#song-J00001">オリジナル</a></li></ul>
+</dialog>
+<dialog id="second-pair-evidence" aria-labelledby="second-pair-title">
+  <form method="dialog"><button>閉じる</button></form>
+  <h2 id="second-pair-title">共同制作楽曲</h2><p>作家A × 作家B</p>
+  <ul class="rows"><li><a href="song-detail.html?example=single">作品B</a></li></ul>
+</dialog>
+<dialog id="second-creator-evidence" aria-labelledby="second-creator-title">
+  <form method="dialog"><button>閉じる</button></form>
+  <h2 id="second-creator-title">共同制作楽曲</h2><p>作家Aと作家C</p>
+  <ul class="rows"><li><a href="song-detail.html">作品A</a> · <a href="song-detail.html#song-J00002">新録</a></li></ul>
+</dialog>
+<footer>ハロプロ作家研究所 · 非公式ファンサイト</footer>
+</main>
+</body>
+</html>

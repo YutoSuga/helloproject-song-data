@@ -62,7 +62,7 @@ JSON生成・CI契約検証・画面を実装済み。キー・型・null・構�
 | works[].work_id/title | string・必須 | works | 識別／一覧名・詳細見出し |
 | works[].title_kana | string/null | works.title_kana | 将来用。今回のソートは使用しない |
 | works[].first_release_date | YYYY-MM-DD/null | 対象songs.release_dateの最小既知日 | 音源初出日表示・新旧順 |
-| works[].date_incomplete | boolean | 対象songに日付欠落が1つ以上 | 内部管理のみ。画面表示に使用しない |
+| works[].date_incomplete | boolean | 対象songに日付欠落が1つ以上 | 現行は内部管理用。再構成後の楽曲詳細は一部日付未確認の表示に利用 |
 | works[].search_creator_names | string[]・空[]可 | 全対象songのcredit_nameとcreators.nameを文字列で重複排除 | 作品単位AND検索 |
 | works[].songs | array・1件以上 | 対象songのみ | 詳細音源一覧 |
 | songs[].song_id/title | string・必須 | songs | 音源ID／名称 |
@@ -83,3 +83,7 @@ credit_nameは正式仕様で必須のため正規名で隠れて補完しない
 
 生成worksはwork_id ASCII順、songsは日付昇順（不明末尾）・song_id、creditsはrole ASCII順→credit_order数値（不明末尾）→creator_id。画面初期順は発売日降順（不明末尾）・work_id。曲名比較と検索の正規化は画面仕様の確定仕様を参照。
 対象artist内の最小既知日という定義（現行画面ラベルは「音源初出日」、並び替え選択肢は「発売日」表記を維持）、同日順、曲名の日本語Collator比較、複数語のwork内横断ANDは正式採用。JSON構造・出力先は既存設計を基本採用する。全artist横断の真の作品初出日は推測しない。読み仮名による厳密な五十音順は対象外。追加絞込UIは引き続き別途判断する。FN-005/SCR-003は同一実装PR。
+
+## 作家研究所での利用
+
+schema_version 1の契約を維持する。SCR-003検索に加え、[SCR-004 楽曲詳細](SCR-004-楽曲詳細.md)と[SCR-009 作家指定分析](SCR-009-分析.md)がSong単位のcreditsを参照する。既存の楽曲モーダルの説明はPR #119時点の利用形態。今後の表示項目・出力拡張条件は[調査・実装計画](../../../history/plans/公開サイト再構成.md)を参照。
