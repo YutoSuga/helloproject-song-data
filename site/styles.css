@@ -33,7 +33,7 @@ button {
   color:var(--accent);
   padding:8px 12px
 }
-button[aria-selected=true] {
+button[aria-selected=true], .creator-work-filters button[aria-pressed=true] {
   background:var(--accent);
   color:white
 }
@@ -213,7 +213,7 @@ footer {
   }
   .content {
     margin-left:0;
-    padding:16px 16px calc(88px + env(safe-area-inset-bottom,0px))
+    padding:0 16px calc(88px + env(safe-area-inset-bottom,0px))
   }
   .mobile {
     position:fixed;
@@ -405,20 +405,6 @@ use main content width. */
     }
   }
 }
-@media(max-width:1023px) {
-  .sp-brand {
-    display:block;
-    text-decoration:none;
-    font-weight:700
-  }
-  .sp-brand small {
-    display:block;
-    font-size:12px
-  }
-  .content {
-    min-width:0
-  }
-}
 @media(max-width:389px) {
   .page-index .artist {
     font-size:12px;
@@ -535,7 +521,8 @@ button:focus-visible {
   outline:3px solid var(--accent);
   outline-offset:3px
 }
-button.name {
+button.name,
+a.name {
   border:0;
   background:transparent;
   padding:4px;
@@ -575,7 +562,7 @@ dialog:not([open]) {
 }
 
 /* SCR-003: compact rows share the site palette and preserve the native dialog. */
-.work-open {
+.work-open, .creator-result-name {
   font-weight:700;
   text-align:left;
   overflow-wrap:anywhere;
@@ -587,12 +574,12 @@ dialog:not([open]) {
 }
 .song-detail-card h3 { overflow-wrap:anywhere; }
 
-.page-songs .work-card {
+.catalog-row {
   padding:12px 0;
   border-bottom:1px solid var(--line);
   min-width:0;
 }
-.page-songs .work-card:last-child { border-bottom:none; }
+.catalog-row:last-child { border-bottom:none; }
 .page-songs .work-card p { margin:4px 0 0; }
 #song-detail > p { margin:4px 0; }
 #song-detail > h2 { margin:8px 0 12px; }
@@ -696,3 +683,61 @@ dialog:not([open]) {
 .page-creators #pair-heading { margin-bottom:12px; }
 
 .page-creators .creator-options, .page-creators .combobox ul { position:absolute; top:auto; bottom:100%; margin:0 0 4px; max-height:240px; overflow:auto; }
+
+/* Creator search and artist-scoped detail. */
+.creator-search-input { width:100%; max-width:480px; }
+.creator-results { list-style:none; padding:0; }
+
+.creator-ranks { width:100%; max-width:480px; border-collapse:collapse; margin-block:12px 24px; }
+.creator-ranks th, .creator-ranks td { text-align:left; padding:8px; border-bottom:1px solid var(--line); }
+.creator-work-filters { margin-block:12px; }
+.creator-work-list { padding-inline-start:24px; }
+.creator-work-list li { border-top:1px solid var(--line); padding-block:10px; overflow-wrap:anywhere; }
+
+.creator-result-name {
+  display:flex;
+  align-items:center;
+  min-height:44px;
+  text-decoration:none;
+}
+.creator-back {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:44px;
+  font-weight:700;
+}
+.creator-back [aria-hidden] { font-size:24px; line-height:1; }
+@media(max-width:1023px) {
+  html {
+    scroll-padding-top:calc(56px + env(safe-area-inset-top,0px));
+  }
+  .content { min-width:0; }
+  .sp-brand {
+    position:sticky;
+    top:0;
+    z-index:5;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-height:calc(56px + env(safe-area-inset-top,0px));
+    margin:0 -16px 16px;
+    padding:env(safe-area-inset-top,0px) 16px 0;
+    background:var(--soft);
+    color:var(--accent);
+    border-bottom:1px solid var(--line);
+    text-decoration:none;
+    font-weight:700;
+    line-height:1.25;
+  }
+  .sp-brand small { display:block; font-size:12px; }
+  #creator-views {
+    flex-wrap:nowrap;
+    gap:4px;
+  }
+  #creator-views button {
+    white-space:nowrap;
+    font-size:13px;
+    padding-inline:5px;
+  }
+}

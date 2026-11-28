@@ -7,7 +7,7 @@ q('#show-numbers')?.addEventListener('change',e=>document.body.classList.toggle(
 function positionArtists(){if(document.body.classList.contains('page-index'))return;const strip=q('.body-artists .artist-strip');if(!strip)return;const selected=strip.querySelector('[aria-pressed=true]');strip.scrollLeft=selected.offsetLeft-strip.offsetLeft-12;}
 requestAnimationFrame(positionArtists);window.addEventListener('resize',positionArtists);
 function tabs(selector,activate){const buttons=all(selector);buttons.forEach((b,i)=>{b.addEventListener('click',()=>{buttons.forEach(x=>{x.setAttribute('aria-selected',String(x===b));x.tabIndex=x===b?0:-1});activate(b)});b.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?buttons.length-1:(i+(e.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;buttons[n].focus();buttons[n].click()})})}
-let view='ranking',category=0;
+let view='search',category=0;
 const categories=all('[data-category]').map(x=>x.textContent);
 let opener;
 function openDialog(dialog,button){opener=button;dialog.showModal();dialog.querySelector('.dialog-close').focus()}
@@ -20,8 +20,20 @@ function songs(){const terms=normalize(q('#song-search').value).split(/\s+/u).fi
 q('#song-search')?.addEventListener('input',songs);q('#song-sort')?.addEventListener('change',songs);
 all('.work-open').forEach(b=>b.addEventListener('click',()=>{q('#song-detail').replaceChildren(b.closest('article').querySelector('template').content.cloneNode(true));openDialog(q('#song-dialog'),b)}));if(works.length)songs();
 // Ranking category selection keeps fixtures and competition ranking rules.
-tabs('[data-view]',b=>{view=b.dataset.view;q('#ranking-panel').hidden=view!=='ranking';q('#pair-panel').hidden=view!=='pair';q('#evidence-dialog').close();state()});
-tabs('[data-category]',b=>{category=Number(b.dataset.category);const cards=all('#ranking-cards article'),counts=cards.map(c=>Number(c.dataset.counts.split(',')[category]));let last=-1,rank=0;cards.forEach((c,i)=>{if(counts[i]!==last)rank=i+1;last=counts[i];c.querySelector('.count').textContent=counts[i]+'作品';c.querySelector('.rank').textContent=rank+'位'});q('#summary').textContent=categories[category]+'：'+cards.length+'作家 / 延べ'+counts.reduce((a,b)=>a+b,0)+'曲（作家ごとの曲数の合計）'});
+tabs('[data-view]',b=>{view=b.dataset.view;q('#search-panel').hidden=view!=='search';q('#ranking-panel').hidden=view!=='ranking';q('#pair-panel').hidden=view!=='pair';q('#evidence-dialog').close();state()});
+tabs('[data-category]', button => {
+  category = Number(button.dataset.category);
+  const cards = all('#ranking-cards article');
+  const counts = cards.map(card => Number(card.dataset.counts.split(',')[category]));
+  cards.forEach((card, index) => {
+    const count = counts[index];
+    card.hidden = count === 0;
+    card.querySelector('.count').textContent = count + '作品';
+    card.querySelector('.rank').textContent = (1 + counts.filter(value => value > count).length) + '位';
+  });
+  q('#summary').textContent = categories[category] + '：' + counts.filter(Boolean).length + '作家 / 延べ'
+    + counts.reduce((total, count) => total + count, 0) + '曲（作家ごとの曲数の合計）';
+});
 // Searchable single combobox: draft input never changes the committed result.
 const input=q('#creator-query'),list=q('#creator-options');let selected='',visible=[],active=-1;
 const candidates=q('#creator-seed')?[...q('#creator-seed').content.querySelectorAll('[data-id]')].map(x=>({id:x.dataset.id,name:x.textContent})):[];
@@ -35,6 +47,94 @@ input?.addEventListener('input',()=>{if(input.value==='')resetCreator();else ren
 let composing=false;input?.addEventListener('compositionstart',()=>{composing=true});input?.addEventListener('compositionend',()=>{composing=false});
 input?.addEventListener('keydown',e=>{if(composing||e.isComposing||e.keyCode===229)return;if(e.key==='Tab'){closeOptions();return}if(e.key==='Escape'){e.preventDefault();closeOptions();input.value=selected?candidates.find(c=>c.id===selected).name+'（'+selected+'）':'';return}if(['ArrowDown','ArrowUp'].includes(e.key)){e.preventDefault();if(list.hidden)renderOptions();if(!visible.length)return;active=active<0?(e.key==='ArrowDown'?0:visible.length-1):(active+(e.key==='ArrowDown'?1:-1)+visible.length)%visible.length;[...list.children].forEach((x,i)=>x.setAttribute('aria-selected',String(i===active)));input.setAttribute('aria-activedescendant',list.children[active].id);list.children[active].scrollIntoView({block:'nearest'})}if(e.key==='Enter'){e.preventDefault();if(!list.hidden&&active>=0)choose(active);else q('#combo-live').textContent='候補一覧から作家を選択してください。'}});
 input?.addEventListener('blur',()=>{closeOptions();input.value=selected?candidates.find(c=>c.id===selected).name+'（'+selected+'）':'';q('#combo-live').textContent=selected?'選択済みの結果を保持しています。':'未選択です。'});
-all('.creator-open').forEach(b=>b.addEventListener('click',()=>{const card=b.closest('article');q('#detail-name').textContent=b.textContent;q('#detail-summary').textContent=(view==='ranking'?categories[category]:'作詞 × 作曲')+'・'+card.querySelector('.count').textContent;const template=card.querySelector(view==='ranking'?'[data-evidence-category="'+category+'"]':'[data-pair-evidence]');q('#evidence-works').replaceChildren(template.content.cloneNode(true));if(view==='ranking'){all('#evidence-works li').forEach(li=>{const badges=document.createElement('span');badges.className='role-badges';for(const [role,label] of [['lyrics','作詞'],['composition','作曲'],['arrangement','編曲'],['english_lyrics','英語詞'],['brass_arrangement','ブラス編曲']]){if(!li.dataset.roles.split(' ').includes(role))continue;const badge=document.createElement('span');badge.className='role-badge';badge.textContent=label;badges.append(badge)}li.append(badges)})}openDialog(q('#evidence-dialog'),b)}));
+all('#pair-cards .creator-open').forEach(button => button.addEventListener('click', () => {
+  const card = button.closest('article');
+  q('#detail-name').textContent = button.textContent;
+  q('#detail-summary').textContent = '作詞 × 作曲・' + card.querySelector('.count').textContent;
+  q('#evidence-works').replaceChildren(card.querySelector('[data-pair-evidence]').content.cloneNode(true));
+  openDialog(q('#evidence-dialog'), button);
+}));
 
 if(input){resetCreator();document.addEventListener('pointerdown',e=>{if(!q('.combobox').contains(e.target))closeOptions()});}
+
+// Creator search and detail use review fixtures embedded in the mock pages.
+const creatorParams = new URLSearchParams(location.search);
+const creatorSearch = q('#mock-creator-search');
+if (creatorSearch) {
+  const links = all('#mock-search-results a');
+  function updateCreatorSearch() {
+    for (const link of links) {
+      link.parentElement.hidden = !normalize(link.textContent).includes(normalize(creatorSearch.value));
+      const url = new URL(link.href);
+      url.searchParams.set('q', creatorSearch.value);
+      link.href = url;
+    }
+    const count = links.filter(link => !link.parentElement.hidden).length;
+    q('#mock-search-count').textContent = count + '作家';
+    q('#mock-search-empty').hidden = count > 0;
+  }
+  creatorSearch.value = creatorParams.get('q') ?? '';
+  creatorSearch.addEventListener('input', updateCreatorSearch);
+  updateCreatorSearch();
+  if (creatorParams.get('view') === 'ranking') {
+    q('[data-view="ranking"]').click();
+    all('[data-category]').find(button => button.dataset.category === creatorParams.get('category'))?.click();
+  }
+  all('#ranking-cards a.name').forEach(link => link.addEventListener('click', () => {
+    const url = new URL(link.href);
+    url.searchParams.set('category', category);
+    link.href = url;
+  }));
+}
+if (q('#creator-content')) {
+  const samples = all('template[data-sample]');
+  const sample = samples.find(item => item.dataset.sample === creatorParams.get('sample')) ?? samples[0];
+  const counts = sample.dataset.counts.split(',').map(Number);
+  const returnUrl = new URL('creators.html', location.href);
+  for (const key of ['view', 'category', 'q']) {
+    if (creatorParams.has(key)) returnUrl.searchParams.set(key, creatorParams.get(key));
+  }
+  q('#creator-back').href = returnUrl;
+  q('#creator-heading').textContent = sample.dataset.name;
+  q('#creator-overview').textContent = 'Juice=Juice・総担当 ' + counts[0] + '曲';
+  const detailCategories = ['すべて', '作詞', '作曲', '作詞 & 作曲', '編曲'];
+  counts.forEach((count, column) => {
+    const rank = 1 + samples.filter(item => Number(item.dataset.counts.split(',')[column]) > count).length;
+    const row = q('#creator-ranks').insertRow();
+    const th = document.createElement('th');
+    th.scope = 'row';
+    th.textContent = detailCategories[column];
+    row.append(th);
+    row.insertCell().textContent = count ? rank + '位' : 'ー';
+    row.insertCell().textContent = count + '曲';
+  });
+  q('#creator-work-list').replaceChildren(sample.content.cloneNode(true));
+  const labels = {lyrics:'作詞', composition:'作曲', arrangement:'編曲', english_lyrics:'英語詞', brass_arrangement:'ブラス編曲'};
+  const filters = all('.creator-work-filters button');
+  const rows = all('#creator-work-list li');
+  rows.forEach(row => {
+    const badges = document.createElement('span');
+    badges.className = 'role-badges';
+    for (const role of row.dataset.roles.split(' ')) {
+      const badge = document.createElement('span');
+      badge.className = 'role-badge';
+      badge.textContent = labels[role];
+      badges.append(badge);
+    }
+    row.append(badges);
+  });
+  function filterWorks(role) {
+    filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.role === role)));
+    rows.forEach(row => {
+      const roles = row.dataset.roles.split(' ');
+      row.hidden = role !== 'all' && !(role === 'other'
+        ? roles.some(value => !['lyrics', 'composition', 'arrangement'].includes(value))
+        : roles.includes(role));
+    });
+    const count = rows.filter(row => !row.hidden).length;
+    q('#creator-work-status').textContent = count ? count + '曲' : '該当する担当楽曲がありません。';
+  }
+  filters.forEach(button => button.addEventListener('click', () => filterWorks(button.dataset.role)));
+  filterWorks('all');
+  q('#creator-content').hidden = false;
+}

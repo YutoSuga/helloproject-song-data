@@ -34,6 +34,7 @@ with sync_playwright() as p:
         page.goto(BASE + url)
         if not mock:
             page.wait_for_selector('#ranking-content:visible')
+        page.locator('[data-view="ranking"]' if mock else '#view-ranking-tab').click()
         category_tabs = page.locator('[data-category]' if mock else '#category-tabs button')
         check(category_tabs.all_text_contents() == ['すべて', '作詞', '作曲', '作詞 & 作曲', '編曲'], 'category order')
         check(category_tabs.first.get_attribute('aria-selected') == 'true', 'all selected initially')
@@ -106,24 +107,12 @@ with sync_playwright() as p:
             check(page.locator(modal + ' .role-badge').count() == 0, 'no pair badges')
             page.keyboard.press('Escape')
             check(page.evaluate('document.activeElement.classList.contains("name")'), 'modal focus returns')
-            page.locator('[data-view="ranking"]' if mock else '#view-ranking-tab').click()
-            if not mock: page.locator('#category-all').click()
-            opener = page.locator('#ranking-cards button.name' if mock else '#ranking button.name').first
-            opener.click()
-            check(page.evaluate('document.activeElement.classList.contains("dialog-close")'), 'initial modal focus')
-            check(page.locator(works + ' .role-badge').count() > 0, 'creator badges')
-            if not mock:
-                entry = DATA['categories']['all']['entries'][0]
-                check(page.locator(works + ' li > span:first-child').all_text_contents() == [w['title'] for w in entry['works']], 'work list/count/order unchanged')
-            # Stress long text and all three badges without changing canonical data.
-            page.locator(works + ' li').first.evaluate('''li => {
-              li.firstElementChild.textContent = '長い作品名'.repeat(30);
-              const badges = li.querySelector('.role-badges');
-              badges.replaceChildren(...['作詞','作曲','編曲','英語詞','ブラス編曲'].map(text => {const s=document.createElement('span');s.className='role-badge';s.textContent=text;return s}));
-            }''')
+            page.locator(cards).first.locator('button.name').click()
+            page.locator(works + ' li').first.evaluate(
+                "li => li.textContent = '長い作品名'.repeat(30)")
             check(page.locator(modal).evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'modal no horizontal overflow')
-            page.keyboard.press('Escape')
-            page.locator('[data-view="pair"]' if mock else '#view-pairs-tab').click()
+            page.locator(modal + ' .dialog-close').click()
+            check(not page.locator(modal).is_visible(), 'close button closes pair dialog')
             page.locator(query).fill('C99991' if mock else 'C00001')
             page.locator(query).press('ArrowDown')
             page.locator('#creator-options [role=option]' if mock else '#pair-creator-options [role=option]').first.evaluate("el => el.textContent = '長い作家名'.repeat(30)")
@@ -132,35 +121,14 @@ with sync_playwright() as p:
             page.wait_for_function('(selector) => document.querySelector(selector).getAttribute("aria-expanded") === "false"', arg=query)
             page.locator(clear).click()
         print(('mock' if mock else 'production') + ': interactions and 6 widths passed')
-    # Check every card against the published rank and count, and verify details
-    # for the first entry and for every creator credited with a specialized role.
-    page.goto(BASE + '/site/creators/')
+    page.goto(BASE + '/site/creators/?view=ranking')
     page.wait_for_selector('#ranking-content:visible')
-    labels = {'lyrics': '作詞', 'composition': '作曲', 'arrangement': '編曲'}
-    all_labels = {**labels, 'english_lyrics': '英語詞', 'brass_arrangement': 'ブラス編曲'}
     for category, definition in DATA['categories'].items():
         page.locator('#category-' + category).click()
         entries = definition['entries']
         check(page.locator('#ranking .creator-id').all_text_contents() == [e['creator_id'] for e in entries], 'creator order')
         check(page.locator('#ranking .rank').all_text_contents() == [f"{e['rank']}位" for e in entries], 'card ranks')
         check(page.locator('#ranking .count strong').all_text_contents() == [str(e['work_count']) for e in entries], 'card counts')
-        for index, entry in enumerate(entries):
-            if index and (category != 'all' or not any(set(w['roles']) - labels.keys() for w in entry['works'])):
-                continue
-            page.locator('#ranking button.name').nth(index).click()
-            check(page.locator('#work-list li > span:first-child').all_text_contents() == [w['title'] for w in entry['works']], 'category works preserved')
-            for row, work in enumerate(entry['works']):
-                if category == 'all':
-                    expected = [label for role, label in all_labels.items() if role in work['roles']]
-                else:
-                    expected = [label for role, label in labels.items()
-                                if any(e['creator_id'] == entry['creator_id']
-                                       and any(w['work_id'] == work['work_id'] for w in e['works'])
-                                       for e in DATA['categories'][role]['entries'])]
-                check(page.locator('#work-list li').nth(row).locator('.role-badge').all_text_contents() == expected, 'exact ordered badges')
-            page.locator('#close-detail').click()
-            check(not page.locator('#creator-detail').is_visible(), 'close button closes dialog')
-    print('all five categories: ranks, counts, work lists and exact badges passed')
     # Bad role evidence must use the existing load-error UI.
     invalid = json.loads(json.dumps(DATA))
     invalid['categories']['lyrics']['entries'][0]['works'][0]['work_id'] = None

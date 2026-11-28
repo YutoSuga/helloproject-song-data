@@ -41,7 +41,7 @@ export async function mountSongCatalog(document, fetchData = fetch) {
     message(data.works.length===0 ? '表示できるデータがありません。' : selected.length===0 ? '検索結果は0件です。' : '');
     const fragment=document.createDocumentFragment();
     for(const work of selected) {
-      const card=element('article',undefined,'work-card');
+      const card=element('article',undefined,'work-card catalog-row');
       const button=element('button',work.title,'work-open');button.type='button';button.setAttribute('aria-haspopup','dialog');button.addEventListener('click',()=>showDetail(work.work_id,button));
       card.append(button);
       card.append(element('p',`音源初出日：${work.first_release_date ?? '確認中'}`));

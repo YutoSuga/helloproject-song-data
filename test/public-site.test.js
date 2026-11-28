@@ -44,6 +44,7 @@ test('songs catalog and existing ranking data remain independently connected', a
   const creators = await read('site/creators/index.html');
   assert.doesNotMatch(creators, /同じ曲に複数のバージョンがある場合も、1曲として数えています。/);
   assert.match(creators, /role="combobox"/);
+  assert.match(creators, /id="view-search-tab"[^>]+aria-selected="true"/);
   assert.doesNotMatch(creators, /creators-combo-status|pair-detail-role/);
   assert.match(await read('site/app.js'), /new URL\("\.\/data\/rankings\/G00001.json", import.meta.url\)/);
   assert.match(await read('.github/workflows/deploy-pages.yml'), /path: site\//);
@@ -93,7 +94,7 @@ test('creator filter controls preserve accessible combobox and explicit checkbox
   assert.match(html, /role="combobox"[^>]+aria-controls="pair-creator-options"/);
   const app = await read('site/app.js');
   assert.match(app, /event.isComposing/);
-  assert.match(app, /kind: "creator", creatorId: entry.creator_id/);
+  assert.match(app, /name.href = creatorUrl\(entry.creator_id\)/);
 });
 
 
