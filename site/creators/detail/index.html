@@ -37,14 +37,21 @@
   <p id="creator-status" role="status">読み込み中…</p>
   <div id="creator-content" hidden>
     <p id="creator-overview"></p>
-<a id="creator-analyze" href="/analysis/?tab=creator">この作家を分析</a>
-    <section aria-labelledby="creator-ranks-heading">
+    <div class="creator-overview-grid">
+      <section aria-labelledby="creator-ranks-heading">
       <h2 id="creator-ranks-heading">順位と担当曲数</h2>
       <table class="creator-ranks" aria-labelledby="creator-ranks-heading">
         <thead><tr><th scope="col">カテゴリ</th><th scope="col">順位</th><th scope="col">曲数</th></tr></thead>
         <tbody id="creator-ranks"></tbody>
       </table>
     </section>
+      <section aria-labelledby="collaborators-heading">
+        <h2 id="collaborators-heading">共同制作者 TOP3</h2>
+        <ol id="creator-collaborators" class="lab-list"></ol>
+        <p id="collaborators-empty" hidden>共同制作楽曲はありません。</p>
+        <p><a id="creator-analyze" href="/analysis/?tab=creator">この作家を分析する ›</a></p>
+      </section>
+    </div>
     <section aria-labelledby="creator-works-heading">
       <h2 id="creator-works-heading">担当楽曲</h2>
       <div class="category-tabs creator-work-filters" role="group" aria-label="担当役割で絞り込み">

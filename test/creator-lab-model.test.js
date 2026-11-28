@@ -52,9 +52,9 @@ test('artist resolution uses an explicit allowlist with URL, saved and default p
 test('legacy paths, validated return URLs and the analysis flag use canonical query rules', () => {
   const origin = 'https://hellosongdb.com';
   assert.equal(legacyDestination('/creators/', new URLSearchParams('view=ranking&category=lyrics&artist_id=G00001')), '/ranking/?artist_id=G00001&category=lyrics');
-  assert.equal(legacyDestination('/creators/', new URLSearchParams('view=pairs&include_self=1&creator_id=C00001')), '/analysis/?tab=pairs');
+  assert.equal(legacyDestination('/creators/', new URLSearchParams('view=pairs&include_self=1&creator_id=C00001')), '/analysis/?tab=pairs&mode=lyrics_composition');
   assert.equal(legacyDestination('/songs/',  new URLSearchParams('q=juice&sort=old')), '/search/?tab=songs&q=juice&sort=old');
-  assert.equal(safeFrom('/analysis/?tab=pairs&include_self=1&unknown=1', origin), '/analysis/?tab=pairs&include_self=1');
+  assert.equal(safeFrom('/analysis/?tab=pairs&include_self=1&unknown=1', origin), '/analysis/?tab=pairs&include_self=1&mode=lyrics_composition');
   assert.equal(safeFrom('/search/?tab=creators&from=%2F', origin), null);
   assert.equal(safeFrom('/songs/detail/?artist_id=G00001&work_id=W00001#song-M00001', origin),
     '/songs/detail/?artist_id=G00001&work_id=W00001#song-M00001');

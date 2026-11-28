@@ -19,7 +19,7 @@ Hello! Project の楽曲、作家、歌唱者、所属履歴、公式映像を�
 
 | ID | 機能名 | 種別 | 概要 | 実装状況 |
 | --- | --- | --- | --- | --- |
-| [SCR-001〜009](docs/design/system/機能ID体系.md#公開サイトの画面番号) | 公開サイトの個別画面 | Screen | 公開ページ構成 | [ハロプロ作家研究所の画面構成](docs/design/screens/画面一覧.md)を参照 |
+| [SCR-001〜010](docs/design/system/機能ID体系.md#公開サイトの画面番号) | 公開サイトの個別画面 | Screen | 公開ページ構成 | [ハロプロ作家研究所の画面構成](docs/design/screens/画面一覧.md)を参照 |
 | SCR-101 | 楽曲管理画面 | Screen | candidate / review情報を確認し、人間が確定・保留・却下等を判断する | 未実装 |
 | FN-001 | 作家ランキング集計・ランキングJSON生成機能 | Function | canonical CSVから作家ランキングJSONを生成する | 実装済み |
 | FN-002 | 楽曲候補収集機能 | Function | 公式release / track情報から `staging/song-candidates.json` を生成・更新する | 実装済み |

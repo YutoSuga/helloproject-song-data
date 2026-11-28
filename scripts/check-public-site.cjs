@@ -16,7 +16,7 @@ async function check() {
   const { selectWorks, selectSongs } = await import('../site/song-catalog-model.js');
   const { findCreators } = await import('../site/creator-catalog-model.js');
   const { rankVisiblePairs } = await import('../site/pair-analysis.js');
-  const { analyzeCollaborators } = await import('../site/collaborators.js');
+  const { allCollaborations, analyzeCollaborators, breakdown, collaborationIndex, pairKey } = await import('../site/collaborators.js');
   const browser = await chromium.launch({
     executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium',
     args: ['--no-sandbox']
@@ -30,12 +30,16 @@ async function check() {
     const creator = ranking.categories.all.entries[0];
     const workUrl = '/songs/detail/?artist_id=' + G + '&work_id=';
     const creatorUrl = '/creators/detail/?artist_id=' + G + '&creator_id=';
+    const pairUrl = (a, b) => '/analysis/detail/?artist_id=' + G + '&creator_id=' + a + '&partner_id=' + b;
     const pages = {
-      home: ['/', '#dashboard'],
+      home: ['/', '#top-pairs .lab-count'],
+      'home-direction': ['/?mode=lyrics_composition', '#top-pairs .lab-count'],
       ranking: ['/ranking/', '#ranking li'],
       songs: [search, '#results li'],
       'creator-search': [search + '&tab=creators', '#results li'],
       pairs: [analysis, '#results li'],
+      'pairs-direction': [analysis + '&mode=lyrics_composition', '#results li'],
+      'collaboration-detail': [pairUrl('C00001', 'C00002'), '#collaboration-content'],
       collaborators: [analysis + '&tab=creator&creator_id=' + creator.creator_id, '#results li'],
       more: ['/more/', '#site-updates .about-content li'],
       creator: [creatorUrl + creator.creator_id, '#creator-content'],
@@ -61,19 +65,31 @@ async function check() {
           assert.equal(await page.locator('.sp-brand').evaluate(e => getComputedStyle(e).position), 'fixed');
           assert.equal(await page.locator('nav.mobile').evaluate(e => getComputedStyle(e).position), 'fixed');
         }
+        if (name === 'creator') {
+          const bounds = await page.locator('.creator-overview-grid > section').evaluateAll(sections =>
+            sections.map(section => ({ left: section.offsetLeft, top: section.offsetTop })));
+          if (width >= 1024) {
+            assert.equal(bounds[0].top, bounds[1].top);
+            assert(bounds[0].left < bounds[1].left);
+          } else {
+            assert.equal(bounds[0].left, bounds[1].left);
+            assert(bounds[0].top < bounds[1].top);
+          }
+        }
+        assert(await page.locator('a.lab-count').evaluateAll(links => links.every(link => link.offsetHeight >= 44)));
         const ids = await page.locator('[id]').evaluateAll(es => es.map(e => e.id));
         assert.equal(new Set(ids).size, ids.length, name);
         if (output && [390, 1440].includes(width)) await page.screenshot({ path: resolve(output, `${name}-${width}.png`) });
       }
     }
 
-    await open('/', '#dashboard');
+    await open('/', '#top-pairs .lab-count');
     assert.deepEqual(await page.locator('#summary dd').allTextContents(), [
       ranking.summary.target_work_count, ranking.summary.primary_song_count, ranking.categories.all.entries.length
     ].map(value => value.toLocaleString('ja-JP')));
     const rowValues = selector => page.locator(selector).evaluateAll(rows => rows.map(row => [
       parseInt(row.querySelector('.lab-rank-number').textContent),
-      [...row.querySelectorAll('a')].map(link => link.textContent).join(' × '),
+      [...row.querySelectorAll('a:not(.lab-count)')].map(link => link.textContent).join(' × '),
       parseInt(row.querySelector('.lab-count').textContent)
     ]));
     const expectedCreators = rows => rows.map(row => [row.rank, row.creator_name, row.work_count]);
@@ -81,12 +97,46 @@ async function check() {
     const publishedPairs = ranking.lyrics_composition_pairs.entries;
     const offPairs = rankVisiblePairs(publishedPairs);
     assert.deepEqual(await rowValues('#top-creators li'), expectedCreators(ranking.categories.all.entries.filter(row => row.rank <= 3)));
+    const all = allCollaborations(catalog.works);
+    const allRows = rows => rows.map(row => [row.rank, row.first_name + ' × ' + row.second_name, row.work_count]);
+    assert.deepEqual(await rowValues('#top-pairs li'), allRows(all.filter(row => row.rank <= 3)));
+    await page.locator('#top-pairs .lab-count').first().click();
+    await page.locator('#collaboration-content').waitFor();
+    assert.equal(await page.locator('#collaboration-works > li').count(), all[0].work_count);
+    await page.locator('#detail-back').click();
+    await page.locator('#top-pairs .lab-count').first().waitFor();
+    assert.equal(await page.locator('#top-pairs .lab-count').first().evaluate(el => el === document.activeElement), true);
+    await page.locator('[data-mode=lyrics_composition]').click();
+    await page.locator('#top-pairs .lab-count').first().waitFor();
     assert.deepEqual(await rowValues('#top-pairs li'), expectedPairs(offPairs.filter(row => row.rank <= 3)));
-    await page.locator('main a[href^="/analysis/"], main a[href*="/analysis/?"]').click();
+    await page.locator('#analyze-pairs').click();
     await page.locator('#results li').first().waitFor();
+    assert.equal(new URL(page.url()).searchParams.get('mode'), 'lyrics_composition');
     assert.deepEqual(await rowValues('#results li'), expectedPairs(offPairs));
     await page.locator('#include-self').check();
     assert.deepEqual(await rowValues('#results li'), expectedPairs(publishedPairs));
+    await page.locator('[data-mode=all]').click();
+    await page.locator('#results li').first().waitFor();
+    assert.equal(await page.locator('#include-self').isVisible(), false);
+    assert.deepEqual(await rowValues('#results li'), allRows(all));
+    await page.goBack();
+    await page.locator('#include-self').waitFor();
+    assert.equal(await page.locator('#include-self').isChecked(), true);
+    await page.goForward();
+    await page.locator('#include-self').waitFor({ state: 'hidden' });
+    await page.locator('[data-mode=lyrics_composition]').click();
+    assert.equal(await page.locator('#include-self').isChecked(), true);
+
+    const wider = offPairs.find(row => {
+      const pair = collaborationIndex(catalog.works).pairs.get(pairKey(row.lyricist_creator_id, row.composer_creator_id));
+      return pair.work_count > row.work_count;
+    });
+    await page.locator(`[data-restore="collaboration-${wider.lyricist_creator_id}-${wider.composer_creator_id}"]`).click();
+    await page.locator('#collaboration-content').waitFor();
+    assert(await page.locator('#collaboration-works > li').count() > wider.work_count);
+    await page.locator('#detail-back').click();
+    await page.locator('#include-self').waitFor();
+    assert.equal(await page.locator('#include-self').isChecked(), true);
 
     await open('/ranking/', '#ranking li');
     for (const [id, category] of Object.entries(ranking.categories)) {
@@ -248,84 +298,69 @@ async function check() {
     await page.getByText(/条件に一致する組み合わせがありません/).waitFor();
     await page.goBack();
     assert.equal(await page.locator('#include-self').isChecked(), true);
-    const evidence = page.locator('#results button').first();
-    await evidence.click();
-    const modal = page.locator('dialog[open]');
-    await modal.waitFor();
-    assert.equal(await page.locator('#evidence-close').evaluate(el => el === document.activeElement), true);
-    await page.keyboard.press('Tab');
-    assert.equal(await page.evaluate(() => document.activeElement.matches('dialog a')), true);
-    const modalUrl = page.url();
-    await modal.getByRole('link', { name: /根拠音源/ }).first().click();
+    await page.locator('#results .lab-count').first().click();
+    await page.locator('#collaboration-content').waitFor();
+    assert.equal(await page.locator('#collaboration-works > li').count(),
+      publishedPairs.find(row => row.lyricist_creator_id === creator.creator_id && row.composer_creator_id === creator.creator_id).work_count);
+    assert.match(await page.locator('#collaboration-total').innerText(), /本人/);
+    await page.locator('#detail-back').click();
+    await page.locator('#results .lab-count').first().waitFor();
+    assert.equal(await page.locator('#include-self').isChecked(), true);
+
+    await open(pairUrl('C00002', 'C00001'), '#collaboration-content');
+    const pair = collaborationIndex(catalog.works).pairs.get(pairKey('C00001', 'C00002'));
+    assert.equal(new URL(page.url()).searchParams.get('creator_id'), 'C00001');
+    assert.equal(await page.locator('#collaboration-works > li').count(), pair.work_count);
+    assert.equal(await page.locator('#collaboration-breakdown > li').count(), breakdown(pair.works).length);
+    await page.reload();
+    await page.locator('#collaboration-content').waitFor();
+    await page.locator('#collaboration-creators a').first().click();
+    await page.locator('#creator-content').waitFor();
+    await page.locator('[data-role="lyrics"]').click();
+    const roleUrl = page.url();
+    const top = analyzeCollaborators(catalog.works, 'C00001').entries.filter(row => row.rank <= 3);
+    assert.deepEqual(await rowValues('#creator-collaborators li'), expectedCreators(top));
+    await page.locator('#creator-collaborators li a:not(.lab-count)').first().click();
+    await page.locator('#creator-content').waitFor();
+    await page.locator('#creator-back').click();
+    await page.waitForURL(roleUrl);
+    await page.locator('#creator-collaborators .lab-count').first().click();
+    await page.locator('#collaboration-content').waitFor();
+    assert.equal(await page.locator('#collaboration-works > li').count(), top[0].work_count);
+    await page.locator('#detail-back').click();
+    await page.waitForURL(roleUrl);
+    assert.equal(await page.locator('[data-role=lyrics]').getAttribute('aria-pressed'), 'true');
+    await page.locator('#creator-analyze').click();
+    await page.locator('#results .lab-count').first().click();
+    await page.locator('#collaboration-content').waitFor();
+    assert.equal(await page.locator('#collaboration-works > li').count(), top[0].work_count);
+    const collaborationUrl = page.url();
+    await page.locator('#collaboration-works a').first().click();
     await page.locator('#work-content').waitFor();
     await page.locator('#detail-back').click();
-    await page.waitForURL(modalUrl);
-    await modal.waitFor();
-    await page.keyboard.press('Escape');
-    await modal.waitFor({ state: 'hidden' });
-    assert.equal(await evidence.evaluate(el => el === document.activeElement), true);
-    assert.equal(new URL(page.url()).searchParams.has('lyricist_id'), false);
-    await open(analysis + '&include_self=1', '#results li');
-    const initialAnalysisUrl = page.url();
-    const selfEvidence = page.locator('#results button').first();
-    await selfEvidence.click();
-    await modal.waitFor();
-    const selfUrl = page.url();
-    const modalLink = modal.locator('a').last();
-    await modalLink.focus();
-    const dialogY = await modal.evaluate(el => {
-      el.scrollTop = el.scrollHeight;
-      return el.scrollTop;
-    });
-    assert(dialogY > 0);
-    await page.waitForFunction(expected => document.querySelector('dialog').scrollTop === expected, dialogY);
-    await page.goBack();
-    assert.equal(page.url(), initialAnalysisUrl);
-    await modal.waitFor({ state: 'hidden' });
-    assert.equal(await selfEvidence.evaluate(el => el === document.activeElement), true);
+    await page.waitForURL(collaborationUrl);
     await page.goForward();
-    assert.equal(page.url(), selfUrl);
-    await modal.waitFor();
-    assert.equal(await modal.evaluate(el => el.scrollTop), dialogY);
-    assert.equal(await modalLink.evaluate(el => el === document.activeElement), true);
-    // Native dialogs keep background inputs inert. Dispatch the same change
-    // to exercise reconciliation when controls change while evidence is open.
-    await page.locator('#include-self').evaluate(input => {
-      input.checked = false;
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-    });
-    await modal.waitFor({ state: 'hidden' });
-    assert.equal(new URL(page.url()).searchParams.has('lyricist_id'), false);
-    assert.equal(await page.locator('#include-self').isChecked(), false);
-    assert.equal(await page.locator('#tab-pairs').evaluate(el => el === document.activeElement), true);
+    await page.locator('#work-content').waitFor();
     await page.goBack();
-    await modal.waitFor();
-    assert.equal(page.url(), selfUrl);
-    assert.equal(await modal.evaluate(el => el.scrollTop), dialogY);
-    await page.goForward();
-    await modal.waitFor({ state: 'hidden' });
-    assert.equal(new URL(page.url()).searchParams.has('composer_id'), false);
-    await open(analysis, '#results li');
-    await page.locator('#results button').first().click();
-    await modal.waitFor();
-    const differentUrl = new URL(page.url());
-    const differentLink = modal.locator('a').first();
-    await differentLink.focus();
-    await page.locator('#include-self').evaluate(input => {
-      input.checked = true;
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-    });
-    await page.waitForURL(url => url.searchParams.get('include_self') === '1');
-    assert.equal(new URL(page.url()).searchParams.get('lyricist_id'), differentUrl.searchParams.get('lyricist_id'));
-    assert.equal(new URL(page.url()).searchParams.get('composer_id'), differentUrl.searchParams.get('composer_id'));
-    assert.equal(await modal.isVisible(), true);
-    assert.equal(await differentLink.evaluate(el => el === document.activeElement), true);
-    await page.keyboard.press('Escape');
-    await modal.waitFor({ state: 'hidden' });
-    await page.waitForURL(url => !url.searchParams.has('lyricist_id') && !url.searchParams.has('composer_id'));
+    await page.locator('#collaboration-content').waitFor();
+    assert.equal(await page.getByText(/根拠音源/).count(), 0);
+    assert.equal(await page.locator('dialog').count(), 0);
+
+    const withoutWork = [...collaborationIndex(catalog.works).creators.keys()].find(id =>
+      id !== 'C00001' && !collaborationIndex(catalog.works).pairs.has(pairKey(id, 'C00001')));
+    await open(pairUrl('C00001', withoutWork), '#collaboration-empty');
+    await open(pairUrl('C00001', 'C99999'), '#data-status');
+    await page.getByText('指定された作家が見つかりません。').waitFor();
+    await open(pairUrl('C00001', 'bad'), '#data-status');
+    await page.getByText(/URLを確認してください/).waitFor();
+    await open(analysis + '&include_self=1&lyricist_id=C00001&composer_id=C00002');
+    await page.waitForURL('**/analysis/detail/**');
+    await page.locator('#collaboration-content').waitFor();
+    await page.locator('#detail-back').click();
+    await page.locator('#results li').first().waitFor();
     assert.equal(await page.locator('#include-self').isChecked(), true);
-    assert.equal(await page.locator('#results button:focus').count(), 1);
-    await open(analysis, '#results li');
+
+    await open(analysis + '&mode=lyrics_composition', '#results li');
     await page.locator('#pair-creator').fill(creator.creator_name);
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('Enter');
@@ -399,7 +434,7 @@ async function check() {
       contentType: 'text/javascript',
       body: stateSource.replace("{ [publishedArtistId]: 'Juice=Juice' }", "{ [publishedArtistId]: 'Juice=Juice', G99999: 'Fixture' }")
     }));
-    await twoArtists.route('**/search/**', async route => {
+    await twoArtists.route(/\/(search|analysis)\//, async route => {
       if (!route.request().isNavigationRequest()) return route.continue();
       const actual = await route.fetch();
       const html = (await actual.text()).replace('</select>', '<option value="G99999">Fixture</option></select>');
@@ -437,6 +472,23 @@ async function check() {
     assert.equal(await twoArtists.locator('#artist-select').inputValue(), fixtureArtist);
     await twoArtists.goto(base + '/search/?artist_id=' + G);
     assert.equal(await twoArtists.locator('#artist-select').inputValue(), G);
+    const roleList = ['lyrics', 'composition', 'arrangement', 'english_lyrics', 'brass_arrangement'];
+    fixture.works[0].songs = [fixture.works[0].songs[0]];
+    fixture.works[0].songs[0].credits = Array.from({ length: 5 }, (_, n) => 'C0000' + (n + 1)).flatMap(creator_id =>
+      roleList.map(role => ({ creator_id, role, creator_name: 'とても長い作家名'.repeat(24) + creator_id,
+        credit_name: creator_id, credit_order: 1 })));
+    await twoArtists.goto(base + analysis);
+    await twoArtists.locator('#results .lab-count').first().waitFor();
+    await twoArtists.locator('#artist-select').selectOption(fixtureArtist);
+    await twoArtists.waitForFunction(() => document.querySelectorAll('#results li').length === 10);
+    await twoArtists.locator('#results .lab-count').first().click();
+    await twoArtists.locator('#collaboration-content').waitFor();
+    assert.equal(await twoArtists.locator('#collaboration-breakdown li').count(), 25);
+    assert.equal(await twoArtists.locator('#collaboration-works li').count(), 1);
+    assert(await twoArtists.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    await twoArtists.locator('#detail-back').click();
+    await twoArtists.locator('#results .lab-count').first().waitFor();
+    assert.equal(await twoArtists.locator('#artist-select').inputValue(), fixtureArtist);
     await twoArtists.close();
 
     await open(search, '#results a');
@@ -473,7 +525,7 @@ async function check() {
       assert.equal(bytes.readUInt32BE(20), height);
     }
     assert.deepEqual(errors, []);
-    console.log(`PASS: 60 responsive cases, ${catalog.works.length} works and all recordings; rankings, search, detail/analysis, history, compatibility, errors and brand assets`);
+    console.log(`PASS: 78 responsive cases, ${catalog.works.length} works and all recordings; rankings, search, detail/analysis, history, compatibility, errors and brand assets`);
   } finally {
     await browser.close();
   }

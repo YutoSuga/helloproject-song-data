@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
 const primary = ['/', '/ranking/', '/search/', '/analysis/', '/more/'];
-const detail = ['/creators/detail/', '/songs/detail/'];
+const detail = ['/creators/detail/', '/songs/detail/', '/analysis/detail/'];
 const legacy = ['/creators/', '/songs/', '/videos/'];
 const read = path => readFile(resolve(root, path), 'utf8');
 
@@ -128,7 +128,8 @@ test('design mock locates pair analysis and collaborator analysis in their own t
   assert.doesNotMatch(ranking, /組み合わせランキング|共同制作楽曲/);
   assert.match(analysis, /aria-controls="pairs"[^>]*>組み合わせランキング<\/button>/);
   assert.match(analysis, /aria-controls="creator"[^>]*>作家指定分析<\/button>/);
-  assert.match(analysis, /<dialog[^>]*>[\s\S]*?href="song-detail\.html"/);
+  assert.doesNotMatch(analysis, /<dialog/);
+  assert.match(analysis, /href="collaboration-detail\.html\?pair=/);
 });
 
 test('pair mocks share all tied top ranks and illustrate the opt-in ranking', async () => {
@@ -152,7 +153,7 @@ test('pair mocks share all tied top ranks and illustrate the opt-in ranking', as
   assert.deepEqual(pairRows(analysis, 'pairs-all').map(([, rank, count]) => [rank, count]),
     [[1, 25], [2, 5], [3, 4]]);
   assert.match(analysis, /id="include-self" type="checkbox" aria-controls="pairs-different pairs-all"> 同一作家の組み合わせを含む/);
-  assert.match(analysis, /id="pairs-all" hidden/);
+  assert.match(analysis, /id="pairs-all" data-pair-view="self" hidden/);
   assert.doesNotMatch(home, /include.self/);
 });
 

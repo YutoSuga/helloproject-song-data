@@ -37,7 +37,11 @@
 <div class="lab-tabs" role="tablist" aria-label="分析方法"><button type="button" role="tab" data-value="pairs" id="tab-pairs" aria-controls="tab-panel" aria-selected="true" tabindex="0">組み合わせランキング</button>
 <button type="button" role="tab" data-value="creator" id="tab-creator" aria-controls="tab-panel" aria-selected="false" tabindex="-1">作家指定分析</button></div>
 <section id="tab-panel" role="tabpanel" aria-labelledby="tab-pairs">
-  <h2 id="analysis-heading">作詞 × 作曲</h2>
+  <div class="lab-controls" id="pair-mode" role="group" aria-label="組み合わせの集計方式">
+    <button data-mode="all" aria-pressed="true">すべて</button>
+    <button data-mode="lyrics_composition" aria-pressed="false">作詞 × 作曲</button>
+  </div>
+  <h2 id="analysis-heading">全担当区分の組み合わせ</h2>
   <div class="creator-combobox">
     <label class="field"><span id="picker-label">対象作家（任意）</span>
       <input type="text" id="pair-creator" role="combobox" aria-label="作家名またはIDで検索" aria-autocomplete="list" aria-controls="pair-creator-options" aria-expanded="false" autocomplete="off" disabled>
@@ -58,12 +62,7 @@
   <p id="summary" role="status"></p>
   <ol id="results" class="lab-list"></ol>
 </section>
-<dialog id="evidence" aria-labelledby="evidence-heading">
-  <form method="dialog"><button id="evidence-close" data-restore="evidence-close" autofocus>閉じる</button></form>
-  <h2 id="evidence-heading">共同制作楽曲</h2>
-  <p id="evidence-summary"></p>
-  <ul id="evidence-works" class="lab-list"></ul>
-</dialog>
+
 </main>
 <footer>ハロプロ作家研究所 · 非公式ファンサイト</footer>
 </div>

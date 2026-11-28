@@ -36,33 +36,17 @@ function entryId() {
   return history.state?.entryId ?? crypto.randomUUID();
 }
 
-const livePositions = new Map();
-
-function snapshotPosition(focus = document.activeElement?.dataset.restore) {
-  return {
-    ...history.state, entryId: entryId(), x: scrollX, y: scrollY,
-    focus, dialogY: document.querySelector('dialog[open]')?.scrollTop
-  };
-}
-
-export function trackHistoryPosition() {
-  const id = history.state?.entryId;
-  if (id) livePositions.set(id, snapshotPosition());
-}
-
-function remember(focus) {
-  const snapshot = snapshotPosition(focus);
-  livePositions.delete(snapshot.entryId);
+function remember(focus = document.activeElement?.dataset.restore) {
+  const snapshot = { ...history.state, entryId: entryId(), x: scrollX, y: scrollY, focus };
   history.replaceState(snapshot, '');
   return snapshot;
 }
 
 export function restorePosition() {
-  const saved = livePositions.get(history.state?.entryId) ?? history.state;
+  const saved = history.state;
   if (saved?.focus) document.querySelector(`[data-restore="${CSS.escape(saved.focus)}"]`)?.focus({ preventScroll: true });
   if (saved?.y != null) scrollTo(saved.x, saved.y);
   else if (path !== '/songs/detail/' || location.hash.startsWith('#song-')) $(location.hash.slice(1))?.scrollIntoView();
-  if (saved?.dialogY != null) document.querySelector('dialog[open]')?.scrollTo(0, saved.dialogY);
 }
 
 export function update(patch, { replace = false, keepPosition = false } = {}) {
@@ -155,14 +139,24 @@ export function tabs(tablist, value, select) {
   return sync;
 }
 
-export function detailLink(type, id, text, artist, song) {
-  const target = type === 'creator' ? '/creators/detail/' : '/songs/detail/';
-  const key = type === 'creator' ? 'creator_id' : 'work_id';
-  const from = safeFrom(relative(), location.origin);
-  const anchor = link(text, pageUrl(target, { artist_id: artist, [key]: id, from }, song ? `#song-${song}` : ''));
+function sourceUrl(url) {
+  url.searchParams.delete('from');
+  return safeFrom(url.pathname + url.search + url.hash, location.origin);
+}
+
+export function navigationLink(text, target, values, focusKey, hash = '') {
+  const from = sourceUrl(new URL(location.href));
+  const anchor = link(text, pageUrl(target, { ...values, from }, hash));
   anchor.dataset.detail = '';
-  anchor.dataset.restore = `${type}-${id}${song ? '-' + song : ''}`;
+  anchor.dataset.restore = focusKey;
   return anchor;
+}
+
+export function detailLink(type, id, text, artist, song) {
+  const creator = type === 'creator';
+  return navigationLink(text, creator ? '/creators/detail/' : '/songs/detail/',
+    { artist_id: artist, [creator ? 'creator_id' : 'work_id']: id },
+    `${type}-${id}${song ? '-' + song : ''}`, song ? `#song-${song}` : '');
 }
 
 export function setupDetail(back, tab) {
@@ -170,7 +164,8 @@ export function setupDetail(back, tab) {
   const current = state();
   const requested = single(params, 'from');
   const legacy = tab === 'creators' && !params.has('from') && ['view', 'category', 'q'].some(key => params.has(key));
-  const fallback = pageUrl('/search/', { artist_id: current.artist_id, tab });
+  const fallback = tab === 'pairs' ? pageUrl('/analysis/', { artist_id: current.artist_id, tab })
+    : pageUrl('/search/', { artist_id: current.artist_id, tab });
   const from = safeFrom(requested, location.origin);
   back.href = from ?? (legacy ? legacyDestination('/creators/', params) : fallback);
   if (from || legacy) back.textContent = '‹ 前の画面へ戻る';
@@ -178,7 +173,7 @@ export function setupDetail(back, tab) {
   try { pending = JSON.parse(storage.get(pendingKey)); } catch { /* Ignore invalid saved state. */ }
   storage.remove(pendingKey);
   const referrer = document.referrer.startsWith(location.origin + '/')
-    ? safeFrom(document.referrer.slice(location.origin.length), location.origin) : null;
+    ? sourceUrl(new URL(document.referrer)) : null;
   if (from && pending?.target === relative() && pending.from === from && referrer === from.split('#')[0]) {
     history.replaceState({ ...history.state, previous: from }, '');
   }
@@ -201,7 +196,7 @@ if (typeof document !== 'undefined') {
     if (!anchor) return;
     remember(anchor.dataset.restore);
     const url = new URL(anchor.href);
-    storage.set(pendingKey, JSON.stringify({ target: url.pathname + url.search + url.hash, from: safeFrom(relative(), location.origin) }));
+    storage.set(pendingKey, JSON.stringify({ target: url.pathname + url.search + url.hash, from: sourceUrl(new URL(location.href)) }));
   });
   if (path === '/more/' || path === '/videos/') {
     refreshLinks(resolveArtist(new URLSearchParams(location.search), readSavedArtist()).artist);

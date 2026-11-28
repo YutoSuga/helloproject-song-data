@@ -76,3 +76,6 @@ dialog::backdrop { background: #35212880; }
 .field select, .field input { min-width: 0; width: 100%; }
 
 .checkbox { display: inline-flex; align-items: center; gap: .35rem; min-height: 44px; }
+
+.mock-creator-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+@media (max-width:1023px) { .mock-creator-grid { grid-template-columns: 1fr; gap: 0; } }

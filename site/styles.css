@@ -767,7 +767,7 @@ dialog:not([open]) {
 .lab-list { padding: 0; list-style: none; }
 .lab-list li { padding: 8px 0; overflow-wrap: anywhere; }
 .lab-list li + li { border-top: 1px solid var(--line); }
-.lab-list li > a:not(.evidence-song) { display: inline-flex; align-items: center; min-height: 44px; }
+.lab-list li > a { display: inline-flex; align-items: center; min-height: 44px; }
 .lab-list small { display: block; }
 .lab-rank { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; min-height: 44px; }
 .lab-rank > a, .lab-rank > strong { flex: 1 1 130px; min-width: 0; overflow-wrap: anywhere; }
@@ -779,8 +779,6 @@ dialog:not([open]) {
 .credit-list { display: grid; grid-template-columns: max-content minmax(0,1fr); gap: 8px 12px; }
 .credit-list dd { margin: 0; overflow-wrap: anywhere; }
 .credit-list dd a + a { margin-inline-start: 8px; }
-.evidence-songs { display: flex; flex-wrap: wrap; gap: 4px 12px; }
-#evidence { width: min(680px, calc(100% - 32px)); }
 #pair-creator-options { position: absolute; z-index: 4; left: 0; width: min(100%, 480px); max-height: 240px; overflow: auto; margin: 0; padding: 4px; background: white; border: 1px solid var(--line); list-style: none; }
 #pair-creator-options [role=option] { cursor: pointer; padding: 8px; overflow-wrap: anywhere; }
 #pair-creator-options [aria-selected=true] { background: var(--soft); color: var(--accent); }
@@ -807,6 +805,10 @@ div.lab-tabs[role=tablist] { flex-wrap: nowrap; }
 #pair-filters label:has(#include-self) { flex: 0 1 auto; }
 .lab-rank a { display: inline-block; padding-block: 6px; }
 @media (max-width:480px) {
-  .lab-rank > button { grid-column: 2 / -1; justify-self: start; }
-  .lab-rank:has(button) { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; }
+  .lab-rank > strong, .lab-rank > a:not(.lab-count) { flex-basis: 95px; }
 }
+
+.lab-rank > .lab-count { flex: none; display: inline-flex; min-height: 44px; align-items: center; }
+#pair-mode button[aria-pressed=true] { background: var(--accent); color: white; }
+.creator-overview-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+@media (max-width:1023px) { .creator-overview-grid { grid-template-columns: 1fr; gap: 0; } }

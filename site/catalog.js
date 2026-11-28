@@ -1,9 +1,11 @@
+import { allCollaborations } from './collaborators.js';
+import { pageUrl } from './site-state.js';
 import { $, detailLink, element, path, restorePosition, setupArtist, state, status, tabs, update } from './common.js';
 import { findCreators } from './creator-catalog-model.js';
 import { selectWorks } from './song-catalog-model.js';
 import { emptyData, loadData, loadError, loading, readPairs } from './public-data.js';
 import { rankVisiblePairs } from './pair-analysis.js';
-import { pairName, rankRow, topThree } from './ranking-view.js';
+import { pairRow, rankRow, topThree } from './ranking-view.js';
 
 const message = $('data-status');
 const summary = $('summary');
@@ -30,12 +32,6 @@ function renderHome(data, artist) {
   }));
   populate($('top-creators'), topThree(all), row =>
     rankRow(row, detailLink('creator', row.creator_id, row.creator_name, artist), all[0].work_count));
-  try {
-    const pairs = rankVisiblePairs(readPairs(data));
-    populate($('top-pairs'), topThree(pairs), row => rankRow(row, pairName(row, artist), pairs[0].work_count));
-  } catch {
-    $('top-pairs').replaceChildren(element('li', loadError));
-  }
   $('dashboard').hidden = false;
 }
 
@@ -79,6 +75,11 @@ async function render(restore = false, live = false) {
   const token = ++request;
   const current = state();
   const songs = isSearch && current.tab === 'songs';
+  const direction = current.mode === 'lyrics_composition';
+  if (isHome) {
+    for (const button of $('pair-mode').querySelectorAll('button')) button.setAttribute('aria-pressed', button.dataset.mode === (current.mode ?? 'all'));
+    $('analyze-pairs').href = pageUrl('/analysis/', { artist_id: current.artist_id, tab: 'pairs', mode: current.mode });
+  }
   syncTabs?.(current.tab ?? current.category);
   if (isSearch) {
     retry.hidden = true;
@@ -100,7 +101,20 @@ async function render(restore = false, live = false) {
     const data = await loadData(songs ? 'songs' : 'rankings', current.artist_id);
     if (token !== request) return;
     let text;
-    if (isHome) renderHome(data, current.artist_id);
+    if (isHome) {
+      renderHome(data, current.artist_id);
+      status(message, '');
+      $('top-pairs').replaceChildren(element('li', loading));
+      try {
+        const pairs = direction ? rankVisiblePairs(readPairs(data))
+          : allCollaborations((await loadData('songs', current.artist_id)).works);
+        if (token !== request) return;
+        populate($('top-pairs'), topThree(pairs), row => pairRow(row, current.artist_id, pairs[0].work_count));
+      } catch {
+        if (token !== request) return;
+        $('top-pairs').replaceChildren(element('li', loadError));
+      }
+    }
     else if (isSearch) {
       query.disabled = sort.disabled = false;
       text = renderSearch(data, current);
@@ -115,6 +129,12 @@ async function render(restore = false, live = false) {
 }
 
 setupArtist(render);
+$('pair-mode')?.addEventListener('click', event => {
+  const mode = event.target.closest('[data-mode]')?.dataset.mode;
+  if (!mode || mode === (state().mode ?? 'all')) return;
+  update({ mode }, { keepPosition: true });
+  render(true);
+});
 retry?.addEventListener('click', async () => {
   const previous = location.href;
   await render();

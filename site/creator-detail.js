@@ -1,3 +1,5 @@
+import { analyzeCollaborators } from './collaborators.js';
+import { collaboratorRow, topThree } from './ranking-view.js';
 import { filterCreatorWorks, getCreatorDetail } from './creator-catalog-model.js';
 import { ALL_ROLE_LABELS } from './creator-roles.js';
 import { $, detailLink, restorePosition, setupDetail, state, status, update } from './common.js';
@@ -8,7 +10,7 @@ const find = $;
 const current = setupDetail(find('creator-back'), 'creators');
 const { creator_id: creatorId, artist_id: artistId } = current;
 
-function renderDetail(detail, artistName) {
+function renderDetail(detail, artistName, songs) {
   find("creator-heading").textContent = detail.name;
   document.title = `${detail.name} | ハロプロ作家研究所`;
   find("creator-overview").textContent = `${artistName}・総担当 ${detail.total}曲`;
@@ -27,7 +29,12 @@ function renderDetail(detail, artistName) {
 
   const filters = [...document.querySelectorAll(".creator-work-filters button")];
   const workList = find("creator-work-list");
+  const { entries } = analyzeCollaborators(songs.works, creatorId);
   function showWorks(role) {
+    find('creator-collaborators').replaceChildren(...topThree(entries).map(row =>
+      collaboratorRow(row, creatorId, artistId, entries[0].work_count)));
+    find('collaborators-empty').hidden = entries.length > 0;
+
     for (const button of filters) {
       button.setAttribute("aria-pressed", String(button.dataset.role === role));
     }
@@ -77,7 +84,7 @@ if (requestError) {
     if (detail) {
       const workIds = new Set(songs.works.map(work => work.work_id));
       if (detail.works.some(work => !workIds.has(work.work_id))) throw new Error('Missing catalog evidence');
-      renderDetail(detail, rankings.artist.name);
+      renderDetail(detail, rankings.artist.name, songs);
       restorePosition();
     } else status(message, '指定された作家の担当楽曲が見つかりません。');
   } catch {
