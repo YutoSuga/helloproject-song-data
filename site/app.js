@@ -1,13 +1,14 @@
 import { analyzeCreatorPairs } from "./pair-analysis.js";
-import { buildCreatorRoleIndex, ROLE_LABELS } from "./creator-roles.js";
+import { ALL_ROLE_LABELS, buildCreatorRoleIndex, ROLE_LABELS } from "./creator-roles.js";
 
+const categoryIds = ["all", "lyrics", "composition", "lyrics_composition", "arrangement"];
 const status = document.querySelector("#data-status");
 try {
   const response = await fetch(new URL("./data/rankings/G00001.json", import.meta.url));
   if (!response.ok) throw new Error(`Ranking data: ${response.status}`);
   const data = await response.json();
   // Only validate the public reader contract. CSV validation stays in the build.
-  for (const id of ["lyrics", "composition", "lyrics_composition", "lyrics_or_composition", "arrangement"]) {
+  for (const id of categoryIds) {
     const category = data.categories?.[id];
     if (typeof category?.label !== "string" || !Array.isArray(category.entries)) throw new Error("Invalid ranking category");
     for (const entry of category.entries) {
@@ -24,8 +25,17 @@ try {
       typeof entry.lyricist_name !== "string" || typeof entry.composer_name !== "string" ||
       !Array.isArray(entry.works) || entry.works.some(work => !work || typeof work.title !== "string")))) pairError = "組み合わせデータを表示できません。";
   const roleIndex = buildCreatorRoleIndex(data.categories);
-  for (const category of Object.values(data.categories)) {
-    for (const entry of category.entries) {
+  for (const id of categoryIds) {
+    for (const entry of data.categories[id].entries) {
+      if (id === "all") {
+        if (entry.works.some(work => !Array.isArray(work.roles) || !work.roles.length ||
+            work.roles.some(role => typeof role !== "string" || !role.trim() || role === "all") ||
+            !Array.isArray(work.song_ids) || !work.song_ids.length ||
+            work.song_ids.some(songId => typeof songId !== "string" || !songId.trim()))) {
+          throw new Error("Invalid all-role evidence");
+        }
+        continue;
+      }
       if (entry.works.some(work => !roleIndex.get(entry.creator_id)?.has(work.work_id))) {
         throw new Error("Missing creator role evidence");
       }
@@ -82,15 +92,17 @@ function initialize(data, pairError, roleIndex) {
       title.textContent = work.title;
       li.append(title);
       if (context.kind === "creator") {
-        const roles = roleIndex.get(context.creatorId)?.get(work.work_id);
+        const roles = context.allRoles ? new Set(work.roles) : roleIndex.get(context.creatorId)?.get(work.work_id);
         if (!roles?.size) throw new Error("Missing creator role evidence");
         const badges = document.createElement("span");
         badges.className = "role-badges";
-        for (const [role, label] of Object.entries(ROLE_LABELS)) {
-          if (!roles.has(role)) continue;
+        const labels = context.allRoles ? ALL_ROLE_LABELS : ROLE_LABELS;
+        const orderedRoles = [...Object.keys(labels).filter(role => roles.has(role)),
+          ...[...roles].filter(role => !Object.hasOwn(labels, role))];
+        for (const role of orderedRoles) {
           const badge = document.createElement("span");
           badge.className = "role-badge";
-          badge.textContent = label;
+          badge.textContent = Object.hasOwn(labels, role) ? labels[role] : role;
           badges.append(badge);
         }
         li.append(badges);
@@ -101,7 +113,7 @@ function initialize(data, pairError, roleIndex) {
     document.querySelector("#close-detail").focus();
   }
   function showDetail(entry, category, button) {
-    showWorks(entry.creator_name, `${category.label}・${entry.work_count}曲`, entry.works, button, { kind: "creator", creatorId: entry.creator_id });
+    showWorks(entry.creator_name, `${category.label}・${entry.work_count}曲`, entry.works, button, { kind: "creator", creatorId: entry.creator_id, allRoles: entry.category === "all" });
   }
   function showPairDetail(entry, button) {
     showWorks(`${entry.lyricist_name} × ${entry.composer_name}`, `作詞 × 作曲・${entry.work_count}曲`, entry.works, button, { kind: "pair" });
@@ -143,7 +155,7 @@ function initialize(data, pairError, roleIndex) {
     document.querySelector("#category-panel").setAttribute("aria-labelledby", `category-${categoryId}`);
     ranking.replaceChildren(...category.entries.map(entry => createCard(entry, button => showDetail(entry, category, button))));
   }
-  for (const [categoryId, category] of Object.entries(data.categories)) {
+  for (const categoryId of categoryIds) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "tab";
@@ -151,12 +163,12 @@ function initialize(data, pairError, roleIndex) {
     button.dataset.category = categoryId;
     button.setAttribute("role", "tab");
     button.setAttribute("aria-controls", "category-panel");
-    button.textContent = category.label;
+    button.textContent = data.categories[categoryId].label;
     button.addEventListener("click", () => selectCategory(categoryId));
     tabs.append(button);
   }
   wireTabs([...tabs.children]);
-  selectCategory("lyrics");
+  selectCategory("all");
   document.querySelector("#close-detail").addEventListener("click", () => detail.close());
   detail.addEventListener("close", () => opener?.focus());
   detail.addEventListener("keydown", event => {

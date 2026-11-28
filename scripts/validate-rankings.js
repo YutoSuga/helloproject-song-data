@@ -1,3 +1,5 @@
+import assert from "node:assert/strict";
+import { CANONICAL_TABLES } from "../src/canonical-schema.js";
 import { resolve } from "node:path";
 import { loadCanonicalData } from "../src/canonical.js";
 import { aggregateCreatorRankings, CATEGORY_DEFINITIONS } from "../src/rankings.js";
@@ -65,6 +67,32 @@ const countedBoth = new Set(sameSongBoth.map(([key]) => {
 }));
 const crossVersionOnly = [...workCreatorRoles].filter(([key, roles]) => roles.has("lyrics") && roles.has("composition") && !countedBoth.has(key));
 
+// Derive the expected public rows directly from primary credits, independently
+// of the production aggregation and its ranking algorithm.
+const byId = (left, right) => left.localeCompare(right, "en");
+const expectedAll = data.creators.flatMap(creator => {
+  const credits = targetCredits.filter(credit => credit.creator_id === creator.creator_id);
+  if (!credits.length) return [];
+  const works = [...new Set(credits.map(credit => songById.get(credit.song_id).work_id))]
+    .sort(byId).map(workId => {
+      const evidence = credits.filter(credit => songById.get(credit.song_id).work_id === workId);
+      return {
+        work_id: workId,
+        title: workById.get(workId).title,
+        song_ids: [...new Set(evidence.map(credit => credit.song_id))].sort(byId),
+        roles: [...new Set(evidence.map(credit => credit.role))].sort(byId)
+      };
+    });
+  return [{ artist_id: artistId, category: "all", creator_id: creator.creator_id,
+    creator_name: creator.name, work_count: works.length, works }];
+}).sort((left, right) => right.work_count - left.work_count || byId(left.creator_id, right.creator_id));
+assert.deepEqual(ranking.categories.all.entries, expectedAll.map(entry => ({
+  ...entry,
+  rank: 1 + expectedAll.filter(other => other.work_count > entry.work_count).length
+})));
+
+const creatorRoles = CANONICAL_TABLES.find(table => table.name === "song_creators")
+  .columns.find(column => column.name === "role").values;
 const anomalyDetails = [];
 const duplicate = (rows, key, label) => {
   const seen = new Set();
@@ -84,7 +112,7 @@ for (const row of data.songArtists) {
 for (const row of data.songCreators) {
   if (!songById.has(row.song_id)) anomalyDetails.push(`missing song: song_creators/${row.song_id}`);
   if (!creatorById.has(row.creator_id)) anomalyDetails.push(`missing creator: ${row.creator_id}`);
-  if (!["lyrics", "english_lyrics", "composition", "arrangement", "brass_arrangement"].includes(row.role)) anomalyDetails.push(`unexpected creator role: ${row.role}`);
+  if (!creatorRoles.includes(row.role)) anomalyDetails.push(`unexpected creator role: ${row.role}`);
 }
 for (const row of data.songs) if (!workById.has(row.work_id)) anomalyDetails.push(`missing work: ${row.song_id}/${row.work_id}`);
 
@@ -107,10 +135,10 @@ const report = {
   })),
   song_vs_work: differences,
   versions: versionSummary,
-  specialized_roles_excluded: {
-    english_lyrics: targetCredits.filter((row) => row.role === "english_lyrics").length,
-    brass_arrangement: targetCredits.filter((row) => row.role === "brass_arrangement").length
-  },
+  all_evidence_verified: true,
+  specialized_roles_in_all_only: Object.fromEntries(creatorRoles
+    .filter(role => !["lyrics", "composition", "arrangement"].includes(role))
+    .map(role => [role, targetCredits.filter(row => row.role === role).length])),
   lyrics_composition_same_song_cases: sameSongBoth.length,
   cross_version_only_lyrics_composition: crossVersionOnly.map(([key]) => {
     const [workId, creatorId] = key.split("\0");

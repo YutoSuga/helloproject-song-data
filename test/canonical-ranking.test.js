@@ -17,13 +17,13 @@ test("current canonical Juice=Juice data aggregates by work", async (t) => {
   const result = aggregateCreatorRankings(data, "G00001");
   assert.deepEqual(result.summary, (await canonicalCounts(rootPath(new URL("..", import.meta.url)))).summary);
   assert.deepEqual(Object.keys(result.categories), [
+    "all",
     "lyrics",
     "composition",
     "lyrics_composition",
-    "lyrics_or_composition",
     "arrangement"
   ]);
-  assert.ok(result.categories.lyrics_or_composition.entries.length > 0);
+  assert.ok(result.categories.all.entries.length > 0);
   for (const category of Object.values(result.categories)) {
     for (const entry of category.entries) assert.equal(entry.work_count, entry.works.length);
   }
