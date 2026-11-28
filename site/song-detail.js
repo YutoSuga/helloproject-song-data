@@ -1,3 +1,4 @@
+import { creditName, creditsInRole } from './collaboration-credits.js';
 import { detailRequestError, isWorkId } from './site-state.js';
 import { $, detailLink, element, restorePosition, setupDetail, status } from './common.js';
 import { ALL_ROLE_LABELS } from './creator-roles.js';
@@ -11,12 +12,11 @@ const message = $('data-status');
 function creditsFor(song) {
   const list = element('dl', null, 'credit-list');
   for (const [role, label] of Object.entries(ALL_ROLE_LABELS)) {
-    const credits = song.credits.filter(credit => credit.role === role)
-      .sort((a, b) => (a.credit_order ?? Infinity) - (b.credit_order ?? Infinity) || a.creator_id.localeCompare(b.creator_id, 'en'));
+    const credits = creditsInRole(song.credits, role);
     if (!credits.length && !['lyrics', 'composition', 'arrangement'].includes(role)) continue;
     const item = element('dd', credits.length ? null : '未確認');
     for (const credit of credits) {
-      const text = credit.credit_name === credit.creator_name ? credit.credit_name : `${credit.credit_name}（${credit.creator_name}）`;
+      const text = creditName(credit);
       const anchor = detailLink('creator', credit.creator_id, text, current.artist_id);
       anchor.dataset.restore += `-${song.song_id}-${role}`;
       item.append(anchor);

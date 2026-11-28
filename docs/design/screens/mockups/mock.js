@@ -77,22 +77,32 @@ if (samples) {
     anchor.textContent = text;
     return anchor;
   };
-  document.getElementById('mock-creators').append(
-    link(row.names[0], 'creator-detail.html'), ' × ', link(row.names[1], 'creator-detail.html')
-  );
+  const text = (tag, label, className) => {
+    const node = document.createElement(tag);
+    node.textContent = label;
+    if (className) node.className = className;
+    return node;
+  };
+  const creators = document.getElementById('mock-creators');
+  creators.append(link(row.names[0], 'creator-detail.html'));
+  if (!row.self) creators.append(' × ', link(row.names[1], 'creator-detail.html'));
   document.getElementById('mock-total').textContent = (row.self ? '本人が作詞・作曲を両方担当した作品：' : '共同制作曲数（全担当区分）：') + row.total + '曲';
-  for (const line of row.breakdown) {
+  for (const [label, count] of row.breakdown) {
     const item = document.createElement('li');
-    item.textContent = line;
+    item.className = 'mock-breakdown-row';
+    item.append(text('span', label), text('span', count + '曲'));
     document.getElementById('mock-breakdown').append(item);
   }
-  for (const [title, ...patterns] of row.works) {
+  for (const work of row.works) {
     const item = document.createElement('li');
-    item.append(link(title, 'song-detail.html'));
-    for (const pattern of patterns) {
-      const label = document.createElement('small');
-      label.textContent = pattern;
-      item.append(label);
+    item.append(link(work.title, 'song-detail.html'));
+    if (work.count) item.append(text('span', work.count, 'mock-song-count'));
+    for (const group of work.groups) {
+      const section = document.createElement('div');
+      section.className = 'mock-song-group';
+      for (const name of group.names) section.append(text('small', name));
+      section.append(text('p', group.credits));
+      item.append(section);
     }
     document.getElementById('mock-works').append(item);
   }

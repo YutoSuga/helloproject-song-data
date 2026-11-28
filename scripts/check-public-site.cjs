@@ -16,7 +16,8 @@ async function check() {
   const { selectWorks, selectSongs } = await import('../site/song-catalog-model.js');
   const { findCreators } = await import('../site/creator-catalog-model.js');
   const { rankVisiblePairs } = await import('../site/pair-analysis.js');
-  const { allCollaborations, analyzeCollaborators, breakdown, collaborationIndex, pairKey } = await import('../site/collaborators.js');
+  const { collaborationRecordings, roleBreakdown } = await import('../site/collaboration-credits.js');
+  const { allCollaborations, analyzeCollaborators, collaborationIndex, pairKey } = await import('../site/collaborators.js');
   const browser = await chromium.launch({
     executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium',
     args: ['--no-sandbox']
@@ -31,6 +32,14 @@ async function check() {
     const workUrl = '/songs/detail/?artist_id=' + G + '&work_id=';
     const creatorUrl = '/creators/detail/?artist_id=' + G + '&creator_id=';
     const pairUrl = (a, b) => '/analysis/detail/?artist_id=' + G + '&creator_id=' + a + '&partner_id=' + b;
+    const recordingCases = [
+      ['tsunku-suzuki', 'C00028', 'C00035', null, 2],
+      ['hirata-tsunku', 'C00009', 'C00028', null, 1],
+      ['yamasaki-kouga', 'C00001', 'C00002', null, 1],
+      ['same-credits', 'C00009', 'C00028', 'W00028', 1, 3, '3音源'],
+      ['different-credits', 'C00031', 'C00039', 'W00040', 2, 2, '該当2音源／全3音源'],
+      ['one-matching-recording', 'C00005', 'C00031', 'W00040', 1, 1, '該当1音源／全3音源']
+    ];
     const pages = {
       home: ['/', '#top-pairs .lab-count'],
       'home-direction': ['/?mode=lyrics_composition', '#top-pairs .lab-count'],
@@ -84,6 +93,27 @@ async function check() {
           if (width === 390 && section) await page.locator(section).evaluate(element => element.scrollIntoView());
           await page.screenshot({ path: resolve(output, `${name}-${width}.png`) });
         }
+      }
+      for (const [name, first, second, workId, count, songCount, label] of recordingCases) {
+        await open(pairUrl(first, second), '#collaboration-content');
+        const target = workId
+          ? page.locator('#collaboration-works > li').filter({ has: page.locator(`a[data-restore="work-${workId}"]`) })
+          : page.locator('main');
+        if (workId) {
+          assert.equal(await target.count(), 1);
+          assert.equal(await target.locator('.collaboration-song-group').count(), count);
+          assert.equal(await target.locator('.collaboration-song-names li').count(), songCount);
+          assert.equal(await target.locator('.collaboration-song-count').innerText(), label);
+          if (output && [390, 1440].includes(width)) {
+            await target.evaluate(el => el.scrollIntoView());
+            await page.screenshot({ path: resolve(output, `${name}-${width}.png`) });
+          }
+        } else {
+          assert.equal(await target.locator('#collaboration-breakdown > li').count(), count);
+          if (output && [390, 1440].includes(width)) await page.screenshot({ path: resolve(output, `${name}-${width}.png`) });
+        }
+        assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+        assert.equal(await target.getByText(/根拠音源/).count(), 0);
       }
     }
 
@@ -315,7 +345,7 @@ async function check() {
     const pair = collaborationIndex(catalog.works).pairs.get(pairKey('C00001', 'C00002'));
     assert.equal(new URL(page.url()).searchParams.get('creator_id'), 'C00001');
     assert.equal(await page.locator('#collaboration-works > li').count(), pair.work_count);
-    assert.equal(await page.locator('#collaboration-breakdown > li').count(), breakdown(pair.works).length);
+    assert.equal(await page.locator('#collaboration-breakdown > li').count(), roleBreakdown(collaborationRecordings(catalog.works, pair.works), [pair.first, pair.second]).length);
     await page.reload();
     await page.locator('#collaboration-content').waitFor();
     await page.locator('#collaboration-creators a').first().click();
@@ -487,7 +517,7 @@ async function check() {
     await twoArtists.waitForFunction(() => document.querySelectorAll('#results li').length === 10);
     await twoArtists.locator('#results .lab-count').first().click();
     await twoArtists.locator('#collaboration-content').waitFor();
-    assert.equal(await twoArtists.locator('#collaboration-breakdown li').count(), 25);
+    assert.equal(await twoArtists.locator('#collaboration-breakdown li').count(), 1);
     assert.equal(await twoArtists.locator('#collaboration-works li').count(), 1);
     assert(await twoArtists.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await twoArtists.locator('#detail-back').click();
@@ -529,7 +559,7 @@ async function check() {
       assert.equal(bytes.readUInt32BE(20), height);
     }
     assert.deepEqual(errors, []);
-    console.log(`PASS: 78 responsive cases, ${catalog.works.length} works and all recordings; rankings, search, detail/analysis, history, compatibility, errors and brand assets`);
+    console.log(`PASS: 114 responsive cases, ${catalog.works.length} works and all recordings; rankings, search, detail/analysis, history, compatibility, errors and brand assets`);
   } finally {
     await browser.close();
   }

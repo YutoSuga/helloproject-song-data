@@ -5,7 +5,7 @@
 - [ホーム](index.html)、[ランキング](creators.html)、[楽曲検索](songs.html)、[作家検索](songs.html?tab=creators)
 - [組み合わせランキング](analysis.html)、[作家指定分析](analysis.html?tab=creator&creator_id=C00001)
 - [作家詳細](creator-detail.html)、[楽曲詳細・複数音源](song-detail.html)、[楽曲詳細・1音源](song-detail.html?example=single)
-- [共同制作楽曲](collaboration-detail.html?pair=C00001-C00002)
+- [共同制作楽曲](collaboration-detail.html?pair=C00001-C00002)、[同一クレジットの複数音源](collaboration-detail.html?pair=C00009-C00028)、[異なるクレジット](collaboration-detail.html?pair=C00031-C00039)、[一部の音源のみ該当](collaboration-detail.html?pair=C00005-C00031)
 - [共通OGPの共有画像案](ogp.svg)
 - [その他](more.html)、[動画一覧の公開休止案内](videos.html)
 
